@@ -1,4 +1,4 @@
-# NTT-power-house
+# ntt-power-house
 
 Processo de SDLC (Software Development Life Cycle) orientado por agentes de IA, com rastreabilidade em GitHub, gates bloqueantes e aprovação humana obrigatória. Este repositório documenta como uma demanda evolui da descoberta do problema até a entrega controlada em produção.
 
