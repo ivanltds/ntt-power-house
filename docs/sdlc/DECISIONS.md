@@ -24,3 +24,18 @@ Formato de cada entrada: use `templates/TEMPLATE_DECISAO.md`. ID sequencial `DEC
 ---
 
 <!-- Novas decisões devem ser adicionadas ABAIXO desta linha, em ordem cronológica -->
+
+## DEC-0001 — Recorte inicial do MVP radar-propostas-cases (NB-01)
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0001 |
+| Data | 2026-10-21 |
+| Fase / Etapa | 1. Negócio / NB-01 |
+| Tipo | Decisão de Escopo |
+| Descrição | O MVP cobrirá apenas propostas comerciais e cases (sem sigilo ou anonimizados), com upload manual, extração/metadados sugeridos com revisão humana, busca conversacional com score explicável e 3–5 resultados, e controle básico de acesso. Integração com SharePoint é opcional/avaliada apenas se viável. Ciclo completo proposta→contrato→projeto→entrega, geração automática de proposta e dashboards de indicadores ficam fora do MVP. |
+| Justificativa | Tempo e acesso a dados limitados; necessidade de validar a hipótese de valor (busca semântica + chat com fontes rastreáveis) antes de investir em integrações completas e automações. |
+| Responsável (autor da proposta) | Agente de Ideação (NB-01) via Agente Maestro |
+| Aprovador humano | Pendente — aguardando definição do Product Owner/Sponsor no gate NB-01 |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-01-discovery.md`, `docs/sdlc/execucoes/radar-propostas-cases/GATE-NB-01.md` |
+| Supersede | N/A |
