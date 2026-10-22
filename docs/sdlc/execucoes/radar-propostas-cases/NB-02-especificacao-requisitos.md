@@ -30,6 +30,10 @@
 | RF17 | Cada resultado deve exibir: nome/título, score de similaridade, status, segmento, tecnologias, resumo do escopo, relação com a busca (justificativa), origem/fontes e opção de expandir/ocultar detalhes. | Must | UC03 |
 | RF18 | Ao expandir um resultado, o sistema deve mostrar: problema/desafio do cliente, objetivo, escopo, entregáveis, tecnologias, áreas envolvidas, prazo/porte (se permitido), status, trechos de evidência e link para a fonte/SharePoint. | Must | UC03 |
 | RF19 | O score de similaridade deve ser apresentado com explicação dos fatores que o compõem (ex.: segmento, tecnologias, escopo, objetivo, prazo), seguindo os pesos iniciais: descrição/objetivo/escopo 40%, segmento 15%, tecnologias 15%, serviços/área 15%, prazo/valor/porte 10%, status/resultado 5%. | Must | UC03 |
+| RF33 | O chat deve manter memória de conversa dentro de uma sessão, permitindo perguntas de acompanhamento que reaproveitam contexto de turnos anteriores. | Must | UC03.3 / UC03.14 |
+| RF34 | O sistema deve permitir que o usuário marque cada resultado exibido como útil/não útil, persistindo esse feedback vinculado à busca, ao documento e ao usuário. | Must | UC03.13 |
+| RF35 | Quando houver informação divergente entre fontes relevantes a um resultado, o sistema deve aplicar automaticamente a hierarquia de confiança de fontes e declarar explicitamente qual fonte foi priorizada e por quê. | Must | UC03.8 |
+| RF36 | O sistema deve registrar, por sessão/turno de conversa, os resultados exibidos, fontes citadas, aberturas de detalhe e feedback recebido, para suportar as métricas de validação do MVP sem levantamento manual. | Must | UC03.15 |
 | RF20 | O sistema deve identificar e sugerir áreas e serviços complementares de escopo frequentemente observados em propostas/cases semelhantes, sempre como possibilidade (não decisão), com rastreabilidade a pelo menos uma referência da base. | Must | UC04 |
 | RF21 | O sistema deve permitir visualizar os documentos/fontes que sustentam cada sugestão de área complementar. | Must | UC04 |
 | RF22 | O sistema deve aplicar controle de acesso de forma que um usuário só visualize/abra documentos para os quais tenha permissão, mesmo que semanticamente relevantes à busca. | Must | Transversal (segurança) |
@@ -83,12 +87,17 @@ Critérios de aceite:
 ### UC03 — Encontrar propostas similares
 **Como** comercial, pré-vendas ou consultor, **quero** consultar a base via chat em linguagem natural **para** localizar rapidamente referências relevantes para uma nova oportunidade.
 
-Critérios de aceite:
+> ⚠️ **UC03 é uma feature composta por 15 sub-casos de uso** (interpretação da pergunta, memória de conversa, recuperação semântica, filtro de permissão, score multi-fator, resolução de conflito entre fontes, geração de justificativa, feedback de utilidade, auditoria, etc.), dado seu peso como principal entrega de valor do MVP e como insumo direto do modelo de ingestão/metadados. Ver detalhamento completo em [`NB-02-feature-busca-conversacional.md`](./NB-02-feature-busca-conversacional.md).
+
+Critérios de aceite (nível macro — critérios detalhados por sub-UC estão no addendum):
 - [ ] Dado que faço uma pergunta relacionada à minha oportunidade, quando o sistema responde, então recebo de 3 a 5 referências priorizadas.
 - [ ] Dado que recebo um resultado, quando o visualizo, então vejo score, resumo, justificativa da relação com a busca e fontes.
 - [ ] Dado que clico em "exibir detalhes", quando o card expande, então vejo problema, objetivo, escopo, entregáveis, tecnologias, áreas, prazo/porte (se permitido), status e trechos de evidência.
 - [ ] Dado que não há conteúdo suficiente na base para responder, quando o sistema processa a pergunta, então ele informa claramente a ausência de evidência, sem inventar resultado.
 - [ ] Dado que um resultado é confidencial para meu perfil, quando a busca é semanticamente relevante, então esse resultado não é exibido para mim.
+- [ ] Dado que faço uma pergunta de acompanhamento na mesma sessão, quando o sistema responde, então reaproveita o contexto já estabelecido (RF33).
+- [ ] Dado que recebo resultados, quando avalio sua utilidade, então posso marcar útil/não útil por resultado (RF34).
+- [ ] Dado que há divergência entre fontes sobre um dado usado na resposta, quando o sistema responde, então aplica a hierarquia de confiança e explica qual fonte prevaleceu (RF35).
 
 ### UC04 — Comparar projetos e identificar áreas agregáveis
 **Como** pré-vendas ou consultor, **quero** visualizar áreas e serviços complementares recorrentes em projetos semelhantes **para** ampliar o escopo da nova oportunidade com base em evidência histórica.

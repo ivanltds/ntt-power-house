@@ -1,13 +1,13 @@
 # Gate de Qualidade — NB-02 Especificação de Requisitos
 
 > Execução: **radar-propostas-cases** · Instância referente a `docs/sdlc/fases/01-negocio/NB-02-especificacao-requisitos/GATE.md`
-> Artefato avaliado: [`NB-02-especificacao-requisitos.md`](./NB-02-especificacao-requisitos.md)
+> Artefatos avaliados: [`NB-02-especificacao-requisitos.md`](./NB-02-especificacao-requisitos.md) e [`NB-02-feature-busca-conversacional.md`](./NB-02-feature-busca-conversacional.md) (detalhamento do UC03, RF33-RF36)
 
 > ⚠️ **Pré-condição de processo não satisfeita:** o gate NB-01 ainda não foi aprovado (`GATE-NB-01.md`). Este gate NB-02 é apresentado como **exploratório**, para apoiar a decisão humana sobre as duas etapas em conjunto. Nenhuma aprovação aqui tem efeito enquanto NB-01 permanecer pendente — ver `DECISIONS.md` (DEC-0002) e `STATUS.md`.
 
 ## Critérios de saída (checklist técnico — preenchido pelo agente de IA)
 
-- [x] Requisitos funcionais listados e numerados (RF01–RF32)
+- [x] Requisitos funcionais listados e numerados (RF01–RF36, sendo RF33–RF36 do detalhamento do UC03)
 - [x] Requisitos não funcionais definidos (performance, segurança, disponibilidade, compliance/LGPD) (RNF01–RNF11)
 - [x] Cada história/caso de uso (UC01–UC04) tem critérios de aceite testáveis
 - [x] Dependências e integrações conhecidas mapeadas (seção 4)

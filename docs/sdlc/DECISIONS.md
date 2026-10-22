@@ -54,3 +54,18 @@ Formato de cada entrada: use `templates/TEMPLATE_DECISAO.md`. ID sequencial `DEC
 | Aprovador humano | Pendente — nenhuma aprovação de gate foi concedida nesta decisão; ela apenas registra a exceção de sequenciamento |
 | Referências | `docs/sdlc/execucoes/radar-propostas-cases/GATE-NB-01.md`, `GATE-NB-02.md`, `STATUS.md` |
 | Supersede | N/A |
+
+## DEC-0003 — UC03 tratado como feature com sub-casos de uso e extensão de escopo (memória de conversa, feedback, resolução automática de conflito de fontes)
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0003 |
+| Data | 2026-10-21 |
+| Fase / Etapa | 1. Negócio / NB-02 |
+| Tipo | Decisão de Escopo |
+| Descrição | UC03 ("Encontrar propostas similares") foi detalhado em `NB-02-feature-busca-conversacional.md` como 15 sub-casos de uso (UC03.1–UC03.15), por ser a principal entrega de valor do MVP e por definir o que precisa ser ingerido e como os metadados devem ser modelados. Três extensões de escopo foram confirmadas com o solicitante e tornadas requisitos explícitos: (1) chat com memória de conversa/multi-turno no MVP (RF33); (2) feedback de utilidade (útil/não útil) por resultado, alimentando as métricas de validação (RF34); (3) resolução automática de divergência entre fontes aplicando a hierarquia de confiança, com explicação da fonte priorizada (RF35). RF36 formaliza o registro de auditoria da busca necessário às métricas do MVP. |
+| Justificativa | O MoSCoW original de NB-01 previa "score explicável" e "fontes rastreáveis", mas não detalhava memória de conversa, botão de feedback nem resolução automática de conflito; essas capacidades são necessárias para que UC03 entregue o valor esperado e para alimentar as métricas de validação já definidas (ex.: avaliação dos 3 primeiros resultados). |
+| Responsável (autor da proposta) | Agente de Especificação de Requisitos (NB-02), a pedido do solicitante |
+| Aprovador humano | Pendente — depende da aprovação conjunta de NB-01 e NB-02 (ver DEC-0002) |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-02-feature-busca-conversacional.md`, `NB-02-especificacao-requisitos.md` (RF33-RF36), `GATE-NB-02.md` |
+| Supersede | N/A |
