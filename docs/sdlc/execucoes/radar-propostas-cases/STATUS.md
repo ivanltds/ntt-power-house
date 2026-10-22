@@ -5,7 +5,7 @@
 | Código | Etapa | Status | PR | Aprovador | Data |
 |---|---|---|---|---|---|
 | NB-01 | Ideação & Discovery | Em aprovação | — | — (pendente de definição) | |
-| NB-02 | Levantamento de Requisitos | Pendente | | | |
+| NB-02 | Especificação de Requisitos | Em aprovação (exploratório — depende de NB-01) | — | | |
 | NB-03 | Viabilidade & Priorização | Pendente | | | |
 | DEV-01 | Arquitetura & Design | Pendente | | | |
 | DEV-02 | Implementação | Pendente | | | |
@@ -23,4 +23,6 @@ Status geral da execução: **Em andamento**
 - Prazo-alvo do MVP (recorte final): 4–6 semanas.
 - Equipe: reduzida, já alocada; sem orçamento externo adicional.
 - Pendência aberta para o fechamento do gate NB-01: definição do nome do aprovador humano (Product Owner / Sponsor).
-- Artefato da etapa atual: [`NB-01-discovery.md`](./NB-01-discovery.md) · Gate: [`GATE-NB-01.md`](./GATE-NB-01.md).
+- **Exceção de processo (DEC-0002):** a saída de NB-02 foi gerada antes da aprovação formal de NB-01, a pedido do solicitante, para permitir avaliação conjunta dos dois gates. O Maestro só considerará NB-02 oficialmente concluída quando NB-01 também estiver aprovado; se o discovery mudar na revisão humana, o requisito deve ser revisado.
+- Artefato NB-01: [`NB-01-discovery.md`](./NB-01-discovery.md) · Gate: [`GATE-NB-01.md`](./GATE-NB-01.md).
+- Artefato NB-02: [`NB-02-especificacao-requisitos.md`](./NB-02-especificacao-requisitos.md) · Gate: [`GATE-NB-02.md`](./GATE-NB-02.md).

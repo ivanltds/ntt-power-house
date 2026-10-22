@@ -39,3 +39,18 @@ Formato de cada entrada: use `templates/TEMPLATE_DECISAO.md`. ID sequencial `DEC
 | Aprovador humano | Pendente — aguardando definição do Product Owner/Sponsor no gate NB-01 |
 | Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-01-discovery.md`, `docs/sdlc/execucoes/radar-propostas-cases/GATE-NB-01.md` |
 | Supersede | N/A |
+
+## DEC-0002 — Geração exploratória de NB-02 antes da aprovação do gate NB-01
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0002 |
+| Data | 2026-10-21 |
+| Fase / Etapa | 1. Negócio / NB-01 e NB-02 |
+| Tipo | Decisão de Processo (exceção pontual, não altera o SOURCE_OF_TRUTH) |
+| Descrição | A pedido explícito do solicitante, o Agente de Requisitos produziu `NB-02-especificacao-requisitos.md` e seu gate (`GATE-NB-02.md`) antes da aprovação formal do gate NB-01, para permitir avaliação conjunta das duas saídas antes de decidir sobre ambas. `STATUS.md` reflete NB-02 como "Em aprovação (exploratório)", e o Maestro não considera NB-02 oficialmente concluída até que NB-01 também seja aprovado. |
+| Justificativa | Acelerar a validação do fluxo de SDLC e dar visibilidade das implicações de requisitos ao aprovador antes de formalizar a aprovação do discovery, reduzindo retrabalho. |
+| Responsável (autor da proposta) | Agente Maestro, a pedido do solicitante |
+| Aprovador humano | Pendente — nenhuma aprovação de gate foi concedida nesta decisão; ela apenas registra a exceção de sequenciamento |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/GATE-NB-01.md`, `GATE-NB-02.md`, `STATUS.md` |
+| Supersede | N/A |
