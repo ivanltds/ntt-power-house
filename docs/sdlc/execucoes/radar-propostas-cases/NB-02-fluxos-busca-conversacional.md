@@ -1,7 +1,7 @@
 # NB-02 — Fluxos da Feature: Busca e Recuperação Conversacional (UC03)
 
 > Demanda: **radar-propostas-cases** · Etapa: NB-02 — Especificação de Requisitos (addendum de fluxos)
-> Status: **RASCUNHO EXPLORATÓRIO** — mesmo regime de [`NB-02-feature-busca-conversacional.md`](./NB-02-feature-busca-conversacional.md): depende da aprovação conjunta de NB-01/NB-02 (ver `GATE-NB-02.md`, `DECISIONS.md` DEC-0002/DEC-0003).
+> Status: **APROVADO** em 2026-10-29 por Ivan Lucio Teles de Souza (Product Owner), em avaliação conjunta com NB-01 — ver `GATE-NB-02.md` e DEC-0006
 > Base: [`NB-02-feature-busca-conversacional.md`](./NB-02-feature-busca-conversacional.md) (UC03.1–UC03.15)
 
 Este documento traduz em diagramas os 15 sub-casos de uso já descritos textualmente no addendum de requisitos. Não introduz nenhum requisito novo — é uma visualização de apoio para NB-03 (viabilidade) e DEV-01 (arquitetura).

@@ -9,11 +9,11 @@
 - [x] Contexto e stakeholders identificados
 - [x] Objetivos de negócio e critérios de sucesso (métricas) definidos
 - [x] Hipóteses e riscos iniciais listados
-- [ ] Nenhuma informação crítica de negócio (orçamento, prioridade, stakeholder decisor) ficou sem resposta
+- [x] Nenhuma informação crítica de negócio (orçamento, prioridade, stakeholder decisor) ficou sem resposta
   - Orçamento/equipe: respondido (equipe reduzida alocada, sem budget externo).
   - Prioridade estratégica: respondido (alta, prioridade imediata).
   - Prazo do MVP: respondido (4–6 semanas).
-  - **Stakeholder decisor/aprovador do gate: ainda não definido pelo solicitante** — pendência aberta que impede marcar este item como 100% concluído.
+  - Stakeholder decisor/aprovador do gate: **Ivan Lucio Teles de Souza (Product Owner)** — definido em 2026-10-29 (DEC-0004).
 
 ## Aprovação humana obrigatória
 
@@ -23,13 +23,13 @@ Nenhuma etapa avança sem aprovação humana explícita registrada abaixo. IA nu
 
 | Campo | Valor |
 |---|---|
-| Aprovador (nome completo) | |
+| Aprovador (nome completo) | Ivan Lucio Teles de Souza <ivtsouza@emeal.nttdata.com> |
 | Papel / cargo | Product Owner / Sponsor |
-| Data da decisão | |
-| Decisão | Aprovado / Aprovado com ressalvas / Reprovado |
-| Ressalvas (se houver) | |
-| Evidências (link do PR) | |
-| Referência em DECISIONS.md | DEC-XXXX |
+| Data da decisão | 2026-10-29 |
+| Decisão | Aprovado |
+| Ressalvas (se houver) | Nenhuma |
+| Evidências (link do PR) | Aprovação do time comunicada pelo PO em 2026-10-29; sem PR aberto (artefatos na branch `sdlc/negocio/nb-01/radar-propostas-cases`) |
+| Referência em DECISIONS.md | DEC-0004, DEC-0005 |
 
 ## Efeito
 

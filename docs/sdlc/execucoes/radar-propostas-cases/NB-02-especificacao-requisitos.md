@@ -1,8 +1,8 @@
 # NB-02 — Especificação de Requisitos de Negócio
 
 > Demanda: **radar-propostas-cases** · Etapa: NB-02 — Especificação de Requisitos
-> Status: **RASCUNHO EXPLORATÓRIO** — gerado para apoiar a decisão de aprovação conjunta de NB-01 e NB-02 (ver nota abaixo). Pendente de aprovação humana em ambos os gates.
-> Base: [`NB-01-discovery.md`](./NB-01-discovery.md) (ainda não aprovado formalmente)
+> Status: **APROVADO** em 2026-10-29 por Ivan Lucio Teles de Souza (Product Owner), em avaliação conjunta com NB-01 — ver `GATE-NB-02.md` e DEC-0006
+> Base: [`NB-01-discovery.md`](./NB-01-discovery.md) (aprovado em 2026-10-29 — DEC-0005)
 > Agente responsável: Agente de Especificação de Requisitos (`%sdlc-nb02-requisitos`), orquestrado pelo Maestro
 
 > ⚠️ **Nota de processo:** por decisão explícita do solicitante, este artefato foi produzido **antes** da aprovação formal do gate NB-01, para permitir avaliação conjunta das saídas de NB-01 e NB-02 antes de decidir sobre ambas. Isso é uma exceção pontual e registrada (ver `DECISIONS.md`, DEC-0002); o Maestro **não** considera NB-02 oficialmente iniciada nem concluída em `STATUS.md` até que o gate NB-01 seja aprovado. Se o conteúdo de NB-01 mudar após a revisão humana, este documento deverá ser revisado antes de qualquer aprovação.

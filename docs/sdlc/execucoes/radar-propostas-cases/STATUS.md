@@ -4,16 +4,19 @@
 
 | Código | Etapa | Status | PR | Aprovador | Data |
 |---|---|---|---|---|---|
-| NB-01 | Ideação & Discovery | Em aprovação | — | — (pendente de definição) | |
-| NB-02 | Especificação de Requisitos | Em aprovação (exploratório — depende de NB-01) | — | | |
+| NB-01 | Ideação & Discovery | Aprovado | — | Ivan Lucio Teles de Souza (PO) | 2026-10-29 |
+| NB-02 | Especificação de Requisitos | Aprovado | — | Ivan Lucio Teles de Souza (PO) | 2026-10-29 |
 | NB-03 | Viabilidade & Priorização | Pendente | | | |
-| DEV-01 | Arquitetura & Design | Pendente | | | |
-| DEV-02 | Implementação | Pendente | | | |
-| DEV-03 | Code Review & Qualidade | Pendente | | | |
+| NB-04 | UI/UX Design | Pendente | | | |
+| DEV-01 | Arquitetura & Design Técnico | Pendente | | | |
+| DEV-02 | Plano de Testes BDD | Pendente | | | |
+| DEV-03 | Implementação / TDD | Pendente | | | |
+| DEV-04 | Code Review & Qualidade | Pendente | | | |
 | QA-01 | Testes Automatizados | Pendente | | | |
-| QA-02 | Homologação | Pendente | | | |
-| QA-03 | Aceite UAT | Pendente | | | |
-| QA-04 | Deploy / Entrega | Pendente | | | |
+| QA-02 | Homologação Funcional | Pendente | | | |
+| QA-03 | CI/CD e Staging | Pendente | | | |
+| QA-04 | UAT / Avaliação de Negócio | Pendente | | | |
+| QA-05 | Deploy / Release em Produção | Pendente | | | |
 
 Status geral da execução: **Em andamento**
 
@@ -22,8 +25,9 @@ Status geral da execução: **Em andamento**
 - Prioridade: alta (prioridade imediata no roadmap).
 - Prazo-alvo do MVP (recorte final): 4–6 semanas.
 - Equipe: reduzida, já alocada; sem orçamento externo adicional.
-- Pendência aberta para o fechamento do gate NB-01: definição do nome do aprovador humano (Product Owner / Sponsor).
-- **Exceção de processo (DEC-0002):** a saída de NB-02 foi gerada antes da aprovação formal de NB-01, a pedido do solicitante, para permitir avaliação conjunta dos dois gates. O Maestro só considerará NB-02 oficialmente concluída quando NB-01 também estiver aprovado; se o discovery mudar na revisão humana, o requisito deve ser revisado.
+- Product Owner / aprovador dos gates de negócio: Ivan Lucio Teles de Souza (DEC-0004).
+- Tabela alinhada ao fluxo de 13 etapas (NB-01–NB-04, DEV-01–DEV-04, QA-01–QA-05) definido no `README.md` e nas pastas de `docs/sdlc/fases/`.
+- **Exceção de processo (DEC-0002):** NB-02 foi produzida antes da aprovação formal de NB-01 e as duas foram avaliadas em conjunto; ambas aprovadas em 2026-10-29 (DEC-0005, DEC-0006). As duas etapas foram entregues na branch `sdlc/negocio/nb-01/radar-propostas-cases`.
 - Artefato NB-01: [`NB-01-discovery.md`](./NB-01-discovery.md) · Gate: [`GATE-NB-01.md`](./GATE-NB-01.md).
 - Artefato NB-02: [`NB-02-especificacao-requisitos.md`](./NB-02-especificacao-requisitos.md) + detalhamento [`NB-02-feature-busca-conversacional.md`](./NB-02-feature-busca-conversacional.md) (UC03) + diagramas [`NB-02-fluxos-busca-conversacional.md`](./NB-02-fluxos-busca-conversacional.md) · Gate: [`GATE-NB-02.md`](./GATE-NB-02.md).
 - UC03 foi tratado como feature própria (15 sub-casos de uso) por ser a principal entrega de valor do MVP e base para o modelo de ingestão/metadados; RF33-RF36 adicionados (DEC-0003).

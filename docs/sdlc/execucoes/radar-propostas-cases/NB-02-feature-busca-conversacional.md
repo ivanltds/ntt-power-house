@@ -1,7 +1,7 @@
 # NB-02 — Detalhamento da Feature: Busca e Recuperação Conversacional (UC03)
 
 > Demanda: **radar-propostas-cases** · Etapa: NB-02 — Especificação de Requisitos (addendum)
-> Status: **RASCUNHO EXPLORATÓRIO** — mesmo regime de `NB-02-especificacao-requisitos.md`: depende da aprovação de NB-01 e será avaliado junto com o gate NB-02 (ver `GATE-NB-02.md`, `DECISIONS.md` DEC-0002/DEC-0003).
+> Status: **APROVADO** em 2026-10-29 por Ivan Lucio Teles de Souza (Product Owner), em avaliação conjunta com NB-01 — ver `GATE-NB-02.md` e DEC-0006
 > Base: [`NB-02-especificacao-requisitos.md`](./NB-02-especificacao-requisitos.md) (UC03, RF11–RF19) e [`NB-01-discovery.md`](./NB-01-discovery.md)
 
 ## 0. Por que este addendum existe

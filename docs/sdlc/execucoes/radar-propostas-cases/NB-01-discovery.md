@@ -1,7 +1,7 @@
 # NB-01 — Documento de Discovery
 
 > Demanda: **radar-propostas-cases** · Etapa: NB-01 — Ideação & Discovery
-> Status: **RASCUNHO** — pendente de aprovação humana (ver `GATE.md` da execução)
+> Status: **APROVADO** em 2026-10-29 por Ivan Lucio Teles de Souza (Product Owner) — ver `GATE-NB-01.md` e DEC-0005
 > Agente responsável: Agente de Ideação (`%sdlc-nb01-ideacao`), orquestrado pelo Maestro
 
 ## 1. Problema de negócio
@@ -34,7 +34,7 @@ O problema **não é genérico**: é a ausência de um mecanismo de busca por co
 | Dono da proposta | Faz upload e mantém metadados das propostas sob sua responsabilidade |
 | Curador/admin | Aprova conteúdos, cura a base piloto, gerencia taxonomia e acessos |
 | Gestor | Consome agregados e referências permitidas, acompanha reaproveitamento de conhecimento |
-| Product Owner / Sponsor | **A definir** — aprovador humano dos gates deste fluxo SDLC (ver pendência na seção 7) |
+| Product Owner / Sponsor | **Ivan Lucio Teles de Souza** — aprovador humano dos gates deste fluxo SDLC (DEC-0004) |
 
 ## 4. Objetivos de negócio
 
@@ -66,7 +66,7 @@ Resolvidas com o solicitante nesta etapa de discovery:
 | Prioridade estratégica / urgência | **Alta** — prioridade imediata no roadmap |
 | Orçamento / equipe | Equipe reduzida já alocada; **sem orçamento externo** adicional previsto |
 | Prazo desejado para o MVP | **4 a 6 semanas** |
-| Aprovador humano (Product Owner / Sponsor) do gate | **Ainda não definido** — segue como pendência aberta, não bloqueia o início do discovery/requisitos, mas **bloqueia o fechamento do gate NB-01**, que exige aprovação humana nominal |
+| Aprovador humano (Product Owner / Sponsor) do gate | **Ivan Lucio Teles de Souza** — definido em 2026-10-29 (DEC-0004) |
 
 ## 8. Critérios de sucesso (métricas) — validação do MVP
 

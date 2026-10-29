@@ -69,3 +69,48 @@ Formato de cada entrada: use `templates/TEMPLATE_DECISAO.md`. ID sequencial `DEC
 | Aprovador humano | Pendente — depende da aprovação conjunta de NB-01 e NB-02 (ver DEC-0002) |
 | Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-02-feature-busca-conversacional.md`, `NB-02-especificacao-requisitos.md` (RF33-RF36), `GATE-NB-02.md` |
 | Supersede | N/A |
+
+## DEC-0004 — Definição do Product Owner da demanda radar-propostas-cases
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0004 |
+| Data | 2026-10-29 |
+| Fase / Etapa | 1. Negócio / NB-01 |
+| Tipo | Decisão de Governança |
+| Descrição | Ivan Lucio Teles de Souza é definido como Product Owner da demanda e aprovador humano dos gates de negócio. Resolve a pendência aberta em `NB-01-discovery.md` (seção 7) e em `GATE-NB-01.md`. |
+| Justificativa | O gate NB-01 exige aprovador humano nominal; a ausência dessa definição era a única pendência que impedia o fechamento do discovery. |
+| Responsável (autor da proposta) | Solicitante da demanda |
+| Aprovador humano | Ivan Lucio Teles de Souza (Product Owner) |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-01-discovery.md`, `GATE-NB-01.md` |
+| Supersede | N/A |
+
+## DEC-0005 — Aprovação do gate NB-01 (radar-propostas-cases)
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0005 |
+| Data | 2026-10-29 |
+| Fase / Etapa | 1. Negócio / NB-01 |
+| Tipo | Aprovação de Gate |
+| Descrição | Gate NB-01 (Ideação & Discovery) aprovado sem ressalvas. Com isso, o recorte de MVP registrado em DEC-0001 passa a ter aprovação humana. |
+| Justificativa | Revisão realizada pelo time; discovery considerado completo (problema, stakeholders, hipótese, riscos, métricas e recorte MoSCoW). Aprovação comunicada pelo PO. |
+| Responsável (autor da proposta) | Agente de Ideação (NB-01) via Agente Maestro |
+| Aprovador humano | Ivan Lucio Teles de Souza (Product Owner), em nome do time |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/GATE-NB-01.md`, DEC-0001, DEC-0004 |
+| Supersede | N/A |
+
+## DEC-0006 — Aprovação do gate NB-02 (radar-propostas-cases)
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0006 |
+| Data | 2026-10-29 |
+| Fase / Etapa | 1. Negócio / NB-02 |
+| Tipo | Aprovação de Gate |
+| Descrição | Gate NB-02 (Especificação de Requisitos) aprovado sem ressalvas, em avaliação conjunta com NB-01 conforme a exceção DEC-0002. Inclui o detalhamento do UC03 e as extensões de escopo RF33–RF36 registradas em DEC-0003. Como NB-01 e NB-02 foram produzidas na mesma branch (`sdlc/negocio/nb-01/radar-propostas-cases`), a entrega de NB-02 permanece nela; a próxima etapa segue a convenção normal de uma branch por etapa. |
+| Justificativa | Revisão realizada pelo time; requisitos rastreáveis ao discovery aprovado, sem contradição identificada. Aprovação comunicada pelo PO. |
+| Responsável (autor da proposta) | Agente de Especificação de Requisitos (NB-02) via Agente Maestro |
+| Aprovador humano | Ivan Lucio Teles de Souza (Product Owner), em nome do time |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/GATE-NB-02.md`, DEC-0002, DEC-0003, DEC-0005 |
+| Supersede | N/A |

@@ -3,7 +3,7 @@
 > Execução: **radar-propostas-cases** · Instância referente a `docs/sdlc/fases/01-negocio/NB-02-especificacao-requisitos/GATE.md`
 > Artefatos avaliados: [`NB-02-especificacao-requisitos.md`](./NB-02-especificacao-requisitos.md), [`NB-02-feature-busca-conversacional.md`](./NB-02-feature-busca-conversacional.md) (detalhamento do UC03, RF33-RF36) e [`NB-02-fluxos-busca-conversacional.md`](./NB-02-fluxos-busca-conversacional.md) (diagramas dos sub-casos de uso UC03.1-UC03.15)
 
-> ⚠️ **Pré-condição de processo não satisfeita:** o gate NB-01 ainda não foi aprovado (`GATE-NB-01.md`). Este gate NB-02 é apresentado como **exploratório**, para apoiar a decisão humana sobre as duas etapas em conjunto. Nenhuma aprovação aqui tem efeito enquanto NB-01 permanecer pendente — ver `DECISIONS.md` (DEC-0002) e `STATUS.md`.
+> ✅ **Pré-condição satisfeita em 2026-10-29:** o gate NB-01 foi aprovado (`GATE-NB-01.md`, DEC-0005). Este gate foi avaliado em conjunto com NB-01, conforme a exceção registrada em DEC-0002.
 
 ## Critérios de saída (checklist técnico — preenchido pelo agente de IA)
 
@@ -17,19 +17,19 @@
 
 Nenhuma etapa avança sem aprovação humana explícita registrada abaixo. IA nunca aprova a própria saída.
 
-**Bloqueio adicional:** mesmo com decisão preenchida abaixo, o Maestro só considera NB-02 oficialmente concluída depois que `GATE-NB-01.md` também estiver aprovado.
+**Bloqueio adicional (resolvido):** NB-02 só seria considerada concluída com `GATE-NB-01.md` aprovado — condição atendida em 2026-10-29.
 
 ## Registro de Aprovação Humana
 
 | Campo | Valor |
 |---|---|
-| Aprovador (nome completo) | |
+| Aprovador (nome completo) | Ivan Lucio Teles de Souza <ivtsouza@emeal.nttdata.com> |
 | Papel / cargo | Product Owner / Business Analyst líder |
-| Data da decisão | |
-| Decisão | Aprovado / Aprovado com ressalvas / Reprovado |
-| Ressalvas (se houver) | |
-| Evidências (link do PR) | |
-| Referência em DECISIONS.md | DEC-XXXX |
+| Data da decisão | 2026-10-29 |
+| Decisão | Aprovado |
+| Ressalvas (se houver) | Nenhuma |
+| Evidências (link do PR) | Aprovação do time comunicada pelo PO em 2026-10-29; sem PR aberto (artefatos entregues na mesma branch de NB-01, ver DEC-0002) |
+| Referência em DECISIONS.md | DEC-0006 |
 
 ## Efeito
 
