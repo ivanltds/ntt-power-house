@@ -6,7 +6,7 @@
 |---|---|---|---|---|---|
 | NB-01 | Ideação & Discovery | Aprovado | — | Ivan Lucio Teles de Souza (PO) | 2026-10-29 |
 | NB-02 | Especificação de Requisitos | Aprovado | — | Ivan Lucio Teles de Souza (PO) | 2026-10-29 |
-| NB-03 | Viabilidade & Priorização | Em aprovação | — | | |
+| NB-03 | Viabilidade & Priorização | Em aprovação (aguardando comitê do time) | — | | |
 | NB-04 | UI/UX Design | Pendente | | | |
 | DEV-01 | Arquitetura & Design Técnico | Pendente | | | |
 | DEV-02 | Plano de Testes BDD | Pendente | | | |
@@ -31,4 +31,4 @@ Status geral da execução: **Em andamento**
 - Artefato NB-01: [`NB-01-discovery.md`](./NB-01-discovery.md) · Gate: [`GATE-NB-01.md`](./GATE-NB-01.md).
 - Artefato NB-02: [`NB-02-especificacao-requisitos.md`](./NB-02-especificacao-requisitos.md) + detalhamento [`NB-02-feature-busca-conversacional.md`](./NB-02-feature-busca-conversacional.md) (UC03) + diagramas [`NB-02-fluxos-busca-conversacional.md`](./NB-02-fluxos-busca-conversacional.md) · Gate: [`GATE-NB-02.md`](./GATE-NB-02.md).
 - UC03 foi tratado como feature própria (15 sub-casos de uso) por ser a principal entrega de valor do MVP e base para o modelo de ingestão/metadados; RF33-RF36 adicionados (DEC-0003).
-- Artefato NB-03: [`NB-03-viabilidade.md`](./NB-03-viabilidade.md) · Gate: [`GATE-NB-03.md`](./GATE-NB-03.md). Recomendação: **Go com ressalvas** (faseamento em 2 ondas; premissa P2 de provedor de LLM é bloqueante).
+- Artefato NB-03: [`NB-03-viabilidade.md`](./NB-03-viabilidade.md) · Gate: [`GATE-NB-03.md`](./GATE-NB-03.md). Recomendação: **Go com ressalvas** (faseamento em 2 ondas aceito pelo PO; LLM: DeepSeek; curador: PO). Aprovação pelo comitê do time após apresentação e testes.

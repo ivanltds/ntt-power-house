@@ -13,15 +13,15 @@ A demanda é viável e tem alto valor potencial, mas o escopo aprovado em NB-02 
 
 ## 2. Premissas da estimativa
 
-As premissas abaixo **não foram confirmadas** pelo solicitante e devem ser validadas no gate. Se mudarem, a estimativa da seção 3 deve ser revista.
+Premissas revisadas com o PO em 2026-10-29 (ver seção 7.1). Se mudarem, a estimativa da seção 3 deve ser revista.
 
-| # | Premissa | Impacto se falsa |
-|---|---|---|
-| P1 | Equipe efetiva de ~3 pessoas (1 dev backend/IA, 1 dev fullstack, ~0,5 QA e ~0,5 PO/curadoria) durante 6 semanas → **capacidade ≈ 15–18 pessoa-semana** | Com 2 pessoas a capacidade cai para ~10–12 pessoa-semana: só a Onda 1 é viável |
-| P2 | Existe um provedor de LLM e embeddings já contratado pela organização (ex.: assinatura corporativa de nuvem/IA), utilizável sem novo orçamento | Sem isso, o requisito "sem orçamento externo" bloqueia RF07, RF12–RF19 e todo o UC03 — **impedimento para o Go** |
-| P3 | Existe um ambiente de nuvem/hospedagem corporativo disponível para o piloto | Exigiria aprovação de infraestrutura nova, com atraso de prazo |
-| P4 | A base piloto terá pequeno volume (ordem de dezenas a poucas centenas de documentos), curada e anonimizada por alguém do negócio | Base maior aumenta esforço de curadoria e custo de processamento; base menor pode não validar a hipótese |
-| P5 | Autenticação: login simples ou SSO corporativo já disponível, sem integração complexa (RF26) | Integração de identidade nova pode adicionar 1–2 pessoa-semana |
+| # | Premissa | Situação | Impacto se falsa |
+|---|---|---|---|
+| P1 | Desenvolvimento conduzido pelo PO com apoio de agentes de IA (este fluxo SDLC); o time atua em testes, homologação e avaliação | **Confirmada pelo PO.** A estimativa em pessoa-semana passa a ser referência de complexidade relativa, não de alocação de equipe | — |
+| P2 | Existe provedor de LLM utilizável sem novo orçamento | **Confirmada:** chave de API DeepSeek com crédito disponível. **Lacuna:** a DeepSeek não oferece API de embeddings; a busca semântica precisa de um modelo de embeddings separado (sugestão: modelo open-source multilíngue rodando localmente, sem custo de API — decisão em DEV-01) | Sem embeddings, RF11 e RF13 (busca semântica) não funcionam |
+| P3 | Existe um ambiente de nuvem/hospedagem corporativo disponível para o piloto | A confirmar em DEV-01 | Exigiria aprovação de infraestrutura nova, com atraso de prazo |
+| P4 | A base piloto terá pequeno volume (ordem de dezenas a poucas centenas de documentos), curada e anonimizada pelo curador nomeado | **Confirmada** (curador: PO) | Base maior aumenta esforço de curadoria e custo de processamento; base menor pode não validar a hipótese |
+| P5 | Autenticação: login simples ou SSO corporativo já disponível, sem integração complexa (RF26) | A confirmar em DEV-01 | Integração de identidade nova pode adicionar 1–2 pessoa-semana |
 
 ## 3. Estimativa de esforço (ordem de grandeza)
 
@@ -42,7 +42,7 @@ Estimativa em **pessoa-semana**, em faixas. Não é estimativa de sprint, que se
 
 Fora da conta: RF25, RF28–RF32 (Should/Could), que já estão marcados como não obrigatórios.
 
-**Leitura:** com a capacidade de P1 (15–18), o escopo Must completo fica **no limite ou acima**, sem margem para calibração do score, que depende da base real (UC03.7), nem para retrabalho de gates reprovados.
+**Leitura:** com desenvolvimento conduzido por uma pessoa com apoio de IA (P1), o esforço total continua alto para 4–6 semanas, e não sobra margem para calibrar o score, que depende da base real (UC03.7), nem para retrabalho de gates reprovados. Isso reforça o faseamento da seção 4.
 
 ## 4. Proposta de faseamento
 
@@ -63,7 +63,8 @@ Na Onda 1, o UC03 funciona como busca conversacional de um turno: cada pergunta 
 | Item | Natureza | Ordem de grandeza |
 |---|---|---|
 | Equipe | Interna, já alocada | 15,5–22 pessoa-semana (seção 3); sem custo incremental de contratação |
-| LLM + embeddings | Consumo por uso | Baixo no piloto: volume de poucas centenas de documentos e uso interno restrito. Depende de P2 |
+| LLM (DeepSeek) | Consumo por uso | Coberto pelo crédito já disponível (P2); baixo no piloto pelo volume pequeno |
+| Embeddings | Modelo local open-source | Sem custo de API; consome CPU/memória do ambiente de hospedagem |
 | Hospedagem (app, banco, índice vetorial, storage) | Infra de nuvem | Baixo no piloto, desde que haja ambiente corporativo (P3) |
 | Curadoria e anonimização da base piloto | Esforço do negócio | Relevante e muitas vezes subestimado; precisa de um responsável nomeado |
 | Custo de oportunidade | Equipe deixa de atuar em outras demandas | Aceito pelo solicitante (prioridade alta) |
@@ -86,7 +87,8 @@ A relação custo × benefício é **favorável**. O custo incremental é baixo 
 | # | Risco | Tipo | Prob. | Impacto | Mitigação proposta |
 |---|---|---|---|---|---|
 | R1 | Escopo Must não cabe no prazo | Negócio/Entrega | Alta | Alto | Faseamento em ondas (seção 4); critério explícito de corte da Onda 2 |
-| R2 | Não existe provedor de LLM/embeddings sem custo novo (P2) | Negócio/Técnico | Média | **Bloqueante** | Confirmar antes do Go; alternativa: solicitar orçamento mínimo de consumo para o piloto |
+| R2 | Crédito DeepSeek se esgota durante o piloto, ou não há provedor de embeddings | Negócio/Técnico | Baixa | Alto | Embeddings em modelo local; monitorar consumo de tokens; camada de LLM desacoplada do provedor (decisão em DEV-01) |
+| R10 | Envio de conteúdo de propostas a API externa (DeepSeek, com processamento fora do Brasil) pode conflitar com a política corporativa de segurança da informação e com a LGPD | Segurança/Compliance | Média | Alto | Base piloto só com documentos sem sigilo ou anonimizados (RNF02, RNF03); confirmar com a área de segurança se o uso é permitido; manter o provedor substituível |
 | R3 | Vazamento de informação confidencial pela busca ou pelo chat | Segurança | Média | Muito alto | Filtro de permissão **antes** da recuperação/ranking (UC03.5), base piloto só anonimizada (RNF02), testes específicos de autorização em DEV-02/QA-01 |
 | R4 | Alucinação: trechos ou scores inventados | Técnico (IA) | Média | Alto | Justificativa só com trecho literal verificado (UC03.9), resposta "sem evidência" (UC03.12), avaliação com conjunto de perguntas de referência |
 | R5 | Base piloto pequena ou pouco representativa | Negócio | Média | Alto | Nomear curador; definir composição mínima por segmento/tecnologia antes de DEV-03 |
@@ -103,6 +105,19 @@ A relação custo × benefício é **favorável**. O custo incremental é baixo 
 2. **Confirmação de P1:** tamanho real da equipe. Com menos de 3 pessoas efetivas, o MVP passa a ser só a Onda 1.
 3. **Aceite do faseamento** da seção 4 (RF33, RF35 e UC04 na Onda 2), registrado como nova decisão de escopo.
 4. **Nomeação de um curador** responsável pela base piloto anonimizada (R5).
+
+### 7.1 Respostas do PO às condições (2026-10-29)
+
+| Condição | Resposta |
+|---|---|
+| 1. Provedor de LLM | **Atendida:** chave de API DeepSeek com crédito. Embeddings serão resolvidos com modelo local (DEV-01) |
+| 2. Tamanho da equipe | **Não se aplica:** o PO conduz o desenvolvimento com apoio de IA e o time testa |
+| 3. Faseamento | **Aceito:** RF33, RF35 e UC04 na Onda 2 |
+| 4. Curador da base piloto | **Atendida:** o próprio PO |
+
+Nova ressalva levantada nesta revisão: **R10** (uso de API externa com conteúdo de propostas). Recomenda-se uma confirmação rápida com segurança da informação antes de ingerir documentos reais.
+
+**Aprovação do gate:** Comitê do time, após apresentação e testes.
 
 ## 8. Priorização relativa ao portfólio
 
