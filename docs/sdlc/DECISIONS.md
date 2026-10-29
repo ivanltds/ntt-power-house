@@ -130,3 +130,20 @@ Formato de cada entrada: use `templates/TEMPLATE_DECISAO.md`. ID sequencial `DEC
 | Aprovador humano | Pendente: validação do adendo pelo comitê do time, junto com o gate NB-03 |
 | Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-02-adendo-memoria-conversas-ia.md`, DEC-0003, `NB-03-viabilidade.md` (R10) |
 | Supersede | N/A |
+
+## DEC-0008 — V0 com upload real, processamento de metadados, cadastro de projetos e base relacional (radar-propostas-cases)
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0008 |
+| Data | 2026-10-29 |
+| Fase / Etapa | 1. Negócio / NB-02 (adendo 3) e NB-03 (apoio à apresentação ao comitê) |
+| Tipo | Mudança de escopo / exceção de processo |
+| Descrição | Por solicitação do PO, o protótipo `radar-v0` deixa de simular o upload e passa a ter: (1) upload multiformato (DOCX, PPTX, XLSX, PDF, VTT/SRT, EML, HTML, CSV, JSON, MD, TXT) com pipeline de processamento em etapas, extração de metadados e entidades por regras + IA (DeepSeek) com proteção contra alucinação, vínculo com projeto, duplicidade, conflitos e revisão humana obrigatória antes da indexação (UC02 detalhado); (2) cadastro e edição de projetos com sugestão inteligente e histórico (UC07); (3) exploração com filtros combinados, facetas e busca textual BM25 (UC08); (4) insights agregados (UC09). A persistência passa a ser relacional, com o SQLite embutido no Node (`node:sqlite`) e FTS5. O MER foi registrado como insumo de DEV-01. Casos de uso em `NB-02-adendo-upload-cadastro-consultas.md`. Continua sendo protótipo de apoio à decisão do comitê; não substitui NB-04 nem DEV-01 a DEV-04. |
+| Justificativa | Demonstrar ao comitê o ciclo completo (alimentar a base → organizar → consultar → gerar insights), que é o núcleo da hipótese do NB-01. |
+| Restrições | A VM precisa de Node 22.13 ou superior (ver R11 abaixo). Documentos enviados à DeepSeek: só dados fictícios até aprovação de segurança/jurídico (R10). PDF escaneado sem OCR no V0. |
+| Riscos novos | R11 — Versão do Node da VM inferior a 22.13 impede o uso do banco embutido; mitigação: confirmar a versão antes da demo ou usar SQLite em WebAssembly empacotado com o projeto. |
+| Responsável (autor da proposta) | Ivan Lucio Teles de Souza (PO), implementado via agente |
+| Aprovador humano | Pendente: validação do adendo pelo comitê do time, junto com o gate NB-03 |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-02-adendo-upload-cadastro-consultas.md`, `docs/sdlc/execucoes/radar-propostas-cases/DEV-01-insumo-MER-base-de-conhecimento.md`, DEC-0007 |
+| Supersede | N/A |
