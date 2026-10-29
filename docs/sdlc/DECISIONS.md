@@ -114,3 +114,19 @@ Formato de cada entrada: use `templates/TEMPLATE_DECISAO.md`. ID sequencial `DEC
 | Aprovador humano | Ivan Lucio Teles de Souza (Product Owner), em nome do time |
 | Referências | `docs/sdlc/execucoes/radar-propostas-cases/GATE-NB-02.md`, DEC-0002, DEC-0003, DEC-0005 |
 | Supersede | N/A |
+
+## DEC-0007 — Protótipo V0 com IA real (DeepSeek), memória de conversa e conversas salvas/favoritas (radar-propostas-cases)
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0007 |
+| Data | 2026-10-29 |
+| Fase / Etapa | 1. Negócio / NB-02 (adendo) e NB-03 (apoio à apresentação ao comitê) |
+| Tipo | Mudança de escopo / exceção de processo |
+| Descrição | Por solicitação do PO, o protótipo `radar-v0` (Node puro, sem dependências, pensado para a VM com acesso restrito) passou a: (1) usar a DeepSeek para interpretar perguntas, reavaliar candidatos e redigir respostas com insights (UC03.16), com fallback offline; (2) implementar a memória de conversa já especificada em UC03.3/UC03.14; (3) permitir salvar, retomar e favoritar conversas (UC05, UC06). Os casos de uso estão em `NB-02-adendo-memoria-conversas-ia.md`. O protótipo foi construído antes dos gates NB-04 e DEV-01 e serve somente para a apresentação e os testes do comitê (NB-03); não substitui DEV-01 a DEV-04. Upload continua simulado. |
+| Justificativa | Validar a hipótese do NB-01 (base de documentos aumenta produtividade e acesso a referências) com uma demo realista. A busca só por termos tinha limitações para perguntas com vocabulário diferente da base. |
+| Restrições | Somente dados fictícios podem ser enviados à DeepSeek até haver aprovação de segurança/jurídico (R10). A chave fica apenas no `.env` local, nunca em commit. A chave compartilhada em chat deve ser rotacionada depois da demo. |
+| Responsável (autor da proposta) | Ivan Lucio Teles de Souza (PO), implementado via agente |
+| Aprovador humano | Pendente: validação do adendo pelo comitê do time, junto com o gate NB-03 |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-02-adendo-memoria-conversas-ia.md`, DEC-0003, `NB-03-viabilidade.md` (R10) |
+| Supersede | N/A |
