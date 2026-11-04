@@ -147,3 +147,35 @@ Formato de cada entrada: use `templates/TEMPLATE_DECISAO.md`. ID sequencial `DEC
 | Aprovador humano | Pendente: validação do adendo pelo comitê do time, junto com o gate NB-03 |
 | Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-02-adendo-upload-cadastro-consultas.md`, `docs/sdlc/execucoes/radar-propostas-cases/DEV-01-insumo-MER-base-de-conhecimento.md`, DEC-0007 |
 | Supersede | N/A |
+
+## DEC-0009 — V0 com exportação de proposta, permissões de cadastro, registro de atividades e aviso de dados sensíveis (radar-propostas-cases)
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0009 |
+| Data | 2026-10-30 (registrada em 2026-11-04) |
+| Fase / Etapa | 1. Negócio / NB-02 (adendo 4) e NB-03 (apoio à apresentação ao comitê) |
+| Tipo | Mudança de escopo / exceção de processo |
+| Descrição | Por solicitação do PO, o protótipo `radar-v0` passou a ter: (1) exportação de proposta em apresentação para o cliente (PPTX/PDF) e resumo executivo (DOCX/PDF), com escolha das seções (UC10); (2) registro de atividades com tela de consulta para o gestor (UC11); (3) cadastro de projeto e de cliente novo só para o gestor (UC07.5, UC07.6); (4) filtro "Meus projetos" (UC08.6); (5) regra RN-V0-01, que proíbe dados sensíveis da NTT enquanto houver LLM externa, com confirmação a cada envio. Casos de uso em `NB-02-adendo-exportacao-permissoes-auditoria.md`. Continua sendo protótipo de apoio ao comitê. |
+| Justificativa | Pedidos do PO a partir dos primeiros testes com o time. |
+| Restrições | Permissões verificadas no servidor, não só na tela. Valores e conteúdo confidencial seguem as regras de perfil. |
+| Responsável (autor da proposta) | Ivan Lucio Teles de Souza (PO), implementado via agente |
+| Aprovador humano | Pendente: validação do adendo pelo comitê do time, junto com o gate NB-03 |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-02-adendo-exportacao-permissoes-auditoria.md`, DEC-0007, DEC-0008 |
+| Supersede | N/A |
+
+## DEC-0010 — Feedbacks do teste com o time: chat por intenção, política de dados sem bloqueio, card rápido e novo discovery da listagem e ficha (radar-propostas-cases)
+
+| Campo | Valor |
+|---|---|
+| ID | DEC-0010 |
+| Data | 2026-11-04 |
+| Fase / Etapa | 1. Negócio / NB-01 (discovery, rodada 2) e NB-02 (adendo 5) |
+| Tipo | Mudança de escopo / mudança de regra de negócio / exceção de processo |
+| Descrição | A partir dos feedbacks do teste de 2026-11-03, o PO decidiu: **F1 (cards de projeto)**: taxonomia "Área do cliente" e visão Executiva/Técnica, depois de uma nova rodada de discovery da listagem e da ficha que inclui executivos e diretoria (ausentes nos stakeholders do NB-01); antes disso, só o card rápido sem cadastro novo (segmento, kit de documentos, porte por faixa de valor, relação com o cliente). **F2 (avisos de dados sensíveis)**: boas-vindas amigáveis com termo aceito uma vez por perfil e versão, e mascaramento automático, sem bloqueio, de dados pessoais, cartões, senhas e chaves antes de gravar e antes de enviar texto à IA. **Isso altera a forma de aplicar a RN-V0-01 (DEC-0009)**: sai a confirmação a cada ação; a regra de não usar dados sensíveis da NTT continua, comunicada como boa prática e reforçada pelo mascaramento. **F3 (chat)**: roteador de intenção (listagem, contagem, ficha, comparação), ferramentas da IA para perguntas compostas, esclarecimento e sugestões por tipo na interface. F2, F3 e o card rápido foram implementados no protótipo (incremento 6). Casos de uso em `NB-02-adendo-feedbacks-teste-2026-11-03.md`; discovery em `NB-01-discovery-r2-projetos-listagem-ficha.md` e `NB-01-discovery-r2-catalogo-informacoes-projeto.md`. |
+| Justificativa | Respostas inadequadas do chat em 4 de 5 perguntas reais; 13 confirmações de aviso em 72 minutos (fadiga de alerta e perda de credibilidade); cards com informação técnica pouco útil para executivos. |
+| Restrições | Arquivos binários originais (PDF, DOCX, PPTX, XLSX) continuam guardados como enviados (questão 2.5 do adendo 5, em aberto). O mascaramento cobre padrões conhecidos; dados sensíveis sem padrão (ex.: estratégia comercial) dependem da boa prática do usuário. Números, listas e fichas do chat vêm sempre do banco, com as permissões do usuário. |
+| Responsável (autor da proposta) | Ivan Lucio Teles de Souza (PO), análise e implementação via agente |
+| Aprovador humano | Pendente: validação pelo comitê do time, junto com o gate NB-03 |
+| Referências | `docs/sdlc/execucoes/radar-propostas-cases/NB-02-adendo-feedbacks-teste-2026-11-03.md`, `NB-01-discovery-r2-projetos-listagem-ficha.md`, `NB-01-discovery-r2-catalogo-informacoes-projeto.md`, DEC-0009 |
+| Supersede | Altera a forma de aplicação da RN-V0-01 descrita em DEC-0009 (a regra permanece) |
