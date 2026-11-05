@@ -1,0 +1,9 @@
+node_modules/
+data/vectorstore/
+data/auditoria/
+data/conversas/
+data/uploads/
+data/radar.db*
+.env
+data/termos.json
+data/qualidade.json

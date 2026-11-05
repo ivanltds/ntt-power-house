@@ -1,0 +1,156 @@
+// Qualidade da versão: feedbacks com código de correção, roteiro de testes regressivos e acompanhamento.
+// Persistência em DATA_DIR/qualidade.json, só texto. As imagens anexadas a um feedback vão para a IA
+// descrever o problema e são descartadas em seguida; nunca são gravadas.
+// Os resultados do roteiro ficam por versão: uma versão nova começa zerada; os tickets atravessam versões.
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { maskSensitive } from './sensitive.js';
+import { ROTEIRO } from './roteiro.js';
+
+export const ANALISTAS_ESPERADOS = 3;
+export const AREAS = { conversas: 'Conversas', projetos: 'Projetos', upload: 'Envio de arquivos', outro: 'Outro' };
+export const TIPOS = { problema: 'Problema', sugestao: 'Sugestão', duvida: 'Dúvida' };
+export const STATUS = {
+  aberto: 'Aberto', em_correcao: 'Em correção', corrigido: 'Corrigido, aguardando reteste', validado: 'Validado', nao_procede: 'Não procede',
+};
+export const STATUS_ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
+export const RESULTADOS = { ok: 'OK', falha: 'Falhou', bloqueado: 'Bloqueado' };
+export const MAX_IMAGENS = 3;
+export const MAX_IMAGEM_BYTES = 1_500_000;
+
+// O roteiro (cenários passo a passo) fica em src/roteiro.js.
+export { ROTEIRO };
+
+const RESULTADO_KEYS = Object.keys(RESULTADOS);
+
+export class QualityStore {
+  constructor(file) {
+    this.file = file;
+    this.data = { seq: 0, tickets: [], execucoes: {} };
+    if (fs.existsSync(file)) this.data = { ...this.data, ...JSON.parse(fs.readFileSync(file, 'utf8')) };
+  }
+
+  save() {
+    fs.mkdirSync(path.dirname(this.file), { recursive: true });
+    const tmp = `${this.file}.tmp`;
+    fs.writeFileSync(tmp, JSON.stringify(this.data, null, 1));
+    fs.renameSync(tmp, this.file);
+  }
+
+  novoCodigo() {
+    this.data.seq += 1;
+    return `CR-${String(this.data.seq).padStart(3, '0')}`;
+  }
+
+  // Abre um ticket. Todo texto passa pelo mascaramento antes de ser gravado.
+  abrir({ nome, texto, area = 'outro', tipo = 'problema', titulo, descricaoImagens = [], versao, origem = 'feedback', cenario = null }) {
+    const limpo = (s) => maskSensitive(String(s ?? '').trim()).texto;
+    const t = limpo(texto);
+    const ticket = {
+      codigo: this.novoCodigo(),
+      criadoEm: new Date().toISOString(),
+      versao, origem, cenario,
+      nome: limpo(nome).slice(0, 80),
+      area: AREAS[area] ? area : 'outro',
+      tipo: TIPOS[tipo] ? tipo : 'problema',
+      titulo: limpo(titulo || t.split(/[.!?\n]/)[0]).slice(0, 90),
+      texto: t.slice(0, 4000),
+      descricaoImagens: descricaoImagens.map(limpo).filter(Boolean),
+      status: 'aberto',
+      historico: [],
+    };
+    this.data.tickets.push(ticket);
+    this.save();
+    return ticket;
+  }
+
+  atualizar(codigo, { status, texto, autor, versao }) {
+    const t = this.data.tickets.find((x) => x.codigo === codigo);
+    if (!t) return null;
+    if (status && !STATUS[status]) throw new Error('Situação inválida.');
+    const nota = maskSensitive(String(texto ?? '').trim()).texto.slice(0, 2000);
+    if (!nota && (!status || status === t.status)) throw new Error('Escreva um retorno ou mude a situação.');
+    t.historico.push({ em: new Date().toISOString(), autor: maskSensitive(String(autor ?? '').trim()).texto.slice(0, 80) || 'Sem nome', de: t.status, para: status ?? t.status, texto: nota, versao });
+    if (status) {
+      t.status = status;
+      if (status === 'corrigido') t.versaoCorrecao = versao;
+    }
+    this.save();
+    return t;
+  }
+
+  tickets({ abertos = false } = {}) {
+    const lista = abertos ? this.data.tickets.filter((t) => STATUS_ABERTOS.includes(t.status)) : this.data.tickets;
+    return [...lista].sort((a, b) => b.criadoEm.localeCompare(a.criadoEm));
+  }
+
+  // Resultado de um analista em um cenário da versão. Falha abre (ou reaproveita) um ticket ligado ao cenário.
+  registrar({ versao, cenario, analista, resultado, comentario = '' }) {
+    const c = ROTEIRO.find((x) => x.id === cenario);
+    if (!c) throw new Error('Cenário não encontrado.');
+    if (!RESULTADO_KEYS.includes(resultado)) throw new Error('Resultado inválido.');
+    const nome = maskSensitive(String(analista ?? '').trim()).texto.slice(0, 80);
+    if (!nome) throw new Error('Informe o seu nome.');
+    const nota = maskSensitive(String(comentario ?? '').trim()).texto.slice(0, 2000);
+    if (resultado !== 'ok' && !nota) throw new Error('Conte o que aconteceu de diferente do esperado.');
+    const exec = (this.data.execucoes[versao] ??= { inicio: new Date().toISOString(), resultados: {} });
+    const porCenario = (exec.resultados[cenario] ??= {});
+    const anterior = porCenario[nome];
+    let ticket = anterior?.ticket ?? null;
+    if (resultado !== 'ok') {
+      const aberto = ticket && this.data.tickets.find((t) => t.codigo === ticket && STATUS_ABERTOS.includes(t.status));
+      if (aberto) aberto.historico.push({ em: new Date().toISOString(), autor: nome, de: aberto.status, para: aberto.status, texto: `Novo resultado no reteste: ${RESULTADOS[resultado]}. ${nota}`, versao });
+      else ticket = this.abrir({ nome, texto: nota, area: c.area, tipo: 'problema', titulo: `${c.id} · ${c.titulo}: ${RESULTADOS[resultado].toLowerCase()}`, versao, origem: 'roteiro', cenario: c.id }).codigo;
+    }
+    porCenario[nome] = { resultado, comentario: nota, em: new Date().toISOString(), ticket };
+    this.save();
+    return { ...porCenario[nome], ticket };
+  }
+
+  execucao(versao) {
+    return this.data.execucoes[versao] ?? { inicio: null, resultados: {} };
+  }
+
+  // Números do acompanhamento: resultados da versão (por área e por analista) e situação dos tickets.
+  resumo(versao) {
+    const { resultados } = this.execucao(versao);
+    const analistas = [...new Set(Object.values(resultados).flatMap((r) => Object.keys(r)))].sort();
+    const esperados = Math.max(ANALISTAS_ESPERADOS, analistas.length);
+    const conta = (cenarios) => {
+      const out = { ok: 0, falha: 0, bloqueado: 0, pendente: 0 };
+      for (const c of cenarios) {
+        const r = resultados[c.id] ?? {};
+        for (const v of Object.values(r)) out[v.resultado] += 1;
+        out.pendente += Math.max(0, esperados - Object.keys(r).length);
+      }
+      return out;
+    };
+    const porArea = Object.fromEntries(['conversas', 'projetos', 'upload'].map((a) => [a, conta(ROTEIRO.filter((c) => c.area === a))]));
+    const porPrioridade = { alta: conta(ROTEIRO.filter((c) => c.prioridade === 'alta')), media: conta(ROTEIRO.filter((c) => c.prioridade !== 'alta')) };
+    const porAnalista = analistas.map((nome) => {
+      const out = { nome, ok: 0, falha: 0, bloqueado: 0 };
+      for (const c of ROTEIRO) { const v = resultados[c.id]?.[nome]; if (v) out[v.resultado] += 1; }
+      return { ...out, feitos: out.ok + out.falha + out.bloqueado, total: ROTEIRO.length };
+    });
+    const tickets = Object.fromEntries(Object.keys(STATUS).map((s) => [s, 0]));
+    for (const t of this.data.tickets) tickets[t.status] += 1;
+    const anteriores = Object.keys(this.data.execucoes).filter((v) => v !== versao).map((v) => {
+      const r = Object.values(this.data.execucoes[v].resultados).flatMap((x) => Object.values(x));
+      return { versao: v, ok: r.filter((x) => x.resultado === 'ok').length, falha: r.filter((x) => x.resultado === 'falha').length, bloqueado: r.filter((x) => x.resultado === 'bloqueado').length };
+    });
+    return { versao, esperados, cenarios: ROTEIRO.length, geral: conta(ROTEIRO), porArea, porPrioridade, porAnalista, tickets, anteriores };
+  }
+}
+
+// Converte data URLs em imagens validadas; nada é gravado.
+export function lerImagens(lista = []) {
+  if (!Array.isArray(lista)) return [];
+  if (lista.length > MAX_IMAGENS) throw new Error(`Envie no máximo ${MAX_IMAGENS} imagens.`);
+  return lista.map((url) => {
+    const m = /^data:(image\/(png|jpeg|webp|gif));base64,([A-Za-z0-9+/=]+)$/.exec(String(url));
+    if (!m) throw new Error('Formato de imagem não aceito. Use PNG, JPG ou WEBP.');
+    if (Buffer.byteLength(m[3], 'base64') > MAX_IMAGEM_BYTES) throw new Error('Imagem grande demais. Use uma captura de tela menor.');
+    return url;
+  });
+}

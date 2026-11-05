@@ -1,0 +1,33 @@
+[
+  {
+    "id": "O-2026-01",
+    "cliente": "Norte Energia Distribuição",
+    "titulo": "Plataforma de dados e combate a perdas",
+    "segmento": "Utilities / Energia",
+    "tecnologias": [
+      "Databricks",
+      "Azure"
+    ],
+    "servicos": [
+      "Engenharia de Dados",
+      "Data Science / ML"
+    ],
+    "descricao": "A distribuidora quer reduzir perdas não técnicas e não tem uma plataforma de dados central. Pediu proposta para lakehouse e modelos de priorização de inspeção, com prazo de 6 meses.",
+    "prazoMeses": 6
+  },
+  {
+    "id": "O-2026-02",
+    "cliente": "Proteção Total Seguros",
+    "titulo": "Assistente com IA generativa para sinistros",
+    "segmento": "Seguros",
+    "tecnologias": [
+      "IA Generativa"
+    ],
+    "servicos": [
+      "IA Generativa",
+      "Automação de Processos"
+    ],
+    "descricao": "A seguradora quer acelerar a análise de sinistros residenciais com IA generativa para ler documentos e fotos, e entender se há risco de fraude.",
+    "prazoMeses": 4
+  }
+]

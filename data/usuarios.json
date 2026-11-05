@@ -1,0 +1,21 @@
+[
+  {
+    "id": "u-consultor",
+    "nome": "Consultor(a) de pré-vendas",
+    "perfil": "consultor",
+    "confidencialidades": [
+      "interna"
+    ],
+    "verValores": false
+  },
+  {
+    "id": "u-gestor",
+    "nome": "Gestor(a) comercial",
+    "perfil": "gestor",
+    "confidencialidades": [
+      "interna",
+      "confidencial"
+    ],
+    "verValores": true
+  }
+]

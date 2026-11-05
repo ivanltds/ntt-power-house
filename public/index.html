@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>Radar — Propostas & Cases</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/tema.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><i data-icon="radar" data-size="22"></i><span>Radar</span><button type="button" class="versao" id="versao" title="Notas da versão · protótipo com dados fictícios">V0.0.1</button></div>
+    <nav class="tabs" aria-label="Seções">
+      <button data-tab="busca" class="active" aria-current="true" title="Perguntar à base"><i data-icon="message"></i><span>Perguntar</span></button>
+      <button data-tab="projetos" title="Projetos"><i data-icon="folder"></i><span>Projetos</span></button>
+      <button data-tab="upload" title="Enviar documentos"><i data-icon="upload"></i><span>Enviar</span><b id="badge-upload" class="count hidden"></b></button>
+      <button data-tab="insights" title="Insights da base"><i data-icon="chart"></i><span>Insights</span></button>
+    </nav>
+    <div class="context">
+      <span id="ia-badge" class="tag warn hidden"></span>
+      <div class="focus">
+        <button type="button" id="focus-btn" class="pill focus-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="focus-pop" title="Escolha um projeto para o chat responder pensando nele"><i data-icon="briefcase" data-size="16"></i><span id="focus-label">Responder para…</span><i data-icon="chevronDown" data-size="14"></i></button>
+        <div id="focus-pop" class="focus-pop hidden">
+          <p class="focus-help">O chat passa a responder pensando no <b>cliente, segmento e tecnologias</b> do projeto escolhido. Ex.: “algum case parecido?”</p>
+          <div class="field-icon"><i data-icon="search" data-size="16"></i><input id="focus-q" type="search" autocomplete="off" placeholder="Buscar por cliente, projeto ou código" aria-label="Buscar projeto" aria-controls="focus-list"></div>
+          <ul id="focus-list" role="listbox" aria-label="Projetos"></ul>
+        </div>
+      </div>
+      <div class="menu">
+        <button id="menu-btn" class="icon-btn" aria-haspopup="true" aria-expanded="false" title="Mais opções"><i data-icon="menu"></i></button>
+        <div id="menu" class="menu-pop hidden" role="menu">
+          <label class="menu-field"><span><i data-icon="eye" data-size="15"></i>Ver como <em>demonstração</em></span><select id="user" aria-label="Ver como"></select></label>
+          <small class="muted">Simula o que cada perfil enxerga. Some quando houver login.</small>
+          <div class="menu-field theme-field"><span><i data-icon="sun" data-size="15"></i>Tema</span>
+            <div class="theme-seg" role="radiogroup" aria-label="Tema">
+              <button type="button" role="radio" data-tema="auto" title="Segue o tema do sistema"><i data-icon="monitor" data-size="14"></i>Auto</button>
+              <button type="button" role="radio" data-tema="claro"><i data-icon="sun" data-size="14"></i>Claro</button>
+              <button type="button" role="radio" data-tema="escuro"><i data-icon="moon" data-size="14"></i>Escuro</button>
+            </div>
+          </div>
+          <hr>
+          <button type="button" role="menuitem" data-menu="docs"><i data-icon="files" data-size="16"></i>Todos os documentos</button>
+          <button type="button" role="menuitem" data-menu="metricas"><i data-icon="gauge" data-size="16"></i>Métricas do piloto</button>
+          <button type="button" role="menuitem" data-menu="atividades" class="hidden"><i data-icon="history" data-size="16"></i>Registro de atividades</button>
+          <button type="button" role="menuitem" data-menu="sobre"><i data-icon="info" data-size="16"></i>Como usar o Radar</button>
+          <button type="button" role="menuitem" data-menu="tecnico"><i data-icon="cpu" data-size="16"></i>Como o Radar funciona</button>
+          <button type="button" role="menuitem" data-menu="sdlc"><i data-icon="layers" data-size="16"></i>Processo SDLC</button>
+          <button type="button" role="menuitem" data-menu="notas"><i data-icon="tag" data-size="16"></i>Versão: notas, feedbacks e testes</button>
+          <a role="menuitem" href="/status" target="_blank" rel="noopener" class="menu-link"><i data-icon="chart" data-size="16"></i>Página de status (link para compartilhar)</a>
+          <button type="button" role="menuitem" data-menu="politica"><i data-icon="shield" data-size="16"></i>Política de dados</button>
+          <button type="button" role="menuitem" data-menu="sair" class="hidden"><i data-icon="logout" data-size="16"></i>Sair</button>
+          <footer class="made-by in-menu"><span>Criado e desenvolvido por</span><span class="impact-logo"><img class="logo-light" src="/img/impactai-claro.png" alt="ImpactAI" width="66" height="18"><img class="logo-dark" src="/img/impactai-escuro.png" alt="ImpactAI" width="66" height="18"></span></footer>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="tab-busca" class="tab active">
+      <div class="chat-layout">
+        <aside class="convs" id="convs">
+          <button id="new-conv" class="btn primary block"><i data-icon="plus"></i>Nova conversa</button>
+          <div class="field-icon"><i data-icon="search" data-size="16"></i><input id="conv-search" type="search" aria-label="Buscar conversas" placeholder="Buscar conversas"></div>
+          <ul id="conv-list"></ul>
+          <footer class="made-by"><span>Criado e desenvolvido por</span><span class="impact-logo"><img class="logo-light" src="/img/impactai-claro.png" alt="ImpactAI" width="81" height="22"><img class="logo-dark" src="/img/impactai-escuro.png" alt="ImpactAI" width="81" height="22"></span></footer>
+        </aside>
+        <div class="chat-main">
+          <div class="conv-bar">
+            <button id="toggle-convs" class="icon-btn" title="Mostrar/ocultar conversas"><i data-icon="sidebar"></i></button>
+            <input id="conv-title" placeholder="Nova conversa" maxlength="80" aria-label="Nome da conversa" title="Nome da conversa (Enter para renomear)">
+            <button id="fav-conv" class="icon-btn star" title="Favoritar"><i data-icon="star"></i></button>
+          </div>
+          <div id="briefing" class="briefing hidden"></div>
+          <div id="chat" class="chat"></div>
+          <form id="ask" class="ask">
+            <span id="memory" class="memory hidden"></span>
+            <input id="query" autocomplete="off" enterkeyhint="send" aria-label="Pergunta" placeholder="Pergunte sobre propostas, clientes, tecnologias…">
+            <button type="submit" class="icon-btn send" title="Enviar"><i data-icon="send"></i></button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-projetos" class="tab">
+      <div class="segmented" role="tablist" aria-label="Ver">
+        <button type="button" role="tab" data-view="projetos" class="on" aria-selected="true"><i data-icon="folder" data-size="15"></i>Projetos</button>
+        <button type="button" role="tab" data-view="docs" aria-selected="false"><i data-icon="files" data-size="15"></i>Documentos</button>
+      </div>
+      <div id="docs-view" class="hidden">
+        <div class="toolbar"><div class="field-icon grow"><i data-icon="search" data-size="16"></i><input id="filter" type="search" aria-label="Filtrar documentos" placeholder="Filtrar por nome, cliente ou tipo"></div></div>
+        <table class="docs"><thead><tr><th>Documento</th><th>Projeto</th><th>Tipo</th><th title="Quanto a fonte é confiável: Oficial, Enviado, Interno, Informal ou Rascunho">Fonte</th></tr></thead><tbody id="docs"></tbody></table>
+      </div>
+      <div id="proj-view">
+      <div class="toolbar">
+        <div class="field-icon grow"><i data-icon="search" data-size="16"></i><input id="proj-q" type="search" aria-label="Buscar projetos" placeholder="Buscar no conteúdo dos documentos"></div>
+        <button id="proj-toggle-filters" class="btn" title="Filtros"><i data-icon="filter" data-size="16"></i>Filtros<b id="proj-filter-count" class="count hidden"></b></button>
+        <label class="pill" title="Ordenar"><i data-icon="sort" data-size="16"></i><select id="proj-order" aria-label="Ordenar"><option value="relevancia">Relevância</option><option value="data">Recentes</option><option value="prazo">Prazo</option><option value="valor">Valor</option><option value="titulo">A–Z</option><option value="documentos">Documentos</option></select></label>
+        <button id="new-project" class="btn primary"><i data-icon="plus" data-size="16"></i>Projeto</button>
+      </div>
+      <div class="explore">
+        <aside class="filters hidden" id="proj-filters">
+          <div class="filters-head"><strong>Filtros</strong><button id="proj-clear" type="button" class="link-btn">Limpar</button></div>
+          <div id="proj-static"></div>
+          <div id="proj-facets"></div>
+        </aside>
+        <div class="results">
+          <p id="proj-summary" class="summary"></p>
+          <div id="proj-list" class="pgrid"></div>
+          <div id="proj-pages" class="pages"></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section id="tab-upload" class="tab">
+      <div id="drop" class="drop">
+        <i data-icon="upload" data-size="34"></i>
+        <strong>Arraste arquivos ou <label class="link">escolha<input type="file" id="file" multiple hidden></label></strong>
+        <small id="upload-formats"></small>
+        <ol class="upload-steps" aria-label="Como funciona"><li><b>1</b>Envie o arquivo</li><li><b>2</b>O Radar lê e preenche os dados</li><li><b>3</b>Você revisa e completa: autor, versão, link, notas, resultados, lições e riscos</li></ol>
+        <div id="upload-aviso"></div>
+        <label class="pill target" title="Projeto de destino"><i data-icon="folder" data-size="16"></i><select id="upload-target" aria-label="Projeto de destino"></select></label>
+      </div>
+      <div class="upload-layout">
+        <ul id="job-list" class="jobs"></ul>
+        <div id="job-detail" class="job-detail"></div>
+      </div>
+    </section>
+
+    <section id="tab-insights" class="tab"><div id="insights"></div></section>
+
+    <section id="tab-atividades" class="tab">
+      <header class="page-head"><h2>Registro de atividades</h2><p class="muted">Quem criou, editou, excluiu ou exportou cada item. Somente leitura.</p></header>
+      <div id="atv-filtros" class="toolbar atv-filtros"></div>
+      <div id="atividades"></div>
+    </section>
+
+    <section id="tab-metricas" class="tab">
+      <header class="page-head"><h2>Métricas do piloto</h2><p class="muted">Indicadores da hipótese para o comitê: uso, utilidade das respostas e reaproveitamento.</p></header>
+      <div id="metrics" class="tiles"></div>
+      <div id="metrics-extra"></div>
+      <p id="base-info" class="foot"></p>
+    </section>
+  </main>
+
+  <dialog id="project-dialog" class="xl" aria-label="Detalhes do projeto"><div id="project-body"></div></dialog>
+  <dialog id="project-form-dialog" class="wide"><form id="project-form"></form></dialog>
+  <dialog id="sensitive-dialog" class="dlg-boas-vindas" aria-label="Boas-vindas e política de dados"></dialog>
+  <dialog id="export-dialog" class="wide" aria-label="Exportar proposta"><form id="export-form"></form></dialog>
+  <dialog id="doc-form-dialog" class="wide" aria-label="Editar informações do documento"><form id="doc-form" class="review"></form></dialog>
+  <dialog id="help" class="xl" aria-label="Ajuda do Radar"></dialog>
+  <dialog id="viewer" class="wide">
+    <header class="dlg-head"><h3 id="viewer-title"></h3><button type="button" id="viewer-download" class="btn sm ghost" title="Baixar arquivo original"><i data-icon="download" data-size="15"></i>Baixar</button><form method="dialog"><button class="icon-btn" title="Fechar"><i data-icon="x"></i></button></form></header>
+    <pre id="viewer-body"></pre>
+  </dialog>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
