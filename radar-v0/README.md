@@ -82,13 +82,13 @@ npm start
 Saída esperada. Na primeira execução o banco e o índice são preparados sozinhos, em cerca de 1 s:
 
 ```
-Base preparada: 11 projetos, 51 documentos, 119 trechos
+Base preparada: 11 projetos, 51 documentos, 118 trechos
 Radar V0 em http://localhost:3000
 Login: desligado (defina RADAR_LOGIN_USER e RADAR_LOGIN_PASS para exigir)
 IA: mock offline (defina DEEPSEEK_API_KEY no .env para usar a DeepSeek)
 ```
 
-Com a chave configurada, a última linha é `IA: DeepSeek (deepseek-chat)`. Nas execuções seguintes a linha "Base preparada" não aparece, porque o banco já existe.
+O número de trechos pode variar em 1 (118 ou 119). Com a chave configurada, a última linha é `IA: DeepSeek (deepseek-chat)`. Nas execuções seguintes a linha "Base preparada" não aparece, porque o banco já existe.
 
 Outra porta: `PORT=8080 npm start` (bash) ou `$env:PORT=8080; npm start` (PowerShell).
 
@@ -104,7 +104,15 @@ curl -s -H "Content-Type: application/json" -d '{"query":"propostas de utilities
 # esperado: JSON que começa com {"query":"propostas de utilities com Databricks","entendimento":{"intencao":"buscar"
 ```
 
-No Windows PowerShell use `curl.exe` (e não `curl`) ou `Invoke-RestMethod http://localhost:3000/api/sessao`.
+No Windows PowerShell, `curl` é outro comando e o `curl.exe` perde as aspas do JSON. Use:
+
+```powershell
+Invoke-RestMethod http://localhost:3000/api/sessao
+# esperado: uma coluna "login" com o valor False
+
+(Invoke-RestMethod -Method Post -Uri http://localhost:3000/api/buscar -ContentType 'application/json' -Body '{"query":"propostas de utilities com Databricks","userId":"u-consultor"}').entendimento.intencao
+# esperado: buscar
+```
 
 Depois abra **http://localhost:3000** no navegador. Deve aparecer "O que você procura?" e o selo **V0.0.1** ao lado de "Radar". A página `http://localhost:3000/status` mostra versões, tickets e feedbacks.
 
@@ -118,7 +126,7 @@ Perfis de teste (troque no menu ⋮ do canto superior direito, campo "Ver como")
 ### Passo 6. Parar o servidor
 
 - No terminal onde ele roda: `Ctrl+C`.
-- Se rodou em segundo plano, pare **só** esse processo pelo PID: `kill <PID>` (bash) ou `Stop-Process -Id <PID>` (PowerShell). Para achar o PID pela porta: `lsof -i :3000` (macOS/Linux) ou `Get-NetTCPConnection -LocalPort 3000 -State Listen | Select OwningProcess` (PowerShell). Não mate todos os processos `node` da máquina.
+- Se rodou em segundo plano, pare **só** esse processo pelo PID: `kill <PID>` (bash) ou `Stop-Process -Id <PID>` (PowerShell). Para achar o PID pela porta: `lsof -i :3000` (macOS/Linux) ou `Get-NetTCPConnection -LocalPort 3000 | Select-Object OwningProcess` (PowerShell) ou `netstat -ano | findstr :3000` (Windows; o PID é o último número). Não mate todos os processos `node` da máquina.
 
 ### Comandos úteis
 
