@@ -4,6 +4,10 @@ Processo de SDLC (Software Development Life Cycle) orientado por agentes de IA, 
 
 > **Regra principal:** a IA prepara artefatos e evidências; uma pessoa responsável aprova ou reprova cada gate. Nenhum agente pode aprovar a própria saída, pular etapa ou avançar sem o gate anterior aprovado.
 
+## Rodar o protótipo Radar localmente
+
+O código do protótipo Radar de Propostas & Cases (POC / MVP 0) está em [`radar-v0/`](./radar-v0/). O passo a passo completo, que pode ser seguido por uma pessoa ou por um agente de IA, está em [`radar-v0/README.md` → Como rodar localmente](./radar-v0/README.md#como-rodar-localmente-passo-a-passo). Resumo: Node.js 22.13+, `cd radar-v0`, `npm start` e abrir http://localhost:3000 (sem `npm install`).
+
 ## 1. Navegação rápida
 
 - [Fonte única de verdade](./docs/sdlc/SOURCE_OF_TRUTH.md)

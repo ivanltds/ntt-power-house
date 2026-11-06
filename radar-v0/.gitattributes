@@ -1,0 +1,8 @@
+# Fim de linha LF no clone: o gerador da base grava LF e assim o git status fica limpo no Windows
+* text=auto eol=lf
+*.pptx binary
+*.docx binary
+*.xlsx binary
+*.pdf binary
+*.png binary
+*.eml -text

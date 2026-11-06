@@ -1,0 +1,19 @@
+{
+  "name": "radar-v0",
+  "version": "0.0.1",
+  "description": "V0 do Radar de Propostas & Cases: base de conhecimento com busca semântica local para validar a hipótese de produtividade na geração de novas propostas.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "generate": "node scripts/generate-corpus.js",
+    "samples": "node scripts/generate-samples.js",
+    "ingest": "node --disable-warning=ExperimentalWarning src/ingest.js",
+    "setup": "node scripts/generate-corpus.js && node scripts/generate-samples.js && node --disable-warning=ExperimentalWarning src/ingest.js --reset",
+    "ask": "node --disable-warning=ExperimentalWarning src/ask.js",
+    "start": "node --disable-warning=ExperimentalWarning src/server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/radar.test.js"
+  }
+}
