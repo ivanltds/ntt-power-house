@@ -108,7 +108,8 @@ export function toast(msg, kind = 'ok', action = null) {
   el.setAttribute('role', 'status');
   el.innerHTML = `${icon(kind === 'error' ? 'xCircle' : kind === 'info' ? 'info' : 'checkCircle', { size: 18 })}<span>${esc(msg)}</span>${action ? `<button type="button">${esc(action.label)}</button>` : ''}`;
   if (action) el.querySelector('button').onclick = () => { el.remove(); action.run(); };
-  document.body.appendChild(el);
+  // Com uma janela modal aberta, o aviso vai dentro dela; no body ele ficaria atrás do fundo escurecido.
+  ([...document.querySelectorAll('dialog[open]')].filter((d) => d.matches(':modal')).at(-1) ?? document.body).appendChild(el);
   setTimeout(() => el.remove(), action ? 9000 : 4500);
 }
 

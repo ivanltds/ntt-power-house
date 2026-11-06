@@ -1,6 +1,7 @@
 // Qualidade da versão: feedbacks com código de correção, roteiro de testes regressivos e acompanhamento.
 // Persistência em DATA_DIR/qualidade.json, só texto. As imagens anexadas a um feedback vão para a IA
-// descrever o problema e são descartadas em seguida; nunca são gravadas.
+// descrever o problema; se a hospedagem externa estiver configurada (src/imagens.js), elas também vão para lá e o
+// ticket guarda só os links. Nada de imagem é gravado no disco do servidor.
 // Os resultados do roteiro ficam por versão: uma versão nova começa zerada; os tickets atravessam versões.
 
 import fs from 'node:fs';
@@ -18,6 +19,16 @@ export const STATUS_ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
 export const RESULTADOS = { ok: 'OK', falha: 'Falhou', bloqueado: 'Bloqueado' };
 export const MAX_IMAGENS = 3;
 export const MAX_IMAGEM_BYTES = 1_500_000;
+// Prioridade definida na triagem; sem valor = "A definir". A ordem é a da listagem.
+export const PRIORIDADES = { critica: 'Crítica', alta: 'Alta', media: 'Média', baixa: 'Baixa' };
+export const MAX_IMAGENS_TICKET = 6;
+const limpo = (s) => maskSensitive(String(s ?? '').trim()).texto;
+// Anexo hospedado fora: só links https entram no ticket.
+const anexo = (a) => {
+  const ok = (u) => typeof u === 'string' && /^https:\/\/[^\s"'<>]+$/.test(u);
+  if (!a || !ok(a.url)) throw new Error('Link de imagem inválido.');
+  return { url: a.url, thumb: ok(a.thumb) ? a.thumb : a.url, apagar: ok(a.apagar) ? a.apagar : null, servico: String(a.servico ?? '').slice(0, 20), em: new Date().toISOString() };
+};
 
 // O roteiro (cenários passo a passo) fica em src/roteiro.js.
 export { ROTEIRO };
@@ -44,8 +55,7 @@ export class QualityStore {
   }
 
   // Abre um ticket. Todo texto passa pelo mascaramento antes de ser gravado.
-  abrir({ nome, texto, area = 'outro', tipo = 'problema', titulo, descricaoImagens = [], versao, origem = 'feedback', cenario = null }) {
-    const limpo = (s) => maskSensitive(String(s ?? '').trim()).texto;
+  abrir({ nome, texto, area = 'outro', tipo = 'problema', titulo, descricaoImagens = [], versao, origem = 'feedback', cenario = null, prioridade = null, imagens = [] }) {
     const t = limpo(texto);
     const ticket = {
       codigo: this.novoCodigo(),
@@ -58,6 +68,8 @@ export class QualityStore {
       texto: t.slice(0, 4000),
       descricaoImagens: descricaoImagens.map(limpo).filter(Boolean),
       status: 'aberto',
+      prioridade: PRIORIDADES[prioridade] ? prioridade : null,
+      imagens: imagens.slice(0, MAX_IMAGENS_TICKET).map(anexo),
       historico: [],
     };
     this.data.tickets.push(ticket);
@@ -76,6 +88,55 @@ export class QualityStore {
       t.status = status;
       if (status === 'corrigido') t.versaoCorrecao = versao;
     }
+    t.atualizadoEm = new Date().toISOString();
+    this.save();
+    return t;
+  }
+
+  ticket(codigo) {
+    return this.data.tickets.find((x) => x.codigo === codigo) ?? null;
+  }
+
+  // Edição completa de um ticket por quem faz a triagem: campos, prioridade, situação, retorno e imagens.
+  // Valida tudo antes de mudar qualquer coisa; cada edição vira uma entrada no histórico com o que mudou.
+  editar(codigo, { autor, versao, status, nota, prioridade, titulo, texto, area, tipo, imagensNovas = [], remover = [] }) {
+    const t = this.ticket(codigo);
+    if (!t) return null;
+    const quem = limpo(autor).slice(0, 80);
+    if (!quem) throw new Error('Informe o seu nome.');
+    if (status !== undefined && !STATUS[status]) throw new Error('Situação inválida.');
+    if (area !== undefined && !AREAS[area]) throw new Error('Área inválida.');
+    if (tipo !== undefined && !TIPOS[tipo]) throw new Error('Tipo inválido.');
+    const prio = prioridade === undefined ? undefined : prioridade || null;
+    if (prio && !PRIORIDADES[prio]) throw new Error('Prioridade inválida.');
+    const novoTitulo = titulo === undefined ? undefined : limpo(titulo).slice(0, 90);
+    if (novoTitulo === '') throw new Error('O título não pode ficar vazio.');
+    const novoTexto = texto === undefined ? undefined : limpo(texto).slice(0, 4000);
+    if (novoTexto !== undefined && novoTexto.length < 10) throw new Error('Descreva o ticket (pelo menos uma frase).');
+    const imagens = (t.imagens ?? []).filter((i) => !remover.includes(i.url));
+    const novas = imagensNovas.map(anexo);
+    if (imagens.length + novas.length > MAX_IMAGENS_TICKET) throw new Error(`No máximo ${MAX_IMAGENS_TICKET} imagens por ticket.`);
+    const retorno = limpo(nota).slice(0, 2000);
+
+    const alteracoes = [];
+    for (const [campo, valor] of [['titulo', novoTitulo], ['area', area], ['tipo', tipo], ['prioridade', prio]]) {
+      if (valor !== undefined && valor !== (t[campo] ?? null)) alteracoes.push({ campo, de: t[campo] ?? null, para: valor });
+    }
+    if (novoTexto !== undefined && novoTexto !== t.texto) alteracoes.push({ campo: 'texto' });
+    const removidas = (t.imagens ?? []).length - imagens.length;
+    if (novas.length || removidas) alteracoes.push({ campo: 'imagens', adicionadas: novas.length, removidas });
+    const novoStatus = status ?? t.status;
+    if (!alteracoes.length && !retorno && novoStatus === t.status) throw new Error('Nada foi alterado.');
+
+    for (const a of alteracoes) if ('para' in a) t[a.campo] = a.para;
+    if (novoTexto !== undefined) t.texto = novoTexto;
+    t.imagens = [...imagens, ...novas];
+    t.historico.push({ em: new Date().toISOString(), autor: quem, de: t.status, para: novoStatus, texto: retorno, versao, ...(alteracoes.length ? { alteracoes } : {}) });
+    if (novoStatus !== t.status) {
+      t.status = novoStatus;
+      if (novoStatus === 'corrigido') t.versaoCorrecao = versao;
+    }
+    t.atualizadoEm = new Date().toISOString();
     this.save();
     return t;
   }

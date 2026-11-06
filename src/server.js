@@ -23,7 +23,8 @@ import { STATUS_PROPOSTA, CONFIDENCIALIDADES } from './db/repo.js';
 import { SUPPORTED } from './extract/formats.js';
 import { maskSensitive, maskFields, TERMO_VERSAO } from './sensitive.js';
 import { ROOT, DB_PATH, STORE_PATH, AUDITORIA_DIR, CONVERSAS_PATH, CORPUS_DIR, DATA_DIR } from './config.js';
-import { QualityStore, ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, ANALISTAS_ESPERADOS, MAX_IMAGENS, lerImagens } from './qualidade.js';
+import { QualityStore, ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, ANALISTAS_ESPERADOS, MAX_IMAGENS, MAX_IMAGENS_TICKET, PRIORIDADES, lerImagens } from './qualidade.js';
+import { criarHospedagem, hospedarTodas } from './imagens.js';
 import { VERSAO } from './version.js';
 
 loadEnv(path.join(ROOT, '.env'));
@@ -84,6 +85,8 @@ function registrarMascaramento(contexto, user, achados) {
 }
 // Qualidade da versão: feedbacks com código de correção e roteiro regressivo (só texto em disco).
 const qualidade = new QualityStore(path.join(DATA_DIR, 'qualidade.json'));
+// Imagens dos tickets vão para o ImgBB (IMGBB_API_KEY); sem a chave, não são guardadas.
+const hospedagem = criarHospedagem();
 const AMOSTRAS = path.join(ROOT, 'amostras');
 const invalido = (fn) => { try { return fn(); } catch (err) { return [400, { erro: err.message }]; } };
 
@@ -282,9 +285,11 @@ const routes = {
   'GET /api/qualidade': () => ({
     versao: VERSAO,
     roteiro: ROTEIRO,
-    rotulos: { areas: AREAS, tipos: TIPOS, status: STATUS, resultados: RESULTADOS },
+    rotulos: { areas: AREAS, tipos: TIPOS, status: STATUS, resultados: RESULTADOS, prioridades: PRIORIDADES },
     analistasEsperados: ANALISTAS_ESPERADOS,
     maxImagens: MAX_IMAGENS,
+    maxImagensTicket: MAX_IMAGENS_TICKET,
+    hospedagemImagens: hospedagem?.nome ?? null,
     analiseImagens: typeof engine.llm.describeFeedback === 'function',
     tickets: qualidade.tickets(),
     execucao: qualidade.execucao(VERSAO),
@@ -297,28 +302,55 @@ const routes = {
     if (String(b.texto ?? '').trim().length < 10) return [400, { erro: 'Descreva o que aconteceu (pelo menos uma frase).' }];
     const imagens = invalido(() => lerImagens(b.imagens));
     if (!Array.isArray(imagens) || typeof imagens[0] === 'number') return imagens;
-    // As imagens só existem durante esta requisição: vão para a IA e são descartadas.
+    // As imagens vão para a IA descrever o problema e, com hospedagem configurada, para o ImgBB (em paralelo).
+    // O servidor não grava imagem: o ticket guarda a descrição e os links.
     let analise = null;
     let aviso = null;
-    if (imagens.length) {
-      if (typeof engine.llm.describeFeedback !== 'function') aviso = 'Imagens não analisadas: a IA está desligada neste ambiente.';
-      else {
-        try {
-          analise = await engine.llm.describeFeedback({ texto: maskSensitive(b.texto).texto, area: AREAS[b.area] ?? 'Outro', imagens });
-        } catch (err) {
-          aviso = `Não foi possível analisar as imagens agora (${err.name === 'TimeoutError' ? 'tempo esgotado' : err.message}). O texto foi registrado.`;
-        }
+    let avisoHospedagem = null;
+    const analisar = async () => {
+      if (typeof engine.llm.describeFeedback !== 'function') { aviso = 'Imagens não analisadas: a IA está desligada neste ambiente.'; return; }
+      try {
+        analise = await engine.llm.describeFeedback({ texto: maskSensitive(b.texto).texto, area: AREAS[b.area] ?? 'Outro', imagens });
+      } catch (err) {
+        aviso = `Não foi possível analisar as imagens agora (${err.name === 'TimeoutError' ? 'tempo esgotado' : err.message}). O texto foi registrado.`;
       }
-    }
+    };
+    const hospedar = async () => {
+      if (!hospedagem) return [];
+      try { return await hospedarTodas(hospedagem, imagens, 'novo'); } catch (err) { avisoHospedagem = `As imagens não foram guardadas (${err.message}). Anexe de novo editando o ticket.`; return []; }
+    };
+    const [, anexos] = imagens.length ? await Promise.all([analisar(), hospedar()]) : [null, []];
     const descricaoImagens = analise ? [...analise.imagens, analise.problema && `Problema identificado pela IA: ${analise.problema}`].filter(Boolean) : aviso ? [aviso] : [];
-    const ticket = qualidade.abrir({ nome: b.nome, texto: b.texto, area: b.area, tipo: b.tipo, titulo: analise?.titulo, descricaoImagens, versao: VERSAO });
-    audit.logEvent({ tipo: 'feedback_aberto', codigo: ticket.codigo, area: ticket.area, imagens: imagens.length });
-    return { ticket, aviso };
+    const ticket = qualidade.abrir({ nome: b.nome, texto: b.texto, area: b.area, tipo: b.tipo, titulo: analise?.titulo, descricaoImagens, versao: VERSAO, imagens: anexos });
+    audit.logEvent({ tipo: 'feedback_aberto', codigo: ticket.codigo, area: ticket.area, imagens: imagens.length, hospedadas: anexos.length });
+    return { ticket, aviso: [aviso, avisoHospedagem].filter(Boolean).join(' ') || null };
   },
 
   'POST /api/feedback/atualizar': async (req) => {
     const b = await readJson(req);
     return invalido(() => qualidade.atualizar(b.codigo, { status: b.status || undefined, texto: b.texto, autor: b.autor, versao: VERSAO }) ?? [404, { erro: 'Ticket não encontrado.' }]);
+  },
+
+  // Edição pela triagem (tela /tickets e kanban): campos, prioridade, situação, retorno e imagens numa só chamada.
+  'POST /api/tickets/editar': async (req) => {
+    const b = await readJson(req, 8_000_000);
+    const t = qualidade.ticket(b.codigo);
+    if (!t) return [404, { erro: 'Ticket não encontrado.' }];
+    if (!String(b.autor ?? '').trim()) return [400, { erro: 'Informe o seu nome.' }];
+    const novas = invalido(() => lerImagens(b.imagens));
+    if (!Array.isArray(novas) || typeof novas[0] === 'number') return novas;
+    const remover = Array.isArray(b.remover) ? b.remover.map(String) : [];
+    if (novas.length && !hospedagem) return [400, { erro: 'O envio de imagens está desligado neste ambiente (falta IMGBB_API_KEY).' }];
+    if ((t.imagens ?? []).filter((i) => !remover.includes(i.url)).length + novas.length > MAX_IMAGENS_TICKET) return [400, { erro: `No máximo ${MAX_IMAGENS_TICKET} imagens por ticket.` }];
+    let imagensNovas = [];
+    if (novas.length) {
+      try { imagensNovas = await hospedarTodas(hospedagem, novas, t.codigo); } catch (err) { return [502, { erro: `Não foi possível guardar a imagem (${err.message}). Nada foi alterado.` }]; }
+    }
+    const campos = Object.fromEntries(['status', 'prioridade', 'titulo', 'texto', 'area', 'tipo'].filter((k) => b[k] !== undefined).map((k) => [k, b[k]]));
+    const r = invalido(() => qualidade.editar(t.codigo, { ...campos, autor: b.autor, nota: b.nota, versao: VERSAO, imagensNovas, remover }));
+    if (Array.isArray(r)) return r;
+    audit.logEvent({ tipo: 'ticket_editado', codigo: t.codigo, campos: r.historico.at(-1).alteracoes?.map((a) => a.campo) ?? [], status: r.status });
+    return { ticket: r };
   },
 
   'POST /api/testes/resultado': async (req) => {
@@ -473,11 +505,12 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && url.pathname === '/api/logout') return send(res, 200, { ok: true }, { 'Set-Cookie': auth.logout() });
     if (!auth.isPublic(url.pathname) && !auth.allowed(req)) {
       if (url.pathname.startsWith('/api/')) return send(res, 401, { erro: 'Sessão expirada. Entre novamente.' });
-      res.writeHead(302, { Location: url.pathname === '/status' ? '/login?volta=status' : '/login' });
+      res.writeHead(302, { Location: ['/status', '/tickets'].includes(url.pathname) ? `/login?volta=${url.pathname.slice(1)}` : '/login' });
       return res.end();
     }
     if (url.pathname === '/login') url.pathname = '/login.html';
     if (url.pathname === '/status') url.pathname = '/status.html';
+    if (url.pathname === '/tickets') url.pathname = '/tickets.html';
     if (url.pathname === '/api/sessao') return send(res, 200, { login: auth.enabled });
     if (req.method === 'GET' && url.pathname === '/api/documento/baixar') return download(res, url);
     if (req.method === 'POST' && url.pathname === '/api/projeto/exportar') return exportFile(req, res);

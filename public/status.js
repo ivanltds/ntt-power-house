@@ -5,6 +5,9 @@ import { $, $$, esc, api, dateBR } from './common.js';
 import { icon, hydrateIcons } from './icons.js';
 import { NOTAS, TIPO, STATUS as SIT_NOTA } from './versao.js';
 import { pizza, partesResultado } from './qualidade.js';
+import { chipPrio, galeriaHtml } from './tickets-ui.js';
+
+const ORDEM_PRIO = ['critica', 'alta', 'media', 'baixa', null];
 
 const ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
 const FILTROS = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', resolvidos: 'Resolvidos', todos: 'Todos' };
@@ -41,15 +44,17 @@ function versoes() {
 function tabela(chave, lista) {
   const rot = q.rotulos;
   const termo = busca[chave].toLowerCase();
-  const ts = lista.filter((t) => passa(t, filtro[chave]) && (!termo || `${t.codigo} ${t.nome} ${t.titulo} ${t.texto}`.toLowerCase().includes(termo)));
+  const ts = lista.filter((t) => passa(t, filtro[chave]) && (!termo || `${t.codigo} ${t.nome} ${t.titulo} ${t.texto}`.toLowerCase().includes(termo)))
+    .sort((a, b) => ORDEM_PRIO.indexOf(a.prioridade ?? null) - ORDEM_PRIO.indexOf(b.prioridade ?? null) || b.criadoEm.localeCompare(a.criadoEm));
   if (!ts.length) return `<p class="muted">Nenhum registro ${filtro[chave] === 'todos' ? 'ainda' : 'nesta situação'}.</p>`;
-  return `<div class="tbl-wrap"><table class="guide-tbl st-tbl"><thead><tr><th>Código</th><th>Situação</th><th>Assunto</th><th>Área</th><th>Aberto por</th><th>Aberto em</th><th>Corrigido em</th><th>Último retorno</th></tr></thead><tbody>
+  return `<div class="tbl-wrap"><table class="guide-tbl st-tbl"><thead><tr><th>Código</th><th>Prioridade</th><th>Situação</th><th>Assunto</th><th>Área</th><th>Aberto por</th><th>Aberto em</th><th>Corrigido em</th><th>Último retorno</th></tr></thead><tbody>
     ${ts.map((t) => {
       const u = ultimo(t);
       return `<tr>
         <td><b>${esc(t.codigo)}</b></td>
+        <td>${chipPrio(t.prioridade, rot)}</td>
         <td>${chip(t.status, rot.status)}</td>
-        <td><details><summary>${esc(t.titulo || t.texto.slice(0, 80))}</summary><p class="small">${esc(t.texto)}</p>${t.descricaoImagens?.length ? `<p class="small muted">Imagens (descrição da IA): ${t.descricaoImagens.map(esc).join(' · ')}</p>` : ''}${t.cenario ? `<p class="small muted">Cenário ${esc(t.cenario)} do roteiro</p>` : ''}</details></td>
+        <td><details><summary>${esc(t.titulo || t.texto.slice(0, 80))}</summary><p class="small">${esc(t.texto)}</p>${galeriaHtml(t)}${t.descricaoImagens?.length ? `<p class="small muted">Imagens (descrição da IA): ${t.descricaoImagens.map(esc).join(' · ')}</p>` : ''}${t.cenario ? `<p class="small muted">Cenário ${esc(t.cenario)} do roteiro</p>` : ''}</details></td>
         <td>${esc(rot.areas[t.area] ?? t.area)}</td>
         <td>${esc(t.nome)}</td>
         <td>${esc(t.versao)} · ${dateBR(t.criadoEm)}</td>
@@ -63,7 +68,7 @@ function blocoTickets(chave, titulo, descricao, lista) {
   const st = q.rotulos.status;
   const partes = Object.keys(st).map((k) => ({ chave: k, rotulo: st[k], valor: lista.filter((t) => t.status === k).length }));
   return `<section class="st-sec" id="sec-${chave}">
-    <h2>${titulo}</h2>
+    <h2>${titulo} <a class="btn sm st-gerir" href="/tickets">Priorizar e editar</a></h2>
     <p class="muted">${descricao}</p>
     <div class="qa-pizzas">${pizza(`${titulo} por situação`, partes, { tamanho: 150 })}</div>
     <div class="qa-toolbar"><div class="theme-seg" role="radiogroup" aria-label="Filtro de ${esc(titulo)}">${Object.entries(FILTROS).map(([k, v]) => `<button type="button" role="radio" data-sec="${chave}" data-f="${k}" class="${filtro[chave] === k ? 'on' : ''}" aria-checked="${filtro[chave] === k}">${v}</button>`).join('')}</div>

@@ -70,6 +70,7 @@ Variáveis aceitas, todas opcionais (no `.env` ou na linha de comando):
 | `DEEPSEEK_MODEL`, `DEEPSEEK_BASE_URL`, `DEEPSEEK_TIMEOUT_MS` | Modelo, endereço e tempo máximo da IA | ver `.env.example` |
 | `PORT` | Porta do servidor | `3000` |
 | `HOST` | Interface de rede (`127.0.0.1` = só esta máquina) | todas |
+| `IMGBB_API_KEY` | Guarda as imagens dos tickets no ImgBB (grátis, https://api.imgbb.com). Vazio = as imagens só vão para a IA e não são guardadas | vazio |
 | `RADAR_DATA_DIR` | Pasta do banco, índice, conversas e uploads | `data/` |
 | `RADAR_LOGIN_USER`, `RADAR_LOGIN_PASS`, `RADAR_LOGIN_SECRET` | Exigem login na tela. Sem elas, não há login | sem login |
 
@@ -114,7 +115,7 @@ Invoke-RestMethod http://localhost:3000/api/sessao
 # esperado: buscar
 ```
 
-Depois abra **http://localhost:3000** no navegador. Deve aparecer "O que você procura?" e o selo **V0.0.1** ao lado de "Radar". A página `http://localhost:3000/status` mostra versões, tickets e feedbacks.
+Depois abra **http://localhost:3000** no navegador. Deve aparecer "O que você procura?" e o selo **V0.0.1** ao lado de "Radar". A página `http://localhost:3000/status` mostra versões, tickets e feedbacks; `http://localhost:3000/tickets` é o quadro para priorizar e editar tickets (lista e kanban).
 
 Perfis de teste (troque no menu ⋮ do canto superior direito, campo "Ver como"):
 
@@ -131,7 +132,7 @@ Perfis de teste (troque no menu ⋮ do canto superior direito, campo "Ver como")
 ### Comandos úteis
 
 ```bash
-npm test                  # 52 testes automatizados; esperado: "pass 52" e "fail 0"
+npm test                  # 54 testes automatizados; esperado: "pass 54" e "fail 0"
 npm run setup             # recria a base fictícia do zero (apaga o que foi cadastrado ou enviado localmente)
 npm run ingest            # reindexa sem apagar o que foi cadastrado ou enviado
 npm run ask -- "propostas de utilities com Databricks"   # pergunta pelo terminal, sem navegador

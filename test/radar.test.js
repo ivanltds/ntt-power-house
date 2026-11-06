@@ -16,6 +16,7 @@ import { createAuth } from '../src/auth.js';
 import { QualityStore, ROTEIRO, lerImagens } from '../src/qualidade.js';
 import { VERSAO } from '../src/version.js';
 import { AuditLog } from '../src/audit.js';
+import { criarHospedagem, hospedarTodas } from '../src/imagens.js';
 
 let engine;
 before(() => {
@@ -782,4 +783,47 @@ test('métricas sobrevivem a uma linha de auditoria cortada (disco cheio)', () =
   assert.equal(m.buscas, 1);
   assert.equal(m.aberturasDeFonte, 2);
   assert.equal(fs.readFileSync(a.turnsFile, 'utf8').split('\n').filter(Boolean).length, 2, 'registro novo não pode colar na linha quebrada');
+});
+
+test('tickets: edição com prioridade, situação e imagens fica no histórico; valida antes de mudar', () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-tk-')), 'qualidade.json');
+  const q = new QualityStore(file);
+  const t = q.abrir({ nome: 'Ana', texto: 'O filtro de segmento não limpa.', area: 'projetos', versao: 'V0.0.1' });
+  assert.equal(t.prioridade, null);
+  assert.deepEqual(t.imagens, []);
+  assert.throws(() => q.editar(t.codigo, { autor: '', prioridade: 'alta' }), /seu nome/);
+  assert.throws(() => q.editar(t.codigo, { autor: 'Bia', prioridade: 'urgentissima' }), /Prioridade inválida/);
+  assert.throws(() => q.editar(t.codigo, { autor: 'Bia', imagensNovas: [{ url: 'javascript:alert(1)' }] }), /Link de imagem/);
+  assert.throws(() => q.editar(t.codigo, { autor: 'Bia', prioridade: null }), /Nada foi alterado/);
+  assert.equal(q.ticket(t.codigo).historico.length, 0, 'tentativas inválidas não deixam rastro');
+  const img = { url: 'https://i.ibb.co/abc/tela.jpg', thumb: 'https://i.ibb.co/abc/tela-t.jpg', apagar: 'https://ibb.co/abc/del', servico: 'imgbb' };
+  const r = q.editar(t.codigo, { autor: 'Bia', versao: 'V0.0.1', prioridade: 'alta', titulo: 'Filtro de segmento não limpa', status: 'em_correcao', nota: 'Vou olhar.', imagensNovas: [img] });
+  assert.equal(r.prioridade, 'alta');
+  assert.equal(r.status, 'em_correcao');
+  assert.equal(r.imagens[0].url, img.url);
+  const h = r.historico.at(-1);
+  assert.deepEqual(h.alteracoes.map((a) => a.campo).sort(), ['imagens', 'prioridade', 'titulo']);
+  assert.equal(h.de, 'aberto');
+  assert.equal(h.para, 'em_correcao');
+  assert.throws(() => q.editar(t.codigo, { autor: 'Bia', imagensNovas: Array(6).fill(img) }), /No máximo 6/);
+  const r2 = new QualityStore(file).editar(t.codigo, { autor: 'Bia', remover: [img.url], prioridade: '' });
+  assert.equal(r2.imagens.length, 0);
+  assert.equal(r2.prioridade, null);
+});
+
+test('tickets: hospedagem de imagens no ImgBB só com chave, sem expor a chave no erro', async () => {
+  assert.equal(criarHospedagem({}), null);
+  const chamadas = [];
+  const ok = criarHospedagem({ IMGBB_API_KEY: 'chave-teste' }, async (url, init) => {
+    chamadas.push({ url, corpo: String(init.body) });
+    return new Response(JSON.stringify({ success: true, data: { url: 'https://i.ibb.co/x/a.jpg', thumb: { url: 'https://i.ibb.co/x/a-t.jpg' }, delete_url: 'https://ibb.co/x/d' } }));
+  });
+  const [a] = await hospedarTodas(ok, ['data:image/png;base64,iVBORw0KGgo='], 'CR-009');
+  assert.equal(a.url, 'https://i.ibb.co/x/a.jpg');
+  assert.equal(a.thumb, 'https://i.ibb.co/x/a-t.jpg');
+  assert.match(chamadas[0].url, /^https:\/\/api\.imgbb\.com\/1\/upload\?key=chave-teste$/);
+  assert.match(chamadas[0].corpo, /image=iVBORw0KGgo%3D/);
+  assert.match(chamadas[0].corpo, /name=radar-CR-009-/);
+  const falha = criarHospedagem({ IMGBB_API_KEY: 'chave-teste' }, async () => new Response(JSON.stringify({ success: false, error: { message: 'Invalid API v1 key.' } }), { status: 400 }));
+  await assert.rejects(hospedarTodas(falha, ['data:image/png;base64,AA=='], 'CR-1'), (err) => /Invalid API/.test(err.message) && !err.message.includes('chave-teste'));
 });
