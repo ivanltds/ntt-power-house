@@ -871,3 +871,29 @@ test('tickets: apagar esconde o ticket das listas e números, guarda quem e por 
   assert.throws(() => q2.editar(a.codigo, { autor: 'X', prioridade: 'alta' }) ?? (() => { throw new Error('nulo'); })(), /nulo/);
   assert.equal(q2.abrir({ nome: 'Ana', texto: 'Mais um problema aqui.', versao: 'V0.0.1' }).codigo, 'CR-003');
 });
+
+test('relatório para agentes: exige chave própria, é só leitura e não expõe link de apagar imagem', async () => {
+  const { criarAcessoRelatorio, montarRelatorio } = await import('../src/relatorio.js');
+  const req = (h = {}) => ({ headers: h });
+  const u = (q = '') => new URL(`http://x/api/relatorio/qualidade${q}`);
+  assert.equal(criarAcessoRelatorio({}).ativo, false, 'sem chave fica desligado');
+  assert.equal(criarAcessoRelatorio({ RADAR_RELATORIO_TOKEN: 'curta' }).ativo, false, 'chave curta não liga');
+  const chave = 'k'.repeat(32);
+  const a = criarAcessoRelatorio({ RADAR_RELATORIO_TOKEN: chave });
+  assert.ok(a.autorizado(req({ authorization: `Bearer ${chave}` }), u()));
+  assert.ok(a.autorizado(req(), u(`?chave=${chave}`)));
+  assert.equal(a.autorizado(req(), u()), false);
+  assert.equal(a.autorizado(req({ authorization: 'Bearer errada' }), u()), false);
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-rel-')), 'qualidade.json');
+  const q = new QualityStore(file);
+  const t = q.abrir({ nome: 'Ana', texto: 'Busca não acha o projeto.', versao: 'V0.0.1', imagens: [{ url: 'https://i.ibb.co/x/a.jpg', apagar: 'https://ibb.co/apagar/123', servico: 'imgbb' }] });
+  const del = q.abrir({ nome: 'Bia', texto: 'Ticket duplicado aqui.', versao: 'V0.0.1' });
+  q.excluir(del.codigo, { autor: 'Bia', motivo: 'dup', versao: 'V0.0.1' });
+  const r = montarRelatorio(q, 'V0.0.1');
+  assert.equal(r.formato, 1);
+  assert.deepEqual(r.tickets.map((x) => x.codigo), [t.codigo]);
+  assert.equal(r.tickets[0].imagens[0].apagar, undefined);
+  assert.ok(r.regraMetrica.includes('uma vez'));
+  assert.equal(r.resumo.porCenario.length, ROTEIRO.length);
+  assert.equal(q.ticket(t.codigo).imagens[0].apagar, 'https://ibb.co/apagar/123', 'não altera o dado guardado');
+});

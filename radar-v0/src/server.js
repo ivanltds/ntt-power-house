@@ -26,6 +26,7 @@ import { ROOT, DB_PATH, STORE_PATH, AUDITORIA_DIR, CONVERSAS_PATH, CORPUS_DIR, D
 import { QualityStore, ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, MAX_IMAGENS, MAX_IMAGENS_TICKET, PRIORIDADES, lerImagens } from './qualidade.js';
 import { criarHospedagem, hospedarTodas } from './imagens.js';
 import { VERSAO } from './version.js';
+import { criarAcessoRelatorio, montarRelatorio, RELATORIO_PATH } from './relatorio.js';
 
 loadEnv(path.join(ROOT, '.env'));
 
@@ -43,6 +44,7 @@ const engine = new RadarEngine({ llm: createLLM() });
 const audit = new AuditLog(AUDITORIA_DIR);
 const conversations = new ConversationStore(CONVERSAS_PATH);
 const auth = createAuth();
+const relatorio = criarAcessoRelatorio();
 
 // Reindexa a base vetorial a partir do banco e recarrega o motor (após upload confirmado ou cadastro).
 function reindex() {
@@ -516,6 +518,14 @@ const server = http.createServer(async (req, res) => {
       // Atraso fixo em caso de erro para dificultar tentativas em série.
       if (!cookie) return setTimeout(() => send(res, 401, { erro: 'Usuário ou senha incorretos' }), 800);
       return send(res, 200, { ok: true }, { 'Set-Cookie': cookie });
+    }
+    // Leitura para agentes de relatório: chave própria, independente do login da tela.
+    if (url.pathname === RELATORIO_PATH) {
+      if (!relatorio.ativo) return send(res, 404, { erro: 'Rota não encontrada' });
+      if (req.method !== 'GET') return send(res, 405, { erro: 'Use GET.' });
+      if (!relatorio.autorizado(req, url)) return setTimeout(() => send(res, 401, { erro: 'Chave de relatório ausente ou inválida.' }, { 'WWW-Authenticate': 'Bearer' }), 500);
+      audit.logEvent({ tipo: 'relatorio_lido' });
+      return send(res, 200, montarRelatorio(qualidade, VERSAO), { 'Cache-Control': 'no-store' });
     }
     if (req.method === 'POST' && url.pathname === '/api/logout') return send(res, 200, { ok: true }, { 'Set-Cookie': auth.logout() });
     if (!auth.isPublic(url.pathname) && !auth.allowed(req)) {

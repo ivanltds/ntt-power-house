@@ -71,6 +71,7 @@ Variáveis aceitas, todas opcionais (no `.env` ou na linha de comando):
 | `PORT` | Porta do servidor | `3000` |
 | `HOST` | Interface de rede (`127.0.0.1` = só esta máquina) | todas |
 | `IMGBB_API_KEY` | Guarda as imagens dos tickets no ImgBB (grátis, https://api.imgbb.com). Vazio = as imagens só vão para a IA e não são guardadas | vazio |
+| `RADAR_RELATORIO_TOKEN` | Liga `GET /api/relatorio/qualidade` (JSON só leitura de tickets e métricas do roteiro) para agentes de relatório. Chave com 24+ caracteres, enviada em `Authorization: Bearer <chave>` ou `?chave=<chave>`. Independe do login da tela | desligado |
 | `RADAR_DATA_DIR` | Pasta do banco, índice, conversas e uploads | `data/` |
 | `RADAR_LOGIN_USER`, `RADAR_LOGIN_PASS`, `RADAR_LOGIN_SECRET` | Exigem login na tela. Sem elas, não há login | sem login |
 
@@ -132,7 +133,7 @@ Perfis de teste (troque no menu ⋮ do canto superior direito, campo "Ver como")
 ### Comandos úteis
 
 ```bash
-npm test                  # 56 testes automatizados; esperado: "pass 56" e "fail 0"
+npm test                  # 57 testes automatizados; esperado: "pass 57" e "fail 0"
 npm run setup             # recria a base fictícia do zero (apaga o que foi cadastrado ou enviado localmente)
 npm run ingest            # reindexa sem apagar o que foi cadastrado ou enviado
 npm run ask -- "propostas de utilities com Databricks"   # pergunta pelo terminal, sem navegador
