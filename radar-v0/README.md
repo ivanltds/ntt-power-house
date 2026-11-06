@@ -115,7 +115,7 @@ Invoke-RestMethod http://localhost:3000/api/sessao
 # esperado: buscar
 ```
 
-Depois abra **http://localhost:3000** no navegador. Deve aparecer "O que você procura?" e o selo **V0.0.1** ao lado de "Radar". A página `http://localhost:3000/status` mostra versões, tickets e feedbacks; `http://localhost:3000/tickets` é o quadro para priorizar e editar tickets (lista e kanban).
+Depois abra **http://localhost:3000** no navegador. Deve aparecer "O que você procura?" e o selo **V0.0.1** ao lado de "Radar". A página `http://localhost:3000/status` mostra versões, tickets e feedbacks. Os tickets são priorizados e editados no menu ⋮ → "Versão: notas, feedbacks e testes" → Tickets (lista e kanban).
 
 Perfis de teste (troque no menu ⋮ do canto superior direito, campo "Ver como"):
 

@@ -1254,7 +1254,7 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 @media (max-width: 640px) { .st-head-acoes #st-atualizado { display: none; } .st-main { padding: 14px 12px 30px; } }
 .st-sec .theme-seg { grid-template-columns: repeat(4, auto); } .st-sec .theme-seg button { white-space: nowrap; padding: 5px 10px; }
 
-/* Quadro de tickets (/tickets e menu Versão → Tickets): lista, kanban e janela de detalhe. */
+/* Quadro de tickets (menu Versão → Tickets): lista, kanban e detalhe. */
 :root { --tk-crit: #b42318; --tk-alta: #c4320a; --tk-media: #1d4ed8; --tk-baixa: #5b6271; }
 :root[data-theme="dark"] { --tk-crit: #f97066; --tk-alta: #fd853a; --tk-media: #84adff; --tk-baixa: #a3abb9; }
 .tk-main { max-width: 1320px; }
@@ -1329,3 +1329,19 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 .qa-field > span.small { font-weight: 400; color: var(--muted); }
 .tk-dlg details summary { cursor: pointer; }
 .qa-evid[hidden] { display: none; }
+.tk-voltar-ic { transform: rotate(180deg); }
+#tk-detalhe .tk-dlg-head { flex-wrap: wrap; }
+.tk-embed .tk-kanban { grid-template-columns: repeat(5, minmax(170px, 1fr)); }
+.tk-embed .tk-barra, .tk-embed .tk-filtros { margin: 8px 0; }
+.tk-barra [hidden] { display: none; }
+.tk-multi { position: relative; }
+.tk-multi > summary { list-style: none; cursor: pointer; font-size: 13px; padding: 5px 10px; }
+.tk-multi > summary::-webkit-details-marker { display: none; }
+.tk-multi[open] > summary { border-color: var(--brand); }
+.tk-multi-pop { position: absolute; z-index: 5; top: calc(100% + 4px); left: 0; min-width: 240px; max-height: 280px; overflow: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow-lg); padding: 6px; display: grid; gap: 2px; }
+.tk-multi-pop label { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 6px; cursor: pointer; font-size: 13.5px; }
+.tk-multi-pop label:hover { background: var(--line-2); }
+.tk-multi-pop label span { flex: 1; }
+.tk-multi-pop input { accent-color: var(--brand); }
+.tk-multi-acoes { display: flex; gap: 4px; border-bottom: 1px solid var(--line-2); padding-bottom: 4px; margin-bottom: 2px; }
+#tk-detalhe .tk-fechar { margin-left: 0; margin-right: 6px; }

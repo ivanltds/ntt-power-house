@@ -1,7 +1,7 @@
 // Quadro de tickets: lista com filtros, kanban por situação e janela de detalhe com edição.
-// Usado na página /tickets (tela cheia) e no menu Versão → Tickets. Dados de /api/qualidade;
+// Usado no menu Versão → Tickets. Dados de /api/qualidade;
 // toda mudança vai para /api/tickets/editar e entra no histórico do ticket com o nome de quem fez.
-// O login do Radar é compartilhado: o nome é pedido uma vez no alto do quadro e nunca vem preenchido.
+// O login do Radar é compartilhado: o nome é pedido em cada formulário e nunca vem preenchido.
 
 import { $, $$, esc, api, dateBR, toast } from './common.js';
 import { icon } from './icons.js';
@@ -49,40 +49,47 @@ export function galeriaHtml(t) {
   return imgs.length ? `<div class="tk-galeria">${imgs.map((i, n) => `<a href="${esc(i.url)}" target="_blank" rel="noopener noreferrer" title="Abrir a imagem ${n + 1} em tamanho real"><img src="${esc(i.thumb || i.url)}" alt="Imagem ${n + 1} do ${esc(t.codigo)}" loading="lazy"></a>`).join('')}</div>` : '';
 }
 
-// root: elemento onde o quadro é montado. Opções: visao inicial ('lista' | 'kanban'), compacto (dentro do menu Versão).
-export async function montarTickets(root, { visao = 'lista', compacto = false } = {}) {
+// root: elemento onde o quadro é montado; visao inicial: 'lista' ou 'kanban'.
+export async function montarTickets(root, { visao = 'lista' } = {}) {
   let q = await api('/api/qualidade');
   const rot = q.rotulos;
-  const f = { visao, situacao: 'abertos', tipo: '', area: '', prioridade: '', ordenar: 'prioridade', busca: '' };
+  const f = { visao, situacao: 'abertos', tipo: '', area: '', prioridade: '', ordenar: 'prioridade', busca: '', nomes: new Set() };
+  // Quem abriu: lista de nomes para o filtro de multisseleção (com a quantidade de tickets de cada um).
+  const contaNomes = () => q.tickets.reduce((m, t) => m.set(t.nome, (m.get(t.nome) ?? 0) + 1), new Map());
   const opts = (obj, todos) => `<option value="">${todos}</option>${Object.entries(obj).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('')}`;
 
   root.innerHTML = `
+    <div id="tk-quadro">
     <div class="tk-barra">
       <div class="theme-seg tk-visao" role="radiogroup" aria-label="Visualização">
         <button type="button" role="radio" data-visao="lista">${icon('layers', { size: 14 })}Lista</button>
         <button type="button" role="radio" data-visao="kanban">${icon('layout', { size: 14 })}Kanban</button>
       </div>
-      <label class="tk-quem"><span>Você é</span><input id="tk-nome" type="text" maxlength="80" autocomplete="off" placeholder="Seu nome (para registrar mudanças)"></label>
-      ${compacto ? `<a class="btn sm" href="/tickets" target="_blank" rel="noopener">${icon('arrowRight', { size: 14 })}Abrir em tela cheia</a>` : ''}
+      <label class="tk-quem"><span>Seu nome</span><input id="tk-nome" type="text" maxlength="80" autocomplete="off" list="tk-nomes" placeholder="Para mover cartões entre colunas"></label>
     </div>
     <div class="tk-filtros">
       <div class="theme-seg tk-sit" role="radiogroup" aria-label="Situação">${Object.entries(SITUACOES).map(([k, v]) => `<button type="button" role="radio" data-sit="${k}">${v}</button>`).join('')}</div>
       <input id="tk-busca" type="search" placeholder="Buscar por código, título, nome ou texto" aria-label="Buscar tickets">
       <select id="tk-tipo" aria-label="Tipo">${opts(rot.tipos, 'Todos os tipos')}</select>
       <select id="tk-area" aria-label="Área">${opts(rot.areas, 'Todas as áreas')}</select>
+      <details class="tk-multi" id="tk-nomes-f"><summary class="btn sm"><span id="tk-nomes-rot">Aberto por: todos</span>${icon('chevronDown', { size: 13 })}</summary><div class="tk-multi-pop" role="group" aria-label="Filtrar por quem abriu"></div></details>
       <select id="tk-prio" aria-label="Prioridade">${opts({ ...rot.prioridades, nd: 'A definir' }, 'Todas as prioridades')}</select>
       <select id="tk-ordem" aria-label="Ordenar">${Object.entries(ORDENAR).map(([k, v]) => `<option value="${k}">Ordenar: ${v}</option>`).join('')}</select>
       <button type="button" class="btn sm ghost" id="tk-limpar">${icon('x', { size: 13 })}Limpar</button>
     </div>
     <p class="tk-conta muted small" id="tk-conta" aria-live="polite"></p>
     <div id="tk-area-lista"></div>
-    <dialog class="wide tk-dlg" id="tk-dlg"></dialog>`;
+    </div>
+    <div id="tk-detalhe" class="tk-dlg" hidden></div>
+    <datalist id="tk-nomes">${[...new Set(q.tickets.flatMap((t) => [t.nome, ...t.historico.map((h) => h.autor)]))].filter(Boolean).sort().map((n) => `<option value="${esc(n)}">`).join('')}</datalist>`;
 
-  const nome = () => $('#tk-nome', root).value.trim();
-  const pedirNome = () => {
-    if (nome()) return true;
-    toast('Escreva o seu nome em "Você é", no alto do quadro.', 'error');
-    $('#tk-nome', root).focus();
+  // O nome é pedido em cada formulário (login compartilhado) e no alto do kanban, para arrastar cartões.
+  let autor = '';
+  const pedirNome = (input) => {
+    autor = input.value.trim();
+    if (autor) return true;
+    toast('Escreva o seu nome para registrar a mudança.', 'error');
+    input.focus();
     return false;
   };
 
@@ -91,6 +98,7 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
     const lista = q.tickets.filter((t) => (f.visao === 'kanban' || passaSituacao(t, f.situacao))
       && (!f.tipo || t.tipo === f.tipo) && (!f.area || t.area === f.area)
       && (!f.prioridade || (f.prioridade === 'nd' ? !t.prioridade : t.prioridade === f.prioridade))
+      && (!f.nomes.size || f.nomes.has(t.nome))
       && (!termo || `${t.codigo} ${t.titulo} ${t.nome} ${t.texto}`.toLowerCase().includes(termo)));
     const prio = (t) => ORDEM_PRIO.indexOf(t.prioridade ?? null);
     const cmp = {
@@ -134,7 +142,7 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
   }
 
   async function salvar(codigo, corpo, msg) {
-    const r = await api('/api/tickets/editar', { codigo, autor: nome(), ...corpo });
+    const r = await api('/api/tickets/editar', { codigo, autor, ...corpo });
     const i = q.tickets.findIndex((t) => t.codigo === codigo);
     q.tickets[i] = r.ticket;
     toast(msg ?? `${codigo} atualizado.`);
@@ -146,9 +154,10 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
     $$('[data-visao]', root).forEach((b) => { const on = b.dataset.visao === f.visao; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
     $$('[data-sit]', root).forEach((b) => { const on = b.dataset.sit === f.situacao; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
     $('.tk-sit', root).hidden = f.visao === 'kanban';
-    $('#tk-ordem', root).hidden = false;
+    $('.tk-quem', root).hidden = f.visao !== 'kanban';
     const ts = filtrados();
-    const ativos = [f.tipo, f.area, f.prioridade, f.busca].filter(Boolean).length + (f.visao === 'lista' && f.situacao !== 'abertos' ? 1 : 0);
+    const ativos = [f.tipo, f.area, f.prioridade, f.busca].filter(Boolean).length + (f.nomes.size ? 1 : 0) + (f.visao === 'lista' && f.situacao !== 'abertos' ? 1 : 0);
+    $('#tk-nomes-rot', root).textContent = !f.nomes.size ? 'Aberto por: todos' : f.nomes.size === 1 ? `Aberto por: ${[...f.nomes][0]}` : `Aberto por: ${f.nomes.size} pessoas`;
     $('#tk-conta', root).textContent = `${ts.length} ticket${ts.length === 1 ? '' : 's'}${ativos ? ` · ${ativos} filtro${ativos > 1 ? 's' : ''} ativo${ativos > 1 ? 's' : ''}` : ''}`;
     $('#tk-limpar', root).hidden = !ativos;
     const area = $('#tk-area-lista', root);
@@ -168,15 +177,18 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
         col.classList.remove('alvo');
         const codigo = e.dataTransfer.getData('text/plain');
         const t = q.tickets.find((x) => x.codigo === codigo);
-        if (!t || t.status === col.dataset.col || !pedirNome()) return;
+        if (!t || t.status === col.dataset.col || !pedirNome($('#tk-nome', root))) return;
         try { await salvar(codigo, { status: col.dataset.col }, `${codigo} → ${rot.status[col.dataset.col]}`); } catch (err) { toast(err.message, 'error'); }
       };
     });
   }
 
-  // ---------- Janela de detalhe: ver, mudar situação/prioridade com retorno, editar campos e imagens ----------
-  const dlg = $('#tk-dlg', root);
-  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  // ---------- Detalhe dentro da própria aba: ver, mudar situação/prioridade com retorno, editar campos e imagens ----------
+  const dlg = $('#tk-detalhe', root);
+  const quadro = $('#tk-quadro', root);
+  const rolarTopo = () => (root.closest('.help-body') ?? document.scrollingElement)?.scrollTo({ top: 0 });
+  const voltar = () => { dlg.hidden = true; quadro.hidden = false; pintar(); rolarTopo(); };
+  const campoNome = () => `<label class="qa-field qa-nome"><span>Seu nome</span><input name="autor" type="text" maxlength="80" autocomplete="off" list="tk-nomes" required placeholder="Ex.: Ana Souza"></label>`;
 
   function detalhe(codigo, editando = false) {
     const t = q.tickets.find((x) => x.codigo === codigo);
@@ -186,8 +198,8 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
     const podeAnexar = Boolean(q.hospedagemImagens);
     dlg.innerHTML = `
       <header class="tk-dlg-head">
+        <button type="button" class="btn sm tk-fechar">${icon('chevronRight', { size: 14, cls: 'tk-voltar-ic' })}Voltar para os tickets</button>
         <b class="qa-cod">${esc(t.codigo)}</b>${chipStatus(t.status, rot)}${chipPrio(t.prioridade, rot)}
-        <button type="button" class="icon-btn sm tk-fechar" aria-label="Fechar">${icon('x', { size: 16 })}</button>
       </header>
       ${editando ? `
       <form class="qa-form tk-editar">
@@ -204,6 +216,7 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
           <span class="muted small">Até ${q.maxImagensTicket} por ticket; também dá para colar com Ctrl+V. As imagens vão para o ${esc(q.hospedagemImagens)} e ficam acessíveis a quem tiver o link: use só telas com dados fictícios.</span>`
           : '<span class="muted small">Anexo de imagens desligado neste ambiente (falta configurar a chave do ImgBB).</span>'}
         </div>
+        ${campoNome()}
         <div class="dialog-actions"><button type="button" class="btn" data-cancelar>Cancelar</button><button type="submit" class="btn primary">${icon('check', { size: 15 })}Salvar alterações</button></div>
       </form>` : `
       <h3 class="tk-dlg-tit">${esc(t.titulo || t.texto.slice(0, 80))}</h3>
@@ -217,19 +230,20 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
           <label class="qa-field"><span>Prioridade</span>${sel('prioridade', rot.prioridades, t.prioridade, 'A definir')}</label>
         </div>
         <label class="qa-field"><span>Retorno <em class="muted">(opcional ao mudar situação ou prioridade)</em></span><textarea name="nota" rows="2" maxlength="2000" placeholder="Ex.: Corrigido na V0.0.2: a pergunta agora mantém os projetos da resposta anterior. Pode retestar."></textarea></label>
+        ${campoNome()}
         <div class="qa-acoes"><button type="submit" class="btn sm primary">${icon('check', { size: 14 })}Registrar</button><button type="button" class="btn sm" data-editar>${icon('edit', { size: 14 })}Editar ticket</button></div>
       </form>
       <h4>Histórico</h4>
       ${historicoHtml(t, rot)}`}`;
-    if (!dlg.open) dlg.showModal();
-    $('.tk-fechar', dlg).onclick = () => dlg.close();
+    if (dlg.hidden) { quadro.hidden = true; dlg.hidden = false; rolarTopo(); }
+    $('.tk-fechar', dlg).onclick = voltar;
 
     if (!editando) {
       $('[data-editar]', dlg).onclick = () => detalhe(codigo, true);
       $('.tk-mover', dlg).onsubmit = async (e) => {
         e.preventDefault();
-        if (!pedirNome()) return;
         const fm = e.target;
+        if (!pedirNome(fm.autor)) return;
         try {
           await salvar(codigo, { status: fm.status.value, prioridade: fm.prioridade.value, nota: fm.nota.value });
           detalhe(codigo);
@@ -264,7 +278,7 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
     $('[data-cancelar]', dlg).onclick = () => detalhe(codigo);
     form.onsubmit = async (e) => {
       e.preventDefault();
-      if (!pedirNome()) return;
+      if (!pedirNome(form.autor)) return;
       const btn = $('button[type=submit]', form);
       btn.disabled = true;
       btn.innerHTML = `${icon('loader', { size: 15 })}${novas.length ? 'Enviando imagens…' : 'Salvando…'}`;
@@ -280,12 +294,26 @@ export async function montarTickets(root, { visao = 'lista', compacto = false } 
   }
 
   // ---------- Filtros ----------
+  const pintarNomes = () => {
+    const pop = $('.tk-multi-pop', root);
+    const nomes = [...contaNomes()].sort(([a], [b]) => a.localeCompare(b, 'pt-BR'));
+    pop.innerHTML = `<div class="tk-multi-acoes"><button type="button" class="btn sm ghost" data-nomes="todos">Todos</button><button type="button" class="btn sm ghost" data-nomes="nenhum">Limpar</button></div>
+      ${nomes.map(([n, c]) => `<label><input type="checkbox" value="${esc(n)}"${f.nomes.has(n) ? ' checked' : ''}><span>${esc(n)}</span><em class="muted small">${c}</em></label>`).join('') || '<p class="muted small">Nenhum nome ainda.</p>'}`;
+    $$('input[type=checkbox]', pop).forEach((c) => (c.onchange = () => { if (c.checked) f.nomes.add(c.value); else f.nomes.delete(c.value); pintar(); }));
+    $('[data-nomes=todos]', pop).onclick = () => { nomes.forEach(([n]) => f.nomes.add(n)); pintarNomes(); pintar(); };
+    $('[data-nomes=nenhum]', pop).onclick = () => { f.nomes.clear(); pintarNomes(); pintar(); };
+  };
+  pintarNomes();
+  // Fecha a lista de nomes ao clicar fora dela.
+  (root.closest('dialog') ?? document).addEventListener('click', (e) => { const d = $('#tk-nomes-f', root); if (d.open && !d.contains(e.target)) d.open = false; });
   $$('[data-visao]', root).forEach((b) => (b.onclick = () => { f.visao = b.dataset.visao; pintar(); }));
   $$('[data-sit]', root).forEach((b) => (b.onclick = () => { f.situacao = b.dataset.sit; pintar(); }));
   $('#tk-busca', root).oninput = (e) => { f.busca = e.target.value.trim(); pintar(); };
   for (const [id, k] of [['#tk-tipo', 'tipo'], ['#tk-area', 'area'], ['#tk-prio', 'prioridade'], ['#tk-ordem', 'ordenar']]) $(id, root).onchange = (e) => { f[k] = e.target.value; pintar(); };
   $('#tk-limpar', root).onclick = () => {
     Object.assign(f, { situacao: 'abertos', tipo: '', area: '', prioridade: '', busca: '' });
+    f.nomes.clear();
+    pintarNomes();
     $('#tk-busca', root).value = '';
     for (const id of ['#tk-tipo', '#tk-area', '#tk-prio']) $(id, root).value = '';
     pintar();
