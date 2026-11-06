@@ -827,3 +827,18 @@ test('tickets: hospedagem de imagens no ImgBB só com chave, sem expor a chave n
   const falha = criarHospedagem({ IMGBB_API_KEY: 'chave-teste' }, async () => new Response(JSON.stringify({ success: false, error: { message: 'Invalid API v1 key.' } }), { status: 400 }));
   await assert.rejects(hospedarTodas(falha, ['data:image/png;base64,AA=='], 'CR-1'), (err) => /Invalid API/.test(err.message) && !err.message.includes('chave-teste'));
 });
+
+test('roteiro: evidências de Falhou vão para o ticket do cenário; reteste soma imagens; OK ignora', () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-ev-')), 'qualidade.json');
+  const q = new QualityStore(file);
+  const img = (n) => ({ url: `https://i.ibb.co/x/ev${n}.jpg`, thumb: `https://i.ibb.co/x/ev${n}-t.jpg`, servico: 'imgbb' });
+  const r = q.registrar({ versao: 'V0.0.1', cenario: 'C02', analista: 'Bia', resultado: 'falha', comentario: 'Veio a lista errada.', imagens: [img(1)] });
+  assert.deepEqual(q.ticket(r.ticket).imagens.map((i) => i.url), [img(1).url]);
+  q.registrar({ versao: 'V0.0.1', cenario: 'C02', analista: 'Bia', resultado: 'bloqueado', comentario: 'Tela não abriu no reteste.', imagens: [img(2)] });
+  const t = q.ticket(r.ticket);
+  assert.equal(t.imagens.length, 2);
+  assert.equal(t.historico.at(-1).alteracoes[0].adicionadas, 1);
+  const ok = q.registrar({ versao: 'V0.0.1', cenario: 'C01', analista: 'Bia', resultado: 'ok', imagens: [img(3)] });
+  assert.equal(ok.ticket, null);
+  assert.throws(() => q.registrar({ versao: 'V0.0.1', cenario: 'C03', analista: 'Bia', resultado: 'falha', comentario: 'x', imagens: [{ url: 'http://inseguro/a.jpg' }] }), /Link de imagem/);
+});

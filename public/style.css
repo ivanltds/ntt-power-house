@@ -1328,3 +1328,4 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 }
 .qa-field > span.small { font-weight: 400; color: var(--muted); }
 .tk-dlg details summary { cursor: pointer; }
+.qa-evid[hidden] { display: none; }

@@ -132,7 +132,7 @@ Perfis de teste (troque no menu ⋮ do canto superior direito, campo "Ver como")
 ### Comandos úteis
 
 ```bash
-npm test                  # 54 testes automatizados; esperado: "pass 54" e "fail 0"
+npm test                  # 55 testes automatizados; esperado: "pass 55" e "fail 0"
 npm run setup             # recria a base fictícia do zero (apaga o que foi cadastrado ou enviado localmente)
 npm run ingest            # reindexa sem apagar o que foi cadastrado ou enviado
 npm run ask -- "propostas de utilities com Databricks"   # pergunta pelo terminal, sem navegador

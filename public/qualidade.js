@@ -185,6 +185,11 @@ function cenarioHtml(c, q) {
         </fieldset>
         <p class="muted small">OK = tudo o que deve acontecer aconteceu. Falhou = algo foi diferente. Bloqueado = não deu para fazer o teste (ex.: a tela não abriu). Se você já registrou este cenário, salvar de novo com o mesmo nome substitui o seu resultado.</p>
         <label class="qa-field"><span>O que aconteceu de diferente <em class="muted">(obrigatório se Falhou ou Bloqueado)</em></span><textarea name="c" rows="2" maxlength="2000"></textarea></label>
+        ${q.hospedagemImagens ? `<div class="qa-imgs qa-evid" hidden>
+          <label class="btn sm">${icon('upload', { size: 14 })}Anexar evidência<input type="file" accept="image/png,image/jpeg,image/webp" multiple hidden></label>
+          <span class="muted small">Até ${q.maxImagens} capturas de tela; também dá para colar com Ctrl+V. Ficam anexadas ao ticket (guardadas no ${esc(q.hospedagemImagens)}, acessíveis a quem tiver o link): use só telas com dados fictícios.</span>
+          <div class="qa-prev"></div>
+        </div>` : ''}
         <div class="qa-acoes"><button type="submit" class="btn sm primary">${icon('check', { size: 14 })}Salvar resultado</button></div>
       </form>
       ${Object.keys(res).length ? `<h5>Resultados nesta versão</h5><ul class="qa-quem">${Object.entries(res).map(([n, v]) => `<li><span class="qa-chip qa-${v.resultado}">${esc(R[v.resultado])}</span><b>${esc(n)}</b><span class="muted small">${horaBR(v.em)}${v.ticket ? ` · ticket ${esc(v.ticket)}` : ''}</span>${v.comentario ? `<span class="small qa-com">${esc(v.comentario)}</span>` : ''}</li>`).join('')}</ul>` : ''}
@@ -225,6 +230,27 @@ const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), as
     $$('.qa-cen', body).forEach((li) => {
       const head = $('.qa-cen-head', li);
       head.onclick = () => { const ab = head.getAttribute('aria-expanded') !== 'true'; head.setAttribute('aria-expanded', ab); $('.qa-cen-body', li).classList.toggle('hidden', !ab); };
+      // Evidências: aparecem ao marcar Falhou ou Bloqueado; vão junto com o resultado.
+      const evid = $('.qa-evid', li);
+      const imagens = [];
+      if (evid) {
+        const prev = $('.qa-prev', evid);
+        const pintarEvid = () => {
+          prev.innerHTML = imagens.map((src, i) => `<figure><img src="${src}" alt="Evidência ${i + 1}"><button type="button" class="icon-btn sm" data-tirar="${i}" title="Remover">${icon('x', { size: 12 })}</button></figure>`).join('');
+          $$('[data-tirar]', prev).forEach((b) => (b.onclick = () => { imagens.splice(Number(b.dataset.tirar), 1); pintarEvid(); }));
+        };
+        const anexar = async (files) => {
+          for (const fl of files) {
+            if (!fl.type.startsWith('image/')) continue;
+            if (imagens.length >= q.maxImagens) { toast(`No máximo ${q.maxImagens} imagens.`, 'error'); break; }
+            imagens.push(await reduzir(fl));
+          }
+          pintarEvid();
+        };
+        $('input[type=file]', evid).onchange = (e) => anexar([...e.target.files]).then(() => { e.target.value = ''; });
+        $('.qa-res', li).onpaste = (e) => { const fs = [...(e.clipboardData?.files ?? [])]; if (fs.length && !evid.hidden) { e.preventDefault(); anexar(fs); } };
+        $$('input[name=r]', li).forEach((r) => (r.onchange = () => { evid.hidden = $('.qa-res', li).r.value === 'ok'; }));
+      }
       $('.qa-res', li).onsubmit = async (e) => {
         e.preventDefault();
         const f = e.target;
@@ -232,7 +258,11 @@ const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), as
         if (!analista) { toast('Escreva o seu nome neste cenário.', 'error'); f.analista.focus(); return; }
         if (!f.r.value) { toast('Escolha OK, Falhou ou Bloqueado.', 'error'); return; }
         try {
-          const r = await api('/api/testes/resultado', { cenario: li.dataset.cen, analista, resultado: f.r.value, comentario: f.c.value });
+          const btn = $('button[type=submit]', f);
+          btn.disabled = true;
+          if (imagens.length && f.r.value !== 'ok') btn.innerHTML = `${icon('loader', { size: 14 })}Enviando evidências…`;
+          let r;
+          try { r = await api('/api/testes/resultado', { cenario: li.dataset.cen, analista, resultado: f.r.value, comentario: f.c.value, imagens: f.r.value === 'ok' ? [] : imagens }); } finally { btn.disabled = false; btn.innerHTML = `${icon('check', { size: 14 })}Salvar resultado`; }
           q.execucao.resultados[li.dataset.cen] = { ...(q.execucao.resultados[li.dataset.cen] ?? {}), [analista]: r.resultado };
           cache = null;
           toast(r.resultado.ticket && f.r.value !== 'ok' ? `Resultado de ${analista} salvo. Ticket ${r.resultado.ticket} aberto para correção.` : `Resultado de ${analista} salvo.`);

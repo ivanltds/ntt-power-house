@@ -354,8 +354,17 @@ const routes = {
   },
 
   'POST /api/testes/resultado': async (req) => {
-    const b = await readJson(req);
-    const r = invalido(() => qualidade.registrar({ versao: VERSAO, cenario: b.cenario, analista: b.analista, resultado: b.resultado, comentario: b.comentario }));
+    const b = await readJson(req, 8_000_000);
+    // Evidências (capturas) de Falhou/Bloqueado vão para o ImgBB e ficam anexadas ao ticket do cenário.
+    const imgs = b.resultado === 'ok' ? [] : invalido(() => lerImagens(b.imagens));
+    if (!Array.isArray(imgs) || typeof imgs[0] === 'number') return imgs;
+    if (imgs.length && !hospedagem) return [400, { erro: 'O envio de imagens está desligado neste ambiente (falta IMGBB_API_KEY).' }];
+    if (b.resultado !== 'ok' && !String(b.comentario ?? '').trim()) return [400, { erro: 'Conte o que aconteceu de diferente do esperado.' }];
+    let imagens = [];
+    if (imgs.length) {
+      try { imagens = await hospedarTodas(hospedagem, imgs, String(b.cenario ?? 'roteiro')); } catch (err) { return [502, { erro: `Não foi possível guardar a imagem (${err.message}). O resultado não foi salvo; tente de novo.` }]; }
+    }
+    const r = invalido(() => qualidade.registrar({ versao: VERSAO, cenario: b.cenario, analista: b.analista, resultado: b.resultado, comentario: b.comentario, imagens }));
     if (Array.isArray(r)) return r;
     return { resultado: r, resumo: qualidade.resumo(VERSAO) };
   },
