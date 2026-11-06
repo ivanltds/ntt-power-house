@@ -91,14 +91,14 @@ function pintar() {
       ${tile('Versão no ar', q.versao, NOTAS[0]?.estado ?? '')}
       ${tile('Tickets em aberto', problemas.filter((t) => ABERTOS.includes(t.status)).length, `${problemas.filter((t) => t.status === 'corrigido').length} aguardando reteste`)}
       ${tile('Melhorias em aberto', melhorias.filter((t) => ABERTOS.includes(t.status)).length, `${melhorias.length} sugeridas no total`)}
-      ${tile('Roteiro da versão', `${previsto ? Math.round((feitos / previsto) * 100) : 0}%`, `${feitos} de ${previsto} execuções · ${s.geral.falha} falhas`)}
+      ${tile('Roteiro da versão', `${previsto ? Math.round((feitos / previsto) * 100) : 0}%`, `${feitos} de ${previsto} cenários · ${s.geral.falha} com falha`)}
     </div>
     <nav class="st-nav" aria-label="Seções"><a href="#sec-versoes">Versões</a><a href="#sec-tickets">Tickets</a><a href="#sec-melhorias">Feedbacks de melhoria</a><a href="#sec-testes">Testes da versão</a></nav>
     <section class="st-sec" id="sec-versoes"><h2>Versões</h2><p class="muted">O que mudou em cada versão. Clique num item para ver o antes e o agora.</p>${versoes()}</section>
     ${blocoTickets('tickets', 'Tickets', 'Problemas e dúvidas relatados por feedback ou por falha no roteiro de testes, de todas as versões.', problemas)}
     ${blocoTickets('melhorias', 'Feedbacks de melhoria', 'Sugestões enviadas pelo menu Versão → Enviar feedback (tipo "Sugestão").', melhorias)}
     <section class="st-sec" id="sec-testes"><h2>Testes regressivos · ${esc(s.versao)}</h2>
-      <p class="muted">${s.cenarios} cenários × ${s.esperados} analistas = ${previsto} execuções previstas · ${feitos} feitas. Zera a cada versão nova.</p>
+      <p class="muted">${feitos} de ${previsto} cenários executados. ${esc(s.regra)} Zera a cada versão nova.</p>
       <div class="qa-pizzas">${pizza('Roteiro (todas as áreas)', partesResultado(s.geral, R), { tamanho: 150 })}${Object.entries(s.porArea).map(([a, c]) => pizza(q.rotulos.areas[a], partesResultado(c, R), { tamanho: 110 })).join('')}</div>
       ${s.anteriores.length ? `<h3>Versões anteriores</h3><div class="tbl-wrap"><table class="guide-tbl"><thead><tr><th>Versão</th><th>${R.ok}</th><th>${R.falha}</th><th>${R.bloqueado}</th></tr></thead><tbody>${s.anteriores.map((v) => `<tr><td>${esc(v.versao)}</td><td>${v.ok}</td><td>${v.falha}</td><td>${v.bloqueado}</td></tr>`).join('')}</tbody></table></div>` : ''}
     </section>`;

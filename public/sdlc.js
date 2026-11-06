@@ -34,7 +34,7 @@ const ETAPAS = [
   { cod: 'DEV-02', fase: 'dev', nome: 'Plano de Testes BDD', status: 'poc', poc: 'Critérios de aceite em formato Dado / Quando / Então em cada caso de uso dos adendos.', faz: 'Critérios de aceite em cenários Gherkin com matriz de rastreabilidade.', saida: '.feature / plano de testes', quem: 'QA Lead / Tech Lead' },
   { cod: 'DEV-03', fase: 'dev', nome: 'Implementação / TDD', status: 'poc', poc: 'App completo: busca conversacional, envio multiformato, cadastro, exploração, insights, exportação, permissões e registro de atividades.', faz: 'Código conforme arquitetura e cenários aprovados, com testes unitários.', saida: 'Código + DEV-03-implementacao.md', quem: 'Tech Lead / Dev sênior' },
   { cod: 'DEV-04', fase: 'dev', nome: 'Code Review & Qualidade', status: 'poc', poc: 'Revisão a cada incremento, verificação de contraste WCAG nos dois temas e regras de permissão checadas no servidor.', faz: 'Revisão de arquitetura, segurança, legibilidade, análise estática e testes.', saida: 'DEV-04-code-review.md', quem: 'Revisores (CODEOWNERS)' },
-  { cod: 'QA-01', fase: 'qa', nome: 'Testes Automatizados', status: 'poc', poc: '55 testes automatizados (node:test) cobrindo extração, permissões, busca, envio, edição e exportação.', faz: 'Testes unitários e de integração, cobertura e rastreabilidade.', saida: 'QA-01-testes-automatizados.md', quem: 'QA Lead / Tech Lead' },
+  { cod: 'QA-01', fase: 'qa', nome: 'Testes Automatizados', status: 'poc', poc: '56 testes automatizados (node:test) cobrindo extração, permissões, busca, envio, edição e exportação.', faz: 'Testes unitários e de integração, cobertura e rastreabilidade.', saida: 'QA-01-testes-automatizados.md', quem: 'QA Lead / Tech Lead' },
   { cod: 'QA-02', fase: 'qa', nome: 'Homologação Funcional', status: 'poc', poc: 'Testes manuais no navegador (computador e celular) a cada incremento e testes do time no ambiente publicado.', faz: 'Testes manuais, exploratórios e ponta a ponta com evidências.', saida: 'QA-02-homologacao.md', quem: 'Analista de QA' },
   { cod: 'QA-03', fase: 'qa', nome: 'CI/CD e Staging', status: 'parcial', poc: 'Ambiente de demonstração na AWS (Caddy, systemd, login). Falta pipeline de CI/CD e artefato versionado.', faz: 'Pipeline, build, artefato versionado e deploy em staging.', saida: 'QA-03-cicd.md', quem: 'Tech Lead / DevOps' },
   { cod: 'QA-04', fase: 'qa', nome: 'UAT / Avaliação de Negócio', status: 'pendente', faz: 'Aceite com usuários e validação das métricas do discovery.', saida: 'QA-04-uat.md', quem: 'PO / Usuário-chave' },
@@ -117,7 +117,7 @@ const SECOES = [
       ['NB-02 Requisitos', `${chip('aprovado')} Aprovado pelo PO em 29/10/2026 (DEC-0006), avaliado junto com NB-01 (exceção DEC-0002).`],
       ['NB-03 Viabilidade', `${chip('aprovacao')} Recomendação <b>Go com ressalvas</b>: MVP em duas ondas, LLM DeepSeek, PO como curador. Decisão do <b>comitê do time após apresentação e testes</b> desta POC.`],
       ['NB-04 a DEV-04', `${chip('poc')} Executadas na POC: telas, arquitetura, critérios de aceite, implementação e revisão. Gate formal no MVP 1.`],
-      ['QA-01 e QA-02', `${chip('poc')} 55 testes automatizados e testes manuais no navegador e pelo time.`],
+      ['QA-01 e QA-02', `${chip('poc')} 56 testes automatizados e testes manuais no navegador e pelo time.`],
       ['QA-03', `${chip('parcial')} Ambiente de demonstração na AWS; falta pipeline de CI/CD.`],
       ['QA-04 e QA-05', `${chip('pendente')} UAT com usuários reais e deploy em produção ficam para o MVP 1.`],
     ])}

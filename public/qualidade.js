@@ -153,7 +153,7 @@ const TICKETS = ['tickets', 'files', 'Tickets', () => carregando(), async (body)
 const AREA_ICON = { conversas: 'message', projetos: 'folder', upload: 'upload' };
 const PRIORIDADE = { alta: 'Prioridade alta', media: 'Prioridade média' };
 
-// Situação do cenário somando todos os analistas: o que foi feito e por quem.
+// Registros do cenário por resultado: o que foi feito e por quem (a métrica usa só o mais recente).
 function situacao(res, R) {
   const vs = Object.values(res);
   if (!vs.length) return '<span class="qa-chip qa-pendente">A fazer</span>';
@@ -226,7 +226,7 @@ const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), as
     }).join('') || '<p class="muted">Nenhum cenário com esses filtros.</p>';
     const comResultado = q.roteiro.filter((c) => Object.keys(q.execucao.resultados[c.id] ?? {}).length).length;
     const execucoes = Object.values(q.execucao.resultados).reduce((n, r) => n + Object.keys(r).length, 0);
-    $('#qa-r-prog', body).innerHTML = `<b>${comResultado} de ${q.roteiro.length}</b> cenários com pelo menos um resultado · <b>${execucoes}</b> execuções registradas nesta versão (previstas: ${q.roteiro.length * q.analistasEsperados}).`;
+    $('#qa-r-prog', body).innerHTML = `<b>${comResultado} de ${q.roteiro.length}</b> cenários executados nesta versão · ${execucoes} registro${execucoes === 1 ? '' : 's'} no total. Cada cenário é executado uma vez; os analistas dividem as áreas entre si.`;
     $$('.qa-cen', body).forEach((li) => {
       const head = $('.qa-cen-head', li);
       head.onclick = () => { const ab = head.getAttribute('aria-expanded') !== 'true'; head.setAttribute('aria-expanded', ab); $('.qa-cen-body', li).classList.toggle('hidden', !ab); };
@@ -290,7 +290,7 @@ const ACOMPANHAMENTO = ['acompanhamento', 'chart', 'Acompanhamento', () => carre
   const feitos = s.geral.ok + s.geral.falha + s.geral.bloqueado;
   const previsto = feitos + s.geral.pendente;
   body.insertAdjacentHTML('beforeend', `
-    <p class="muted small">${esc(s.versao)} · ${s.cenarios} cenários × ${s.esperados} analistas = ${previsto} execuções previstas · ${feitos} feitas. Os resultados zeram a cada versão nova; os tickets continuam.</p>
+    <p class="muted small">${esc(s.versao)} · ${feitos} de ${previsto} cenários executados. ${esc(s.regra)} Os resultados zeram a cada versão nova; os tickets continuam.</p>
     <div class="qa-pizzas">
       ${pizza('Roteiro da versão (todas as áreas)', partesResultado(s.geral, R), { tamanho: 170 })}
       ${pizza('Tickets por situação (todas as versões)', Object.keys(st).map((k) => ({ chave: k, rotulo: st[k], valor: s.tickets[k] })), { tamanho: 170 })}
@@ -300,8 +300,8 @@ const ACOMPANHAMENTO = ['acompanhamento', 'chart', 'Acompanhamento', () => carre
     <h4>Por área</h4>
     <div class="qa-pizzas">${Object.entries(s.porArea).map(([a, c]) => pizza(q.rotulos.areas[a], partesResultado(c, R), { tamanho: 120 })).join('')}</div>
     <h4>Por analista</h4>
-    ${s.porAnalista.length ? `<div class="tbl-wrap"><table class="guide-tbl"><thead><tr><th>Analista</th><th>Feitos</th><th>${R.ok}</th><th>${R.falha}</th><th>${R.bloqueado}</th></tr></thead>
-      <tbody>${s.porAnalista.map((a) => `<tr><td>${esc(a.nome)}</td><td>${a.feitos} de ${a.total}</td><td>${a.ok}</td><td>${a.falha}</td><td>${a.bloqueado}</td></tr>`).join('')}</tbody></table></div>`
+    ${s.porAnalista.length ? `<div class="tbl-wrap"><table class="guide-tbl"><thead><tr><th>Analista</th><th>Cenários registrados</th><th>Áreas</th><th>${R.ok}</th><th>${R.falha}</th><th>${R.bloqueado}</th></tr></thead>
+      <tbody>${s.porAnalista.map((a) => `<tr><td>${esc(a.nome)}</td><td>${a.feitos}</td><td>${a.areas.map((x) => esc(q.rotulos.areas[x] ?? x)).join(", ")}</td><td>${a.ok}</td><td>${a.falha}</td><td>${a.bloqueado}</td></tr>`).join('')}</tbody></table></div>`
       : '<p class="muted">Nenhum analista registrou resultados nesta versão ainda.</p>'}
     ${s.anteriores.length ? `<h4>Versões anteriores</h4><div class="tbl-wrap"><table class="guide-tbl"><thead><tr><th>Versão</th><th>${R.ok}</th><th>${R.falha}</th><th>${R.bloqueado}</th></tr></thead>
       <tbody>${s.anteriores.map((v) => `<tr><td>${esc(v.versao)}</td><td>${v.ok}</td><td>${v.falha}</td><td>${v.bloqueado}</td></tr>`).join('')}</tbody></table></div>` : ''}`);

@@ -23,7 +23,7 @@ import { STATUS_PROPOSTA, CONFIDENCIALIDADES } from './db/repo.js';
 import { SUPPORTED } from './extract/formats.js';
 import { maskSensitive, maskFields, TERMO_VERSAO } from './sensitive.js';
 import { ROOT, DB_PATH, STORE_PATH, AUDITORIA_DIR, CONVERSAS_PATH, CORPUS_DIR, DATA_DIR } from './config.js';
-import { QualityStore, ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, ANALISTAS_ESPERADOS, MAX_IMAGENS, MAX_IMAGENS_TICKET, PRIORIDADES, lerImagens } from './qualidade.js';
+import { QualityStore, ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, MAX_IMAGENS, MAX_IMAGENS_TICKET, PRIORIDADES, lerImagens } from './qualidade.js';
 import { criarHospedagem, hospedarTodas } from './imagens.js';
 import { VERSAO } from './version.js';
 
@@ -286,7 +286,6 @@ const routes = {
     versao: VERSAO,
     roteiro: ROTEIRO,
     rotulos: { areas: AREAS, tipos: TIPOS, status: STATUS, resultados: RESULTADOS, prioridades: PRIORIDADES },
-    analistasEsperados: ANALISTAS_ESPERADOS,
     maxImagens: MAX_IMAGENS,
     maxImagensTicket: MAX_IMAGENS_TICKET,
     hospedagemImagens: hospedagem?.nome ?? null,
@@ -351,6 +350,13 @@ const routes = {
     if (Array.isArray(r)) return r;
     audit.logEvent({ tipo: 'ticket_editado', codigo: t.codigo, campos: r.historico.at(-1).alteracoes?.map((a) => a.campo) ?? [], status: r.status });
     return { ticket: r };
+  },
+
+  'POST /api/tickets/excluir': async (req) => {
+    const b = await readJson(req, 20_000);
+    const r = invalido(() => qualidade.excluir(String(b.codigo ?? ''), { autor: b.autor, motivo: b.motivo, versao: VERSAO }) ?? [404, { erro: 'Ticket não encontrado.' }]);
+    if (!Array.isArray(r)) audit.logEvent({ tipo: 'ticket_apagado', codigo: r.codigo });
+    return r;
   },
 
   'POST /api/testes/resultado': async (req) => {
