@@ -59,6 +59,12 @@ export const NOTAS = [
         depois: 'O endereço /status (menu → "Página de status") mostra, só para leitura, as versões com o que mudou, os tickets por situação e os feedbacks de melhoria, com filtros, busca, último retorno e gráficos. Usa o mesmo login do Radar.',
       },
       {
+        tipo: 'melhoria', status: 'feito', area: 'Qualidade',
+        titulo: 'Quadro de tickets: prioridade, edição, kanban e imagens (/tickets)',
+        antes: 'O ticket só aceitava retorno e troca de situação; não tinha prioridade, não dava para corrigir título ou descrição, a lista tinha um filtro só e as capturas de tela eram descartadas depois da análise da IA.',
+        depois: 'O endereço /tickets (menu → "Tickets") mostra lista e kanban. A lista filtra por situação, tipo, área e prioridade, com busca e ordenação (prioridade, mais recentes, mais antigos, atualizados). No kanban, arrastar o cartão muda a situação. Cada ticket tem prioridade (Crítica, Alta, Média, Baixa ou A definir) e pode ser editado: título, descrição, tipo, área e imagens. As imagens ficam guardadas no ImgBB, fora do servidor. Toda mudança entra no histórico com o nome de quem fez.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Geral',
         titulo: 'Versão no título e notas da versão',
         antes: 'Não havia como saber qual versão estava no ar nem o que mudou.',

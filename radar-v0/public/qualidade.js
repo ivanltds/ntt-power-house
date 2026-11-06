@@ -4,6 +4,7 @@
 
 import { $, $$, esc, api, dateBR, toast } from './common.js';
 import { icon } from './icons.js';
+import { montarTickets } from './tickets-ui.js';
 
 // O login do Radar é um só, usado por várias pessoas ao mesmo tempo: o nome é pedido em cada registro
 // (feedback, retorno de ticket e resultado de cenário) e nunca vem preenchido. A lista só sugere nomes já usados.
@@ -67,7 +68,6 @@ export const partesResultado = (c, R) => [
   { chave: 'bloqueado', rotulo: R.bloqueado, valor: c.bloqueado }, { chave: 'pendente', rotulo: 'Não executado', valor: c.pendente },
 ];
 
-const chipStatus = (s, rot) => `<span class="qa-chip qa-${s}">${esc(rot[s] ?? s)}</span>`;
 
 // ---------- Enviar feedback ----------
 async function reduzir(file) {
@@ -94,7 +94,7 @@ const FEEDBACK = ['feedback', 'message', 'Enviar feedback', () => carregando(), 
       <label class="qa-field"><span>O que aconteceu</span><textarea id="qa-fb-texto" rows="5" maxlength="4000" placeholder="Ex.: Perguntei &quot;quais os resultados neles?&quot; e a resposta trouxe projetos que não estavam na conversa."></textarea></label>
       <div class="qa-imgs">
         <label class="btn sm">${icon('upload', { size: 14 })}Anexar imagem<input id="qa-fb-img" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden></label>
-        <span class="muted small">Até ${q.maxImagens} capturas de tela. Você também pode colar com Ctrl+V. ${q.analiseImagens ? 'A IA examina e descreve o problema; a imagem <b>não é guardada</b>, só o texto.' : 'A IA está desligada neste ambiente: as imagens não serão analisadas.'}</span>
+        <span class="muted small">Até ${q.maxImagens} capturas de tela. Você também pode colar com Ctrl+V. ${q.analiseImagens ? 'A IA examina e descreve o problema.' : 'A IA está desligada neste ambiente: as imagens não serão analisadas.'} ${q.hospedagemImagens ? `A imagem fica anexada ao ticket (guardada no ${esc(q.hospedagemImagens)}, acessível a quem tiver o link): use só telas com dados fictícios.` : 'A imagem <b>não é guardada</b>, só o texto.'}</span>
         <div id="qa-fb-prev" class="qa-prev"></div>
       </div>
       <div class="qa-acoes"><button type="submit" class="btn primary" id="qa-fb-enviar">${icon('send', { size: 15 })}Enviar feedback</button></div>
@@ -142,67 +142,11 @@ const FEEDBACK = ['feedback', 'message', 'Enviar feedback', () => carregando(), 
   };
 }];
 
-// ---------- Tickets ----------
-function ticketHtml(t, rot) {
-  return `<li class="qa-ticket" data-codigo="${esc(t.codigo)}">
-    <button type="button" class="qa-ticket-head" aria-expanded="false">
-      <b class="qa-cod">${esc(t.codigo)}</b>${chipStatus(t.status, rot.status)}<span class="qa-tt">${esc(t.titulo || t.texto.slice(0, 80))}</span>
-      <span class="muted small">${esc(rot.areas[t.area] ?? t.area)} · ${esc(rot.tipos[t.tipo] ?? t.tipo)} · ${esc(t.nome)} · ${dateBR(t.criadoEm)} · ${esc(t.versao)}${t.cenario ? ` · cenário ${esc(t.cenario)}` : ''}</span>
-    </button>
-    <div class="qa-ticket-body hidden">
-      <p class="qa-texto">${esc(t.texto)}</p>
-      ${t.descricaoImagens?.length ? `<p class="small"><b>Descrição das imagens (IA):</b></p><ul class="small">${t.descricaoImagens.map((d) => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}
-      ${t.historico.length ? `<ol class="qa-hist">${t.historico.map((h) => `<li><span class="muted small">${horaBR(h.em)} · ${esc(h.autor)} · ${esc(h.versao ?? '')}</span>${h.de !== h.para ? `<span class="small">${esc(rot.status[h.de])} → <b>${esc(rot.status[h.para])}</b></span>` : ''}${h.texto ? `<p>${esc(h.texto)}</p>` : ''}</li>`).join('')}</ol>` : '<p class="muted small">Sem retornos ainda.</p>'}
-      <form class="qa-form qa-retorno">
-        <div class="qa-row">
-          <label class="qa-field"><span>Situação</span><select name="status">${Object.entries(rot.status).map(([k, v]) => `<option value="${k}"${k === t.status ? ' selected' : ''}>${esc(v)}</option>`).join('')}</select></label>
-          ${campoNome('name="autor"')}
-        </div>
-        <label class="qa-field"><span>Retorno</span><textarea name="texto" rows="2" maxlength="2000" placeholder="Ex.: Corrigido na V0.0.2: a pergunta agora mantém os projetos da resposta anterior. Pode retestar."></textarea></label>
-        <div class="qa-acoes"><button type="submit" class="btn sm primary">${icon('check', { size: 14 })}Registrar retorno</button></div>
-      </form>
-    </div>
-  </li>`;
-}
-
-const FILTROS_TICKET = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', todos: 'Todos' };
-
-const TICKETS = ['tickets', 'files', 'Tickets', () => carregando(), async (body, show) => {
-  const q = await dados(true);
-  const rot = { ...q.rotulos };
-  let filtro = 'abertos';
-  const abertos = ['aberto', 'em_correcao', 'corrigido'];
+// ---------- Tickets: o mesmo quadro da página /tickets (lista, kanban, edição) ----------
+const TICKETS = ['tickets', 'files', 'Tickets', () => carregando(), async (body) => {
   $('.help-body > p.muted', body)?.remove();
-  body.insertAdjacentHTML('beforeend', `
-    <p>Tickets abertos por feedback ou por falha no roteiro de testes. Quando um ticket for corrigido, registre o retorno e mude a situação para "Corrigido, aguardando reteste"; quem abriu retesta e marca "Validado".</p>
-    <div class="qa-toolbar"><div class="theme-seg" role="radiogroup" aria-label="Filtro">${Object.entries(FILTROS_TICKET).map(([k, v]) => `<button type="button" role="radio" data-filtro-t="${k}">${v}</button>`).join('')}</div>
-      <input id="qa-t-busca" type="search" placeholder="Buscar por código, nome ou texto" aria-label="Buscar tickets"></div>
-    <ul id="qa-t-lista" class="qa-tickets"></ul>${listaNomes(q)}`);
-  const lista = $('#qa-t-lista', body);
-  const pintar = () => {
-    const termo = $('#qa-t-busca', body).value.trim().toLowerCase();
-    const ts = q.tickets.filter((t) => (filtro === 'todos' || (filtro === 'abertos' ? abertos.includes(t.status) : t.status === 'corrigido'))
-      && (!termo || `${t.codigo} ${t.nome} ${t.titulo} ${t.texto}`.toLowerCase().includes(termo)));
-    $$('[data-filtro-t]', body).forEach((b) => { const on = b.dataset.filtroT === filtro; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
-    lista.innerHTML = ts.length ? ts.map((t) => ticketHtml(t, rot)).join('') : `<li class="muted">Nenhum ticket ${filtro === 'todos' ? 'registrado' : 'nesta situação'}.</li>`;
-    $$('.qa-ticket', lista).forEach((li) => {
-      const head = $('.qa-ticket-head', li);
-      head.onclick = () => { const ab = head.getAttribute('aria-expanded') !== 'true'; head.setAttribute('aria-expanded', ab); $('.qa-ticket-body', li).classList.toggle('hidden', !ab); };
-      $('.qa-retorno', li).onsubmit = async (e) => {
-        e.preventDefault();
-        const f = e.target;
-        try {
-          await api('/api/feedback/atualizar', { codigo: li.dataset.codigo, status: f.status.value, texto: f.texto.value, autor: f.autor.value });
-          toast(`Retorno registrado no ${li.dataset.codigo}.`);
-          cache = null;
-          show('tickets');
-        } catch (err) { toast(err.message, 'error'); }
-      };
-    });
-  };
-  $$('[data-filtro-t]', body).forEach((b) => (b.onclick = () => { filtro = b.dataset.filtroT; pintar(); }));
-  $('#qa-t-busca', body).oninput = pintar;
-  pintar();
+  body.insertAdjacentHTML('beforeend', `<p>Tickets abertos por feedback ou por falha no roteiro de testes. Defina a prioridade, edite, anexe imagens e mude a situação; quem abriu retesta e marca "Validado". Em tela cheia o kanban fica mais confortável.</p><div class="tk-embed"></div>`);
+  await montarTickets($('.tk-embed', body), { compacto: true });
 }];
 
 // ---------- Roteiro de testes ----------
