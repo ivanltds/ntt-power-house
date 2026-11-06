@@ -749,7 +749,18 @@ test('qualidade: ticket com código, mascaramento, falha no roteiro abre ticket 
   const s1 = q.resumo('V0.0.1');
   assert.equal(s1.geral.ok, 1);
   assert.equal(s1.geral.falha, 1);
-  assert.equal(s1.geral.pendente, ROTEIRO.length * 3 - 2);
+  assert.equal(s1.geral.pendente, ROTEIRO.length - 2, 'cada cenário conta uma vez');
+  // Reteste por outra pessoa substitui: vale o resultado mais recente, sem somar execuções.
+  q.registrar({ versao: 'V0.0.1', cenario: 'C02', analista: 'Carla', resultado: 'ok' });
+  const s1b = q.resumo('V0.0.1');
+  assert.equal(s1b.geral.ok + s1b.geral.falha + s1b.geral.bloqueado + s1b.geral.pendente, ROTEIRO.length);
+  assert.equal(s1b.geral.ok, 2);
+  assert.equal(s1b.geral.falha, 0);
+  const c02 = s1b.porCenario.find((c) => c.id === 'C02');
+  assert.equal(c02.situacao, 'ok');
+  assert.equal(c02.analista, 'Carla');
+  assert.equal(c02.registros, 2);
+  assert.ok(s1b.regra.includes('uma vez'));
   q.atualizar('CR-002', { status: 'corrigido', texto: 'Corrigido, pode retestar.', autor: 'Claude', versao: 'V0.0.2' });
   // Versão nova: roteiro zerado; tickets continuam e o histórico da anterior fica disponível.
   const q2 = new QualityStore(file);
@@ -841,4 +852,22 @@ test('roteiro: evidências de Falhou vão para o ticket do cenário; reteste som
   const ok = q.registrar({ versao: 'V0.0.1', cenario: 'C01', analista: 'Bia', resultado: 'ok', imagens: [img(3)] });
   assert.equal(ok.ticket, null);
   assert.throws(() => q.registrar({ versao: 'V0.0.1', cenario: 'C03', analista: 'Bia', resultado: 'falha', comentario: 'x', imagens: [{ url: 'http://inseguro/a.jpg' }] }), /Link de imagem/);
+});
+
+test('tickets: apagar esconde o ticket das listas e números, guarda quem e por quê, e não reaproveita o código', () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-del-')), 'qualidade.json');
+  const q = new QualityStore(file);
+  const a = q.abrir({ nome: 'Ana', texto: 'Duplicado do outro ticket.', versao: 'V0.0.1' });
+  q.abrir({ nome: 'Bia', texto: 'Problema real na busca.', versao: 'V0.0.1' });
+  assert.throws(() => q.excluir(a.codigo, { autor: '' }), /seu nome/);
+  const r = q.excluir(a.codigo, { autor: 'Carla', motivo: 'Duplicado do CR-002', versao: 'V0.0.1' });
+  assert.equal(r.excluido.autor, 'Carla');
+  assert.equal(q.excluir(a.codigo, { autor: 'Carla' }), null, 'já apagado');
+  const q2 = new QualityStore(file);
+  assert.deepEqual(q2.tickets().map((t) => t.codigo), ['CR-002']);
+  assert.equal(q2.resumo('V0.0.1').tickets.aberto, 1);
+  assert.equal(q2.ticket(a.codigo), null);
+  assert.equal(q2.data.tickets.length, 2, 'o registro continua no arquivo');
+  assert.throws(() => q2.editar(a.codigo, { autor: 'X', prioridade: 'alta' }) ?? (() => { throw new Error('nulo'); })(), /nulo/);
+  assert.equal(q2.abrir({ nome: 'Ana', texto: 'Mais um problema aqui.', versao: 'V0.0.1' }).codigo, 'CR-003');
 });

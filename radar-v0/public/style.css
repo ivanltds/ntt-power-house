@@ -1345,3 +1345,8 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 .tk-multi-pop input { accent-color: var(--brand); }
 .tk-multi-acoes { display: flex; gap: 4px; border-bottom: 1px solid var(--line-2); padding-bottom: 4px; margin-bottom: 2px; }
 #tk-detalhe .tk-fechar { margin-left: 0; margin-right: 6px; }
+.tk-apagar { color: var(--bad); margin-left: auto; }
+.tk-apagar-ok { background: var(--bad); border-color: var(--bad); color: #fff; }
+.tk-apagar-ok:hover { background: var(--bad); filter: brightness(.92); }
+.tk-excluir[hidden], .tk-mover[hidden] { display: none; }
+.tk-excluir { border-top: 1px dashed var(--line); padding-top: 12px; margin-top: 12px; max-width: none; }

@@ -231,7 +231,13 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
         </div>
         <label class="qa-field"><span>Retorno <em class="muted">(opcional ao mudar situação ou prioridade)</em></span><textarea name="nota" rows="2" maxlength="2000" placeholder="Ex.: Corrigido na V0.0.2: a pergunta agora mantém os projetos da resposta anterior. Pode retestar."></textarea></label>
         ${campoNome()}
-        <div class="qa-acoes"><button type="submit" class="btn sm primary">${icon('check', { size: 14 })}Registrar</button><button type="button" class="btn sm" data-editar>${icon('edit', { size: 14 })}Editar ticket</button></div>
+        <div class="qa-acoes"><button type="submit" class="btn sm primary">${icon('check', { size: 14 })}Registrar</button><button type="button" class="btn sm" data-editar>${icon('edit', { size: 14 })}Editar ticket</button><button type="button" class="btn sm tk-apagar" data-apagar>${icon('trash', { size: 14 })}Apagar ticket</button></div>
+      </form>
+      <form class="qa-form tk-excluir" hidden>
+        <p class="alert error">${icon('alert', { size: 16 })}<span>O ${esc(t.codigo)} vai sumir da lista, do kanban, da página de status e dos números. O registro fica guardado no servidor com o seu nome e o motivo.</span></p>
+        <label class="qa-field"><span>Motivo <em class="muted">(opcional)</em></span><input name="motivo" maxlength="500" placeholder="Ex.: Duplicado do CR-004; aberto por engano."></label>
+        ${campoNome()}
+        <div class="qa-acoes"><button type="submit" class="btn sm tk-apagar-ok">${icon('trash', { size: 14 })}Apagar ${esc(t.codigo)}</button><button type="button" class="btn sm" data-nao-apagar>Cancelar</button></div>
       </form>
       <h4>Histórico</h4>
       ${historicoHtml(t, rot)}`}`;
@@ -240,6 +246,19 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
 
     if (!editando) {
       $('[data-editar]', dlg).onclick = () => detalhe(codigo, true);
+      const fx = $('.tk-excluir', dlg);
+      $('[data-apagar]', dlg).onclick = () => { fx.hidden = false; $('.tk-mover', dlg).hidden = true; fx.motivo.focus(); };
+      $('[data-nao-apagar]', dlg).onclick = () => { fx.hidden = true; $('.tk-mover', dlg).hidden = false; };
+      fx.onsubmit = async (e) => {
+        e.preventDefault();
+        if (!pedirNome(fx.autor)) return;
+        try {
+          await api('/api/tickets/excluir', { codigo, autor, motivo: fx.motivo.value });
+          q.tickets = q.tickets.filter((x) => x.codigo !== codigo);
+          toast(`${codigo} apagado.`);
+          voltar();
+        } catch (err) { toast(err.message, 'error'); }
+      };
       $('.tk-mover', dlg).onsubmit = async (e) => {
         e.preventDefault();
         const fm = e.target;
