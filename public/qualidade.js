@@ -142,11 +142,11 @@ const FEEDBACK = ['feedback', 'message', 'Enviar feedback', () => carregando(), 
   };
 }];
 
-// ---------- Tickets: o mesmo quadro da página /tickets (lista, kanban, edição) ----------
+// ---------- Tickets: lista, kanban e edição (public/tickets-ui.js) ----------
 const TICKETS = ['tickets', 'files', 'Tickets', () => carregando(), async (body) => {
   $('.help-body > p.muted', body)?.remove();
-  body.insertAdjacentHTML('beforeend', `<p>Tickets abertos por feedback ou por falha no roteiro de testes. Defina a prioridade, edite, anexe imagens e mude a situação; quem abriu retesta e marca "Validado". Em tela cheia o kanban fica mais confortável.</p><div class="tk-embed"></div>`);
-  await montarTickets($('.tk-embed', body), { compacto: true });
+  body.insertAdjacentHTML('beforeend', `<p>Tickets abertos por feedback ou por falha no roteiro de testes. Defina a prioridade, edite, anexe imagens e mude a situação; quem abriu retesta e marca "Validado".</p><div class="tk-embed"></div>`);
+  await montarTickets($('.tk-embed', body));
 }];
 
 // ---------- Roteiro de testes ----------

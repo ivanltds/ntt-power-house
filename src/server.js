@@ -331,7 +331,7 @@ const routes = {
     return invalido(() => qualidade.atualizar(b.codigo, { status: b.status || undefined, texto: b.texto, autor: b.autor, versao: VERSAO }) ?? [404, { erro: 'Ticket não encontrado.' }]);
   },
 
-  // Edição pela triagem (tela /tickets e kanban): campos, prioridade, situação, retorno e imagens numa só chamada.
+  // Edição pela triagem (menu Versão → Tickets: lista e kanban): campos, prioridade, situação, retorno e imagens numa só chamada.
   'POST /api/tickets/editar': async (req) => {
     const b = await readJson(req, 8_000_000);
     const t = qualidade.ticket(b.codigo);
@@ -514,12 +514,11 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && url.pathname === '/api/logout') return send(res, 200, { ok: true }, { 'Set-Cookie': auth.logout() });
     if (!auth.isPublic(url.pathname) && !auth.allowed(req)) {
       if (url.pathname.startsWith('/api/')) return send(res, 401, { erro: 'Sessão expirada. Entre novamente.' });
-      res.writeHead(302, { Location: ['/status', '/tickets'].includes(url.pathname) ? `/login?volta=${url.pathname.slice(1)}` : '/login' });
+      res.writeHead(302, { Location: url.pathname === '/status' ? '/login?volta=status' : '/login' });
       return res.end();
     }
     if (url.pathname === '/login') url.pathname = '/login.html';
     if (url.pathname === '/status') url.pathname = '/status.html';
-    if (url.pathname === '/tickets') url.pathname = '/tickets.html';
     if (url.pathname === '/api/sessao') return send(res, 200, { login: auth.enabled });
     if (req.method === 'GET' && url.pathname === '/api/documento/baixar') return download(res, url);
     if (req.method === 'POST' && url.pathname === '/api/projeto/exportar') return exportFile(req, res);

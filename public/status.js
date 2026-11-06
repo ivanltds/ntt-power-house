@@ -68,7 +68,7 @@ function blocoTickets(chave, titulo, descricao, lista) {
   const st = q.rotulos.status;
   const partes = Object.keys(st).map((k) => ({ chave: k, rotulo: st[k], valor: lista.filter((t) => t.status === k).length }));
   return `<section class="st-sec" id="sec-${chave}">
-    <h2>${titulo} <a class="btn sm st-gerir" href="/tickets">Priorizar e editar</a></h2>
+    <h2>${titulo}</h2>
     <p class="muted">${descricao}</p>
     <div class="qa-pizzas">${pizza(`${titulo} por situação`, partes, { tamanho: 150 })}</div>
     <div class="qa-toolbar"><div class="theme-seg" role="radiogroup" aria-label="Filtro de ${esc(titulo)}">${Object.entries(FILTROS).map(([k, v]) => `<button type="button" role="radio" data-sec="${chave}" data-f="${k}" class="${filtro[chave] === k ? 'on' : ''}" aria-checked="${filtro[chave] === k}">${v}</button>`).join('')}</div>
