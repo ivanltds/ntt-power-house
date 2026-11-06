@@ -147,7 +147,8 @@ export class QualityStore {
   }
 
   // Resultado de um analista em um cenário da versão. Falha abre (ou reaproveita) um ticket ligado ao cenário.
-  registrar({ versao, cenario, analista, resultado, comentario = '' }) {
+  // imagens: evidências já hospedadas (links do ImgBB), só para Falhou ou Bloqueado.
+  registrar({ versao, cenario, analista, resultado, comentario = '', imagens = [] }) {
     const c = ROTEIRO.find((x) => x.id === cenario);
     if (!c) throw new Error('Cenário não encontrado.');
     if (!RESULTADO_KEYS.includes(resultado)) throw new Error('Resultado inválido.');
@@ -155,14 +156,19 @@ export class QualityStore {
     if (!nome) throw new Error('Informe o seu nome.');
     const nota = maskSensitive(String(comentario ?? '').trim()).texto.slice(0, 2000);
     if (resultado !== 'ok' && !nota) throw new Error('Conte o que aconteceu de diferente do esperado.');
+    const evidencias = resultado === 'ok' ? [] : imagens.map(anexo);
     const exec = (this.data.execucoes[versao] ??= { inicio: new Date().toISOString(), resultados: {} });
     const porCenario = (exec.resultados[cenario] ??= {});
     const anterior = porCenario[nome];
     let ticket = anterior?.ticket ?? null;
     if (resultado !== 'ok') {
       const aberto = ticket && this.data.tickets.find((t) => t.codigo === ticket && STATUS_ABERTOS.includes(t.status));
-      if (aberto) aberto.historico.push({ em: new Date().toISOString(), autor: nome, de: aberto.status, para: aberto.status, texto: `Novo resultado no reteste: ${RESULTADOS[resultado]}. ${nota}`, versao });
-      else ticket = this.abrir({ nome, texto: nota, area: c.area, tipo: 'problema', titulo: `${c.id} · ${c.titulo}: ${RESULTADOS[resultado].toLowerCase()}`, versao, origem: 'roteiro', cenario: c.id }).codigo;
+      if (aberto) {
+        const cabem = evidencias.slice(0, Math.max(0, MAX_IMAGENS_TICKET - (aberto.imagens ?? []).length));
+        aberto.imagens = [...(aberto.imagens ?? []), ...cabem];
+        aberto.historico.push({ em: new Date().toISOString(), autor: nome, de: aberto.status, para: aberto.status, texto: `Novo resultado no reteste: ${RESULTADOS[resultado]}. ${nota}`, versao, ...(cabem.length ? { alteracoes: [{ campo: 'imagens', adicionadas: cabem.length, removidas: 0 }] } : {}) });
+        aberto.atualizadoEm = new Date().toISOString();
+      } else ticket = this.abrir({ nome, texto: nota, area: c.area, tipo: 'problema', titulo: `${c.id} · ${c.titulo}: ${RESULTADOS[resultado].toLowerCase()}`, versao, origem: 'roteiro', cenario: c.id, imagens: evidencias }).codigo;
     }
     porCenario[nome] = { resultado, comentario: nota, em: new Date().toISOString(), ticket };
     this.save();
