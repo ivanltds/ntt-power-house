@@ -6,13 +6,16 @@ import { $, $$, esc, brl, api, userId, currentUser, tipoLabel, onTab, onUserChan
 import { icon } from './icons.js';
 import { openProject } from './projetos.js';
 
+// [chave, nome curto, ícone, o que responde, pergunta de entrada, para quem]
 const LENTES = [
-  ['negocio', 'Negócio', 'briefcase', 'Onde ganhamos, onde crescer e o que mostrar ao cliente.'],
-  ['tecnica', 'Técnica', 'cpu', 'Sabemos entregar o que vendemos? Onde investir em capacidade?'],
-  ['pipeline', 'Pipeline', 'trending', 'O que está parado, fora do padrão ou em risco.'],
-  ['prevenda', 'Pré-venda', 'search', 'Estamos prontos para a oportunidade? O que reaproveitar?'],
-  ['curadoria', 'Curadoria', 'shield', 'O que está sujo, faltando ou esperando revisão.'],
+  ['negocio', 'Negócio', 'briefcase', 'Onde ganhamos, onde crescer e o que mostrar ao cliente.', 'Onde estamos ganhando e onde crescer?', 'Diretoria e comercial'],
+  ['tecnica', 'Técnica', 'cpu', 'Sabemos entregar o que vendemos? Onde investir em capacidade?', 'Sabemos entregar o que vendemos?', 'Liderança técnica e arquitetura'],
+  ['pipeline', 'Pipeline', 'trending', 'O que está parado, fora do padrão ou em risco.', 'Que propostas precisam de atenção agora?', 'Gestão comercial, toda semana'],
+  ['prevenda', 'Pré-venda', 'search', 'Estamos prontos para a oportunidade? O que reaproveitar?', 'Estamos prontos para uma nova oportunidade?', 'Quem está montando uma proposta'],
+  ['curadoria', 'Curadoria', 'shield', 'O que está sujo, faltando ou esperando revisão.', 'Dá para confiar nos dados da base?', 'Quem cuida da base'],
 ];
+// Lente sugerida pelo perfil (só um destaque na tela inicial; a pessoa escolhe).
+const sugerida = () => (currentUser()?.perfil === 'consultor' ? 'prevenda' : currentUser()?.perfil === 'gestor' ? 'negocio' : null);
 const KEY = 'radar.painel.lente';
 const view = { lente: null, filtros: { segmento: '', area: '', desde: '' }, dados: null, oportunidade: null };
 
@@ -21,8 +24,9 @@ export function initPainel() {
   onUserChange(() => { view.lente = null; if ($('#tab-painel').classList.contains('active')) load(); });
 }
 
-// Lente inicial: a última escolhida; senão, pelo perfil (consultor → Pré-venda, gestor → Negócio).
-const lenteInicial = () => localStorage.getItem(KEY) || (currentUser()?.perfil === 'consultor' ? 'prevenda' : 'negocio');
+// Primeira visita: tela inicial com as perguntas. Depois, volta para a última lente escolhida.
+const lenteInicial = () => localStorage.getItem(KEY) || 'inicio';
+const irPara = (lente) => { view.lente = lente; if (lente !== 'inicio') localStorage.setItem(KEY, lente); render(); window.scrollTo({ top: 0 }); };
 
 async function load() {
   view.lente ??= lenteInicial();
@@ -40,16 +44,19 @@ async function load() {
 // ---------- Peças visuais ----------
 const num = (v, d = 1) => (v == null ? '—' : Number(v).toLocaleString('pt-BR', { maximumFractionDigits: d }));
 const mi = (v) => (v == null ? '—' : `R$ ${num(v / 1e6)} mi`);
-const nTag = (n, amostra = false) => `<span class="pn-n${amostra && n < (view.dados?.amostraMinima ?? 3) ? ' pequena' : ''}" title="${n < (view.dados?.amostraMinima ?? 3) ? 'Amostra pequena: leia como indício, não como conclusão' : 'Tamanho da amostra'}">n = ${n}</span>`;
-const selo = (s) => `<span class="pn-selo ${s.startsWith('IA') ? 'ia' : ''}">${esc(s)}</span>`;
+const pequena = (n) => n < (view.dados?.amostraMinima ?? 3);
+const nTag = (n, amostra = false) => `<span class="pn-n${amostra && pequena(n) ? ' pequena' : ''}" title="Quantos itens da base entram neste cálculo">${amostra && pequena(n) ? `${icon('alert', { size: 12 })}poucos dados (${n}): leia como indício` : `com base em ${n}`}</span>`;
+const SELO = { calculado: ['Calculado da base', 'Conta feita sobre os cadastros, sem interpretação.'], 'IA · sugerido': ['IA · confira antes de usar', 'Extraído dos documentos por IA, sem revisão de uma pessoa.'], 'IA · revisado': ['IA · revisado', 'Extraído por IA e conferido por uma pessoa.'] };
+const selo = (s) => { const [rot, dica] = SELO[s] ?? [s, '']; return `<span class="pn-selo ${s.startsWith('IA') ? 'ia' : ''}" title="${esc(dica)}">${esc(rot)}</span>`; };
 const plural = (n, um, varios) => `${n} ${n === 1 ? um : varios}`;
 const vazio = (txt = 'Sem dados suficientes neste recorte.') => `<p class="muted small">${esc(txt)}</p>`;
 const semValores = () => `<p class="muted small">${icon('lock', { size: 14 })} Valores e margens aparecem só para quem tem permissão de ver valores.</p>`;
 
 // amostra: o cartão mostra uma taxa ou média; com n pequeno, o 'n' fica em destaque (indício, não conclusão).
-function card({ id, pergunta, corpo, origem = 'calculado', n = null, como = '', drill = null, perguntar = null, largo = false, amostra = false }) {
+function card({ id, pergunta, corpo, origem = 'calculado', n = null, como = '', dica = '', drill = null, perguntar = null, largo = false, amostra = false }) {
   return `<section class="pn-card${largo ? ' largo' : ''}" id="pn-${id}" data-card="${id}">
     <header><h4>${esc(pergunta)}</h4>${como ? `<button type="button" class="icon-btn pn-info" title="${esc(`Como calculamos: ${como}`)}" aria-label="Como calculamos">${icon('info', { size: 15 })}</button>` : ''}</header>
+    ${dica ? `<p class="pn-dica">${esc(dica)}</p>` : ''}
     <div class="pn-corpo">${corpo}</div>
     <footer>${selo(origem)}${n != null ? nTag(n, amostra) : ''}<span class="pn-acoes">
       ${perguntar ? `<button type="button" class="btn sm ghost" data-perguntar="${esc(perguntar)}" title="Abrir o chat com esta pergunta">${icon('message', { size: 14 })}Perguntar</button>` : ''}
@@ -93,7 +100,7 @@ const ZONAS = [
 ];
 function quadrante(pontos) {
   if (!pontos.length) return vazio();
-  const chip = (p) => `<a href="#" class="pn-qchip${p.n < (view.dados.amostraMinima ?? 3) ? ' pequena' : ''}" data-drill='${esc(JSON.stringify({ segmentos: [p.segmento] }))}' title="${esc(`${p.segmento}: ${p.prova} entrega(s) com case · ${p.taxa}% de ganho · n = ${p.n}`)}"><b>${esc(p.segmento)}</b><small>${p.taxa}% · ${p.prova} case${p.prova === 1 ? '' : 's'} · n = ${p.n}</small></a>`;
+  const chip = (p) => `<a href="#" class="pn-qchip${p.n < (view.dados.amostraMinima ?? 3) ? ' pequena' : ''}" data-drill='${esc(JSON.stringify({ segmentos: [p.segmento] }))}' title="${esc(`${p.segmento}: ${p.prova} entrega(s) com case · ${p.taxa}% de ganho · n = ${p.n}`)}"><b>${esc(p.segmento)}</b><small>ganha ${p.taxa}% · ${p.prova} case${p.prova === 1 ? '' : 's'} entregue${p.prova === 1 ? '' : 's'}${p.n < (view.dados.amostraMinima ?? 3) ? ' · poucos dados' : ''}</small></a>`;
   return `<div class="pn-quad" role="table" aria-label="Segmentos por zona: taxa de ganho (vertical) e entregas com case (horizontal)">
     <span class="pn-q-y">Taxa de ganho ≥ 50% ↑</span>
     ${ZONAS.map(([z, rot, dica]) => { const ps = pontos.filter((p) => p.zona === z); return `<div class="pn-q-zona z-${z}"><header title="${esc(dica)}"><b>${rot}</b><span class="muted small">${esc(dica)}</span></header>${ps.map(chip).join('') || '<span class="muted small">—</span>'}</div>`; }).join('')}
@@ -122,13 +129,13 @@ function lenteNegocio(n, v) {
       : [[c.ganho.n, 'ganhos', '', { status: ['Vendida', 'Em execução', 'Entregue'] }], [c.aberto.n, 'em aberto', '', { status: ['Em elaboração', 'Enviada', 'Em negociação'] }], [c.perdido.n, 'perdidos', '', { status: ['Perdida'] }]]) + (v ? (n.concentracao ? `<p class="muted small">Os 3 maiores clientes somam ${num(n.concentracao.top3)}% da carteira ganha (${n.concentracao.clientes} clientes).</p>` : '') : semValores()),
   }));
   cards.push(card({
-    id: 'segmentos', amostra: true, pergunta: 'Onde ganhamos?', n: n.porSegmento.reduce((a, s) => a + s.decididos, 0),
+    id: 'segmentos', amostra: true, dica: 'De cada 100 propostas decididas no segmento, quantas ganhamos.', pergunta: 'Onde ganhamos?', n: n.porSegmento.reduce((a, s) => a + s.decididos, 0),
     como: 'Taxa de ganho = ganhas ÷ (ganhas + perdidas), por segmento. Barras cinza: menos de 3 propostas decididas.',
     corpo: barras(n.porSegmento.filter((s) => s.decididos).map((s) => ({ rotulo: s.segmento, valor: s.taxa, n: s.decididos, extra: `${s.ganhos} de ${s.decididos}` })), { max: 100, fmt: (x) => `${num(x, 0)}%`, drill: (i) => ({ segmentos: [i.rotulo] }) }),
     perguntar: 'Em quais segmentos mais ganhamos propostas e por quê?',
   }));
   cards.push(card({
-    id: 'quadrante', amostra: true, pergunta: 'Ganhamos onde sabemos entregar?', largo: false, n: n.quadrante.reduce((a, q) => a + q.n, 0),
+    id: 'quadrante', amostra: true, dica: 'Cada segmento cai numa zona. Núcleo é o ideal; Risco e Conversão pedem ação.', pergunta: 'Ganhamos onde sabemos entregar?', largo: false, n: n.quadrante.reduce((a, q) => a + q.n, 0),
     como: 'Cada ponto é um segmento. Horizontal: projetos entregues com case de sucesso. Vertical: taxa de ganho. Pontos menores: menos de 3 propostas decididas.',
     corpo: quadrante(n.quadrante),
   }));
@@ -160,12 +167,12 @@ function lenteNegocio(n, v) {
 function lenteTecnica(t, v) {
   const cards = [];
   cards.push(card({
-    id: 'matriz', pergunta: 'Onde temos profundidade?', n: t.matriz.n, largo: true,
+    id: 'matriz', dica: 'Quanto mais escuro, mais projetos entregues naquele cruzamento. Clique num número para ver os projetos.', pergunta: 'Onde temos profundidade?', n: t.matriz.n, largo: true,
     como: 'Projetos ENTREGUES por tecnologia e segmento. Frequência de uso não é competência: por isso só entram entregas.',
     corpo: matriz(t.matriz, { drill: (tec, seg) => ({ tecnologias: [tec], segmentos: [seg], status: ['Entregue'] }) }),
   }));
   cards.push(card({
-    id: 'tendencia', pergunta: 'O que está crescendo ou sumindo?', n: t.tendencia.celulas.flat().length ? new Set(t.tendencia.celulas.flat(2)).size : 0, largo: true,
+    id: 'tendencia', dica: 'Leia cada linha da esquerda para a direita: números subindo indicam tecnologia em alta.', pergunta: 'O que está crescendo ou sumindo?', n: t.tendencia.celulas.flat().length ? new Set(t.tendencia.celulas.flat(2)).size : 0, largo: true,
     como: 'Projetos decididos por tecnologia e ano da data de referência.',
     corpo: matriz(t.tendencia, { drill: (tec, a) => ({ tecnologias: [tec], dataDe: `${a}-01-01`, dataAte: `${a}-12-31` }) }),
   }));
@@ -176,12 +183,12 @@ function lenteTecnica(t, v) {
     perguntar: 'Quais riscos e lições se repetem entre os projetos entregues?',
   }));
   cards.push(card({
-    id: 'riscos', pergunta: 'Os riscos que previmos aconteceram?', origem: 'IA · sugerido', n: t.riscosQueAconteceram.length,
+    id: 'riscos', dica: 'Riscos escritos na proposta que viraram problema de verdade no projeto.', pergunta: 'Os riscos que previmos aconteceram?', origem: 'IA · sugerido', n: t.riscosQueAconteceram.length,
     como: 'Risco declarado na proposta que reaparece numa lição do mesmo projeto relatando atraso, extensão ou mudança (2 ou mais palavras em comum).',
     corpo: frases(t.riscosQueAconteceram, (r) => `<li><b>${esc(r.risco)}</b> ${icon('arrowRight', { size: 12 })} ${esc(r.licao)} <span class="muted">· ${projLink(r.projeto, r.cliente)}</span></li>`),
   }));
   cards.push(card({
-    id: 'estimativa', amostra: true, pergunta: 'Nossas estimativas se sustentam?', n: t.estimativa.n,
+    id: 'estimativa', amostra: true, dica: 'Quanto a proposta final ficou acima da primeira estimativa.', pergunta: 'Nossas estimativas se sustentam?', n: t.estimativa.n,
     como: 'Compara a estimativa preliminar com a proposta comercial do mesmo projeto.',
     corpo: numeros([
       [t.estimativa.variacaoValor ? `+${num(t.estimativa.variacaoValor.media)}%` : '—', 'proposta × estimativa (valor)', t.estimativa.variacaoValor ? `de ${num(t.estimativa.variacaoValor.min)}% a ${num(t.estimativa.variacaoValor.max)}%` : 'só com permissão de valores'],
@@ -211,7 +218,7 @@ function lentePipeline(p, v) {
   const cards = [];
   const maxN = Math.max(1, ...p.funil.map((f) => f.n));
   cards.push(card({
-    id: 'alertas', pergunta: 'O que precisa de atenção agora?', n: p.alertas.length, largo: true,
+    id: 'alertas', dica: 'Comece por aqui: cada linha é uma proposta e o motivo do alerta. Use "Copiar aviso" para mandar ao dono.', pergunta: 'O que precisa de atenção agora?', n: p.alertas.length, largo: true,
     como: `Fora da curva: margem 3 p.p. fora da faixa dos projetos ganhos${p.faixaMargem ? ` (${Math.round(p.faixaMargem.min * 100)}% a ${Math.round(p.faixaMargem.max * 100)}%)` : ''}. Parada: 7 dias sem alteração. Incompleta: falta valor, margem, prazo, dono, data ou segmento. Parecida com perdida: similaridade de 50% ou mais com uma proposta perdida.`,
     corpo: p.alertas.length ? `<ul class="pn-alertas">${p.alertas.map((a) => { const [cls, ic, rot] = NIVEL[a.nivel]; return `<li class="${cls}">
       <span class="pn-nivel">${icon(ic, { size: 14 })}${rot}</span><span class="pn-tipo">${TIPO_ALERTA[a.tipo]}</span>
@@ -234,7 +241,7 @@ function lentePipeline(p, v) {
 
 const NIVEL_PRONT = { forte: ['ok', 'checkCircle', 'Forte'], parcial: ['warn', 'alert', 'Parcial'], fraca: ['bad', 'xCircle', 'Fraca'] };
 function lentePrevenda(lista) {
-  if (!lista.length) return card({ id: 'prontidao', pergunta: 'Estamos prontos?', corpo: vazio('Nenhuma oportunidade cadastrada.') });
+  if (!lista.length) return card({ id: 'prontidao', dica: 'Escolha a oportunidade abaixo. Mostramos o quanto já fizemos de parecido e o que dá para reaproveitar.', pergunta: 'Estamos prontos?', corpo: vazio('Nenhuma oportunidade cadastrada.') });
   view.oportunidade = lista.some((o) => o.oportunidade.id === view.oportunidade) ? view.oportunidade : lista[0].oportunidade.id;
   const o = lista.find((x) => x.oportunidade.id === view.oportunidade);
   const [cls, ic, rot] = NIVEL_PRONT[o.nivel];
@@ -274,7 +281,7 @@ function lenteCuradoria(c, pode) {
   const linhaTeste = (p, marcado) => `<li><span>${projLink(p.id, `${p.id} · ${p.titulo || '(sem título)'}`)} <span class="muted">· ${esc(p.cliente)}${p.motivo ? ` · ${esc(p.motivo)}` : ''}</span></span>
     ${pode ? `<button type="button" class="btn sm${marcado ? '' : ' ghost'}" data-teste="${esc(p.id)}" data-valor="${marcado ? '0' : '1'}">${marcado ? 'Voltar aos números' : 'Marcar como teste'}</button>` : ''}</li>`;
   cards.push(card({
-    id: 'testes', pergunta: 'Que cadastros são de teste?', n: c.suspeitos.length + c.testes.length, largo: true,
+    id: 'testes', dica: 'Cadastros de teste distorcem os números. Marcar não apaga nada e dá para desfazer.', pergunta: 'Que cadastros são de teste?', n: c.suspeitos.length + c.testes.length, largo: true,
     como: 'Sugestão por regra: título com "teste", texto aleatório ou curto demais. Marcar como teste tira o projeto dos insights; nada é apagado e dá para desfazer.',
     corpo: `${c.suspeitos.length ? `<h5>Parecem teste (ainda entram nos números)</h5><ul class="pn-testes">${c.suspeitos.map((p) => linhaTeste(p, false)).join('')}</ul>` : '<p class="muted small">Nenhum cadastro com cara de teste.</p>'}
       ${c.testes.length ? `<h5>Marcados como teste (fora dos números)</h5><ul class="pn-testes">${c.testes.map((p) => linhaTeste(p, true)).join('')}</ul>` : ''}
@@ -309,28 +316,61 @@ function transversal(u) {
 }
 
 // ---------- Tela ----------
+// Tela inicial: "O que você quer saber?" com as cinco perguntas, o primeiro destaque de cada uma e como ler os números.
+function inicio(d) {
+  const sug = sugerida();
+  return `<header class="pn-inicio-topo">
+      <h2>O que você quer saber hoje?</h2>
+      <p class="muted">Escolha uma pergunta. Cada uma abre uma visão com os números da base de propostas e cases, explicados e com os projetos por trás.</p>
+    </header>
+    <div class="pn-portas">${[...LENTES].sort((a, b) => (b[0] === sug) - (a[0] === sug)).map(([k, nome, ic, , pergunta, para]) => { const m = d.manchetes[k] ?? []; return `<button type="button" class="pn-porta${k === sug ? ' sugerida' : ''}" data-lente="${k}">
+        <span class="pn-porta-ic">${icon(ic, { size: 20 })}</span>
+        <span class="pn-porta-txt"><span class="pn-porta-para">${esc(para)}${k === sug ? '<b class="pn-sug">sugerido para você</b>' : ''}</span>
+          <strong>${esc(pergunta)}</strong>
+          ${m[0] ? `<span class="pn-porta-m">${esc(m[0].texto)}</span>` : ''}
+          <span class="pn-porta-ir">Abrir ${esc(nome)}${m.length > 1 ? ` · ${m.length} destaques` : ''} ${icon('arrowRight', { size: 14 })}</span></span>
+      </button>`; }).join('')}
+    <section class="pn-comoler" aria-label="Como ler os números">
+      <h3>${icon('info', { size: 15 })}Como ler os números</h3>
+      <ul>
+        <li><b>Em resumo</b>, no topo de cada visão, traz o que pede atenção. Clique num destaque para ir ao gráfico.</li>
+        <li><b>"com base em 5"</b> diz quantos itens entram na conta. Com <span class="pn-n pequena">${icon('alert', { size: 12 })}poucos dados</span>, trate como indício.</li>
+        <li><span class="pn-selo">Calculado da base</span> é conta feita sobre os cadastros. <span class="pn-selo ia">IA · confira antes de usar</span> foi extraído dos documentos.</li>
+        <li><b>Ver projetos</b> abre a lista de projetos que formam aquele número.</li>
+      </ul>
+    </section></div>`;
+}
+
 function render() {
   const d = view.dados;
+  if (view.lente === 'inicio') {
+    $('#painel').innerHTML = inicio(d) + `<p class="muted small pn-rodape">${icon('info', { size: 13 })} Protótipo · ${d.base.projetos} projetos na base${d.base.testesOcultos ? ` (${d.base.testesOcultos} de teste fora dos números)` : ''} · atualizado ${dateBR(d.geradoEm)}.</p>`;
+    bind();
+    return;
+  }
   const pode = Boolean(currentUser()?.pode?.marcarTeste);
-  const [, nome, , desc] = LENTES.find(([k]) => k === view.lente);
+  const [, nome, ic, desc, pergunta, para] = LENTES.find(([k]) => k === view.lente);
   const sel = (id, rot, opcoes, valor) => `<label class="pn-filtro"><span>${rot}</span><select id="${id}"><option value="">${id === 'pn-desde' ? 'todo o período' : 'todos'}</option>${opcoes.map((o) => `<option${String(o) === String(valor) ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select></label>`;
   const filtrosAtivos = view.lente !== 'curadoria' && view.lente !== 'prevenda';
   const L = d.lentes;
   const corpo = { negocio: () => lenteNegocio(L.negocio, d.valores), tecnica: () => lenteTecnica(L.tecnica, d.valores), pipeline: () => lentePipeline(L.pipeline, d.valores), prevenda: () => lentePrevenda(L.prevenda), curadoria: () => lenteCuradoria(L.curadoria, pode) }[view.lente]();
   $('#painel').innerHTML = `
+    <nav class="pn-trilha"><button type="button" class="btn sm ghost" data-lente="inicio">← Todas as perguntas</button><span class="pn-beta">novo · protótipo</span></nav>
     <header class="pn-topo">
-      <div><h2>Insights <span class="pn-beta">novo · protótipo</span></h2><p class="muted small">${esc(desc)}</p></div>
-      <div class="pn-lentes" role="tablist" aria-label="Lente">${LENTES.map(([k, rot, ic]) => `<button type="button" role="tab" aria-selected="${k === view.lente}" class="${k === view.lente ? 'ativo' : ''}" data-lente="${k}">${icon(ic, { size: 15 })}${rot}</button>`).join('')}</div>
+      <div><p class="pn-porta-para">${icon(ic, { size: 14 })}${esc(nome)} · para ${esc(para.toLowerCase())}</p><h2>${esc(pergunta)}</h2><p class="muted small">${esc(desc)}</p></div>
+      <div class="pn-lentes" role="tablist" aria-label="Trocar de visão">${LENTES.map(([k, rot, ic]) => `<button type="button" role="tab" aria-selected="${k === view.lente}" class="${k === view.lente ? 'ativo' : ''}" data-lente="${k}">${icon(ic, { size: 15 })}${rot}</button>`).join('')}</div>
     </header>
     <div class="pn-barra">
       ${filtrosAtivos ? `${sel('pn-seg', 'Segmento', d.opcoes.segmentos, view.filtros.segmento)}${sel('pn-area', 'Prática', d.opcoes.areas, view.filtros.area)}${sel('pn-desde', 'Desde', d.opcoes.anos, view.filtros.desde)}` : `<span class="muted small">${view.lente === 'curadoria' ? 'A curadoria olha a base inteira, inclusive os testes.' : 'A prontidão compara cada oportunidade com a base inteira.'}</span>`}
       <span class="pn-meta muted small" title="${d.base.testesOcultos} cadastro(s) de teste fora dos números">${d.base.projetos} projetos${d.base.testesOcultos ? ` · ${d.base.testesOcultos} teste(s) ocultos` : ''} · atualizado ${dateBR(d.geradoEm)} ${new Date(d.geradoEm).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>
       <button type="button" class="btn sm" id="pn-copiar" title="Copiar as manchetes desta lente para colar num e-mail ou no Teams">${icon('copy', { size: 14 })}Copiar resumo</button>
     </div>
-    <section class="pn-manchetes" aria-label="Manchetes de ${esc(nome)}">${d.manchetes[view.lente].map((m) => `<button type="button" class="pn-manchete" data-ir="${esc(m.card)}"${m.lente ? ` data-lente-ir="${esc(m.lente)}"` : ''}${m.oportunidade ? ` data-op-ir="${esc(m.oportunidade)}"` : ''}><span class="pn-ponto"></span><span>${esc(m.texto)}</span>${icon('chevronRight', { size: 14 })}</button>`).join('') || '<p class="muted small">Nada a destacar neste recorte.</p>'}</section>
+    <h3 class="pn-sec">Em resumo</h3>
+    <section class="pn-manchetes" aria-label="Resumo de ${esc(nome)}">${d.manchetes[view.lente].map((m) => `<button type="button" class="pn-manchete" data-ir="${esc(m.card)}"${m.lente ? ` data-lente-ir="${esc(m.lente)}"` : ''}${m.oportunidade ? ` data-op-ir="${esc(m.oportunidade)}"` : ''}><span class="pn-ponto"></span><span>${esc(m.texto)}</span>${icon('chevronRight', { size: 14 })}</button>`).join('') || '<p class="muted small">Nada a destacar neste recorte.</p>'}</section>
+    <h3 class="pn-sec">Os números por trás</h3>
     <div class="pn-grid">${corpo}</div>
     ${transversal(d.uso)}
-    <p class="muted small pn-rodape">${icon('info', { size: 13 })} Protótipo do discovery r3 com dados fictícios. Números com menos de ${d.amostraMinima} projetos aparecem em cinza. Selo <b>IA · sugerido</b>: extraído automaticamente, sem revisão humana.</p>`;
+    <p class="muted small pn-rodape">${icon('info', { size: 13 })} Protótipo do discovery r3 com dados fictícios. Barras hachuradas e o aviso "poucos dados" marcam contas com menos de ${d.amostraMinima} itens. "IA · confira antes de usar": extraído automaticamente, sem revisão humana.</p>`;
   bind();
 }
 
@@ -341,7 +381,7 @@ function drill(det) {
 
 function bind() {
   const root = $('#painel');
-  $$('[data-lente]', root).forEach((b) => (b.onclick = () => { view.lente = b.dataset.lente; localStorage.setItem(KEY, view.lente); render(); }));
+  $$('[data-lente]', root).forEach((b) => (b.onclick = () => irPara(b.dataset.lente)));
   for (const [id, k] of [['#pn-seg', 'segmento'], ['#pn-area', 'area'], ['#pn-desde', 'desde']]) {
     const el = $(id, root);
     if (el) el.onchange = () => { view.filtros[k] = el.value; load(); };
@@ -364,7 +404,7 @@ function bind() {
     alvo?.classList.add('pn-foco');
     setTimeout(() => alvo?.classList.remove('pn-foco'), 1600);
   }));
-  $('#pn-copiar', root).onclick = async () => {
+  if ($('#pn-copiar', root)) $('#pn-copiar', root).onclick = async () => {
     const [, nome] = LENTES.find(([k]) => k === view.lente);
     const f = Object.entries(view.filtros).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join(', ');
     const txt = [`Radar · Insights ${nome} · ${dateBR(view.dados.geradoEm)}${f ? ` (${f})` : ''}`, ...view.dados.manchetes[view.lente].map((m) => `• ${m.texto}`), '(protótipo com dados fictícios)'].join('\n');
