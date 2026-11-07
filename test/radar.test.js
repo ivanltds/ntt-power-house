@@ -897,3 +897,50 @@ test('relatório para agentes: exige chave própria, é só leitura e não expõ
   assert.equal(r.resumo.porCenario.length, ROTEIRO.length);
   assert.equal(q.ticket(t.codigo).imagens[0].apagar, 'https://ibb.co/apagar/123', 'não altera o dado guardado');
 });
+
+test('insights por lente: manchetes por regra, permissão de valores, teste fora dos números e resumo sem valores', async () => {
+  const { montarPainel, resumoExecutivo, pareceTeste, reaisCitados, prontidao } = await import('../src/painel.js');
+  const { usuarioRelatorio } = await import('../src/relatorio.js');
+  const gestor = engine.user('u-gestor');
+  const consultor = engine.user('u-consultor');
+  const ops = engine.opportunities;
+  const g = montarPainel(engine.repo, gestor, { oportunidades: ops });
+  const c = montarPainel(engine.repo, consultor, { oportunidades: ops });
+  for (const l of ['negocio', 'tecnica', 'pipeline', 'prevenda', 'curadoria']) assert.ok(g.manchetes[l].length >= 1 && g.manchetes[l].length <= 4, l);
+  assert.ok(g.lentes.negocio.carteira.ganho.valor > 0);
+  // Sem verValores: nenhum valor ou margem sai do servidor.
+  assert.equal(c.lentes.negocio.carteira.ganho.valor, null);
+  assert.equal(c.lentes.negocio.margemPorDuracao, null);
+  assert.equal(c.lentes.tecnica.plataforma, null);
+  assert.ok(c.lentes.pipeline.funil.every((f) => f.valor === null));
+  assert.ok(!JSON.stringify(c.lentes.negocio.pacotes).includes('valorMedio":1'));
+  // Confidencial fica fora para quem não pode ver.
+  assert.ok(c.base.visiveis < g.base.visiveis);
+  // Taxa sempre com o n.
+  assert.ok(g.lentes.negocio.porSegmento.every((s) => Number.isInteger(s.decididos)));
+  // Regras auxiliares.
+  assert.equal(pareceTeste({ titulo: 'TESTE X' }), 'Título com cara de teste');
+  assert.ok(pareceTeste({ titulo: 'sbdmbsdkjasdk' }));
+  assert.equal(pareceTeste({ titulo: 'Plataforma de dados para redução de perdas' }), null);
+  assert.equal(reaisCitados('recuperação estimada de R$ 18 milhões no primeiro ano'), 18e6);
+  assert.equal(reaisCitados('Economia de R$ 450 mil'), 450e3);
+  // Prontidão: oportunidade de Utilities encontra o P001 entregue com case.
+  const utilities = g.lentes.prevenda.find((p) => p.oportunidade.segmento === 'Utilities / Energia');
+  assert.ok(utilities.similares.some((s) => s.id === 'P001' && s.case));
+  assert.equal(prontidao({ segmento: 'Inexistente', servicos: [], tecnologias: [] }, []).nivel, 'fraca');
+  // Marcar como teste tira o projeto dos números e volta ao desmarcar.
+  const antes = g.lentes.negocio.carteira.ganho.n;
+  assert.equal(engine.repo.marcarTeste('P001', true, gestor).teste, true);
+  const g2 = montarPainel(engine.repo, gestor, { oportunidades: ops });
+  assert.equal(g2.lentes.negocio.carteira.ganho.n, antes - 1);
+  assert.equal(g2.base.testesOcultos, 1);
+  assert.ok(g2.lentes.curadoria.testes.some((t) => t.id === 'P001'));
+  engine.repo.marcarTeste('P001', false, gestor);
+  assert.equal(montarPainel(engine.repo, gestor).lentes.negocio.carteira.ganho.n, antes);
+  // Resumo do agente: sem valores por padrão e sem listas de projetos.
+  const r = resumoExecutivo(montarPainel(engine.repo, usuarioRelatorio({}), { oportunidades: ops }));
+  assert.equal(r.incluiValores, false);
+  assert.equal(r.numeros.carteira.ganho.valor, null);
+  assert.ok(Array.isArray(r.manchetes.negocio));
+  assert.equal(usuarioRelatorio({ RADAR_RELATORIO_VALORES: '1' }).verValores, true);
+});

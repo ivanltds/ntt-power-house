@@ -3,6 +3,7 @@ import { icon, hydrateIcons } from './icons.js';
 import { initProjects, openProject, openProjectForm } from './projetos.js';
 import { initUploads } from './upload.js';
 import { initInsights } from './insights.js';
+import { initPainel } from './painel.js';
 import { showGuide, showTech } from './ajuda.js';
 import { showSdlc } from './sdlc.js';
 import { VERSAO, showReleaseNotes } from './versao.js';
@@ -49,6 +50,7 @@ async function init() {
   initProjects();
   initUploads();
   initInsights();
+  initPainel();
   initActivities();
   newConversation();
   loadConversations();

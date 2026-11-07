@@ -26,7 +26,8 @@ import { ROOT, DB_PATH, STORE_PATH, AUDITORIA_DIR, CONVERSAS_PATH, CORPUS_DIR, D
 import { QualityStore, ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, MAX_IMAGENS, MAX_IMAGENS_TICKET, PRIORIDADES, lerImagens } from './qualidade.js';
 import { criarHospedagem, hospedarTodas } from './imagens.js';
 import { VERSAO } from './version.js';
-import { criarAcessoRelatorio, montarRelatorio, RELATORIO_PATH } from './relatorio.js';
+import { criarAcessoRelatorio, montarRelatorio, RELATORIO_PATH, RELATORIO_INSIGHTS_PATH, usuarioRelatorio } from './relatorio.js';
+import { montarPainel, resumoExecutivo } from './painel.js';
 
 loadEnv(path.join(ROOT, '.env'));
 
@@ -87,6 +88,10 @@ function registrarMascaramento(contexto, user, achados) {
 }
 // Qualidade da versão: feedbacks com código de correção e roteiro regressivo (só texto em disco).
 const qualidade = new QualityStore(path.join(DATA_DIR, 'qualidade.json'));
+
+function painelPara(user, filtros = {}) {
+  return montarPainel(engine.repo, user, { oportunidades: engine.opportunities, turnos: audit.read(audit.turnsFile), eventos: audit.read(audit.eventsFile), filtros });
+}
 // Imagens dos tickets vão para o ImgBB (IMGBB_API_KEY); sem a chave, não são guardadas.
 const hospedagem = criarHospedagem();
 const AMOSTRAS = path.join(ROOT, 'amostras');
@@ -506,6 +511,23 @@ const routes = {
   }),
 
   'GET /api/insights': (req, url) => engine.repo.insights(engine.user(url.searchParams.get('userId'))),
+
+  // Insights por lente (discovery r3): Negócio, Técnica, Pipeline, Pré-venda e Curadoria.
+  'GET /api/painel': (req, url) => painelPara(engine.user(url.searchParams.get('userId')), {
+    segmento: url.searchParams.get('segmento') || null,
+    area: url.searchParams.get('area') || null,
+    desde: url.searchParams.get('desde') || null,
+  }),
+
+  'POST /api/projeto/teste': async (req) => {
+    const b = await readJson(req, 10_000);
+    const user = engine.user(b.userId);
+    if (!can(user, 'marcarTeste')) return [403, { erro: PROIBIDO.marcarTeste }];
+    const r = engine.repo.marcarTeste(String(b.id ?? ''), Boolean(b.teste), user);
+    if (!r) return [404, { erro: 'Projeto não encontrado.' }];
+    audit.logEvent({ tipo: 'projeto_teste', projeto_id: r.id, teste: r.teste, usuario: user.id });
+    return r;
+  },
 };
 
 const server = http.createServer(async (req, res) => {
@@ -520,12 +542,14 @@ const server = http.createServer(async (req, res) => {
       return send(res, 200, { ok: true }, { 'Set-Cookie': cookie });
     }
     // Leitura para agentes de relatório: chave própria, independente do login da tela.
-    if (url.pathname === RELATORIO_PATH) {
+    if (url.pathname === RELATORIO_PATH || url.pathname === RELATORIO_INSIGHTS_PATH) {
       if (!relatorio.ativo) return send(res, 404, { erro: 'Rota não encontrada' });
       if (req.method !== 'GET') return send(res, 405, { erro: 'Use GET.' });
       if (!relatorio.autorizado(req, url)) return setTimeout(() => send(res, 401, { erro: 'Chave de relatório ausente ou inválida.' }, { 'WWW-Authenticate': 'Bearer' }), 500);
-      audit.logEvent({ tipo: 'relatorio_lido' });
-      return send(res, 200, montarRelatorio(qualidade, VERSAO), { 'Cache-Control': 'no-store' });
+      const insights = url.pathname === RELATORIO_INSIGHTS_PATH;
+      audit.logEvent({ tipo: 'relatorio_lido', rota: insights ? 'insights' : 'qualidade' });
+      const corpo = insights ? { formato: 1, versao: VERSAO, ...resumoExecutivo(painelPara(usuarioRelatorio())) } : montarRelatorio(qualidade, VERSAO);
+      return send(res, 200, corpo, { 'Cache-Control': 'no-store' });
     }
     if (req.method === 'POST' && url.pathname === '/api/logout') return send(res, 200, { ok: true }, { 'Set-Cookie': auth.logout() });
     if (!auth.isPublic(url.pathname) && !auth.allowed(req)) {

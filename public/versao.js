@@ -59,6 +59,12 @@ export const NOTAS = [
         depois: 'O endereço /status (menu → "Página de status") mostra, só para leitura, as versões com o que mudou, os tickets por situação e os feedbacks de melhoria, com filtros, busca, último retorno e gráficos. Usa o mesmo login do Radar.',
       },
       {
+        tipo: 'melhoria', status: 'feito', area: 'Insights',
+        titulo: 'Insights (novo): cinco lentes por perfil (protótipo do discovery r3)',
+        antes: 'A aba Insights era igual para todos, misturava números de negócio com pendências de curadoria e mostrava taxas sem o tamanho da amostra.',
+        depois: 'A aba Insights (novo), ao lado da atual, tem as lentes Negócio, Técnica, Pipeline, Pré-venda e Curadoria. Cada lente traz manchetes geradas por regra, cartões com uma pergunta, o n de cada número, o selo calculado ou IA e o caminho para os projetos. O gestor marca cadastros de teste, que saem dos números sem serem apagados. O resumo das manchetes também sai para agentes de relatório.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
         titulo: 'Tickets: prioridade, edição, kanban e imagens (menu Versão → Tickets)',
         antes: 'O ticket só aceitava retorno e troca de situação; não tinha prioridade, não dava para corrigir título ou descrição, a lista tinha um filtro só e as capturas de tela eram descartadas depois da análise da IA.',

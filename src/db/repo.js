@@ -65,6 +65,9 @@ export class Repo {
     // Adendo 4 (UC11): o histórico passa a registrar também criações, exclusões e exportações.
     const hist = new Set(this.db.prepare('PRAGMA table_info(historico_alteracao)').all().map((c) => c.name));
     if (!hist.has('acao')) this.db.exec("ALTER TABLE historico_alteracao ADD COLUMN acao TEXT NOT NULL DEFAULT 'editar'");
+    // Discovery r3: cadastro de teste fica na base, mas fora dos insights.
+    const proj = new Set(this.db.prepare('PRAGMA table_info(projeto)').all().map((c) => c.name));
+    if (!proj.has('teste')) this.db.exec('ALTER TABLE projeto ADD COLUMN teste INTEGER NOT NULL DEFAULT 0');
   }
 
   // ---------- Registro de atividades (UC11): somente inclusão ----------
@@ -664,6 +667,18 @@ Notas do revisor: ${r.observacoes}` : r.texto,
       historico,
       qualidade: { percentual: Math.round((1 - faltando.length / (campos.length + 3)) * 100), faltando },
     };
+  }
+
+  // Marca ou desmarca um projeto como cadastro de teste (some dos insights; nada é apagado).
+  marcarTeste(id, teste, user) {
+    const p = this.get('SELECT id, teste FROM projeto WHERE id = $id', { $id: id });
+    if (!p) return null;
+    const novo = teste ? 1 : 0;
+    if (p.teste !== novo) {
+      this.run('UPDATE projeto SET teste = $t WHERE id = $id', { $t: novo, $id: id });
+      this.logActivity({ acao: 'editar', entidade: 'projeto', entidade_id: id, campo: 'teste', antes: p.teste ? 'sim' : 'não', depois: novo ? 'sim' : 'não', usuario_id: user?.id ?? null });
+    }
+    return { id, teste: Boolean(novo) };
   }
 
   // Indicadores agregados da base (UC09), sempre restritos ao que o perfil pode ver.
