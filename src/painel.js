@@ -278,13 +278,14 @@ function uso(turnos, eventos, ps) {
 }
 
 // ---------------- Manchetes (regras sobre os números) ----------------
+const pl = (n, um, varios) => `${n} ${n === 1 ? um : varios}`;
 const br = (v) => Number(v).toLocaleString('pt-BR', { maximumFractionDigits: 1 });
 const fmtMi = (v) => `R$ ${(v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} mi`;
 function manchetes(l, valores) {
   const out = { negocio: [], tecnica: [], pipeline: [], prevenda: [], curadoria: [] };
   const n = l.negocio;
   if (valores && n.carteira.ganho.valor) out.negocio.push({ texto: `Carteira ganha de ${fmtMi(n.carteira.ganho.valor)} em ${n.carteira.ganho.n} projetos; ${fmtMi(n.carteira.aberto.valor)} em aberto.`, card: 'carteira' });
-  else out.negocio.push({ texto: `${n.carteira.ganho.n} projetos ganhos, ${n.carteira.aberto.n} em aberto e ${n.carteira.perdido.n} perdidos.`, card: 'carteira' });
+  else out.negocio.push({ texto: `${pl(n.carteira.ganho.n, "projeto ganho", "projetos ganhos")}, ${n.carteira.aberto.n} em aberto e ${pl(n.carteira.perdido.n, "perdido", "perdidos")}.`, card: 'carteira' });
   if (n.concentracao?.maiorSegmento) out.negocio.push({ texto: `${n.concentracao.maiorSegmento.segmento} concentra ${br(n.concentracao.maiorSegmento.pct)}% da carteira ganha.`, card: 'segmentos', filtro: { segmentos: [n.concentracao.maiorSegmento.segmento] } });
   const md = n.margemPorDuracao?.filter((x) => x.margem != null && x.n);
   if (md?.length >= 2) { const lo = md[0], hi = md.at(-1); const d = r1(hi.margem - lo.margem); if (Math.abs(d) >= 3) out.negocio.push({ texto: `Projetos de ${hi.faixa} têm margem ${br(Math.abs(d))} p.p. ${d > 0 ? 'acima' : 'abaixo'} dos de ${lo.faixa} (n = ${lo.n} e ${hi.n}).`, card: 'duracao' }); }
