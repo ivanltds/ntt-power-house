@@ -6,6 +6,12 @@ import crypto from 'node:crypto';
 import { ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, PRIORIDADES } from './qualidade.js';
 
 export const RELATORIO_PATH = '/api/relatorio/qualidade';
+// Resumo executivo dos insights (manchetes por lente e números-chave), com a mesma chave.
+export const RELATORIO_INSIGHTS_PATH = '/api/relatorio/insights';
+
+// O agente lê como um usuário sem acesso a confidenciais e, por padrão, sem valores e margens.
+// RADAR_RELATORIO_VALORES=1 inclui valores (decisão do PO; a chave passa a dar acesso a números financeiros).
+export const usuarioRelatorio = (env = process.env) => ({ id: 'relatorio', nome: 'Agente de relatório', perfil: 'relatorio', confidencialidades: ['publica', 'interna'], verValores: env.RADAR_RELATORIO_VALORES === '1' });
 export const RELATORIO_FORMATO = 1;
 
 export function criarAcessoRelatorio(env = process.env) {
