@@ -1487,3 +1487,9 @@ a.pn-cel:hover { outline: 2px solid var(--brand); }
 .pn-sug { margin-left: auto; white-space: nowrap; align-self: flex-start; font-size: 11px; background: var(--brand-soft); border-radius: 999px; padding: 1px 8px; }
 .pn-portas .pn-porta-para { display: flex; width: 100%; }
 .pn-portas .pn-comoler { align-self: stretch; }
+
+/* Chamada temporária de alcance (public/campanha.js) */
+.campanha { display: flex; align-items: center; gap: 12px; padding: 8px 20px; background: linear-gradient(90deg, var(--violet-soft), var(--brand-soft)); border-bottom: 1px solid var(--line); font-size: 13.5px; color: var(--ink); }
+.campanha-emoji { font-size: 20px; line-height: 1; }
+.campanha-txt { flex: 1; min-width: 0; }
+@media (max-width: 720px) { .campanha { flex-wrap: wrap; } .campanha-txt { flex-basis: calc(100% - 60px); } }
