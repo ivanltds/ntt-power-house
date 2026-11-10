@@ -126,6 +126,7 @@ const FEEDBACK = ['feedback', 'message', 'Enviar feedback', () => carregando(), 
     try {
       const r = await api('/api/feedback', { nome, texto: $('#qa-fb-texto', body).value, area: $('#qa-fb-area', body).value, tipo: $('#qa-fb-tipo', body).value, imagens });
       cache = null;
+      document.dispatchEvent(new CustomEvent('radar:feedback-enviado'));
       $('#qa-fb-nome', body).value = '';
       const t = r.ticket;
       out.innerHTML = `<div class="qa-ok-box">${icon('check', { size: 18 })}<div><b>Ticket ${esc(t.codigo)} aberto.</b> Guarde o código para acompanhar a correção em Tickets.

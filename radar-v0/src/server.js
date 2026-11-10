@@ -27,6 +27,7 @@ import { QualityStore, ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, MAX_IMAGENS, M
 import { criarHospedagem, hospedarTodas } from './imagens.js';
 import { VERSAO } from './version.js';
 import { criarAcessoRelatorio, montarRelatorio, RELATORIO_PATH, RELATORIO_INSIGHTS_PATH, usuarioRelatorio } from './relatorio.js';
+import { resumoCampanha } from './campanha.js';
 import { montarPainel, resumoExecutivo } from './painel.js';
 
 loadEnv(path.join(ROOT, '.env'));
@@ -253,11 +254,14 @@ const routes = {
   },
 
   'POST /api/evento': async (req) => {
-    const { tipo, turnoId, projeto_id, doc_id, util, motivo, acao, userId } = await readJson(req);
-    if (!['feedback', 'feedback_motivo', 'abrir_detalhe', 'abrir_fonte', 'reaproveitar'].includes(tipo)) return [400, { erro: 'Tipo de evento inválido.' }];
-    audit.logEvent({ tipo, turnoId, projeto_id, doc_id, util, motivo: motivo ? String(motivo).slice(0, 60) : undefined, acao: acao ? String(acao).slice(0, 30) : undefined, usuario: userId });
+    const { tipo, turnoId, projeto_id, doc_id, util, motivo, acao, userId, campanha, navegador } = await readJson(req);
+    if (!['feedback', 'feedback_motivo', 'abrir_detalhe', 'abrir_fonte', 'reaproveitar', 'campanha'].includes(tipo)) return [400, { erro: 'Tipo de evento inválido.' }];
+    audit.logEvent({ tipo, turnoId, projeto_id, doc_id, util, motivo: motivo ? String(motivo).slice(0, 60) : undefined, acao: acao ? String(acao).slice(0, 30) : undefined, campanha: campanha ? String(campanha).slice(0, 40) : undefined, navegador: navegador ? String(navegador).slice(0, 40) : undefined, usuario: userId });
     return { ok: true };
   },
+
+  // Chamada temporária de alcance (public/campanha.js): navegadores que viram, clicaram, fecharam e tickets enviados.
+  'GET /api/campanha': (req, url) => resumoCampanha(audit.read(audit.eventsFile), url.searchParams.get('id')),
 
   'GET /api/metricas': () => audit.metrics(),
 

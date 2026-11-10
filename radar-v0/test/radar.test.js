@@ -944,3 +944,26 @@ test('insights por lente: manchetes por regra, permissão de valores, teste fora
   assert.ok(Array.isArray(r.manchetes.negocio));
   assert.equal(usuarioRelatorio({ RADAR_RELATORIO_VALORES: '1' }).verValores, true);
 });
+
+test('chamada de alcance: conta navegadores únicos por etapa e tickets do período', async () => {
+  const { resumoCampanha } = await import('../src/campanha.js');
+  const ev = [
+    { ts: '2026-11-01T10:00:00Z', tipo: 'feedback_aberto' },
+    { ts: '2026-11-10T10:00:00Z', tipo: 'campanha', campanha: 'c1', acao: 'visto', navegador: 'a' },
+    { ts: '2026-11-10T10:01:00Z', tipo: 'campanha', campanha: 'c1', acao: 'visto', navegador: 'a' },
+    { ts: '2026-11-10T10:02:00Z', tipo: 'campanha', campanha: 'c1', acao: 'visto', navegador: 'b' },
+    { ts: '2026-11-10T10:03:00Z', tipo: 'campanha', campanha: 'c1', acao: 'clique', navegador: 'a' },
+    { ts: '2026-11-10T10:04:00Z', tipo: 'feedback_aberto' },
+    { ts: '2026-11-10T10:04:01Z', tipo: 'campanha', campanha: 'c1', acao: 'ticket', navegador: 'a' },
+    { ts: '2026-11-10T10:05:00Z', tipo: 'campanha', campanha: 'c1', acao: 'fechar', navegador: 'b' },
+  ];
+  const r = resumoCampanha(ev);
+  assert.equal(r.campanha, 'c1');
+  assert.equal(r.navegadoresQueViram, 2);
+  assert.equal(r.navegadoresQueClicaram, 1);
+  assert.equal(r.taxaDeClique, 50);
+  assert.equal(r.navegadoresQueFecharam, 1);
+  assert.equal(r.ticketsPelaChamada, 1);
+  assert.equal(r.ticketsNoPeriodo, 1);
+  assert.equal(resumoCampanha([]).navegadoresQueViram, 0);
+});
