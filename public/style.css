@@ -1757,3 +1757,21 @@ details.pd-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 .conta-txt small { font-size: 11.5px; color: var(--muted); }
 .conta-btn svg { color: var(--muted); }
 @media (max-width: 720px) { .conta-txt, .conta-btn > svg { display: none; } .conta-btn { padding: 2px; } }
+
+/* "Proposta em foco" na caixa de pergunta, ao lado do clipe (antes "Responder para…", no topo) */
+.ask .focus { position: relative; display: inline-flex; align-items: center; flex: none; min-width: 0; }
+.ask .focus-btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--muted); border-radius: 999px; padding: 5px 10px; font: inherit; font-size: 12.5px; max-width: 220px; cursor: pointer; }
+.ask .focus-btn:hover { color: var(--brand); border-color: var(--brand); }
+.ask .focus-btn.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-ink); font-weight: 600; padding-right: 26px; }
+:root[data-theme="dark"] .ask .focus-btn.on { color: var(--ink); }
+.ask .focus-btn.on .focus-chev { display: none; }
+.ask .focus-btn #focus-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.ask .focus-clear { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: none; color: var(--brand); display: inline-flex; padding: 3px; border-radius: 50%; cursor: pointer; }
+.ask .focus-clear:hover { background: rgba(0,0,0,.08); }
+.ask .focus-pop { top: auto; bottom: calc(100% + 10px); left: 0; right: auto; }
+@media (max-width: 720px) {
+  .ask .focus-btn { max-width: 120px; padding: 5px 8px; }
+  .ask .focus-btn #focus-label { display: none; }
+  .ask .focus-btn.on #focus-label { display: inline; }
+  .ask .focus-pop { position: fixed; top: auto; bottom: 80px; left: 8px; right: 8px; width: auto; max-height: calc(100dvh - 180px); }
+}

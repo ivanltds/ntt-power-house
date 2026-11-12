@@ -86,13 +86,13 @@ const GUIA = [
     <p>👍 conta como referência útil. 👎 pergunta o motivo (Não é parecido, Informação errada, Desatualizado, Outro). Essas avaliações alimentam as <b>Métricas do piloto</b>.</p>
     ${tip('A IA nunca inventa: ela só pode citar o que está nos documentos que você tem permissão de ver. Se não houver evidência, a resposta diz isso.', 'warn')}`],
 
-  ['foco', 'briefcase', 'Responder para… (foco)', () => `
+  ['foco', 'target', 'Proposta em foco', () => `
     <p>Quando você está montando uma proposta, escolha um projeto como <b>foco</b>. A partir daí, cada pergunta considera o cliente, o segmento, as tecnologias, os serviços e o prazo dele, mesmo que você não escreva isso.</p>
     ${steps([
-      `No topo, clique em ${ui(`${icon('briefcase', { size: 13 })} Responder para…`)}.`,
+      `Na caixa de pergunta, ao lado do clipe, clique em ${ui(`${icon('target', { size: 13 })} Proposta em foco`)}.`,
       'Digite parte do cliente, do título ou o código (ex.: <i>"energ"</i>, <i>"P012"</i>). A lista filtra enquanto você digita.',
       `Escolha com o mouse, ou com ${kbd('↑')} ${kbd('↓')} e ${kbd('Enter')}. Projetos <b>Em andamento</b> (em elaboração, enviada, em negociação) aparecem primeiro.`,
-      'O botão fica azul com o nome do cliente e o chat mostra "Respondendo com foco em…".',
+      'O botão fica azul com "Foco: " e o nome do cliente (o X ao lado tira o foco), e o chat mostra "Respondendo com foco em…".',
       'Agora pergunte de forma curta: <i>"algum case parecido?"</i>, <i>"que riscos considerar?"</i>.',
     ])}
     ${flow([['Pergunta curta', '"algum case parecido?"', 'message'], ['+ contexto do foco', 'cliente, segmento, tecnologias, serviços, prazo', 'briefcase', true], ['Busca', 'referências para esse cliente', 'search']])}
