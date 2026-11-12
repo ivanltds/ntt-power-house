@@ -1689,3 +1689,16 @@ details.pd-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 #conv-list .conv-chev { display: flex; color: var(--muted); transition: transform .2s; }
 #conv-list .conv-grupo-sec details[open] .conv-chev { transform: rotate(180deg); }
 #conv-list .conv-grupo-sec ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
+
+/* Lista de conversas em caixas: Favoritas, Grupos e Recentes */
+#conv-list { gap: 8px; }
+#conv-list .conv-box { display: block; background: var(--panel) !important; border: 1px solid var(--line); border-radius: 10px; padding: 4px 4px 6px; box-shadow: none !important; }
+#conv-list .conv-box-head { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding: 6px 6px 4px; }
+#conv-list .conv-box-head svg { color: var(--brand); }
+#conv-list .conv-box-head span { flex: 1; }
+#conv-list .conv-box-head em { font-style: normal; font-weight: 500; color: var(--faint); text-transform: none; }
+#conv-list .box-fav .conv-box-head svg { color: var(--amber); }
+#conv-list .conv-box-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
+#conv-list .conv-box li[data-id]:hover, #conv-list .conv-box li[data-id].active { background: var(--brand-soft); box-shadow: none; }
+#conv-list .box-grupos .conv-grupo-sec summary { padding: 6px 6px 4px; }
+#conv-list .box-grupos .conv-grupo-sec ul { padding-left: 10px; border-left: 2px solid var(--line); margin-left: 12px; }
