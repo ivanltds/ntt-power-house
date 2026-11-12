@@ -1745,3 +1745,15 @@ details.pd-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 #conv-list .box-fav .conv-box-head svg { color: var(--brand); }
 #conv-list .conv-box-head .conv-chev svg, #conv-list .conv-box-head .conv-chev { color: var(--muted); }
 :root[data-theme="dark"] .icon-btn.star.on, :root[data-theme="dark"] .star.on, :root[data-theme="dark"] #conv-list .box-fav .conv-box-head svg { color: #8fb4ff; }
+
+/* Botão de conta no lugar da etiqueta "Visão" e do menu ⋮ (CR-031, revisto): padrão de app, nas cores da página */
+.visao-tag { display: none !important; }
+.conta-btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid transparent; background: none; color: var(--ink-2); font: inherit; padding: 4px 8px 4px 4px; border-radius: 999px; cursor: pointer; }
+.conta-btn:hover, .conta-btn[aria-expanded="true"] { background: var(--line-2); border-color: var(--line); }
+.conta-av { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-soft); color: var(--brand-ink); font-size: 12px; font-weight: 700; letter-spacing: .02em; flex: none; }
+:root[data-theme="dark"] .conta-av { background: #1b2b4a; color: #8fb4ff; }
+.conta-txt { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; text-align: left; }
+.conta-txt b { font-size: 13px; font-weight: 600; color: var(--ink); }
+.conta-txt small { font-size: 11.5px; color: var(--muted); }
+.conta-btn svg { color: var(--muted); }
+@media (max-width: 720px) { .conta-txt, .conta-btn > svg { display: none; } .conta-btn { padding: 2px; } }
