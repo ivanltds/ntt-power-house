@@ -23,7 +23,7 @@ import { STATUS_PROPOSTA, CONFIDENCIALIDADES } from './db/repo.js';
 import { SUPPORTED } from './extract/formats.js';
 import { maskSensitive, maskFields, TERMO_VERSAO } from './sensitive.js';
 import { ROOT, DB_PATH, STORE_PATH, AUDITORIA_DIR, CONVERSAS_PATH, CORPUS_DIR, DATA_DIR } from './config.js';
-import { QualityStore, ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, MAX_IMAGENS, MAX_IMAGENS_TICKET, PRIORIDADES, lerImagens } from './qualidade.js';
+import { QualityStore, roteiroDe, AREAS, TIPOS, STATUS, RESULTADOS, MAX_IMAGENS, MAX_IMAGENS_TICKET, PRIORIDADES, lerImagens } from './qualidade.js';
 import { criarHospedagem, hospedarTodas } from './imagens.js';
 import { VERSAO } from './version.js';
 import { criarAcessoRelatorio, montarRelatorio, RELATORIO_PATH, RELATORIO_INSIGHTS_PATH, usuarioRelatorio } from './relatorio.js';
@@ -293,18 +293,26 @@ const routes = {
 
   // ---------- UC13: termo de uso (uma vez por usuário e por versão) ----------
   // ---------- Qualidade: feedbacks, tickets e roteiro de testes ----------
-  'GET /api/qualidade': () => ({
+  // ?versao=V0.0.1 mostra o roteiro e os resultados de uma versão anterior (arquivada, só leitura).
+  'GET /api/qualidade': (req, url) => {
+    const pedida = url.searchParams.get('versao');
+    const v = pedida && qualidade.versoes(VERSAO).some((x) => x.versao === pedida) ? pedida : VERSAO;
+    return {
     versao: VERSAO,
-    roteiro: ROTEIRO,
+    versaoVista: v,
+    arquivada: v !== VERSAO,
+    versoes: qualidade.versoes(VERSAO),
+    roteiro: roteiroDe(v),
     rotulos: { areas: AREAS, tipos: TIPOS, status: STATUS, resultados: RESULTADOS, prioridades: PRIORIDADES },
     maxImagens: MAX_IMAGENS,
     maxImagensTicket: MAX_IMAGENS_TICKET,
     hospedagemImagens: hospedagem?.nome ?? null,
     analiseImagens: typeof engine.llm.describeFeedback === 'function',
     tickets: qualidade.tickets(),
-    execucao: qualidade.execucao(VERSAO),
-    resumo: qualidade.resumo(VERSAO),
-  }),
+    execucao: qualidade.execucao(v),
+    resumo: qualidade.resumo(v),
+    };
+  },
 
   'POST /api/feedback': async (req) => {
     const b = await readJson(req, 8_000_000);
@@ -558,11 +566,14 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && url.pathname === '/api/logout') return send(res, 200, { ok: true }, { 'Set-Cookie': auth.logout() });
     if (!auth.isPublic(url.pathname) && !auth.allowed(req)) {
       if (url.pathname.startsWith('/api/')) return send(res, 401, { erro: 'Sessão expirada. Entre novamente.' });
-      res.writeHead(302, { Location: url.pathname === '/status' ? '/login?volta=status' : '/login' });
+      const volta = { '/status': 'status', '/insights-novo': 'insights-novo', '/insigths-novo': 'insights-novo' }[url.pathname];
+      res.writeHead(302, { Location: volta ? `/login?volta=${volta}` : '/login' });
       return res.end();
     }
     if (url.pathname === '/login') url.pathname = '/login.html';
     if (url.pathname === '/status') url.pathname = '/status.html';
+    // Insights (novo) fica fora das abas: só por este endereço, enquanto é avaliado (abre a mesma página, direto nele).
+    if (url.pathname === '/insights-novo' || url.pathname === '/insigths-novo') url.pathname = '/index.html';
     if (url.pathname === '/api/sessao') return send(res, 200, { login: auth.enabled });
     if (req.method === 'GET' && url.pathname === '/api/documento/baixar') return download(res, url);
     if (req.method === 'POST' && url.pathname === '/api/projeto/exportar') return exportFile(req, res);

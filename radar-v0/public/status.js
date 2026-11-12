@@ -44,7 +44,7 @@ function versoes() {
       </header>
       <p>${esc(n.resumo)}</p>
       <ul class="st-itens">${n.itens.map((x) => `<li>
-        <details><summary><span class="rn-chip rn-${SIT_NOTA[x.status][1]}">${SIT_NOTA[x.status][0]}</span><span class="muted small">${TIPO[x.tipo][0]} · ${esc(x.area)}</span><b>${esc(x.titulo)}</b></summary>
+        <details><summary><span class="rn-chip rn-${SIT_NOTA[x.status][1]}">${SIT_NOTA[x.status][0]}</span><span class="muted small">${TIPO[x.tipo][0]} · ${esc(x.area)}</span><b>${esc(x.titulo)}</b>${x.tickets?.length ? `<span class="rn-tks">${x.tickets.map((c) => `<code>${esc(c)}</code>`).join(" ")}</span>` : ""}</summary>
         <dl><dt>Antes</dt><dd>${esc(x.antes)}</dd><dt>${x.status === 'feito' ? 'Agora' : 'Próximo passo'}</dt><dd>${esc(x.depois)}</dd></dl></details>
       </li>`).join('')}</ul>
     </article>`;

@@ -1,6 +1,6 @@
 {
   "name": "radar-v0",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "V0 do Radar de Propostas & Cases: base de conhecimento com busca semântica local para validar a hipótese de produtividade na geração de novas propostas.",
   "type": "module",
   "private": true,
