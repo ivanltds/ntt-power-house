@@ -15,3 +15,7 @@ export const PROIBIDO = {
   verAtividades: 'Só o gestor pode consultar o registro de atividades.',
   marcarTeste: 'Só o gestor pode marcar um projeto como teste.',
 };
+
+// D19 (12/11), opção A "demo coerente": cada usuário de demonstração representa uma pessoa responsável por projetos da
+// base piloto, para "Meus projetos" mostrar listas diferentes em cada perfil. Some quando houver login individual (SSO).
+export const PESSOA_DEMO = { 'u-consultor': 'Marina Costa', 'u-gestor': 'Thiago Ramos' };

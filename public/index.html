@@ -65,6 +65,11 @@
           <button id="new-conv" class="btn primary block"><i data-icon="plus"></i>Nova conversa</button>
           <div class="field-icon"><i data-icon="search" data-size="16"></i><input id="conv-search" type="search" aria-label="Buscar conversas" placeholder="Buscar conversas"></div>
           <ul id="conv-list"></ul>
+          <nav class="side-links" aria-label="Ajuda e versão">
+            <button type="button" data-side="ajuda"><i data-icon="help" data-size="16"></i>Como usar o Radar</button>
+            <button type="button" data-side="versao"><i data-icon="tag" data-size="16"></i>Versão, feedback e testes</button>
+            <button type="button" data-side="feedback"><i data-icon="message" data-size="16"></i>Enviar feedback</button>
+          </nav>
           <footer class="made-by"><span>Criado e desenvolvido por</span><span class="impact-logo"><img class="logo-light" src="/img/impactai-claro.png" alt="ImpactAI" width="81" height="22"><img class="logo-dark" src="/img/impactai-escuro.png" alt="ImpactAI" width="81" height="22"></span></footer>
         </aside>
         <div class="chat-main">
@@ -79,6 +84,8 @@
           <form id="ask" class="ask">
             <span id="editando" class="memory editando hidden"><i data-icon="edit" data-size="13"></i>Editando a última pergunta<button type="button" id="editando-cancelar" class="link-btn">Cancelar</button></span>
             <span id="memory" class="memory hidden"></span>
+            <span id="anexos" class="anexos hidden" aria-live="polite"></span>
+            <label class="icon-btn anexar" title="Anexar arquivo para enviar a um projeto (diga o projeto na mensagem)"><i data-icon="paperclip"></i><input type="file" id="anexar" multiple hidden></label>
             <input id="query" autocomplete="off" enterkeyhint="send" aria-label="Pergunta" placeholder="Pergunte sobre propostas, clientes, tecnologias…">
             <button type="submit" class="icon-btn send" title="Enviar"><i data-icon="send"></i></button>
           </form>
@@ -129,7 +136,7 @@
         <label class="pill target" title="Projeto de destino"><i data-icon="folder" data-size="16"></i><select id="upload-target" aria-label="Projeto de destino"></select></label>
       </div>
       <div class="upload-layout">
-        <ul id="job-list" class="jobs"></ul>
+        <div class="jobs-col"><div id="job-lote" class="job-lote"></div><ul id="job-list" class="jobs"></ul></div>
         <div id="job-detail" class="job-detail"></div>
       </div>
     </section>

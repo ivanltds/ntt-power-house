@@ -2,6 +2,7 @@
 // Concentra persistência e consultas combinadas: filtros por facetas, busca textual BM25 (FTS5),
 // agregações para insights e histórico de alterações. Toda consulta aplica o filtro de permissão.
 
+import { PESSOA_DEMO } from '../permissions.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -183,7 +184,7 @@ export class Repo {
 
   users() {
     return this.all("SELECT u.id, u.nome, u.perfil, u.ver_valores, group_concat(c.nivel, '|') AS niveis FROM usuario u LEFT JOIN usuario_confidencialidade c ON c.usuario_id = u.id GROUP BY u.id ORDER BY u.ver_valores, count(c.nivel), u.id").map((r) => ({
-      id: r.id, nome: r.nome, perfil: r.perfil, verValores: r.ver_valores === 1, confidencialidades: split(r.niveis),
+      id: r.id, nome: r.nome, perfil: r.perfil, verValores: r.ver_valores === 1, confidencialidades: split(r.niveis), pessoa: PESSOA_DEMO[r.id] ?? null,
     }));
   }
 
@@ -544,8 +545,9 @@ Notas do revisor: ${r.observacoes}` : r.texto,
     // UC08.6: criados por mim, em que sou o responsável ou em que enviei/revisei documento.
     if (f.meus) {
       params.$eu = user.id;
-      params.$euNome = user.nome;
-      where.push('(p.criado_por = $eu OR p.dono = $euNome OR p.id IN (SELECT projeto_id FROM documento WHERE enviado_por = $eu OR revisado_por = $eu))');
+      params.$euNome = user.pessoa ?? user.nome;
+      // D19: "Meus" = sou o responsável cadastrado (na demonstração, a pessoa que o usuário representa) ou enviei documento.
+      where.push('(p.criado_por = $eu OR p.dono = $euNome OR p.id IN (SELECT projeto_id FROM documento WHERE enviado_por = $eu))');
     }
     if (f.cliente?.trim()) {
       params.$cliente = `%${normalize(f.cliente)}%`;

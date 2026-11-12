@@ -214,7 +214,7 @@ export class UploadService {
   }
 
   // Revisão humana: confirma (com correções) e indexa, ou rejeita.
-  async confirm(id, user, { metadados = {}, projeto = {}, tecnologias, servicos, atualizarProjeto = false, extras = {} }) {
+  async confirm(id, user, { metadados = {}, projeto = {}, tecnologias, servicos, atualizarProjeto = false, atualizarCampos = [], extras = {} }) {
     const job = this.repo.job(id);
     if (!job || job.enviado_por !== user.id) return [404, { erro: 'Processamento não encontrado.' }];
     if (job.status !== 'aguardando_revisao') return [409, { erro: `Processamento está "${job.status}" e não pode ser confirmado.` }];
@@ -293,6 +293,19 @@ export class UploadService {
       if (atualizarProjeto && (tecnologias?.length || servicos?.length)) {
         const p = this.repo.project(projetoId);
         this.repo.updateProject(projetoId, { tecnologias: [...new Set([...p.tecnologias, ...(tecnologias ?? [])])], servicos: [...new Set([...p.servicos, ...(servicos ?? [])])] }, user.id);
+        refreshFicha(this.repo, projetoId, user.id);
+      }
+      // CR-047: dados da ficha do projeto atualizados com o que veio do arquivo, campo a campo, só os que o revisor marcou.
+      // Valor e margem só para quem pode ver valores. Cada mudança entra no histórico do projeto (antes → depois).
+      const PARA_PROJETO = { prazo_meses: 'prazo_meses', data_conteudo: 'data_referencia', valor: 'valor', margem: 'margem' };
+      const mudancas = {};
+      for (const k of Array.isArray(atualizarCampos) ? atualizarCampos : []) {
+        if (!PARA_PROJETO[k] || final[k] == null || final[k] === '') continue;
+        if (['valor', 'margem'].includes(k) && !user.verValores) continue;
+        mudancas[PARA_PROJETO[k]] = final[k];
+      }
+      if (Object.keys(mudancas).length) {
+        this.repo.updateProject(projetoId, mudancas, user.id);
         refreshFicha(this.repo, projetoId, user.id);
       }
       this.repo.updateJob(id, { status: 'indexado', documento_id: docId });

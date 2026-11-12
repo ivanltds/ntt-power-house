@@ -39,7 +39,8 @@ export function initUploads() {
 async function loadProjects() {
   const c = state.ctx.catalogo;
   $('#upload-formats').textContent = `${c.formatosUpload.join(' · ').toUpperCase()} · até ${c.maxUploadMb} MB`;
-  const r = await api(`/api/projetos?userId=${userId()}&tamanho=100&ordenar=titulo`);
+  view.carregandoProjetos = api(`/api/projetos?userId=${userId()}&tamanho=100&ordenar=titulo`);
+  const r = await view.carregandoProjetos;
   view.projetos = r.itens;
   const cur = $('#upload-target').value;
   $('#upload-target').innerHTML = `<option value="">Projeto: detectar automaticamente</option>${r.itens.map((p) => `<option value="${p.id}">${esc(p.cliente)} — ${esc(p.titulo)}</option>`).join('')}`;
@@ -52,6 +53,24 @@ const toBase64 = (buf) => {
   for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
   return btoa(bin);
 };
+
+// CR-046 / CR-049: envio para um projeto já escolhido (pela ficha do projeto ou pelo chat). Devolve os ids dos envios.
+export async function enviarParaProjeto(files, projetoId) {
+  if (!(await ensureTerms())) return [];
+  const aceitos = state.ctx.catalogo.formatosUpload.map((f) => f.toLowerCase());
+  const ids = [];
+  for (const file of files) {
+    if (!aceitos.includes(file.name.split('.').pop().toLowerCase())) { toast(`${file.name}: formato não aceito. Envie ${aceitos.join(', ').toUpperCase()}.`, 'error'); continue; }
+    const enviar = async () => api('/api/upload', { nome: file.name, conteudoBase64: toBase64(await file.arrayBuffer()), userId: userId(), projetoId });
+    try { ids.push((await enviar()).id); } catch (err) {
+      if (await handleTermsError(err)) { try { ids.push((await enviar()).id); } catch (e2) { toast(`${file.name}: ${e2.message}`, 'error'); } } else toast(`${file.name}: ${err.message}`, 'error');
+    }
+  }
+  loadJobs();
+  return ids;
+}
+export async function situacaoEnvio(id) { return api(`/api/upload?id=${encodeURIComponent(id)}&userId=${userId()}`); }
+export function revisarEnvio(id) { view.selecionado = id; openTab('upload'); }
 
 async function sendFiles(files) {
   if (!files.length) return;
@@ -88,6 +107,10 @@ async function loadJobs() {
   }
   $('#badge-upload').textContent = pendentes;
   $('#badge-upload').classList.toggle('hidden', !pendentes);
+  // CR-048: com vários arquivos prontos, aprovar de uma vez os que vieram com destino definido e sem pontos de atenção.
+  const lote = jobs.filter((j) => j.status === 'aguardando_revisao');
+  $('#job-lote').innerHTML = lote.length > 1 ? `<button type="button" class="btn sm" id="job-lote-ok">${icon('check', { size: 14 })}Aprovar os prontos (${lote.length})</button>` : '';
+  $('#job-lote-ok')?.addEventListener('click', () => aprovarLote(lote));
   $('#job-list').innerHTML = jobs.length ? jobs.map((j) => `
     <li data-id="${j.id}" class="${j.id === view.selecionado ? 'active' : ''}" title="${(j.tamanho_bytes / 1024).toFixed(1)} KB · ${new Date(j.criado_em).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}">
       <span class="fmt f-${esc(j.formato)}">${esc(j.formato)}</span>
@@ -102,8 +125,30 @@ async function loadJobs() {
   if (view.selecionado) showJob(view.selecionado, pending);
 }
 
+// Aprovação em lote (CR-048): usa as sugestões do Radar. Só entram os que têm projeto de destino definido (escolhido no
+// envio ou recomendado com segurança) e nenhum alerta; os demais ficam para revisão individual. No fim, um resumo.
+async function aprovarLote(lote) {
+  const resumo = { ok: [], revisar: [], erro: [] };
+  for (const j of lote) {
+    try {
+      const job = await api(`/api/upload?id=${j.id}&userId=${userId()}`);
+      const v = job.sugestao.vinculo;
+      const destino = job.projeto_alvo_id ?? (v.recomendacao === 'existente' ? v.sugestoes[0]?.projeto_id : null);
+      const atencao = job.sugestao.alertas.some((a) => a.nivel !== 'info');
+      if (!destino || atencao) { resumo.revisar.push(job.nome_arquivo); continue; }
+      const c = job.sugestao.campos;
+      await api('/api/upload/confirmar', { id: job.id, userId: userId(), metadados: {}, projeto: { modo: 'existente', id: destino }, tecnologias: c.tecnologias.map((t) => t.valor), servicos: c.servicos.map((t) => t.valor), atualizarProjeto: true, extras: {} });
+      resumo.ok.push(job.nome_arquivo);
+    } catch (err) { resumo.erro.push(`${j.nome_arquivo} (${err.message})`); }
+  }
+  toast(`${resumo.ok.length} aprovado(s)${resumo.revisar.length ? ` · ${resumo.revisar.length} para revisar um a um` : ''}${resumo.erro.length ? ` · ${resumo.erro.length} com erro` : ''}.`, resumo.erro.length ? 'error' : 'info');
+  state.ctx = await api(`/api/contexto?userId=${userId()}`);
+  loadJobs();
+}
+
 async function showJob(id, refreshing) {
   const job = await api(`/api/upload?id=${id}&userId=${userId()}`);
+  await view.carregandoProjetos?.catch(() => {});
   const box = $('#job-detail');
   // Não redesenha um formulário de revisão que o usuário já está editando.
   if (refreshing && box.dataset.job === id && box.dataset.status === job.status && job.status === 'aguardando_revisao') return;
@@ -154,6 +199,15 @@ function reviewForm(job, etapas) {
   const autor = s.arquivo?.autor ?? c.entidades.pessoas?.find((p) => p.papel === 'autor do arquivo')?.valor ?? '';
   const iaOn = s.ia?.provedor === 'deepseek' && !s.ia?.fallback;
   const avisos = s.alertas.filter((a) => a.nivel !== 'info');
+  // CR-046: envio feito de dentro de um projeto (ficha ou chat) já vem com o destino; a escolha só aparece em "Trocar".
+  const alvo = job.projeto_alvo_id ? view.projetos.find((p) => p.id === job.projeto_alvo_id) : null;
+  // CR-047: o que o arquivo traz de diferente da ficha do projeto de destino (prazo, data e, para o gestor, valor e margem).
+  const projAtual = alvo ?? view.projetos.find((p) => p.id === (v.projetoAlvo ?? v.sugestoes[0]?.projeto_id));
+  const difs = projAtual ? [
+    ['prazo_meses', 'Prazo', c.prazo_meses.valor, projAtual.prazo_meses, (x) => `${String(x).replace('.', ',')} meses`],
+    ['data_conteudo', 'Data de referência', c.data_conteudo.valor, projAtual.data_referencia, (x) => String(x).split('-').reverse().join('/')],
+    ...(user.verValores ? [['valor', 'Valor', c.valor.valor, projAtual.valor, brl], ['margem', 'Margem', c.margem.valor, projAtual.margem, (x) => `${Math.round(Number(x) * 100)}%`]] : []),
+  ].filter(([, , novo, antigo]) => novo != null && novo !== '' && String(novo) !== String(antigo ?? '')) : [];
   const conferir = [c.tipo_documental, c.titulo, c.confidencialidade].filter(low).length;
   const destinoCerto = v.recomendacao === 'existente' && Boolean(v.projetoAlvo || (v.sugestoes[0]?.score ?? 0) >= 0.6);
   const pontos = avisos.length + conferir + (destinoCerto ? 0 : 1);
@@ -177,8 +231,9 @@ function reviewForm(job, etapas) {
         <label><span>Acesso ${conf(c.confidencialidade)}</span><select name="confidencialidade" title="${esc(c.confidencialidade.motivos?.join('; ') ?? '')}">${opt(cat.confidencialidades.filter((x) => user.confidencialidades.includes(x)), c.confidencialidade.valor)}</select></label>
       </div>
 
-      <h5 class="sect-title">${icon('folder', { size: 16 })}Em qual projeto entra?${destinoCerto ? '' : ' <em class="confira">confira</em>'}</h5>
-      <div class="dest">
+      <h5 class="sect-title">${icon('folder', { size: 16 })}Em qual projeto entra?${destinoCerto || alvo ? '' : ' <em class="confira">confira</em>'}</h5>
+      ${alvo ? `<p class="dest-fixo">${icon('check', { size: 15 })}<span>Vai para <b>${esc(alvo.titulo)}</b> <small class="muted">${esc(alvo.cliente)}</small></span><button type="button" class="link-btn" id="dest-trocar">Trocar projeto</button></p>` : ''}
+      <div class="dest${alvo ? ' hidden' : ''}">
         ${v.sugestoes.map((p, i) => `<label class="opt"><input type="radio" name="destino" value="${p.projeto_id}"${(v.projetoAlvo ? v.projetoAlvo === p.projeto_id : v.recomendacao === 'existente' && i === 0) ? ' checked' : ''}>
           <span>${esc(p.titulo)}<small>${esc(p.cliente)} · <b title="${esc(p.motivos.join('; '))}">${Math.round(p.score * 100)}% compatível</b></small></span></label>`).join('')}
         <label class="opt"><input type="radio" name="destino" value="__outro"${v.projetoAlvo && !v.sugestoes.some((p) => p.projeto_id === v.projetoAlvo) ? ' checked' : ''}>${icon('search', { size: 16 })}
@@ -202,6 +257,11 @@ function reviewForm(job, etapas) {
         ${chipPicker('servicos', c.servicos.map((t) => t.valor), cat.servicos.map((t) => t.nome), meta(c.servicos))}
         <label class="check"><input type="checkbox" name="atualizarProjeto" checked>Adicionar ao projeto</label>
       </details>
+
+      ${difs.length ? `<details class="sec" open id="atualizar-ficha"><summary>${icon('refresh', { size: 16 })}Atualizar a ficha do projeto<em>${difs.length}</em></summary>
+        <p class="muted small">O arquivo traz dados diferentes da ficha de <b>${esc(projAtual.titulo)}</b>. Marque o que deve ser atualizado (fica no histórico do projeto).</p>
+        ${difs.map(([k, rot, novo, antigo, fmt]) => `<label class="check"><input type="checkbox" name="atualizar_${k}" value="${k}">${esc(rot)}: ${antigo != null && antigo !== '' ? `<s class="muted">${esc(fmt(antigo))}</s> → ` : ''}<b>${esc(fmt(novo))}</b></label>`).join('')}
+      </details>` : ''}
 
       <details class="sec"><summary>${icon('edit', { size: 16 })}Mais campos</summary>
         <div class="form-grid">
@@ -250,6 +310,7 @@ function bindReview(job) {
   $$('input[name=destino]', form).forEach((r) => (r.onchange = toggleNovo));
   toggleNovo();
   $('#quick-ok')?.addEventListener('click', () => form.requestSubmit());
+  $('#dest-trocar')?.addEventListener('click', (e) => { e.target.closest('.dest-fixo').remove(); $('.dest', form).classList.remove('hidden'); });
   bindEntityLists(form);
   $$('[data-alt]', form).forEach((b) => (b.onclick = () => { form.querySelector(`[name="${b.dataset.alt}"]`).value = b.value; }));
   $('#job-reject').onclick = async () => { await api('/api/upload/rejeitar', { id: job.id, userId: userId() }); toast('Documento descartado'); loadJobs(); };
@@ -276,7 +337,8 @@ function bindReview(job) {
       : { modo: 'existente', id: destino === '__outro' ? form.outro.value : destino };
     const send = async (forcar) => {
       try {
-        const r = await api('/api/upload/confirmar', { id: job.id, userId: userId(), metadados, projeto: { ...projeto, forcar }, tecnologias, servicos, atualizarProjeto: form.atualizarProjeto.checked, extras: readExtras(form) });
+        const atualizarCampos = $$('#atualizar-ficha input:checked', form).map((x) => x.value);
+        const r = await api('/api/upload/confirmar', { id: job.id, userId: userId(), metadados, projeto: { ...projeto, forcar }, tecnologias, servicos, atualizarProjeto: form.atualizarProjeto.checked, atualizarCampos, extras: readExtras(form) });
         toast(`${r.documento} está na base`);
         state.ctx = await api(`/api/contexto?userId=${userId()}`);
         loadJobs();
