@@ -1,6 +1,7 @@
 // Tela "Projetos": exploração com filtros combinados e facetas (UC08), detalhe (UC07) e cadastro/edição.
 
-import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText } from './common.js';
+import { enviarParaProjeto, situacaoEnvio, revisarEnvio } from './upload.js';
+import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText, iconeSegmento } from './common.js';
 import { icon } from './icons.js';
 import { ELISTS, elist, bindEntityLists, readEntityLists } from './entidades.js';
 import { ensureTerms, handleTermsError, maskNote, policyLine } from './aviso.js';
@@ -51,7 +52,7 @@ function renderStaticFilters() {
   const f = view.filtros;
   const valores = currentUser()?.verValores;
   $('#proj-static').innerHTML = `
-    <button type="button" class="mine${f.meus ? ' on' : ''}" data-meus aria-pressed="${f.meus}" title="Criados por você, em que você é o responsável ou em que você enviou documentos">${icon('user', { size: 15 })}Meus projetos</button>
+    <button type="button" class="mine${f.meus ? ' on' : ''}" data-meus aria-pressed="${f.meus}" title="Projetos em que você é o responsável ou em que enviou documentos (na demonstração, cada perfil representa uma pessoa responsável)">${icon('user', { size: 15 })}Meus projetos</button>
     <div class="seg" title="Como combinar as palavras da busca"><label><input type="radio" name="modoTexto" value="todas"${f.modoTexto === 'todas' ? ' checked' : ''}>todas as palavras</label>
       <label><input type="radio" name="modoTexto" value="qualquer"${f.modoTexto === 'qualquer' ? ' checked' : ''}>qualquer</label></div>
     <div class="field-icon"><i>${icon('building', { size: 15 })}</i><input data-f="cliente" value="${esc(f.cliente)}" placeholder="Cliente"></div>
@@ -150,13 +151,13 @@ function renderResults(r) {
         <span class="icons">${p.confidencialidade === 'confidencial' ? `<span title="Confidencial">${icon('lock', { size: 15 })}</span>` : ''}${p.origem !== 'seed' ? `<span title="${p.origem === 'upload' ? 'Criado por upload' : 'Cadastrado manualmente'}">${icon(p.origem === 'upload' ? 'upload' : 'edit', { size: 15 })}</span>` : ''}</span></div>
       <h4 title="${esc(p.tecnologias.length ? `Tecnologias: ${p.tecnologias.join(', ')}` : '')}">${esc(p.titulo)}</h4>
       <p class="sub">${esc(p.cliente)}${p.projetos_cliente > 1 ? ` <span class="relacao" title="Projetos com este cliente na base">· ${p.projetos_cliente} projetos com o cliente</span>` : ''}</p>
-      <p class="pseg">${icon('building', { size: 14 })}${esc(p.segmento ?? 'Segmento não informado')}</p>
+      <p class="pseg"><span class="seg-ico" aria-hidden="true">${icon(iconeSegmento(p.segmento), { size: 14 })}</span>${esc(p.segmento ?? 'Segmento não informado')}</p>
       ${p.trecho ? `<p class="snippet">${highlight(p.trecho)}</p>` : ''}
       <div class="pfoot">
         <span class="pmeta">${porte(p)}${p.prazo_meses ? `<span title="Prazo">${icon('clock', { size: 14 })}${String(p.prazo_meses).replace('.', ',')} m</span>` : ''}${p.data_referencia ? `<span title="Data de referência: ${esc(p.data_referencia.split('-').reverse().join('/'))}">${icon('calendar', { size: 14 })}${p.data_referencia.length >= 7 ? `${MESES[Number(p.data_referencia.slice(5, 7)) - 1]}/` : ''}${p.data_referencia.slice(0, 4)}</span>` : ''}</span>
         ${kit(p)}
       </div>
-    </article>`).join('') : `<div class="empty-state">${icon('search', { size: 32 })}<p>Nenhum projeto ${active || view.filtros.q ? 'com esses critérios' : 'cadastrado ainda'}</p>${view.filtros.meus ? '<p class="muted small">"Meus projetos" mostra os que você criou, em que é o responsável ou em que enviou documentos.</p>' : ''}
+    </article>`).join('') : `<div class="empty-state">${icon('search', { size: 32 })}<p>Nenhum projeto ${active || view.filtros.q ? 'com esses critérios' : 'cadastrado ainda'}</p>${view.filtros.meus ? '<p class="muted small">"Meus projetos" mostra os projetos em que você é o responsável ou em que enviou documentos.</p>' : ''}
       <div class="suggest">${active ? `<button type="button" class="chip-btn" data-empty="limpar">${icon('x', { size: 14 })}Limpar filtros</button>` : ''}
         ${view.filtros.q ? `<button type="button" class="chip-btn" data-empty="perguntar">${icon('message', { size: 14 })}Perguntar ao Radar sobre “${esc(view.filtros.q)}”</button>` : ''}
         ${pode('cadastrarProjeto') ? `<button type="button" class="chip-btn" data-empty="novo">${icon('plus', { size: 14 })}Cadastrar projeto</button>` : ''}</div></div>`;
@@ -262,6 +263,8 @@ export async function openProject(id) {
         ${p.descricao ? `<section class="pd-sec"><h5 class="sect-title">${icon('info', { size: 16 })}Contexto</h5><div class="pd-text">${md(p.descricao)}</div></section>` : ''}
         ${insight('kpi', 'chart', 'Resultados')}${insight('licao', 'bulb', 'Lições aprendidas')}${insight('risco', 'alert', 'Riscos')}
         <section class="pd-sec"><h5 class="sect-title">${icon('files', { size: 16 })}Documentos<em>${d.documentos.length}</em></h5>
+          <div class="pd-envio" id="pd-envio"><label class="btn sm">${icon('upload', { size: 14 })}Enviar arquivo para este projeto<input type="file" id="pd-file" multiple hidden></label><span class="muted small">O arquivo já entra neste projeto; você só confere os dados.</span></div>
+          <ul class="pd-envios" id="pd-envios"></ul>
           ${d.documentos.length ? `<ul class="pd-docs">${d.documentos.map((doc) => `<li>
             <div class="pd-doc-top"><a href="#" data-doc="${doc.id}">${icon('file', { size: 16 })}${esc(doc.titulo)}</a>${trustBadge(doc.nivel_confianca)}<button type="button" class="icon-btn sm" data-edit-doc="${doc.id}" title="Editar informações" aria-label="Editar informações de ${esc(doc.titulo)}">${icon('edit', { size: 15 })}</button><button type="button" class="icon-btn sm" data-dl="${doc.id}" title="Baixar arquivo" aria-label="Baixar ${esc(doc.titulo)}">${icon('download', { size: 16 })}</button></div>
             <span class="sub">${esc(tipoLabel(doc.tipo_documental))}${doc.status_documento ? ` · ${esc(doc.status_documento.replace(/_/g, ' '))}` : ''} · ${dateBR(doc.data_conteudo)}${doc.formato ? ` · ${esc(doc.formato.toUpperCase())}` : ''}${doc.tamanho_bytes ? ` · ${kb(doc.tamanho_bytes)}` : ''}
@@ -304,7 +307,32 @@ export async function openProject(id) {
   $$('[data-proj]', body).forEach((a) => (a.onclick = (e) => { e.preventDefault(); openProject(a.dataset.proj); }));
   const close = () => $('#project-dialog').close();
   const edit = () => { close(); openProjectForm(p); };
-  const upload = (e) => { e?.preventDefault(); close(); openTab('upload'); document.dispatchEvent(new CustomEvent('radar:upload-para', { detail: p.id })); };
+  // CR-046: envio pela própria ficha, já vinculado a este projeto. O andamento aparece aqui; "Revisar" abre a conferência
+  // (com o destino fixo) e, ao aprovar, "Abrir projeto" volta para esta ficha.
+  const upload = (e) => { e?.preventDefault(); $('#pd-file').click(); };
+  $('#pd-file').onchange = async (e) => {
+    const files = [...e.target.files];
+    e.target.value = '';
+    if (!files.length) return;
+    const ids = await enviarParaProjeto(files, p.id);
+    const lista = $('#pd-envios');
+    for (const id of ids) {
+      const li = document.createElement('li');
+      li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}<span>Processando…</span>`;
+      lista.appendChild(li);
+      const acompanhar = async () => {
+        if (!li.isConnected) return;
+        const j = await situacaoEnvio(id).catch(() => null);
+        if (!j) return;
+        if (['enviado', 'processando'].includes(j.status)) { setTimeout(acompanhar, 900); return; }
+        li.innerHTML = j.status === 'erro'
+          ? `${icon('xCircle', { size: 14 })}<span><b>${esc(j.nome_arquivo)}</b>: ${esc(j.erro)}</span>`
+          : `${icon('eye', { size: 14 })}<span><b>${esc(j.nome_arquivo)}</b> pronto para conferir</span><button type="button" class="btn sm primary">Revisar</button>`;
+        $('button', li)?.addEventListener('click', () => { close(); revisarEnvio(id); });
+      };
+      acompanhar();
+    }
+  };
   $('#pd-close').onclick = close;
   $('#pd-export').onclick = () => openExportDialog(p);
   $('#pd-edit').onclick = edit;

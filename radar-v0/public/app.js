@@ -1,4 +1,5 @@
-import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode } from './common.js';
+import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode, iconeSegmento, normalizeText } from './common.js';
+import { enviarParaProjeto, situacaoEnvio, revisarEnvio } from './upload.js';
 import { icon, hydrateIcons } from './icons.js';
 import { initProjects, openProject, openProjectForm } from './projetos.js';
 import { initUploads } from './upload.js';
@@ -32,7 +33,10 @@ async function init() {
   const reloadContext = async () => { state.ctx = { ...state.ctx, ...(await api(`/api/contexto?userId=${userId()}`)) }; };
   $('#user').innerHTML = state.ctx.usuarios.map((u) => `<option value="${u.id}">${esc(u.perfil.charAt(0).toUpperCase() + u.perfil.slice(1))}</option>`).join('');
   // CR-031: a etiqueta "Visão: …" mostra sempre qual usuário de demonstração está ativo; clicar abre o menu para trocar.
-  const pintarVisao = () => { $('#visao-nome').textContent = `Visão: ${$('#user').selectedOptions[0]?.textContent ?? ''}`; };
+  const pintarVisao = () => {
+    const u = state.ctx.usuarios.find((x) => x.id === $('#user').value);
+    $('#visao-nome').textContent = `Visão: ${$('#user').selectedOptions[0]?.textContent ?? ''}${u?.pessoa ? ` · ${u.pessoa}` : ''}`;
+  };
   pintarVisao();
   $('#visao-tag').onclick = (e) => { e.stopPropagation(); $('#menu-btn').click(); $('#user').focus(); };
   $('#user').onchange = async () => { pintarVisao(); await reloadContext(); setFocus(null); newConversation(); loadDocs(); loadConversations(); notifyUserChange(); toast(`Agora você vê o Radar como ${$('#user').selectedOptions[0]?.textContent}.`); };
@@ -87,6 +91,8 @@ function setupMenu() {
   document.addEventListener('click', (e) => { if (!e.target.closest('.menu')) toggle(false); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
   // CR-006: botão X no menu (depois de trocar o "Ver como" o menu fica aberto para mostrar as opções do perfil).
+  // CR-026: Ajuda, versão e feedback visíveis na lateral das conversas (antes só no menu ⋮).
+  $$('[data-side]').forEach((b) => (b.onclick = () => ({ ajuda: showGuide, versao: () => showReleaseNotes(), feedback: () => showReleaseNotes('feedback') })[b.dataset.side]()));
   $('#menu-fechar').onclick = (e) => { e.stopPropagation(); toggle(false); btn.focus(); };
   $$('[data-menu]', pop).forEach((b) => (b.onclick = () => {
     toggle(false);
@@ -184,10 +190,66 @@ function renderBriefing() {
   }
 }
 
+// ---- CR-049 / CR-050: arquivos pelo chat ----
+// O clipe anexa arquivos à conversa. Eles ficam pendentes (não entram na base) até a pessoa dizer o projeto, na mesma
+// mensagem ("coloca essa proposta no projeto da Energisul") ou depois ("aquele PDF é do projeto P003"). Com o projeto
+// definido, o arquivo vai para o envio normal (mascaramento, revisão humana) já com o destino fixo.
+const QUER_ENVIAR = /\b(coloc|envi|sub|adicion|anex|mand|guard|salv|inclu|vincul|associ)\w*\b|\b(é|eh|sao|são|vai|vão|vao) (do|da|de|para o|pro|no) projeto\b|\b(arquivo|pdf|documento|anexo|planilha|apresenta\w*)\b.*\bprojeto\b/i;
+let projetosChat = null;
+async function projetoCitado(texto) {
+  projetosChat ??= (await api(`/api/projetos?userId=${userId()}&tamanho=100&ordenar=titulo`)).itens;
+  const t = normalizeText(texto);
+  const cod = /\bp\d{3}\b/.exec(t)?.[0].toUpperCase();
+  if (cod) return projetosChat.find((p) => p.id === cod) ?? null;
+  const palavras = (x) => normalizeText(x).split(/[^a-z0-9]+/).filter((w) => w.length > 3 && !['projeto', 'cliente', 'dados', 'para', 'com'].includes(w));
+  const pontos = projetosChat.map((p) => ({ p, n: [...new Set([...palavras(p.cliente), ...palavras(p.titulo)])].filter((w) => t.includes(w)).length })).sort((a, b) => b.n - a.n);
+  return pontos[0]?.n ? pontos[0].p : null;
+}
+function pintarAnexos() {
+  const a = state.anexos ?? [];
+  $('#anexos').innerHTML = a.map((f, i) => `<span class="anexo">${icon('paperclip', { size: 13 })}${esc(f.name)}<button type="button" data-tirar-anexo="${i}" title="Tirar o anexo" aria-label="Tirar ${esc(f.name)}">${icon('x', { size: 12 })}</button></span>`).join('');
+  $('#anexos').classList.toggle('hidden', !a.length);
+  $$('[data-tirar-anexo]').forEach((b) => (b.onclick = () => { state.anexos.splice(Number(b.dataset.tirarAnexo), 1); pintarAnexos(); }));
+  atualizarEnviar();
+}
+async function enviarAnexos(texto) {
+  const projeto = await projetoCitado(texto) ?? (QUER_ENVIAR.test(texto) && state.foco ? { id: state.foco.id, titulo: state.foco.titulo, cliente: state.foco.cliente } : null);
+  $('#chat .welcome')?.remove();
+  addMsg('user', `${esc(texto)}<span class="anexos-msg">${state.anexos.map((f) => `${icon('paperclip', { size: 12 })}${esc(f.name)}`).join(' ')}</span>`);
+  if (!projeto) {
+    addMsg('bot', `<p class="answer"><span class="ans-par">Para qual projeto vão ${state.anexos.length > 1 ? `os ${state.anexos.length} arquivos` : `o arquivo <b>${esc(state.anexos[0].name)}</b>`}? Diga o cliente ou o código do projeto (ex.: "é do projeto P003" ou "coloca no projeto da Energisul"). Até lá ${state.anexos.length > 1 ? 'eles ficam' : 'ele fica'} só nesta conversa, fora da base.</span></p>`);
+    return;
+  }
+  const arquivos = state.anexos.splice(0);
+  pintarAnexos();
+  const bot = addMsg('bot', `<p class="answer"><span class="ans-par">${icon('loader', { size: 14, cls: 'spin' })}Enviando para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)})…</span></p>`);
+  const ids = await enviarParaProjeto(arquivos, projeto.id);
+  if (!ids.length) { bot.innerHTML = '<p class="error">Nenhum arquivo foi enviado.</p>'; return; }
+  bot.innerHTML = `<p class="answer"><span class="ans-par">Enviei ${ids.length > 1 ? `${ids.length} arquivos` : 'o arquivo'} para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)}). O Radar está lendo; quando ficar pronto, confira os dados antes de entrar na base.</span></p><ul class="chat-envios"></ul>`;
+  for (const id of ids) {
+    const li = document.createElement('li');
+    $('.chat-envios', bot).appendChild(li);
+    const acompanhar = async () => {
+      const j = await situacaoEnvio(id).catch(() => null);
+      if (!j || !li.isConnected) return;
+      if (['enviado', 'processando'].includes(j.status)) { li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}${esc(j.nome_arquivo)}: lendo…`; setTimeout(acompanhar, 900); return; }
+      li.innerHTML = j.status === 'erro' ? `${icon('xCircle', { size: 14 })}${esc(j.nome_arquivo)}: ${esc(j.erro)}`
+        : `${icon('eye', { size: 14 })}<b>${esc(j.nome_arquivo)}</b> pronto para conferir <button type="button" class="btn sm primary">Revisar</button>`;
+      $('button', li)?.addEventListener('click', () => revisarEnvio(id));
+    };
+    acompanhar();
+  }
+}
+
 async function onAsk(e) {
   e?.preventDefault();
   const query = $('#query').value.trim();
   if (!query) return;
+  if (state.anexos?.length && (QUER_ENVIAR.test(query) || await projetoCitado(query))) {
+    $('#query').value = '';
+    atualizarEnviar();
+    return enviarAnexos(query);
+  }
   // CR-044: editar a última pergunta — a pergunta e a resposta anteriores saem da conversa e a nova entra no lugar.
   if (state.editando && state.conv?.id) {
     try { await api('/api/conversa/desfazer-ultima', { id: state.conv.id, userId: userId() }); } catch { /* conversa nova: segue como pergunta normal */ }
@@ -298,6 +360,7 @@ function renderCard(x) {
   return `
   <article class="rcard" data-projeto="${x.projeto_id}">
     <div class="rhead" data-toggle>
+      <span class="seg-ico lg" title="${esc(x.segmento)}" aria-hidden="true">${icon(iconeSegmento(x.segmento), { size: 18 })}</span>
       <div class="rt"><h4>${esc(x.titulo)}</h4><span class="sub">${matchLabel(x.score)} ${esc(x.cliente)} · ${statusDot(x.status)}</span></div>
       ${x.conflitos.length ? `<span class="tag warn" title="${esc(x.conflitos.map((c) => c.motivo).join(' '))}">${icon('alert', { size: 14 })}dados divergentes</span>` : ''}
       <span class="fb">
@@ -309,7 +372,7 @@ function renderCard(x) {
     <div class="fb-why hidden"><span>O que não ajudou?</span>${MOTIVOS.map((m) => `<button type="button" class="pick" data-motivo="${esc(m)}">${esc(m)}</button>`).join('')}</div>
     <div class="rbody">
       <div class="facts">
-        <span title="Segmento">${icon('building', { size: 15 })}${esc(x.segmento)}</span>
+        <span title="Segmento">${icon(iconeSegmento(x.segmento), { size: 15 })}${esc(x.segmento)}</span>
         <span title="Prazo">${icon('clock', { size: 15 })}${d.prazoMeses ? `${d.prazoMeses} meses` : '—'}</span>
         ${d.valor ? `<span title="Preço da proposta">${icon('money', { size: 15 })}${brl(d.valor)}</span>` : d.valor === undefined ? `<span title="O preço e a margem da proposta não aparecem para o seu perfil. Resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos.">${icon('lock', { size: 15 })}preço e margem restritos</span>` : ''}
       </div>
@@ -664,6 +727,7 @@ function setupConversations() {
   // CR-037: botão enviar só com texto; Enter com a caixa vazia não faz nada.
   $('#query').addEventListener('input', atualizarEnviar);
   atualizarEnviar();
+  $('#anexar').onchange = (e) => { state.anexos = [...(state.anexos ?? []), ...e.target.files]; e.target.value = ''; pintarAnexos(); $('#query').focus(); };
   $('#editando-cancelar').onclick = () => { pararEdicao(); $('#query').value = ''; atualizarEnviar(); };
   // CR-035: clicar fora do diálogo de excluir cancela.
   $('#dlg-excluir-conv').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.close('cancelar'); });

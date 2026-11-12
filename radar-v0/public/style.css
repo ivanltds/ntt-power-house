@@ -1630,3 +1630,42 @@ dialog.dlg-confirma .actions { display: flex; justify-content: flex-end; gap: 8p
   .tabs button.active svg { color: var(--on-brand); background: var(--brand-fill); }
   .tabs button.active::after { display: none; }
 }
+/* CR-015: títulos das seções da ficha do projeto maiores e na cor da marca */
+.pd-sec .sect-title { font-size: 15px; font-weight: 700; color: var(--brand-ink); letter-spacing: 0; text-transform: none; padding-bottom: 6px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.pd-sec .sect-title svg { color: var(--brand); }
+:root[data-theme="dark"] .pd-sec .sect-title { color: #8fb4ff; }
+:root[data-theme="dark"] .pd-sec .sect-title svg { color: #8fb4ff; }
+/* CR-026: lateral das conversas no tom da marca, com Ajuda e Versão visíveis; ícone por segmento nos cards */
+.convs { background: linear-gradient(180deg, var(--brand-soft), transparent 70%); border-radius: var(--radius); padding: 10px; }
+:root[data-theme="dark"] .convs { background: linear-gradient(180deg, #13213d, transparent 75%); }
+.side-links { display: flex; flex-direction: column; gap: 2px; border-top: 1px solid var(--line); padding-top: 8px; flex: none; }
+.side-links button { display: flex; align-items: center; gap: 8px; border: 0; background: none; font: inherit; font-size: 13px; color: var(--ink-2); padding: 6px 8px; border-radius: 8px; cursor: pointer; text-align: left; }
+.side-links button:hover { background: var(--panel); color: var(--brand); }
+.side-links button svg { color: var(--brand); }
+.convs .made-by { margin-top: 0; }
+.seg-ico { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 6px; background: var(--brand-soft); color: var(--brand); flex: none; }
+.seg-ico.lg { width: 36px; height: 36px; border-radius: 10px; }
+.pseg .seg-ico { margin-right: 6px; }
+:root[data-theme="dark"] .seg-ico { background: #1b2b4a; color: #8fb4ff; }
+/* Envio (V0.0.2: CR-046 destino fixo, CR-048 aprovação em lote) */
+.jobs-col { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.job-lote:empty { display: none; }
+.job-lote .btn { width: 100%; justify-content: center; }
+.dest-fixo { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--ok-soft); color: var(--ok); border-radius: 8px; padding: 8px 10px; font-size: 13.5px; }
+.dest-fixo span { color: var(--ink); flex: 1; }
+.dest-fixo .link-btn { margin-left: auto; }
+.pd-envio { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.pd-envios { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.pd-envios:empty { display: none; }
+.pd-envios li { display: flex; align-items: center; gap: 8px; font-size: 13px; background: var(--brand-soft); border-radius: 8px; padding: 6px 10px; }
+.pd-envios li span { flex: 1; }
+/* Chat: anexos para enviar a um projeto (CR-049, CR-050) */
+.ask .anexar { cursor: pointer; color: var(--muted); flex: none; }
+.ask .anexar:hover { color: var(--brand); }
+.anexos { display: inline-flex; gap: 4px; flex-wrap: wrap; max-width: 45%; }
+.anexo { display: inline-flex; align-items: center; gap: 4px; background: var(--brand-soft); color: var(--brand-ink); border-radius: 999px; padding: 2px 4px 2px 8px; font-size: 12px; max-width: 220px; }
+:root[data-theme="dark"] .anexo { color: var(--ink); }
+.anexo button { border: 0; background: none; color: inherit; display: inline-flex; padding: 1px; cursor: pointer; }
+.anexos-msg { display: block; margin-top: 4px; font-size: 12px; opacity: .85; }
+.chat-envios { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+.chat-envios li { display: flex; align-items: center; gap: 8px; }

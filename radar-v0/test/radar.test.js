@@ -499,9 +499,13 @@ test('filtro "Meus projetos" traz o que criei, em que sou responsável ou em que
   assert.ok(criados.length && criados.every((id) => meus.includes(id)));
   const comDoc = engine.repo.all("SELECT DISTINCT projeto_id FROM documento WHERE enviado_por = 'u-gestor'").map((p) => p.projeto_id);
   assert.ok(comDoc.every((id) => meus.includes(id)));
-  assert.ok(!meus.includes('P002') || criados.includes('P002') || comDoc.includes('P002'));
+  // D19 (V0.0.2): cada usuário de demonstração representa um responsável da base piloto, então as listas diferem.
+  const doGestor = engine.repo.all("SELECT id FROM projeto WHERE dono = 'Thiago Ramos'").map((p) => p.id);
+  assert.ok(doGestor.length && doGestor.every((id) => meus.includes(id)));
   const consultor = engine.repo.searchProjects({ meus: true }, engine.user('u-consultor'), { tamanho: 100 }).itens.map((p) => p.id);
   assert.ok(consultor.every((id) => !criados.includes(id) || comDoc.includes(id)));
+  assert.ok(['P001', 'P003', 'P011'].every((id) => consultor.includes(id)), 'consultor representa Marina Costa');
+  assert.notDeepEqual(consultor.sort(), meus.sort());
 });
 
 test('exportação gera PPTX, PDF e DOCX válidos, respeita seções escolhidas e esconde valores do consultor (UC10)', async () => {
