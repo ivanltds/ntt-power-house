@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar · Decisões para implementar o MVP</title>
+<style>
+  :root { --bg:#f7f8fa; --card:#fff; --ink:#1b1f29; --muted:#5b6475; --line:#e3e6ec; --accent:#0b5cad; --accent-soft:#e8f1fb;
+          --crit:#b42318; --crit-soft:#fdecea; --warn:#9a6700; --warn-soft:#fff6db; --ok:#1a7f37; --ok-soft:#e6f4ea; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#12151b; --card:#1a1e26; --ink:#e7eaf0; --muted:#9aa3b2; --line:#2b313c; --accent:#6aa9ec; --accent-soft:#1c2a3b;
+            --crit:#f3877c; --crit-soft:#3a1e1c; --warn:#e2b54a; --warn-soft:#372d14; --ok:#6cc58a; --ok-soft:#18301f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .resumo { display:grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap:10px; margin: 20px 0; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .tile b { display:block; font-size:24px; }
+  .tile span { color:var(--muted); font-size:13px; }
+  .nota { background:var(--accent-soft); border-radius:10px; padding:12px 16px; margin: 16px 0; }
+  .filtros { display:flex; flex-wrap:wrap; gap:8px; margin: 18px 0 4px; }
+  .filtros button { border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:999px; padding:5px 12px; font:inherit; font-size:13px; cursor:pointer; }
+  .filtros button[aria-pressed="true"] { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .d { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin: 12px 0; }
+  .d header { display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; }
+  .d .id { font-weight:700; color:var(--accent); font-variant-numeric: tabular-nums; }
+  .d h3 { font-size:16px; margin:0; flex:1 1 300px; }
+  .tag { font-size:12px; border-radius:6px; padding:2px 8px; white-space:nowrap; }
+  .t-bloq { background:var(--crit-soft); color:var(--crit); }
+  .t-cedo { background:var(--warn-soft); color:var(--warn); }
+  .t-dur { background:var(--ok-soft); color:var(--ok); }
+  .tks { color:var(--muted); font-size:13px; margin: 4px 0 8px; }
+  .d dl { display:grid; grid-template-columns: 130px 1fr; gap:6px 14px; margin: 8px 0 0; }
+  .d dt { color:var(--muted); font-size:13px; }
+  .d dd { margin:0; }
+  .d ul { margin: 0; padding-left: 18px; }
+  .rec { font-weight: 600; }
+  table { width:100%; border-collapse: collapse; background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; font-size:14px; }
+  th, td { text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); vertical-align: top; }
+  th { color:var(--muted); font-weight:600; font-size:13px; }
+  tr:last-child td { border-bottom: none; }
+  .legenda { color:var(--muted); font-size:13px; }
+  @media (max-width: 600px) { .d dl { grid-template-columns: 1fr; } .d dt { margin-top: 6px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Radar · Decisões para implementar o MVP</h1>
+  <p class="sub">Levantamento de 12/11/2026, depois da reunião Produto &amp; Técnico. Base: os 31 tickets do MVP que estão abertos ou aguardando reteste no Radar (códigos CR-xxx iguais aos da tela de tickets).</p>
+
+  <div class="resumo">
+    <div class="tile"><b>23</b><span>decisões em aberto</span></div>
+    <div class="tile"><b>11</b><span>travam o início do trabalho</span></div>
+    <div class="tile"><b>13</b><span>tickets prontos para executar, sem decisão pendente</span></div>
+    <div class="tile"><b>23/11 · 27/11 · 3/12</b><span>checkpoint · entrega · pitch</span></div>
+  </div>
+
+  <div class="nota">
+    <b>Como ler:</b> cada decisão traz a pergunta, os tickets afetados, as opções e uma recomendação para o time aprovar ou trocar.
+    <span class="tag t-bloq">Trava o início</span> precisa de resposta antes de começar o ticket.
+    <span class="tag t-cedo">Decidir cedo</span> dá para começar, mas a resposta muda o resultado.
+    <span class="tag t-dur">Decidir durante</span> pode ser resolvida na revisão da tela.
+  </div>
+
+  <h2>Decisões tomadas em 12/11 (Ivan)</h2>
+  <table>
+    <thead><tr><th>Decisão</th><th>Resultado</th><th>Registrado em</th></tr></thead>
+    <tbody>
+      <tr><td>D01 Prioridades</td><td>Tocar todos os tickets do MVP; a meta é gerar uma versão até 13/11.</td><td>—</td></tr>
+      <tr><td>D02 Congelamento</td><td><b>Congelar em 20/11.</b> Depois, só correção de erro do roteiro do pitch.</td><td>—</td></tr>
+      <tr><td>D05 Sinônimos</td><td>No MVP, a IA infere de forma paliativa, sem lista curada. Solução assertiva documentada para depois do MVP (UC03.16).</td><td>CR-012 · <code>docs/sdlc/.../NB-02-adendo-busca-sinonimos-pos-mvp.md</code></td></tr>
+      <tr><td>D06 Busca vazia</td><td>Informar que não encontrou nada relevante e sugerir buscas próximas que tragam resultado.</td><td>CR-012</td></tr>
+      <tr><td>D07 Permissões</td><td><b>Dado sensível só no projeto confidencial.</b> O confidencial continua invisível para o consultor; nos projetos internos, ele vê tudo menos o preço e a margem da proposta (como hoje). Ao negar, avisar e oferecer em uma frase ver projetos parecidos. O CR-043 não procede: o "R$ 18 milhões" do print era resultado do case, não o preço; o ajuste de texto está no CR-051.</td><td>CR-042, CR-043, CR-051</td></tr>
+      <tr><td>D10 Barras</td><td>Recomendação aceita: contribuição de cada critério, de 0 a 100%.</td><td>CR-028</td></tr>
+      <tr><td>D13 Gráfico cruzado</td><td>Recomendação aceita: construir só se o C08 entrar no roteiro do pitch; se não, ajustar o C08.</td><td>CR-040</td></tr>
+      <tr><td>D15 Grupos de conversa</td><td>Recomendação aceita: grupos só organizam, nome livre, um grupo por conversa, com Arquivadas.</td><td>CR-017, CR-018</td></tr>
+      <tr><td>D19 Meus projetos</td><td>Opção A, demo coerente: "Meus" = sou o responsável ou enviei documento; cada usuário de demonstração vira responsável por alguns projetos da base. Login individual (SSO) fica para depois do MVP.</td><td>CR-007, CR-031</td></tr>
+      <tr><td>D20 Download</td><td>Recomendação aceita: arquivo original como padrão. Verificado: os originais enviados estão guardados no servidor.</td><td>CR-033</td></tr>
+      <tr><td>D23 Painel e Insights</td><td>Refazer o Insights atual como paliativo; o Insights novo é avaliado na semana e entra na versão seguinte (provável 0.0.3).</td><td>CR-009</td></tr>
+    </tbody>
+  </table>
+  <p class="legenda">As demais decisões (D03, D04, D08, D09, D11, D12, D14, D16, D17, D18, D21, D22) seguem com a recomendação abaixo até o time dizer o contrário. Tickets novos de envio de arquivos: CR-046 a CR-050.</p>
+
+  <div class="filtros" role="group" aria-label="Filtrar decisões">
+    <button type="button" data-f="todas" aria-pressed="true">Todas</button>
+    <button type="button" data-f="bloq" aria-pressed="false">Trava o início</button>
+    <button type="button" data-f="cedo" aria-pressed="false">Decidir cedo</button>
+    <button type="button" data-f="dur" aria-pressed="false">Decidir durante</button>
+  </div>
+
+  <h2>1. Transversais (valem para todo o MVP)</h2>
+
+  <section class="d" data-u="bloq"><header><span class="id">D01</span><h3>Validar as prioridades que foram sugeridas, não decididas</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">20 tickets: CR-005, 006, 007, 008, 010, 012, 013, 018, 031, 033, 039, 040, 041, 042, 043 (prioridade da análise do backlog) e CR-004, 015, 017, 027, 028 (deduzidas da reunião).</div>
+    <dl><dt>Por que importa</dt><dd>A ordem de trabalho das próximas 2 semanas sai daqui. Hoje: 3 críticos, 8 altos, 14 médios, 4 baixos.</dd>
+      <dt>Recomendação</dt><dd class="rec">Revisar só os críticos e altos em 10 minutos na próxima reunião; o resto fica como está.</dd>
+      <dt>Quem decide</dt><dd>Time de produto (Isabelle, Vanessa, Vania) com o Ivan.</dd></dl></section>
+
+  <section class="d" data-u="bloq"><header><span class="id">D02</span><h3>Data de congelamento da versão do pitch</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">Todos os tickets do MVP.</div>
+    <dl><dt>Por que importa</dt><dd>Checkpoint em 23/11, entrega dos materiais em 27/11 e pitch em 3/12 (a Vania entendeu 5/12; confirmar). Sem uma data de corte, correções de última hora podem quebrar a demo.</dd>
+      <dt>Opções</dt><dd><ul><li>Congelar em 21/11 e usar até 23/11 para reteste.</li><li>Congelar em 25/11, reteste até 27/11, e só correções críticas depois.</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Congelar em 25/11. Depois disso, só correção de erro que apareça no roteiro do pitch.</dd>
+      <dt>Quem decide</dt><dd>Isabelle (agenda do Power House) com o Ivan.</dd></dl></section>
+
+  <section class="d" data-u="cedo"><header><span class="id">D03</span><h3>Quem retesta cada ticket corrigido e em quanto tempo</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">CR-003 e CR-036 já estão em "Aguardando reteste"; os demais entram conforme forem corrigidos.</div>
+    <dl><dt>Recomendação</dt><dd class="rec">Quem abriu o ticket retesta em até 2 dias úteis e marca "Validado" ou reabre com o motivo.</dd>
+      <dt>Quem decide</dt><dd>Time de produto.</dd></dl></section>
+
+  <section class="d" data-u="cedo"><header><span class="id">D04</span><h3>O que o pitch vai demonstrar (roteiro da demo)</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">Afeta a ordem de CR-009, CR-012, CR-017, CR-026, CR-027, CR-030 e CR-040.</div>
+    <dl><dt>Por que importa</dt><dd>Com 2 semanas, vale caprichar no que aparece na demo antes de qualquer outra coisa. Exemplo: se a demo passa pelo Painel do Piloto, o CR-009 vem antes dos ajustes de Projetos.</dd>
+      <dt>Recomendação</dt><dd class="rec">Fechar 3 a 5 perguntas da demo na reunião de amanhã (13/11), junto com o grupo do pitch, e priorizar os tickets que tocam essas perguntas.</dd>
+      <dt>Quem decide</dt><dd>Grupo do pitch.</dd></dl></section>
+
+  <h2>2. Busca e permissões</h2>
+
+  <section class="d" data-u="bloq"><header><span class="id">D05</span><h3>Sinônimos de segmento e tecnologia que a busca deve entender</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-012 (crítico): "propostas com aws" e "preiso de propostas de energia" voltam vazias.</div>
+    <dl><dt>Por que importa</dt><dd>"Energia" não bate com "Utilities", e a busca não tolera erro de digitação. Corrigir exige uma lista de equivalências que o time conhece melhor que o código.</dd>
+      <dt>Opções</dt><dd><ul><li>Lista curta feita pelo produto, por torre (Utilities = energia, saneamento, gás...; Banking = bancos, financeiro...).</li><li>Deixar a IA inferir os sinônimos, sem lista (mais rápido, menos previsível).</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Lista curta por torre, enviada pelo produto até 15/11. A IA cobre o resto.</dd>
+      <dt>Quem decide</dt><dd>Vania e Isabelle (conhecem as torres).</dd></dl></section>
+
+  <section class="d" data-u="bloq"><header><span class="id">D06</span><h3>O que fazer quando a busca não acha nada</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-012.</div>
+    <dl><dt>Opções</dt><dd><ul><li>Avisar que não encontrou e sugerir buscas próximas (outro segmento, sem o filtro de ano...).</li><li>Mostrar os projetos mais parecidos mesmo sem bater todos os critérios, deixando isso claro.</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Nunca responder vazio: dizer o que não achou e mostrar os 3 mais parecidos, com o aviso "não bate em tudo".</dd>
+      <dt>Quem decide</dt><dd>Time de produto.</dd></dl></section>
+
+  <section class="d" data-u="bloq"><header><span class="id">D07</span><h3>Regra de permissão nas respostas: o que o consultor pode ver</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-043 (crítico) e CR-042 (alto).</div>
+    <dl><dt>Por que importa</dt><dd>No CR-043, a continuação ("e neles?") pode estar mostrando valor ao consultor, que é dado restrito ao gestor. Erro de permissão na demo é o pior cenário. Antes de corrigir, o time precisa confirmar a lista do que é restrito por perfil: valor, cliente, documentos confidenciais?</dd>
+      <dt>Recomendação</dt><dd class="rec">Confirmar a tabela "campo × perfil" (o Ivan monta a partir do código atual e o time valida). Enquanto isso, o Ivan reproduz o CR-043.</dd>
+      <dt>Quem decide</dt><dd>Time de produto, com o Ivan.</dd></dl></section>
+
+  <section class="d" data-u="cedo"><header><span class="id">D08</span><h3>Ao negar um projeto confidencial, o Radar sugere alternativas ou só avisa?</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">CR-042.</div>
+    <dl><dt>Por que importa</dt><dd>Hoje o consultor recebe referências que não pediu, e o gestor recebe a mesma informação duas vezes, no texto e na tabela.</dd>
+      <dt>Opções</dt><dd><ul><li>Só avisa: "existe um projeto que você não tem permissão para ver".</li><li>Avisa e oferece em uma frase: "quer ver projetos parecidos que não são confidenciais?".</li><li>Avisa e já lista alternativas (o comportamento atual).</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Avisar e oferecer em uma frase, sem listar. Para o gestor, texto curto mais tabela, sem repetir.</dd>
+      <dt>Quem decide</dt><dd>Time de produto.</dd></dl></section>
+
+  <h2>3. Resposta do chat e card do projeto</h2>
+
+  <section class="d" data-u="cedo"><header><span class="id">D09</span><h3>A resposta recomenda perfis profissionais sempre ou só quando os documentos citam papéis?</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">CR-027 (alto): estrutura da resposta em blocos (resposta, referências, recomendação, perfis).</div>
+    <dl><dt>Por que importa</dt><dd>Se a base não tiver equipe registrada, a IA tende a inventar perfis. Isso é risco de credibilidade na demo.</dd>
+      <dt>Recomendação</dt><dd class="rec">Mostrar perfis só quando os documentos citam papéis; sem base, omitir o bloco.</dd>
+      <dt>Quem decide</dt><dd>Vanessa (abriu o ticket) e Vania.</dd></dl></section>
+
+  <section class="d" data-u="bloq"><header><span class="id">D10</span><h3>A barra de "Por que apareceu nesta posição" mostra o peso do critério ou quanto ele contribuiu?</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-028 (alto).</div>
+    <dl><dt>Por que importa</dt><dd>Hoje a barra mostra uma coisa (a nota do critério) e o número mostra outra (o peso); por isso 53% aparece menor que 20%. É preciso escolher um dos dois.</dd>
+      <dt>Opções</dt><dd><ul><li>Peso: igual para todo projeto ("descrição vale 53%").</li><li>Contribuição: quanto cada critério somou para este projeto (muda de projeto para projeto).</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Contribuição, numa escala de 0 a 100%. É o que explica por que este projeto ficou nesta posição.</dd>
+      <dt>Quem decide</dt><dd>Vanessa.</dd></dl></section>
+
+  <section class="d" data-u="cedo"><header><span class="id">D11</span><h3>Nova ordem do card da resposta e onde as tags de tecnologia aparecem</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">CR-030 (alto), com CR-013 (tags clicáveis) e CR-029 (acordeon).</div>
+    <dl><dt>Já decidido</dt><dd>As tags ficam (Vania), sem duplicidade e com menos destaque; manter a busca por tecnologia.</dd>
+      <dt>Falta decidir</dt><dd><ul><li>A ordem dos elementos no card (proposta: título e similaridade → cliente, segmento, status → escopo curto → botões → tags → acordeons).</li><li>Em qual lugar as tags ficam: no card ou só dentro do acordeon de escopo.</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">A Vanessa desenha a ordem (rascunho ou print anotado) e as tags ficam uma vez só, no fim do card, clicáveis.</dd>
+      <dt>Quem decide</dt><dd>Vanessa, validando com a Vania.</dd></dl></section>
+
+  <section class="d" data-u="cedo"><header><span class="id">D12</span><h3>Tags de segurança: quais são e quem cadastra nos projetos</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">CR-030 (pedido da Vania na reunião).</div>
+    <dl><dt>Por que importa</dt><dd>A massa de teste não tem tecnologias de segurança. Sem a lista, não há o que mostrar nem filtrar.</dd>
+      <dt>Recomendação</dt><dd class="rec">A Vania manda 5 a 10 tecnologias de segurança comuns nas propostas; o Ivan inclui na massa de teste.</dd>
+      <dt>Quem decide</dt><dd>Vania.</dd></dl></section>
+
+  <section class="d" data-u="bloq"><header><span class="id">D13</span><h3>Construir o gráfico cruzado (tecnologia × ano) ou ajustar o roteiro do C08?</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-040 (médio).</div>
+    <dl><dt>Por que importa</dt><dd>Barras empilhadas por ano é um trabalho médio. A testadora também achou o roteiro do teste sem sentido.</dd>
+      <dt>Opções</dt><dd><ul><li>Construir as barras empilhadas (tecnologia por ano, e cliente por ano).</li><li>Reescrever o C08 para o que o Radar já faz (contagem por uma dimensão).</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Construir só se entrar no roteiro do pitch (D04); se não, ajustar o C08.</dd>
+      <dt>Quem decide</dt><dd>Time de produto.</dd></dl></section>
+
+  <section class="d" data-u="dur"><header><span class="id">D14</span><h3>Editar mensagem: só a última ou qualquer uma? A resposta antiga some?</h3><span class="tag t-dur">Decidir durante</span></header>
+    <div class="tks">CR-044 (médio).</div>
+    <dl><dt>Recomendação</dt><dd class="rec">Só a última pergunta. Ao reenviar, a resposta nova substitui a antiga (sem guardar versões).</dd>
+      <dt>Quem decide</dt><dd>Isabelle (pediu a melhoria).</dd></dl></section>
+
+  <h2>4. Conversas e navegação</h2>
+
+  <section class="d" data-u="bloq"><header><span class="id">D15</span><h3>Grupos de conversa: só organizam ou também limitam a busca aos documentos do grupo?</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-017 (alto) e CR-018 (médio).</div>
+    <dl><dt>Por que importa</dt><dd>Só organizar é um trabalho médio. Limitar a busca aos arquivos do grupo, como a Vania descreveu no ChatGPT, muda o motor de busca e é bem maior.</dd>
+      <dt>Falta decidir</dt><dd><ul><li>Organiza só, ou organiza e limita a busca?</li><li>Nome do grupo livre ou amarrado a um cliente cadastrado?</li><li>Uma conversa pode estar em mais de um grupo?</li><li>"Arquivadas" entra no MVP?</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">MVP: grupos só organizam, nome livre, uma conversa por grupo, e arquivar entra (está no wireframe). Limitar a busca fica para depois.</dd>
+      <dt>Quem decide</dt><dd>Vania.</dd></dl></section>
+
+  <section class="d" data-u="cedo"><header><span class="id">D16</span><h3>Menu da conversa: o que a Vania quis dizer com "funcionalidades em amarelo"?</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">CR-018 (médio).</div>
+    <dl><dt>Por que importa</dt><dd>O texto do ticket é curto e dá margem a duas leituras: destacar opções importantes em amarelo, ou incluir as funções que aparecem em amarelo no wireframe.</dd>
+      <dt>Recomendação</dt><dd class="rec">Confirmar com a Vania. Proposta atual: menu com Renomear, Mover para grupo, Arquivar e Excluir.</dd>
+      <dt>Quem decide</dt><dd>Vania.</dd></dl></section>
+
+  <section class="d" data-u="cedo"><header><span class="id">D17</span><h3>Como mostrar a seção selecionada na navegação do topo</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">CR-025 (médio). Já decidido: a navegação fica no topo, não vai para a lateral.</div>
+    <dl><dt>Opções</dt><dd><ul><li>Aba selecionada com fundo azul ImpactAI e texto branco.</li><li>Sublinhado grosso na cor da marca e texto em negrito.</li><li>Título da seção repetido abaixo do topo.</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">A Vanessa escolhe o padrão visual; o Ivan aplica nas abas e no menu do celular.</dd>
+      <dt>Quem decide</dt><dd>Vanessa.</dd></dl></section>
+
+  <section class="d" data-u="cedo"><header><span class="id">D18</span><h3>Lateral da tela de conversas e imagens dos projetos: o que entra no MVP</h3><span class="tag t-cedo">Decidir cedo</span></header>
+    <div class="tks">CR-026 (médio), com CR-015 (títulos em azul).</div>
+    <dl><dt>Já decidido</dt><dd>Contexto da resposta continua dentro do chat; aproximar do protótipo HTML/Miro; Ajuda e Configurações visíveis na lateral, fora do ⋮.</dd>
+      <dt>Falta decidir</dt><dd><ul><li>Imagens nos projetos entram no MVP?</li><li>Ícones (sugestão da Isabelle) ou fotos?</li><li>Fonte: pasta da Vania ou script de geração do Ivan?</li><li>Como evitar a mesma imagem em projetos do mesmo segmento?</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Ícones por torre ou segmento: resolvem a repetição melhor que fotos e não precisam de curadoria. Decidir até 15/11 para caber antes do congelamento.</dd>
+      <dt>Quem decide</dt><dd>Vania e Isabelle.</dd></dl></section>
+
+  <h2>5. Projetos</h2>
+
+  <section class="d" data-u="bloq"><header><span class="id">D19</span><h3>Regra de "Meus projetos" e o que o "Ver como" simula</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-007 (médio), com CR-031 (tag "Visão: Gestor") e CR-006.</div>
+    <dl><dt>Por que importa</dt><dd>Hoje "Meus projetos" mostra os mesmos 4 projetos para consultor e gestor, porque o "Ver como" troca só as permissões, não o usuário.</dd>
+      <dt>Falta decidir</dt><dd><ul><li>"Meus" = criei, sou responsável ou participei?</li><li>O "Ver como" simula só permissões (como hoje) ou outro usuário?</li><li>Quando duas pessoas sobem o mesmo documento, quem é o dono?</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">"Meus" = sou o responsável cadastrado. O "Ver como" continua simulando só permissões, e a tag do CR-031 deixa isso claro. Registrar a regra na Ajuda.</dd>
+      <dt>Quem decide</dt><dd>Ana Flávia (abriu o ticket), com o time de produto.</dd></dl></section>
+
+  <section class="d" data-u="bloq"><header><span class="id">D20</span><h3>Download do documento: arquivo original ou conversão do Radar?</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-033 (alto).</div>
+    <dl><dt>Por que importa</dt><dd>O PDF deu erro e o Word saiu com formatação de modelo. O teste fica ambíguo enquanto o formato esperado não estiver definido.</dd>
+      <dt>Opções</dt><dd><ul><li>Baixar o arquivo original que foi enviado (o que o usuário espera).</li><li>Baixar uma versão gerada pelo Radar (padronizada, mas é o que falhou).</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Arquivo original como padrão. A exportação do Radar fica como segunda opção, só para a ficha do projeto.</dd>
+      <dt>Quem decide</dt><dd>Time de produto.</dd></dl></section>
+
+  <section class="d" data-u="dur"><header><span class="id">D21</span><h3>Filtro com várias opções: fecha a cada clique ou tem botão "Ver N projetos"?</h3><span class="tag t-dur">Decidir durante</span></header>
+    <div class="tks">CR-005 (médio).</div>
+    <dl><dt>Por que importa</dt><dd>O ticket pede que o painel feche ao escolher a opção, mas Segmento e Tecnologias aceitam várias opções: fechar no primeiro clique impede marcar a segunda.</dd>
+      <dt>Recomendação</dt><dd class="rec">Aplicar na hora e fechar só com o botão "Ver N projetos" (ou clicando fora).</dd>
+      <dt>Quem decide</dt><dd>Ana Flávia.</dd></dl></section>
+
+  <section class="d" data-u="dur"><header><span class="id">D22</span><h3>"Recentes" ordena pela data do projeto ou pela última atualização no Radar? E a massa de teste</h3><span class="tag t-dur">Decidir durante</span></header>
+    <div class="tks">CR-008 (médio) e CR-039 (médio).</div>
+    <dl><dt>Falta decidir</dt><dd><ul><li>CR-008: data do projeto ou da última atualização? (Os projetos de exemplo só têm ano, então empatam.)</li><li>CR-039: o C05 precisa de uma proposta "Perdida". O status já existe no Radar; falta decidir se ela entra pronta na massa de teste ou se o testador sobe uma.</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">Ordenar pela data do projeto, desempatando por título. O Ivan inclui na massa datas completas e duas propostas perdidas.</dd>
+      <dt>Quem decide</dt><dd>Ana Flávia e Vania.</dd></dl></section>
+
+  <h2>6. Painel do Piloto e Insights</h2>
+
+  <section class="d" data-u="bloq"><header><span class="id">D23</span><h3>O que o "efeito uau" precisa ter, e o que fazer com o Insights novo</h3><span class="tag t-bloq">Trava o início</span></header>
+    <div class="tks">CR-009 (crítico).</div>
+    <dl><dt>Já decidido</dt><dd>Gráficos mais bonitos e coloridos, barras, top 10 em vez da lista inteira; só métricas que existem (sem inventar).</dd>
+      <dt>Falta decidir</dt><dd><ul><li>Quais 4 a 6 gráficos entram (ex.: buscas por semana, % de respostas úteis, top 10 segmentos, top 10 tecnologias, projetos reaproveitados, cobertura da base).</li><li>O Insights novo (visões negócio, técnica, pipeline, pré-venda) entra no MVP ou fica para depois?</li><li>Se entra: uma página só ou separada por visão?</li></ul></dd>
+      <dt>Recomendação</dt><dd class="rec">MVP com uma página só, o Painel do Piloto contando a história Uso → Qualidade → Eficiência → Reuso → Cobertura. As visões separadas do Insights novo ficam fora do MVP.</dd>
+      <dt>Quem decide</dt><dd>Vania (abriu o ticket) e o grupo do pitch.</dd></dl></section>
+
+  <h2>Tickets do MVP sem decisão pendente (prontos para executar)</h2>
+  <table>
+    <thead><tr><th>Ticket</th><th>Prioridade</th><th>O que fazer</th></tr></thead>
+    <tbody>
+      <tr><td>CR-041</td><td>Alta</td><td>Clicar na barra "Telecom" abre Projetos já filtrado.</td></tr>
+      <tr><td>CR-010</td><td>Alta</td><td>No arquivo recusado: "Remover", "Trocar arquivo" e lista de formatos aceitos.</td></tr>
+      <tr><td>CR-035</td><td>Média</td><td>Modal "Excluir conversa" com o título, Cancelar e Excluir; fecha no X, no Esc e ao clicar fora.</td></tr>
+      <tr><td>CR-029</td><td>Média</td><td>Chevron no acordeon e indicação de que o item é clicável.</td></tr>
+      <tr><td>CR-031</td><td>Média</td><td>Tag "Visão: Gestor" fixa no cabeçalho, com X (a regra do D19 só muda o texto da Ajuda).</td></tr>
+      <tr><td>CR-013</td><td>Média</td><td>Filtros ativos como chips acima da lista; tags do card clicáveis.</td></tr>
+      <tr><td>CR-015</td><td>Média</td><td>Títulos das seções maiores e em azul.</td></tr>
+      <tr><td>CR-037</td><td>Baixa</td><td>Botão enviar desabilitado com a mensagem vazia.</td></tr>
+      <tr><td>CR-034</td><td>Baixa</td><td>Lápis ao lado do título da conversa.</td></tr>
+      <tr><td>CR-006</td><td>Baixa</td><td>X e Esc para fechar o menu ⋮.</td></tr>
+      <tr><td>CR-004</td><td>Baixa</td><td>Estrela de favorito só no hover e nas favoritas.</td></tr>
+      <tr><td>CR-036, CR-003</td><td>—</td><td>Já corrigidos: só falta o reteste (D03).</td></tr>
+    </tbody>
+  </table>
+  <p class="legenda">Fora do MVP e fora deste levantamento: CR-011, 014, 016, 019, 020, 021, 038 e 045 (filtro "Fora do MVP" na tela de tickets).</p>
+</main>
+<script>
+  const botoes = document.querySelectorAll('.filtros button');
+  botoes.forEach((b) => b.addEventListener('click', () => {
+    botoes.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    document.querySelectorAll('.d').forEach((d) => { d.hidden = b.dataset.f !== 'todas' && d.dataset.u !== b.dataset.f; });
+    document.querySelectorAll('h2').forEach((h) => {
+      let el = h.nextElementSibling, algum = false, tem = false;
+      while (el && el.tagName !== 'H2') { if (el.classList.contains('d')) { tem = true; if (!el.hidden) algum = true; } el = el.nextElementSibling; }
+      if (tem) h.hidden = !algum;
+    });
+  }));
+</script>
+</body>
+</html>
