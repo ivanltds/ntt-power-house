@@ -38,7 +38,7 @@ const GUIA = [
     ])}
     <h4>Menu ${icon('menu', { size: 14 })}</h4>
     <ul>
-      <li><b>Ver como (demonstração):</b> troca o usuário de demonstração (Consultor ou Gestor); o botão no canto superior direito mostra quem está ativo (iniciais, nome e perfil) e abre este menu. <b>Consultor</b> não vê projetos confidenciais nem o <b>preço e a margem</b> das propostas; os resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos. <b>Gestor</b> vê tudo. "Meus projetos" mostra os projetos em que o usuário é o responsável ou enviou documento. Serve para testar as permissões; some quando houver login individual.</li>
+      <li><b>Ver como (demonstração):</b> troca o usuário de demonstração (Consultor ou Gestor); o botão de conta, no canto superior direito, mostra quem está ativo (iniciais, nome e perfil); clique nele para trocar. O menu ⋮, ao lado, tem as demais opções. <b>Consultor</b> não vê projetos confidenciais nem o <b>preço e a margem</b> das propostas; os resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos. <b>Gestor</b> vê tudo. "Meus projetos" mostra os projetos em que o usuário é o responsável ou enviou documento. Serve para testar as permissões; some quando houver login individual.</li>
       <li><b>Todos os documentos:</b> lista de arquivos da base com tipo e rótulo de confiança.</li>
       <li><b>Métricas do piloto:</b> indicadores que o comitê usa para avaliar o Radar.</li>
       <li><b>Registro de atividades</b> (só gestor): quem criou, editou, excluiu ou exportou cada item.</li>

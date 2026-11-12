@@ -19,12 +19,18 @@
     </nav>
     <div class="context">
       <span id="ia-badge" class="tag warn hidden"></span>
+      <div class="conta">
+        <button id="conta-btn" class="conta-btn" aria-haspopup="true" aria-expanded="false" aria-controls="conta-pop" title="Perfil"><span class="conta-av" id="conta-av" aria-hidden="true"></span><span class="conta-txt"><b id="conta-nome"></b><small id="conta-perfil"></small></span><i data-icon="chevronDown" data-size="14"></i></button>
+        <div id="conta-pop" class="conta-pop hidden">
+          <div class="conta-pop-head"><span class="conta-av lg" id="conta-av-2" aria-hidden="true"></span><div><b id="conta-nome-2"></b><small id="conta-perfil-2"></small></div></div>
+          <label class="menu-field"><span><i data-icon="eye" data-size="15"></i>Ver como <em>demonstração</em></span><select id="user" aria-label="Ver como"></select></label>
+          <small class="muted">Cada perfil representa uma pessoa e vê só o que esse perfil pode ver. Some quando houver login individual.</small>
+        </div>
+      </div>
       <div class="menu">
-        <button id="menu-btn" class="conta-btn" aria-haspopup="true" aria-expanded="false" title="Perfil e opções"><span class="conta-av" id="conta-av" aria-hidden="true"></span><span class="conta-txt"><b id="conta-nome"></b><small id="conta-perfil"></small></span><i data-icon="chevronDown" data-size="14"></i></button>
+        <button id="menu-btn" class="icon-btn" aria-haspopup="true" aria-expanded="false" title="Mais opções"><i data-icon="menu"></i></button>
         <div id="menu" class="menu-pop hidden" role="menu">
           <button type="button" id="menu-fechar" class="icon-btn sm menu-fechar" title="Fechar o menu (Esc)" aria-label="Fechar o menu"><i data-icon="x" data-size="16"></i></button>
-          <label class="menu-field"><span><i data-icon="eye" data-size="15"></i>Ver como <em>demonstração</em></span><select id="user" aria-label="Ver como"></select></label>
-          <small class="muted">Demonstração: cada perfil representa uma pessoa e vê o que esse perfil pode ver. Some quando houver login individual.</small>
           <div class="menu-field theme-field"><span><i data-icon="sun" data-size="15"></i>Tema</span>
             <div class="theme-seg" role="radiogroup" aria-label="Tema">
               <button type="button" role="radio" data-tema="auto" title="Segue o tema do sistema"><i data-icon="monitor" data-size="14"></i>Auto</button>

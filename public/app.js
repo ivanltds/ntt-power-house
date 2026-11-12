@@ -38,10 +38,14 @@ async function init() {
     const u = state.ctx.usuarios.find((x) => x.id === $('#user').value);
     const perfil = $('#user').selectedOptions[0]?.textContent ?? '';
     const nome = u?.pessoa ?? perfil;
-    $('#conta-av').textContent = nome.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase();
+    const iniciais = nome.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase();
+    $('#conta-av').textContent = iniciais;
+    $('#conta-av-2').textContent = iniciais;
     $('#conta-nome').textContent = nome.split(/\s+/)[0];
+    $('#conta-nome-2').textContent = nome;
     $('#conta-perfil').textContent = perfil;
-    $('#menu-btn').title = `${nome} · ${perfil} (demonstração). Clique para trocar de perfil e ver as opções.`;
+    $('#conta-perfil-2').textContent = `${perfil} · demonstração`;
+    $('#conta-btn').title = `${nome} · ${perfil} (demonstração). Clique para trocar de perfil.`;
   };
   pintarVisao();
   $('#user').onchange = async () => { pintarVisao(); await reloadContext(); setFocus(null); newConversation(); loadDocs(); loadConversations(); notifyUserChange(); toast(`Agora você vê o Radar como ${$('#user').selectedOptions[0]?.textContent}.`); };
@@ -85,11 +89,22 @@ function setupTheme() {
   paint();
 }
 
+// Botão de conta (perfil): só o "Ver como". Independente do menu ⋮ (opções gerais).
+function setupConta() {
+  const btn = $('#conta-btn');
+  const pop = $('#conta-pop');
+  const toggle = (open = pop.classList.contains('hidden')) => { pop.classList.toggle('hidden', !open); btn.setAttribute('aria-expanded', open); };
+  btn.onclick = (e) => { e.stopPropagation(); $('#menu').classList.add('hidden'); toggle(); };
+  document.addEventListener('click', (e) => { if (!e.target.closest('.conta')) toggle(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+}
+
 function setupMenu() {
+  setupConta();
   const btn = $('#menu-btn');
   const pop = $('#menu');
   const toggle = (open = pop.classList.contains('hidden')) => { pop.classList.toggle('hidden', !open); btn.setAttribute('aria-expanded', open); };
-  btn.onclick = (e) => { e.stopPropagation(); toggle(); };
+  btn.onclick = (e) => { e.stopPropagation(); $('#conta-pop').classList.add('hidden'); toggle(); };
   const v = $('#versao');
   v.textContent = VERSAO;
   v.onclick = () => showReleaseNotes();

@@ -558,8 +558,8 @@ export const ROTEIRO = [
   c('C43', 'media', 'Etiqueta da visão, menu e seção atual',
     'Ver se fica claro com que perfil e em que seção você está.',
     [],
-    ['Olhe o canto superior direito da tela.', 'Clique no botão com as iniciais e o nome.', 'No menu, troque o "Ver como".', 'Clique no X no alto do menu.', 'Clique nas abas Projetos, Enviar e Insights.'],
-    ['O botão de conta mostra um círculo com as iniciais, o primeiro nome e, embaixo, o perfil (ex.: "MC Marina · Consultor"), nas cores da página, sempre visível.', 'Clicar nele abre o menu, com o "Ver como" no topo; trocando, o botão passa a mostrar a outra pessoa e o outro perfil, e aparece um aviso.', 'O X fecha o menu (Esc também).', 'A aba atual fica em azul cheio, com um traço embaixo, bem diferente das outras.'],
+    ['Olhe o canto superior direito da tela.', 'Clique no botão com as iniciais e o nome e troque o "Ver como".', 'Clique nos três pontinhos (⋮), ao lado do botão de conta.', 'Clique no X no alto desse menu.', 'Clique nas abas Projetos, Enviar e Insights.'],
+    ['O botão de conta mostra um círculo com as iniciais, o primeiro nome e, embaixo, o perfil (ex.: "MC Marina · Consultor"), nas cores da página, sempre visível.', 'Clicar nele abre só o perfil, com o "Ver como"; trocando, o botão passa a mostrar a outra pessoa e o outro perfil, e aparece um aviso.', 'O menu ⋮ é separado: tem tema, documentos, métricas, ajuda e versão, mas não o "Ver como"; o X fecha esse menu (Esc também).', 'A aba atual fica em azul cheio, com um traço embaixo, bem diferente das outras.'],
     { tickets: ['CR-031', 'CR-006', 'CR-025'] }),
 
   c('C44', 'media', 'Ajuda e versão na lateral das conversas',
