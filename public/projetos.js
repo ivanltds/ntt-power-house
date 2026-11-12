@@ -223,9 +223,11 @@ export async function openProject(id) {
   const ents = (tipo) => d.entidades[tipo] ?? [];
   const fontes = (e) => e.documentos.map((id) => `<a href="#" data-doc="${id}">${esc(docTitle.get(id) ?? id)}</a>`).join(', ');
 
+  // Resultados, lições, riscos e documentos: seções que recolhem e já vêm fechadas (o título mostra quantos itens há).
+  const recolhivel = (ic, label, n, corpo, id = '') => `<details class="pd-sec pd-acc"${id ? ` id="${id}"` : ''}><summary><h5 class="sect-title">${icon(ic, { size: 16 })}${label}<em>${n}</em><span class="pd-acc-chev">${icon('chevronDown', { size: 16 })}</span></h5></summary>${corpo}</details>`;
   // Resultados, lições e riscos com o trecho de onde vieram.
-  const insight = (tipo, ic, label) => (ents(tipo).length ? `<section class="pd-sec"><h5 class="sect-title">${icon(ic, { size: 16 })}${label}<em>${ents(tipo).length}</em></h5>
-    <ul class="pd-insights ${tipo}">${ents(tipo).map((e) => `<li><b>${esc(e.valor)}</b>${e.trecho && e.trecho !== e.valor ? `<q>${esc(e.trecho)}</q>` : ''}<small>${icon('file', { size: 12 })}${fontes(e)}</small></li>`).join('')}</ul></section>` : '');
+  const insight = (tipo, ic, label) => (ents(tipo).length ? recolhivel(ic, label, ents(tipo).length,
+    `<ul class="pd-insights ${tipo}">${ents(tipo).map((e) => `<li><b>${esc(e.valor)}</b>${e.trecho && e.trecho !== e.valor ? `<q>${esc(e.trecho)}</q>` : ''}<small>${icon('file', { size: 12 })}${fontes(e)}</small></li>`).join('')}</ul>`) : '');
   const tags = (list, cls = '') => list.map((t) => `<span class="chip${cls}">${esc(t)}</span>`).join('');
   const side = (ic, label, body, n) => (body ? `<section class="pd-card"><h6>${icon(ic, { size: 15 })}${label}${n ? `<em>${n}</em>` : ''}</h6>${body}</section>` : '');
   const row = (label, value) => `<dt>${label}</dt><dd>${value || '—'}</dd>`;
@@ -262,7 +264,7 @@ export async function openProject(id) {
         ${p.objetivo ? `<section class="pd-sec"><h5 class="sect-title">${icon('trending', { size: 16 })}Objetivo</h5><div class="pd-text">${md(p.objetivo)}</div></section>` : ''}
         ${p.descricao ? `<section class="pd-sec"><h5 class="sect-title">${icon('info', { size: 16 })}Contexto</h5><div class="pd-text">${md(p.descricao)}</div></section>` : ''}
         ${insight('kpi', 'chart', 'Resultados')}${insight('licao', 'bulb', 'Lições aprendidas')}${insight('risco', 'alert', 'Riscos')}
-        <section class="pd-sec"><h5 class="sect-title">${icon('files', { size: 16 })}Documentos<em>${d.documentos.length}</em></h5>
+        ${recolhivel('files', 'Documentos', d.documentos.length, `
           <div class="pd-envio" id="pd-envio"><label class="btn sm">${icon('upload', { size: 14 })}Enviar arquivo para este projeto<input type="file" id="pd-file" multiple hidden></label><span class="muted small">O arquivo já entra neste projeto; você só confere os dados.</span></div>
           <ul class="pd-envios" id="pd-envios"></ul>
           ${d.documentos.length ? `<ul class="pd-docs">${d.documentos.map((doc) => `<li>
@@ -278,8 +280,7 @@ export async function openProject(id) {
             ${doc.resumo ? `<p>${esc(doc.resumo)}</p>` : ''}
             ${doc.observacoes ? `<p class="pd-note" title="Nota de quem revisou o envio">${icon('info', { size: 13 })} ${esc(doc.observacoes)}</p>` : ''}
             ${doc.palavras_chave?.length ? `<div class="chips">${tags(doc.palavras_chave.slice(0, 8))}</div>` : ''}
-          </li>`).join('')}</ul>` : `<p class="muted">Nenhum documento visível para o seu perfil. <a href="#" id="pd-upload-2">Enviar o primeiro</a></p>`}
-        </section>
+          </li>`).join('')}</ul>` : `<p class="muted">Nenhum documento visível para o seu perfil. <a href="#" id="pd-upload-2">Enviar o primeiro</a></p>`}`, 'pd-docs-sec')}
       </div>
       <aside class="pd-side">
         ${side('briefcase', 'Ficha', `<dl class="pd-dl">
@@ -309,7 +310,7 @@ export async function openProject(id) {
   const edit = () => { close(); openProjectForm(p); };
   // CR-046: envio pela própria ficha, já vinculado a este projeto. O andamento aparece aqui; "Revisar" abre a conferência
   // (com o destino fixo) e, ao aprovar, "Abrir projeto" volta para esta ficha.
-  const upload = (e) => { e?.preventDefault(); $('#pd-file').click(); };
+  const upload = (e) => { e?.preventDefault(); $('#pd-docs-sec').open = true; $('#pd-file').click(); };
   $('#pd-file').onchange = async (e) => {
     const files = [...e.target.files];
     e.target.value = '';

@@ -1672,3 +1672,20 @@ dialog.dlg-confirma .actions { display: flex; justify-content: flex-end; gap: 8p
 /* Diálogo com uma seção só (ex.: Enviar feedback pela lateral): sem a coluna de seções */
 .help-grid.solo { grid-template-columns: minmax(0, 1fr); }
 .help-grid.solo .help-nav { display: none; }
+/* Seções que recolhem: ficha do projeto (resultados, lições, riscos, documentos) e grupos de conversa — fechadas por padrão */
+details.pd-acc > summary { list-style: none; cursor: pointer; display: block; color: inherit; margin: 0; }
+details.pd-acc > summary::-webkit-details-marker { display: none; }
+details.pd-acc > summary .sect-title { margin-bottom: 0; }
+details.pd-acc[open] > summary .sect-title { margin-bottom: 8px; }
+details.pd-acc > summary:hover .sect-title { color: var(--brand); }
+.pd-acc-chev { margin-left: auto; display: flex; color: var(--muted); transition: transform .2s; }
+details.pd-acc[open] .pd-acc-chev { transform: rotate(180deg); }
+#conv-list .conv-grupo-sec { display: block; background: none !important; box-shadow: none !important; padding: 2px 0 0; }
+#conv-list .conv-grupo-sec summary { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); padding: 8px 6px 4px; cursor: pointer; border-radius: 6px; list-style: none; }
+#conv-list .conv-grupo-sec summary::-webkit-details-marker { display: none; }
+#conv-list .conv-grupo-sec summary:hover { color: var(--brand); }
+#conv-list .conv-grupo-sec summary span:first-of-type { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#conv-list .conv-grupo-sec summary em { font-style: normal; font-weight: 500; color: var(--faint); }
+#conv-list .conv-chev { display: flex; color: var(--muted); transition: transform .2s; }
+#conv-list .conv-grupo-sec details[open] .conv-chev { transform: rotate(180deg); }
+#conv-list .conv-grupo-sec ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
