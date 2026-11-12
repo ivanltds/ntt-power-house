@@ -322,13 +322,13 @@ export const ROTEIRO = [
   c('P14', 'alta', 'Abrir o detalhe do projeto',
     'Ver se o detalhe mostra os dados e os documentos.',
     [GESTOR, PROJETOS],
-    ['Clique num card qualquer.', 'Leia a coluna da direita ("Ficha", "Tecnologias", "Serviços", "Projetos parecidos").', 'Role a janela até o fim.', 'Feche pelo X no canto superior direito.'],
-    ['Abre uma janela com título, cliente, objetivo, contexto e a lista de documentos.', 'A coluna "Ficha" mostra cliente, segmento, status, acesso e origem.', 'Cada documento mostra o tipo (proposta, apresentação, case…).', 'O X fecha a janela e você volta para a lista.']),
+    ['Clique num card qualquer.', 'Leia a coluna da direita ("Ficha", "Tecnologias", "Serviços", "Projetos parecidos").', 'Role a janela até o fim e clique em "Documentos" para abrir a seção.', 'Clique em "Documentos" de novo para fechar.', 'Feche pelo X no canto superior direito.'],
+    ['Abre uma janela com título, cliente, objetivo e contexto; Resultados, Lições aprendidas, Riscos e Documentos vêm fechados, com a quantidade de itens no título e uma setinha.', 'A coluna "Ficha" mostra cliente, segmento, status, acesso e origem.', 'Ao abrir "Documentos", cada documento mostra o tipo (proposta, apresentação, case…); clicar no título de novo fecha a seção.', 'O X fecha a janela e você volta para a lista.']),
 
   c('P15', 'media', 'Navegar para um projeto parecido e abrir um documento',
     'Ver as ligações entre projetos e os documentos.',
     [GESTOR, PROJETOS, 'Abra o detalhe de um projeto que tenha "Projetos parecidos" na coluna da direita.'],
-    ['Clique num dos "Projetos parecidos".', 'No novo detalhe, clique no nome de um documento da lista.', 'Na janela do documento, clique em "Baixar original".', 'Feche as janelas.'],
+    ['Clique num dos "Projetos parecidos".', 'No novo detalhe, abra a seção "Documentos" e clique no nome de um documento.', 'Na janela do documento, clique em "Baixar original".', 'Feche as janelas.'],
     ['O detalhe muda para o projeto parecido.', 'O documento abre numa janela com o texto.', '"Baixar original" baixa o arquivo como foi enviado (na base de exemplo os documentos são .md; o botão mostra o formato). PDF e Word gerados pelo Radar ficam em "Exportar", na ficha.']),
 
   c('P16', 'alta', 'Detalhe do projeto como consultor',
@@ -524,7 +524,7 @@ export const ROTEIRO = [
     'Ver se dá para organizar as conversas por cliente ou proposta.',
     ['Faça o cenário C27 (tenha a sua conversa "Teste do roteiro").'],
     ['Na coluna da esquerda, passe o mouse sobre a sua conversa e clique nos três pontinhos (⋯).', 'Em "Mover para grupo", escreva "Roteiro" seguido do seu nome e clique no +.', 'Abra o menu de novo e clique em "Renomear"; mude o nome e aperte Enter.', 'Abra o menu e clique em "Arquivar".', 'No fim da lista, abra "Arquivadas", abra o menu da conversa e clique em "Desarquivar".'],
-    ['A conversa passa a aparecer num bloco com o nome do grupo, separado das "Avulsas" (se ela for favorita, aparece também em "Favoritas").', 'O nome muda na lista e aparece o aviso "Conversa renomeada".', 'Arquivada, a conversa sai dos blocos e fica em "Arquivadas", no fim da lista.', 'Desarquivada, ela volta para o grupo.'],
+    ['A conversa passa a aparecer num grupo com o nome escolhido, separado das "Avulsas" (se ela for favorita, aparece também em "Favoritas"). Os grupos vêm fechados (só o da conversa aberta abre sozinho); clicar no nome do grupo abre e fecha, e o Radar lembra quais você deixou abertos.', 'O nome muda na lista e aparece o aviso "Conversa renomeada".', 'Arquivada, a conversa sai dos blocos e fica em "Arquivadas", no fim da lista.', 'Desarquivada, ela volta para o grupo.'],
     { tickets: ['CR-017', 'CR-018'] }),
 
   c('C39', 'media', 'Editar o título pelo lápis',
@@ -586,7 +586,7 @@ export const ROTEIRO = [
   c('P28', 'alta', 'Enviar arquivo pela ficha do projeto',
     'Ver se dá para mandar um documento sem sair do projeto.',
     [GESTOR, PROJETOS, 'Baixe o arquivo de exemplo deste cenário.', 'Abra o projeto "Plataforma de dados para redução de perdas não técnicas" (Energisul).'],
-    ['Na seção Documentos da ficha, clique em "Enviar arquivo para este projeto" e escolha o arquivo baixado.', 'Quando aparecer "pronto para conferir", clique em "Revisar".', 'Na revisão, clique em "Descartar".'],
+    ['Abra a seção "Documentos" da ficha e clique em "Enviar arquivo para este projeto" e escolha o arquivo baixado.', 'Quando aparecer "pronto para conferir", clique em "Revisar".', 'Na revisão, clique em "Descartar".'],
     ['O andamento aparece na própria ficha, sem trocar de tela.', 'A revisão abre com "Vai para" o projeto da Energisul (dá para trocar em "Trocar projeto").', '"Descartar" tira o arquivo, sem entrar na base.'],
     { tickets: ['CR-046'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
 
