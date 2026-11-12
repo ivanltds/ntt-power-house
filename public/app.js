@@ -561,7 +561,7 @@ async function toggleFavorite(id, favorita) {
 }
 
 // Lista de conversas (V0.0.2):
-// CR-017: Favoritas, um bloco por grupo (cliente ou proposta, nome livre), Avulsas e Arquivadas (recolhidas no fim).
+// CR-017: Favoritas, um bloco por grupo (cliente ou proposta, nome livre), Recentes (sem grupo) e Arquivadas (recolhidas no fim).
 // CR-004: a estrela só aparece ao passar o mouse, e fica fixa (colorida) nas favoritas.
 // CR-018: menu ⋯ de cada conversa com Renomear, Mover para grupo, Arquivar e Excluir.
 // CR-035: excluir pede confirmação num diálogo com o título da conversa.
@@ -593,7 +593,7 @@ async function loadConversations() {
   $('#conv-list').innerHTML = conversas.length
     ? bloco('star', 'Favoritas', favs)
       + grupos.map(blocoGrupo).join('')
-      + bloco('clock', grupos.length ? 'Avulsas' : 'Recentes', avulsas)
+      + bloco('clock', 'Recentes', avulsas)
       + (arquivadas.length ? `<li class="conv-arq" role="presentation"><details><summary>${icon('archive', { size: 14 })}<span>Arquivadas</span><em>${arquivadas.length}</em></summary><ul>${arquivadas.map(item).join('')}</ul></details></li>` : '')
     : `<li class="empty">${icon('message', { size: 16 })}${$('#conv-search').value ? 'Nenhuma conversa com essa busca' : 'Suas conversas aparecem aqui'}</li>`;
   $$('#conv-list [data-grupo-sec]').forEach((d) => d.addEventListener('toggle', () => {
