@@ -612,16 +612,16 @@ async function loadConversations() {
   const blocoGrupo = (g) => {
     const itens = ativas.filter((c) => c.grupo === g);
     const aberto = gruposAbertos().has(g) || itens.some((c) => c.id === state.conv?.id);
-    return `<li class="conv-grupo-sec" role="presentation"><details data-grupo-sec="${esc(g)}"${aberto ? ' open' : ''}><summary>${icon('folder', { size: 14 })}<span>${esc(g)}</span><em>${itens.length}</em><span class="conv-chev">${icon('chevronDown', { size: 14 })}</span></summary><ul>${itens.map(item).join('')}</ul></details></li>`;
+    return `<li class="conv-grupo-sec" role="presentation"><details data-grupo-sec="${esc(g)}"${aberto ? ' open' : ''}><summary>${icon('folder', { size: 14 })}<span>${esc(g)}</span><span class="conv-chev">${icon('chevronDown', { size: 14 })}</span></summary><ul>${itens.map(item).join('')}</ul></details></li>`;
   };
   // Um componente (caixa) para cada tipo: Favoritas, Grupos, Arquivadas (recolhida) e Recentes.
-  const caixa = (ic, titulo, n, corpo, extra = '') => `<li class="conv-box${extra}" role="presentation"><div class="conv-box-head">${icon(ic, { size: 14 })}<span>${titulo}</span><em>${n}</em></div><ul class="conv-box-list">${corpo}</ul></li>`;
+  const caixa = (ic, titulo, n, corpo, extra = '') => `<li class="conv-box${extra}" role="presentation"><div class="conv-box-head">${icon(ic, { size: 14 })}<span>${titulo}</span></div><ul class="conv-box-list">${corpo}</ul></li>`;
   // Favoritas, Grupos e Arquivadas recolhem e começam fechadas (o navegador lembra as abertas); com busca, abrem todas.
   // Recentes fica sempre aberta e ocupa o espaço que sobra, com rolagem própria, para nunca sumir da tela.
   const buscando = Boolean($('#conv-search').value.trim());
   // A caixa que tem a conversa aberta na tela abre sozinha (ex.: conversa de um grupo ou arquivada).
   const contemAtual = (chave) => Boolean(state.conv?.id) && ({ fav: favs, grupos: ativas.filter((c) => c.grupo), arq: arquivadas }[chave] ?? []).some((c) => c.id === state.conv.id);
-  const caixaRecolhivel = (chave, ic, titulo, n, corpo) => `<li class="conv-box box-${chave} recolhe" role="presentation"><details data-caixa="${chave}"${buscando || caixasAbertas().has(chave) || contemAtual(chave) ? ' open' : ''}><summary class="conv-box-head">${icon(ic, { size: 14 })}<span>${titulo}</span><em>${n}</em><span class="conv-chev">${icon('chevronDown', { size: 14 })}</span></summary><ul class="conv-box-list">${corpo}</ul></details></li>`;
+  const caixaRecolhivel = (chave, ic, titulo, n, corpo) => `<li class="conv-box box-${chave} recolhe" role="presentation"><details data-caixa="${chave}"${buscando || caixasAbertas().has(chave) || contemAtual(chave) ? ' open' : ''}><summary class="conv-box-head">${icon(ic, { size: 14 })}<span>${titulo}</span><span class="conv-chev">${icon('chevronDown', { size: 14 })}</span></summary><ul class="conv-box-list">${corpo}</ul></details></li>`;
   $('#conv-list').innerHTML = conversas.length
     ? (favs.length ? caixaRecolhivel('fav', 'star', 'Favoritas', favs.length, favs.map(item).join('')) : '')
       + (grupos.length ? caixaRecolhivel('grupos', 'folder', 'Grupos', grupos.length, grupos.map(blocoGrupo).join('')) : '')
