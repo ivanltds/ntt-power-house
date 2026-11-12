@@ -19,14 +19,6 @@
     </nav>
     <div class="context">
       <span id="ia-badge" class="tag warn hidden"></span>
-      <div class="focus">
-        <button type="button" id="focus-btn" class="pill focus-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="focus-pop" title="Escolha um projeto para o chat responder pensando nele"><i data-icon="briefcase" data-size="16"></i><span id="focus-label">Responder para…</span><i data-icon="chevronDown" data-size="14"></i></button>
-        <div id="focus-pop" class="focus-pop hidden">
-          <p class="focus-help">O chat passa a responder pensando no <b>cliente, segmento e tecnologias</b> do projeto escolhido. Ex.: “algum case parecido?”</p>
-          <div class="field-icon"><i data-icon="search" data-size="16"></i><input id="focus-q" type="search" autocomplete="off" placeholder="Buscar por cliente, projeto ou código" aria-label="Buscar projeto" aria-controls="focus-list"></div>
-          <ul id="focus-list" role="listbox" aria-label="Projetos"></ul>
-        </div>
-      </div>
       <div class="menu">
         <button id="menu-btn" class="conta-btn" aria-haspopup="true" aria-expanded="false" title="Perfil e opções"><span class="conta-av" id="conta-av" aria-hidden="true"></span><span class="conta-txt"><b id="conta-nome"></b><small id="conta-perfil"></small></span><i data-icon="chevronDown" data-size="14"></i></button>
         <div id="menu" class="menu-pop hidden" role="menu">
@@ -84,6 +76,15 @@
             <span id="memory" class="memory hidden"></span>
             <span id="anexos" class="anexos hidden" aria-live="polite"></span>
             <label class="icon-btn anexar" title="Anexar arquivo para enviar a um projeto (diga o projeto na mensagem)"><i data-icon="paperclip"></i><input type="file" id="anexar" multiple hidden></label>
+            <div class="focus">
+              <button type="button" id="focus-btn" class="focus-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="focus-pop" title="Escolha a proposta que você está montando: as respostas passam a considerar esse projeto"><i data-icon="target" data-size="15"></i><span id="focus-label">Proposta em foco</span><i data-icon="chevronDown" data-size="13" class="focus-chev"></i></button>
+              <button type="button" id="focus-clear" class="focus-clear hidden" title="Tirar o foco" aria-label="Tirar a proposta em foco"><i data-icon="x" data-size="12"></i></button>
+              <div id="focus-pop" class="focus-pop hidden">
+                <p class="focus-help">Escolha a proposta que você está montando. O chat passa a responder pensando no <b>cliente, segmento e tecnologias</b> dela. Ex.: “algum case parecido?”</p>
+                <div class="field-icon"><i data-icon="search" data-size="16"></i><input id="focus-q" type="search" autocomplete="off" placeholder="Buscar por cliente, projeto ou código" aria-label="Buscar projeto" aria-controls="focus-list"></div>
+                <ul id="focus-list" role="listbox" aria-label="Projetos"></ul>
+              </div>
+            </div>
             <input id="query" autocomplete="off" enterkeyhint="send" aria-label="Pergunta" placeholder="Pergunte sobre propostas, clientes, tecnologias…">
             <button type="submit" class="icon-btn send" title="Enviar"><i data-icon="send"></i></button>
           </form>
