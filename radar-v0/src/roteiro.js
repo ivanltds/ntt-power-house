@@ -13,14 +13,14 @@ const CONSULTOR = PERFIL('Consultor(a) de pré-vendas');
 const GESTOR = PERFIL('Gestor(a) comercial');
 const NOVA = 'Na aba "Perguntar", clique no botão azul "Nova conversa", no alto da coluna da esquerda.';
 const PERGUNTE = (q) => `Clique na caixa de texto na parte de baixo da tela, escreva exatamente: "${q}" e aperte Enter.`;
-const ESPERE = 'Espere a resposta aparecer (pode levar até 15 segundos).';
+const ESPERE = 'Espere a resposta aparecer.';
 const ETIQUETA = 'Olhe a etiqueta pequena acima da resposta, à direita (ela diz o tipo de resposta).';
 const PROJETOS = 'Clique na aba "Projetos", no alto da tela.';
 const FILTROS = 'Clique no botão "Filtros", ao lado da caixa de busca, para abrir o painel de filtros à esquerda.';
 const LIMPAR = 'Ao terminar, clique em "Limpar", no alto do painel de filtros.';
 const ENVIAR = 'Clique na aba "Enviar", no alto da tela. Se aparecer a tela de boas-vindas, clique em "Começar".';
 const ESCOLHA = (a) => `Clique na palavra "escolha", dentro da área tracejada, e selecione o arquivo "${a}" que você baixou (ou arraste o arquivo para a área tracejada).`;
-const ESPERE_ENVIO = 'Espere o arquivo aparecer na lista à esquerda com a situação "Para revisar" (de 5 a 30 segundos) e clique nele.';
+const ESPERE_ENVIO = 'Espere o arquivo aparecer na lista à esquerda com a situação "Para revisar" e clique nele.';
 const DESCARTAR = 'No fim da revisão, clique em "Descartar" para não colocar o arquivo na base.';
 const CELULAR = 'No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha.';
 
@@ -485,7 +485,7 @@ export const ROTEIRO = [
   c('U14', 'media', 'Aviso quando o envio fica pronto em outra tela',
     'Ver se o Radar avisa que o arquivo está pronto enquanto você faz outra coisa.',
     ['Baixe o arquivo pelo botão deste cenário.'],
-    [ENVIAR, ESCOLHA('levantamento-requisitos-hospital.html'), 'Logo depois, clique na aba "Perguntar".', 'Espere uns 20 segundos.', 'Clique no botão "Revisar" do aviso que aparecer.', DESCARTAR],
+    [ENVIAR, ESCOLHA('levantamento-requisitos-hospital.html'), 'Logo depois, clique na aba "Perguntar".', 'Continue nessa aba até o aviso aparecer.', 'Clique no botão "Revisar" do aviso que aparecer.', DESCARTAR],
     ['Aparece o aviso "… está pronto para revisar", com o botão "Revisar".', 'O botão leva para a revisão desse arquivo.'],
     { arquivo: 'levantamento-requisitos-hospital.html' }),
 

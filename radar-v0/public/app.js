@@ -45,8 +45,8 @@ async function init() {
   // A IA só aparece no topo quando está fora do ar: ligada é o normal.
   const ia = state.ctx.base.llmProvedor === 'deepseek';
   if (!ia) {
-    $('#ia-badge').innerHTML = `${icon('alert', { size: 14 })}IA offline`;
-    $('#ia-badge').title = 'Sem IA: as respostas usam só regras e busca por palavras.';
+    $('#ia-badge').innerHTML = `${icon('cpu', { size: 14 })}Modo regras`;
+    $('#ia-badge').title = 'Neste ambiente, as respostas usam as regras e a busca por palavras do Radar.';
     $('#ia-badge').classList.remove('hidden');
   }
   $$('.tabs button').forEach((b) => (b.onclick = () => openTab(b.dataset.tab)));
@@ -222,17 +222,17 @@ async function enviarAnexos(texto) {
   }
   const arquivos = state.anexos.splice(0);
   pintarAnexos();
-  const bot = addMsg('bot', `<p class="answer"><span class="ans-par">${icon('loader', { size: 14, cls: 'spin' })}Enviando para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)})…</span></p>`);
+  const bot = addMsg('bot', `<p class="answer"><span class="ans-par">${icon('loader', { size: 14, cls: 'spin' })}Enviando para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)})</span></p>`);
   const ids = await enviarParaProjeto(arquivos, projeto.id);
   if (!ids.length) { bot.innerHTML = '<p class="error">Nenhum arquivo foi enviado.</p>'; return; }
-  bot.innerHTML = `<p class="answer"><span class="ans-par">Enviei ${ids.length > 1 ? `${ids.length} arquivos` : 'o arquivo'} para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)}). O Radar está lendo; quando ficar pronto, confira os dados antes de entrar na base.</span></p><ul class="chat-envios"></ul>`;
+  bot.innerHTML = `<p class="answer"><span class="ans-par">${ids.length > 1 ? `${ids.length} arquivos enviados` : 'Arquivo enviado'} para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)}). O Radar extrai os dados e você confere antes de ${ids.length > 1 ? 'entrarem' : 'entrar'} na base.</span></p><ul class="chat-envios"></ul>`;
   for (const id of ids) {
     const li = document.createElement('li');
     $('.chat-envios', bot).appendChild(li);
     const acompanhar = async () => {
       const j = await situacaoEnvio(id).catch(() => null);
       if (!j || !li.isConnected) return;
-      if (['enviado', 'processando'].includes(j.status)) { li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}${esc(j.nome_arquivo)}: lendo…`; setTimeout(acompanhar, 900); return; }
+      if (['enviado', 'processando'].includes(j.status)) { li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}${esc(j.nome_arquivo)}: extraindo os dados`; setTimeout(acompanhar, 900); return; }
       li.innerHTML = j.status === 'erro' ? `${icon('xCircle', { size: 14 })}${esc(j.nome_arquivo)}: ${esc(j.erro)}`
         : `${icon('eye', { size: 14 })}<b>${esc(j.nome_arquivo)}</b> pronto para conferir <button type="button" class="btn sm primary">Revisar</button>`;
       $('button', li)?.addEventListener('click', () => revisarEnvio(id));
@@ -321,14 +321,14 @@ function renderText(r) {
 function renderAnswer(r) {
   const e = r.entendimento ?? {};
   const reescrita = e.consulta && e.consulta.trim().toLowerCase() !== r.query.trim().toLowerCase();
-  const info = `${r.candidatosAvaliados ? `${r.candidatosAvaliados} projetos avaliados · ` : ''}${r.tempoMs} ms · IA: ${r.ia?.fallback ? 'offline' : r.ia?.provedor === 'deepseek' ? 'DeepSeek' : 'regras'}${reescrita ? `\nEntendi como: ${e.consulta}` : ''}`;
+  const info = `${r.candidatosAvaliados ? `${r.candidatosAvaliados} projetos avaliados · ` : ''}${r.tempoMs} ms · IA: ${r.ia?.fallback ? 'regras do Radar' : r.ia?.provedor === 'deepseek' ? 'DeepSeek' : 'regras'}${reescrita ? `\nEntendi como: ${e.consulta}` : ''}`;
   const opp = state.foco;
   const tipado = renderTyped(r);
   return `
     <div class="answer-head">
       ${typeTag(r)}
       ${e.continuacao ? `<span class="tag ctx" title="${esc(reescrita ? `Entendi como: ${e.consulta}` : 'Usei as perguntas anteriores desta conversa')}">${icon('layers', { size: 14 })}continuando a conversa</span>` : ''}
-      ${r.ia?.fallback ? `<span class="tag warn" title="${esc(r.ia.erro)}">${icon('alert', { size: 14 })}IA offline: resposta simplificada</span>` : ''}
+      ${r.ia?.fallback ? `<span class="tag" title="Resposta montada pelas regras e pela busca por palavras do Radar">${icon('cpu', { size: 14 })}resposta direta da base</span>` : ''}
       <span class="info" title="${esc(info)}">${icon('info', { size: 15 })}</span>
     </div>
     <p class="answer">${renderText(r)}</p>
