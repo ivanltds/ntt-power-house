@@ -569,7 +569,8 @@ Notas do revisor: ${r.observacoes}` : r.texto,
     const ids = `${cte}SELECT p.id ${from}`;
     const orders = {
       relevancia: ftsUsed ? 'b.rank' : 'p.data_referencia DESC',
-      data: 'p.data_referencia DESC',
+      // CR-008: "Recentes" pela data do projeto, desempatando pelo título.
+      data: 'p.data_referencia IS NULL, p.data_referencia DESC, p.titulo',
       prazo: 'p.prazo_meses IS NULL, p.prazo_meses',
       valor: user.verValores ? 'p.valor IS NULL, p.valor DESC' : 'p.data_referencia DESC',
       titulo: 'p.titulo COLLATE NOCASE',
@@ -698,6 +699,10 @@ Notas do revisor: ${r.observacoes}` : r.texto,
       porTecnologia: this.all(`SELECT t.nome AS tecnologia, count(*) AS projetos, ${rate} AS taxa_conversao, ROUND(avg(p.prazo_meses), 1) AS prazo_medio${valor}
           FROM projeto p JOIN projeto_tecnologia x ON x.projeto_id = p.id JOIN tecnologia t ON t.id = x.tecnologia_id WHERE ${visible}
           GROUP BY t.nome ORDER BY projetos DESC LIMIT 15`, params),
+      // V0.0.2 (CR-009): funil por status, projetos por ano e quantas tecnologias distintas aparecem.
+      porStatus: this.all(`SELECT p.status_proposta AS status, count(*) AS projetos FROM projeto p WHERE ${visible} GROUP BY p.status_proposta`, params),
+      porAno: this.all(`SELECT substr(p.data_referencia, 1, 4) AS ano, count(*) AS projetos FROM projeto p WHERE ${visible} AND p.data_referencia IS NOT NULL GROUP BY ano ORDER BY ano`, params),
+      totalTecnologias: this.get(`SELECT count(DISTINCT x.tecnologia_id) AS n FROM projeto_tecnologia x JOIN projeto p ON p.id = x.projeto_id WHERE ${visible}`, params).n,
       coocorrencia: this.all(`SELECT a.nome AS tecnologia_a, b.nome AS tecnologia_b, count(*) AS projetos
           FROM projeto_tecnologia x JOIN projeto_tecnologia y ON y.projeto_id = x.projeto_id AND x.tecnologia_id < y.tecnologia_id
           JOIN tecnologia a ON a.id = x.tecnologia_id JOIN tecnologia b ON b.id = y.tecnologia_id JOIN projeto p ON p.id = x.projeto_id

@@ -1507,3 +1507,76 @@ a.pn-cel:hover { outline: 2px solid var(--brand); }
 .campanha-emoji { font-size: 20px; line-height: 1; }
 .campanha-txt { flex: 1; min-width: 0; }
 @media (max-width: 720px) { .campanha { flex-wrap: wrap; } .campanha-txt { flex-basis: calc(100% - 60px); } }
+
+/* Insights (V0.0.2, CR-009). Paleta categórica validada (dataviz): ordem fixa, passos próprios para o tema escuro. */
+.ins-root { --viz-1: #2a78d6; --viz-2: #eb6834; --viz-3: #1baf7a; --viz-4: #eda100; --viz-5: #e87ba4; --viz-6: #008300; --viz-7: #6250d6; --viz-8: #e34948; }
+:root[data-theme="dark"] .ins-root { --viz-1: #3987e5; --viz-2: #d95926; --viz-3: #199e70; --viz-4: #c98500; --viz-5: #d55181; --viz-6: #008300; --viz-7: #9085e9; --viz-8: #e66767; }
+.ins-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.ins-kpi { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 14px 20px; box-shadow: var(--shadow); display: grid; gap: 2px; overflow: hidden; }
+.ins-kpi::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--kpi); }
+.ins-kpi svg { color: var(--kpi); }
+.ins-kpi strong { font-size: 30px; line-height: 1.1; letter-spacing: -.02em; }
+.ins-kpi span { font-size: 13px; color: var(--ink-2); font-weight: 600; }
+.ins-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr)); gap: 12px; }
+.ins-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+.ins-card.ins-wide { grid-column: 1 / -1; }
+.ins-card header { margin-bottom: 10px; }
+.ins-card h4 { display: flex; gap: 8px; align-items: center; font-size: 15px; color: var(--brand-ink); }
+:root[data-theme="dark"] .ins-card h4 { color: var(--ink); }
+.ins-card h4 svg { color: var(--brand); }
+.ins-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ins-bars li { display: grid; grid-template-columns: 18px minmax(90px, 38%) 1fr 34px; align-items: center; gap: 8px; font-size: 13px; padding: 2px 4px; border-radius: 6px; }
+.ins-bars li:hover { background: var(--row-hover); }
+.ins-rank { color: var(--faint); font-size: 12px; text-align: right; }
+.ins-lab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); }
+a.ins-lab:hover { color: var(--brand); text-decoration: underline; }
+.ins-track { height: 14px; background: var(--line-2); border-radius: 4px; overflow: hidden; }
+.ins-fill { display: block; height: 100%; border-radius: 0 4px 4px 0; }
+.ins-val { text-align: right; font-variant-numeric: tabular-nums; }
+.ins-stack { display: flex; gap: 2px; height: 26px; border-radius: 6px; overflow: hidden; margin: 4px 0 10px; }
+.ins-stack span { min-width: 6px; }
+.ins-stack span:hover { filter: brightness(1.1); }
+.ins-leg { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; }
+.ins-leg li { display: inline-flex; align-items: center; gap: 6px; }
+.ins-leg i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.ins-leg a { color: var(--ink); }
+.ins-leg em { color: var(--muted); font-style: normal; font-size: 12px; }
+.ins-cols { display: flex; align-items: flex-end; gap: 10px; height: 170px; padding-top: 6px; }
+.ins-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; font-size: 12px; }
+.ins-colbar { width: 100%; max-width: 46px; background: var(--viz-1); border-radius: 4px 4px 0 0; }
+.ins-col small { color: var(--muted); }
+.ins-list { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 13px; }
+.ins-list .chip + svg { margin: 0 4px; }
+.ins-n { margin-left: 8px; font-weight: 500; color: var(--muted); font-size: 12px; }
+.ins-saude { margin-top: 14px; }
+.ins-saude summary { cursor: pointer; display: inline-flex; gap: 6px; align-items: center; font-weight: 600; color: var(--ink-2); margin-bottom: 10px; }
+
+/* Card da resposta (V0.0.2: CR-029, CR-030) */
+.rbody .resumo { font-size: 13.5px; }
+.accs { display: flex; flex-direction: column; gap: 4px; }
+details.acc { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+details.acc > summary { padding: 8px 10px; color: var(--brand-ink); font-weight: 600; font-size: 13px; border-radius: 8px; margin: 0; }
+:root[data-theme="dark"] details.acc > summary { color: var(--ink); }
+details.acc > summary:hover { background: var(--brand-soft); color: var(--brand-ink); }
+details.acc > summary svg { color: var(--brand); }
+details.acc > summary .acc-chev { margin-left: auto; display: flex; transition: transform .2s; color: var(--muted); }
+details.acc[open] > summary .acc-chev { transform: rotate(180deg); }
+details.acc[open] > summary { border-bottom: 1px solid var(--line); border-radius: 8px 8px 0 0; margin: 0; }
+.acc-body { padding: 8px 12px 10px; }
+.tec-tags { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.tec-tag { border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 999px; padding: 1px 8px; font: inherit; font-size: 11.5px; cursor: pointer; }
+.tec-tag:hover { color: var(--brand); border-color: var(--brand); }
+/* Resposta em blocos (CR-027) */
+.answer .ans-par { display: block; }
+.answer .ans-par + .ans-par { margin-top: 8px; }
+.answer .ans-rot { color: var(--brand-ink); }
+:root[data-theme="dark"] .answer .ans-rot { color: var(--ink); }
+/* Projetos: filtros ativos (CR-013) e botão de fechar o painel (CR-005) */
+.fchips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.fchips:empty { display: none; }
+.fchip { display: inline-flex; align-items: center; gap: 4px; background: var(--brand-soft); color: var(--brand-ink); border-radius: 999px; padding: 3px 4px 3px 10px; font-size: 12.5px; }
+:root[data-theme="dark"] .fchip { color: var(--ink); }
+.fchip button { border: 0; background: transparent; color: inherit; display: inline-flex; padding: 2px; border-radius: 50%; cursor: pointer; }
+.fchip button:hover { background: rgba(0,0,0,.08); }
+.filters-foot { position: sticky; bottom: 0; padding: 10px 0 2px; background: var(--panel); }
+.filters-foot .btn { width: 100%; justify-content: center; }
