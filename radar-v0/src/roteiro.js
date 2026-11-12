@@ -199,7 +199,7 @@ export const ROTEIRO = [
     'Ver se as favoritas ficam no alto da lista.',
     ['Faça o cenário C27.'],
     ['Clique na estrela (☆) no alto da conversa, à direita do título.', 'Olhe a coluna da esquerda.', 'Clique de novo na estrela.'],
-    ['A estrela fica preenchida e a conversa passa para o grupo "Favoritas", no alto da lista, com a estrela sempre visível.', 'Nas outras conversas, a estrela só aparece ao passar o mouse.', 'Clicando de novo, a estrela fica vazia e a conversa volta para "Recentes".'],
+    ['A estrela fica preenchida e a conversa aparece na caixa "Favoritas", no alto da lista, com a estrela sempre visível.', 'Nas outras conversas, a estrela só aparece ao passar o mouse.', 'Clicando de novo, a estrela fica vazia e a conversa sai de "Favoritas" (continua em "Recentes" ou no grupo dela).'],
     { tickets: ['CR-004'] }),
 
   c('C29', 'media', 'Excluir uma conversa',
@@ -524,7 +524,7 @@ export const ROTEIRO = [
     'Ver se dá para organizar as conversas por cliente ou proposta.',
     ['Faça o cenário C27 (tenha a sua conversa "Teste do roteiro").'],
     ['Na coluna da esquerda, passe o mouse sobre a sua conversa e clique nos três pontinhos (⋯).', 'Em "Mover para grupo", escreva "Roteiro" seguido do seu nome e clique no +.', 'Abra o menu de novo e clique em "Renomear"; mude o nome e aperte Enter.', 'Abra o menu e clique em "Arquivar".', 'Abra a caixa "Arquivadas" (entre Grupos e Recentes), abra o menu da conversa e clique em "Desarquivar".'],
-    ['A conversa passa a aparecer num grupo com o nome escolhido, separado das "Recentes" (se ela for favorita, aparece também em "Favoritas"). Os grupos vêm fechados (só o da conversa aberta abre sozinho); clicar no nome do grupo abre e fecha, e o Radar lembra quais você deixou abertos.', 'O nome muda na lista e aparece o aviso "Conversa renomeada".', 'Arquivada, a conversa sai dos blocos e fica na caixa "Arquivadas", entre Grupos e Recentes.', 'Desarquivada, ela volta para o grupo.'],
+    ['A conversa sai de "Recentes" e aparece na caixa "Grupos", dentro do grupo com o nome escolhido.', 'O nome muda na lista e aparece o aviso "Conversa renomeada".', 'Arquivada, a conversa sai de "Grupos" e passa para a caixa "Arquivadas".', 'Desarquivada, ela volta para o grupo.'],
     { tickets: ['CR-017', 'CR-018'] }),
 
   c('C39', 'media', 'Editar o título pelo lápis',
@@ -552,7 +552,7 @@ export const ROTEIRO = [
     'Ver se dá para mandar um documento para um projeto conversando com o Radar.',
     [GESTOR, NOVA, 'Baixe o arquivo de exemplo deste cenário.'],
     ['Clique no clipe, à esquerda da caixa de texto, e escolha o arquivo baixado.', 'Escreva "esse arquivo é de qual projeto?" e aperte Enter.', 'Escreva "coloca no projeto da Energisul" e aperte Enter.', 'Quando aparecer "pronto para conferir", clique em "Revisar".', 'Na revisão, clique em "Descartar".'],
-    ['O arquivo aparece como etiqueta acima da caixa de texto, com X para tirar.', 'Sem projeto definido, o Radar pergunta para qual projeto vai e o arquivo continua só na conversa.', 'Com o projeto, o Radar diz para qual projeto enviou e mostra o andamento.', 'A revisão abre com "Vai para" o projeto da Energisul já escolhido.', '"Descartar" tira o arquivo, sem entrar na base.'],
+    ['O arquivo aparece como etiqueta acima da caixa de texto, com X para tirar.', 'Sem projeto definido, o Radar pergunta para qual projeto vai e o arquivo continua só na conversa.', 'Com o projeto, aparece "Arquivo enviado para … O Radar extrai os dados e você confere antes de entrar na base." e o andamento mostra "extraindo os dados" até ficar "pronto para conferir".', 'A revisão abre com "Vai para" o projeto da Energisul já escolhido.', '"Descartar" tira o arquivo, sem entrar na base.'],
     { tickets: ['CR-049', 'CR-050'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
 
   c('C43', 'media', 'Etiqueta da visão, menu e seção atual',
@@ -565,8 +565,8 @@ export const ROTEIRO = [
   c('C44', 'media', 'Ajuda e versão na lateral das conversas',
     'Ver se a ajuda está à vista, sem depender do menu.',
     [NOVA],
-    ['Olhe o fim da coluna da esquerda.', 'Clique em "Como usar o Radar" e feche.', 'Clique em "Enviar feedback" e feche sem enviar.'],
-    ['A coluna da esquerda tem o fundo no tom azul da marca e, no fim, os atalhos "Como usar o Radar" e "Enviar feedback".', '"Como usar o Radar" abre o guia; "Enviar feedback" abre só o formulário de feedback, sem as telas de versão, tickets e testes.', 'O logo da ImpactAI ("Criado e desenvolvido por") fica sempre visível no fim da coluna.'],
+    ['Olhe o fim da coluna da esquerda.', 'Clique em "Como usar o Radar" e feche.', 'Clique em "Enviar feedback" e feche sem enviar.', 'Se a faixa "Desbloqueie a próxima fase do Radar" aparecer no alto, clique em "Dar minha opinião" e feche sem enviar.'],
+    ['A coluna da esquerda tem o fundo no tom azul da marca e, no fim, os atalhos "Como usar o Radar" e "Enviar feedback" (não há atalho de versão e testes).', '"Como usar o Radar" abre o guia; "Enviar feedback" e "Dar minha opinião" abrem só o formulário de feedback, sem a coluna de versão, tickets e testes, e o texto não fala da tela de Tickets.', 'O logo da ImpactAI ("Criado e desenvolvido por") fica sempre visível no fim da coluna.'],
     { tickets: ['CR-026', 'CR-003'] }),
 
   c('P26', 'alta', 'Filtros ativos como etiquetas e "Ver N projetos"',
@@ -589,6 +589,18 @@ export const ROTEIRO = [
     ['Abra a seção "Documentos" da ficha e clique em "Enviar arquivo para este projeto" e escolha o arquivo baixado.', 'Quando aparecer "pronto para conferir", clique em "Revisar".', 'Na revisão, clique em "Descartar".'],
     ['O andamento aparece na própria ficha, sem trocar de tela.', 'A revisão abre com "Vai para" o projeto da Energisul (dá para trocar em "Trocar projeto").', '"Descartar" tira o arquivo, sem entrar na base.'],
     { tickets: ['CR-046'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
+
+  c('C45', 'alta', 'Lista de conversas em caixas',
+    'Ver se a coluna da esquerda separa bem favoritas, grupos, arquivadas e recentes.',
+    ['Faça os cenários C28 e C38 (tenha uma conversa num grupo e outra favorita).'],
+    ['Olhe a coluna da esquerda de cima para baixo.', 'Favorite a conversa que está no seu grupo (estrela ao passar o mouse).', 'Clique no nome do seu grupo para fechar e abrir.', 'Deixe o grupo aberto e aperte F5 para recarregar a página.', 'Clique em "Nova conversa", feche o seu grupo e aperte F5 de novo.', 'Clique no título da caixa "Arquivadas".'],
+    ['As conversas ficam em caixas separadas, nesta ordem: "Favoritas", "Grupos", "Arquivadas" e "Recentes" (caixa sem conversas não aparece).', 'A conversa favorita que está num grupo aparece duas vezes: em "Favoritas" e dentro do grupo, na caixa "Grupos".', 'Cada grupo mostra o nome, quantas conversas tem e uma setinha; clicar no nome abre e fecha.', 'Depois do F5, o grupo continua como você deixou (aberto ou fechado); um grupo nunca aberto vem fechado.', '"Arquivadas" vem fechada e abre ao clicar no título.']),
+
+  c('P29', 'media', 'Seções da ficha que recolhem',
+    'Ver se a ficha mostra primeiro o essencial e deixa o resto recolhido.',
+    [PROJETOS, 'Abra o projeto "Plataforma de dados para redução de perdas não técnicas" (Energisul).'],
+    ['Olhe as seções abaixo de Objetivo e Contexto.', 'Clique em "Resultados", depois em "Lições aprendidas" e em "Riscos".', 'Clique de novo em "Riscos".', 'Feche a ficha e abra de novo.'],
+    ['Objetivo e Contexto aparecem abertos; "Resultados", "Lições aprendidas", "Riscos" e "Documentos" vêm fechados, cada um com a quantidade de itens e uma setinha.', 'Clicar no título abre a seção com os itens e de onde vieram; a setinha vira.', 'Clicar de novo fecha.', 'Ao reabrir a ficha, as quatro seções vêm fechadas de novo.']),
 
   c('U16', 'alta', 'Arquivo recusado: trocar ou remover',
     'Ver se um arquivo de formato errado não trava o envio.',
