@@ -1,6 +1,7 @@
 // Tela "Projetos": exploração com filtros combinados e facetas (UC08), detalhe (UC07) e cadastro/edição.
 
-import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText } from './common.js';
+import { enviarParaProjeto, situacaoEnvio, revisarEnvio } from './upload.js';
+import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText, iconeSegmento } from './common.js';
 import { icon } from './icons.js';
 import { ELISTS, elist, bindEntityLists, readEntityLists } from './entidades.js';
 import { ensureTerms, handleTermsError, maskNote, policyLine } from './aviso.js';
@@ -16,6 +17,7 @@ const ENTITY_TYPES = { pessoa: 'Pessoa', organizacao: 'Organização', kpi: 'Res
 const STATUS_DOC = ['rascunho', 'preliminar', 'bruta', 'final', 'final_enviada', 'final_aprovada', 'aprovado', 'validada'];
 const empty = () => ({ meus: false, q: '', modoTexto: 'todas', cliente: '', segmentos: [], status: [], tecnologias: [], modoTecnologias: 'todas', servicos: [], modoServicos: 'todas', tiposDocumento: [], prazoMin: '', prazoMax: '', valorMin: '', valorMax: '', dataDe: '', dataAte: '', entidadeTipo: '', entidadeValor: '' });
 const PAGE_SIZE = 20;
+const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 const view = { filtros: empty(), ordenar: 'relevancia', pagina: 1 };
 let timer;
 
@@ -29,9 +31,14 @@ export function initProjects() {
   $('#proj-order').onchange = (e) => { view.ordenar = e.target.value; search(); };
   $('#proj-clear').onclick = () => { reset(); search(); };
   $('#proj-toggle-filters').onclick = () => $('#proj-filters').classList.toggle('hidden');
+  // CR-005: o filtro é aplicado na hora; "Ver N projetos" (ou Esc) fecha o painel. Fechar a cada clique impediria marcar
+  // duas opções nos filtros de várias escolhas (Segmento, Tecnologias).
+  $('#proj-ver').onclick = () => $('#proj-filters').classList.add('hidden');
+  $('#proj-filters').addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); $('#proj-filters').classList.add('hidden'); $('#proj-toggle-filters').focus(); } });
   $('#proj-q').oninput = (e) => { view.filtros.q = e.target.value; view.pagina = 1; debounce(); };
   // Atalho vindo dos Insights: abre a exploração já filtrada.
-  document.addEventListener('radar:filtrar', (e) => { reset(); Object.assign(view.filtros, e.detail); $('#proj-filters').classList.remove('hidden'); search(); });
+  // CR-041: os filtros vindos de fora (chat, Insights, tags do card) entram antes da busca e aparecem nos controles e nos chips.
+  document.addEventListener('radar:filtrar', (e) => { reset(); Object.assign(view.filtros, e.detail); renderStaticFilters(); search(); });
 }
 
 function reset() {
@@ -45,7 +52,7 @@ function renderStaticFilters() {
   const f = view.filtros;
   const valores = currentUser()?.verValores;
   $('#proj-static').innerHTML = `
-    <button type="button" class="mine${f.meus ? ' on' : ''}" data-meus aria-pressed="${f.meus}" title="Criados por você, em que você é o responsável ou em que você enviou documentos">${icon('user', { size: 15 })}Meus projetos</button>
+    <button type="button" class="mine${f.meus ? ' on' : ''}" data-meus aria-pressed="${f.meus}" title="Projetos em que você é o responsável ou em que enviou documentos (na demonstração, cada perfil representa uma pessoa responsável)">${icon('user', { size: 15 })}Meus projetos</button>
     <div class="seg" title="Como combinar as palavras da busca"><label><input type="radio" name="modoTexto" value="todas"${f.modoTexto === 'todas' ? ' checked' : ''}>todas as palavras</label>
       <label><input type="radio" name="modoTexto" value="qualquer"${f.modoTexto === 'qualquer' ? ' checked' : ''}>qualquer</label></div>
     <div class="field-icon"><i>${icon('building', { size: 15 })}</i><input data-f="cliente" value="${esc(f.cliente)}" placeholder="Cliente"></div>
@@ -68,7 +75,11 @@ function query() {
   return p;
 }
 
+// CR-041: só a resposta da busca mais recente é desenhada (abrir a aba e aplicar um filtro disparam duas buscas;
+// sem isso, a primeira, sem filtro, podia chegar depois e apagar o resultado filtrado).
+let ultimaBusca = 0;
 async function search() {
+  const minha = ++ultimaBusca;
   // Cadastro de projeto só para o gestor (UC07.5).
   $('#new-project').classList.toggle('hidden', !pode('cadastrarProjeto'));
   // Ordenar por valor só para quem vê valores (o servidor já ignora para os demais).
@@ -76,8 +87,34 @@ async function search() {
   optValor.hidden = optValor.disabled = !currentUser()?.verValores;
   if (optValor.disabled && view.ordenar === 'valor') { view.ordenar = 'relevancia'; $('#proj-order').value = 'relevancia'; }
   const r = await api(`/api/projetos?${query()}`);
+  if (minha !== ultimaBusca) return;
   renderFacets(r.facetas);
   renderResults(r);
+  renderChips();
+}
+
+// CR-013: filtros ativos como chips acima da lista, cada um com X para tirar; "Limpar tudo" no fim.
+const ROTULO_FILTRO = { segmentos: 'Segmento', status: 'Status', tecnologias: 'Tecnologia', servicos: 'Serviço', tiposDocumento: 'Documento', cliente: 'Cliente', prazoMin: 'Prazo de', prazoMax: 'Prazo até', valorMin: 'Valor de', valorMax: 'Valor até', dataDe: 'Desde', dataAte: 'Até', entidadeValor: 'Citado' };
+function renderChips() {
+  const f = view.filtros;
+  const chips = [];
+  if (f.meus) chips.push({ k: 'meus', rot: 'Meus projetos' });
+  for (const [k, rot] of Object.entries(ROTULO_FILTRO)) {
+    const v = f[k];
+    if (Array.isArray(v)) v.forEach((x) => chips.push({ k, v: x, rot: `${rot}: ${k === 'tiposDocumento' ? tipoLabel(x) : x}` }));
+    else if (v) chips.push({ k, rot: `${rot}: ${k.startsWith('data') ? String(v).split('-').reverse().join('/') : v}` });
+  }
+  $('#proj-chips').innerHTML = chips.length ? `${chips.map((c, i) => `<span class="fchip">${esc(c.rot)}<button type="button" data-tirar="${i}" title="Tirar este filtro" aria-label="Tirar o filtro ${esc(c.rot)}">${icon('x', { size: 12 })}</button></span>`).join('')}
+    <button type="button" class="link-btn" data-tirar="todos">Limpar tudo</button>` : '';
+  $$('[data-tirar]', $('#proj-chips')).forEach((b) => (b.onclick = () => {
+    if (b.dataset.tirar === 'todos') { const q = f.q; reset(); view.filtros.q = q; $('#proj-q').value = q; search(); return; }
+    const c = chips[Number(b.dataset.tirar)];
+    if (c.k === 'meus') f.meus = false; else if (Array.isArray(f[c.k])) f[c.k].splice(f[c.k].indexOf(c.v), 1); else f[c.k] = '';
+    if (c.k === 'entidadeValor') f.entidadeTipo = '';
+    view.pagina = 1;
+    renderStaticFilters();
+    search();
+  }));
 }
 
 function renderFacets(facetas) {
@@ -104,6 +141,7 @@ function renderResults(r) {
   const active = Object.entries(view.filtros).filter(([k, v]) => k !== 'q' && (Array.isArray(v) ? v.length : v !== '' && v !== 'todas' && v !== false)).length;
   $('#proj-filter-count').textContent = active;
   $('#proj-filter-count').classList.toggle('hidden', !active);
+  $('#proj-ver').textContent = `Ver ${r.total} projeto${r.total === 1 ? '' : 's'}`;
   const de = (r.pagina - 1) * r.tamanho + 1;
   const ate = Math.min(r.total, r.pagina * r.tamanho);
   $('#proj-summary').innerHTML = `${r.total > r.tamanho ? `${de}–${ate} de ` : ''}${r.total} projeto${r.total === 1 ? '' : 's'}<span title="Tempo da consulta no banco">${icon('clock', { size: 13 })}${r.tempoMs} ms</span>`;
@@ -113,13 +151,13 @@ function renderResults(r) {
         <span class="icons">${p.confidencialidade === 'confidencial' ? `<span title="Confidencial">${icon('lock', { size: 15 })}</span>` : ''}${p.origem !== 'seed' ? `<span title="${p.origem === 'upload' ? 'Criado por upload' : 'Cadastrado manualmente'}">${icon(p.origem === 'upload' ? 'upload' : 'edit', { size: 15 })}</span>` : ''}</span></div>
       <h4 title="${esc(p.tecnologias.length ? `Tecnologias: ${p.tecnologias.join(', ')}` : '')}">${esc(p.titulo)}</h4>
       <p class="sub">${esc(p.cliente)}${p.projetos_cliente > 1 ? ` <span class="relacao" title="Projetos com este cliente na base">· ${p.projetos_cliente} projetos com o cliente</span>` : ''}</p>
-      <p class="pseg">${icon('building', { size: 14 })}${esc(p.segmento ?? 'Segmento não informado')}</p>
+      <p class="pseg"><span class="seg-ico" aria-hidden="true">${icon(iconeSegmento(p.segmento), { size: 14 })}</span>${esc(p.segmento ?? 'Segmento não informado')}</p>
       ${p.trecho ? `<p class="snippet">${highlight(p.trecho)}</p>` : ''}
       <div class="pfoot">
-        <span class="pmeta">${porte(p)}${p.prazo_meses ? `<span title="Prazo">${icon('clock', { size: 14 })}${String(p.prazo_meses).replace('.', ',')} m</span>` : ''}${p.data_referencia ? `<span title="Data de referência">${icon('calendar', { size: 14 })}${p.data_referencia.slice(0, 4)}</span>` : ''}</span>
+        <span class="pmeta">${porte(p)}${p.prazo_meses ? `<span title="Prazo">${icon('clock', { size: 14 })}${String(p.prazo_meses).replace('.', ',')} m</span>` : ''}${p.data_referencia ? `<span title="Data de referência: ${esc(p.data_referencia.split('-').reverse().join('/'))}">${icon('calendar', { size: 14 })}${p.data_referencia.length >= 7 ? `${MESES[Number(p.data_referencia.slice(5, 7)) - 1]}/` : ''}${p.data_referencia.slice(0, 4)}</span>` : ''}</span>
         ${kit(p)}
       </div>
-    </article>`).join('') : `<div class="empty-state">${icon('search', { size: 32 })}<p>Nenhum projeto ${active || view.filtros.q ? 'com esses critérios' : 'cadastrado ainda'}</p>${view.filtros.meus ? '<p class="muted small">"Meus projetos" mostra os que você criou, em que é o responsável ou em que enviou documentos.</p>' : ''}
+    </article>`).join('') : `<div class="empty-state">${icon('search', { size: 32 })}<p>Nenhum projeto ${active || view.filtros.q ? 'com esses critérios' : 'cadastrado ainda'}</p>${view.filtros.meus ? '<p class="muted small">"Meus projetos" mostra os projetos em que você é o responsável ou em que enviou documentos.</p>' : ''}
       <div class="suggest">${active ? `<button type="button" class="chip-btn" data-empty="limpar">${icon('x', { size: 14 })}Limpar filtros</button>` : ''}
         ${view.filtros.q ? `<button type="button" class="chip-btn" data-empty="perguntar">${icon('message', { size: 14 })}Perguntar ao Radar sobre “${esc(view.filtros.q)}”</button>` : ''}
         ${pode('cadastrarProjeto') ? `<button type="button" class="chip-btn" data-empty="novo">${icon('plus', { size: 14 })}Cadastrar projeto</button>` : ''}</div></div>`;
@@ -225,6 +263,8 @@ export async function openProject(id) {
         ${p.descricao ? `<section class="pd-sec"><h5 class="sect-title">${icon('info', { size: 16 })}Contexto</h5><div class="pd-text">${md(p.descricao)}</div></section>` : ''}
         ${insight('kpi', 'chart', 'Resultados')}${insight('licao', 'bulb', 'Lições aprendidas')}${insight('risco', 'alert', 'Riscos')}
         <section class="pd-sec"><h5 class="sect-title">${icon('files', { size: 16 })}Documentos<em>${d.documentos.length}</em></h5>
+          <div class="pd-envio" id="pd-envio"><label class="btn sm">${icon('upload', { size: 14 })}Enviar arquivo para este projeto<input type="file" id="pd-file" multiple hidden></label><span class="muted small">O arquivo já entra neste projeto; você só confere os dados.</span></div>
+          <ul class="pd-envios" id="pd-envios"></ul>
           ${d.documentos.length ? `<ul class="pd-docs">${d.documentos.map((doc) => `<li>
             <div class="pd-doc-top"><a href="#" data-doc="${doc.id}">${icon('file', { size: 16 })}${esc(doc.titulo)}</a>${trustBadge(doc.nivel_confianca)}<button type="button" class="icon-btn sm" data-edit-doc="${doc.id}" title="Editar informações" aria-label="Editar informações de ${esc(doc.titulo)}">${icon('edit', { size: 15 })}</button><button type="button" class="icon-btn sm" data-dl="${doc.id}" title="Baixar arquivo" aria-label="Baixar ${esc(doc.titulo)}">${icon('download', { size: 16 })}</button></div>
             <span class="sub">${esc(tipoLabel(doc.tipo_documental))}${doc.status_documento ? ` · ${esc(doc.status_documento.replace(/_/g, ' '))}` : ''} · ${dateBR(doc.data_conteudo)}${doc.formato ? ` · ${esc(doc.formato.toUpperCase())}` : ''}${doc.tamanho_bytes ? ` · ${kb(doc.tamanho_bytes)}` : ''}
@@ -267,7 +307,32 @@ export async function openProject(id) {
   $$('[data-proj]', body).forEach((a) => (a.onclick = (e) => { e.preventDefault(); openProject(a.dataset.proj); }));
   const close = () => $('#project-dialog').close();
   const edit = () => { close(); openProjectForm(p); };
-  const upload = (e) => { e?.preventDefault(); close(); openTab('upload'); document.dispatchEvent(new CustomEvent('radar:upload-para', { detail: p.id })); };
+  // CR-046: envio pela própria ficha, já vinculado a este projeto. O andamento aparece aqui; "Revisar" abre a conferência
+  // (com o destino fixo) e, ao aprovar, "Abrir projeto" volta para esta ficha.
+  const upload = (e) => { e?.preventDefault(); $('#pd-file').click(); };
+  $('#pd-file').onchange = async (e) => {
+    const files = [...e.target.files];
+    e.target.value = '';
+    if (!files.length) return;
+    const ids = await enviarParaProjeto(files, p.id);
+    const lista = $('#pd-envios');
+    for (const id of ids) {
+      const li = document.createElement('li');
+      li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}<span>Processando…</span>`;
+      lista.appendChild(li);
+      const acompanhar = async () => {
+        if (!li.isConnected) return;
+        const j = await situacaoEnvio(id).catch(() => null);
+        if (!j) return;
+        if (['enviado', 'processando'].includes(j.status)) { setTimeout(acompanhar, 900); return; }
+        li.innerHTML = j.status === 'erro'
+          ? `${icon('xCircle', { size: 14 })}<span><b>${esc(j.nome_arquivo)}</b>: ${esc(j.erro)}</span>`
+          : `${icon('eye', { size: 14 })}<span><b>${esc(j.nome_arquivo)}</b> pronto para conferir</span><button type="button" class="btn sm primary">Revisar</button>`;
+        $('button', li)?.addEventListener('click', () => { close(); revisarEnvio(id); });
+      };
+      acompanhar();
+    }
+  };
   $('#pd-close').onclick = close;
   $('#pd-export').onclick = () => openExportDialog(p);
   $('#pd-edit').onclick = edit;

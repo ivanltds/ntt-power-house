@@ -3,6 +3,9 @@
 // prioridade 'alta' = fluxo principal (fazer sempre); 'media' = variações e casos de borda.
 // Cenários que alteram a base (aprovar envio, editar projeto) pedem para desfazer ou são feitos uma vez só.
 // Ao mudar uma tela, revise os cenários dela: o texto precisa bater com os botões e rótulos reais.
+// O roteiro abaixo é o da versão atual. Versões fechadas ficam congeladas em src/roteiros/<versão>.json (fim do arquivo).
+
+import fs from 'node:fs';
 
 const MENU = 'o botão de três pontinhos (⋮), no canto superior direito';
 const PERFIL = (p) => `Abra ${MENU}. Em "Ver como", escolha "${p}". Clique fora do menu para fechar.`;
@@ -21,7 +24,7 @@ const ESPERE_ENVIO = 'Espere o arquivo aparecer na lista à esquerda com a situa
 const DESCARTAR = 'No fim da revisão, clique em "Descartar" para não colocar o arquivo na base.';
 const CELULAR = 'No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha.';
 
-const c = (id, prioridade, titulo, objetivo, preparo, passos, esperado, extra = {}) => ({ id, area: { C: 'conversas', P: 'projetos', U: 'upload' }[id[0]], prioridade, titulo, objetivo, preparo, passos, esperado, ...extra });
+const c = (id, prioridade, titulo, objetivo, preparo, passos, esperado, extra = {}) => ({ id, area: { C: 'conversas', P: 'projetos', U: 'upload', I: 'insights' }[id[0]], prioridade, titulo, objetivo, preparo, passos, esperado, ...extra });
 
 export const ROTEIRO = [
   // =====================================================================
@@ -55,7 +58,7 @@ export const ROTEIRO = [
     'Ver variações de pedido de lista.',
     [CONSULTOR, NOVA],
     [PERGUNTE('quantos projetos temos de Saúde?'), ESPERE, PERGUNTE('liste as propostas perdidas'), ESPERE],
-    ['As duas respostas têm a etiqueta "Listagem".', 'Na primeira, todas as linhas são do segmento Saúde e o texto diz quantos são.', 'Na segunda, todas as linhas têm status "Perdida".']),
+    ['As duas respostas têm a etiqueta "Listagem".', 'Na primeira, todas as linhas são do segmento Saúde e o texto diz quantos são.', 'Na segunda, todas as linhas têm status "Perdida" (a base de exemplo já tem uma proposta perdida, da ModaViva; não é preciso enviar nada).']),
 
   c('C06', 'media', 'Abrir a listagem na tela de Projetos',
     'Ver se dá para continuar a análise na tela de Projetos com os mesmos filtros.',
@@ -73,13 +76,14 @@ export const ROTEIRO = [
     'Ver outras formas de contagem.',
     [CONSULTOR, NOVA],
     [PERGUNTE('Quantos projetos por tecnologia?'), ESPERE, PERGUNTE('distribuição de projetos por ano'), ESPERE, PERGUNTE('quais clientes temos na base?'), ESPERE],
-    ['As três respostas têm a etiqueta "Contagem".', 'Na de tecnologia, o texto avisa que um projeto pode contar em mais de um item.', 'Na de ano, as barras mostram anos (ex.: 2026, 2025, 2024).', 'Na de clientes, aparecem nomes de clientes com a quantidade de projetos de cada um.']),
+    ['As três respostas têm a etiqueta "Contagem", cada uma por uma dimensão (o cruzamento tecnologia × ano em barras empilhadas não está nesta versão).', 'Na de tecnologia, o texto avisa que um projeto pode contar em mais de um item.', 'Na de ano, as barras mostram anos (ex.: 2026, 2025, 2024).', 'Na de clientes, aparecem nomes de clientes com a quantidade de projetos de cada um.'],
+    { tickets: ['CR-040'] }),
 
   c('C09', 'media', 'Clicar numa barra da contagem',
     'Ver se o item da contagem leva aos projetos dele.',
     [CONSULTOR, NOVA, PERGUNTE('Quais segmentos já atendemos?'), ESPERE],
     ['Na lista de barras, clique no nome de um segmento (por exemplo "Varejo").'],
-    ['A aba "Projetos" abre sozinha.', 'Só aparecem cards do segmento clicado.', 'A quantidade de cards é igual ao número que aparecia ao lado da barra.']),
+    ['A aba "Projetos" abre sozinha.', 'Só aparecem cards do segmento clicado, e o filtro aparece como etiqueta acima da lista (ex.: "Segmento: Varejo").', 'A quantidade de cards é igual ao número que aparecia ao lado da barra.']),
 
   c('C10', 'alta', 'Ficha de um projeto: consultor não vê valores, gestor vê',
     'Ver se a ficha respeita o que cada perfil pode ver.',
@@ -97,7 +101,7 @@ export const ROTEIRO = [
     'Ver se um projeto confidencial fica escondido de quem não tem permissão.',
     [CONSULTOR, NOVA],
     [PERGUNTE('ficha do P005'), ESPERE, GESTOR, NOVA, PERGUNTE('ficha do P005'), ESPERE],
-    ['Como consultor: o Radar não mostra nenhum dado do P005 (nem cliente, nem valor). Ele diz que não encontrou evidência.', 'Como gestor: aparece a ficha do projeto da Cooperativa de Crédito Horizonte, com valor e margem.']),
+    ['Como consultor: o Radar não mostra nenhum dado do P005 (nem cliente, nem valor) e responde só "Não encontrei o P005 entre os projetos que o seu perfil pode ver", oferecendo buscar pelo tema, sem listar outros projetos.', 'Como gestor: aparece a ficha do projeto da Cooperativa de Crédito Horizonte, com valor e margem na tabela; o texto não repete os campos da tabela.']),
 
   c('C13', 'alta', 'Comparar dois projetos pelo código',
     'Ver a comparação lado a lado.',
@@ -127,7 +131,8 @@ export const ROTEIRO = [
     'Ver se o Radar mantém o tema e troca só o segmento.',
     [CONSULTOR, NOVA],
     [PERGUNTE('projetos de churn em telecom'), ESPERE, PERGUNTE('e em varejo?'), ESPERE],
-    ['A segunda resposta mostra a etiqueta "continuando a conversa".', 'Ela fala de churn (perda de clientes) no varejo, e não de varejo em geral.', 'Na caixa de texto aparece a marca "lembrando 1 pergunta" (ou mais).']),
+    ['A segunda resposta mostra a etiqueta "continuando a conversa".', 'Ela fala de churn (perda de clientes) no varejo, e não de varejo em geral, e deixa claro o que entendeu (ex.: projetos de churn no varejo).', 'Na caixa de texto aparece a marca "lembrando 1 pergunta" (ou mais).'],
+    { tickets: ['CR-036'] }),
 
   c('C18', 'media', 'Continuar uma contagem ("desses")',
     'Ver se o Radar aplica um filtro novo sobre a resposta anterior.',
@@ -169,7 +174,8 @@ export const ROTEIRO = [
     'Ver se o card mostra as evidências e a explicação da posição.',
     [CONSULTOR, NOVA, PERGUNTE('tem algum case de manutenção preditiva?'), ESPERE],
     ['Clique no título do primeiro card para abri-lo.', 'Clique em "Trechos que sustentam a resposta".', 'Clique em "Por que apareceu nesta posição".', 'Em "Fontes", no fim do card, clique em um dos documentos.', 'Feche a janela do documento.'],
-    ['O card abre e mostra a justificativa, as tecnologias, o prazo e o segmento.', 'Os trechos mostram frases dos documentos do projeto.', 'A explicação mostra barras com fatores como conteúdo, segmento e tecnologias.', 'O documento abre numa janela com o texto e o botão "Baixar".', 'Como consultor, no lugar do valor aparece "valor restrito".']),
+    ['O card abre e mostra primeiro o segmento, o prazo, a justificativa e o resumo; as tecnologias aparecem uma vez só, no fim do card.', 'Os trechos mostram frases dos documentos do projeto.', 'A explicação mostra barras com fatores como conteúdo, segmento e tecnologias.', 'O documento abre numa janela com o texto e o botão "Baixar original".', 'Como consultor, no lugar do preço aparece "preço e margem restritos" (os resultados em reais dos cases continuam aparecendo).'],
+    { tickets: ['CR-051'] }),
 
   c('C25', 'media', 'Reaproveitar um card: abrir, copiar escopo e usar como base',
     'Ver os botões de reaproveitamento.',
@@ -193,13 +199,14 @@ export const ROTEIRO = [
     'Ver se as favoritas ficam no alto da lista.',
     ['Faça o cenário C27.'],
     ['Clique na estrela (☆) no alto da conversa, à direita do título.', 'Olhe a coluna da esquerda.', 'Clique de novo na estrela.'],
-    ['A estrela fica preenchida e a conversa passa para o grupo "Favoritas", no alto da lista.', 'Clicando de novo, a estrela fica vazia e a conversa volta para "Recentes".']),
+    ['A estrela fica preenchida e a conversa passa para o grupo "Favoritas", no alto da lista, com a estrela sempre visível.', 'Nas outras conversas, a estrela só aparece ao passar o mouse.', 'Clicando de novo, a estrela fica vazia e a conversa volta para "Recentes" (ou "Avulsas").'],
+    { tickets: ['CR-004'] }),
 
   c('C29', 'media', 'Excluir uma conversa',
     'Ver se a exclusão pede confirmação antes de apagar.',
     ['Faça o cenário C27 (use a sua conversa "Teste do roteiro", não a de outra pessoa).'],
-    ['Na coluna da esquerda, passe o mouse sobre a conversa e clique na lixeira uma vez.', 'Espere 4 segundos sem clicar.', 'Clique na lixeira e, logo em seguida, clique nela de novo.'],
-    ['No primeiro clique a lixeira muda de cor (pede confirmação) e nada é apagado.', 'Depois de alguns segundos ela volta ao normal.', 'Com dois cliques seguidos, a conversa some da lista.']),
+    ['Na coluna da esquerda, passe o mouse sobre a conversa e clique nos três pontinhos (⋯) à direita dela.', 'Clique em "Excluir".', 'Na janela que abre, clique em "Cancelar".', 'Repita os dois primeiros passos e clique fora da janela.', 'Repita mais uma vez e clique em "Excluir conversa".'],
+    ['A janela "Excluir conversa" mostra o nome da conversa e avisa que a exclusão é permanente.', '"Cancelar" e o clique fora fecham a janela sem apagar nada.', '"Excluir conversa" apaga: a conversa some da lista e aparece o aviso "Conversa excluída".']),
 
   c('C30', 'media', 'Reabrir uma conversa e continuar perguntando',
     'Ver se a memória volta quando a conversa é reaberta.',
@@ -285,8 +292,8 @@ export const ROTEIRO = [
   c('P09', 'media', '"Meus projetos"',
     'Ver o filtro de projetos ligados a você.',
     [CONSULTOR, PROJETOS, FILTROS],
-    ['Clique em "Meus projetos", no alto do painel de filtros.', 'Clique de novo para desligar.'],
-    ['Se o perfil não criou nem enviou nada, aparece "Nenhum projeto com esses critérios" e a explicação do que "Meus projetos" mostra.', 'Se o perfil já enviou documentos, aparecem só esses projetos.', 'Clicando de novo, a lista completa volta.']),
+    ['Clique em "Meus projetos", no alto do painel de filtros, e anote os projetos.', 'Clique de novo para desligar.', GESTOR, 'Ligue "Meus projetos" de novo.'],
+    ['No alto da tela, a etiqueta mostra "Visão: Consultor · Marina Costa" e depois "Visão: Gestor · Thiago Ramos".', 'Como consultor, aparecem os projetos em que Marina Costa é a responsável (ou em que esse perfil enviou documento).', 'Como gestor, a lista é outra: os projetos de Thiago Ramos.', 'Clicando de novo, a lista completa volta.']),
 
   c('P10', 'alta', 'Buscar no conteúdo dos documentos',
     'Ver se a busca encontra projetos pelo que está escrito nos documentos.',
@@ -310,7 +317,7 @@ export const ROTEIRO = [
     'Ver se a ordenação muda a ordem dos cards.',
     [GESTOR, PROJETOS],
     ['Clique na caixa de ordenação (mostra "Relevância"), ao lado do botão Filtros, e escolha "Recentes".', 'Escolha "Prazo".', 'Escolha "A–Z".', 'Escolha "Valor".', CONSULTOR, 'Abra a caixa de ordenação de novo.'],
-    ['"Recentes": do ano mais novo para o mais antigo.', '"Prazo": em ordem de prazo.', '"A–Z": em ordem alfabética do título.', '"Valor" (gestor): do maior para o menor valor.', 'Como consultor, a opção "Valor" não aparece na lista.']),
+    ['"Recentes": da data mais nova para a mais antiga; os cards mostram mês e ano (ex.: set/2026).', '"Prazo": em ordem de prazo.', '"A–Z": em ordem alfabética do título.', '"Valor" (gestor): do maior para o menor valor.', 'Como consultor, a opção "Valor" não aparece na lista.']),
 
   c('P14', 'alta', 'Abrir o detalhe do projeto',
     'Ver se o detalhe mostra os dados e os documentos.',
@@ -321,8 +328,8 @@ export const ROTEIRO = [
   c('P15', 'media', 'Navegar para um projeto parecido e abrir um documento',
     'Ver as ligações entre projetos e os documentos.',
     [GESTOR, PROJETOS, 'Abra o detalhe de um projeto que tenha "Projetos parecidos" na coluna da direita.'],
-    ['Clique num dos "Projetos parecidos".', 'No novo detalhe, clique no nome de um documento da lista.', 'Na janela do documento, clique em "Baixar".', 'Feche as janelas.'],
-    ['O detalhe muda para o projeto parecido.', 'O documento abre numa janela com o texto.', '"Baixar" baixa o arquivo original para o seu computador.']),
+    ['Clique num dos "Projetos parecidos".', 'No novo detalhe, clique no nome de um documento da lista.', 'Na janela do documento, clique em "Baixar original".', 'Feche as janelas.'],
+    ['O detalhe muda para o projeto parecido.', 'O documento abre numa janela com o texto.', '"Baixar original" baixa o arquivo como foi enviado (na base de exemplo os documentos são .md; o botão mostra o formato). PDF e Word gerados pelo Radar ficam em "Exportar", na ficha.']),
 
   c('P16', 'alta', 'Detalhe do projeto como consultor',
     'Ver se o consultor não vê valores no detalhe.',
@@ -488,4 +495,180 @@ export const ROTEIRO = [
     ['Toque na aba "Enviar", na barra de baixo.', 'Toque em "escolha" e selecione o arquivo.', 'Toque no envio quando ficar "Para revisar".', 'Toque em "Descartar".'],
     ['O arquivo é enviado e a revisão abre inteira, sem cortar botões.', '"Descartar" funciona.'],
     { arquivo: 'levantamento-requisitos-hospital.html' }),
+
+  // =====================================================================
+  // NOVOS NA V0.0.2 (correções dos tickets da V0.0.1). "tickets" = o que o cenário retesta: marcar OK valida esses tickets.
+  // =====================================================================
+  c('C35', 'alta', 'Busca sem nada relevante sugere buscas próximas',
+    'Ver se, quando não há nada na base, o Radar diz isso e oferece buscas que trazem resultado.',
+    [CONSULTOR, NOVA],
+    [PERGUNTE('preciso de propostas de mineração'), ESPERE, 'Clique numa das buscas sugeridas abaixo da resposta.', PERGUNTE('preiso de propostas de energia'), ESPERE],
+    ['A primeira resposta diz "Não encontrei nada relevante na base" e mostra até 3 buscas próximas como botões.', 'Clicar numa sugestão faz a busca e traz projetos (não volta vazia).', 'A pergunta com erro de digitação ("preiso") traz os projetos de Utilities / Energia.'],
+    { tickets: ['CR-012'] }),
+
+  c('C36', 'alta', 'Resposta em blocos fáceis de ler',
+    'Ver se a resposta separa a resposta direta da recomendação.',
+    [CONSULTOR, NOVA],
+    [PERGUNTE('Já fizemos fraude em seguros?'), ESPERE],
+    ['O texto vem em blocos separados: primeiro a resposta direta e por que cada projeto citado é relevante.', 'Depois um bloco que começa com "Recomendação:" (em destaque) dizendo o que reaproveitar e os cuidados.', 'Se aparecer "Perfis sugeridos:", os perfis estão citados nos documentos dos projetos (o Radar não inventa equipe).'],
+    { tickets: ['CR-027'] }),
+
+  c('C37', 'alta', 'Card do projeto: ordem, tags, itens que abrem e barras',
+    'Ver o novo card de projeto da resposta.',
+    [CONSULTOR, NOVA, PERGUNTE('tem algum case de manutenção preditiva?'), ESPERE, 'Clique no título do primeiro card para abri-lo.'],
+    ['Olhe a ordem das informações do card.', 'Clique em "Escopo, resultados e lições" e depois em "Por que apareceu nesta posição".', 'Passe o mouse sobre uma das barras.', 'Clique numa tecnologia, no fim do card.'],
+    ['O ícone do segmento aparece ao lado do título; segmento, prazo, justificativa e resumo vêm antes dos botões, e as tecnologias aparecem uma vez só, no fim, discretas.', 'Cada item que abre tem uma setinha que vira ao abrir, e só um fica aberto por vez (abrir outro fecha o anterior).', 'Cada barra tem o mesmo tamanho do percentual ao lado (53% é maior que 20%) e a dica mostra "nota × peso"; a soma das barras dá a semelhança do projeto.', 'Clicar na tecnologia abre a aba Projetos filtrada por ela.'],
+    { tickets: ['CR-028', 'CR-029', 'CR-030'] }),
+
+  c('C38', 'alta', 'Grupos de conversas, arquivar e menu da conversa',
+    'Ver se dá para organizar as conversas por cliente ou proposta.',
+    ['Faça o cenário C27 (tenha a sua conversa "Teste do roteiro").'],
+    ['Na coluna da esquerda, passe o mouse sobre a sua conversa e clique nos três pontinhos (⋯).', 'Em "Mover para grupo", escreva "Roteiro" seguido do seu nome e clique no +.', 'Abra o menu de novo e clique em "Renomear"; mude o nome e aperte Enter.', 'Abra o menu e clique em "Arquivar".', 'No fim da lista, abra "Arquivadas", abra o menu da conversa e clique em "Desarquivar".'],
+    ['A conversa passa a aparecer num bloco com o nome do grupo, separado das "Avulsas".', 'O nome muda na lista e aparece o aviso "Conversa renomeada".', 'Arquivada, a conversa sai dos blocos e fica em "Arquivadas", no fim da lista.', 'Desarquivada, ela volta para o grupo.'],
+    { tickets: ['CR-017', 'CR-018'] }),
+
+  c('C39', 'media', 'Editar o título pelo lápis',
+    'Ver se fica claro que o título da conversa pode ser editado.',
+    ['Abra uma conversa sua.'],
+    ['Clique no lápis ao lado do título da conversa, no alto.', 'Mude o nome e aperte Esc.', 'Clique no lápis de novo, mude o nome e aperte Enter.'],
+    ['O lápis aparece ao lado do título e, ao clicar, o título fica selecionado para edição.', 'Esc desfaz e volta o nome anterior.', 'Enter salva e aparece o aviso "Conversa renomeada".'],
+    { tickets: ['CR-034'] }),
+
+  c('C40', 'media', 'Botão enviar só com texto',
+    'Ver se o botão de enviar fica desligado com a caixa vazia.',
+    [NOVA],
+    ['Olhe o botão de enviar (seta azul) com a caixa de texto vazia.', 'Digite só espaços.', 'Digite uma pergunta.'],
+    ['Com a caixa vazia ou só com espaços, o botão fica apagado e não envia (nem com Enter).', 'Com texto, o botão fica azul e envia.'],
+    { tickets: ['CR-037'] }),
+
+  c('C41', 'media', 'Editar a última pergunta e reenviar',
+    'Ver se dá para corrigir a última pergunta sem mandar outra.',
+    [CONSULTOR, NOVA, PERGUNTE('projetos de telecom'), ESPERE],
+    ['Passe o mouse sobre a sua pergunta (balão azul) e clique no lápis ao lado dela.', 'Mude a pergunta para "projetos de telecom com machine learning" e aperte Enter.'],
+    ['A caixa de texto recebe a pergunta e aparece o aviso "Editando a última pergunta" com "Cancelar".', 'A pergunta e a resposta antigas somem e aparecem a pergunta nova e a resposta dela; a conversa continua com o mesmo número de perguntas.'],
+    { tickets: ['CR-044'] }),
+
+  c('C42', 'media', 'Enviar arquivo pelo chat para um projeto',
+    'Ver se dá para mandar um documento para um projeto conversando com o Radar.',
+    [GESTOR, NOVA, 'Baixe o arquivo de exemplo deste cenário.'],
+    ['Clique no clipe, à esquerda da caixa de texto, e escolha o arquivo baixado.', 'Escreva "esse arquivo é de qual projeto?" e aperte Enter.', 'Escreva "coloca no projeto da Energisul" e aperte Enter.', 'Quando aparecer "pronto para conferir", clique em "Revisar".', 'Na revisão, clique em "Descartar".'],
+    ['O arquivo aparece como etiqueta acima da caixa de texto, com X para tirar.', 'Sem projeto definido, o Radar pergunta para qual projeto vai e o arquivo continua só na conversa.', 'Com o projeto, o Radar diz para qual projeto enviou e mostra o andamento.', 'A revisão abre com "Vai para" o projeto da Energisul já escolhido.', '"Descartar" tira o arquivo, sem entrar na base.'],
+    { tickets: ['CR-049', 'CR-050'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
+
+  c('C43', 'media', 'Etiqueta da visão, menu e seção atual',
+    'Ver se fica claro com que perfil e em que seção você está.',
+    [],
+    ['Olhe o alto da tela.', 'Clique na etiqueta "Visão: …".', 'No menu, troque o "Ver como".', 'Clique no X no alto do menu.', 'Clique nas abas Projetos, Enviar e Insights.'],
+    ['A etiqueta "Visão: Consultor · Marina Costa" (ou Gestor · Thiago Ramos) aparece no alto, sempre visível.', 'Clicar nela abre o menu no "Ver como"; trocando, a etiqueta muda e aparece um aviso.', 'O X fecha o menu (Esc também).', 'A aba atual fica em azul cheio, com um traço embaixo, bem diferente das outras.'],
+    { tickets: ['CR-031', 'CR-006', 'CR-025'] }),
+
+  c('C44', 'media', 'Ajuda e versão na lateral das conversas',
+    'Ver se a ajuda está à vista, sem depender do menu.',
+    [NOVA],
+    ['Olhe o fim da coluna da esquerda.', 'Clique em "Como usar o Radar" e feche.', 'Clique em "Versão, feedback e testes" e feche.'],
+    ['A coluna da esquerda tem o fundo no tom azul da marca e, no fim, os atalhos "Como usar o Radar", "Versão, feedback e testes" e "Enviar feedback".', 'Cada atalho abre a tela certa.', 'O logo da ImpactAI ("Criado e desenvolvido por") fica sempre visível no fim da coluna.'],
+    { tickets: ['CR-026', 'CR-003'] }),
+
+  c('P26', 'alta', 'Filtros ativos como etiquetas e "Ver N projetos"',
+    'Ver se é fácil enxergar e tirar os filtros aplicados.',
+    [CONSULTOR, PROJETOS, FILTROS],
+    ['Marque dois segmentos no painel.', 'Clique em "Ver N projetos", no fim do painel.', 'Clique no X de uma das etiquetas acima da lista.', 'Clique em "Limpar tudo".'],
+    ['Cada filtro marcado é aplicado na hora, e dá para marcar mais de um antes de fechar.', '"Ver N projetos" fecha o painel; os filtros aparecem como etiquetas acima da lista (ex.: "Segmento: Varejo").', 'O X tira só aquele filtro e a lista atualiza.', '"Limpar tudo" volta a lista completa.'],
+    { tickets: ['CR-005', 'CR-013'] }),
+
+  c('P27', 'media', 'Títulos da ficha e ícone do segmento',
+    'Ver o destaque visual da ficha do projeto.',
+    [PROJETOS],
+    ['Olhe os cards da lista.', 'Abra um projeto.'],
+    ['Cada card mostra um ícone do segmento (ex.: raio para Utilities / Energia, carrinho para Varejo).', 'Na ficha, os títulos das seções (Objetivo, Contexto, Documentos…) estão maiores, em azul e com uma linha embaixo.'],
+    { tickets: ['CR-015', 'CR-026'] }),
+
+  c('P28', 'alta', 'Enviar arquivo pela ficha do projeto',
+    'Ver se dá para mandar um documento sem sair do projeto.',
+    [GESTOR, PROJETOS, 'Baixe o arquivo de exemplo deste cenário.', 'Abra o projeto "Plataforma de dados para redução de perdas não técnicas" (Energisul).'],
+    ['Na seção Documentos da ficha, clique em "Enviar arquivo para este projeto" e escolha o arquivo baixado.', 'Quando aparecer "pronto para conferir", clique em "Revisar".', 'Na revisão, clique em "Descartar".'],
+    ['O andamento aparece na própria ficha, sem trocar de tela.', 'A revisão abre com "Vai para" o projeto da Energisul (dá para trocar em "Trocar projeto").', '"Descartar" tira o arquivo, sem entrar na base.'],
+    { tickets: ['CR-046'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
+
+  c('U16', 'alta', 'Arquivo recusado: trocar ou remover',
+    'Ver se um arquivo de formato errado não trava o envio.',
+    [ENVIAR, 'Tenha no computador uma imagem (PNG ou JPG) qualquer.'],
+    ['Escolha a imagem na área tracejada.'],
+    ['Aparece o aviso de formato não aceito com a lista de formatos (MD, PDF, DOCX…), e a imagem nem entra na lista de envios.', 'Se um envio aparecer com erro na lista, ele tem os botões "Trocar arquivo" e "Remover da lista", e os dois funcionam.'],
+    { tickets: ['CR-010'] }),
+
+  c('U17', 'media', 'Atualizar a ficha do projeto ao aprovar um arquivo',
+    'Ver se os dados novos do arquivo podem atualizar o projeto.',
+    [GESTOR, ENVIAR, 'Baixe o arquivo de exemplo deste cenário.'],
+    [ESCOLHA('apresentacao-energisul-fase2.pptx'), ESPERE_ENVIO, 'Na revisão, procure a seção "Atualizar a ficha do projeto".', DESCARTAR],
+    ['Quando o arquivo traz prazo, data ou valor diferentes da ficha do projeto de destino, aparece a seção com cada diferença (antes → depois) e uma caixa para marcar.', 'Só o que for marcado é atualizado na ficha ao aprovar (e fica no histórico do projeto).'],
+    { tickets: ['CR-047'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
+
+  c('U18', 'media', 'Aprovar vários envios de uma vez',
+    'Ver a aprovação em lote.',
+    [GESTOR, ENVIAR, 'Baixe os dois arquivos de exemplo deste cenário.'],
+    ['Escolha os dois arquivos de uma vez na área tracejada.', 'Espere os dois ficarem "Para revisar".', 'Clique em "Aprovar os prontos (2)", acima da lista.', 'Depois, abra cada documento aprovado e, se não quiser manter, peça a um gestor para excluir (ou repita o cenário só com Descartar).'],
+    ['O botão "Aprovar os prontos" aparece quando há mais de um envio para revisar.', 'Os que têm projeto certo e nenhum ponto de atenção são aprovados; os outros ficam para revisar um a um.', 'Aparece um resumo com quantos foram aprovados e quantos ficaram para revisar.'],
+    { tickets: ['CR-048'], arquivo: 'case-segura-mais-resultados.pdf', arquivo2: 'proposta-banco-aurora-antifraude.docx' }),
+
+  // =====================================================================
+  // INSIGHTS (aba Insights, refeita na V0.0.2)
+  // =====================================================================
+  c('I01', 'alta', 'Números do topo',
+    'Ver se os números grandes do topo batem com a base.',
+    [CONSULTOR, 'Clique na aba "Insights", no alto da tela.'],
+    ['Leia os quatro números do topo.', PROJETOS, 'Leia quantos projetos a lista mostra.'],
+    ['O topo mostra projetos na base, taxa de conversão (com ganhos e perdidos), segmentos atendidos e tecnologias usadas, cada um com uma cor.', 'O número de projetos é igual ao total da aba Projetos para o mesmo perfil.'],
+    { tickets: ['CR-009'] }),
+
+  c('I02', 'alta', 'Funil das propostas',
+    'Ver em que etapa estão os projetos.',
+    [CONSULTOR, 'Clique na aba "Insights".'],
+    ['Passe o mouse sobre um pedaço da barra colorida do funil.', 'Clique no nome "Entregue" na legenda.'],
+    ['A barra mostra um pedaço por status (Enviada, Em negociação, Vendida, Em execução, Entregue, Perdida…), cada um com sua cor, e a legenda traz o número e a porcentagem.', 'A dica mostra o status, a quantidade e a porcentagem.', 'Clicar em "Entregue" abre a aba Projetos só com os entregues.'],
+    { tickets: ['CR-009'] }),
+
+  c('I03', 'alta', 'Top 10 segmentos e tecnologias',
+    'Ver os rankings e o atalho para os projetos.',
+    [CONSULTOR, 'Clique na aba "Insights".'],
+    ['Olhe os cartões "Top 10 segmentos" e "Top 10 tecnologias".', 'Passe o mouse sobre uma barra.', 'Clique no nome de um segmento.', 'Volte para Insights e clique no nome de uma tecnologia.'],
+    ['As barras estão em ordem, da maior para a menor, numeradas, com no máximo 10 itens e o número no fim de cada barra.', 'A dica traz o detalhe (conversão e prazo médio; para o gestor, também o valor médio).', 'Clicar no segmento ou na tecnologia abre a aba Projetos filtrada por ele.'],
+    { tickets: ['CR-009'] }),
+
+  c('I04', 'media', 'Projetos por ano, pares de tecnologias, resultados e lições',
+    'Ver os outros cartões da tela.',
+    [CONSULTOR, 'Clique na aba "Insights".'],
+    ['Olhe o cartão "Projetos por ano".', 'Role a tela e leia "Tecnologias que andam juntas", "Resultados comprovados" e "Lições das propostas perdidas".', 'Clique no nome de um cliente em "Resultados comprovados".'],
+    ['"Projetos por ano" mostra uma coluna por ano com o número em cima.', 'Os pares mostram duas tecnologias e em quantos projetos aparecem juntas.', 'Resultados e lições trazem frases dos documentos com o cliente; clicar no cliente abre o projeto.'],
+    { tickets: ['CR-009'] }),
+
+  c('I05', 'alta', 'Insights respeitam o perfil',
+    'Ver se o consultor não vê números de projetos confidenciais.',
+    [CONSULTOR, 'Clique na aba "Insights" e anote o número de projetos do topo.'],
+    [GESTOR, 'Olhe de novo a aba Insights.'],
+    ['O gestor vê mais projetos que o consultor (o projeto confidencial entra só para o gestor).', 'Para o consultor, as dicas das barras não mostram valor médio.'],
+    { tickets: ['CR-009'] }),
+
+  c('I06', 'media', 'Saúde da base recolhida',
+    'Ver se os dados de curadoria não poluem a tela.',
+    ['Clique na aba "Insights".'],
+    ['Role até o fim e clique em "Saúde da base (curadoria)".'],
+    ['A seção começa recolhida e, ao abrir, mostra documentos por tipo, envios aguardando revisão e pendências de cadastro.'],
+    { tickets: ['CR-009'] }),
+
+  c('I07', 'media', 'Insights (novo) fora das abas',
+    'Ver se o protótipo antigo saiu da barra de abas.',
+    [],
+    ['Olhe a barra de abas no alto.', 'Na barra de endereço do navegador, troque o fim do endereço por "/insights-novo" e aperte Enter.'],
+    ['A barra de abas tem só Perguntar, Projetos, Enviar e Insights.', 'O endereço /insights-novo abre o protótipo "Insights (novo)" direto, para avaliação.']),
 ];
+
+// Roteiros de versões anteriores, congelados: a versão arquivada só pode ser consultada.
+// O arquivo JSON de cada uma é uma foto do roteiro no dia em que a versão foi fechada; um teste garante que não muda.
+const ARQUIVO = (v) => new URL(`./roteiros/${v}.json`, import.meta.url);
+export const VERSOES_ARQUIVADAS = ['V0.0.1'];
+const congelar = (o) => { Object.values(o).forEach((v) => v && typeof v === 'object' && congelar(v)); return Object.freeze(o); };
+const ARQUIVADOS = Object.fromEntries(VERSOES_ARQUIVADAS.map((v) => [v, congelar(JSON.parse(fs.readFileSync(ARQUIVO(v), 'utf8')))]));
+export const versaoArquivada = (v) => Object.hasOwn(ARQUIVADOS, v);
+// Roteiro de uma versão: o congelado, se arquivada; senão, o roteiro atual (acima).
+export const roteiroDe = (v) => ARQUIVADOS[v] ?? ROTEIRO;

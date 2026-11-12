@@ -1,4 +1,5 @@
-import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode } from './common.js';
+import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode, iconeSegmento, normalizeText } from './common.js';
+import { enviarParaProjeto, situacaoEnvio, revisarEnvio } from './upload.js';
 import { icon, hydrateIcons } from './icons.js';
 import { initProjects, openProject, openProjectForm } from './projetos.js';
 import { initUploads } from './upload.js';
@@ -31,7 +32,14 @@ async function init() {
   state.ctx = await api('/api/contexto');
   const reloadContext = async () => { state.ctx = { ...state.ctx, ...(await api(`/api/contexto?userId=${userId()}`)) }; };
   $('#user').innerHTML = state.ctx.usuarios.map((u) => `<option value="${u.id}">${esc(u.perfil.charAt(0).toUpperCase() + u.perfil.slice(1))}</option>`).join('');
-  $('#user').onchange = async () => { await reloadContext(); setFocus(null); newConversation(); loadDocs(); loadConversations(); notifyUserChange(); };
+  // CR-031: a etiqueta "Visão: …" mostra sempre qual usuário de demonstração está ativo; clicar abre o menu para trocar.
+  const pintarVisao = () => {
+    const u = state.ctx.usuarios.find((x) => x.id === $('#user').value);
+    $('#visao-nome').textContent = `Visão: ${$('#user').selectedOptions[0]?.textContent ?? ''}${u?.pessoa ? ` · ${u.pessoa}` : ''}`;
+  };
+  pintarVisao();
+  $('#visao-tag').onclick = (e) => { e.stopPropagation(); $('#menu-btn').click(); $('#user').focus(); };
+  $('#user').onchange = async () => { pintarVisao(); await reloadContext(); setFocus(null); newConversation(); loadDocs(); loadConversations(); notifyUserChange(); toast(`Agora você vê o Radar como ${$('#user').selectedOptions[0]?.textContent}.`); };
   setupFocus();
   setupTheme();
   // A IA só aparece no topo quando está fora do ar: ligada é o normal.
@@ -59,6 +67,8 @@ async function init() {
   // Links "Política de dados" em qualquer tela.
   document.addEventListener('click', (e) => { const a = e.target.closest('[data-politica-link]'); if (a) { e.preventDefault(); showPolicy(); } });
   welcomeOnFirstVisit().catch(() => {});
+  // Insights (novo) não tem aba: abre só pelo endereço /insights-novo, enquanto é avaliado.
+  if (/^\/insig(ht|th)s-novo\/?$/.test(location.pathname)) openTab('painel');
 }
 
 // ---- Menu "Mais opções": perfil de demonstração, documentos, métricas e ajuda ----
@@ -80,6 +90,10 @@ function setupMenu() {
   v.onclick = () => showReleaseNotes();
   document.addEventListener('click', (e) => { if (!e.target.closest('.menu')) toggle(false); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+  // CR-006: botão X no menu (depois de trocar o "Ver como" o menu fica aberto para mostrar as opções do perfil).
+  // CR-026: Ajuda, versão e feedback visíveis na lateral das conversas (antes só no menu ⋮).
+  $$('[data-side]').forEach((b) => (b.onclick = () => ({ ajuda: showGuide, versao: () => showReleaseNotes(), feedback: () => showReleaseNotes('feedback') })[b.dataset.side]()));
+  $('#menu-fechar').onclick = (e) => { e.stopPropagation(); toggle(false); btn.focus(); };
   $$('[data-menu]', pop).forEach((b) => (b.onclick = () => {
     toggle(false);
     if (b.dataset.menu === 'docs') { openTab('projetos'); showView('docs'); }
@@ -176,13 +190,81 @@ function renderBriefing() {
   }
 }
 
+// ---- CR-049 / CR-050: arquivos pelo chat ----
+// O clipe anexa arquivos à conversa. Eles ficam pendentes (não entram na base) até a pessoa dizer o projeto, na mesma
+// mensagem ("coloca essa proposta no projeto da Energisul") ou depois ("aquele PDF é do projeto P003"). Com o projeto
+// definido, o arquivo vai para o envio normal (mascaramento, revisão humana) já com o destino fixo.
+const QUER_ENVIAR = /\b(coloc|envi|sub|adicion|anex|mand|guard|salv|inclu|vincul|associ)\w*\b|\b(é|eh|sao|são|vai|vão|vao) (do|da|de|para o|pro|no) projeto\b|\b(arquivo|pdf|documento|anexo|planilha|apresenta\w*)\b.*\bprojeto\b/i;
+let projetosChat = null;
+async function projetoCitado(texto) {
+  projetosChat ??= (await api(`/api/projetos?userId=${userId()}&tamanho=100&ordenar=titulo`)).itens;
+  const t = normalizeText(texto);
+  const cod = /\bp\d{3}\b/.exec(t)?.[0].toUpperCase();
+  if (cod) return projetosChat.find((p) => p.id === cod) ?? null;
+  const palavras = (x) => normalizeText(x).split(/[^a-z0-9]+/).filter((w) => w.length > 3 && !['projeto', 'cliente', 'dados', 'para', 'com'].includes(w));
+  const pontos = projetosChat.map((p) => ({ p, n: [...new Set([...palavras(p.cliente), ...palavras(p.titulo)])].filter((w) => t.includes(w)).length })).sort((a, b) => b.n - a.n);
+  return pontos[0]?.n ? pontos[0].p : null;
+}
+function pintarAnexos() {
+  const a = state.anexos ?? [];
+  $('#anexos').innerHTML = a.map((f, i) => `<span class="anexo">${icon('paperclip', { size: 13 })}${esc(f.name)}<button type="button" data-tirar-anexo="${i}" title="Tirar o anexo" aria-label="Tirar ${esc(f.name)}">${icon('x', { size: 12 })}</button></span>`).join('');
+  $('#anexos').classList.toggle('hidden', !a.length);
+  $$('[data-tirar-anexo]').forEach((b) => (b.onclick = () => { state.anexos.splice(Number(b.dataset.tirarAnexo), 1); pintarAnexos(); }));
+  atualizarEnviar();
+}
+async function enviarAnexos(texto) {
+  const projeto = await projetoCitado(texto) ?? (QUER_ENVIAR.test(texto) && state.foco ? { id: state.foco.id, titulo: state.foco.titulo, cliente: state.foco.cliente } : null);
+  $('#chat .welcome')?.remove();
+  addMsg('user', `${esc(texto)}<span class="anexos-msg">${state.anexos.map((f) => `${icon('paperclip', { size: 12 })}${esc(f.name)}`).join(' ')}</span>`);
+  if (!projeto) {
+    addMsg('bot', `<p class="answer"><span class="ans-par">Para qual projeto vão ${state.anexos.length > 1 ? `os ${state.anexos.length} arquivos` : `o arquivo <b>${esc(state.anexos[0].name)}</b>`}? Diga o cliente ou o código do projeto (ex.: "é do projeto P003" ou "coloca no projeto da Energisul"). Até lá ${state.anexos.length > 1 ? 'eles ficam' : 'ele fica'} só nesta conversa, fora da base.</span></p>`);
+    return;
+  }
+  const arquivos = state.anexos.splice(0);
+  pintarAnexos();
+  const bot = addMsg('bot', `<p class="answer"><span class="ans-par">${icon('loader', { size: 14, cls: 'spin' })}Enviando para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)})…</span></p>`);
+  const ids = await enviarParaProjeto(arquivos, projeto.id);
+  if (!ids.length) { bot.innerHTML = '<p class="error">Nenhum arquivo foi enviado.</p>'; return; }
+  bot.innerHTML = `<p class="answer"><span class="ans-par">Enviei ${ids.length > 1 ? `${ids.length} arquivos` : 'o arquivo'} para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)}). O Radar está lendo; quando ficar pronto, confira os dados antes de entrar na base.</span></p><ul class="chat-envios"></ul>`;
+  for (const id of ids) {
+    const li = document.createElement('li');
+    $('.chat-envios', bot).appendChild(li);
+    const acompanhar = async () => {
+      const j = await situacaoEnvio(id).catch(() => null);
+      if (!j || !li.isConnected) return;
+      if (['enviado', 'processando'].includes(j.status)) { li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}${esc(j.nome_arquivo)}: lendo…`; setTimeout(acompanhar, 900); return; }
+      li.innerHTML = j.status === 'erro' ? `${icon('xCircle', { size: 14 })}${esc(j.nome_arquivo)}: ${esc(j.erro)}`
+        : `${icon('eye', { size: 14 })}<b>${esc(j.nome_arquivo)}</b> pronto para conferir <button type="button" class="btn sm primary">Revisar</button>`;
+      $('button', li)?.addEventListener('click', () => revisarEnvio(id));
+    };
+    acompanhar();
+  }
+}
+
 async function onAsk(e) {
   e?.preventDefault();
   const query = $('#query').value.trim();
   if (!query) return;
+  if (state.anexos?.length && (QUER_ENVIAR.test(query) || await projetoCitado(query))) {
+    $('#query').value = '';
+    atualizarEnviar();
+    return enviarAnexos(query);
+  }
+  // CR-044: editar a última pergunta — a pergunta e a resposta anteriores saem da conversa e a nova entra no lugar.
+  if (state.editando && state.conv?.id) {
+    try { await api('/api/conversa/desfazer-ultima', { id: state.conv.id, userId: userId() }); } catch { /* conversa nova: segue como pergunta normal */ }
+    const ultimas = $$('#chat .msg');
+    ultimas.slice(-2).forEach((m) => m.remove());
+    state.conv.turnos = Math.max(0, (state.conv.turnos ?? 1) - 1);
+  }
+  pararEdicao();
   $('#query').value = '';
+  atualizarEnviar();
   $('#chat .welcome')?.remove();
-  addMsg('user', esc(query));
+  $$('#chat .msg.user .msg-editar').forEach((b) => b.remove());
+  const msgUser = addMsg('user', esc(query));
+  msgUser.insertAdjacentHTML('beforeend', `<button type="button" class="icon-btn sm msg-editar" title="Editar esta pergunta e reenviar" aria-label="Editar a última pergunta">${icon('edit', { size: 14 })}</button>`);
+  $('.msg-editar', msgUser).onclick = () => editarUltima(query);
   const pending = addMsg('bot', `<span class="typing">${icon('loader', { cls: 'spin' })}Buscando…</span>`);
   try {
     const r = await api('/api/buscar', { query, userId: userId(), opportunityId: state.foco?.id || undefined, conversaId: state.conv?.id });
@@ -198,6 +280,26 @@ async function onAsk(e) {
   pending.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// CR-044: a última pergunta tem um lápis; ao editar, a caixa de texto recebe a pergunta e um aviso com "Cancelar".
+function editarUltima(texto) {
+  state.editando = true;
+  $('#query').value = texto;
+  atualizarEnviar();
+  $('#editando').classList.remove('hidden');
+  $('#query').focus();
+  $('#query').select();
+}
+function pararEdicao() {
+  state.editando = false;
+  $('#editando')?.classList.add('hidden');
+}
+// CR-037: enviar só fica habilitado com texto de verdade (não vale vazio nem só espaços).
+function atualizarEnviar() {
+  const vazio = !$('#query').value.trim();
+  $('#ask .send').disabled = vazio;
+  $('#ask .send').title = vazio ? 'Escreva uma pergunta para enviar' : 'Enviar';
+}
+
 function addMsg(kind, html) {
   const el = document.createElement('div');
   el.className = `msg ${kind}`;
@@ -207,11 +309,13 @@ function addMsg(kind, html) {
 }
 
 // Citações [P001] da resposta da IA viram etiquetas com o nome do cliente.
+// Resposta em blocos (CR-027): cada parágrafo vira um bloco; "Recomendação:" e "Perfis sugeridos:" ganham destaque.
 function renderText(r) {
   const names = citeNames(r);
-  return esc(r.resposta)
+  return String(r.resposta ?? '').split(/\n\s*\n/).map((bloco) => `<span class="ans-par">${esc(bloco.trim())
+    .replace(/^(Recomendação|Perfis sugeridos):/, '<b class="ans-rot">$1:</b>')
     .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
-    .replace(/\[(P\d{3})\]/g, (m, id) => `<span class="cite" title="${id}">${esc(names.get(id) ?? id)}</span>`);
+    .replace(/\[(P\d{3})\]/g, (m, id) => `<span class="cite" title="${id}">${esc(names.get(id) ?? id)}</span>`)}</span>`).join('');
 }
 
 function renderAnswer(r) {
@@ -231,6 +335,7 @@ function renderAnswer(r) {
     ${tipado !== null ? tipado : r.resultados.length ? `<div class="rcards">${r.resultados.map(renderCard).join('')}</div>` : `
       <div class="noresult">
         <span>Tente:</span>
+        ${(r.sugestoes ?? []).map((q) => `<button type="button" class="chip-btn" data-ask="${esc(q)}">${icon('search', { size: 14 })}${esc(q)}</button>`).join('')}
         <button type="button" class="chip-btn" data-act="explorar">${icon('folder', { size: 14 })}Explorar projetos</button>
         ${opp ? `<button type="button" class="chip-btn" data-act="sem-contexto">${icon('x', { size: 14 })}Perguntar sem o foco em ${esc(opp?.cliente ?? '')}</button>` : ''}
         ${state.conv?.turnos ? `<button type="button" class="chip-btn" data-act="nova">${icon('plus', { size: 14 })}Nova conversa, sem o contexto anterior</button>` : ''}
@@ -240,11 +345,22 @@ function renderAnswer(r) {
 
 const statusDot = (s) => `<i class="dot s-${esc(s).replace(/\s/g, '')}"></i>${esc(s)}`;
 
+// Card do projeto na resposta (V0.0.2):
+// CR-030: hierarquia nova — o que importa para decidir vem primeiro (cliente, segmento, status, prazo, por que é parecido,
+// resumo); tecnologias aparecem uma vez só, no fim, discretas e clicáveis (CR-013: abrem Projetos filtrado).
+// CR-029: itens que abrem e fecham com setinha (chevron) e um aberto por vez (atributo name do <details>).
+// CR-028: cada barra de "Por que apareceu" é a contribuição do critério para este projeto, numa escala única de 0 a 100%.
+// CR-051: o que fica oculto para o consultor é o preço e a margem da proposta, não os resultados em reais.
+const acordeon = (grupo, ic, titulo, corpo) => `<details class="acc" name="${grupo}"><summary>${icon(ic, { size: 14 })}<span>${titulo}</span><span class="acc-chev">${icon('chevronDown', { size: 15 })}</span></summary><div class="acc-body">${corpo}</div></details>`;
+
 function renderCard(x) {
   const d = x.detalhes;
+  const grupo = `acc-${x.projeto_id}`;
+  const fatores = x.fatores.map((f) => ({ ...f, contribuicao: f.valor * f.peso }));
   return `
   <article class="rcard" data-projeto="${x.projeto_id}">
     <div class="rhead" data-toggle>
+      <span class="seg-ico lg" title="${esc(x.segmento)}" aria-hidden="true">${icon(iconeSegmento(x.segmento), { size: 18 })}</span>
       <div class="rt"><h4>${esc(x.titulo)}</h4><span class="sub">${matchLabel(x.score)} ${esc(x.cliente)} · ${statusDot(x.status)}</span></div>
       ${x.conflitos.length ? `<span class="tag warn" title="${esc(x.conflitos.map((c) => c.motivo).join(' '))}">${icon('alert', { size: 14 })}dados divergentes</span>` : ''}
       <span class="fb">
@@ -255,25 +371,25 @@ function renderCard(x) {
     </div>
     <div class="fb-why hidden"><span>O que não ajudou?</span>${MOTIVOS.map((m) => `<button type="button" class="pick" data-motivo="${esc(m)}">${esc(m)}</button>`).join('')}</div>
     <div class="rbody">
+      <div class="facts">
+        <span title="Segmento">${icon(iconeSegmento(x.segmento), { size: 15 })}${esc(x.segmento)}</span>
+        <span title="Prazo">${icon('clock', { size: 15 })}${d.prazoMeses ? `${d.prazoMeses} meses` : '—'}</span>
+        ${d.valor ? `<span title="Preço da proposta">${icon('money', { size: 15 })}${brl(d.valor)}</span>` : d.valor === undefined ? `<span title="O preço e a margem da proposta não aparecem para o seu perfil. Resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos.">${icon('lock', { size: 15 })}preço e margem restritos</span>` : ''}
+      </div>
       <p class="why">${esc(x.justificativa)}</p>
+      ${x.resumo ? `<p class="resumo">${esc(x.resumo)}</p>` : ''}
       <div class="reuse">
         <button type="button" class="btn sm" data-reuse="abrir">${icon('folder', { size: 15 })}Abrir projeto</button>
         ${d.escopo ? `<button type="button" class="btn sm" data-reuse="copiar">${icon('copy', { size: 15 })}Copiar escopo</button>` : ''}
         ${pode('cadastrarProjeto') ? `<button type="button" class="btn sm" data-reuse="base">${icon('duplicate', { size: 15 })}Usar como base</button>` : ''}
       </div>
-      <div class="chips">${x.tecnologias.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>
-      <div class="facts">
-        <span title="Prazo">${icon('clock', { size: 15 })}${d.prazoMeses ? `${d.prazoMeses} meses` : '—'}</span>
-        ${d.valor ? `<span title="Valor">${icon('money', { size: 15 })}${brl(d.valor)}</span>` : d.valor === undefined ? `<span title="Valor oculto para o seu perfil">${icon('lock', { size: 15 })}valor restrito</span>` : ''}
-        <span title="Segmento">${icon('building', { size: 15 })}${esc(x.segmento)}</span>
+      <div class="accs">
+        ${d.resultados || d.licoes || d.escopo ? acordeon(grupo, 'bulb', 'Escopo, resultados e lições', `${d.escopo ? `<h5>Escopo</h5><p>${md(d.escopo)}</p>` : ''}${d.resultados ? `<h5>Resultados</h5><p>${md(d.resultados)}</p>` : ''}${d.licoes ? `<h5>Lições</h5><p>${md(d.licoes)}</p>` : ''}`) : ''}
+        ${acordeon(grupo, 'eye', 'Trechos que sustentam a resposta', x.evidencias.map((e) => `<blockquote><small>${esc(tipoLabel(e.tipo))}</small>${md(e.trecho)}</blockquote>`).join(''))}
+        ${acordeon(grupo, 'chart', 'Por que apareceu nesta posição', `<p class="muted small">Quanto cada critério somou para a semelhança de ${pct(x.score)} deste projeto.</p>
+          <div class="factors">${fatores.map((f) => `<span>${esc(f.fator)}</span><div class="bar" title="${esc(`${f.fator}: nota ${pct(f.valor)} × peso ${pct(f.peso)} = ${pct(f.contribuicao)}`)}"><div style="width:${pct(f.contribuicao)}"></div></div><em>${pct(f.contribuicao)}</em>`).join('')}</div>`)}
       </div>
-      ${x.resumo ? `<p>${esc(x.resumo)}</p>` : ''}
-      ${d.resultados || d.licoes || d.escopo ? `<details><summary>${icon('bulb', { size: 14 })}Escopo, resultados e lições</summary>
-        ${d.escopo ? `<h5>Escopo</h5><p>${md(d.escopo)}</p>` : ''}${d.resultados ? `<h5>Resultados</h5><p>${md(d.resultados)}</p>` : ''}${d.licoes ? `<h5>Lições</h5><p>${md(d.licoes)}</p>` : ''}</details>` : ''}
-      <details><summary>${icon('eye', { size: 14 })}Trechos que sustentam a resposta</summary>${x.evidencias.map((e) => `<blockquote><small>${esc(tipoLabel(e.tipo))}</small>${md(e.trecho)}</blockquote>`).join('')}</details>
-      <details><summary>${icon('chart', { size: 14 })}Por que apareceu nesta posição</summary>
-        <div class="factors">${x.fatores.map((f) => `<span>${esc(f.fator)}</span><div class="bar"><div style="width:${pct(f.valor)}"></div></div><em>${pct(f.peso)}</em>`).join('')}</div>
-      </details>
+      ${x.tecnologias.length ? `<div class="tec-tags"><span class="muted small">Tecnologias:</span>${x.tecnologias.map((t) => `<button type="button" class="tec-tag" data-tec="${esc(t)}" title="Ver projetos com ${esc(t)}">${esc(t)}</button>`).join('')}</div>` : ''}
       <div class="sources"><span class="muted">Fontes:</span>${x.fontes.map((f) => `<a href="#" data-doc="${f.doc_id}" title="${esc(f.arquivo)}">${icon('file', { size: 14 })}${esc(tipoLabel(f.tipo))}</a>`).join('')}</div>
     </div>
   </article>`;
@@ -281,6 +397,7 @@ function renderCard(x) {
 
 function bindAnswer(container, r) {
   bindTyped(container, { ask: (q) => { $('#query').value = q; onAsk(); } });
+  $$('.noresult [data-ask]', container).forEach((b) => (b.onclick = () => { $('#query').value = b.dataset.ask; onAsk(); }));
   $$('[data-act]', container).forEach((b) => (b.onclick = () => {
     const last = $$('#chat .msg.user').pop()?.textContent ?? '';
     if (b.dataset.act === 'explorar') { openTab('projetos'); showView('projetos'); }
@@ -315,6 +432,7 @@ function bindAnswer(container, r) {
       $('.fb-why', card).classList.add('hidden');
       toast('Obrigado! Vamos usar isso para ajustar a busca.');
     }));
+    $$('[data-tec]', card).forEach((b) => (b.onclick = () => { openTab('projetos'); document.dispatchEvent(new CustomEvent('radar:filtrar', { detail: { tecnologias: [b.dataset.tec] } })); }));
     $$('[data-reuse]', card).forEach((b) => (b.onclick = async () => {
       const acao = b.dataset.reuse;
       evento('reaproveitar', { acao });
@@ -383,6 +501,7 @@ async function loadMetrics() {
 
 function newConversation() {
   state.conv = null;
+  pararEdicao();
   const perfil = currentUser()?.perfil;
   const o = state.foco;
   const sugestoes = o
@@ -406,7 +525,9 @@ function newConversation() {
 
 function renderConvBar() {
   const c = state.conv;
+  $('#edit-title').disabled = !c;
   $('#conv-title').value = c?.titulo ?? '';
+  $('#conv-title').dataset.original = c?.titulo ?? '';
   $('#conv-title').placeholder = 'Nova conversa';
   $('#conv-title').disabled = !c;
   $('#fav-conv').disabled = !c;
@@ -439,41 +560,129 @@ async function toggleFavorite(id, favorita) {
   loadConversations();
 }
 
+// Lista de conversas (V0.0.2):
+// CR-017: Favoritas, um bloco por grupo (cliente ou proposta, nome livre), Avulsas e Arquivadas (recolhidas no fim).
+// CR-004: a estrela só aparece ao passar o mouse, e fica fixa (colorida) nas favoritas.
+// CR-018: menu ⋯ de cada conversa com Renomear, Mover para grupo, Arquivar e Excluir.
+// CR-035: excluir pede confirmação num diálogo com o título da conversa.
+let conversas = [];
 async function loadConversations() {
   const params = new URLSearchParams({ userId: userId(), busca: $('#conv-search').value });
-  const list = await api(`/api/conversas?${params}`);
+  conversas = await api(`/api/conversas?${params}`);
   const item = (c) => `
-      <li data-id="${c.id}" title="${c.turnos} pergunta${c.turnos > 1 ? 's' : ''} · ${new Date(c.atualizadaEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}">
-        <button class="icon-btn sm star${c.favorita ? ' on' : ''}" data-fav="${c.favorita ? 0 : 1}" title="${c.favorita ? 'Remover dos favoritos' : 'Favoritar'}" aria-pressed="${c.favorita}">${icon('star', { size: 15 })}</button>
+      <li data-id="${c.id}" class="${c.favorita ? 'fav' : ''}" title="${c.turnos} pergunta${c.turnos > 1 ? 's' : ''} · ${new Date(c.atualizadaEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}">
         <a href="#" class="open">${esc(c.titulo)}</a>
-        <button class="icon-btn sm del" title="Excluir" aria-label="Excluir conversa">${icon('trash', { size: 15 })}</button>
+        <button class="icon-btn sm star${c.favorita ? ' on' : ''}" data-fav="${c.favorita ? 0 : 1}" title="${c.favorita ? 'Remover dos favoritos' : 'Favoritar'}" aria-pressed="${c.favorita}">${icon('star', { size: 15 })}</button>
+        <button class="icon-btn sm mais" title="Mais opções" aria-label="Mais opções da conversa ${esc(c.titulo)}" aria-haspopup="menu">${icon('more', { size: 15 })}</button>
       </li>`;
-  // Favoritas primeiro, depois as recentes; cada conversa aparece uma vez só.
-  const favs = list.filter((c) => c.favorita);
-  const recentes = list.filter((c) => !c.favorita);
-  const grupo = (ic, titulo, itens) => (itens.length ? `<li class="conv-group" role="presentation">${icon(ic, { size: 14 })}${titulo}</li>${itens.map(item).join('')}` : '');
-  $('#conv-list').innerHTML = list.length
-    ? grupo('star', 'Favoritas', favs) + grupo('clock', 'Recentes', recentes)
+  const ativas = conversas.filter((c) => !c.arquivada);
+  const favs = ativas.filter((c) => c.favorita);
+  const grupos = [...new Set(ativas.filter((c) => !c.favorita && c.grupo).map((c) => c.grupo))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  const avulsas = ativas.filter((c) => !c.favorita && !c.grupo);
+  const arquivadas = conversas.filter((c) => c.arquivada);
+  const bloco = (ic, titulo, itens, extra = '') => (itens.length ? `<li class="conv-group${extra}" role="presentation">${icon(ic, { size: 14 })}<span>${esc(titulo)}</span><em>${itens.length}</em></li>${itens.map(item).join('')}` : '');
+  $('#conv-list').innerHTML = conversas.length
+    ? bloco('star', 'Favoritas', favs)
+      + grupos.map((g) => bloco('folder', g, ativas.filter((c) => !c.favorita && c.grupo === g), ' grupo')).join('')
+      + bloco('clock', grupos.length ? 'Avulsas' : 'Recentes', avulsas)
+      + (arquivadas.length ? `<li class="conv-arq" role="presentation"><details><summary>${icon('archive', { size: 14 })}<span>Arquivadas</span><em>${arquivadas.length}</em></summary><ul>${arquivadas.map(item).join('')}</ul></details></li>` : '')
     : `<li class="empty">${icon('message', { size: 16 })}${$('#conv-search').value ? 'Nenhuma conversa com essa busca' : 'Suas conversas aparecem aqui'}</li>`;
   $$('#conv-list li[data-id]').forEach((li) => {
     const id = li.dataset.id;
     $('.open', li).onclick = (e) => { e.preventDefault(); openConversation(id); };
     $('.star', li).onclick = (e) => toggleFavorite(id, e.currentTarget.dataset.fav === '1');
-    // Exclusão em dois cliques, sem diálogo modal do navegador.
-    $('.del', li).onclick = async (e) => {
-      const btn = e.currentTarget;
-      if (!btn.classList.contains('confirm')) {
-        btn.classList.add('confirm');
-        btn.title = 'Toque de novo para excluir';
-        setTimeout(() => { btn.classList.remove('confirm'); btn.title = 'Excluir'; }, 3000);
-        return;
-      }
-      await api('/api/conversa/excluir', { id, userId: userId() });
-      if (state.conv?.id === id) newConversation();
-      loadConversations();
-    };
+    $('.mais', li).onclick = (e) => { e.stopPropagation(); abrirMenuConversa(id, e.currentTarget); };
   });
   highlightConv();
+}
+
+function fecharMenuConversa() {
+  $('#conv-menu')?.remove();
+  document.removeEventListener('click', fecharMenuConversa);
+}
+
+function abrirMenuConversa(id, botao) {
+  fecharMenuConversa();
+  const c = conversas.find((x) => x.id === id);
+  if (!c) return;
+  const grupos = [...new Set(conversas.map((x) => x.grupo).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  const menu = document.createElement('div');
+  menu.id = 'conv-menu';
+  menu.className = 'conv-menu';
+  menu.setAttribute('role', 'menu');
+  menu.innerHTML = `
+    <button type="button" role="menuitem" data-m="renomear">${icon('edit', { size: 14 })}Renomear</button>
+    <div class="conv-menu-sec" role="group" aria-label="Mover para grupo"><span>${icon('folder', { size: 14 })}Mover para grupo</span>
+      ${grupos.map((g) => `<button type="button" role="menuitemradio" aria-checked="${c.grupo === g}" data-grupo="${esc(g)}">${c.grupo === g ? icon('check', { size: 13 }) : '<i class="sp"></i>'}${esc(g)}</button>`).join('')}
+      ${c.grupo ? `<button type="button" role="menuitem" data-grupo="">${'<i class="sp"></i>'}Tirar do grupo</button>` : ''}
+      <form class="conv-novo-grupo"><input name="g" maxlength="40" placeholder="Novo grupo (ex.: cliente ou proposta)" aria-label="Nome do novo grupo"><button type="submit" class="icon-btn sm" title="Criar grupo e mover">${icon('plus', { size: 14 })}</button></form>
+    </div>
+    <button type="button" role="menuitem" data-m="arquivar">${icon('archive', { size: 14 })}${c.arquivada ? 'Desarquivar' : 'Arquivar'}</button>
+    <button type="button" role="menuitem" data-m="excluir" class="perigo">${icon('trash', { size: 14 })}Excluir</button>`;
+  document.body.appendChild(menu);
+  const r = botao.getBoundingClientRect();
+  menu.style.top = `${Math.min(r.bottom + 4, innerHeight - menu.offsetHeight - 8)}px`;
+  menu.style.left = `${Math.max(8, Math.min(r.right - menu.offsetWidth, innerWidth - menu.offsetWidth - 8))}px`;
+  menu.onclick = (e) => e.stopPropagation();
+  menu.onkeydown = (e) => { if (e.key === 'Escape') { fecharMenuConversa(); botao.focus(); } };
+  setTimeout(() => document.addEventListener('click', fecharMenuConversa), 0);
+  const mover = async (grupo) => {
+    await api('/api/conversa/grupo', { id, userId: userId(), grupo });
+    fecharMenuConversa();
+    toast(grupo ? `Conversa movida para "${grupo}"` : 'Conversa tirada do grupo');
+    loadConversations();
+  };
+  $$('[data-grupo]', menu).forEach((b) => (b.onclick = () => mover(b.dataset.grupo)));
+  $('.conv-novo-grupo', menu).onsubmit = (e) => { e.preventDefault(); const g = e.target.g.value.trim(); if (g) mover(g); };
+  $('[data-m="renomear"]', menu).onclick = () => { fecharMenuConversa(); renomearNaLista(id); };
+  $('[data-m="arquivar"]', menu).onclick = async () => {
+    await api('/api/conversa/arquivar', { id, userId: userId(), arquivada: !c.arquivada });
+    fecharMenuConversa();
+    toast(c.arquivada ? 'Conversa desarquivada' : 'Conversa arquivada');
+    loadConversations();
+  };
+  $('[data-m="excluir"]', menu).onclick = () => { fecharMenuConversa(); confirmarExclusao(c); };
+  $('button', menu).focus();
+}
+
+// Renomear direto na lista: Enter salva, Esc cancela.
+function renomearNaLista(id) {
+  const li = $(`#conv-list li[data-id="${id}"]`);
+  const a = li && $('.open', li);
+  if (!a) return;
+  const input = Object.assign(document.createElement('input'), { value: a.textContent, maxLength: 80, className: 'conv-rename' });
+  input.setAttribute('aria-label', 'Novo nome da conversa');
+  a.replaceWith(input);
+  input.focus();
+  input.select();
+  let feito = false;
+  const fim = async (salvar) => {
+    if (feito) return;
+    feito = true;
+    if (salvar && input.value.trim() && input.value.trim() !== a.textContent) {
+      const r = await api('/api/conversa/salvar', { id, userId: userId(), titulo: input.value });
+      if (state.conv?.id === id) { Object.assign(state.conv, r); renderConvBar(); }
+      toast('Conversa renomeada');
+    }
+    loadConversations();
+  };
+  input.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); fim(true); } if (e.key === 'Escape') { e.preventDefault(); fim(false); } };
+  input.onblur = () => fim(true);
+}
+
+function confirmarExclusao(c) {
+  const dlg = $('#dlg-excluir-conv');
+  $('#dlg-excluir-titulo', dlg).textContent = c.titulo;
+  dlg.returnValue = '';
+  dlg.showModal();
+  $('[value="cancelar"]', dlg).focus();
+  dlg.onclose = async () => {
+    if (dlg.returnValue !== 'excluir') return;
+    await api('/api/conversa/excluir', { id: c.id, userId: userId() });
+    if (state.conv?.id === c.id) newConversation();
+    toast('Conversa excluída');
+    loadConversations();
+  };
 }
 
 function highlightConv() {
@@ -509,8 +718,19 @@ function setupConversations() {
   layout.addEventListener('click', (e) => {
     if (mobile.matches && (e.target === layout || e.target.closest('#new-conv, #conv-list .open'))) layout.classList.remove('no-side');
   });
-  // Renomear: Enter no título grava o novo nome.
-  $('#conv-title').onkeydown = (e) => { if (e.key === 'Enter' && state.conv) { e.preventDefault(); renameConversation(); e.target.blur(); } };
+  // Renomear (CR-034): lápis ao lado do título; Enter salva, Esc cancela e volta o nome anterior.
+  $('#conv-title').onkeydown = (e) => {
+    if (e.key === 'Enter' && state.conv) { e.preventDefault(); renameConversation(); e.target.blur(); }
+    if (e.key === 'Escape') { e.preventDefault(); e.target.value = e.target.dataset.original ?? ''; e.target.blur(); }
+  };
+  $('#edit-title').onclick = () => { $('#conv-title').focus(); $('#conv-title').select(); };
+  // CR-037: botão enviar só com texto; Enter com a caixa vazia não faz nada.
+  $('#query').addEventListener('input', atualizarEnviar);
+  atualizarEnviar();
+  $('#anexar').onchange = (e) => { state.anexos = [...(state.anexos ?? []), ...e.target.files]; e.target.value = ''; pintarAnexos(); $('#query').focus(); };
+  $('#editando-cancelar').onclick = () => { pararEdicao(); $('#query').value = ''; atualizarEnviar(); };
+  // CR-035: clicar fora do diálogo de excluir cancela.
+  $('#dlg-excluir-conv').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.close('cancelar'); });
   $('#conv-search').oninput = loadConversations;
 }
 

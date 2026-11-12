@@ -101,6 +101,38 @@ export class ConversationStore {
     return c;
   }
 
+  // CR-017 (D15): grupo de conversas só organiza (não limita a busca). Nome livre; uma conversa fica em um grupo só.
+  // Grupo vazio = conversa avulsa. Os grupos existentes são os nomes usados nas conversas do usuário.
+  group(id, userId, grupo) {
+    const c = this.get(id, userId);
+    if (!c || !c.turnos.length) return null;
+    const nome = String(grupo ?? '').replace(/\s+/g, ' ').trim().slice(0, 40);
+    c.grupo = nome || null;
+    c.salva = true;
+    this.persist();
+    return c;
+  }
+
+  // CR-017: arquivar tira a conversa das listas principais sem apagar; dá para desarquivar.
+  archive(id, userId, arquivada) {
+    const c = this.get(id, userId);
+    if (!c || !c.turnos.length) return null;
+    c.arquivada = Boolean(arquivada);
+    c.salva = true;
+    this.persist();
+    return c;
+  }
+
+  // CR-044: editar a última pergunta e reenviar — tira a última pergunta (e a resposta dela) da conversa.
+  dropLastTurn(id, userId) {
+    const c = this.get(id, userId);
+    if (!c || !c.turnos.length) return null;
+    const t = c.turnos.pop();
+    c.atualizadaEm = new Date().toISOString();
+    this.persist();
+    return t.pergunta;
+  }
+
   remove(id, userId) {
     const c = this.get(id, userId);
     if (!c) return false;
@@ -116,6 +148,6 @@ export class ConversationStore {
       .filter((c) => c.userId === userId && c.salva && (!soFavoritas || c.favorita))
       .filter((c) => !q || c.titulo.toLowerCase().includes(q) || c.turnos.some((t) => t.pergunta.toLowerCase().includes(q)))
       .sort((a, b) => Number(b.favorita) - Number(a.favorita) || b.atualizadaEm.localeCompare(a.atualizadaEm))
-      .map(({ id, titulo, favorita, oportunidadeId, criadaEm, atualizadaEm, turnos }) => ({ id, titulo, favorita, oportunidadeId, criadaEm, atualizadaEm, turnos: turnos.length }));
+      .map(({ id, titulo, favorita, grupo, arquivada, oportunidadeId, criadaEm, atualizadaEm, turnos }) => ({ id, titulo, favorita, grupo: grupo ?? null, arquivada: Boolean(arquivada), oportunidadeId, criadaEm, atualizadaEm, turnos: turnos.length }));
   }
 }

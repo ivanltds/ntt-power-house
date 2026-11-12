@@ -70,7 +70,11 @@ Regras:
 - "relevancia" de 0 a 1: o quanto o projeto é uma referência útil para a pergunta, pelo significado (problema, objetivo, escopo, segmento, tecnologia), não só por palavras iguais. Use < 0.4 para projetos que não ajudam.
 - "justificativa": 1 frase explicando por que o projeto se relaciona (ou não) com a pergunta.
 - "evidencia": o id (ex.: "P001-3") da frase que melhor sustenta a justificativa. Nunca escreva o texto da frase, só o id.
-- "resposta": 2 ou 3 frases curtas e objetivas (no máximo 70 palavras) em português, respondendo à pergunta e trazendo o principal insight para a nova proposta: quais referências reaproveitar e por quê, riscos e lições (inclusive de propostas perdidas), áreas complementares que apareceram. Cite projetos como [P001]. Cite apenas projetos com relevância >= 0.5 e não mencione os demais.
+- "resposta": texto em português, no máximo 110 palavras, em blocos separados por uma linha em branco ("\n\n"), fácil de escanear:
+  1º bloco (1 ou 2 frases): responda diretamente à pergunta e diga por que cada referência citada é relevante. Não misture recomendação neste bloco.
+  2º bloco: comece com "Recomendação:" e diga o que reaproveitar de cada referência, cuidados, riscos e lições (inclusive de propostas perdidas).
+  3º bloco, SÓ se as frases fornecidas citarem papéis ou perfis da equipe (ex.: arquiteto de dados, cientista de dados): comece com "Perfis sugeridos:" e liste esses perfis. Se as frases não citarem papéis, não escreva este bloco e não invente equipe.
+  Cite projetos como [P001]. Cite apenas projetos com relevância >= 0.5 e não mencione os demais.
 - Use exclusivamente as informações fornecidas. Não invente números, valores, prazos, clientes ou resultados. Se nenhum projeto ajudar, diga claramente que não há evidência suficiente na base.
 - Não mencione valores financeiros que não estejam nas frases fornecidas.`;
 

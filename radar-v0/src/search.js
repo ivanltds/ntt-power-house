@@ -44,13 +44,18 @@ const MIN_CONFIANCA = 0.45;
 const GRAU_PROJETO = 0.75;
 
 // Remove da resposta da IA as frases que citam projetos fora dos resultados exibidos.
-function onlyCitedResults(text, results) {
+// Remove frases que citam projetos fora dos resultados, preservando os blocos (parágrafos) da resposta (CR-027).
+export function onlyCitedResults(text, results) {
   const ids = new Set(results.map((r) => r.projeto_id));
   return text
-    .split(/(?<=[.!?])\s+/)
-    .filter((sentence) => [...sentence.matchAll(/\[(P\d{3})\]/g)].every((m) => ids.has(m[1])))
-    .join(' ')
-    .trim();
+    .split(/\n\s*\n/)
+    .map((bloco) => bloco
+      .split(/(?<=[.!?])\s+/)
+      .filter((sentence) => [...sentence.matchAll(/\[(P\d{3})\]/g)].every((m) => ids.has(m[1])))
+      .join(' ')
+      .trim())
+    .filter((bloco) => bloco && !/^(Recomendação|Perfis sugeridos):?$/i.test(bloco))
+    .join('\n\n');
 }
 
 const scoreOf = (factors) => factors.reduce((s, f) => s + f.weight * f.value, 0);
@@ -85,6 +90,24 @@ function bestSentence(texts, queryTokens) {
 function section(body, title) {
   const m = body.match(new RegExp(`##\\s*\\d*\\.?\\s*${title}[^\\n]*\\n([\\s\\S]*?)(?=\\n##\\s|$)`, 'i'));
   return m ? m[1].trim() : null;
+}
+
+// Busca sem nada relevante (D06): até 3 buscas próximas que trazem resultado, tiradas dos projetos mais
+// parecidos que o usuário pode ver (os candidatos já passaram pelo filtro de permissão). Não repete o que já foi pedido.
+export function sugerirBuscas(candidates, entities = {}) {
+  const pedidos = new Set([...(entities.segmentos ?? []), ...(entities.tecnologias ?? [])]);
+  const out = [];
+  const add = (q, chave) => { if (!pedidos.has(chave) && !out.some((o) => o.chave === chave) && out.length < 3) out.push({ chave, pergunta: q }); };
+  const ordem = [...candidates].sort((a, b) => b.score - a.score);
+  for (const c of ordem) if (c.meta.segmento) add(`Liste os projetos de ${c.meta.segmento}`, c.meta.segmento);
+  for (const c of ordem) for (const t of c.meta.tecnologias ?? []) add(`Liste os projetos com ${t}`, t);
+  return out.map((o) => o.pergunta);
+}
+
+export function semResultado(query, sugestoes) {
+  const base = `Não encontrei nada relevante na base para "${query}".`;
+  return sugestoes.length ? `${base} Buscas próximas que trazem resultado: ${sugestoes.map((s) => `"${s}"`).join(', ')}.`
+    : `${base} Tente outro segmento, tecnologia ou tipo de serviço, ou envie mais referências para a base.`;
 }
 
 export class RadarEngine {
@@ -288,13 +311,23 @@ export class RadarEngine {
     const complementares = [...counts.values()].filter((c) => c.projetos.length >= 2 || results.length <= 2).sort((a, b) => b.projetos.length - a.projetos.length);
 
     const lowEvidence = results.length > 0 && results.length < 3;
-    // Sem resultados, a resposta é sempre a mensagem determinística de falta de evidência (UC03.12).
+    // Sem resultados (UC03.12, decisão D06 de 12/11): diz que não achou nada relevante e sugere buscas próximas
+    // que trazem resultado. Cada sugestão é um segmento ou tecnologia de projetos que o usuário pode ver.
+    // CR-042 / D07: pedido de um projeto específico (ex.: "ficha do P005") que o perfil não pode ver ou que não existe:
+    // avisa e oferece, em uma frase, buscar projetos parecidos pelo tema; não lista referências que não foram pedidas
+    // e não revela se o projeto existe (projeto confidencial é invisível para quem não tem permissão).
+    const codigo = !results.length && /\bP\d{3}\b/i.exec(query)?.[0].toUpperCase();
+    if (codigo) {
+      return finish({ entidades: entities, resposta: `Não encontrei o ${codigo} entre os projetos que o seu perfil pode ver. Se quiser, me diga o tema e eu busco projetos parecidos que você pode ver.`, sugestoes: [], semEvidencia: true, resultados: [], candidatosAvaliados: candidates.length });
+    }
+    const sugestoes = results.length ? [] : sugerirBuscas(candidates, entities);
     const resposta = results.length && semantic && analysis.resposta
       ? onlyCitedResults(analysis.resposta, results) || this.llm.compose({ query, results, complementares, lowEvidence })
-      : this.llm.compose({ query, results, complementares, lowEvidence });
+      : results.length ? this.llm.compose({ query, results, complementares, lowEvidence }) : semResultado(query, sugestoes);
     return finish({
       entidades: entities,
       resposta,
+      sugestoes,
       poucasReferencias: lowEvidence,
       semEvidencia: results.length === 0,
       resultados: results,

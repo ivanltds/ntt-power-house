@@ -2,6 +2,7 @@
 // Concentra persistência e consultas combinadas: filtros por facetas, busca textual BM25 (FTS5),
 // agregações para insights e histórico de alterações. Toda consulta aplica o filtro de permissão.
 
+import { PESSOA_DEMO } from '../permissions.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -183,7 +184,7 @@ export class Repo {
 
   users() {
     return this.all("SELECT u.id, u.nome, u.perfil, u.ver_valores, group_concat(c.nivel, '|') AS niveis FROM usuario u LEFT JOIN usuario_confidencialidade c ON c.usuario_id = u.id GROUP BY u.id ORDER BY u.ver_valores, count(c.nivel), u.id").map((r) => ({
-      id: r.id, nome: r.nome, perfil: r.perfil, verValores: r.ver_valores === 1, confidencialidades: split(r.niveis),
+      id: r.id, nome: r.nome, perfil: r.perfil, verValores: r.ver_valores === 1, confidencialidades: split(r.niveis), pessoa: PESSOA_DEMO[r.id] ?? null,
     }));
   }
 
@@ -480,7 +481,7 @@ Notas do revisor: ${r.observacoes}` : r.texto,
 
   jobs(usuarioId) {
     return this.all(`SELECT id, nome_arquivo, formato, tamanho_bytes, status, projeto_alvo_id, documento_id, erro, criado_em, concluido_em
-      FROM processamento WHERE enviado_por = $u ORDER BY criado_em DESC LIMIT 100`, { $u: usuarioId });
+      FROM processamento WHERE enviado_por = $u AND status <> 'rejeitado' ORDER BY criado_em DESC LIMIT 100`, { $u: usuarioId });
   }
 
   logCorrection(c) {
@@ -544,8 +545,9 @@ Notas do revisor: ${r.observacoes}` : r.texto,
     // UC08.6: criados por mim, em que sou o responsável ou em que enviei/revisei documento.
     if (f.meus) {
       params.$eu = user.id;
-      params.$euNome = user.nome;
-      where.push('(p.criado_por = $eu OR p.dono = $euNome OR p.id IN (SELECT projeto_id FROM documento WHERE enviado_por = $eu OR revisado_por = $eu))');
+      params.$euNome = user.pessoa ?? user.nome;
+      // D19: "Meus" = sou o responsável cadastrado (na demonstração, a pessoa que o usuário representa) ou enviei documento.
+      where.push('(p.criado_por = $eu OR p.dono = $euNome OR p.id IN (SELECT projeto_id FROM documento WHERE enviado_por = $eu))');
     }
     if (f.cliente?.trim()) {
       params.$cliente = `%${normalize(f.cliente)}%`;
@@ -569,7 +571,8 @@ Notas do revisor: ${r.observacoes}` : r.texto,
     const ids = `${cte}SELECT p.id ${from}`;
     const orders = {
       relevancia: ftsUsed ? 'b.rank' : 'p.data_referencia DESC',
-      data: 'p.data_referencia DESC',
+      // CR-008: "Recentes" pela data do projeto, desempatando pelo título.
+      data: 'p.data_referencia IS NULL, p.data_referencia DESC, p.titulo',
       prazo: 'p.prazo_meses IS NULL, p.prazo_meses',
       valor: user.verValores ? 'p.valor IS NULL, p.valor DESC' : 'p.data_referencia DESC',
       titulo: 'p.titulo COLLATE NOCASE',
@@ -698,6 +701,10 @@ Notas do revisor: ${r.observacoes}` : r.texto,
       porTecnologia: this.all(`SELECT t.nome AS tecnologia, count(*) AS projetos, ${rate} AS taxa_conversao, ROUND(avg(p.prazo_meses), 1) AS prazo_medio${valor}
           FROM projeto p JOIN projeto_tecnologia x ON x.projeto_id = p.id JOIN tecnologia t ON t.id = x.tecnologia_id WHERE ${visible}
           GROUP BY t.nome ORDER BY projetos DESC LIMIT 15`, params),
+      // V0.0.2 (CR-009): funil por status, projetos por ano e quantas tecnologias distintas aparecem.
+      porStatus: this.all(`SELECT p.status_proposta AS status, count(*) AS projetos FROM projeto p WHERE ${visible} GROUP BY p.status_proposta`, params),
+      porAno: this.all(`SELECT substr(p.data_referencia, 1, 4) AS ano, count(*) AS projetos FROM projeto p WHERE ${visible} AND p.data_referencia IS NOT NULL GROUP BY ano ORDER BY ano`, params),
+      totalTecnologias: this.get(`SELECT count(DISTINCT x.tecnologia_id) AS n FROM projeto_tecnologia x JOIN projeto p ON p.id = x.projeto_id WHERE ${visible}`, params).n,
       coocorrencia: this.all(`SELECT a.nome AS tecnologia_a, b.nome AS tecnologia_b, count(*) AS projetos
           FROM projeto_tecnologia x JOIN projeto_tecnologia y ON y.projeto_id = x.projeto_id AND x.tecnologia_id < y.tecnologia_id
           JOIN tecnologia a ON a.id = x.tecnologia_id JOIN tecnologia b ON b.id = y.tecnologia_id JOIN projeto p ON p.id = x.projeto_id

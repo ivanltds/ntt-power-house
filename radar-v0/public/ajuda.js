@@ -38,7 +38,7 @@ const GUIA = [
     ])}
     <h4>Menu ${icon('menu', { size: 14 })}</h4>
     <ul>
-      <li><b>Ver como (demonstração):</b> troca o perfil simulado. <b>Consultor</b> não vê valores nem documentos confidenciais; <b>Gestor</b> vê tudo. Serve para testar as permissões; some quando houver login individual.</li>
+      <li><b>Ver como (demonstração):</b> troca o usuário de demonstração (Consultor ou Gestor); a etiqueta "Visão: …" no alto mostra qual está ativo. <b>Consultor</b> não vê projetos confidenciais nem o <b>preço e a margem</b> das propostas; os resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos. <b>Gestor</b> vê tudo. "Meus projetos" mostra os projetos em que o usuário é o responsável ou enviou documento. Serve para testar as permissões; some quando houver login individual.</li>
       <li><b>Todos os documentos:</b> lista de arquivos da base com tipo e rótulo de confiança.</li>
       <li><b>Métricas do piloto:</b> indicadores que o comitê usa para avaliar o Radar.</li>
       <li><b>Registro de atividades</b> (só gestor): quem criou, editou, excluiu ou exportou cada item.</li>
@@ -200,7 +200,7 @@ const GUIA = [
 
   ['insights', 'chart', 'Insights e métricas', () => `
     <h4>Insights</h4>
-    <p>Visão agregada do que o seu perfil enxerga: <b>segmentos</b> (com taxa de ganho), <b>tecnologias</b> mais usadas, tecnologias que <b>andam juntas</b>, <b>resultados comprovados</b>, <b>lições de propostas perdidas</b>, <b>documentos</b> por tipo, <b>curadoria</b> (cadastros incompletos) e <b>correções</b> feitas nas revisões de envio. Clique em um item para abrir ${ui('Projetos')} já filtrado.</p>
+    <p>Visão agregada do que o seu perfil enxerga: números grandes no topo (projetos, <b>conversão</b>, segmentos e tecnologias), o <b>funil</b> das propostas por status, o <b>top 10</b> de segmentos e de tecnologias, projetos <b>por ano</b>, tecnologias que <b>andam juntas</b>, <b>resultados comprovados</b> e <b>lições de propostas perdidas</b>. Passe o mouse numa barra para ver o detalhe e clique num item para abrir ${ui('Projetos')} já filtrado. A <b>saúde da base</b> (documentos por tipo, envios a revisar e pendências de cadastro) fica recolhida no fim.</p>
     <h4>Métricas do piloto (menu ${icon('menu', { size: 14 })})</h4>
     ${table(['Indicador', 'O que mede'], [
       ['Buscas e sessões', 'Uso do Radar.'],

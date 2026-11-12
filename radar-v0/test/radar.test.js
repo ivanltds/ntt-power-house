@@ -2,6 +2,7 @@ import './setup.js';
 import { test, before } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -9,11 +10,11 @@ import { matchesWhere, LocalVectorStore } from '../src/vectorstore.js';
 import { HashingEmbedder } from '../src/embedder.js';
 import { trustLevel, parseDocument } from '../src/corpus.js';
 import { ingest, ROOT, STORE_PATH } from '../src/ingest.js';
-import { RadarEngine } from '../src/search.js';
+import { RadarEngine, sugerirBuscas, semResultado, onlyCitedResults } from '../src/search.js';
 import { ConversationStore } from '../src/conversations.js';
 import { DeepSeekLLM, createLLM } from '../src/deepseek.js';
 import { createAuth } from '../src/auth.js';
-import { QualityStore, ROTEIRO, lerImagens } from '../src/qualidade.js';
+import { QualityStore, ROTEIRO, roteiroDe, versaoArquivada, lerImagens } from '../src/qualidade.js';
 import { VERSAO } from '../src/version.js';
 import { AuditLog } from '../src/audit.js';
 import { criarHospedagem, hospedarTodas } from '../src/imagens.js';
@@ -498,9 +499,13 @@ test('filtro "Meus projetos" traz o que criei, em que sou responsável ou em que
   assert.ok(criados.length && criados.every((id) => meus.includes(id)));
   const comDoc = engine.repo.all("SELECT DISTINCT projeto_id FROM documento WHERE enviado_por = 'u-gestor'").map((p) => p.projeto_id);
   assert.ok(comDoc.every((id) => meus.includes(id)));
-  assert.ok(!meus.includes('P002') || criados.includes('P002') || comDoc.includes('P002'));
+  // D19 (V0.0.2): cada usuário de demonstração representa um responsável da base piloto, então as listas diferem.
+  const doGestor = engine.repo.all("SELECT id FROM projeto WHERE dono = 'Thiago Ramos'").map((p) => p.id);
+  assert.ok(doGestor.length && doGestor.every((id) => meus.includes(id)));
   const consultor = engine.repo.searchProjects({ meus: true }, engine.user('u-consultor'), { tamanho: 100 }).itens.map((p) => p.id);
   assert.ok(consultor.every((id) => !criados.includes(id) || comDoc.includes(id)));
+  assert.ok(['P001', 'P003', 'P011'].every((id) => consultor.includes(id)), 'consultor representa Marina Costa');
+  assert.notDeepEqual(consultor.sort(), meus.sort());
 });
 
 test('exportação gera PPTX, PDF e DOCX válidos, respeita seções escolhidas e esconde valores do consultor (UC10)', async () => {
@@ -738,21 +743,21 @@ test('pergunta composta: a IA escolhe ferramentas, o servidor aplica as permiss�
 test('qualidade: ticket com código, mascaramento, falha no roteiro abre ticket e versão nova começa zerada', () => {
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-qa-')), 'qualidade.json');
   const q = new QualityStore(file);
-  const t1 = q.abrir({ nome: 'Ana', texto: 'A resposta veio errada. Meu e-mail é ana.teste@exemplo.com', area: 'conversas', versao: 'V0.0.1' });
+  const t1 = q.abrir({ nome: 'Ana', texto: 'A resposta veio errada. Meu e-mail é ana.teste@exemplo.com', area: 'conversas', versao: 'V0.0.2' });
   assert.equal(t1.codigo, 'CR-001');
   assert.ok(!JSON.stringify(t1).includes('ana.teste@exemplo.com'), 'e-mail mascarado antes de gravar');
-  const r = q.registrar({ versao: 'V0.0.1', cenario: 'C02', analista: 'Bruno', resultado: 'falha', comentario: 'Veio projetos parecidos em vez da lista.' });
+  const r = q.registrar({ versao: 'V0.0.2', cenario: 'C02', analista: 'Bruno', resultado: 'falha', comentario: 'Veio projetos parecidos em vez da lista.' });
   assert.equal(r.ticket, 'CR-002');
   assert.equal(q.data.tickets.find((t) => t.codigo === 'CR-002').cenario, 'C02');
-  assert.throws(() => q.registrar({ versao: 'V0.0.1', cenario: 'C03', analista: 'Bruno', resultado: 'falha' }), /Conte o que aconteceu/);
-  q.registrar({ versao: 'V0.0.1', cenario: 'C01', analista: 'Bruno', resultado: 'ok' });
-  const s1 = q.resumo('V0.0.1');
+  assert.throws(() => q.registrar({ versao: 'V0.0.2', cenario: 'C03', analista: 'Bruno', resultado: 'falha' }), /Conte o que aconteceu/);
+  q.registrar({ versao: 'V0.0.2', cenario: 'C01', analista: 'Bruno', resultado: 'ok' });
+  const s1 = q.resumo('V0.0.2');
   assert.equal(s1.geral.ok, 1);
   assert.equal(s1.geral.falha, 1);
   assert.equal(s1.geral.pendente, ROTEIRO.length - 2, 'cada cenário conta uma vez');
   // Reteste por outra pessoa substitui: vale o resultado mais recente, sem somar execuções.
-  q.registrar({ versao: 'V0.0.1', cenario: 'C02', analista: 'Carla', resultado: 'ok' });
-  const s1b = q.resumo('V0.0.1');
+  q.registrar({ versao: 'V0.0.2', cenario: 'C02', analista: 'Carla', resultado: 'ok' });
+  const s1b = q.resumo('V0.0.2');
   assert.equal(s1b.geral.ok + s1b.geral.falha + s1b.geral.bloqueado + s1b.geral.pendente, ROTEIRO.length);
   assert.equal(s1b.geral.ok, 2);
   assert.equal(s1b.geral.falha, 0);
@@ -761,15 +766,15 @@ test('qualidade: ticket com código, mascaramento, falha no roteiro abre ticket 
   assert.equal(c02.analista, 'Carla');
   assert.equal(c02.registros, 2);
   assert.ok(s1b.regra.includes('uma vez'));
-  q.atualizar('CR-002', { status: 'corrigido', texto: 'Corrigido, pode retestar.', autor: 'Claude', versao: 'V0.0.2' });
+  q.atualizar('CR-002', { status: 'corrigido', texto: 'Corrigido, pode retestar.', autor: 'Claude', versao: 'V0.0.3' });
   // Versão nova: roteiro zerado; tickets continuam e o histórico da anterior fica disponível.
   const q2 = new QualityStore(file);
-  const s2 = q2.resumo('V0.0.2');
+  const s2 = q2.resumo('V0.0.3');
   assert.equal(s2.geral.ok + s2.geral.falha + s2.geral.bloqueado, 0);
   assert.equal(q2.tickets({ abertos: true }).length, 2);
-  assert.equal(q2.tickets().find((t) => t.codigo === 'CR-002').versaoCorrecao, 'V0.0.2');
-  assert.deepEqual(s2.anteriores.map((v) => v.versao), ['V0.0.1']);
-  assert.equal(q2.abrir({ nome: 'Ana', texto: 'Outro problema aqui.', versao: 'V0.0.2' }).codigo, 'CR-003');
+  assert.equal(q2.tickets().find((t) => t.codigo === 'CR-002').versaoCorrecao, 'V0.0.3');
+  assert.deepEqual(s2.anteriores.map((v) => v.versao), ['V0.0.2']);
+  assert.equal(q2.abrir({ nome: 'Ana', texto: 'Outro problema aqui.', versao: 'V0.0.3' }).codigo, 'CR-003');
 });
 
 test('qualidade: imagens só PNG/JPG/WEBP, no máximo 3; versão do selo igual à do package.json; arquivos do roteiro existem', () => {
@@ -872,15 +877,48 @@ test('roteiro: evidências de Falhou vão para o ticket do cenário; reteste som
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-ev-')), 'qualidade.json');
   const q = new QualityStore(file);
   const img = (n) => ({ url: `https://i.ibb.co/x/ev${n}.jpg`, thumb: `https://i.ibb.co/x/ev${n}-t.jpg`, servico: 'imgbb' });
-  const r = q.registrar({ versao: 'V0.0.1', cenario: 'C02', analista: 'Bia', resultado: 'falha', comentario: 'Veio a lista errada.', imagens: [img(1)] });
+  const r = q.registrar({ versao: 'V0.0.2', cenario: 'C02', analista: 'Bia', resultado: 'falha', comentario: 'Veio a lista errada.', imagens: [img(1)] });
   assert.deepEqual(q.ticket(r.ticket).imagens.map((i) => i.url), [img(1).url]);
-  q.registrar({ versao: 'V0.0.1', cenario: 'C02', analista: 'Bia', resultado: 'bloqueado', comentario: 'Tela não abriu no reteste.', imagens: [img(2)] });
+  q.registrar({ versao: 'V0.0.2', cenario: 'C02', analista: 'Bia', resultado: 'bloqueado', comentario: 'Tela não abriu no reteste.', imagens: [img(2)] });
   const t = q.ticket(r.ticket);
   assert.equal(t.imagens.length, 2);
   assert.equal(t.historico.at(-1).alteracoes[0].adicionadas, 1);
-  const ok = q.registrar({ versao: 'V0.0.1', cenario: 'C01', analista: 'Bia', resultado: 'ok', imagens: [img(3)] });
+  const ok = q.registrar({ versao: 'V0.0.2', cenario: 'C01', analista: 'Bia', resultado: 'ok', imagens: [img(3)] });
   assert.equal(ok.ticket, null);
-  assert.throws(() => q.registrar({ versao: 'V0.0.1', cenario: 'C03', analista: 'Bia', resultado: 'falha', comentario: 'x', imagens: [{ url: 'http://inseguro/a.jpg' }] }), /Link de imagem/);
+  assert.throws(() => q.registrar({ versao: 'V0.0.2', cenario: 'C03', analista: 'Bia', resultado: 'falha', comentario: 'x', imagens: [{ url: 'http://inseguro/a.jpg' }] }), /Link de imagem/);
+});
+
+test('versões: V0.0.1 arquivada e congelada; cenário que passa valida os tickets ligados a ele', () => {
+  // O roteiro da V0.0.1 é uma foto congelada: o arquivo não pode mudar e o objeto não aceita alteração.
+  // Hash do conteúdo (JSON normalizado), para não depender de quebra de linha do Windows.
+  const foto = JSON.stringify(JSON.parse(fs.readFileSync(path.join(ROOT, 'src', 'roteiros', 'V0.0.1.json'), 'utf8')));
+  assert.equal(crypto.createHash('sha256').update(foto).digest('hex'), '413889453d3f0da46345a071c840584ff8f4b09df705b7590f23cfc933fb4c04', 'o roteiro da V0.0.1 não pode ser alterado');
+  const v1 = roteiroDe('V0.0.1');
+  assert.equal(v1.length, 74);
+  assert.ok(Object.isFrozen(v1) && Object.isFrozen(v1[0]) && Object.isFrozen(v1[0].passos));
+  assert.ok(versaoArquivada('V0.0.1') && !versaoArquivada(VERSAO));
+  assert.equal(roteiroDe(VERSAO), ROTEIRO);
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-ver-')), 'qualidade.json');
+  const q = new QualityStore(file);
+  assert.throws(() => q.registrar({ versao: 'V0.0.1', cenario: 'C01', analista: 'Ana', resultado: 'ok' }), /arquivada/);
+  // Ticket aberto por falha na V0.0.1 (cenário C16) e ticket de feedback listado num cenário novo.
+  const antigo = q.abrir({ nome: 'Isa', texto: 'Falhou o C16 na versão anterior.', versao: 'V0.0.1', origem: 'roteiro', cenario: 'C16' });
+  const fb = q.abrir({ nome: 'Van', texto: 'Barras não batem com o percentual.', versao: 'V0.0.1' });
+  const outro = q.abrir({ nome: 'Van', texto: 'Outro problema sem cenário.', versao: 'V0.0.1' });
+  q.editar(antigo.codigo, { autor: 'Ivan', status: 'corrigido', versao: VERSAO });
+  const c16 = ROTEIRO.find((c) => c.id === 'C16');
+  assert.deepEqual(q.registrar({ versao: VERSAO, cenario: 'C16', analista: 'Isa', resultado: 'ok' }).validados, [antigo.codigo]);
+  assert.equal(q.ticket(antigo.codigo).status, 'validado');
+  assert.match(q.ticket(antigo.codigo).historico.at(-1).texto, /Validado automaticamente: o cenário C16 passou/);
+  assert.ok(c16);
+  // Cenário com a lista de tickets que ele retesta.
+  q.validarPorCenario({ id: 'X01', tickets: [fb.codigo] }, { versao: VERSAO, autor: 'Ana' });
+  assert.equal(q.ticket(fb.codigo).status, 'validado');
+  assert.equal(q.ticket(outro.codigo).status, 'aberto');
+  // Falha não valida nada; versões listadas com a atual primeiro.
+  assert.deepEqual(q.registrar({ versao: VERSAO, cenario: 'C01', analista: 'Ana', resultado: 'falha', comentario: 'Quebrou.' }).validados, []);
+  assert.deepEqual(q.versoes(VERSAO).map((v) => [v.versao, v.atual]), [[VERSAO, true], ['V0.0.1', false]]);
+  assert.equal(q.resumo('V0.0.1').arquivada, true);
 });
 
 test('tickets: apagar esconde o ticket das listas e números, guarda quem e por quê, e não reaproveita o código', () => {
@@ -923,7 +961,7 @@ test('relatório para agentes: exige chave própria, é só leitura e não expõ
   assert.deepEqual(r.tickets.map((x) => x.codigo), [t.codigo]);
   assert.equal(r.tickets[0].imagens[0].apagar, undefined);
   assert.ok(r.regraMetrica.includes('uma vez'));
-  assert.equal(r.resumo.porCenario.length, ROTEIRO.length);
+  assert.equal(r.resumo.porCenario.length, roteiroDe('V0.0.1').length);
   assert.equal(q.ticket(t.codigo).imagens[0].apagar, 'https://ibb.co/apagar/123', 'não altera o dado guardado');
 });
 
@@ -995,4 +1033,41 @@ test('chamada de alcance: conta navegadores únicos por etapa e tickets do perí
   assert.equal(r.ticketsPelaChamada, 1);
   assert.equal(r.ticketsNoPeriodo, 1);
   assert.equal(resumoCampanha([]).navegadoresQueViram, 0);
+});
+
+test('V0.0.2: grupos, arquivar e editar a última pergunta nas conversas; sugestões de busca e blocos da resposta', async () => {
+  const store = new ConversationStore(path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'conv2-')), 'c.json'));
+  const c = store.open(null, { userId: 'u-consultor' });
+  const r = { resultados: [], tipoResposta: 'semelhantes' };
+  store.addTurn(c, { turnoId: 't1', pergunta: 'projetos de telecom', resultado: r });
+  store.addTurn(c, { turnoId: 't2', pergunta: 'e de varejo?', resultado: r });
+  store.save(c.id, 'u-consultor');
+  assert.equal(store.group(c.id, 'u-consultor', '  Energisul   proposta ').grupo, 'Energisul proposta');
+  assert.equal(store.group(c.id, 'u-outro', 'X'), null, 'só o dono mexe');
+  store.archive(c.id, 'u-consultor', true);
+  const [item] = store.list('u-consultor');
+  assert.deepEqual([item.grupo, item.arquivada], ['Energisul proposta', true]);
+  assert.equal(store.dropLastTurn(c.id, 'u-consultor'), 'e de varejo?');
+  assert.equal(new ConversationStore(store.file).get(c.id, 'u-consultor').turnos.length, 1, 'persistido');
+  store.group(c.id, 'u-consultor', '');
+  assert.equal(store.list('u-consultor')[0].grupo, null);
+  // D06: sugestões vêm dos candidatos (já filtrados por permissão), sem repetir o que foi pedido.
+  const cand = (seg, tec, score) => ({ score, meta: { segmento: seg, tecnologias: tec } });
+  const sug = sugerirBuscas([cand('Varejo', ['AWS'], 0.2), cand('Telecom', ['Azure'], 0.4), cand('Varejo', ['Python'], 0.1), cand('Saúde', [], 0.3)], { segmentos: ['Telecom'] });
+  assert.deepEqual(sug, ['Liste os projetos de Saúde', 'Liste os projetos de Varejo', 'Liste os projetos com Azure']);
+  assert.match(semResultado('mineração', sug), /Não encontrei nada relevante.*Liste os projetos de Saúde/);
+  // CR-027: frases com projeto fora dos resultados saem, mas os blocos ficam.
+  const txt = ['Sim, há [P001].', 'Recomendação: reaproveite [P001]. Veja também [P009].', 'Perfis sugeridos: cientista de dados com [P009].'].join(String.fromCharCode(10, 10));
+  assert.equal(onlyCitedResults(txt, [{ projeto_id: 'P001' }]), ['Sim, há [P001].', 'Recomendação: reaproveite [P001].'].join(String.fromCharCode(10, 10)));
+});
+
+test('V0.0.2: Insights traz funil, anos e total de tecnologias respeitando o perfil', () => {
+  const gestor = engine.repo.insights(engine.user('u-gestor'));
+  const consultor = engine.repo.insights(engine.user('u-consultor'));
+  const soma = (x) => x.porStatus.reduce((a, s) => a + s.projetos, 0);
+  assert.equal(soma(gestor), gestor.totais.projetos);
+  assert.equal(soma(consultor), consultor.totais.projetos);
+  assert.ok(gestor.totais.projetos > consultor.totais.projetos, 'confidencial só para o gestor');
+  assert.ok(consultor.porAno.every((a) => /^\d{4}$/.test(a.ano)));
+  assert.ok(consultor.totalTecnologias >= consultor.porTecnologia.slice(0, 10).length);
 });
