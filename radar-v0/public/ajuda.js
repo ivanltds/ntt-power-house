@@ -436,7 +436,7 @@ export function render(titulo, subtitulo, secoes, inicial) {
   dlg.innerHTML = `
     <header class="dlg-head help-head"><div><span class="sub">${subtitulo}</span><h3>${titulo}</h3></div>
       <button type="button" class="icon-btn" data-close title="Fechar">${icon('x')}</button></header>
-    <div class="help-grid">
+    <div class="help-grid${secoes.length === 1 ? ' solo' : ''}">
       <nav class="help-nav" aria-label="Seções">${secoes.map(([id, ic, t]) => `<button type="button" data-sec="${id}">${icon(ic, { size: 16 })}<span>${t}</span></button>`).join('')}</nav>
       <article class="help-body" tabindex="-1"></article>
     </div>`;
