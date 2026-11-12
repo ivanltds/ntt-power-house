@@ -9,7 +9,7 @@ import { icon } from './icons.js';
 const ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
 const ORDEM_PRIO = ['critica', 'alta', 'media', 'baixa', null];
 const ORDENAR = { prioridade: 'Prioridade', recentes: 'Mais recentes', antigos: 'Mais antigos', atualizados: 'Atualizados por último' };
-const SITUACOES = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', resolvidos: 'Resolvidos', todos: 'Todos' };
+const SITUACOES = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', fora_mvp: 'Fora do MVP', resolvidos: 'Resolvidos', todos: 'Todos' };
 const CAMPO = { titulo: 'Título', texto: 'Descrição', area: 'Área', tipo: 'Tipo', prioridade: 'Prioridade', imagens: 'Imagens', proposta: 'Proposta de solução' };
 
 const horaBR = (iso) => (iso ? `${dateBR(iso)} ${new Date(iso).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}` : '');
@@ -17,7 +17,9 @@ const atualizadoEm = (t) => t.atualizadoEm ?? t.historico.at(-1)?.em ?? t.criado
 const rotPrio = (p, rot) => (p ? rot.prioridades[p] : 'A definir');
 export const chipPrio = (p, rot) => `<span class="tk-prio tk-p-${p ?? 'nd'}" title="Prioridade: ${esc(rotPrio(p, rot))}">${esc(rotPrio(p, rot))}</span>`;
 const chipStatus = (s, rot) => `<span class="qa-chip qa-${s}">${esc(rot.status[s] ?? s)}</span>`;
-const passaSituacao = (t, f) => f === 'todos' || (f === 'abertos' ? ABERTOS.includes(t.status) : f === 'corrigido' ? t.status === 'corrigido' : !ABERTOS.includes(t.status));
+const ADIADOS = ['nao_priorizado'];
+const passaSituacao = (t, f) => f === 'todos' || (f === 'abertos' ? ABERTOS.includes(t.status) : f === 'corrigido' ? t.status === 'corrigido'
+  : f === 'fora_mvp' ? ADIADOS.includes(t.status) : !ABERTOS.includes(t.status) && !ADIADOS.includes(t.status));
 
 async function reduzir(file) {
   // Captura reduzida a no máximo 1600 px de largura: mais leve para a IA e para o ImgBB.
@@ -47,14 +49,67 @@ export function historicoHtml(t, rot) {
 
 export function galeriaHtml(t) {
   const imgs = t.imagens ?? [];
-  return imgs.length ? `<div class="tk-galeria">${imgs.map((i, n) => `<a href="${esc(i.url)}" target="_blank" rel="noopener noreferrer" title="Abrir a imagem ${n + 1} em tamanho real"><img src="${esc(i.thumb || i.url)}" alt="Imagem ${n + 1} do ${esc(t.codigo)}" loading="lazy"></a>`).join('')}</div>` : '';
+  // A miniatura usa a imagem inteira (a do ImgBB é um recorte quadrado do canto, ilegível em captura de celular).
+  // O clique abre a imagem dentro da própria tela: link em aba nova costuma não abrir no navegador do WhatsApp/Teams.
+  return imgs.length ? `<div class="tk-galeria">${imgs.map((i, n) => `<a href="${esc(i.url)}" target="_blank" rel="noopener noreferrer" data-zoom="${n}" data-cod="${esc(t.codigo)}" title="Ver a imagem ${n + 1} em tamanho real"><img src="${esc(i.url)}" alt="Imagem ${n + 1} do ${esc(t.codigo)}" loading="lazy"></a>`).join('')}</div>` : '';
 }
+
+// Visualizador de imagem dos tickets (quadro e página de status): um só, ligado por delegação.
+function verImagem(link) {
+  const links = [...link.closest('.tk-galeria').querySelectorAll('a[data-zoom]')];
+  let n = links.indexOf(link);
+  let dlg = document.querySelector('dialog.tk-zoom');
+  if (!dlg) {
+    dlg = Object.assign(document.createElement('dialog'), { className: 'tk-zoom' });
+    document.body.appendChild(dlg);
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  }
+  const pintar = () => {
+    const a = links[n];
+    dlg.innerHTML = `<div class="tk-zoom-head"><b>${esc(a.dataset.cod)} · imagem ${n + 1} de ${links.length}</b>
+      ${links.length > 1 ? '<button type="button" class="btn sm" data-z="-1" aria-label="Imagem anterior">‹</button><button type="button" class="btn sm" data-z="1" aria-label="Próxima imagem">›</button>' : ''}
+      <a class="btn sm" href="${esc(a.href)}" target="_blank" rel="noopener noreferrer">Abrir em nova aba</a>
+      <button type="button" class="icon-btn" data-z-fechar title="Fechar" aria-label="Fechar imagem">${icon('x')}</button></div>
+      <img class="tk-zoom-img" src="${esc(a.href)}" alt="Imagem ${n + 1} do ${esc(a.dataset.cod)}">`;
+    $('img', dlg).onerror = (e) => e.target.replaceWith(Object.assign(document.createElement('p'), { className: 'tk-zoom-erro muted', textContent: 'A imagem não carregou. O serviço de imagens (ImgBB) pode estar bloqueado nesta rede; tente "Abrir em nova aba" ou outra rede.' }));
+    $('[data-z-fechar]', dlg).onclick = () => dlg.close();
+    $$('[data-z]', dlg).forEach((b) => (b.onclick = () => { n = (n + Number(b.dataset.z) + links.length) % links.length; pintar(); }));
+  };
+  pintar();
+  dlg.onkeydown = (e) => {
+    if (links.length < 2 || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+    n = (n + (e.key === 'ArrowRight' ? 1 : -1) + links.length) % links.length;
+    pintar();
+  };
+  if (!dlg.open) dlg.showModal();
+}
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest?.('a[data-zoom]');
+    if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    verImagem(a);
+  });
+}
+
+// Filtros do quadro guardados na sessão do navegador: voltar de um ticket, fechar e reabrir a janela ou recarregar
+// a página não perde a visão nem os filtros.
+const FILTROS_KEY = 'radar.tickets.filtros';
+const lerFiltros = () => { try { const x = JSON.parse(sessionStorage.getItem(FILTROS_KEY)); return x && typeof x === 'object' ? x : null; } catch { return null; } };
+const gravarFiltros = (f) => { try { sessionStorage.setItem(FILTROS_KEY, JSON.stringify({ ...f, nomes: [...f.nomes] })); } catch { /* sem sessionStorage: segue sem lembrar */ } };
 
 // root: elemento onde o quadro é montado; visao inicial: 'lista' ou 'kanban'.
 export async function montarTickets(root, { visao = 'lista' } = {}) {
   let q = await api('/api/qualidade');
   const rot = q.rotulos;
   const f = { visao, situacao: 'abertos', tipo: '', area: '', prioridade: '', ordenar: 'prioridade', busca: '', nomes: new Set() };
+  const salvos = lerFiltros();
+  if (salvos) {
+    for (const k of ['visao', 'situacao', 'tipo', 'area', 'prioridade', 'ordenar', 'busca']) if (typeof salvos[k] === 'string') f[k] = salvos[k];
+    if (!SITUACOES[f.situacao]) f.situacao = 'abertos';
+    if (f.visao !== 'kanban') f.visao = 'lista';
+    if (Array.isArray(salvos.nomes)) f.nomes = new Set(salvos.nomes.map(String));
+  }
   // Quem abriu: lista de nomes para o filtro de multisseleção (com a quantidade de tickets de cada um).
   const contaNomes = () => q.tickets.reduce((m, t) => m.set(t.nome, (m.get(t.nome) ?? 0) + 1), new Map());
   const opts = (obj, todos) => `<option value="">${todos}</option>${Object.entries(obj).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('')}`;
@@ -153,6 +208,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
   }
 
   function pintar() {
+    gravarFiltros(f);
     $$('[data-visao]', root).forEach((b) => { const on = b.dataset.visao === f.visao; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
     $$('[data-sit]', root).forEach((b) => { const on = b.dataset.sit === f.situacao; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
     $('.tk-sit', root).hidden = f.visao === 'kanban';
@@ -189,7 +245,31 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
   const dlg = $('#tk-detalhe', root);
   const quadro = $('#tk-quadro', root);
   const rolarTopo = () => (root.closest('.help-body') ?? document.scrollingElement)?.scrollTo({ top: 0 });
-  const voltar = () => { dlg.hidden = true; quadro.hidden = false; pintar(); rolarTopo(); };
+  const rolador = () => root.closest('.help-body') ?? document.scrollingElement;
+  // Voltar: reabre o quadro com a mesma visão, filtros e posição de rolagem, e marca o ticket de onde se veio.
+  let posicao = 0;
+  let aberto = null;
+  const voltar = () => {
+    dlg.hidden = true;
+    quadro.hidden = false;
+    pintar();
+    const r = rolador();
+    if (r) r.scrollTop = posicao;
+    const el = aberto && $(`[data-abrir="${aberto}"], [data-card="${aberto}"]`, quadro);
+    if (el) { el.classList.add('tk-volta'); el.focus({ preventScroll: true }); setTimeout(() => el.classList.remove('tk-volta'), 2500); }
+    aberto = null;
+  };
+  const destinoVolta = () => (f.visao === 'kanban' ? 'Voltar para o kanban' : 'Voltar para a lista');
+  // Esc dentro de um ticket volta para o quadro em vez de fechar a janela inteira.
+  const naEsc = (e) => {
+    if (!root.isConnected) { document.removeEventListener('keydown', naEsc, true); return; }
+    if (e.key !== 'Escape' || dlg.hidden || document.querySelector('dialog.tk-zoom[open]')) return;
+    e.preventDefault();
+    e.stopPropagation();
+    voltar();
+  };
+  document.addEventListener('keydown', naEsc, true);
+  root.closest('dialog')?.addEventListener('cancel', (e) => { if (root.isConnected && !dlg.hidden) { e.preventDefault(); voltar(); } });
   const campoNome = () => `<label class="qa-field qa-nome"><span>Seu nome</span><input name="autor" type="text" maxlength="80" autocomplete="off" list="tk-nomes" required placeholder="Ex.: Ana Souza"></label>`;
 
   function detalhe(codigo, editando = false) {
@@ -200,7 +280,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
     const podeAnexar = Boolean(q.hospedagemImagens);
     dlg.innerHTML = `
       <header class="tk-dlg-head">
-        <button type="button" class="btn sm tk-fechar">${icon('chevronRight', { size: 14, cls: 'tk-voltar-ic' })}Voltar para os tickets</button>
+        <button type="button" class="btn sm tk-fechar" title="Volta com os mesmos filtros (atalho: Esc)">${icon('chevronRight', { size: 14, cls: 'tk-voltar-ic' })}${destinoVolta()}</button>
         <b class="qa-cod">${esc(t.codigo)}</b>${chipStatus(t.status, rot)}${chipPrio(t.prioridade, rot)}
       </header>
       ${editando ? `
@@ -252,9 +332,10 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
         <div class="qa-acoes"><button type="submit" class="btn sm tk-apagar-ok">${icon('trash', { size: 14 })}Apagar ${esc(t.codigo)}</button><button type="button" class="btn sm" data-nao-apagar>Cancelar</button></div>
       </form>
       <h4>Histórico</h4>
-      ${historicoHtml(t, rot)}`}`;
-    if (dlg.hidden) { quadro.hidden = true; dlg.hidden = false; rolarTopo(); }
-    $('.tk-fechar', dlg).onclick = voltar;
+      ${historicoHtml(t, rot)}
+      <div class="tk-dlg-pe"><button type="button" class="btn sm tk-fechar">${icon('chevronRight', { size: 14, cls: 'tk-voltar-ic' })}${destinoVolta()}</button></div>`}`;
+    if (dlg.hidden) { posicao = rolador()?.scrollTop ?? 0; aberto = codigo; quadro.hidden = true; dlg.hidden = false; rolarTopo(); }
+    $$('.tk-fechar', dlg).forEach((b) => (b.onclick = voltar));
 
     if (!editando) {
       $('[data-editar]', dlg).onclick = () => detalhe(codigo, true);
@@ -361,6 +442,8 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
     for (const id of ['#tk-tipo', '#tk-area', '#tk-prio']) $(id, root).value = '';
     pintar();
   };
+  $('#tk-busca', root).value = f.busca;
+  for (const [id, k] of [['#tk-tipo', 'tipo'], ['#tk-area', 'area'], ['#tk-prio', 'prioridade'], ['#tk-ordem', 'ordenar']]) $(id, root).value = f[k];
   pintar();
 
   return { recarregar: async () => { q = await api('/api/qualidade'); pintar(); } };
