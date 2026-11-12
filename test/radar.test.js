@@ -10,7 +10,7 @@ import { matchesWhere, LocalVectorStore } from '../src/vectorstore.js';
 import { HashingEmbedder } from '../src/embedder.js';
 import { trustLevel, parseDocument } from '../src/corpus.js';
 import { ingest, ROOT, STORE_PATH } from '../src/ingest.js';
-import { RadarEngine } from '../src/search.js';
+import { RadarEngine, sugerirBuscas, semResultado, onlyCitedResults } from '../src/search.js';
 import { ConversationStore } from '../src/conversations.js';
 import { DeepSeekLLM, createLLM } from '../src/deepseek.js';
 import { createAuth } from '../src/auth.js';
@@ -1033,4 +1033,41 @@ test('chamada de alcance: conta navegadores únicos por etapa e tickets do perí
   assert.equal(r.ticketsPelaChamada, 1);
   assert.equal(r.ticketsNoPeriodo, 1);
   assert.equal(resumoCampanha([]).navegadoresQueViram, 0);
+});
+
+test('V0.0.2: grupos, arquivar e editar a última pergunta nas conversas; sugestões de busca e blocos da resposta', async () => {
+  const store = new ConversationStore(path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'conv2-')), 'c.json'));
+  const c = store.open(null, { userId: 'u-consultor' });
+  const r = { resultados: [], tipoResposta: 'semelhantes' };
+  store.addTurn(c, { turnoId: 't1', pergunta: 'projetos de telecom', resultado: r });
+  store.addTurn(c, { turnoId: 't2', pergunta: 'e de varejo?', resultado: r });
+  store.save(c.id, 'u-consultor');
+  assert.equal(store.group(c.id, 'u-consultor', '  Energisul   proposta ').grupo, 'Energisul proposta');
+  assert.equal(store.group(c.id, 'u-outro', 'X'), null, 'só o dono mexe');
+  store.archive(c.id, 'u-consultor', true);
+  const [item] = store.list('u-consultor');
+  assert.deepEqual([item.grupo, item.arquivada], ['Energisul proposta', true]);
+  assert.equal(store.dropLastTurn(c.id, 'u-consultor'), 'e de varejo?');
+  assert.equal(new ConversationStore(store.file).get(c.id, 'u-consultor').turnos.length, 1, 'persistido');
+  store.group(c.id, 'u-consultor', '');
+  assert.equal(store.list('u-consultor')[0].grupo, null);
+  // D06: sugestões vêm dos candidatos (já filtrados por permissão), sem repetir o que foi pedido.
+  const cand = (seg, tec, score) => ({ score, meta: { segmento: seg, tecnologias: tec } });
+  const sug = sugerirBuscas([cand('Varejo', ['AWS'], 0.2), cand('Telecom', ['Azure'], 0.4), cand('Varejo', ['Python'], 0.1), cand('Saúde', [], 0.3)], { segmentos: ['Telecom'] });
+  assert.deepEqual(sug, ['Liste os projetos de Saúde', 'Liste os projetos de Varejo', 'Liste os projetos com Azure']);
+  assert.match(semResultado('mineração', sug), /Não encontrei nada relevante.*Liste os projetos de Saúde/);
+  // CR-027: frases com projeto fora dos resultados saem, mas os blocos ficam.
+  const txt = ['Sim, há [P001].', 'Recomendação: reaproveite [P001]. Veja também [P009].', 'Perfis sugeridos: cientista de dados com [P009].'].join(String.fromCharCode(10, 10));
+  assert.equal(onlyCitedResults(txt, [{ projeto_id: 'P001' }]), ['Sim, há [P001].', 'Recomendação: reaproveite [P001].'].join(String.fromCharCode(10, 10)));
+});
+
+test('V0.0.2: Insights traz funil, anos e total de tecnologias respeitando o perfil', () => {
+  const gestor = engine.repo.insights(engine.user('u-gestor'));
+  const consultor = engine.repo.insights(engine.user('u-consultor'));
+  const soma = (x) => x.porStatus.reduce((a, s) => a + s.projetos, 0);
+  assert.equal(soma(gestor), gestor.totais.projetos);
+  assert.equal(soma(consultor), consultor.totais.projetos);
+  assert.ok(gestor.totais.projetos > consultor.totais.projetos, 'confidencial só para o gestor');
+  assert.ok(consultor.porAno.every((a) => /^\d{4}$/.test(a.ano)));
+  assert.ok(consultor.totalTecnologias >= consultor.porTecnologia.slice(0, 10).length);
 });
