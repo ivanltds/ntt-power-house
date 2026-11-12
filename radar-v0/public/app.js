@@ -8,7 +8,7 @@ import { initPainel } from './painel.js';
 import { initCampanha } from './campanha.js';
 import { showGuide, showTech } from './ajuda.js';
 import { showSdlc } from './sdlc.js';
-import { VERSAO, showReleaseNotes } from './versao.js';
+import { VERSAO, showReleaseNotes, showFeedback } from './versao.js';
 import { initActivities } from './atividades.js';
 import { welcomeOnFirstVisit, showPolicy } from './aviso.js';
 import { renderTyped, bindTyped, typeTag, citeNames } from './respostas.js';
@@ -60,7 +60,7 @@ async function init() {
   initUploads();
   initInsights();
   initPainel();
-  initCampanha(() => showReleaseNotes('feedback'));
+  initCampanha(() => showFeedback());
   initActivities();
   newConversation();
   loadConversations();
@@ -92,7 +92,7 @@ function setupMenu() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
   // CR-006: botão X no menu (depois de trocar o "Ver como" o menu fica aberto para mostrar as opções do perfil).
   // CR-026: Ajuda, versão e feedback visíveis na lateral das conversas (antes só no menu ⋮).
-  $$('[data-side]').forEach((b) => (b.onclick = () => ({ ajuda: showGuide, versao: () => showReleaseNotes(), feedback: () => showReleaseNotes('feedback') })[b.dataset.side]()));
+  $$('[data-side]').forEach((b) => (b.onclick = () => ({ ajuda: showGuide, feedback: showFeedback })[b.dataset.side]()));
   $('#menu-fechar').onclick = (e) => { e.stopPropagation(); toggle(false); btn.focus(); };
   $$('[data-menu]', pop).forEach((b) => (b.onclick = () => {
     toggle(false);
@@ -577,13 +577,14 @@ async function loadConversations() {
       </li>`;
   const ativas = conversas.filter((c) => !c.arquivada);
   const favs = ativas.filter((c) => c.favorita);
-  const grupos = [...new Set(ativas.filter((c) => !c.favorita && c.grupo).map((c) => c.grupo))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  // Favorita que está num grupo aparece nos dois lugares: em Favoritas e no bloco do grupo.
+  const grupos = [...new Set(ativas.filter((c) => c.grupo).map((c) => c.grupo))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
   const avulsas = ativas.filter((c) => !c.favorita && !c.grupo);
   const arquivadas = conversas.filter((c) => c.arquivada);
   const bloco = (ic, titulo, itens, extra = '') => (itens.length ? `<li class="conv-group${extra}" role="presentation">${icon(ic, { size: 14 })}<span>${esc(titulo)}</span><em>${itens.length}</em></li>${itens.map(item).join('')}` : '');
   $('#conv-list').innerHTML = conversas.length
     ? bloco('star', 'Favoritas', favs)
-      + grupos.map((g) => bloco('folder', g, ativas.filter((c) => !c.favorita && c.grupo === g), ' grupo')).join('')
+      + grupos.map((g) => bloco('folder', g, ativas.filter((c) => c.grupo === g), ' grupo')).join('')
       + bloco('clock', grupos.length ? 'Avulsas' : 'Recentes', avulsas)
       + (arquivadas.length ? `<li class="conv-arq" role="presentation"><details><summary>${icon('archive', { size: 14 })}<span>Arquivadas</span><em>${arquivadas.length}</em></summary><ul>${arquivadas.map(item).join('')}</ul></details></li>` : '')
     : `<li class="empty">${icon('message', { size: 16 })}${$('#conv-search').value ? 'Nenhuma conversa com essa busca' : 'Suas conversas aparecem aqui'}</li>`;
@@ -634,7 +635,7 @@ function abrirMenuConversa(id, botao) {
   };
   $$('[data-grupo]', menu).forEach((b) => (b.onclick = () => mover(b.dataset.grupo)));
   $('.conv-novo-grupo', menu).onsubmit = (e) => { e.preventDefault(); const g = e.target.g.value.trim(); if (g) mover(g); };
-  $('[data-m="renomear"]', menu).onclick = () => { fecharMenuConversa(); renomearNaLista(id); };
+  $('[data-m="renomear"]', menu).onclick = () => { fecharMenuConversa(); renomearNaLista(id, botao.closest('li')); };
   $('[data-m="arquivar"]', menu).onclick = async () => {
     await api('/api/conversa/arquivar', { id, userId: userId(), arquivada: !c.arquivada });
     fecharMenuConversa();
@@ -646,8 +647,9 @@ function abrirMenuConversa(id, botao) {
 }
 
 // Renomear direto na lista: Enter salva, Esc cancela.
-function renomearNaLista(id) {
-  const li = $(`#conv-list li[data-id="${id}"]`);
+// A conversa pode aparecer duas vezes (favorita e no grupo): edita a linha cujo menu foi aberto.
+function renomearNaLista(id, linha) {
+  const li = linha?.isConnected ? linha : $(`#conv-list li[data-id="${id}"]`);
   const a = li && $('.open', li);
   if (!a) return;
   const input = Object.assign(document.createElement('input'), { value: a.textContent, maxLength: 80, className: 'conv-rename' });

@@ -1669,3 +1669,6 @@ dialog.dlg-confirma .actions { display: flex; justify-content: flex-end; gap: 8p
 .anexos-msg { display: block; margin-top: 4px; font-size: 12px; opacity: .85; }
 .chat-envios { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
 .chat-envios li { display: flex; align-items: center; gap: 8px; }
+/* Diálogo com uma seção só (ex.: Enviar feedback pela lateral): sem a coluna de seções */
+.help-grid.solo { grid-template-columns: minmax(0, 1fr); }
+.help-grid.solo .help-nav { display: none; }
