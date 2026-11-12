@@ -10,14 +10,14 @@ import { chipPrio, galeriaHtml } from './tickets-ui.js';
 const ORDEM_PRIO = ['critica', 'alta', 'media', 'baixa', null];
 
 const ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
-const FILTROS = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', resolvidos: 'Resolvidos', todos: 'Todos' };
+const FILTROS = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', fora_mvp: 'Fora do MVP', resolvidos: 'Resolvidos', todos: 'Todos' };
 const filtro = { tickets: 'abertos', melhorias: 'abertos' };
 const busca = { tickets: '', melhorias: '' };
 let q = null;
 
 const chip = (s, rot) => `<span class="qa-chip qa-${s}">${esc(rot[s] ?? s)}</span>`;
 const ultimo = (t) => t.historico.at(-1);
-const passa = (t, f) => f === 'todos' || (f === 'abertos' ? ABERTOS.includes(t.status) : f === 'corrigido' ? t.status === 'corrigido' : !ABERTOS.includes(t.status));
+const passa = (t, f) => f === 'todos' || (f === 'abertos' ? ABERTOS.includes(t.status) : f === 'corrigido' ? t.status === 'corrigido' : f === 'fora_mvp' ? t.status === 'nao_priorizado' : !ABERTOS.includes(t.status) && t.status !== 'nao_priorizado');
 
 function tile(rotulo, valor, detalhe = '') {
   return `<div class="st-tile"><span class="muted small">${esc(rotulo)}</span><b>${esc(valor)}</b>${detalhe ? `<span class="muted small">${esc(detalhe)}</span>` : ''}</div>`;

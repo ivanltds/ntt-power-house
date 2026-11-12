@@ -1150,8 +1150,8 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 #ask #query { min-width: 0; flex: 1 1 auto; }
 
 /* ---------- Qualidade da versão: feedback, tickets, roteiro e acompanhamento ---------- */
-:root { --qa-ok: #0ca30c; --qa-falha: #d03b3b; --qa-bloq: #fab219; --qa-corr: #2f6fed; --qa-pend: #c3c2b7; }
-:root[data-theme="dark"] { --qa-pend: #55554f; --qa-corr: #84adff; }
+:root { --qa-ok: #0ca30c; --qa-falha: #d03b3b; --qa-bloq: #fab219; --qa-corr: #2f6fed; --qa-pend: #c3c2b7; --qa-adiado: #8a63d2; }
+:root[data-theme="dark"] { --qa-pend: #55554f; --qa-corr: #84adff; --qa-adiado: #b598f0; }
 .qa-form { display: grid; gap: 10px; max-width: 820px; margin-top: 8px; }
 .qa-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
 .qa-field { display: grid; gap: 4px; font-size: 13px; }
@@ -1196,6 +1196,7 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 .qa-falha::before, .qa-aberto::before { background: var(--qa-falha); }
 .qa-bloqueado::before, .qa-em_correcao::before { background: var(--qa-bloq); }
 .qa-corrigido::before { background: var(--qa-corr); }
+.qa-nao_priorizado::before { background: var(--qa-adiado); }
 .qa-cen.feito { border-left: 4px solid var(--qa-pend); }
 .qa-cen.qa-r-ok { border-left-color: var(--qa-ok); }
 .qa-cen.qa-r-falha { border-left-color: var(--qa-falha); }
@@ -1316,7 +1317,16 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 .tk-mover { border-top: 1px dashed var(--line); padding-top: 12px; margin-top: 12px; max-width: none; }
 .tk-editar { max-width: none; }
 .tk-galeria { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
-.tk-galeria img { width: 150px; height: 100px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); display: block; }
+.tk-galeria img { width: 150px; height: 100px; object-fit: contain; background: var(--row-hover); border-radius: 6px; border: 1px solid var(--line); display: block; }
+.tk-galeria a { cursor: zoom-in; }
+.tk-zoom { max-width: min(96vw, 1100px); max-height: 94vh; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); color: var(--ink); }
+.tk-zoom::backdrop { background: var(--backdrop); }
+.tk-zoom-head { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+.tk-zoom-head b { margin-right: auto; }
+.tk-zoom-img { display: block; max-width: 100%; max-height: calc(94vh - 56px); margin: 0 auto; object-fit: contain; }
+.tk-zoom-erro { padding: 24px; max-width: 420px; }
+.tk-dlg-pe { display: flex; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--line); }
+.tk-linha.tk-volta, .tk-card.tk-volta { outline: 2px solid var(--brand); outline-offset: -2px; }
 .tk-anexar { justify-self: start; cursor: pointer; margin-top: 4px; }
 .qa-prev figure.nova img { outline: 2px dashed var(--brand); }
 .st-gerir { margin-left: 8px; vertical-align: middle; text-decoration: none; font-size: 12px; }
@@ -1352,7 +1362,7 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 .tk-apagar { color: var(--bad); margin-left: auto; }
 .tk-apagar-ok { background: var(--bad); border-color: var(--bad); color: #fff; }
 .tk-apagar-ok:hover { background: var(--bad); filter: brightness(.92); }
-.tk-excluir[hidden], .tk-mover[hidden] { display: none; }
+.tk-excluir[hidden], .tk-mover[hidden], .tk-prop-form[hidden], .tk-proposta [hidden] { display: none; }
 .tk-excluir { border-top: 1px dashed var(--line); padding-top: 12px; margin-top: 12px; max-width: none; }
 
 /* ---------- Insights (novo): lentes por perfil (discovery r3) ---------- */

@@ -16,9 +16,11 @@ const maisRecente = (porAnalista = {}) => Object.entries(porAnalista).map(([nome
 export const AREAS = { conversas: 'Conversas', projetos: 'Projetos', upload: 'Envio de arquivos', outro: 'Outro' };
 export const TIPOS = { problema: 'Problema', sugestao: 'Sugestão', duvida: 'Dúvida' };
 export const STATUS = {
-  aberto: 'Aberto', em_correcao: 'Em correção', corrigido: 'Corrigido, aguardando reteste', validado: 'Validado', nao_procede: 'Não procede',
+  aberto: 'Aberto', em_correcao: 'Em correção', corrigido: 'Corrigido, aguardando reteste', nao_priorizado: 'Não priorizado no MVP', validado: 'Validado', nao_procede: 'Não procede',
 };
 export const STATUS_ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
+// Fora do MVP: decidido não fazer agora. Não conta como aberto nem como resolvido; dá para reabrir depois.
+export const STATUS_ADIADOS = ['nao_priorizado'];
 export const RESULTADOS = { ok: 'OK', falha: 'Falhou', bloqueado: 'Bloqueado' };
 export const MAX_IMAGENS = 3;
 export const MAX_IMAGEM_BYTES = 1_500_000;

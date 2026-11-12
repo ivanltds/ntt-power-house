@@ -30,7 +30,7 @@ const horaBR = (iso) => (iso ? `${dateBR(iso)} ${new Date(iso).toLocaleTimeStrin
 // Cores de status fixas; cada fatia tem rótulo, número e porcentagem na legenda, então a cor nunca é o único sinal.
 const COR = {
   ok: 'var(--qa-ok)', falha: 'var(--qa-falha)', bloqueado: 'var(--qa-bloq)', pendente: 'var(--qa-pend)',
-  aberto: 'var(--qa-falha)', em_correcao: 'var(--qa-bloq)', corrigido: 'var(--qa-corr)', validado: 'var(--qa-ok)', nao_procede: 'var(--qa-pend)',
+  aberto: 'var(--qa-falha)', em_correcao: 'var(--qa-bloq)', corrigido: 'var(--qa-corr)', validado: 'var(--qa-ok)', nao_procede: 'var(--qa-pend)', nao_priorizado: 'var(--qa-adiado)',
 };
 
 export function pizza(titulo, partes, { tamanho = 150 } = {}) {

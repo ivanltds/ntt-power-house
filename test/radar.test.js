@@ -822,6 +822,18 @@ test('tickets: edição com prioridade, situação e imagens fica no histórico;
   assert.equal(r2.prioridade, null);
 });
 
+test('tickets: "Não priorizado no MVP" sai da lista de abertos e pode ser reaberto', () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-tk-')), 'qualidade.json');
+  const q = new QualityStore(file);
+  const t = q.abrir({ nome: 'Ana', texto: 'Gerar documento Word a partir da conversa.', area: 'conversas', tipo: 'sugestao', versao: 'V0.0.1' });
+  const r = q.editar(t.codigo, { autor: 'Time de produto', status: 'nao_priorizado', nota: 'Fica para depois do MVP.' });
+  assert.equal(r.status, 'nao_priorizado');
+  assert.equal(q.tickets({ abertos: true }).length, 0);
+  assert.equal(q.resumo('V0.0.1').tickets.nao_priorizado, 1);
+  assert.equal(q.editar(t.codigo, { autor: 'Time de produto', status: 'aberto' }).status, 'aberto');
+  assert.equal(q.tickets({ abertos: true }).length, 1);
+});
+
 test('tickets: proposta de solução do time é gravada, entra no histórico e pode ser apagada', () => {
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-tk-')), 'qualidade.json');
   const q = new QualityStore(file);
