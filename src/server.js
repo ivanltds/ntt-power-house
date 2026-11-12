@@ -356,7 +356,7 @@ const routes = {
     if (novas.length) {
       try { imagensNovas = await hospedarTodas(hospedagem, novas, t.codigo); } catch (err) { return [502, { erro: `Não foi possível guardar a imagem (${err.message}). Nada foi alterado.` }]; }
     }
-    const campos = Object.fromEntries(['status', 'prioridade', 'titulo', 'texto', 'area', 'tipo'].filter((k) => b[k] !== undefined).map((k) => [k, b[k]]));
+    const campos = Object.fromEntries(['status', 'prioridade', 'titulo', 'texto', 'area', 'tipo', 'proposta'].filter((k) => b[k] !== undefined).map((k) => [k, b[k]]));
     const r = invalido(() => qualidade.editar(t.codigo, { ...campos, autor: b.autor, nota: b.nota, versao: VERSAO, imagensNovas, remover }));
     if (Array.isArray(r)) return r;
     audit.logEvent({ tipo: 'ticket_editado', codigo: t.codigo, campos: r.historico.at(-1).alteracoes?.map((a) => a.campo) ?? [], status: r.status });

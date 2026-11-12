@@ -822,6 +822,23 @@ test('tickets: edição com prioridade, situação e imagens fica no histórico;
   assert.equal(r2.prioridade, null);
 });
 
+test('tickets: proposta de solução do time é gravada, entra no histórico e pode ser apagada', () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-tk-')), 'qualidade.json');
+  const q = new QualityStore(file);
+  const t = q.abrir({ nome: 'Ana', texto: 'As barras do ranking não batem com o percentual.', area: 'conversas', versao: 'V0.0.1' });
+  assert.equal(t.proposta, undefined);
+  const r = q.editar(t.codigo, { autor: 'Time de produto', versao: 'V0.0.1', proposta: '  Usar escala fixa 0-100%.  ' });
+  assert.equal(r.proposta, 'Usar escala fixa 0-100%.');
+  assert.equal(r.propostaPor, 'Time de produto');
+  assert.ok(r.propostaEm);
+  assert.deepEqual(r.historico.at(-1).alteracoes, [{ campo: 'proposta', vazia: false }]);
+  assert.throws(() => q.editar(t.codigo, { autor: 'Bia', proposta: 'Usar escala fixa 0-100%.' }), /Nada foi alterado/);
+  assert.equal(new QualityStore(file).ticket(t.codigo).proposta, 'Usar escala fixa 0-100%.');
+  const sem = q.editar(t.codigo, { autor: 'Bia', proposta: '' });
+  assert.equal(sem.proposta, undefined);
+  assert.deepEqual(sem.historico.at(-1).alteracoes, [{ campo: 'proposta', vazia: true }]);
+});
+
 test('tickets: hospedagem de imagens no ImgBB só com chave, sem expor a chave no erro', async () => {
   assert.equal(criarHospedagem({}), null);
   const chamadas = [];

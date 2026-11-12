@@ -25,6 +25,7 @@ export const MAX_IMAGEM_BYTES = 1_500_000;
 // Prioridade definida na triagem; sem valor = "A definir". A ordem é a da listagem.
 export const PRIORIDADES = { critica: 'Crítica', alta: 'Alta', media: 'Média', baixa: 'Baixa' };
 export const MAX_IMAGENS_TICKET = 6;
+export const MAX_PROPOSTA = 4000;
 const limpo = (s) => maskSensitive(String(s ?? '').trim()).texto;
 // Anexo hospedado fora: só links https entram no ticket.
 const anexo = (a) => {
@@ -119,7 +120,7 @@ export class QualityStore {
 
   // Edição completa de um ticket por quem faz a triagem: campos, prioridade, situação, retorno e imagens.
   // Valida tudo antes de mudar qualquer coisa; cada edição vira uma entrada no histórico com o que mudou.
-  editar(codigo, { autor, versao, status, nota, prioridade, titulo, texto, area, tipo, imagensNovas = [], remover = [] }) {
+  editar(codigo, { autor, versao, status, nota, prioridade, titulo, texto, area, tipo, proposta, imagensNovas = [], remover = [] }) {
     const t = this.ticket(codigo);
     if (!t) return null;
     const quem = limpo(autor).slice(0, 80);
@@ -133,6 +134,8 @@ export class QualityStore {
     if (novoTitulo === '') throw new Error('O título não pode ficar vazio.');
     const novoTexto = texto === undefined ? undefined : limpo(texto).slice(0, 4000);
     if (novoTexto !== undefined && novoTexto.length < 10) throw new Error('Descreva o ticket (pelo menos uma frase).');
+    // Proposta de solução definida pelo time (saída da discussão do ticket); vazio apaga.
+    const novaProposta = proposta === undefined ? undefined : limpo(proposta).slice(0, MAX_PROPOSTA);
     const imagens = (t.imagens ?? []).filter((i) => !remover.includes(i.url));
     const novas = imagensNovas.map(anexo);
     if (imagens.length + novas.length > MAX_IMAGENS_TICKET) throw new Error(`No máximo ${MAX_IMAGENS_TICKET} imagens por ticket.`);
@@ -143,6 +146,7 @@ export class QualityStore {
       if (valor !== undefined && valor !== (t[campo] ?? null)) alteracoes.push({ campo, de: t[campo] ?? null, para: valor });
     }
     if (novoTexto !== undefined && novoTexto !== t.texto) alteracoes.push({ campo: 'texto' });
+    if (novaProposta !== undefined && novaProposta !== (t.proposta ?? '')) alteracoes.push({ campo: 'proposta', vazia: !novaProposta });
     const removidas = (t.imagens ?? []).length - imagens.length;
     if (novas.length || removidas) alteracoes.push({ campo: 'imagens', adicionadas: novas.length, removidas });
     const novoStatus = status ?? t.status;
@@ -150,6 +154,9 @@ export class QualityStore {
 
     for (const a of alteracoes) if ('para' in a) t[a.campo] = a.para;
     if (novoTexto !== undefined) t.texto = novoTexto;
+    if (novaProposta !== undefined && novaProposta !== (t.proposta ?? '')) {
+      if (novaProposta) { t.proposta = novaProposta; t.propostaEm = new Date().toISOString(); t.propostaPor = quem; } else { delete t.proposta; delete t.propostaEm; delete t.propostaPor; }
+    }
     t.imagens = [...imagens, ...novas];
     t.historico.push({ em: new Date().toISOString(), autor: quem, de: t.status, para: novoStatus, texto: retorno, versao, ...(alteracoes.length ? { alteracoes } : {}) });
     if (novoStatus !== t.status) {
