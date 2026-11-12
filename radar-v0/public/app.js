@@ -209,11 +209,13 @@ function addMsg(kind, html) {
 }
 
 // Citações [P001] da resposta da IA viram etiquetas com o nome do cliente.
+// Resposta em blocos (CR-027): cada parágrafo vira um bloco; "Recomendação:" e "Perfis sugeridos:" ganham destaque.
 function renderText(r) {
   const names = citeNames(r);
-  return esc(r.resposta)
+  return String(r.resposta ?? '').split(/\n\s*\n/).map((bloco) => `<span class="ans-par">${esc(bloco.trim())
+    .replace(/^(Recomendação|Perfis sugeridos):/, '<b class="ans-rot">$1:</b>')
     .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
-    .replace(/\[(P\d{3})\]/g, (m, id) => `<span class="cite" title="${id}">${esc(names.get(id) ?? id)}</span>`);
+    .replace(/\[(P\d{3})\]/g, (m, id) => `<span class="cite" title="${id}">${esc(names.get(id) ?? id)}</span>`)}</span>`).join('');
 }
 
 function renderAnswer(r) {
@@ -233,6 +235,7 @@ function renderAnswer(r) {
     ${tipado !== null ? tipado : r.resultados.length ? `<div class="rcards">${r.resultados.map(renderCard).join('')}</div>` : `
       <div class="noresult">
         <span>Tente:</span>
+        ${(r.sugestoes ?? []).map((q) => `<button type="button" class="chip-btn" data-ask="${esc(q)}">${icon('search', { size: 14 })}${esc(q)}</button>`).join('')}
         <button type="button" class="chip-btn" data-act="explorar">${icon('folder', { size: 14 })}Explorar projetos</button>
         ${opp ? `<button type="button" class="chip-btn" data-act="sem-contexto">${icon('x', { size: 14 })}Perguntar sem o foco em ${esc(opp?.cliente ?? '')}</button>` : ''}
         ${state.conv?.turnos ? `<button type="button" class="chip-btn" data-act="nova">${icon('plus', { size: 14 })}Nova conversa, sem o contexto anterior</button>` : ''}
@@ -242,8 +245,18 @@ function renderAnswer(r) {
 
 const statusDot = (s) => `<i class="dot s-${esc(s).replace(/\s/g, '')}"></i>${esc(s)}`;
 
+// Card do projeto na resposta (V0.0.2):
+// CR-030: hierarquia nova — o que importa para decidir vem primeiro (cliente, segmento, status, prazo, por que é parecido,
+// resumo); tecnologias aparecem uma vez só, no fim, discretas e clicáveis (CR-013: abrem Projetos filtrado).
+// CR-029: itens que abrem e fecham com setinha (chevron) e um aberto por vez (atributo name do <details>).
+// CR-028: cada barra de "Por que apareceu" é a contribuição do critério para este projeto, numa escala única de 0 a 100%.
+// CR-051: o que fica oculto para o consultor é o preço e a margem da proposta, não os resultados em reais.
+const acordeon = (grupo, ic, titulo, corpo) => `<details class="acc" name="${grupo}"><summary>${icon(ic, { size: 14 })}<span>${titulo}</span><span class="acc-chev">${icon('chevronDown', { size: 15 })}</span></summary><div class="acc-body">${corpo}</div></details>`;
+
 function renderCard(x) {
   const d = x.detalhes;
+  const grupo = `acc-${x.projeto_id}`;
+  const fatores = x.fatores.map((f) => ({ ...f, contribuicao: f.valor * f.peso }));
   return `
   <article class="rcard" data-projeto="${x.projeto_id}">
     <div class="rhead" data-toggle>
@@ -257,25 +270,25 @@ function renderCard(x) {
     </div>
     <div class="fb-why hidden"><span>O que não ajudou?</span>${MOTIVOS.map((m) => `<button type="button" class="pick" data-motivo="${esc(m)}">${esc(m)}</button>`).join('')}</div>
     <div class="rbody">
+      <div class="facts">
+        <span title="Segmento">${icon('building', { size: 15 })}${esc(x.segmento)}</span>
+        <span title="Prazo">${icon('clock', { size: 15 })}${d.prazoMeses ? `${d.prazoMeses} meses` : '—'}</span>
+        ${d.valor ? `<span title="Preço da proposta">${icon('money', { size: 15 })}${brl(d.valor)}</span>` : d.valor === undefined ? `<span title="O preço e a margem da proposta não aparecem para o seu perfil. Resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos.">${icon('lock', { size: 15 })}preço e margem restritos</span>` : ''}
+      </div>
       <p class="why">${esc(x.justificativa)}</p>
+      ${x.resumo ? `<p class="resumo">${esc(x.resumo)}</p>` : ''}
       <div class="reuse">
         <button type="button" class="btn sm" data-reuse="abrir">${icon('folder', { size: 15 })}Abrir projeto</button>
         ${d.escopo ? `<button type="button" class="btn sm" data-reuse="copiar">${icon('copy', { size: 15 })}Copiar escopo</button>` : ''}
         ${pode('cadastrarProjeto') ? `<button type="button" class="btn sm" data-reuse="base">${icon('duplicate', { size: 15 })}Usar como base</button>` : ''}
       </div>
-      <div class="chips">${x.tecnologias.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>
-      <div class="facts">
-        <span title="Prazo">${icon('clock', { size: 15 })}${d.prazoMeses ? `${d.prazoMeses} meses` : '—'}</span>
-        ${d.valor ? `<span title="Valor">${icon('money', { size: 15 })}${brl(d.valor)}</span>` : d.valor === undefined ? `<span title="Valor oculto para o seu perfil">${icon('lock', { size: 15 })}valor restrito</span>` : ''}
-        <span title="Segmento">${icon('building', { size: 15 })}${esc(x.segmento)}</span>
+      <div class="accs">
+        ${d.resultados || d.licoes || d.escopo ? acordeon(grupo, 'bulb', 'Escopo, resultados e lições', `${d.escopo ? `<h5>Escopo</h5><p>${md(d.escopo)}</p>` : ''}${d.resultados ? `<h5>Resultados</h5><p>${md(d.resultados)}</p>` : ''}${d.licoes ? `<h5>Lições</h5><p>${md(d.licoes)}</p>` : ''}`) : ''}
+        ${acordeon(grupo, 'eye', 'Trechos que sustentam a resposta', x.evidencias.map((e) => `<blockquote><small>${esc(tipoLabel(e.tipo))}</small>${md(e.trecho)}</blockquote>`).join(''))}
+        ${acordeon(grupo, 'chart', 'Por que apareceu nesta posição', `<p class="muted small">Quanto cada critério somou para a semelhança de ${pct(x.score)} deste projeto.</p>
+          <div class="factors">${fatores.map((f) => `<span>${esc(f.fator)}</span><div class="bar" title="${esc(`${f.fator}: nota ${pct(f.valor)} × peso ${pct(f.peso)} = ${pct(f.contribuicao)}`)}"><div style="width:${pct(f.contribuicao)}"></div></div><em>${pct(f.contribuicao)}</em>`).join('')}</div>`)}
       </div>
-      ${x.resumo ? `<p>${esc(x.resumo)}</p>` : ''}
-      ${d.resultados || d.licoes || d.escopo ? `<details><summary>${icon('bulb', { size: 14 })}Escopo, resultados e lições</summary>
-        ${d.escopo ? `<h5>Escopo</h5><p>${md(d.escopo)}</p>` : ''}${d.resultados ? `<h5>Resultados</h5><p>${md(d.resultados)}</p>` : ''}${d.licoes ? `<h5>Lições</h5><p>${md(d.licoes)}</p>` : ''}</details>` : ''}
-      <details><summary>${icon('eye', { size: 14 })}Trechos que sustentam a resposta</summary>${x.evidencias.map((e) => `<blockquote><small>${esc(tipoLabel(e.tipo))}</small>${md(e.trecho)}</blockquote>`).join('')}</details>
-      <details><summary>${icon('chart', { size: 14 })}Por que apareceu nesta posição</summary>
-        <div class="factors">${x.fatores.map((f) => `<span>${esc(f.fator)}</span><div class="bar"><div style="width:${pct(f.valor)}"></div></div><em>${pct(f.peso)}</em>`).join('')}</div>
-      </details>
+      ${x.tecnologias.length ? `<div class="tec-tags"><span class="muted small">Tecnologias:</span>${x.tecnologias.map((t) => `<button type="button" class="tec-tag" data-tec="${esc(t)}" title="Ver projetos com ${esc(t)}">${esc(t)}</button>`).join('')}</div>` : ''}
       <div class="sources"><span class="muted">Fontes:</span>${x.fontes.map((f) => `<a href="#" data-doc="${f.doc_id}" title="${esc(f.arquivo)}">${icon('file', { size: 14 })}${esc(tipoLabel(f.tipo))}</a>`).join('')}</div>
     </div>
   </article>`;
@@ -283,6 +296,7 @@ function renderCard(x) {
 
 function bindAnswer(container, r) {
   bindTyped(container, { ask: (q) => { $('#query').value = q; onAsk(); } });
+  $$('.noresult [data-ask]', container).forEach((b) => (b.onclick = () => { $('#query').value = b.dataset.ask; onAsk(); }));
   $$('[data-act]', container).forEach((b) => (b.onclick = () => {
     const last = $$('#chat .msg.user').pop()?.textContent ?? '';
     if (b.dataset.act === 'explorar') { openTab('projetos'); showView('projetos'); }
@@ -317,6 +331,7 @@ function bindAnswer(container, r) {
       $('.fb-why', card).classList.add('hidden');
       toast('Obrigado! Vamos usar isso para ajustar a busca.');
     }));
+    $$('[data-tec]', card).forEach((b) => (b.onclick = () => { openTab('projetos'); document.dispatchEvent(new CustomEvent('radar:filtrar', { detail: { tecnologias: [b.dataset.tec] } })); }));
     $$('[data-reuse]', card).forEach((b) => (b.onclick = async () => {
       const acao = b.dataset.reuse;
       evento('reaproveitar', { acao });

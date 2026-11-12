@@ -16,6 +16,7 @@ const ENTITY_TYPES = { pessoa: 'Pessoa', organizacao: 'Organização', kpi: 'Res
 const STATUS_DOC = ['rascunho', 'preliminar', 'bruta', 'final', 'final_enviada', 'final_aprovada', 'aprovado', 'validada'];
 const empty = () => ({ meus: false, q: '', modoTexto: 'todas', cliente: '', segmentos: [], status: [], tecnologias: [], modoTecnologias: 'todas', servicos: [], modoServicos: 'todas', tiposDocumento: [], prazoMin: '', prazoMax: '', valorMin: '', valorMax: '', dataDe: '', dataAte: '', entidadeTipo: '', entidadeValor: '' });
 const PAGE_SIZE = 20;
+const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 const view = { filtros: empty(), ordenar: 'relevancia', pagina: 1 };
 let timer;
 
@@ -29,9 +30,14 @@ export function initProjects() {
   $('#proj-order').onchange = (e) => { view.ordenar = e.target.value; search(); };
   $('#proj-clear').onclick = () => { reset(); search(); };
   $('#proj-toggle-filters').onclick = () => $('#proj-filters').classList.toggle('hidden');
+  // CR-005: o filtro é aplicado na hora; "Ver N projetos" (ou Esc) fecha o painel. Fechar a cada clique impediria marcar
+  // duas opções nos filtros de várias escolhas (Segmento, Tecnologias).
+  $('#proj-ver').onclick = () => $('#proj-filters').classList.add('hidden');
+  $('#proj-filters').addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); $('#proj-filters').classList.add('hidden'); $('#proj-toggle-filters').focus(); } });
   $('#proj-q').oninput = (e) => { view.filtros.q = e.target.value; view.pagina = 1; debounce(); };
   // Atalho vindo dos Insights: abre a exploração já filtrada.
-  document.addEventListener('radar:filtrar', (e) => { reset(); Object.assign(view.filtros, e.detail); $('#proj-filters').classList.remove('hidden'); search(); });
+  // CR-041: os filtros vindos de fora (chat, Insights, tags do card) entram antes da busca e aparecem nos controles e nos chips.
+  document.addEventListener('radar:filtrar', (e) => { reset(); Object.assign(view.filtros, e.detail); renderStaticFilters(); search(); });
 }
 
 function reset() {
@@ -68,7 +74,11 @@ function query() {
   return p;
 }
 
+// CR-041: só a resposta da busca mais recente é desenhada (abrir a aba e aplicar um filtro disparam duas buscas;
+// sem isso, a primeira, sem filtro, podia chegar depois e apagar o resultado filtrado).
+let ultimaBusca = 0;
 async function search() {
+  const minha = ++ultimaBusca;
   // Cadastro de projeto só para o gestor (UC07.5).
   $('#new-project').classList.toggle('hidden', !pode('cadastrarProjeto'));
   // Ordenar por valor só para quem vê valores (o servidor já ignora para os demais).
@@ -76,8 +86,34 @@ async function search() {
   optValor.hidden = optValor.disabled = !currentUser()?.verValores;
   if (optValor.disabled && view.ordenar === 'valor') { view.ordenar = 'relevancia'; $('#proj-order').value = 'relevancia'; }
   const r = await api(`/api/projetos?${query()}`);
+  if (minha !== ultimaBusca) return;
   renderFacets(r.facetas);
   renderResults(r);
+  renderChips();
+}
+
+// CR-013: filtros ativos como chips acima da lista, cada um com X para tirar; "Limpar tudo" no fim.
+const ROTULO_FILTRO = { segmentos: 'Segmento', status: 'Status', tecnologias: 'Tecnologia', servicos: 'Serviço', tiposDocumento: 'Documento', cliente: 'Cliente', prazoMin: 'Prazo de', prazoMax: 'Prazo até', valorMin: 'Valor de', valorMax: 'Valor até', dataDe: 'Desde', dataAte: 'Até', entidadeValor: 'Citado' };
+function renderChips() {
+  const f = view.filtros;
+  const chips = [];
+  if (f.meus) chips.push({ k: 'meus', rot: 'Meus projetos' });
+  for (const [k, rot] of Object.entries(ROTULO_FILTRO)) {
+    const v = f[k];
+    if (Array.isArray(v)) v.forEach((x) => chips.push({ k, v: x, rot: `${rot}: ${k === 'tiposDocumento' ? tipoLabel(x) : x}` }));
+    else if (v) chips.push({ k, rot: `${rot}: ${k.startsWith('data') ? String(v).split('-').reverse().join('/') : v}` });
+  }
+  $('#proj-chips').innerHTML = chips.length ? `${chips.map((c, i) => `<span class="fchip">${esc(c.rot)}<button type="button" data-tirar="${i}" title="Tirar este filtro" aria-label="Tirar o filtro ${esc(c.rot)}">${icon('x', { size: 12 })}</button></span>`).join('')}
+    <button type="button" class="link-btn" data-tirar="todos">Limpar tudo</button>` : '';
+  $$('[data-tirar]', $('#proj-chips')).forEach((b) => (b.onclick = () => {
+    if (b.dataset.tirar === 'todos') { const q = f.q; reset(); view.filtros.q = q; $('#proj-q').value = q; search(); return; }
+    const c = chips[Number(b.dataset.tirar)];
+    if (c.k === 'meus') f.meus = false; else if (Array.isArray(f[c.k])) f[c.k].splice(f[c.k].indexOf(c.v), 1); else f[c.k] = '';
+    if (c.k === 'entidadeValor') f.entidadeTipo = '';
+    view.pagina = 1;
+    renderStaticFilters();
+    search();
+  }));
 }
 
 function renderFacets(facetas) {
@@ -104,6 +140,7 @@ function renderResults(r) {
   const active = Object.entries(view.filtros).filter(([k, v]) => k !== 'q' && (Array.isArray(v) ? v.length : v !== '' && v !== 'todas' && v !== false)).length;
   $('#proj-filter-count').textContent = active;
   $('#proj-filter-count').classList.toggle('hidden', !active);
+  $('#proj-ver').textContent = `Ver ${r.total} projeto${r.total === 1 ? '' : 's'}`;
   const de = (r.pagina - 1) * r.tamanho + 1;
   const ate = Math.min(r.total, r.pagina * r.tamanho);
   $('#proj-summary').innerHTML = `${r.total > r.tamanho ? `${de}–${ate} de ` : ''}${r.total} projeto${r.total === 1 ? '' : 's'}<span title="Tempo da consulta no banco">${icon('clock', { size: 13 })}${r.tempoMs} ms</span>`;
@@ -116,7 +153,7 @@ function renderResults(r) {
       <p class="pseg">${icon('building', { size: 14 })}${esc(p.segmento ?? 'Segmento não informado')}</p>
       ${p.trecho ? `<p class="snippet">${highlight(p.trecho)}</p>` : ''}
       <div class="pfoot">
-        <span class="pmeta">${porte(p)}${p.prazo_meses ? `<span title="Prazo">${icon('clock', { size: 14 })}${String(p.prazo_meses).replace('.', ',')} m</span>` : ''}${p.data_referencia ? `<span title="Data de referência">${icon('calendar', { size: 14 })}${p.data_referencia.slice(0, 4)}</span>` : ''}</span>
+        <span class="pmeta">${porte(p)}${p.prazo_meses ? `<span title="Prazo">${icon('clock', { size: 14 })}${String(p.prazo_meses).replace('.', ',')} m</span>` : ''}${p.data_referencia ? `<span title="Data de referência: ${esc(p.data_referencia.split('-').reverse().join('/'))}">${icon('calendar', { size: 14 })}${p.data_referencia.length >= 7 ? `${MESES[Number(p.data_referencia.slice(5, 7)) - 1]}/` : ''}${p.data_referencia.slice(0, 4)}</span>` : ''}</span>
         ${kit(p)}
       </div>
     </article>`).join('') : `<div class="empty-state">${icon('search', { size: 32 })}<p>Nenhum projeto ${active || view.filtros.q ? 'com esses critérios' : 'cadastrado ainda'}</p>${view.filtros.meus ? '<p class="muted small">"Meus projetos" mostra os que você criou, em que é o responsável ou em que enviou documentos.</p>' : ''}
