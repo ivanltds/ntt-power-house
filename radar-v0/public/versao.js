@@ -62,7 +62,7 @@ export const NOTAS = [
         tipo: 'melhoria', status: 'feito', area: 'Chat', tickets: ['CR-017', 'CR-018', 'CR-004', 'CR-035'],
         titulo: 'Conversas em grupos, arquivadas, menu ⋯ e exclusão com confirmação',
         antes: 'As conversas ficavam numa lista só; a estrela aparecia sempre; excluir era um segundo clique na lixeira, sem aviso.',
-        depois: 'Cada conversa tem o menu ⋯ com Renomear, Mover para grupo (nome livre, ex.: cliente ou proposta), Arquivar e Excluir. A lista mostra Favoritas, um bloco por grupo, Recentes (sem grupo) e Arquivadas (recolhidas no fim). Os grupos só organizam; não limitam a busca. A estrela aparece ao passar o mouse e fica fixa nas favoritas. Excluir abre a janela "Excluir conversa" com o nome dela e Cancelar.',
+        depois: 'Cada conversa tem o menu ⋯ com Renomear, Mover para grupo (nome livre, ex.: cliente ou proposta), Arquivar e Excluir. A lista mostra Favoritas, um bloco por grupo, Recentes (sem grupo) e Arquivadas (recolhida, antes de Recentes). Os grupos só organizam; não limitam a busca. A estrela aparece ao passar o mouse e fica fixa nas favoritas. Excluir abre a janela "Excluir conversa" com o nome dela e Cancelar.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Chat', tickets: ['CR-034', 'CR-037', 'CR-044'],

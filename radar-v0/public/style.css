@@ -1702,3 +1702,13 @@ details.pd-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 #conv-list .conv-box li[data-id]:hover, #conv-list .conv-box li[data-id].active { background: var(--brand-soft); box-shadow: none; }
 #conv-list .box-grupos .conv-grupo-sec summary { padding: 6px 6px 4px; }
 #conv-list .box-grupos .conv-grupo-sec ul { padding-left: 10px; border-left: 2px solid var(--line); margin-left: 12px; }
+
+/* Arquivadas como caixa, recolhida, entre Grupos e Recentes */
+#conv-list .box-arq summary.conv-box-head { cursor: pointer; list-style: none; }
+#conv-list .box-arq summary.conv-box-head::-webkit-details-marker { display: none; }
+#conv-list .box-arq summary.conv-box-head:hover { color: var(--brand); }
+#conv-list .box-arq summary .conv-chev { margin-left: 4px; }
+#conv-list .box-arq details[open] .conv-chev { transform: rotate(180deg); }
+#conv-list .box-arq summary.conv-box-head svg { color: var(--muted); }
+#conv-list .box-arq summary .conv-chev { flex: none; }
+#conv-list .box-arq summary span:first-of-type { flex: 1; }

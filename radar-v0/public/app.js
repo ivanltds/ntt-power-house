@@ -561,7 +561,7 @@ async function toggleFavorite(id, favorita) {
 }
 
 // Lista de conversas (V0.0.2):
-// CR-017: caixas separadas para Favoritas, Grupos (um por cliente ou proposta, nome livre, recolhíveis) e Recentes (sem grupo); Arquivadas recolhidas no fim.
+// CR-017: caixas separadas, nesta ordem: Favoritas, Grupos (um por cliente ou proposta, nome livre, recolhíveis), Arquivadas (recolhida) e Recentes (sem grupo).
 // CR-004: a estrela só aparece ao passar o mouse, e fica fixa (colorida) nas favoritas.
 // CR-018: menu ⋯ de cada conversa com Renomear, Mover para grupo, Arquivar e Excluir.
 // CR-035: excluir pede confirmação num diálogo com o título da conversa.
@@ -589,13 +589,13 @@ async function loadConversations() {
     const aberto = gruposAbertos().has(g) || itens.some((c) => c.id === state.conv?.id);
     return `<li class="conv-grupo-sec" role="presentation"><details data-grupo-sec="${esc(g)}"${aberto ? ' open' : ''}><summary>${icon('folder', { size: 14 })}<span>${esc(g)}</span><em>${itens.length}</em><span class="conv-chev">${icon('chevronDown', { size: 14 })}</span></summary><ul>${itens.map(item).join('')}</ul></details></li>`;
   };
-  // Um componente (caixa) para cada tipo: Favoritas, Grupos e Recentes; Arquivadas recolhida no fim.
+  // Um componente (caixa) para cada tipo: Favoritas, Grupos, Arquivadas (recolhida) e Recentes.
   const caixa = (ic, titulo, n, corpo, extra = '') => `<li class="conv-box${extra}" role="presentation"><div class="conv-box-head">${icon(ic, { size: 14 })}<span>${titulo}</span><em>${n}</em></div><ul class="conv-box-list">${corpo}</ul></li>`;
   $('#conv-list').innerHTML = conversas.length
     ? (favs.length ? caixa('star', 'Favoritas', favs.length, favs.map(item).join(''), ' box-fav') : '')
       + (grupos.length ? caixa('folder', 'Grupos', grupos.length, grupos.map(blocoGrupo).join(''), ' box-grupos') : '')
+      + (arquivadas.length ? `<li class="conv-box box-arq" role="presentation"><details><summary class="conv-box-head">${icon('archive', { size: 14 })}<span>Arquivadas</span><em>${arquivadas.length}</em><span class="conv-chev">${icon('chevronDown', { size: 14 })}</span></summary><ul class="conv-box-list">${arquivadas.map(item).join('')}</ul></details></li>` : '')
       + (avulsas.length ? caixa('clock', 'Recentes', avulsas.length, avulsas.map(item).join(''), ' box-rec') : '')
-      + (arquivadas.length ? `<li class="conv-arq" role="presentation"><details><summary>${icon('archive', { size: 14 })}<span>Arquivadas</span><em>${arquivadas.length}</em></summary><ul>${arquivadas.map(item).join('')}</ul></details></li>` : '')
     : `<li class="empty">${icon('message', { size: 16 })}${$('#conv-search').value ? 'Nenhuma conversa com essa busca' : 'Suas conversas aparecem aqui'}</li>`;
   $$('#conv-list [data-grupo-sec]').forEach((d) => d.addEventListener('toggle', () => {
     const abertos = gruposAbertos();
