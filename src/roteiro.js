@@ -3,6 +3,9 @@
 // prioridade 'alta' = fluxo principal (fazer sempre); 'media' = variações e casos de borda.
 // Cenários que alteram a base (aprovar envio, editar projeto) pedem para desfazer ou são feitos uma vez só.
 // Ao mudar uma tela, revise os cenários dela: o texto precisa bater com os botões e rótulos reais.
+// O roteiro abaixo é o da versão atual. Versões fechadas ficam congeladas em src/roteiros/<versão>.json (fim do arquivo).
+
+import fs from 'node:fs';
 
 const MENU = 'o botão de três pontinhos (⋮), no canto superior direito';
 const PERFIL = (p) => `Abra ${MENU}. Em "Ver como", escolha "${p}". Clique fora do menu para fechar.`;
@@ -21,7 +24,7 @@ const ESPERE_ENVIO = 'Espere o arquivo aparecer na lista à esquerda com a situa
 const DESCARTAR = 'No fim da revisão, clique em "Descartar" para não colocar o arquivo na base.';
 const CELULAR = 'No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha.';
 
-const c = (id, prioridade, titulo, objetivo, preparo, passos, esperado, extra = {}) => ({ id, area: { C: 'conversas', P: 'projetos', U: 'upload' }[id[0]], prioridade, titulo, objetivo, preparo, passos, esperado, ...extra });
+const c = (id, prioridade, titulo, objetivo, preparo, passos, esperado, extra = {}) => ({ id, area: { C: 'conversas', P: 'projetos', U: 'upload', I: 'insights' }[id[0]], prioridade, titulo, objetivo, preparo, passos, esperado, ...extra });
 
 export const ROTEIRO = [
   // =====================================================================
@@ -489,3 +492,13 @@ export const ROTEIRO = [
     ['O arquivo é enviado e a revisão abre inteira, sem cortar botões.', '"Descartar" funciona.'],
     { arquivo: 'levantamento-requisitos-hospital.html' }),
 ];
+
+// Roteiros de versões anteriores, congelados: a versão arquivada só pode ser consultada.
+// O arquivo JSON de cada uma é uma foto do roteiro no dia em que a versão foi fechada; um teste garante que não muda.
+const ARQUIVO = (v) => new URL(`./roteiros/${v}.json`, import.meta.url);
+export const VERSOES_ARQUIVADAS = ['V0.0.1'];
+const congelar = (o) => { Object.values(o).forEach((v) => v && typeof v === 'object' && congelar(v)); return Object.freeze(o); };
+const ARQUIVADOS = Object.fromEntries(VERSOES_ARQUIVADAS.map((v) => [v, congelar(JSON.parse(fs.readFileSync(ARQUIVO(v), 'utf8')))]));
+export const versaoArquivada = (v) => Object.hasOwn(ARQUIVADOS, v);
+// Roteiro de uma versão: o congelado, se arquivada; senão, o roteiro atual (acima).
+export const roteiroDe = (v) => ARQUIVADOS[v] ?? ROTEIRO;

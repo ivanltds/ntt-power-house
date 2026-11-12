@@ -103,16 +103,18 @@ const gravarFiltros = (f) => { try { localStorage.setItem(FILTROS_KEY, JSON.stri
 export async function montarTickets(root, { visao = 'lista' } = {}) {
   let q = await api('/api/qualidade');
   const rot = q.rotulos;
-  const f = { visao, situacao: 'abertos', tipo: '', area: '', prioridade: '', ordenar: 'prioridade', busca: '', nomes: new Set() };
+  const f = { visao, situacao: 'abertos', tipo: '', area: '', prioridade: '', versao: '', ordenar: 'prioridade', busca: '', nomes: new Set() };
   const salvos = lerFiltros();
   if (salvos) {
-    for (const k of ['visao', 'situacao', 'tipo', 'area', 'prioridade', 'ordenar', 'busca']) if (typeof salvos[k] === 'string') f[k] = salvos[k];
+    for (const k of ['visao', 'situacao', 'tipo', 'area', 'prioridade', 'versao', 'ordenar', 'busca']) if (typeof salvos[k] === 'string') f[k] = salvos[k];
     if (!SITUACOES[f.situacao]) f.situacao = 'abertos';
     if (f.visao !== 'kanban') f.visao = 'lista';
     if (Array.isArray(salvos.nomes)) f.nomes = new Set(salvos.nomes.map(String));
   }
   // Quem abriu: lista de nomes para o filtro de multisseleção (com a quantidade de tickets de cada um).
   const contaNomes = () => q.tickets.reduce((m, t) => m.set(t.nome, (m.get(t.nome) ?? 0) + 1), new Map());
+  // Versão em que cada ticket foi aberto (filtro "Aberto na versão"); a lista mostra todas as versões juntas.
+  const versoesTk = [...new Set(q.tickets.map((t) => t.versao).filter(Boolean))].sort().reverse();
   const opts = (obj, todos) => `<option value="">${todos}</option>${Object.entries(obj).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('')}`;
 
   root.innerHTML = `
@@ -131,6 +133,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
       <select id="tk-area" aria-label="Área">${opts(rot.areas, 'Todas as áreas')}</select>
       <details class="tk-multi" id="tk-nomes-f"><summary class="btn sm"><span id="tk-nomes-rot">Aberto por: todos</span>${icon('chevronDown', { size: 13 })}</summary><div class="tk-multi-pop" role="group" aria-label="Filtrar por quem abriu"></div></details>
       <select id="tk-prio" aria-label="Prioridade">${opts({ ...rot.prioridades, nd: 'A definir' }, 'Todas as prioridades')}</select>
+      <select id="tk-versao" aria-label="Aberto na versão">${opts(Object.fromEntries(versoesTk.map((v) => [v, `Aberto na ${v}`])), 'Todas as versões')}</select>
       <select id="tk-ordem" aria-label="Ordenar">${Object.entries(ORDENAR).map(([k, v]) => `<option value="${k}">Ordenar: ${v}</option>`).join('')}</select>
       <button type="button" class="btn sm ghost" id="tk-limpar">${icon('x', { size: 13 })}Limpar</button>
     </div>
@@ -155,7 +158,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
     const lista = q.tickets.filter((t) => (f.visao === 'kanban' || passaSituacao(t, f.situacao))
       && (!f.tipo || t.tipo === f.tipo) && (!f.area || t.area === f.area)
       && (!f.prioridade || (f.prioridade === 'nd' ? !t.prioridade : t.prioridade === f.prioridade))
-      && (!f.nomes.size || f.nomes.has(t.nome))
+      && (!f.nomes.size || f.nomes.has(t.nome)) && (!f.versao || t.versao === f.versao)
       && (!termo || `${t.codigo} ${t.titulo} ${t.nome} ${t.texto} ${t.proposta ?? ''}`.toLowerCase().includes(termo)));
     const prio = (t) => ORDEM_PRIO.indexOf(t.prioridade ?? null);
     const cmp = {
@@ -167,7 +170,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
     return lista.sort(cmp);
   };
 
-  const meta = (t) => `${esc(rot.tipos[t.tipo] ?? t.tipo)} · ${esc(rot.areas[t.area] ?? t.area)} · ${esc(t.nome)} · ${dateBR(t.criadoEm)}`;
+  const meta = (t) => `${esc(rot.tipos[t.tipo] ?? t.tipo)} · ${esc(rot.areas[t.area] ?? t.area)} · ${esc(t.nome)} · ${dateBR(t.criadoEm)}${t.versao ? ` · aberto na ${esc(t.versao)}` : ''}`;
   const clipe = (t) => (t.imagens?.length ? `<span class="tk-clip" title="${t.imagens.length} imagem(ns)">${icon('file', { size: 13 })}${t.imagens.length}</span>` : '')
     + (t.proposta ? `<span class="tk-clip tk-tem-proposta" title="Proposta de solução definida pelo time">${icon('bulb', { size: 13 })}</span>` : '');
 
@@ -192,7 +195,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
         <div class="tk-cards">${col.map((t) => `<article class="tk-card" draggable="true" data-card="${esc(t.codigo)}" tabindex="0" aria-label="${esc(`${t.codigo}: ${t.titulo}`)}">
           <div class="tk-card-top"><b class="qa-cod">${esc(t.codigo)}</b>${chipPrio(t.prioridade, rot)}${clipe(t)}</div>
           <p>${esc(t.titulo || t.texto.slice(0, 80))}</p>
-          <span class="muted small">${esc(rot.tipos[t.tipo] ?? t.tipo)} · ${esc(rot.areas[t.area] ?? t.area)}</span>
+          <span class="muted small">${esc(rot.tipos[t.tipo] ?? t.tipo)} · ${esc(rot.areas[t.area] ?? t.area)}${t.versao ? ` · ${esc(t.versao)}` : ""}</span>
         </article>`).join('') || '<p class="muted small tk-col-vazia">Arraste um ticket para cá</p>'}</div>
       </section>`;
     }).join('')}</div>
@@ -303,7 +306,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
         <div class="dialog-actions"><button type="button" class="btn" data-cancelar>Cancelar</button><button type="submit" class="btn primary">${icon('check', { size: 15 })}Salvar alterações</button></div>
       </form>` : `
       <h3 class="tk-dlg-tit">${esc(t.titulo || t.texto.slice(0, 80))}</h3>
-      <p class="muted small">${meta(t)} · ${esc(t.versao)}${t.cenario ? ` · cenário ${esc(t.cenario)} do roteiro` : ''}${t.versaoCorrecao ? ` · corrigido na ${esc(t.versaoCorrecao)}` : ''}</p>
+      <p class="muted small">${meta(t)}${t.cenario ? ` · cenário ${esc(t.cenario)} do roteiro` : ''}${t.versaoCorrecao ? ` · corrigido na ${esc(t.versaoCorrecao)}` : ''}</p>
       <p class="qa-texto">${esc(t.texto)}</p>
       ${galeriaHtml(t)}
       ${t.descricaoImagens?.length ? `<details class="small"><summary>Descrição das imagens feita pela IA</summary><ul>${t.descricaoImagens.map((d) => `<li>${esc(d)}</li>`).join('')}</ul></details>` : ''}
@@ -434,17 +437,17 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
   $$('[data-visao]', root).forEach((b) => (b.onclick = () => { f.visao = b.dataset.visao; pintar(); }));
   $$('[data-sit]', root).forEach((b) => (b.onclick = () => { f.situacao = b.dataset.sit; pintar(); }));
   $('#tk-busca', root).oninput = (e) => { f.busca = e.target.value.trim(); pintar(); };
-  for (const [id, k] of [['#tk-tipo', 'tipo'], ['#tk-area', 'area'], ['#tk-prio', 'prioridade'], ['#tk-ordem', 'ordenar']]) $(id, root).onchange = (e) => { f[k] = e.target.value; pintar(); };
+  for (const [id, k] of [['#tk-tipo', 'tipo'], ['#tk-area', 'area'], ['#tk-prio', 'prioridade'], ['#tk-versao', 'versao'], ['#tk-ordem', 'ordenar']]) $(id, root).onchange = (e) => { f[k] = e.target.value; pintar(); };
   $('#tk-limpar', root).onclick = () => {
-    Object.assign(f, { situacao: 'abertos', tipo: '', area: '', prioridade: '', busca: '' });
+    Object.assign(f, { situacao: 'abertos', tipo: '', area: '', prioridade: '', versao: '', busca: '' });
     f.nomes.clear();
     pintarNomes();
     $('#tk-busca', root).value = '';
-    for (const id of ['#tk-tipo', '#tk-area', '#tk-prio']) $(id, root).value = '';
+    for (const id of ['#tk-tipo', '#tk-area', '#tk-prio', '#tk-versao']) $(id, root).value = '';
     pintar();
   };
   $('#tk-busca', root).value = f.busca;
-  for (const [id, k] of [['#tk-tipo', 'tipo'], ['#tk-area', 'area'], ['#tk-prio', 'prioridade'], ['#tk-ordem', 'ordenar']]) $(id, root).value = f[k];
+  for (const [id, k] of [['#tk-tipo', 'tipo'], ['#tk-area', 'area'], ['#tk-prio', 'prioridade'], ['#tk-versao', 'versao'], ['#tk-ordem', 'ordenar']]) $(id, root).value = f[k];
   pintar();
 
   return { recarregar: async () => { q = await api('/api/qualidade'); pintar(); } };

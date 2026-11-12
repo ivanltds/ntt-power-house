@@ -14,6 +14,25 @@ async function dados(forcar = false) {
   if (!cache || forcar) cache = await api('/api/qualidade');
   return cache;
 }
+// Versão escolhida no seletor do Roteiro e do Acompanhamento (a atual por padrão; as anteriores são só leitura).
+let versaoVista = null;
+const dadosDaVersao = async (v) => (v ? api(`/api/qualidade?versao=${encodeURIComponent(v)}`) : dados(true));
+const seletorVersao = (q) => q.versoes.length < 2 ? '' : `<label class="qa-versao"><span>Versão</span><select class="qa-versao-sel">${q.versoes.map((v) => `<option value="${esc(v.versao)}"${v.versao === q.versaoVista ? ' selected' : ''}>${esc(v.versao)} · ${v.atual ? 'atual' : 'arquivada'}</option>`).join('')}</select></label>`;
+const avisoArquivada = (q) => (q.arquivada ? `<p class="alert info qa-arquivada">${icon('lock', { size: 16 })}<span>A <b>${esc(q.versaoVista)}</b> está arquivada: o roteiro e os resultados dela ficam só para consulta e não podem mais ser alterados. Os testes de agora são da <b>${esc(q.versao)}</b>.</span></p>` : '');
+// Monta uma seção com seletor de versão: troca a versão e redesenha só o conteúdo, sem fechar a janela.
+function comVersao(body, montar) {
+  const box = document.createElement('div');
+  body.append(box);
+  const desenhar = async () => {
+    box.innerHTML = carregando();
+    const q = await dadosDaVersao(versaoVista && versaoVista !== cache?.versao ? versaoVista : null);
+    box.innerHTML = '';
+    montar(box, q);
+    const sel = $('.qa-versao-sel', box);
+    if (sel) sel.onchange = () => { versaoVista = sel.value; desenhar(); };
+  };
+  return desenhar();
+}
 
 const carregando = () => `<p class="muted">${icon('loader', { size: 16 })} Carregando…</p>`;
 const NOMES_ID = 'qa-nomes';
@@ -151,7 +170,7 @@ const TICKETS = ['tickets', 'files', 'Tickets', () => carregando(), async (body)
 }];
 
 // ---------- Roteiro de testes ----------
-const AREA_ICON = { conversas: 'message', projetos: 'folder', upload: 'upload' };
+const AREA_ICON = { conversas: 'message', projetos: 'folder', upload: 'upload', insights: 'chart' };
 const PRIORIDADE = { alta: 'Prioridade alta', media: 'Prioridade média' };
 
 // Registros do cenário por resultado: o que foi feito e por quem (a métrica usa só o mais recente).
@@ -179,7 +198,7 @@ function cenarioHtml(c, q) {
       ${arquivos.length ? `<p class="qa-arq">${arquivos.map((a) => `<a class="btn sm" href="/amostras/${encodeURIComponent(a)}" download>${icon('download', { size: 14 })}Baixar ${esc(a)}</a>`).join(' ')}</p>` : ''}
       <h5>Passo a passo</h5><ol>${c.passos.map((p) => `<li>${esc(p)}</li>`).join('')}</ol>
       <h5>O que deve acontecer</h5><ul class="qa-esperado">${c.esperado.map((p) => `<li>${icon('check', { size: 14 })}${esc(p)}</li>`).join('')}</ul>
-      <form class="qa-form qa-res">
+      ${q.arquivada ? '' : `<form class="qa-form qa-res">
         ${campoNome('name="analista"', 'Seu nome (quem executou este cenário)')}
         <fieldset class="qa-botoes"><legend>Resultado</legend>
           ${Object.entries(R).map(([k, v]) => `<label class="qa-opcao qa-op-${k}"><input type="radio" name="r" value="${k}"><span>${esc(v)}</span></label>`).join('')}
@@ -192,21 +211,26 @@ function cenarioHtml(c, q) {
           <div class="qa-prev"></div>
         </div>` : ''}
         <div class="qa-acoes"><button type="submit" class="btn sm primary">${icon('check', { size: 14 })}Salvar resultado</button></div>
-      </form>
-      ${Object.keys(res).length ? `<h5>Resultados nesta versão</h5><ul class="qa-quem">${Object.entries(res).map(([n, v]) => `<li><span class="qa-chip qa-${v.resultado}">${esc(R[v.resultado])}</span><b>${esc(n)}</b><span class="muted small">${horaBR(v.em)}${v.ticket ? ` · ticket ${esc(v.ticket)}` : ''}</span>${v.comentario ? `<span class="small qa-com">${esc(v.comentario)}</span>` : ''}</li>`).join('')}</ul>` : ''}
+      </form>`}
+      ${c.tickets?.length ? `<p class="muted small">${icon('files', { size: 13 })} Este cenário retesta a correção de ${c.tickets.map(esc).join(', ')}: marcar OK valida esses tickets.</p>` : ''}
+      ${Object.keys(res).length ? `<h5>Resultados na ${esc(q.versaoVista)}</h5><ul class="qa-quem">${Object.entries(res).map(([n, v]) => `<li><span class="qa-chip qa-${v.resultado}">${esc(R[v.resultado])}</span><b>${esc(n)}</b><span class="muted small">${horaBR(v.em)}${v.ticket ? ` · ticket ${esc(v.ticket)}` : ''}</span>${v.comentario ? `<span class="small qa-com">${esc(v.comentario)}</span>` : ''}</li>`).join('')}</ul>` : ''}
     </div>
   </li>`;
 }
 
-const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), async (body) => {
-  const q = await dados(true);
-  $('.help-body > p.muted', body)?.remove();
-  const AREAS = { conversas: q.rotulos.areas.conversas, projetos: q.rotulos.areas.projetos, upload: q.rotulos.areas.upload };
+const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), async (body0) => {
+  $('.help-body > p.muted', body0)?.remove();
+  await comVersao(body0, (body, q) => montarRoteiro(body, q));
+}];
+
+function montarRoteiro(body, q) {
+  const AREAS = Object.fromEntries(['conversas', 'projetos', 'upload', 'insights'].filter((a) => q.roteiro.some((c) => c.area === a)).map((a) => [a, q.rotulos.areas[a]]));
   const filtro = { area: 'todas', prioridade: 'todas', situacao: 'todos' };
   const seg = (chave, opcoes) => `<div class="theme-seg" role="radiogroup" aria-label="${chave}">${Object.entries(opcoes).map(([k, v]) => `<button type="button" role="radio" data-f-${chave}="${k}">${esc(v)}</button>`).join('')}</div>`;
   body.insertAdjacentHTML('beforeend', `
-    <p>Roteiro regressivo da <b>${esc(q.versao)}</b>: ${q.roteiro.length} cenários de Conversas, Projetos e Envio de arquivos. Comece pelos de <b>prioridade alta</b>. Abra o cenário, siga o passo a passo exatamente como está escrito, escreva <b>o seu nome</b> e marque o resultado. Se algo falhar, conte o que aconteceu: o Radar abre um ticket automaticamente.</p>
-    <p class="muted small">O usuário do Radar é compartilhado: o nome que você escreve em cada cenário é o que identifica quem testou.</p>
+    <div class="qa-versao-bar">${seletorVersao(q)}</div>${avisoArquivada(q)}
+    <p>Roteiro regressivo da <b>${esc(q.versaoVista)}</b>: ${q.roteiro.length} cenários de ${Object.values(AREAS).map(esc).join(', ')}.${q.arquivada ? '' : ' Comece pelos de <b>prioridade alta</b>. Abra o cenário, siga o passo a passo exatamente como está escrito, escreva <b>o seu nome</b> e marque o resultado. Se algo falhar, conte o que aconteceu: o Radar abre um ticket automaticamente. Se um cenário que falhou antes passar agora, o ticket dele é validado automaticamente.'}</p>
+    ${q.arquivada ? '' : '<p class="muted small">O usuário do Radar é compartilhado: o nome que você escreve em cada cenário é o que identifica quem testou.</p>'}
     <div class="qa-toolbar qa-filtros">
       ${seg('area', { todas: 'Todas as telas', ...AREAS })}
       ${seg('prioridade', { todas: 'Todas', alta: 'Alta', media: 'Média' })}
@@ -227,7 +251,7 @@ const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), as
     }).join('') || '<p class="muted">Nenhum cenário com esses filtros.</p>';
     const comResultado = q.roteiro.filter((c) => Object.keys(q.execucao.resultados[c.id] ?? {}).length).length;
     const execucoes = Object.values(q.execucao.resultados).reduce((n, r) => n + Object.keys(r).length, 0);
-    $('#qa-r-prog', body).innerHTML = `<b>${comResultado} de ${q.roteiro.length}</b> cenários executados nesta versão · ${execucoes} registro${execucoes === 1 ? '' : 's'} no total. Cada cenário é executado uma vez; os analistas dividem as áreas entre si.`;
+    $('#qa-r-prog', body).innerHTML = `<b>${comResultado} de ${q.roteiro.length}</b> cenários executados na ${esc(q.versaoVista)} · ${execucoes} registro${execucoes === 1 ? '' : 's'} no total. Cada cenário é executado uma vez; os analistas dividem as áreas entre si.`;
     $$('.qa-cen', body).forEach((li) => {
       const head = $('.qa-cen-head', li);
       head.onclick = () => { const ab = head.getAttribute('aria-expanded') !== 'true'; head.setAttribute('aria-expanded', ab); $('.qa-cen-body', li).classList.toggle('hidden', !ab); };
@@ -252,6 +276,7 @@ const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), as
         $('.qa-res', li).onpaste = (e) => { const fs = [...(e.clipboardData?.files ?? [])]; if (fs.length && !evid.hidden) { e.preventDefault(); anexar(fs); } };
         $$('input[name=r]', li).forEach((r) => (r.onchange = () => { evid.hidden = $('.qa-res', li).r.value === 'ok'; }));
       }
+      if (!$('.qa-res', li)) return;
       $('.qa-res', li).onsubmit = async (e) => {
         e.preventDefault();
         const f = e.target;
@@ -266,7 +291,9 @@ const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), as
           try { r = await api('/api/testes/resultado', { cenario: li.dataset.cen, analista, resultado: f.r.value, comentario: f.c.value, imagens: f.r.value === 'ok' ? [] : imagens }); } finally { btn.disabled = false; btn.innerHTML = `${icon('check', { size: 14 })}Salvar resultado`; }
           q.execucao.resultados[li.dataset.cen] = { ...(q.execucao.resultados[li.dataset.cen] ?? {}), [analista]: r.resultado };
           cache = null;
-          toast(r.resultado.ticket && f.r.value !== 'ok' ? `Resultado de ${analista} salvo. Ticket ${r.resultado.ticket} aberto para correção.` : `Resultado de ${analista} salvo.`);
+          const val = r.resultado.validados ?? [];
+          toast(r.resultado.ticket && f.r.value !== 'ok' ? `Resultado de ${analista} salvo. Ticket ${r.resultado.ticket} aberto para correção.`
+            : `Resultado de ${analista} salvo.${val.length ? ` Ticket${val.length > 1 ? 's' : ''} ${val.join(', ')} validado${val.length > 1 ? 's' : ''}.` : ''}`);
           const id = li.dataset.cen;
           pintar();
           const atual = $(`.qa-cen[data-cen="${id}"]`, body);
@@ -279,18 +306,22 @@ const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), as
   };
   for (const k of Object.keys(filtro)) $$(`[data-f-${k}]`, body).forEach((b) => (b.onclick = () => { filtro[k] = b.dataset[`f${k[0].toUpperCase()}${k.slice(1)}`]; pintar(); }));
   pintar();
-}];
+}
 
 // ---------- Acompanhamento ----------
-const ACOMPANHAMENTO = ['acompanhamento', 'chart', 'Acompanhamento', () => carregando(), async (body) => {
-  const q = await dados(true);
+const ACOMPANHAMENTO = ['acompanhamento', 'chart', 'Acompanhamento', () => carregando(), async (body0) => {
+  $('.help-body > p.muted', body0)?.remove();
+  await comVersao(body0, (body, q) => montarAcompanhamento(body, q));
+}];
+
+function montarAcompanhamento(body, q) {
   const s = q.resumo;
   const R = q.rotulos.resultados;
   const st = q.rotulos.status;
-  $('.help-body > p.muted', body)?.remove();
   const feitos = s.geral.ok + s.geral.falha + s.geral.bloqueado;
   const previsto = feitos + s.geral.pendente;
   body.insertAdjacentHTML('beforeend', `
+    <div class="qa-versao-bar">${seletorVersao(q)}</div>${avisoArquivada(q)}
     <p class="muted small">${esc(s.versao)} · ${feitos} de ${previsto} cenários executados. ${esc(s.regra)} Os resultados zeram a cada versão nova; os tickets continuam.</p>
     <div class="qa-pizzas">
       ${pizza('Roteiro da versão (todas as áreas)', partesResultado(s.geral, R), { tamanho: 170 })}
@@ -306,6 +337,6 @@ const ACOMPANHAMENTO = ['acompanhamento', 'chart', 'Acompanhamento', () => carre
       : '<p class="muted">Nenhum analista registrou resultados nesta versão ainda.</p>'}
     ${s.anteriores.length ? `<h4>Versões anteriores</h4><div class="tbl-wrap"><table class="guide-tbl"><thead><tr><th>Versão</th><th>${R.ok}</th><th>${R.falha}</th><th>${R.bloqueado}</th></tr></thead>
       <tbody>${s.anteriores.map((v) => `<tr><td>${esc(v.versao)}</td><td>${v.ok}</td><td>${v.falha}</td><td>${v.bloqueado}</td></tr>`).join('')}</tbody></table></div>` : ''}`);
-}];
+}
 
 export const SECOES_QUALIDADE = [FEEDBACK, TICKETS, ROTEIRO, ACOMPANHAMENTO];

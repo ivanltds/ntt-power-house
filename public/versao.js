@@ -7,13 +7,33 @@ import { icon } from './icons.js';
 import { render, table, tip } from './ajuda.js';
 import { SECOES_QUALIDADE } from './qualidade.js';
 
-export const VERSAO = 'V0.0.1';
+export const VERSAO = 'V0.0.2';
 
 export const NOTAS = [
   {
+    versao: 'V0.0.2',
+    data: '13/11/2026',
+    estado: 'Em andamento',
+    resumo: 'Correções dos tickets da V0.0.1 priorizados para o MVP, das críticas às baixas, e a gestão de versões: a V0.0.1 fica arquivada (roteiro e resultados só para consulta) e o roteiro da V0.0.2 começa zerado. Cada item cita os tickets que corrige; eles ficam como "Corrigido, aguardando reteste" até alguém passar o cenário no roteiro.',
+    itens: [
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Qualidade',
+        titulo: 'Versões: V0.0.1 arquivada, seletor de versão e validação automática no reteste',
+        antes: 'O roteiro e os resultados eram só da versão atual; não havia como consultar a versão anterior nem saber em que versão um ticket foi aberto, e o ticket de um cenário que voltava a passar continuava aberto até alguém mudar à mão.',
+        depois: 'Roteiro de testes e Acompanhamento têm um seletor de versão: a V0.0.1 fica arquivada, com o roteiro congelado e os resultados só para consulta. Os tickets mostram em que versão foram abertos e ganharam o filtro "Aberto na versão" (a lista continua com todas as versões juntas). Quando um cenário que falhou passa (OK) no roteiro da versão nova, os tickets ligados a ele são validados automaticamente, com registro no histórico.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Insights',
+        titulo: 'Insights (novo) sai das abas e fica só no endereço /insights-novo',
+        antes: 'A aba "Insights (novo)" aparecia para todos ao lado de Insights, ainda em protótipo.',
+        depois: 'A aba saiu da barra. O protótipo continua acessível pelo endereço /insights-novo, para avaliação do time durante a semana; ele volta com melhorias numa versão seguinte (provavelmente a V0.0.3).',
+      },
+    ],
+  },
+  {
     versao: 'V0.0.1',
     data: '05/11/2026',
-    estado: 'Em andamento',
+    estado: 'Arquivada',
     resumo: 'Primeira versão numerada do protótipo. Reúne os ajustes vindos do teste com o time em 03/11 e as correções que estão sendo feitas a partir dele.',
     itens: [
       {
@@ -88,7 +108,7 @@ const chip = (s) => `<span class="rn-chip rn-${STATUS[s][1]}">${STATUS[s][0]}</s
 const item = (i) => `
   <li class="rn-item">
     <div class="rn-top">${chip(i.status)}<span class="rn-tipo">${TIPO[i.tipo][0]} · ${i.area}</span></div>
-    <b>${i.titulo}</b>
+    <b>${i.titulo}</b>${i.tickets?.length ? `<span class="rn-tks">${i.tickets.map((c) => `<code>${c}</code>`).join(' ')}</span>` : ''}
     <dl><dt>Antes</dt><dd>${i.antes}</dd><dt>${i.status === 'feito' ? 'Agora' : 'Próximo passo'}</dt><dd>${i.depois}</dd></dl>
   </li>`;
 

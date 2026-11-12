@@ -59,6 +59,8 @@ async function init() {
   // Links "Política de dados" em qualquer tela.
   document.addEventListener('click', (e) => { const a = e.target.closest('[data-politica-link]'); if (a) { e.preventDefault(); showPolicy(); } });
   welcomeOnFirstVisit().catch(() => {});
+  // Insights (novo) não tem aba: abre só pelo endereço /insights-novo, enquanto é avaliado.
+  if (/^\/insig(ht|th)s-novo\/?$/.test(location.pathname)) openTab('painel');
 }
 
 // ---- Menu "Mais opções": perfil de demonstração, documentos, métricas e ajuda ----

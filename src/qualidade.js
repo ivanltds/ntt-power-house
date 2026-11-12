@@ -7,13 +7,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { maskSensitive } from './sensitive.js';
-import { ROTEIRO } from './roteiro.js';
+import { ROTEIRO, roteiroDe, versaoArquivada, VERSOES_ARQUIVADAS } from './roteiro.js';
 
 // Cada cenário do roteiro é executado UMA vez por versão (os analistas dividem as áreas entre si).
 // A situação do cenário é o resultado mais recente registrado nele; sem resultado, fica pendente.
 export const REGRA_METRICA = 'Cada cenário conta uma vez por versão: vale o resultado mais recente registrado nele (um reteste substitui o anterior). Sem resultado, o cenário está pendente. Os analistas dividem as áreas entre si; não se espera que cada um execute todos os cenários.';
 const maisRecente = (porAnalista = {}) => Object.entries(porAnalista).map(([nome, v]) => ({ ...v, analista: nome })).sort((a, b) => b.em.localeCompare(a.em))[0] ?? null;
-export const AREAS = { conversas: 'Conversas', projetos: 'Projetos', upload: 'Envio de arquivos', outro: 'Outro' };
+export const AREAS = { conversas: 'Conversas', projetos: 'Projetos', upload: 'Envio de arquivos', insights: 'Insights', outro: 'Outro' };
 export const TIPOS = { problema: 'Problema', sugestao: 'Sugestão', duvida: 'Dúvida' };
 export const STATUS = {
   aberto: 'Aberto', em_correcao: 'Em correção', corrigido: 'Corrigido, aguardando reteste', nao_priorizado: 'Não priorizado no MVP', validado: 'Validado', nao_procede: 'Não procede',
@@ -37,7 +37,7 @@ const anexo = (a) => {
 };
 
 // O roteiro (cenários passo a passo) fica em src/roteiro.js.
-export { ROTEIRO };
+export { ROTEIRO, roteiroDe, versaoArquivada, VERSOES_ARQUIVADAS };
 
 const RESULTADO_KEYS = Object.keys(RESULTADOS);
 
@@ -179,7 +179,8 @@ export class QualityStore {
   // Resultado de um analista em um cenário da versão. Falha abre (ou reaproveita) um ticket ligado ao cenário.
   // imagens: evidências já hospedadas (links do ImgBB), só para Falhou ou Bloqueado.
   registrar({ versao, cenario, analista, resultado, comentario = '', imagens = [] }) {
-    const c = ROTEIRO.find((x) => x.id === cenario);
+    if (versaoArquivada(versao)) throw new Error(`A ${versao} está arquivada: o roteiro de testes dela não pode mais ser alterado.`);
+    const c = roteiroDe(versao).find((x) => x.id === cenario);
     if (!c) throw new Error('Cenário não encontrado.');
     if (!RESULTADO_KEYS.includes(resultado)) throw new Error('Resultado inválido.');
     const nome = maskSensitive(String(analista ?? '').trim()).texto.slice(0, 80);
@@ -201,12 +202,33 @@ export class QualityStore {
       } else ticket = this.abrir({ nome, texto: nota, area: c.area, tipo: 'problema', titulo: `${c.id} · ${c.titulo}: ${RESULTADOS[resultado].toLowerCase()}`, versao, origem: 'roteiro', cenario: c.id, imagens: evidencias }).codigo;
     }
     porCenario[nome] = { resultado, comentario: nota, em: new Date().toISOString(), ticket };
+    // Cenário que passou valida os tickets ligados a ele (abertos por falha nele, em qualquer versão, ou listados no cenário).
+    const validados = resultado === 'ok' ? this.validarPorCenario(c, { versao, autor: nome }) : [];
     this.save();
-    return { ...porCenario[nome], ticket };
+    return { ...porCenario[nome], ticket, validados };
+  }
+
+  validarPorCenario(c, { versao, autor }) {
+    const ligados = this.data.tickets.filter((t) => !t.excluido && STATUS_ABERTOS.includes(t.status) && (t.cenario === c.id || (c.tickets ?? []).includes(t.codigo)));
+    const em = new Date().toISOString();
+    for (const t of ligados) {
+      t.historico.push({ em, autor, de: t.status, para: 'validado', texto: `Validado automaticamente: o cenário ${c.id} passou (OK) no roteiro da ${versao}.`, versao });
+      t.status = 'validado';
+      t.atualizadoEm = em;
+    }
+    return ligados.map((t) => t.codigo);
   }
 
   execucao(versao) {
     return this.data.execucoes[versao] ?? { inicio: null, resultados: {} };
+  }
+
+  // Versões com roteiro: as arquivadas (só leitura), as que já têm resultados e a atual.
+  versoes(atual) {
+    const todas = [...new Set([...VERSOES_ARQUIVADAS, ...Object.keys(this.data.execucoes), atual])];
+    const num = (v) => v.replace(/^V/, '').split('.').map(Number);
+    todas.sort((a, b) => { const [x, y] = [num(a), num(b)]; for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return y[i] - x[i]; return 0; });
+    return todas.map((v) => ({ versao: v, atual: v === atual, arquivada: v !== atual }));
   }
 
   // Números do acompanhamento (REGRA_METRICA): cada cenário conta uma vez, pelo resultado mais recente.
@@ -214,7 +236,8 @@ export class QualityStore {
   resumo(versao) {
     const { resultados } = this.execucao(versao);
     const analistas = [...new Set(Object.values(resultados).flatMap((r) => Object.keys(r)))].sort();
-    const porCenario = ROTEIRO.map((c) => {
+    const roteiro = roteiroDe(versao);
+    const porCenario = roteiro.map((c) => {
       const u = maisRecente(resultados[c.id]);
       return { id: c.id, titulo: c.titulo, area: c.area, prioridade: c.prioridade, situacao: u?.resultado ?? 'pendente', analista: u?.analista ?? null, em: u?.em ?? null, ticket: u?.ticket ?? null, registros: Object.keys(resultados[c.id] ?? {}).length };
     });
@@ -223,13 +246,13 @@ export class QualityStore {
       for (const c of porCenario.filter(filtro)) out[c.situacao] += 1;
       return out;
     };
-    const porArea = Object.fromEntries(['conversas', 'projetos', 'upload'].map((a) => [a, conta((c) => c.area === a)]));
+    const porArea = Object.fromEntries(['conversas', 'projetos', 'upload', 'insights'].filter((a) => roteiro.some((c) => c.area === a)).map((a) => [a, conta((c) => c.area === a)]));
     const porPrioridade = { alta: conta((c) => c.prioridade === 'alta'), media: conta((c) => c.prioridade !== 'alta') };
     // Por analista: o que cada um registrou (contribuição), sem meta de "todos os cenários".
     const porAnalista = analistas.map((nome) => {
       const out = { nome, ok: 0, falha: 0, bloqueado: 0 };
       const areas = new Set();
-      for (const c of ROTEIRO) { const v = resultados[c.id]?.[nome]; if (v) { out[v.resultado] += 1; areas.add(c.area); } }
+      for (const c of roteiro) { const v = resultados[c.id]?.[nome]; if (v) { out[v.resultado] += 1; areas.add(c.area); } }
       return { ...out, feitos: out.ok + out.falha + out.bloqueado, areas: [...areas] };
     });
     const tickets = Object.fromEntries(Object.keys(STATUS).map((s) => [s, 0]));
@@ -238,7 +261,7 @@ export class QualityStore {
       const r = Object.values(this.data.execucoes[v].resultados).map(maisRecente).filter(Boolean);
       return { versao: v, ok: r.filter((x) => x.resultado === 'ok').length, falha: r.filter((x) => x.resultado === 'falha').length, bloqueado: r.filter((x) => x.resultado === 'bloqueado').length };
     });
-    return { versao, regra: REGRA_METRICA, cenarios: ROTEIRO.length, geral: conta(() => true), porArea, porPrioridade, porAnalista, porCenario, tickets, anteriores };
+    return { versao, arquivada: versaoArquivada(versao), regra: REGRA_METRICA, cenarios: roteiro.length, geral: conta(() => true), porArea, porPrioridade, porAnalista, porCenario, tickets, anteriores };
   }
 }
 
