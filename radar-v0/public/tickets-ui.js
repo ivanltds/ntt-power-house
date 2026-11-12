@@ -10,7 +10,7 @@ const ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
 const ORDEM_PRIO = ['critica', 'alta', 'media', 'baixa', null];
 const ORDENAR = { prioridade: 'Prioridade', recentes: 'Mais recentes', antigos: 'Mais antigos', atualizados: 'Atualizados por último' };
 const SITUACOES = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', resolvidos: 'Resolvidos', todos: 'Todos' };
-const CAMPO = { titulo: 'Título', texto: 'Descrição', area: 'Área', tipo: 'Tipo', prioridade: 'Prioridade', imagens: 'Imagens' };
+const CAMPO = { titulo: 'Título', texto: 'Descrição', area: 'Área', tipo: 'Tipo', prioridade: 'Prioridade', imagens: 'Imagens', proposta: 'Proposta de solução' };
 
 const horaBR = (iso) => (iso ? `${dateBR(iso)} ${new Date(iso).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}` : '');
 const atualizadoEm = (t) => t.atualizadoEm ?? t.historico.at(-1)?.em ?? t.criadoEm;
@@ -30,6 +30,7 @@ async function reduzir(file) {
 
 function alteracaoHtml(a, rot) {
   if (a.campo === 'texto') return 'editou a descrição';
+  if (a.campo === 'proposta') return a.vazia ? 'apagou a proposta de solução' : 'registrou a proposta de solução';
   if (a.campo === 'imagens') return [a.adicionadas && `anexou ${a.adicionadas} imagem(ns)`, a.removidas && `removeu ${a.removidas} imagem(ns)`].filter(Boolean).join(' e ');
   const v = (x) => (a.campo === 'area' ? rot.areas[x] : a.campo === 'tipo' ? rot.tipos[x] : a.campo === 'prioridade' ? rotPrio(x, rot) : x) ?? '—';
   return `${CAMPO[a.campo] ?? a.campo}: ${esc(v(a.de))} → <b>${esc(v(a.para))}</b>`;
@@ -99,7 +100,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
       && (!f.tipo || t.tipo === f.tipo) && (!f.area || t.area === f.area)
       && (!f.prioridade || (f.prioridade === 'nd' ? !t.prioridade : t.prioridade === f.prioridade))
       && (!f.nomes.size || f.nomes.has(t.nome))
-      && (!termo || `${t.codigo} ${t.titulo} ${t.nome} ${t.texto}`.toLowerCase().includes(termo)));
+      && (!termo || `${t.codigo} ${t.titulo} ${t.nome} ${t.texto} ${t.proposta ?? ''}`.toLowerCase().includes(termo)));
     const prio = (t) => ORDEM_PRIO.indexOf(t.prioridade ?? null);
     const cmp = {
       prioridade: (a, b) => prio(a) - prio(b) || b.criadoEm.localeCompare(a.criadoEm),
@@ -111,7 +112,8 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
   };
 
   const meta = (t) => `${esc(rot.tipos[t.tipo] ?? t.tipo)} · ${esc(rot.areas[t.area] ?? t.area)} · ${esc(t.nome)} · ${dateBR(t.criadoEm)}`;
-  const clipe = (t) => (t.imagens?.length ? `<span class="tk-clip" title="${t.imagens.length} imagem(ns)">${icon('file', { size: 13 })}${t.imagens.length}</span>` : '');
+  const clipe = (t) => (t.imagens?.length ? `<span class="tk-clip" title="${t.imagens.length} imagem(ns)">${icon('file', { size: 13 })}${t.imagens.length}</span>` : '')
+    + (t.proposta ? `<span class="tk-clip tk-tem-proposta" title="Proposta de solução definida pelo time">${icon('bulb', { size: 13 })}</span>` : '');
 
   function lista(ts) {
     if (!ts.length) return '<p class="muted tk-vazio">Nenhum ticket com esses filtros.</p>';
@@ -224,6 +226,16 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
       <p class="qa-texto">${esc(t.texto)}</p>
       ${galeriaHtml(t)}
       ${t.descricaoImagens?.length ? `<details class="small"><summary>Descrição das imagens feita pela IA</summary><ul>${t.descricaoImagens.map((d) => `<li>${esc(d)}</li>`).join('')}</ul></details>` : ''}
+      <section class="tk-proposta" aria-labelledby="tk-prop-tit">
+        <h4 id="tk-prop-tit">${icon('bulb', { size: 15 })}Proposta de solução <span class="muted small">(definida pelo time)</span></h4>
+        ${t.proposta ? `<p class="qa-texto">${esc(t.proposta)}</p><p class="muted small">Registrada por ${esc(t.propostaPor ?? '—')} em ${horaBR(t.propostaEm)}</p>` : '<p class="muted small">Ainda não definida.</p>'}
+        <button type="button" class="btn sm" data-proposta>${icon('edit', { size: 14 })}${t.proposta ? 'Editar proposta' : 'Registrar proposta'}</button>
+        <form class="qa-form tk-prop-form" hidden>
+          <label class="qa-field"><span>Proposta de solução</span><textarea name="proposta" rows="6" maxlength="4000" placeholder="O que o time decidiu: solução, escopo, responsáveis, versão prevista. Deixe vazio para apagar.">${esc(t.proposta ?? '')}</textarea></label>
+          ${campoNome()}
+          <div class="qa-acoes"><button type="submit" class="btn sm primary">${icon('check', { size: 14 })}Salvar proposta</button><button type="button" class="btn sm" data-prop-cancelar>Cancelar</button></div>
+        </form>
+      </section>
       <form class="qa-form tk-mover">
         <div class="qa-row">
           <label class="qa-field"><span>Situação</span>${sel('status', rot.status, t.status)}</label>
@@ -246,6 +258,18 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
 
     if (!editando) {
       $('[data-editar]', dlg).onclick = () => detalhe(codigo, true);
+      const fp = $('.tk-prop-form', dlg);
+      const btnProp = $('[data-proposta]', dlg);
+      btnProp.onclick = () => { fp.hidden = false; btnProp.hidden = true; fp.proposta.focus(); };
+      $('[data-prop-cancelar]', dlg).onclick = () => { fp.hidden = true; btnProp.hidden = false; fp.proposta.value = t.proposta ?? ''; };
+      fp.onsubmit = async (e) => {
+        e.preventDefault();
+        if (!pedirNome(fp.autor)) return;
+        try {
+          await salvar(codigo, { proposta: fp.proposta.value }, `Proposta de solução do ${codigo} salva.`);
+          detalhe(codigo);
+        } catch (err) { toast(err.message, 'error'); }
+      };
       const fx = $('.tk-excluir', dlg);
       $('[data-apagar]', dlg).onclick = () => { fx.hidden = false; $('.tk-mover', dlg).hidden = true; fx.motivo.focus(); };
       $('[data-nao-apagar]', dlg).onclick = () => { fx.hidden = true; $('.tk-mover', dlg).hidden = false; };

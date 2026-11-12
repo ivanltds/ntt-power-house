@@ -1290,6 +1290,10 @@ dialog.dlg-boas-vindas { width: min(560px, calc(100vw - 32px)); }
 .tk-tit { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; min-width: 0; }
 .tk-tit > span:first-of-type { min-width: 0; overflow-wrap: anywhere; }
 .tk-meta { flex-basis: 100%; }
+.tk-proposta { margin: 14px 0; padding: 12px 14px; border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: var(--radius); background: var(--brand-soft); }
+.tk-proposta h4 { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; }
+.tk-proposta .tk-prop-form { margin-top: 8px; }
+.tk-tem-proposta { color: var(--brand); }
 .tk-clip { display: inline-flex; align-items: center; gap: 2px; font-size: 12px; color: var(--muted); }
 .tk-vazio { padding: 16px; }
 .tk-kanban { display: grid; grid-template-columns: repeat(5, minmax(220px, 1fr)); gap: 10px; overflow-x: auto; padding-bottom: 6px; }
