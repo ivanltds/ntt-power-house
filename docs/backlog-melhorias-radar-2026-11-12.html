@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backlog de melhorias do Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: relatório de leitura em coluna (resumo → números → insights → decisões → ondas → matriz → tabela operável). */
+:root {
+  --bg: #f4f6f9;
+  --panel: #ffffff;
+  --ink: #142033;
+  --ink-2: #44526a;
+  --muted: #6b778c;
+  --line: #dde3ec;
+  --brand: #0b4fb3;
+  --brand-soft: #e7effb;
+  --crit: #b4232c; --crit-soft: #fbe9ea;
+  --alta: #b3540b; --alta-soft: #fcefe3;
+  --media: #8a6d00; --media-soft: #fbf4d9;
+  --baixa: #4d6b55; --baixa-soft: #e8f1ea;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141c; --panel: #171e29; --ink: #e6ebf3; --ink-2: #b7c1d1; --muted: #8b97aa; --line: #2a3445;
+    --brand: #7fb0ff; --brand-soft: #1b2a44;
+    --crit: #ff8a8f; --crit-soft: #3a1c20; --alta: #ffb072; --alta-soft: #3a2614; --media: #e9cf6a; --media-soft: #33300f; --baixa: #9fcfaa; --baixa-soft: #1b2e22;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141c; --panel: #171e29; --ink: #e6ebf3; --ink-2: #b7c1d1; --muted: #8b97aa; --line: #2a3445;
+  --brand: #7fb0ff; --brand-soft: #1b2a44;
+  --crit: #ff8a8f; --crit-soft: #3a1c20; --alta: #ffb072; --alta-soft: #3a2614; --media: #e9cf6a; --media-soft: #33300f; --baixa: #9fcfaa; --baixa-soft: #1b2e22;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 var(--f-body); }
+main { max-width: 1120px; margin: 0 auto; padding: 32px 20px 64px; display: grid; gap: 40px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: 34px; font-weight: 700; }
+h2 { font-size: 24px; font-weight: 600; }
+h3 { font-size: 17px; font-weight: 600; }
+p { margin: 0; }
+.prose { max-width: 70ch; color: var(--ink-2); }
+section { display: grid; gap: 16px; }
+.sec-head { display: grid; gap: 6px; }
+.eyebrow { font: 600 12px/1 var(--f-display); letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+header.top { display: grid; gap: 10px; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+.fonte { font-size: 13px; color: var(--muted); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; }
+.tile b { font: 600 30px/1 var(--f-display); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 13px; color: var(--muted); }
+.tile.alerta { border-left: 4px solid var(--crit); }
+.resumo { display: grid; gap: 10px; counter-reset: r; padding: 0; margin: 0; list-style: none; }
+.resumo li { display: grid; grid-template-columns: 28px 1fr; gap: 8px; }
+.resumo li::before { counter-increment: r; content: counter(r); font: 600 15px/1.5 var(--f-display); color: var(--brand); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.bars { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 7px; }
+.bars li { display: grid; grid-template-columns: minmax(120px, 42%) 1fr 32px; gap: 10px; align-items: center; font-size: 13.5px; }
+.bars .trk { height: 10px; background: var(--brand-soft); border-radius: 0 4px 4px 0; }
+.bars .fill { height: 100%; background: var(--brand); border-radius: 0 4px 4px 0; }
+.bars em { font-style: normal; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+.ins { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 8px; align-content: start; }
+.ins p { color: var(--ink-2); font-size: 14.5px; }
+.ins .acao { color: var(--ink); font-size: 14px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.ins .acao b { color: var(--brand); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+a.cr, button.cr { font: 500 12px/1 var(--f-mono); padding: 5px 7px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); text-decoration: none; cursor: pointer; }
+a.cr:hover, a.cr:focus-visible { border-color: var(--brand); color: var(--brand); outline: none; }
+a.cr.p-critica { border-left: 3px solid var(--crit); }
+a.cr.p-alta { border-left: 3px solid var(--alta); }
+a.cr.p-media { border-left: 3px solid var(--media); }
+a.cr.p-baixa { border-left: 3px solid var(--baixa); }
+.prio { display: inline-flex; align-items: center; gap: 5px; font: 600 12px/1 var(--f-body); padding: 4px 8px; border-radius: 999px; white-space: nowrap; }
+.prio::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.prio.critica { color: var(--crit); background: var(--crit-soft); }
+.prio.alta { color: var(--alta); background: var(--alta-soft); }
+.prio.media { color: var(--media); background: var(--media-soft); }
+.prio.baixa { color: var(--baixa); background: var(--baixa-soft); }
+.legenda { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--muted); align-items: center; }
+.decisoes { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.decisoes li { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; align-items: center; }
+.decisoes .sug { grid-column: 1 / -1; font-size: 13.5px; color: var(--ink-2); }
+.ondas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.onda { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: var(--radius); padding: 14px; display: grid; gap: 8px; align-content: start; }
+.onda h3 { font-size: 16px; }
+.onda p { font-size: 13px; color: var(--muted); }
+.onda .n { font: 600 13px var(--f-display); color: var(--ink-2); }
+.matriz { display: grid; grid-template-columns: 34px 1fr 1fr 1fr; grid-template-rows: auto auto auto auto; gap: 8px; }
+.matriz .eixo { font: 600 12px/1.2 var(--f-display); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; display: flex; align-items: center; justify-content: center; }
+.matriz .eixo.v { writing-mode: vertical-rl; transform: rotate(180deg); }
+.cel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; min-height: 84px; display: grid; gap: 8px; align-content: start; }
+.cel small { font-size: 12px; color: var(--muted); }
+.cel.destaque { border-color: var(--brand); background: var(--brand-soft); }
+.filtros { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+.filtros label { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); }
+select, input[type="search"] { font: 14px var(--f-body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; min-width: 180px; }
+select:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.contador { font-size: 13px; color: var(--muted); margin-left: auto; }
+.tabwrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 960px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font: 600 12px var(--f-display); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); position: sticky; top: 0; background: var(--panel); }
+td.cod { font: 500 13px var(--f-mono); white-space: nowrap; }
+td .tit { font-weight: 600; display: block; }
+td .meta { color: var(--muted); font-size: 12.5px; }
+td .q { display: block; margin-top: 6px; color: var(--brand); font-size: 13px; }
+tr.alvo td { background: var(--brand-soft); }
+.copiar { font: 500 12.5px var(--f-body); border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 6px; padding: 5px 9px; cursor: pointer; white-space: nowrap; }
+.copiar:hover { border-color: var(--brand); color: var(--brand); }
+.passos { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-2); max-width: 75ch; }
+code { font: 500 13px var(--f-mono); background: var(--brand-soft); padding: 1px 5px; border-radius: 4px; }
+.fechados { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 640px) {
+  h1 { font-size: 27px; }
+  .matriz { grid-template-columns: 1fr; }
+  .matriz .eixo { display: none; }
+  .bars li { grid-template-columns: 110px 1fr 28px; }
+}
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <span class="eyebrow">Radar by ImpactAI · base de tickets V0.0.1</span>
+    <h1>Backlog de melhorias do Radar</h1>
+    <p class="prose">Leitura dos tickets abertos pelos testadores do piloto para a conversa com o time de produto: onde está o risco, o que é barato, o que precisa de decisão e o que é épico. Cada ticket aparece pelo código (CR-xxx) para ser atualizado depois na página de tickets.</p>
+    <p class="fonte" id="fonte"></p>
+  </header>
+
+  <section aria-labelledby="s-resumo">
+    <div class="sec-head"><span class="eyebrow">Em uma leitura</span><h2 id="s-resumo">O que os tickets dizem</h2></div>
+    <ol class="resumo panel">
+      <li><span><b>Nenhum ticket foi triado.</b> Dos 41 abertos, nenhum tem prioridade e nenhum está em correção. O primeiro passo da reunião é priorizar; este relatório traz uma prioridade sugerida para cada um.</span></li>
+      <li><span><b>O maior risco é a busca.</b> Buscas simples como "propostas com aws" voltam vazias (CR-012), e o próprio painel do piloto citado no CR-009 mostra 23,3% de buscas sem resultado e 28,6% de úteis entre os 3 primeiros. Melhorar layout não compensa uma busca que não acha.</span></li>
+      <li><span><b>Há um possível problema de permissão para verificar antes de tudo.</b> O CR-043 sugere que o consultor pode ver valor numa pergunta de continuação. Valor é restrito ao gestor.</span></li>
+      <li><span><b>Parte dos pedidos já existe, mas ninguém encontra.</b> Filtro por segmento e tecnologia, renomear conversa, confirmação ao excluir e os acordeons do card já estão no código. São ajustes de sinalização, baratos.</span></li>
+      <li><span><b>Há pedidos que se contradizem.</b> Uma testadora pede para tirar as tags de tecnologia do card (CR-030); outra pede mais destaque para setor e tecnologia (CR-013, CR-014). O time precisa decidir antes de alguém implementar.</span></li>
+      <li><span><b>Metade da base vem de uma pessoa e de um dia.</b> 21 dos 43 tickets são de uma testadora e 22 foram abertos em 06/11. Pesar por impacto, não por volume.</span></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="s-num">
+    <div class="sec-head"><span class="eyebrow">Números da base</span><h2 id="s-num">Como a base está hoje</h2></div>
+    <div class="tiles" id="tiles"></div>
+    <div class="grid2">
+      <div class="panel"><h3>Tickets abertos por tema</h3><p class="fonte">Agrupamento desta análise</p><ul class="bars" id="b-tema"></ul></div>
+      <div class="panel"><h3>Tickets abertos por área informada</h3><p class="fonte">Campo "Área" do ticket; "Conversas" virou área padrão</p><ul class="bars" id="b-area"></ul>
+        <h3 style="margin-top:18px">Tickets por autor</h3><p class="fonte">Todos os 43, incluindo fechados</p><ul class="bars" id="b-autor"></ul></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="s-ins">
+    <div class="sec-head"><span class="eyebrow">Insights</span><h2 id="s-ins">O que muda a forma de atacar o backlog</h2></div>
+    <div class="insights" id="insights"></div>
+  </section>
+
+  <section aria-labelledby="s-dec">
+    <div class="sec-head"><span class="eyebrow">Pauta da reunião</span><h2 id="s-dec">Decisões que o time precisa tomar</h2>
+      <p class="prose">Sem estas respostas, os tickets ligados a elas não têm como ser implementados direito. Cada uma traz uma sugestão para começar a conversa.</p></div>
+    <ol class="decisoes" id="decisoes"></ol>
+  </section>
+
+  <section aria-labelledby="s-ondas">
+    <div class="sec-head"><span class="eyebrow">Sequência sugerida</span><h2 id="s-ondas">Atacar em ondas</h2>
+      <p class="prose">Primeiro limpar e recuperar a confiança no que o Radar responde; depois os ganhos rápidos de interface; em paralelo, decidir o que está em aberto e fazer descoberta dos épicos.</p></div>
+    <div class="legenda">Prioridade sugerida: <span class="prio critica">Crítica</span><span class="prio alta">Alta</span><span class="prio media">Média</span><span class="prio baixa">Baixa</span></div>
+    <div class="ondas" id="ondas"></div>
+  </section>
+
+  <section aria-labelledby="s-mat">
+    <div class="sec-head"><span class="eyebrow">Impacto × esforço</span><h2 id="s-mat">Onde está o melhor retorno</h2>
+      <p class="prose">Impacto vem da prioridade sugerida; esforço é estimativa desta análise (P = horas a 1 dia, M = alguns dias, G = semanas ou precisa de descoberta). Validar o esforço com o time técnico.</p></div>
+    <div class="matriz" id="matriz"></div>
+  </section>
+
+  <section aria-labelledby="s-tab">
+    <div class="sec-head"><span class="eyebrow">Todos os tickets abertos</span><h2 id="s-tab">Ticket a ticket</h2>
+      <p class="prose">"Copiar" leva o código, a prioridade sugerida e a direção de solução para colar no campo <b>Proposta de solução</b> do ticket depois que o time decidir.</p></div>
+    <div class="filtros">
+      <label for="f-tema">Tema<select id="f-tema"></select></label>
+      <label for="f-onda">Onda<select id="f-onda"></select></label>
+      <label for="f-prio">Prioridade sugerida<select id="f-prio"></select></label>
+      <label for="f-busca">Buscar<input id="f-busca" type="search" placeholder="Código, título ou palavra"></label>
+      <span class="contador" id="contador"></span>
+    </div>
+    <div class="tabwrap"><table>
+      <thead><tr><th>Código</th><th>Ticket</th><th>Tema</th><th>Prioridade sugerida</th><th>Esforço</th><th>Direção de solução</th><th></th></tr></thead>
+      <tbody id="linhas"></tbody>
+    </table></div>
+    <p class="fechados" id="fechados"></p>
+  </section>
+
+  <section aria-labelledby="s-como">
+    <div class="sec-head"><span class="eyebrow">Depois da reunião</span><h2 id="s-como">Como registrar as decisões na página de tickets</h2></div>
+    <ol class="passos panel">
+      <li>Abra o Radar em Versão → Tickets e procure o código (ex.: <code>CR-012</code>) na busca.</li>
+      <li>Ajuste a <b>Prioridade</b> e, se for o caso, a <b>Situação</b>, e clique em Registrar.</li>
+      <li>No bloco <b>Proposta de solução</b>, clique em Registrar proposta, cole ou escreva o que o time decidiu, informe o seu nome e salve. A proposta fica no ticket com quem registrou e quando, e entra no histórico.</li>
+      <li>Para duplicados (CR-032) e testes (CR-001), use Apagar ticket com o motivo.</li>
+    </ol>
+  </section>
+</main>
+<script>
+const D = {"geradoEm":"2026-11-12T13:39:13.960Z","temas":{"busca":"Busca e recuperação","resposta":"Qualidade da resposta","card":"Card de evidência","conversas":"Gestão de conversas","perfis":"Perfis e permissões","projetos":"Tela de Projetos","navegacao":"Navegação, marca e celular","oportunidades":"Radar de Oportunidades","plataforma":"Plataforma (épicos)","upload":"Envio de arquivos","higiene":"Higiene da base"},"ondas":{"0":"Onda 0 · Limpar a base","1":"Onda 1 · Recuperar a confiança","2":"Onda 2 · Ganhos rápidos de UX","3":"Onda 3 · Decidir antes de fazer","4":"Épicos · Descoberta"},"areas":{"conversas":"Conversas","projetos":"Projetos","upload":"Envio de arquivos","outro":"Outro"},"tipos":{"problema":"Problema","sugestao":"Sugestão","duvida":"Dúvida"},"status":{"aberto":"Aberto","em_correcao":"Em correção","corrigido":"Corrigido, aguardando reteste","validado":"Validado","nao_procede":"Não procede"},"tickets":[{"codigo":"CR-001","titulo":"Teste do Ivan","texto":"Teste do Ivan","tipo":"problema","area":"outro","status":"aberto","aberto":true,"autor":"Ivan","data":"05/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"higiene","onda":0,"p":"baixa","e":"P","dir":"Ticket de teste. Apagar com o motivo \"teste do Ivan\"."},{"codigo":"CR-002","titulo":"C11 · Ficha pelo nome do projeto: falhou","texto":"Teste ivan","tipo":"problema","area":"conversas","status":"nao_procede","aberto":false,"autor":"Ivan","data":"05/11","origem":"roteiro","cenario":"C11","prioridadeAtual":null},{"codigo":"CR-003","titulo":"Deixar o logo da ImpactAI sempre visível na tela (fora do container da lista de conversas)","texto":"Deixar o logo da ImpactAI sempre visível na tela (fora do container da lista de conversas). Adicionar o logo da NTT. \nSugestão:\nCriado e desenvolvido por </br>\nLogo ImpactAI | Logo NTT","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"05/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"navegacao","onda":2,"p":"baixa","e":"P","dir":"Rodapé fixo na lateral: \"Criado e desenvolvido por\" + logos ImpactAI e NTT. Confirmar regra de uso da marca NTT."},{"codigo":"CR-004","titulo":"Ícones de favorito nas conversas desalinham títulos das seções","texto":"Remover os ícones de favorito das conversas, mas manter a identação, alinhando os títulos das conversas com os títulos da seção","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"05/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"conversas","onda":2,"p":"baixa","e":"P","dir":"Mostrar a estrela só em hover e nas favoritas; alinhar o título da conversa ao título da seção."},{"codigo":"CR-005","titulo":"Painel de filtros não fecha automaticamente após selecionar opção","texto":"Melhoria UX: Aplicação e fechamento automático (Auto-close) na aba lateral de filtros\n\nObjetivo / História do Usuário:\n\nComo usuário, eu quero que a aba lateral esquerda de filtros se feche automaticamente logo após eu selecionar uma opção, para que eu tenha uma navegação mais fluida, economize cliques e veja os resultados do filtro mais rápido.\n\nComportamento Atual:\n\nO usuário precisa abrir a aba esquerda, selecionar a opção desejada e depois clicar manualmente em um botão do lado direito que a aba do filtro seja recolhida\n\nComportamento Esperado:\n\nO usuário abre a aba lateral esquerda e clic","tipo":"sugestao","area":"projetos","status":"aberto","aberto":true,"autor":"Ana FlÁVia Oliveira","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"projetos","onda":2,"p":"media","e":"P","dir":"Aplicar o filtro na hora (auto-apply). Cuidado com o auto-close: Segmento e Tecnologias são multisseleção no código, fechar no 1º clique impede marcar duas opções. Alternativa: botão \"Ver N projetos\" que aplica e fecha.","q":"Auto-close vale também para filtros de multisseleção?"},{"codigo":"CR-006","titulo":"UX: Adicionar botão de fechar (X) no menu principal para facilitar a saída após troca de p","texto":"UX: Adicionar botão de fechar (X) no menu principal para facilitar a saída após troca de perfil\n\nObjetivo / História do Usuário:\nComo usuário, eu quero poder fechar o menu de opções clicando em um ícone de \"X\" explícito. Como a troca de perfil (\"Ver como\") altera os links e acessos exibidos dentro do próprio menu, ele precisa continuar aberto para que eu veja as novas opções, mas preciso de uma forma intuitiva de fechá-lo quando terminar, sem ter que clicar em uma área vazia da tela.\n\nComportamento Atual:\nAo selecionar um novo perfil, o menu atualiza seus links internos corretamente, mas perma","tipo":"sugestao","area":"projetos","status":"aberto","aberto":true,"autor":"Ana FlÁVia Oliveira","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"perfis","onda":2,"p":"baixa","e":"P","dir":"Botão X no topo do menu ⋮ e fechar com Esc. Pode ir junto com o CR-031."},{"codigo":"CR-007","titulo":"P09 · \"Meus projetos\": falhou","texto":"Dúvida sobre o Filtro \"Meus Projetos\" vs. \"Ver Como: GESTOR/ CONSULTOR\"\n\nDurante os testes, notei que ao ativar o filtro \"Meus projetos\", o sistema retorna os mesmos 4 projetos tanto no perfil de Consultor quanto no de Gestor.\nPergunta: A função \"Ver como\" altera apenas as permissões de tela do meu usuário atual, ou deveria simular usuários distintos com bases de dados diferentes? \n\nEntendo que nesse cenário apenas um usuário cadastrou as propostas com status \" Em elaboração \" dois usuários não deveria apresentar esse filtro ao mesmo tempo, visto que apenas um teria feito este cadastro de docu","tipo":"problema","area":"projetos","status":"aberto","aberto":true,"autor":"Ana FlÁVia Oliveira","data":"06/11","origem":"roteiro","cenario":"P09","prioridadeAtual":null,"tema":"perfis","onda":3,"p":"media","e":"M","dir":"Definir a regra de \"Meus projetos\" (criei? sou responsável? participei?) e o que o \"Ver como\" simula. Registrar a regra na ajuda.","q":"\"Ver como\" simula só permissões ou um usuário diferente? Quem é o dono de um projeto?"},{"codigo":"CR-008","titulo":"P13 · Ordenar a lista: bloqueado","texto":"Impedimento de Teste: Massa de dados do protótipo insuficiente para validar a ordenação \"Recentes\"\n\nContexto: Ao testar a ordenação \"Recentes\", notei que os cards consideram apenas o ano. Na base de dados real, teremos um volume massivo de projetos no mesmo ano, variando por mês, dia e hora.\n\nImpacto no Teste: Como os dados fictícios estão simplificados, vários projetos do mesmo ano \"empatam\". Isso bloqueia a validação de QA, pois não consigo garantir se a lógica de ordenação do front-end está preparada para desempatar e organizar cronologicamente projetos criados no mesmo ano.","tipo":"problema","area":"projetos","status":"aberto","aberto":true,"autor":"Ana FlÁVia Oliveira","data":"06/11","origem":"roteiro","cenario":"P13","prioridadeAtual":null,"tema":"projetos","onda":3,"p":"media","e":"M","dir":"Os projetos de exemplo só têm ano. Gravar data completa (criação/atualização) na massa de teste e desempatar por data, depois título.","q":"\"Recentes\" ordena por data do projeto ou da última atualização no Radar?"},{"codigo":"CR-009","titulo":"Painel do Piloto precisa de mais impacto visual e narrativa executiva","texto":"Melhorar a pagina do kpi para dar um \"uau\"\nVisão Conceitual --- Página de KPIs do Piloto Radar\nPágina executiva de acompanhamento do piloto do Radar by ImpactAI,\nestruturada para demonstrar uso, utilidade das respostas, eficiência da\nrecuperação, reutilização do conhecimento e cobertura da base, sem\ninventar métricas não disponíveis.\nObjetivo da página\nA página de KPIs do Piloto deve responder, de forma visual e executiva,\ncinco perguntas:\n1. O Radar está sendo utilizado?\n2. As buscas estão encontrando conhecimento útil?\n3. Quanto tempo o usuário leva para chegar a uma referência útil?\n4. O co","tipo":"sugestao","area":"outro","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"plataforma","onda":4,"p":"alta","e":"G","dir":"Reorganizar o Painel do Piloto na história Uso → Qualidade → Eficiência → Reuso → Cobertura, só com métricas que já existem; esconder as sem dado. É a tela que o patrocinador vê."},{"codigo":"CR-010","titulo":"Subi um arquivo nao permitido, um formato png, e depois da mensagem de que nao era permiti","texto":"Subi um arquivo nao permitido, um formato png, e depois da mensagem de que nao era permitido, nao sei como fazer para ignorar o arquivo e subir outro.","tipo":"problema","area":"upload","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"upload","onda":1,"p":"alta","e":"P","dir":"No arquivo recusado: botão \"Remover\" e \"Trocar arquivo\", e a mensagem lista os formatos aceitos. Hoje o fluxo trava."},{"codigo":"CR-011","titulo":"a ferramenta deveria permitir buscar alem de projetos, qualquer documento dentro do univer","texto":"a ferramenta deveria permitir buscar alem de projetos, qualquer documento dentro do universo que subimos. subi a especificacao funcional dos kpis do radar e nao estou conseguindo encontrar de forma facil, por projeto e por documentos. nao entendi porque separou, talvez fosse melhor numa unica tela e so ter um icone de filtro dentro da tela de busca.....","tipo":"problema","area":"projetos","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"busca","onda":3,"p":"alta","e":"G","dir":"Uma busca só, com resultado agrupado em Projetos | Documentos (ou filtro de tipo). Documento solto achado pelo nome do arquivo e pelo conteúdo.","q":"Juntar as telas de busca de projetos e de documentos?"},{"codigo":"CR-012","titulo":"Busquei com o seguinte prompt: preciso de propostas com aws,nao veio nada","texto":"Busquei com o seguinte prompt: preciso de propostas com aws,nao veio nada. Busquei: preiso de propostas de energia , nao veio nada.","tipo":"problema","area":"projetos","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"busca","onda":1,"p":"critica","e":"M","dir":"Reproduzir \"preciso de propostas com aws\" e \"preiso de propostas de energia\". Hipóteses: palavra \"propostas\" virando filtro de tipo, erro de digitação, \"energia\" ≠ \"Utilities\". Tolerância a erro, sinônimos de segmento e nunca responder vazio sem sugerir alternativa."},{"codigo":"CR-013","titulo":"nao tem filtro pelas tags (setor, tecnologia) por exemplo","texto":"nao tem filtro pelas tags (setor, tecnologia) por exemplo","tipo":"problema","area":"projetos","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"busca","onda":2,"p":"media","e":"P","dir":"Os filtros de Segmento e Tecnologias já existem no painel lateral de Projetos (public/projetos.js). O problema é encontrar: mostrar filtros ativos como chips acima da lista e deixar as tags do card clicáveis."},{"codigo":"CR-014","titulo":"Classificações de negócio que também discutimos","texto":"Classificações de negócio que também discutimos\nEssas não são propriamente controles de governança, mas são muito importantes para o Radar encontrar a referência correta:\nClassificação\tExemplos\nSetor / Segmento\tBanking · Seguros · Utilities · Saúde · Telecom · Varejo\nCapability\tData & AI · Cloud · Digital Experience · Application Services\nTecnologia\tDatabricks · Azure · AWS · Salesforce · Python · IA Generativa\nRegião\tBrasil · LATAM · América do Norte · EMEA · APAC\nStatus da proposta\tEm elaboração · Enviada · Em negociação · Ganha · Perdida · Cancelada\nVirou projeto?\tSim · Não\nStatus do projet","tipo":"sugestao","area":"projetos","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"busca","onda":4,"p":"alta","e":"G","dir":"Adotar Setor, Capability e Tecnologia como dimensões principais (filtro, ranking e explicação do \"por que apareceu\"). Taxonomia de Governança de IA fica para fase 2.","q":"Quais classificações entram no piloto? Quem mantém a lista?"},{"codigo":"CR-015","titulo":"Sugestão de destaque visual nos títulos das seções do projeto","texto":"Destacaria os titulos num layout melhor: maior e em tom de azul, acho que ficaria interessante.","tipo":"sugestao","area":"projetos","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"projetos","onda":2,"p":"baixa","e":"P","dir":"Títulos de seção da ficha maiores e na cor da marca. Ajuste só de CSS."},{"codigo":"CR-016","titulo":"Quando converso no chat gpt peco para ele gerar um documento word, ou planilha excel ou pp","texto":"Quando converso no chat gpt peco para ele gerar um documento word, ou planilha excel ou ppt editavel ou imagem a partir do resultado de busca que encontrei. Para mim, faz sentido no conversacional ter esses recursos, ele somente trazero resultado, vira so uma ferramenta de busca.","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"plataforma","onda":4,"p":"media","e":"G","dir":"Começar por \"Exportar esta resposta\" para Word/PPT reaproveitando a exportação de projeto que já existe (/api/projeto/exportar). Geração livre de documentos fica para depois."},{"codigo":"CR-017","titulo":"Conversas sem organização por grupos de assuntos no Radar","texto":"As conversas ficam desorganizadas. No chat gpt, crio grupos de assuntos de conversa para eu me localizar rapidamente. as vezes estamos fazendo mais de uma proposta, entao separo em assuntos e dai o chat gpt deveria estar  olhando somente os arquivos de cada grupo. A mesma coisa esperaria do radar","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"conversas","onda":4,"p":"alta","e":"G","dir":"Pastas por proposta: conversas agrupadas e busca limitada aos documentos da pasta. Resolve organização e contexto ao mesmo tempo.","q":"A pasta restringe a busca ou só organiza?"},{"codigo":"CR-018","titulo":"Menu de opções do chat com itens destacados em amarelo","texto":"Acho que tem de ter algumas funcionalidades em amarelo tambem","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"conversas","onda":3,"p":"media","e":"M","dir":"Menu da conversa com Renomear, Arquivar, Excluir e Mover para pasta. Depende do CR-017."},{"codigo":"CR-019","titulo":"Agentes de propostas e RFPs não aparecem no Radar","texto":"O Radar como plataforma integradora, deveria  permitir ver agentes referentes a propostas, rfps. o Reuso é importante.","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"plataforma","onda":4,"p":"baixa","e":"G","dir":"Primeiro passo barato: catálogo com links para agentes de RFP/propostas que já existem. Integração fica para discovery."},{"codigo":"CR-020","titulo":"Como num site, gostaria que tivesse um banner que quando tivesse assuntos importantes, ele","texto":"Como num site, gostaria que tivesse um banner que quando tivesse assuntos importantes, ele pudesse me chamar a atencao para clicar e ver . Assuntos relacionados a um segmento de negocio, melhorias de ferramenta, cases ganhadores, etc","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"oportunidades","onda":3,"p":"baixa","e":"M","dir":"Usar o banner de oportunidades como área de destaques (cases ganhadores, novidades da ferramenta)."},{"codigo":"CR-021","titulo":"Radar de Oportunidades sem status de andamento das oportunidades","texto":"Sobre o Radar de Oportunidades (tem de ter um status para ver se alguem esta trabalhando nela)","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"oportunidades","onda":3,"p":"alta","e":"M","dir":"Status e responsável na oportunidade, com \"Eu assumo\". Evita duas pessoas trabalhando na mesma RFP.","q":"Quais status? Quem pode assumir?"},{"codigo":"CR-022","titulo":"seria bom eu poder editar o ticket e acrescentar documentos","texto":"seria bom eu poder editar o ticket e acrescentar documentos\n\neditado 🙌🏾","tipo":"problema","area":"outro","status":"validado","aberto":false,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null},{"codigo":"CR-023","titulo":"no radar de oportunidades, seguee","texto":"no radar de oportunidades, seguee","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"higiene","onda":0,"p":"baixa","e":"P","dir":"Texto incompleto e sem imagem (\"seguee\"). Pedir o complemento à autora; se for o mesmo pedido do CR-021, apagar como duplicado."},{"codigo":"CR-024","titulo":"Radar de oportunidades","texto":"Radar de oportunidades. segue nb","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"higiene","onda":0,"p":"baixa","e":"P","dir":"Texto incompleto e sem imagem (\"segue nb\"). Mesmo tratamento do CR-023."},{"codigo":"CR-025","titulo":"Menu lateral do Radar não permite navegação entre seções","texto":"o nosso wireframe conversacional estava assim, confore a imagem, porque nao conseguimos navegar pela lateral, parece melhor.....","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"navegacao","onda":3,"p":"media","e":"G","dir":"Adotar o menu lateral do wireframe (Início, Oportunidades, Projetos, Conhecimento, Insights, Ajuda). Juntar com o CR-026 num só item.","q":"Vamos trocar a navegação por abas pelo menu lateral no piloto?"},{"codigo":"CR-026","titulo":"Tela de Conversas com menu lateral, ícone de Ajuda e banner Radar de Oportunidades","texto":"- icone de ajuda no final da lateral (mostra como o radar funciona, etc), menu lateral como nosso wireframe para dar um ar de \"uau\", banner de radar de oportunidades","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"06/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"navegacao","onda":3,"p":"media","e":"M","dir":"Sobreposto ao CR-025 (menu lateral) e ao CR-020 (banner). Separar só o ícone de Ajuda no rodapé, que é rápido."},{"codigo":"CR-027","titulo":"Melhore a estrutura e a apresentação da resposta do chat para torná-la mais escaneável, se","texto":"# Objetivo\n\nMelhore a estrutura e a apresentação da resposta do chat para torná-la mais escaneável, separando claramente:\n\n1. **Por que os cases encontrados são relevantes para a pergunta do usuário**\n2. **O que pode ser reaproveitado desses cases**\n3. **Quais perfis profissionais são recomendados para compor a equipe**\n\n# Estrutura esperada da resposta\n\n## 1. Resposta e justificativa\n\nInicie respondendo diretamente à pergunta do usuário.\n\nApresente os cases encontrados e explique brevemente por que eles são relevantes para a busca realizada.\n\nMantenha neste bloco apenas informações relacionad","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"07/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"resposta","onda":2,"p":"alta","e":"M","dir":"Resposta em blocos: resposta direta + por que cada case é relevante, depois \"Recomendação\" (o que reaproveitar, cuidados, perfis). Perfis só quando os documentos citam papéis; sem base, omitir para não inventar equipe."},{"codigo":"CR-028","titulo":"Barras de \"Por que apareceu nesta posição\" não refletem os percentuais","texto":"# Objetivo\n\nCorrigir a visualização da seção **“Por que apareceu nesta posição”**, garantindo que o comprimento de cada barra represente corretamente o percentual exibido ao lado.\n\n# Problema atual\n\nAs barras estão visualmente inconsistentes com os valores percentuais.\n\nExemplo:\n\n- **Descrição / objetivo / escopo (análise semântica): 53%** → a barra deve ocupar aproximadamente 53% da largura disponível.\n- **Tecnologias: 20%** → a barra deve ocupar 20%.\n- **Serviços / área: 20%** → a barra deve ocupar 20%.\n- **Status / resultado: 7%** → a barra deve ocupar 7%.\n\nAtualmente, valores diferentes ap","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"07/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"card","onda":1,"p":"alta","e":"P","dir":"Diagnóstico no código (public/app.js): a barra mostra a nota do critério (valor) e o número mostra o peso. São dois dados na mesma linha. Mostrar um só, a contribuição de cada critério, numa escala 0–100%.","q":"A linha deve mostrar o peso do critério ou quanto ele contribuiu para este projeto?"},{"codigo":"CR-029","titulo":"Itens da seção sem chevron e sem visual de acordeon","texto":"# Objetivo\n\nTransformar os atuais **button links** da seção em **acordeons expansíveis**, deixando mais claro visualmente que os itens são clicáveis e que cada um revela conteúdo complementar logo abaixo do próprio título.\n\n# Itens afetados\n\nAplicar o comportamento de acordeon aos itens:\n\n- **Escopo, resultados e lições**\n- **Trechos que sustentam a resposta**\n- **Por que apareceu nesta posição**\n\n# Comportamento esperado\n\nCada item deve funcionar como um acordeon.\n\nAo clicar no título:\n\n- o conteúdo correspondente deve ser exibido **imediatamente abaixo do próprio título**;\n- o item deve assu","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"07/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"card","onda":2,"p":"media","e":"P","dir":"Os itens já são acordeons nativos (<details>). Falta chevron, hover e abrir um por vez (atributo name no <details>). Ajuste pequeno."},{"codigo":"CR-030","titulo":"Tags de tecnologia ainda visíveis no card do projeto","texto":"# Objetivo\n\nRemover da interface as **tags de tecnologia** exibidas no card do projeto.\n\n# Elementos que devem ser removidos\n\nExcluir visualmente as tags/chips de tecnologias, como no exemplo atual:\n\n- AWS\n- Power BI\n- Python\n- Machine Learning\n\nEssas tags não devem mais aparecer entre as ações do card e os demais metadados.\n\n# O que deve ser mantido\n\nPreservar os demais elementos do card, incluindo:\n\n- título do projeto;\n- indicador de similaridade;\n- empresa;\n- status;\n- texto explicativo;\n- botões **Abrir projeto** e **Copiar escopo**;\n- duração;\n- classificação de acesso, como **valor rest","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"07/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"card","onda":3,"p":"media","e":"P","dir":"Conflita com CR-013/CR-014, que pedem mais destaque para tecnologia. Sugestão: tirar as tags do card da resposta e manter como chips clicáveis na tela de Projetos e na ficha.","q":"Tags de tecnologia: remover do card (CR-030) ou destacar (CR-013/014)?"},{"codigo":"CR-031","titulo":"Tag de simulação \"Visão: Gestor\" não aparece no cabeçalho","texto":"Cenário de Teste: Simulação de Perfil \"Ver como\"\n\nPasso a passo:\n\nClique no botão de três pontinhos (⋮), no canto superior direito.\n\nEm \"Ver como\", selecione a opção \"Gestor\" (ou qualquer outro perfil disponível).\n\nFeche o menu clicando fora ou no botão correspondente.\n\nO que deve acontecer (Resultado Esperado):\n\nVisibilidade da Simulação: Um indicador visual em formato de Tag (Badge) \"Visão: Gestor\" (com design roxo e ícone de visualização 👁) deve aparecer imediatamente no canto superior direito do cabeçalho (ao lado de \"Responder para...\"), identificando o perfil simulado ativo.\n\nAção de Fe","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Ana FlÁVia Oliveira","data":"07/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"perfis","onda":2,"p":"media","e":"P","dir":"Tag \"Visão: Gestor\" no cabeçalho com X para sair da simulação, fixa durante a navegação."},{"codigo":"CR-032","titulo":"Tag \"Visão: Gestor\" não aparece no cabeçalho ao simular perfil","texto":"Cenário de Teste: Simulação de Perfil \"Ver como\"\n\nPasso a passo:\n\nClique no botão de três pontinhos (⋮), no canto superior direito.\n\nEm \"Ver como\", selecione a opção \"Gestor\" (ou qualquer outro perfil disponível).\n\nFeche o menu clicando fora ou no botão correspondente.\n\nO que deve acontecer (Resultado Esperado):\n\nVisibilidade da Simulação: Um indicador visual em formato de Tag (Badge) \"Visão: Gestor\" (com design roxo e ícone de visualização 👁) deve aparecer imediatamente no canto superior direito do cabeçalho (ao lado de \"Responder para...\"), identificando o perfil simulado ativo.\n\nAção de Fe","tipo":"sugestao","area":"projetos","status":"aberto","aberto":true,"autor":"Ana FlÁVia Oliveira","data":"07/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"higiene","onda":0,"p":"baixa","e":"P","dir":"Duplicado do CR-031 (mesmo texto). Apagar com motivo \"duplicado do CR-031\" e copiar a imagem para o CR-031."},{"codigo":"CR-033","titulo":"P15 · Navegar para um projeto parecido e abrir um documento: falhou","texto":"Resultado obtido no teste\n\nAo tentar abrir o arquivo como PDF, ocorreu um erro.\nAo baixar como Word, o documento abriu com uma formatação visual inadequada, semelhante a um modelo, e não apresentou o resultado esperado.\nPortanto, o teste não foi concluído com sucesso.\nPonto a definir É necessário confirmar qual formato o sistema deve oferecer para download — por exemplo, o formato original ou uma conversão específica — e quais formatos são suportados. Sem essa definição, o resultado esperado do teste fica ambíguo.","tipo":"problema","area":"projetos","status":"aberto","aberto":true,"autor":"Ana FlÁVia Oliveira","data":"08/11","origem":"roteiro","cenario":"P15","prioridadeAtual":null,"tema":"projetos","onda":1,"p":"alta","e":"M","dir":"Erro ao abrir PDF é bug: reproduzir. Word com formatação de modelo vem da conversão. Decidir o formato oferecido.","q":"Baixar o arquivo original ou uma conversão do Radar?"},{"codigo":"CR-034","titulo":"Ícone de editar título ausente no cabeçalho da conversa","texto":"# Objetivo\n\nAdicionar uma ação explícita de **editar o título da conversa** diretamente no cabeçalho da área principal do chat, deixando claro para o usuário que esse título pode ser alterado naquele local.\n\n# Alteração visual\n\nAo lado do título atual da conversa, adicionar um **ícone de edição** (ex.: lápis).\n\nExemplo:\n\n**Quais segmentos já atendemos?** ✎\n\nO ícone deve ficar visualmente associado ao título e não competir com outros controles do cabeçalho.\n\n# Comportamento esperado\n\n## Estado padrão\n\nNo estado inicial:\n\n- exibir o título da conversa normalmente;\n- exibir o ícone de edição ao l","tipo":"sugestao","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"08/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"conversas","onda":2,"p":"baixa","e":"P","dir":"A edição do título já existe: clicar no título e Enter salva. Falta mostrar: lápis ao lado, salvar/cancelar e Esc."},{"codigo":"CR-035","titulo":"C29 · Excluir uma conversa: falhou","texto":"No primeiro clique não apareceu o pedido de confirmação para exclusão. O ideal é ter uma modal com botão de fechar que cancela a ação, título \"Excluir conversa\", Descrição \"Ao excluir a conversa “[Título da conversa]”, ela será removida permanentemente e você não poderá acessá-la novamente.\", CTA \"Excluir conversa\". Ao clicar fora da modal, fecha a modal e cancela a ação.","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"08/11","origem":"roteiro","cenario":"C29","prioridadeAtual":null,"tema":"conversas","onda":2,"p":"media","e":"P","dir":"Hoje a confirmação é um segundo toque em até 3 s no ícone, que ninguém percebe. Trocar por diálogo \"Excluir conversa\" com o título e Cancelar."},{"codigo":"CR-036","titulo":"Resposta não explicita o contexto implícito assumido na conversa","texto":"Quando a resposta depender de contexto implícito, tornar visível qual contexto foi assumido — sem obrigar o usuário a abrir detalhes técnicos. Usando a imagem como exemplo, adicionar a informação \"Entendi que você quer ver os projetos de Varejo.\" no corpo da resposta como primeira frase.","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"08/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"resposta","onda":2,"p":"alta","e":"P","dir":"Quando a pergunta herda contexto (\"e os de varejo?\"), abrir a resposta com \"Entendi que você quer ver…\". Barato e aumenta a confiança na continuação."},{"codigo":"CR-037","titulo":"Melhorar o comportamento do campo de mensagem do chat, impedindo o envio quando não houver","texto":"# Objetivo\n\nMelhorar o comportamento do campo de mensagem do chat, impedindo o envio quando não houver conteúdo válido digitado.\n\n# Problema atual\n\nAtualmente, o botão de envio permanece disponível mesmo quando a caixa de texto está vazia. Ao clicar, nada acontece, o que gera uma interação sem feedback e pode causar dúvida sobre o funcionamento do sistema.\n\n# Comportamento esperado\n\nO botão de envio deve permanecer **desabilitado** enquanto o campo de mensagem estiver vazio ou contiver apenas espaços em branco.\n\nExemplos que devem manter o botão desabilitado:\n\n- campo vazio;\n- `\" \"`;\n- `\"    \"","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"08/11","origem":"feedback","cenario":null,"prioridadeAtual":null,"tema":"conversas","onda":2,"p":"baixa","e":"P","dir":"Botão enviar desabilitado enquanto texto.trim() estiver vazio; mesma regra no Enter."},{"codigo":"CR-038","titulo":"C34 · Conversas no celular: falhou","texto":"A caixa de texto está oculta pela barra de navegação inferior. A tabela não apresenta rolagem lateral, pois está quebrando o texto das colunas, dificultando a leitura.","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vanessa","data":"08/11","origem":"roteiro","cenario":"C34","prioridadeAtual":null,"tema":"navegacao","onda":1,"p":"alta","e":"M","dir":"Caixa de texto coberta pela barra inferior e tabela sem rolagem lateral. Os testadores abrem o link pelo WhatsApp/Teams, então o celular é o uso real."},{"codigo":"CR-039","titulo":"C05 · Listagem por segmento e por status: bloqueado","texto":"nao consegui subir uma proposta ficticia perdida para testar","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"09/11","origem":"roteiro","cenario":"C05","prioridadeAtual":null,"tema":"upload","onda":1,"p":"media","e":"M","dir":"Bloqueou o cenário C05. Descobrir por que não deu para subir uma proposta perdida (status? permissão do perfil?) ou incluir uma na massa de teste."},{"codigo":"CR-040","titulo":"C08 · Contagem por tecnologia, por ano e por cliente: falhou","texto":"Achei o teste sem sentido\nse estou buscando primeiro por tecnologia\ne depois pedi para abrir por ano, acho que deveria seguir barras empilhado, em que por exemplo em 2026, eu vejo que por exemplo que a maioria é azzure, depois  aws, e assim por diante.\nidem clientes","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"09/11","origem":"roteiro","cenario":"C08","prioridadeAtual":null,"tema":"resposta","onda":3,"p":"media","e":"M","dir":"Contagem cruzada (tecnologia × ano) em barras empilhadas. Rever também o roteiro do C08.","q":"Vale fazer o gráfico cruzado no piloto?"},{"codigo":"CR-041","titulo":"C09 · Clicar numa barra da contagem: falhou","texto":"escolhi Telecom. Nao filtrou. Ao abrir a tela de projetos ja deveria trazer somente telecom","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Vania Yogui","data":"09/11","origem":"roteiro","cenario":"C09","prioridadeAtual":null,"tema":"busca","onda":1,"p":"alta","e":"P","dir":"Bug: clicar na barra \"Telecom\" deve abrir Projetos já filtrado por Telecom."},{"codigo":"CR-042","titulo":"C12 · Projeto confidencial não aparece para o consultor: falhou","texto":"Para o Consultor, ele não traz esse retorno, mas ainda traz referências, as quais não foram solicitadas;\nJá para o gestor, trouxe corretamente, mas seria interessante vir somente resumo como tabela na parte debaixo, sem vir a mesma informação duas vezes","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Isabelle","data":"09/11","origem":"roteiro","cenario":"C12","prioridadeAtual":null,"tema":"perfis","onda":1,"p":"alta","e":"M","dir":"Consultor: ao negar o confidencial, a resposta oferece referências que não foram pedidas. Gestor: a mesma informação sai no texto e na tabela.","q":"Ao negar por permissão, o Radar sugere alternativas ou só avisa?"},{"codigo":"CR-043","titulo":"C16 · Continuar a conversa com \"neles\": falhou","texto":"Nesse caso, ele retorna os clientes e seus dados, mas por ser Consultor não deveria retornar sem o valor?","tipo":"problema","area":"conversas","status":"aberto","aberto":true,"autor":"Isabelle","data":"09/11","origem":"roteiro","cenario":"C16","prioridadeAtual":null,"tema":"perfis","onda":1,"p":"critica","e":"M","dir":"Verificar primeiro: na continuação (\"neles\") o consultor pode estar vendo valor, que é restrito ao gestor. Reproduzir com o perfil consultor. Se aparecer valor, é vazamento de permissão."}]};
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const PRIO = { critica: 'Crítica', alta: 'Alta', media: 'Média', baixa: 'Baixa' };
+const ESF = { P: 'P · pequeno', M: 'M · médio', G: 'G · grande' };
+const abertos = D.tickets.filter((t) => t.aberto);
+const porCod = Object.fromEntries(D.tickets.map((t) => [t.codigo, t]));
+const chip = (c) => { const t = porCod[c]; return `<a class="cr p-${t?.p ?? ''}" href="#${c.toLowerCase()}" data-ir="${c}" title="${esc(t?.titulo ?? '')}">${c}</a>`; };
+const chips = (lista) => `<div class="chips">${lista.map(chip).join('')}</div>`;
+
+$('#fonte').textContent = `Fonte: endpoint de relatório da base de tickets em produção, lido em ${new Date(D.geradoEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}. ${D.tickets.length} tickets, ${abertos.length} em aberto. Análise de 12/11/2026, cruzada com o código do Radar.`;
+
+const comPrio = D.tickets.filter((t) => t.prioridadeAtual).length;
+const tiles = [
+  [D.tickets.length, 'tickets na base'],
+  [abertos.length, 'em aberto'],
+  [comPrio, 'com prioridade definida', true],
+  [D.tickets.filter((t) => t.status === 'em_correcao').length, 'em correção', true],
+  [abertos.filter((t) => t.origem === 'roteiro').length, 'vindos do roteiro de testes'],
+  [abertos.filter((t) => t.p === 'critica' || t.p === 'alta').length, 'com prioridade sugerida alta ou crítica'],
+];
+$('#tiles').innerHTML = tiles.map(([n, r, a]) => `<div class="tile${a ? ' alerta' : ''}"><b>${n}</b><span>${r}</span></div>`).join('');
+
+function barras(el, pares) {
+  const max = Math.max(...pares.map((p) => p[1]));
+  $(el).innerHTML = pares.map(([k, v]) => `<li title="${esc(k)}: ${v}"><span>${esc(k)}</span><div class="trk"><div class="fill" style="width:${(v / max) * 100}%"></div></div><em>${v}</em></li>`).join('');
+}
+const conta = (lista, f) => Object.entries(lista.reduce((m, t) => ((m[f(t)] = (m[f(t)] || 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+barras('#b-tema', conta(abertos, (t) => D.temas[t.tema]));
+barras('#b-area', conta(abertos, (t) => D.areas[t.area] ?? t.area));
+barras('#b-autor', conta(D.tickets, (t) => t.autor));
+
+const INS = [
+  { t: 'A busca é o problema de produto mais caro', p: 'Busca vazia para pedidos simples (CR-012), documento enviado que não é achado (CR-011), barra do gráfico que não filtra (CR-041). O CR-009 registra o painel do piloto com 23,3% de buscas sem resultado e só 28,6% de úteis entre os 3 primeiros.', a: 'Montar um conjunto fixo de 20 a 30 perguntas reais dos testadores e medir antes e depois de cada ajuste de busca.', c: ['CR-012', 'CR-011', 'CR-041', 'CR-013', 'CR-014'] },
+  { t: 'Permissão de perfil precisa de verificação já', p: 'O CR-043 pergunta se o consultor deveria ver dados de valor numa continuação ("neles"). Pelo cadastro, consultor não vê valor nem margem. O CR-042 mostra que, ao negar o confidencial, a resposta ainda oferece referências não pedidas.', a: 'Reproduzir CR-043 com o perfil consultor antes de qualquer outra coisa. Se o valor aparecer, é correção crítica.', c: ['CR-043', 'CR-042', 'CR-007'] },
+  { t: 'Pedidos que já estão no código', p: 'Filtro por segmento e tecnologia existe no painel de Projetos (CR-013). Renomear conversa existe ao clicar no título (CR-034). Excluir já pede um segundo toque em 3 s, que ninguém percebe (CR-035). Os itens do card já são acordeons, sem chevron (CR-029).', a: 'Tratar como problema de sinalização: chips de filtro visíveis, lápis no título, diálogo de confirmação, chevron. Todos de esforço pequeno.', c: ['CR-013', 'CR-034', 'CR-035', 'CR-029'] },
+  { t: 'A barra do "por que apareceu" mistura dois números', p: 'No código, a largura da barra é a nota do critério para aquele projeto e o percentual ao lado é o peso do critério no ranking. Por isso 7% aparece com barra quase cheia (CR-028). Não é só escala.', a: 'Decidir o que a linha comunica e mostrar um só número: a contribuição de cada critério.', c: ['CR-028'] },
+  { t: 'Testadoras pedem coisas opostas', p: 'CR-030 quer remover as tags de tecnologia do card. CR-013 e CR-014 querem setor e tecnologia em destaque para explicar por que a referência apareceu. As duas leituras fazem sentido em telas diferentes.', a: 'Proposta: card da resposta mais limpo; tags clicáveis na lista e na ficha de Projetos.', c: ['CR-030', 'CR-013', 'CR-014'] },
+  { t: 'A confiança na resposta cresce com pouco esforço', p: 'Dizer o contexto assumido ("Entendi que você quer ver os projetos de Varejo", CR-036), separar evidência de recomendação (CR-027) e não repetir a mesma informação em texto e tabela (CR-042) mexem no texto da resposta, não na arquitetura.', a: 'Ajustar a montagem da resposta numa entrega só e retestar os cenários do roteiro de Conversas.', c: ['CR-036', 'CR-027', 'CR-042', 'CR-040'] },
+  { t: 'Uma parte dos tickets é sobre o teste, não sobre o produto', p: 'Massa de dados só com ano impede validar "Recentes" (CR-008), não deu para subir a proposta perdida do C05 (CR-039), o C08 foi achado sem sentido (CR-040) e o C11 virou "não procede". O roteiro e a massa de teste também precisam de manutenção.', a: 'Revisar roteiro e massa de teste junto com a Onda 1, para o reteste da V0.0.2 não travar de novo.', c: ['CR-008', 'CR-039', 'CR-040', 'CR-033'] },
+  { t: 'Os épicos são uma visão de plataforma', p: 'Gerar Word/PPT (CR-016), pastas por proposta com contexto próprio (CR-017), agentes de RFP (CR-019), painel executivo (CR-009) e taxonomia de negócio (CR-014) mudam o que o Radar é. Comparam o Radar com o ChatGPT corporativo.', a: 'Escolher no máximo um para descoberta no piloto. Candidatos com melhor relação: painel executivo (CR-009) e pastas por proposta (CR-017).', c: ['CR-009', 'CR-017', 'CR-016', 'CR-019', 'CR-014'] },
+  { t: 'A base precisa de limpeza e de reclassificação', p: 'Um teste (CR-001), um duplicado exato (CR-032 = CR-031), dois tickets sem conteúdo (CR-023, CR-024) e dois sobrepostos (CR-025, CR-026). Vários "Problema" são sugestões (CR-011, CR-013, CR-016, CR-021, CR-037), e tickets do Radar de Oportunidades estão na área Conversas.', a: 'Onda 0, na própria reunião: apagar, mesclar e corrigir tipo e área. A contagem fica confiável para o status report.', c: ['CR-001', 'CR-032', 'CR-023', 'CR-024', 'CR-025', 'CR-026'] },
+  { t: 'Cada autora escreve de um jeito', p: 'Os tickets da Vanessa já vêm com objetivo, comportamento esperado e critérios de aceite: estão prontos para desenvolvimento. Os da Ana Flávia vêm como história de usuário. Os da Vania trazem visão de produto e costumam virar épico.', a: 'Puxar primeiro os já especificados; para os curtos, fazer uma pergunta de esclarecimento antes de estimar.', c: ['CR-027', 'CR-028', 'CR-029', 'CR-034', 'CR-037'] },
+];
+$('#insights').innerHTML = INS.map((i) => `<article class="ins"><h3>${esc(i.t)}</h3><p>${esc(i.p)}</p>${chips(i.c)}<p class="acao"><b>Ação:</b> ${esc(i.a)}</p></article>`).join('');
+
+const DEC = [
+  ['Tags de tecnologia: tirar do card da resposta ou dar mais destaque?', 'Tirar do card do chat e manter clicáveis na lista e na ficha de Projetos.', ['CR-030', 'CR-013', 'CR-014']],
+  ['A barra do "por que apareceu" mostra o peso do critério ou a contribuição para aquele projeto?', 'Mostrar a contribuição, numa escala única de 0 a 100%.', ['CR-028']],
+  ['O "Ver como" simula só permissões ou um usuário diferente? O que é "Meus projetos"?', 'Simula permissões; "Meus projetos" = projetos em que sou responsável. Escrever a regra na ajuda.', ['CR-007', 'CR-031', 'CR-006']],
+  ['Quando o perfil não pode ver algo, a resposta sugere alternativas ou só avisa?', 'Avisar e oferecer pedir acesso ao gestor; não trocar por outras referências sem dizer.', ['CR-042', 'CR-043']],
+  ['No download, o Radar entrega o arquivo original ou uma conversão?', 'Original sempre que existir; conversão só para documentos montados pelo Radar.', ['CR-033']],
+  ['Juntar a busca de projetos e de documentos numa tela só?', 'Sim, com resultado agrupado por tipo. Fazer depois das correções de busca da Onda 1.', ['CR-011']],
+  ['Trocar a navegação atual pelo menu lateral do wireframe ainda no piloto?', 'Só depois da Onda 2; antes, entregar o ícone de Ajuda no rodapé.', ['CR-025', 'CR-026']],
+  ['Qual épico entra em descoberta no piloto?', 'Um só: painel executivo (CR-009) se o foco é patrocinador; pastas por proposta (CR-017) se o foco é uso diário.', ['CR-009', 'CR-017', 'CR-016', 'CR-019']],
+];
+$('#decisoes').innerHTML = DEC.map(([q, s, c]) => `<li><b>${esc(q)}</b>${chips(c)}<span class="sug">Sugestão para abrir a conversa: ${esc(s)}</span></li>`).join('');
+
+const DESC = { 0: 'Apagar, mesclar e corrigir tipo e área. Cabe na reunião.', 1: 'Bugs, bloqueios de teste e risco de permissão. Afetam a confiança no que o Radar responde.', 2: 'Ajustes de interface e de texto da resposta, quase todos já especificados.', 3: 'Precisam de uma decisão de produto antes de virar tarefa.', 4: 'Mudam o que o Radar é. Escolher um para descoberta.' };
+const ordemP = ['critica', 'alta', 'media', 'baixa'];
+const ordena = (a, b) => ordemP.indexOf(a.p) - ordemP.indexOf(b.p) || a.codigo.localeCompare(b.codigo);
+$('#ondas').innerHTML = Object.entries(D.ondas).map(([k, nome]) => {
+  const ts = abertos.filter((t) => String(t.onda) === k).sort(ordena);
+  return `<div class="onda"><h3>${esc(nome)}</h3><span class="n">${ts.length} tickets</span><p>${esc(DESC[k])}</p>${chips(ts.map((t) => t.codigo))}</div>`;
+}).join('');
+
+const IMP = [['critica', 'alta'], ['media'], ['baixa']];
+const IMPN = ['Impacto alto', 'Impacto médio', 'Impacto baixo'];
+const ESFS = ['P', 'M', 'G'];
+let m = '<span></span>' + ['Esforço pequeno', 'Esforço médio', 'Esforço grande'].map((x) => `<span class="eixo">${x}</span>`).join('');
+IMP.forEach((ps, i) => {
+  m += `<span class="eixo v">${IMPN[i]}</span>`;
+  ESFS.forEach((e, j) => {
+    const ts = abertos.filter((t) => ps.includes(t.p) && t.e === e && t.onda !== 0).sort(ordena);
+    const nota = i === 0 && j === 0 ? 'Fazer primeiro' : i === 0 && j === 2 ? 'Planejar como épico' : i === 2 && j === 0 ? 'Encaixar quando sobrar tempo' : '';
+    m += `<div class="cel${i === 0 && j === 0 ? ' destaque' : ''}"><small>${IMPN[i]} · ${ESF[e]}${nota ? ` · <b>${nota}</b>` : ''}</small>${ts.length ? chips(ts.map((t) => t.codigo)) : '<small>—</small>'}</div>`;
+  });
+});
+$('#matriz').innerHTML = m;
+
+const opt = (el, obj, todos) => { $(el).innerHTML = `<option value="">${todos}</option>` + Object.entries(obj).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join(''); };
+opt('#f-tema', D.temas, 'Todos os temas');
+opt('#f-onda', D.ondas, 'Todas as ondas');
+opt('#f-prio', PRIO, 'Todas');
+const textoCopia = (t) => `${t.codigo} · Prioridade sugerida: ${PRIO[t.p]} · Esforço: ${t.e}\nDireção: ${t.dir}${t.q ? `\nDecisão: ${t.q}` : ''}`;
+function pintar() {
+  const tema = $('#f-tema').value, onda = $('#f-onda').value, prio = $('#f-prio').value, b = $('#f-busca').value.trim().toLowerCase();
+  const ts = abertos.filter((t) => (!tema || t.tema === tema) && (!onda || String(t.onda) === onda) && (!prio || t.p === prio)
+    && (!b || `${t.codigo} ${t.titulo} ${t.texto} ${t.dir}`.toLowerCase().includes(b))).sort((a, b2) => a.onda - b2.onda || ordena(a, b2));
+  $('#contador').textContent = `${ts.length} de ${abertos.length} tickets`;
+  $('#linhas').innerHTML = ts.map((t) => `<tr id="${t.codigo.toLowerCase()}">
+    <td class="cod">${t.codigo}</td>
+    <td><span class="tit">${esc(t.titulo)}</span><span class="meta">${esc(D.tipos[t.tipo])} · ${esc(D.areas[t.area])} · ${esc(t.autor)} · ${t.data}${t.origem === 'roteiro' ? ` · roteiro ${esc(t.cenario)}` : ''}</span></td>
+    <td>${esc(D.temas[t.tema])}<br><span class="meta">${esc(D.ondas[t.onda])}</span></td>
+    <td><span class="prio ${t.p}">${PRIO[t.p]}</span></td>
+    <td>${ESF[t.e]}</td>
+    <td>${esc(t.dir)}${t.q ? `<span class="q">Decidir: ${esc(t.q)}</span>` : ''}</td>
+    <td><button type="button" class="copiar" data-copiar="${t.codigo}" aria-label="Copiar a direção do ${t.codigo}">Copiar</button></td></tr>`).join('') || '<tr><td colspan="7">Nenhum ticket com esses filtros.</td></tr>';
+}
+['#f-tema', '#f-onda', '#f-prio'].forEach((s) => $(s).addEventListener('change', pintar));
+$('#f-busca').addEventListener('input', pintar);
+pintar();
+$('#fechados').textContent = `Fora da tabela, já fechados: ${D.tickets.filter((t) => !t.aberto).map((t) => `${t.codigo} (${D.status[t.status]})`).join(', ')}.`;
+
+document.addEventListener('click', async (e) => {
+  const ir = e.target.closest('[data-ir]');
+  if (ir) {
+    e.preventDefault();
+    ['#f-tema', '#f-onda', '#f-prio', '#f-busca'].forEach((s) => ($(s).value = ''));
+    pintar();
+    const tr = document.getElementById(ir.dataset.ir.toLowerCase());
+    if (tr) { document.querySelectorAll('tr.alvo').forEach((x) => x.classList.remove('alvo')); tr.classList.add('alvo'); tr.scrollIntoView({ block: 'center' }); }
+    return;
+  }
+  const cp = e.target.closest('[data-copiar]');
+  if (cp) {
+    try { await navigator.clipboard.writeText(textoCopia(porCod[cp.dataset.copiar])); cp.textContent = 'Copiado'; }
+    catch { cp.textContent = 'Não deu para copiar'; }
+    setTimeout(() => (cp.textContent = 'Copiar'), 1800);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>Status — Radar</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/tema.js"></script>
+</head>
+<body class="status-page">
+  <header class="topbar">
+    <div class="brand"><i data-icon="radar" data-size="22"></i><span>Radar · Status</span><span class="versao" id="st-versao"></span></div>
+    <div class="st-head-acoes">
+      <span id="st-atualizado" class="muted small"></span>
+      <button type="button" class="btn sm" id="st-atualizar"><i data-icon="history" data-size="14"></i>Atualizar</button>
+      <a class="btn sm primary" href="/">Abrir o Radar</a>
+    </div>
+  </header>
+  <main class="st-main" id="st-main"><p class="muted">Carregando…</p></main>
+  <footer class="made-by"><span>Protótipo com dados fictícios · página só de leitura (para editar tickets, use o menu Versão → Tickets no Radar)</span></footer>
+  <script type="module" src="/status.js"></script>
+</body>
+</html>

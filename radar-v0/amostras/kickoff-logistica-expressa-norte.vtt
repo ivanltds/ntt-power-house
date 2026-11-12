@@ -1,0 +1,21 @@
+WEBVTT
+
+1
+00:00:05.000 --> 00:00:18.000
+<v Juliana Prado>Bom dia a todos. Sou gerente de operações da Expressa Norte Logística e vou conduzir pelo lado do cliente.
+
+2
+00:00:19.000 --> 00:00:40.000
+<v Carlos Menezes>Obrigado, Juliana. Eu sou o gerente de projeto pela NTT. O objetivo é otimizar as rotas de entrega last mile com previsão de demanda por região.
+
+3
+00:01:02.000 --> 00:01:30.000
+<v Juliana Prado>Hoje roteirizamos em planilha. Nossa meta é reduzir 15% do custo de frete e o atraso nas entregas.
+
+4
+00:02:10.000 --> 00:02:45.000
+<v Carlos Menezes>A proposta prevê dados em AWS com modelos de machine learning em Python e painéis em Power BI. O prazo estimado é de 16 semanas.
+
+5
+00:03:00.000 --> 00:03:20.000
+<v Juliana Prado>Um risco é a qualidade dos endereços no cadastro, que tem muitos erros.
