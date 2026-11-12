@@ -313,6 +313,13 @@ export class RadarEngine {
     const lowEvidence = results.length > 0 && results.length < 3;
     // Sem resultados (UC03.12, decisão D06 de 12/11): diz que não achou nada relevante e sugere buscas próximas
     // que trazem resultado. Cada sugestão é um segmento ou tecnologia de projetos que o usuário pode ver.
+    // CR-042 / D07: pedido de um projeto específico (ex.: "ficha do P005") que o perfil não pode ver ou que não existe:
+    // avisa e oferece, em uma frase, buscar projetos parecidos pelo tema; não lista referências que não foram pedidas
+    // e não revela se o projeto existe (projeto confidencial é invisível para quem não tem permissão).
+    const codigo = !results.length && /\bP\d{3}\b/i.exec(query)?.[0].toUpperCase();
+    if (codigo) {
+      return finish({ entidades: entities, resposta: `Não encontrei o ${codigo} entre os projetos que o seu perfil pode ver. Se quiser, me diga o tema e eu busco projetos parecidos que você pode ver.`, sugestoes: [], semEvidencia: true, resultados: [], candidatosAvaliados: candidates.length });
+    }
     const sugestoes = results.length ? [] : sugerirBuscas(candidates, entities);
     const resposta = results.length && semantic && analysis.resposta
       ? onlyCitedResults(analysis.resposta, results) || this.llm.compose({ query, results, complementares, lowEvidence })

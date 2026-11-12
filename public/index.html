@@ -10,7 +10,7 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><i data-icon="radar" data-size="22"></i><span>Radar</span><button type="button" class="versao" id="versao" title="Notas da versão · protótipo com dados fictícios">V0.0.1</button></div>
+    <div class="brand"><i data-icon="radar" data-size="22"></i><span>Radar</span><button type="button" class="versao" id="versao" title="Notas da versão · protótipo com dados fictícios">V0.0.2</button></div>
     <nav class="tabs" aria-label="Seções">
       <button data-tab="busca" class="active" aria-current="true" title="Perguntar à base"><i data-icon="message"></i><span>Perguntar</span></button>
       <button data-tab="projetos" title="Projetos"><i data-icon="folder"></i><span>Projetos</span></button>
@@ -19,6 +19,7 @@
     </nav>
     <div class="context">
       <span id="ia-badge" class="tag warn hidden"></span>
+      <button type="button" id="visao-tag" class="visao-tag" title="Usuário de demonstração ativo. Clique para trocar."><i data-icon="eye" data-size="14"></i><span id="visao-nome">Visão</span></button>
       <div class="focus">
         <button type="button" id="focus-btn" class="pill focus-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="focus-pop" title="Escolha um projeto para o chat responder pensando nele"><i data-icon="briefcase" data-size="16"></i><span id="focus-label">Responder para…</span><i data-icon="chevronDown" data-size="14"></i></button>
         <div id="focus-pop" class="focus-pop hidden">
@@ -30,6 +31,7 @@
       <div class="menu">
         <button id="menu-btn" class="icon-btn" aria-haspopup="true" aria-expanded="false" title="Mais opções"><i data-icon="menu"></i></button>
         <div id="menu" class="menu-pop hidden" role="menu">
+          <button type="button" id="menu-fechar" class="icon-btn sm menu-fechar" title="Fechar o menu (Esc)" aria-label="Fechar o menu"><i data-icon="x" data-size="16"></i></button>
           <label class="menu-field"><span><i data-icon="eye" data-size="15"></i>Ver como <em>demonstração</em></span><select id="user" aria-label="Ver como"></select></label>
           <small class="muted">Simula o que cada perfil enxerga. Some quando houver login.</small>
           <div class="menu-field theme-field"><span><i data-icon="sun" data-size="15"></i>Tema</span>
@@ -68,12 +70,14 @@
         <div class="chat-main">
           <div class="conv-bar">
             <button id="toggle-convs" class="icon-btn" title="Mostrar/ocultar conversas"><i data-icon="sidebar"></i></button>
-            <input id="conv-title" placeholder="Nova conversa" maxlength="80" aria-label="Nome da conversa" title="Nome da conversa (Enter para renomear)">
+            <input id="conv-title" placeholder="Nova conversa" maxlength="80" aria-label="Nome da conversa" title="Nome da conversa: clique para editar, Enter salva, Esc cancela">
+            <button id="edit-title" class="icon-btn sm" title="Editar título" aria-label="Editar o título da conversa"><i data-icon="edit" data-size="15"></i></button>
             <button id="fav-conv" class="icon-btn star" title="Favoritar"><i data-icon="star"></i></button>
           </div>
           <div id="briefing" class="briefing hidden"></div>
           <div id="chat" class="chat"></div>
           <form id="ask" class="ask">
+            <span id="editando" class="memory editando hidden"><i data-icon="edit" data-size="13"></i>Editando a última pergunta<button type="button" id="editando-cancelar" class="link-btn">Cancelar</button></span>
             <span id="memory" class="memory hidden"></span>
             <input id="query" autocomplete="off" enterkeyhint="send" aria-label="Pergunta" placeholder="Pergunte sobre propostas, clientes, tecnologias…">
             <button type="submit" class="icon-btn send" title="Enviar"><i data-icon="send"></i></button>
@@ -159,5 +163,12 @@
     <pre id="viewer-body"></pre>
   </dialog>
   <script type="module" src="/app.js"></script>
+  <dialog id="dlg-excluir-conv" class="dlg dlg-confirma" aria-labelledby="dlg-excluir-h">
+    <form method="dialog">
+      <header class="dlg-head"><h3 id="dlg-excluir-h">Excluir conversa</h3><button class="icon-btn" value="cancelar" title="Fechar" aria-label="Fechar"><i data-icon="x"></i></button></header>
+      <p>Ao excluir a conversa “<b id="dlg-excluir-titulo"></b>”, ela será removida permanentemente e você não poderá acessá-la novamente.</p>
+      <div class="actions"><button class="btn" value="cancelar">Cancelar</button><button class="btn danger" value="excluir">Excluir conversa</button></div>
+    </form>
+  </dialog>
 </body>
 </html>

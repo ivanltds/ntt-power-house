@@ -31,7 +31,11 @@ async function init() {
   state.ctx = await api('/api/contexto');
   const reloadContext = async () => { state.ctx = { ...state.ctx, ...(await api(`/api/contexto?userId=${userId()}`)) }; };
   $('#user').innerHTML = state.ctx.usuarios.map((u) => `<option value="${u.id}">${esc(u.perfil.charAt(0).toUpperCase() + u.perfil.slice(1))}</option>`).join('');
-  $('#user').onchange = async () => { await reloadContext(); setFocus(null); newConversation(); loadDocs(); loadConversations(); notifyUserChange(); };
+  // CR-031: a etiqueta "Visão: …" mostra sempre qual usuário de demonstração está ativo; clicar abre o menu para trocar.
+  const pintarVisao = () => { $('#visao-nome').textContent = `Visão: ${$('#user').selectedOptions[0]?.textContent ?? ''}`; };
+  pintarVisao();
+  $('#visao-tag').onclick = (e) => { e.stopPropagation(); $('#menu-btn').click(); $('#user').focus(); };
+  $('#user').onchange = async () => { pintarVisao(); await reloadContext(); setFocus(null); newConversation(); loadDocs(); loadConversations(); notifyUserChange(); toast(`Agora você vê o Radar como ${$('#user').selectedOptions[0]?.textContent}.`); };
   setupFocus();
   setupTheme();
   // A IA só aparece no topo quando está fora do ar: ligada é o normal.
@@ -82,6 +86,8 @@ function setupMenu() {
   v.onclick = () => showReleaseNotes();
   document.addEventListener('click', (e) => { if (!e.target.closest('.menu')) toggle(false); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+  // CR-006: botão X no menu (depois de trocar o "Ver como" o menu fica aberto para mostrar as opções do perfil).
+  $('#menu-fechar').onclick = (e) => { e.stopPropagation(); toggle(false); btn.focus(); };
   $$('[data-menu]', pop).forEach((b) => (b.onclick = () => {
     toggle(false);
     if (b.dataset.menu === 'docs') { openTab('projetos'); showView('docs'); }
@@ -182,9 +188,21 @@ async function onAsk(e) {
   e?.preventDefault();
   const query = $('#query').value.trim();
   if (!query) return;
+  // CR-044: editar a última pergunta — a pergunta e a resposta anteriores saem da conversa e a nova entra no lugar.
+  if (state.editando && state.conv?.id) {
+    try { await api('/api/conversa/desfazer-ultima', { id: state.conv.id, userId: userId() }); } catch { /* conversa nova: segue como pergunta normal */ }
+    const ultimas = $$('#chat .msg');
+    ultimas.slice(-2).forEach((m) => m.remove());
+    state.conv.turnos = Math.max(0, (state.conv.turnos ?? 1) - 1);
+  }
+  pararEdicao();
   $('#query').value = '';
+  atualizarEnviar();
   $('#chat .welcome')?.remove();
-  addMsg('user', esc(query));
+  $$('#chat .msg.user .msg-editar').forEach((b) => b.remove());
+  const msgUser = addMsg('user', esc(query));
+  msgUser.insertAdjacentHTML('beforeend', `<button type="button" class="icon-btn sm msg-editar" title="Editar esta pergunta e reenviar" aria-label="Editar a última pergunta">${icon('edit', { size: 14 })}</button>`);
+  $('.msg-editar', msgUser).onclick = () => editarUltima(query);
   const pending = addMsg('bot', `<span class="typing">${icon('loader', { cls: 'spin' })}Buscando…</span>`);
   try {
     const r = await api('/api/buscar', { query, userId: userId(), opportunityId: state.foco?.id || undefined, conversaId: state.conv?.id });
@@ -198,6 +216,26 @@ async function onAsk(e) {
     pending.innerHTML = `<p class="error">${icon('alert', { size: 16 })}${esc(err.message)}</p>`;
   }
   pending.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// CR-044: a última pergunta tem um lápis; ao editar, a caixa de texto recebe a pergunta e um aviso com "Cancelar".
+function editarUltima(texto) {
+  state.editando = true;
+  $('#query').value = texto;
+  atualizarEnviar();
+  $('#editando').classList.remove('hidden');
+  $('#query').focus();
+  $('#query').select();
+}
+function pararEdicao() {
+  state.editando = false;
+  $('#editando')?.classList.add('hidden');
+}
+// CR-037: enviar só fica habilitado com texto de verdade (não vale vazio nem só espaços).
+function atualizarEnviar() {
+  const vazio = !$('#query').value.trim();
+  $('#ask .send').disabled = vazio;
+  $('#ask .send').title = vazio ? 'Escreva uma pergunta para enviar' : 'Enviar';
 }
 
 function addMsg(kind, html) {
@@ -400,6 +438,7 @@ async function loadMetrics() {
 
 function newConversation() {
   state.conv = null;
+  pararEdicao();
   const perfil = currentUser()?.perfil;
   const o = state.foco;
   const sugestoes = o
@@ -423,7 +462,9 @@ function newConversation() {
 
 function renderConvBar() {
   const c = state.conv;
+  $('#edit-title').disabled = !c;
   $('#conv-title').value = c?.titulo ?? '';
+  $('#conv-title').dataset.original = c?.titulo ?? '';
   $('#conv-title').placeholder = 'Nova conversa';
   $('#conv-title').disabled = !c;
   $('#fav-conv').disabled = !c;
@@ -456,41 +497,129 @@ async function toggleFavorite(id, favorita) {
   loadConversations();
 }
 
+// Lista de conversas (V0.0.2):
+// CR-017: Favoritas, um bloco por grupo (cliente ou proposta, nome livre), Avulsas e Arquivadas (recolhidas no fim).
+// CR-004: a estrela só aparece ao passar o mouse, e fica fixa (colorida) nas favoritas.
+// CR-018: menu ⋯ de cada conversa com Renomear, Mover para grupo, Arquivar e Excluir.
+// CR-035: excluir pede confirmação num diálogo com o título da conversa.
+let conversas = [];
 async function loadConversations() {
   const params = new URLSearchParams({ userId: userId(), busca: $('#conv-search').value });
-  const list = await api(`/api/conversas?${params}`);
+  conversas = await api(`/api/conversas?${params}`);
   const item = (c) => `
-      <li data-id="${c.id}" title="${c.turnos} pergunta${c.turnos > 1 ? 's' : ''} · ${new Date(c.atualizadaEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}">
-        <button class="icon-btn sm star${c.favorita ? ' on' : ''}" data-fav="${c.favorita ? 0 : 1}" title="${c.favorita ? 'Remover dos favoritos' : 'Favoritar'}" aria-pressed="${c.favorita}">${icon('star', { size: 15 })}</button>
+      <li data-id="${c.id}" class="${c.favorita ? 'fav' : ''}" title="${c.turnos} pergunta${c.turnos > 1 ? 's' : ''} · ${new Date(c.atualizadaEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}">
         <a href="#" class="open">${esc(c.titulo)}</a>
-        <button class="icon-btn sm del" title="Excluir" aria-label="Excluir conversa">${icon('trash', { size: 15 })}</button>
+        <button class="icon-btn sm star${c.favorita ? ' on' : ''}" data-fav="${c.favorita ? 0 : 1}" title="${c.favorita ? 'Remover dos favoritos' : 'Favoritar'}" aria-pressed="${c.favorita}">${icon('star', { size: 15 })}</button>
+        <button class="icon-btn sm mais" title="Mais opções" aria-label="Mais opções da conversa ${esc(c.titulo)}" aria-haspopup="menu">${icon('more', { size: 15 })}</button>
       </li>`;
-  // Favoritas primeiro, depois as recentes; cada conversa aparece uma vez só.
-  const favs = list.filter((c) => c.favorita);
-  const recentes = list.filter((c) => !c.favorita);
-  const grupo = (ic, titulo, itens) => (itens.length ? `<li class="conv-group" role="presentation">${icon(ic, { size: 14 })}${titulo}</li>${itens.map(item).join('')}` : '');
-  $('#conv-list').innerHTML = list.length
-    ? grupo('star', 'Favoritas', favs) + grupo('clock', 'Recentes', recentes)
+  const ativas = conversas.filter((c) => !c.arquivada);
+  const favs = ativas.filter((c) => c.favorita);
+  const grupos = [...new Set(ativas.filter((c) => !c.favorita && c.grupo).map((c) => c.grupo))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  const avulsas = ativas.filter((c) => !c.favorita && !c.grupo);
+  const arquivadas = conversas.filter((c) => c.arquivada);
+  const bloco = (ic, titulo, itens, extra = '') => (itens.length ? `<li class="conv-group${extra}" role="presentation">${icon(ic, { size: 14 })}<span>${esc(titulo)}</span><em>${itens.length}</em></li>${itens.map(item).join('')}` : '');
+  $('#conv-list').innerHTML = conversas.length
+    ? bloco('star', 'Favoritas', favs)
+      + grupos.map((g) => bloco('folder', g, ativas.filter((c) => !c.favorita && c.grupo === g), ' grupo')).join('')
+      + bloco('clock', grupos.length ? 'Avulsas' : 'Recentes', avulsas)
+      + (arquivadas.length ? `<li class="conv-arq" role="presentation"><details><summary>${icon('archive', { size: 14 })}<span>Arquivadas</span><em>${arquivadas.length}</em></summary><ul>${arquivadas.map(item).join('')}</ul></details></li>` : '')
     : `<li class="empty">${icon('message', { size: 16 })}${$('#conv-search').value ? 'Nenhuma conversa com essa busca' : 'Suas conversas aparecem aqui'}</li>`;
   $$('#conv-list li[data-id]').forEach((li) => {
     const id = li.dataset.id;
     $('.open', li).onclick = (e) => { e.preventDefault(); openConversation(id); };
     $('.star', li).onclick = (e) => toggleFavorite(id, e.currentTarget.dataset.fav === '1');
-    // Exclusão em dois cliques, sem diálogo modal do navegador.
-    $('.del', li).onclick = async (e) => {
-      const btn = e.currentTarget;
-      if (!btn.classList.contains('confirm')) {
-        btn.classList.add('confirm');
-        btn.title = 'Toque de novo para excluir';
-        setTimeout(() => { btn.classList.remove('confirm'); btn.title = 'Excluir'; }, 3000);
-        return;
-      }
-      await api('/api/conversa/excluir', { id, userId: userId() });
-      if (state.conv?.id === id) newConversation();
-      loadConversations();
-    };
+    $('.mais', li).onclick = (e) => { e.stopPropagation(); abrirMenuConversa(id, e.currentTarget); };
   });
   highlightConv();
+}
+
+function fecharMenuConversa() {
+  $('#conv-menu')?.remove();
+  document.removeEventListener('click', fecharMenuConversa);
+}
+
+function abrirMenuConversa(id, botao) {
+  fecharMenuConversa();
+  const c = conversas.find((x) => x.id === id);
+  if (!c) return;
+  const grupos = [...new Set(conversas.map((x) => x.grupo).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  const menu = document.createElement('div');
+  menu.id = 'conv-menu';
+  menu.className = 'conv-menu';
+  menu.setAttribute('role', 'menu');
+  menu.innerHTML = `
+    <button type="button" role="menuitem" data-m="renomear">${icon('edit', { size: 14 })}Renomear</button>
+    <div class="conv-menu-sec" role="group" aria-label="Mover para grupo"><span>${icon('folder', { size: 14 })}Mover para grupo</span>
+      ${grupos.map((g) => `<button type="button" role="menuitemradio" aria-checked="${c.grupo === g}" data-grupo="${esc(g)}">${c.grupo === g ? icon('check', { size: 13 }) : '<i class="sp"></i>'}${esc(g)}</button>`).join('')}
+      ${c.grupo ? `<button type="button" role="menuitem" data-grupo="">${'<i class="sp"></i>'}Tirar do grupo</button>` : ''}
+      <form class="conv-novo-grupo"><input name="g" maxlength="40" placeholder="Novo grupo (ex.: cliente ou proposta)" aria-label="Nome do novo grupo"><button type="submit" class="icon-btn sm" title="Criar grupo e mover">${icon('plus', { size: 14 })}</button></form>
+    </div>
+    <button type="button" role="menuitem" data-m="arquivar">${icon('archive', { size: 14 })}${c.arquivada ? 'Desarquivar' : 'Arquivar'}</button>
+    <button type="button" role="menuitem" data-m="excluir" class="perigo">${icon('trash', { size: 14 })}Excluir</button>`;
+  document.body.appendChild(menu);
+  const r = botao.getBoundingClientRect();
+  menu.style.top = `${Math.min(r.bottom + 4, innerHeight - menu.offsetHeight - 8)}px`;
+  menu.style.left = `${Math.max(8, Math.min(r.right - menu.offsetWidth, innerWidth - menu.offsetWidth - 8))}px`;
+  menu.onclick = (e) => e.stopPropagation();
+  menu.onkeydown = (e) => { if (e.key === 'Escape') { fecharMenuConversa(); botao.focus(); } };
+  setTimeout(() => document.addEventListener('click', fecharMenuConversa), 0);
+  const mover = async (grupo) => {
+    await api('/api/conversa/grupo', { id, userId: userId(), grupo });
+    fecharMenuConversa();
+    toast(grupo ? `Conversa movida para "${grupo}"` : 'Conversa tirada do grupo');
+    loadConversations();
+  };
+  $$('[data-grupo]', menu).forEach((b) => (b.onclick = () => mover(b.dataset.grupo)));
+  $('.conv-novo-grupo', menu).onsubmit = (e) => { e.preventDefault(); const g = e.target.g.value.trim(); if (g) mover(g); };
+  $('[data-m="renomear"]', menu).onclick = () => { fecharMenuConversa(); renomearNaLista(id); };
+  $('[data-m="arquivar"]', menu).onclick = async () => {
+    await api('/api/conversa/arquivar', { id, userId: userId(), arquivada: !c.arquivada });
+    fecharMenuConversa();
+    toast(c.arquivada ? 'Conversa desarquivada' : 'Conversa arquivada');
+    loadConversations();
+  };
+  $('[data-m="excluir"]', menu).onclick = () => { fecharMenuConversa(); confirmarExclusao(c); };
+  $('button', menu).focus();
+}
+
+// Renomear direto na lista: Enter salva, Esc cancela.
+function renomearNaLista(id) {
+  const li = $(`#conv-list li[data-id="${id}"]`);
+  const a = li && $('.open', li);
+  if (!a) return;
+  const input = Object.assign(document.createElement('input'), { value: a.textContent, maxLength: 80, className: 'conv-rename' });
+  input.setAttribute('aria-label', 'Novo nome da conversa');
+  a.replaceWith(input);
+  input.focus();
+  input.select();
+  let feito = false;
+  const fim = async (salvar) => {
+    if (feito) return;
+    feito = true;
+    if (salvar && input.value.trim() && input.value.trim() !== a.textContent) {
+      const r = await api('/api/conversa/salvar', { id, userId: userId(), titulo: input.value });
+      if (state.conv?.id === id) { Object.assign(state.conv, r); renderConvBar(); }
+      toast('Conversa renomeada');
+    }
+    loadConversations();
+  };
+  input.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); fim(true); } if (e.key === 'Escape') { e.preventDefault(); fim(false); } };
+  input.onblur = () => fim(true);
+}
+
+function confirmarExclusao(c) {
+  const dlg = $('#dlg-excluir-conv');
+  $('#dlg-excluir-titulo', dlg).textContent = c.titulo;
+  dlg.returnValue = '';
+  dlg.showModal();
+  $('[value="cancelar"]', dlg).focus();
+  dlg.onclose = async () => {
+    if (dlg.returnValue !== 'excluir') return;
+    await api('/api/conversa/excluir', { id: c.id, userId: userId() });
+    if (state.conv?.id === c.id) newConversation();
+    toast('Conversa excluída');
+    loadConversations();
+  };
 }
 
 function highlightConv() {
@@ -526,8 +655,18 @@ function setupConversations() {
   layout.addEventListener('click', (e) => {
     if (mobile.matches && (e.target === layout || e.target.closest('#new-conv, #conv-list .open'))) layout.classList.remove('no-side');
   });
-  // Renomear: Enter no título grava o novo nome.
-  $('#conv-title').onkeydown = (e) => { if (e.key === 'Enter' && state.conv) { e.preventDefault(); renameConversation(); e.target.blur(); } };
+  // Renomear (CR-034): lápis ao lado do título; Enter salva, Esc cancela e volta o nome anterior.
+  $('#conv-title').onkeydown = (e) => {
+    if (e.key === 'Enter' && state.conv) { e.preventDefault(); renameConversation(); e.target.blur(); }
+    if (e.key === 'Escape') { e.preventDefault(); e.target.value = e.target.dataset.original ?? ''; e.target.blur(); }
+  };
+  $('#edit-title').onclick = () => { $('#conv-title').focus(); $('#conv-title').select(); };
+  // CR-037: botão enviar só com texto; Enter com a caixa vazia não faz nada.
+  $('#query').addEventListener('input', atualizarEnviar);
+  atualizarEnviar();
+  $('#editando-cancelar').onclick = () => { pararEdicao(); $('#query').value = ''; atualizarEnviar(); };
+  // CR-035: clicar fora do diálogo de excluir cancela.
+  $('#dlg-excluir-conv').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.close('cancelar'); });
   $('#conv-search').oninput = loadConversations;
 }
 

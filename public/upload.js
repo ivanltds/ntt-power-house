@@ -57,6 +57,12 @@ async function sendFiles(files) {
   if (!files.length) return;
   // Termo aceito uma vez por versão (UC13.1). O servidor mascara dados sensíveis sem bloquear o envio (UC13.2).
   if (!(await ensureTerms())) { $('#file').value = ''; return; }
+  // CR-010: formato não aceito é avisado antes de enviar, com a lista de formatos; o arquivo nem entra na lista.
+  const aceitos = state.ctx.catalogo.formatosUpload.map((f) => f.toLowerCase());
+  const recusados = files.filter((f) => !aceitos.includes(f.name.split('.').pop().toLowerCase()));
+  if (recusados.length) toast(`${recusados.map((f) => f.name).join(', ')}: formato não aceito. Envie ${aceitos.join(', ').toUpperCase()}.`, 'error');
+  files = files.filter((f) => !recusados.includes(f));
+  if (!files.length) { $('#file').value = ''; return; }
   for (const file of files) {
     const enviar = async () => api('/api/upload', { nome: file.name, conteudoBase64: toBase64(await file.arrayBuffer()), userId: userId(), projetoId: $('#upload-target').value || undefined });
     try {
@@ -108,7 +114,17 @@ async function showJob(id, refreshing) {
   // Durante o processamento as etapas mostram o progresso; depois ficam recolhidas.
   const etapas = processando ? lista : `<details class="how"><summary>${icon('layers', { size: 14 })}Como foi processado</summary>${lista}</details>`;
   const head = `<header class="job-head"><h3>${icon('file', { size: 18 })}${esc(job.nome_arquivo)}</h3>${statusBadge(job.status)}</header>`;
-  if (job.status === 'erro') { box.innerHTML = `${head}${etapas}<p class="alert error">${icon('xCircle', { size: 16 })}<span>${esc(job.erro)}</span></p>`; return; }
+  // CR-010: arquivo recusado não trava o envio: dá para tirar da lista ou trocar por outro, e a mensagem diz os formatos aceitos.
+  if (job.status === 'erro') {
+    const formatos = state.ctx.catalogo.formatosUpload.join(', ').toUpperCase();
+    box.innerHTML = `${head}${etapas}<p class="alert error">${icon('xCircle', { size: 16 })}<span>${esc(job.erro)}</span></p>
+      <p class="muted small">Formatos aceitos: ${esc(formatos)} · até ${state.ctx.catalogo.maxUploadMb} MB.</p>
+      <div class="actions"><button id="job-trocar" class="btn primary">${icon('upload', { size: 16 })}Trocar arquivo</button><button id="job-remover" class="btn">${icon('x', { size: 16 })}Remover da lista</button></div>`;
+    const remover = async () => { await api('/api/upload/rejeitar', { id: job.id, userId: userId() }); view.selecionado = null; $('#job-detail').innerHTML = ''; loadJobs(); };
+    $('#job-remover').onclick = () => remover().then(() => toast(`${job.nome_arquivo} removido da lista.`)).catch((e) => toast(e.message, 'error'));
+    $('#job-trocar').onclick = () => { if (job.projeto_alvo_id) $('#upload-target').value = job.projeto_alvo_id; remover().then(() => $('#file').click()).catch((e) => toast(e.message, 'error')); };
+    return;
+  }
   if (job.status === 'indexado') {
     box.innerHTML = `${head}${etapas}<div class="done">${icon('checkCircle', { size: 36 })}<p>Na base como <b>${esc(job.documento_id)}</b></p><button id="job-open" class="btn">${icon('folder', { size: 16 })}Abrir projeto</button><button id="job-next" class="link-btn">Enviar outro</button></div>`;
     $('#job-open').onclick = () => openProject(job.documento_id.replace(/-[^-]+$/, ''));
