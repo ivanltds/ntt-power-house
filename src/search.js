@@ -535,7 +535,7 @@ export class RadarEngine {
     const ids = [...new Set(out.passos.flatMap((p) => p.ids ?? []))];
     const blocos = out.passos.filter((p) => p.tipo).map((p) => ({ tipo: p.tipo, ferramenta: p.ferramenta, dados: p.dados }));
     const texto = onlyCitedResults(out.resposta || '', ids.map((projeto_id) => ({ projeto_id })))
-      || (blocos.length ? 'Reuni as informações abaixo a partir da base.' : 'Não consegui montar a resposta com as ferramentas disponíveis. Tente dividir a pergunta em partes.');
+      || (blocos.length ? 'Reuni as informações abaixo a partir da base.' : 'Para essa pergunta, a resposta fica melhor em partes: peça primeiro a lista e depois a comparação ou o detalhe.');
     return responder('composta', {
       resposta: texto,
       dados: { blocos },

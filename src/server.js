@@ -348,7 +348,7 @@ const routes = {
       try {
         analise = await engine.llm.describeFeedback({ texto: maskSensitive(b.texto).texto, area: AREAS[b.area] ?? 'Outro', imagens });
       } catch (err) {
-        aviso = `Não foi possível analisar as imagens agora (${err.name === 'TimeoutError' ? 'tempo esgotado' : err.message}). O texto foi registrado.`;
+        aviso = 'O texto foi registrado. A descrição automática das imagens não veio desta vez; se precisar, descreva o que aparece nelas no ticket.';
       }
     };
     const hospedar = async () => {

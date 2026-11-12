@@ -24,7 +24,7 @@ export function initCampanha(abrirFeedback) {
   faixa.setAttribute('role', 'region');
   faixa.setAttribute('aria-label', 'Convite');
   faixa.innerHTML = `<span class="campanha-emoji" aria-hidden="true">🎮</span>
-    <span class="campanha-txt"><b>Desbloqueie a próxima fase do Radar.</b> Em 1 minuto, conte o que travou, o que faltou ou o que você mudaria.</span>
+    <span class="campanha-txt"><b>Desbloqueie a próxima fase do Radar.</b> Em 1 minuto, conte o que funcionou bem, o que faltou ou o que você mudaria.</span>
     <button type="button" class="btn sm primary" id="campanha-ir">${icon('message', { size: 14 })}Dar minha opinião</button>
     <button type="button" class="icon-btn sm" id="campanha-fechar" title="Fechar" aria-label="Fechar">${icon('x', { size: 14 })}</button>`;
   $('#main').before(faixa);

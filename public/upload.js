@@ -220,7 +220,7 @@ function reviewForm(job, etapas) {
     ${maskNote(s.mascaramento)}
     <form id="review" class="review">
       <div class="review-meta">
-        <span title="${iaOn ? 'Metadados por regras + IA (DeepSeek)' : 'Metadados só por regras (IA offline)'}">${icon(iaOn ? 'sparkles' : 'cpu', { size: 15 })}${iaOn ? 'Lido com IA' : 'Lido por regras'}</span>
+        <span title="${iaOn ? 'Metadados por regras + IA (DeepSeek)' : 'Dados extraídos pelas regras do Radar'}">${icon(iaOn ? 'sparkles' : 'cpu', { size: 15 })}${iaOn ? 'Lido com IA' : 'Lido por regras'}</span>
         <span title="${c.qualidade.faltando.length ? `Falta: ${c.qualidade.faltando.join(', ')}` : 'Todos os campos preenchidos'}">${icon('checkCircle', { size: 15 })}${c.qualidade.percentual}% dos campos preenchidos</span>
         ${s.alertas.some((a) => a.nivel === 'info' && a.codigo !== 'mascaramento') ? `<span title="${esc(s.alertas.filter((a) => a.nivel === 'info' && a.codigo !== 'mascaramento').map((a) => a.mensagem).join('\n'))}">${icon('info', { size: 15 })}</span>` : ''}
       </div>

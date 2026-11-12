@@ -318,7 +318,7 @@ export async function openProject(id) {
     const lista = $('#pd-envios');
     for (const id of ids) {
       const li = document.createElement('li');
-      li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}<span>Processando…</span>`;
+      li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}<span>Extraindo os dados</span>`;
       lista.appendChild(li);
       const acompanhar = async () => {
         if (!li.isConnected) return;
