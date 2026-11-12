@@ -480,7 +480,7 @@ Notas do revisor: ${r.observacoes}` : r.texto,
 
   jobs(usuarioId) {
     return this.all(`SELECT id, nome_arquivo, formato, tamanho_bytes, status, projeto_alvo_id, documento_id, erro, criado_em, concluido_em
-      FROM processamento WHERE enviado_por = $u ORDER BY criado_em DESC LIMIT 100`, { $u: usuarioId });
+      FROM processamento WHERE enviado_por = $u AND status <> 'rejeitado' ORDER BY criado_em DESC LIMIT 100`, { $u: usuarioId });
   }
 
   logCorrection(c) {

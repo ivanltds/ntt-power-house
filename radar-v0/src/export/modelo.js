@@ -54,7 +54,8 @@ export function buildContent(detail, user) {
       : null,
     resultados: secao('resultados', lista(ents('kpi')), 'sem resultados nos documentos'),
     cases: secao('cases', lista(detail.relacionados.map((r) => `${plain(r.titulo)} — ${r.cliente}${r.status_proposta ? ` (${r.status_proposta})` : ''}`)), 'sem projetos parecidos'),
-    riscos: secao('riscos', lista(ents('risco')), 'sem riscos nos documentos'),
+    // CR-033: fala de transcrição (pergunta ou "Nome: fala") não é risco; fica fora do documento exportado.
+    riscos: secao('riscos', lista(ents('risco').filter((r) => !/\?\s*$/.test(r) && !/^[A-ZÀ-Ú][\wÀ-ú]+( [A-ZÀ-Ú][\wÀ-ú]+)+:\s/.test(r) && !/^A ideia é/i.test(r))), 'sem riscos nos documentos'),
     licoes: secao('licoes', lista(ents('licao')), 'sem lições nos documentos'),
     fontes: secao('fontes', lista(docs.map((d) => `${plain(d.titulo)} · ${TIPOS_DOCUMENTAIS[d.tipo_documental] ?? d.tipo_documental} · ${TRUST[d.nivel_confianca] ?? ''}`)), 'sem documentos'),
   };

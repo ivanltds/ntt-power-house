@@ -323,7 +323,9 @@ export function textoFicha(f) {
   const restritos = f.campos.filter((c) => c.restrito).map((c) => c.rotulo.toLowerCase());
   const vazios = f.campos.filter((c) => !c.restrito && c.valor == null).map((c) => c.rotulo.toLowerCase());
   let t = `Ficha de “${f.titulo}” (${f.cliente}, ${f.projeto_id})`;
-  t += vistos.length ? `: ${vistos.join('; ')}.` : '.';
+  // CR-042: ficha completa já aparece na tabela da tela; o texto não repete os campos (só pedidos de 1 a 3 campos vêm no texto).
+  if (vistos.length > 3) t += '. Os dados do cadastro estão na tabela abaixo.';
+  else t += vistos.length ? `: ${vistos.join('; ')}.` : '.';
   if (restritos.length) t += ` Restrito ao seu perfil: ${list(restritos)}.`;
   if (vazios.length) t += ` Não ${vazios.length > 1 ? 'estão informados' : 'está informado'} no cadastro: ${list(vazios)}.`;
   return t;

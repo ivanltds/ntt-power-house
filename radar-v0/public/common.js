@@ -81,6 +81,10 @@ export async function openDoc(id) {
   $('#viewer-title').textContent = `${d.meta.cliente} — ${d.meta.titulo ?? tipoLabel(d.meta.tipo)} (${d.meta.arquivo})`;
   $('#viewer-body').textContent = d.conteudo;
   $('#viewer-download').onclick = () => downloadDoc(id);
+  // CR-033 / D20: o botão baixa o arquivo original, como foi enviado; o rótulo mostra o formato para não haver surpresa.
+  const ext = String(d.meta.arquivo ?? '').split('.').pop().toUpperCase();
+  const rot = [...$('#viewer-download').childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+  if (rot) rot.textContent = ext && ext.length <= 5 ? `Baixar original (${ext})` : 'Baixar original';
   $('#viewer').showModal();
 }
 

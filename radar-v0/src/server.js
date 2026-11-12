@@ -248,6 +248,24 @@ const routes = {
     return c ? { id: c.id, titulo: c.titulo, salva: c.salva, favorita: c.favorita } : [404, { erro: 'Conversa não encontrada ou ainda sem perguntas.' }];
   },
 
+  'POST /api/conversa/grupo': async (req) => {
+    const { id, userId, grupo } = await readJson(req);
+    const c = conversations.group(id, engine.user(userId).id, grupo);
+    return c ? { id: c.id, grupo: c.grupo } : [404, { erro: 'Conversa não encontrada ou ainda sem perguntas.' }];
+  },
+
+  'POST /api/conversa/arquivar': async (req) => {
+    const { id, userId, arquivada } = await readJson(req);
+    const c = conversations.archive(id, engine.user(userId).id, arquivada);
+    return c ? { id: c.id, arquivada: c.arquivada } : [404, { erro: 'Conversa não encontrada ou ainda sem perguntas.' }];
+  },
+
+  'POST /api/conversa/desfazer-ultima': async (req) => {
+    const { id, userId } = await readJson(req);
+    const pergunta = conversations.dropLastTurn(id, engine.user(userId).id);
+    return pergunta != null ? { pergunta } : [404, { erro: 'Conversa não encontrada ou sem perguntas.' }];
+  },
+
   'POST /api/conversa/excluir': async (req) => {
     const { id, userId } = await readJson(req);
     return conversations.remove(id, engine.user(userId).id) ? { ok: true } : [404, { erro: 'Conversa não encontrada.' }];
