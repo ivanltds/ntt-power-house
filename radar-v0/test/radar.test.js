@@ -919,6 +919,10 @@ test('versões: V0.0.1 arquivada e congelada; cenário que passa valida os ticke
   assert.deepEqual(q.registrar({ versao: VERSAO, cenario: 'C01', analista: 'Ana', resultado: 'falha', comentario: 'Quebrou.' }).validados, []);
   assert.deepEqual(q.versoes(VERSAO).map((v) => [v.versao, v.atual]), [[VERSAO, true], ['V0.0.1', false]]);
   assert.equal(q.resumo('V0.0.1').arquivada, true);
+  // Cenários que não passaram na versão anterior: destacados e filtráveis no roteiro da atual.
+  q.data.execucoes['V0.0.1'] = { inicio: 'x', resultados: { C05: { Ana: { resultado: 'bloqueado', em: '2026-11-01', ticket: 'CR-039' } }, C01: { Ana: { resultado: 'ok', em: '2026-11-01' } }, C09: { Bia: { resultado: 'falha', em: '2026-11-01', ticket: 'CR-041' }, Caio: { resultado: 'ok', em: '2026-11-02' } } } };
+  assert.deepEqual(q.naoPassaramAntes(VERSAO, VERSAO), { versao: 'V0.0.1', cenarios: { C05: { resultado: 'bloqueado', ticket: 'CR-039' } } }, 'vale o resultado mais recente');
+  assert.equal(q.naoPassaramAntes('V0.0.1', VERSAO), null);
 });
 
 test('tickets: apagar esconde o ticket das listas e números, guarda quem e por quê, e não reaproveita o código', () => {
