@@ -1735,3 +1735,13 @@ details.pd-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 #conv-list .box-rec { align-items: stretch; gap: 0; padding-right: 4px; }
 #conv-list .box-rec .conv-box-list { overflow-x: hidden; }
 #conv-list .box-rec > .conv-box-head { justify-content: flex-start; }
+/* Hover só da conversa sob o mouse: caixas e grupos também são <li>, então a regra antiga mostrava todas as estrelas
+   da caixa ao passar o mouse em qualquer ponto dela. */
+#conv-list li:hover .star, #conv-list li:hover .mais, #conv-list li:focus-within .star, #conv-list li:focus-within .mais { opacity: 0; }
+#conv-list li[data-id]:hover > .star, #conv-list li[data-id]:hover > .mais, #conv-list li[data-id]:focus-within > .star, #conv-list li[data-id]:focus-within > .mais, #conv-list li[data-id] > .star.on { opacity: 1; }
+@media (hover: none) { #conv-list li[data-id] > .star, #conv-list li[data-id] > .mais { opacity: 1; } }
+/* Favoritas no azul da página (sem amarelo): estrela marcada, ícone e setinha da caixa */
+.icon-btn.star.on, .star.on { color: var(--brand); }
+#conv-list .box-fav .conv-box-head svg { color: var(--brand); }
+#conv-list .conv-box-head .conv-chev svg, #conv-list .conv-box-head .conv-chev { color: var(--muted); }
+:root[data-theme="dark"] .icon-btn.star.on, :root[data-theme="dark"] .star.on, :root[data-theme="dark"] #conv-list .box-fav .conv-box-head svg { color: #8fb4ff; }
