@@ -170,6 +170,8 @@ const TICKETS = ['tickets', 'files', 'Tickets', () => carregando(), async (body)
 }];
 
 // ---------- Roteiro de testes ----------
+// Cenário que não passou na versão anterior (destaque e filtro no roteiro da versão atual).
+const antes = (q, id) => q.naoPassaramAntes?.cenarios?.[id] ?? null;
 const AREA_ICON = { conversas: 'message', projetos: 'folder', upload: 'upload', insights: 'chart' };
 const PRIORIDADE = { alta: 'Prioridade alta', media: 'Prioridade média' };
 
@@ -189,6 +191,7 @@ function cenarioHtml(c, q) {
   return `<li class="qa-cen${pior ? ` feito qa-r-${pior}` : ''}" data-cen="${c.id}">
     <button type="button" class="qa-cen-head" aria-expanded="false">
       <b class="qa-cod">${c.id}</b><span class="qa-tt">${esc(c.titulo)}</span>
+      ${antes(q, c.id) ? `<span class="qa-antes qa-antes-${antes(q, c.id).resultado}" title="Último resultado na ${esc(q.naoPassaramAntes.versao)}${antes(q, c.id).ticket ? ` · ticket ${esc(antes(q, c.id).ticket)}` : ''}">${icon('alert', { size: 12 })}${antes(q, c.id).resultado === 'falha' ? 'Falhou' : 'Bloqueado'} na ${esc(q.naoPassaramAntes.versao)}</span>` : ''}
       <span class="qa-prio qa-prio-${c.prioridade}" title="${PRIORIDADE[c.prioridade]}">${c.prioridade === 'alta' ? 'Alta' : 'Média'}</span>
       <span class="qa-sit">${situacao(res, R)}</span>
     </button>
@@ -234,7 +237,7 @@ function montarRoteiro(body, q) {
     <div class="qa-toolbar qa-filtros">
       ${seg('area', { todas: 'Todas as telas', ...AREAS })}
       ${seg('prioridade', { todas: 'Todas', alta: 'Alta', media: 'Média' })}
-      ${seg('situacao', { todos: 'Todos', afazer: 'A fazer', falha: 'Com falha ou bloqueio' })}
+      ${seg('situacao', { todos: 'Todos', afazer: 'A fazer', falha: 'Com falha ou bloqueio', ...(Object.keys(q.naoPassaramAntes?.cenarios ?? {}).length ? { antes: `Não passaram na ${q.naoPassaramAntes.versao} (${Object.keys(q.naoPassaramAntes.cenarios).length})` } : {}) })}
     </div>
     <p id="qa-r-prog" class="small"></p>
     <div id="qa-r-lista"></div>${listaNomes(q)}`);
@@ -243,7 +246,7 @@ function montarRoteiro(body, q) {
     const visiveis = q.roteiro.filter((c) => {
       const res = Object.values(q.execucao.resultados[c.id] ?? {});
       return (filtro.area === 'todas' || c.area === filtro.area) && (filtro.prioridade === 'todas' || c.prioridade === filtro.prioridade)
-        && (filtro.situacao === 'todos' || (filtro.situacao === 'afazer' ? !res.length : res.some((v) => v.resultado !== 'ok')));
+        && (filtro.situacao === 'todos' || (filtro.situacao === 'antes' ? Boolean(antes(q, c.id)) : filtro.situacao === 'afazer' ? !res.length : res.some((v) => v.resultado !== 'ok')));
     });
     $('#qa-r-lista', body).innerHTML = Object.entries(AREAS).map(([a, rotulo]) => {
       const cs = visiveis.filter((c) => c.area === a);

@@ -20,7 +20,7 @@ export const NOTAS = [
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
         titulo: 'Versões: V0.0.1 arquivada, seletor de versão e validação automática no reteste',
         antes: 'O roteiro e os resultados eram só da versão atual; não havia como consultar a versão anterior nem saber em que versão um ticket foi aberto, e o ticket de um cenário que voltava a passar continuava aberto até alguém mudar à mão.',
-        depois: 'Roteiro de testes e Acompanhamento têm um seletor de versão: a V0.0.1 fica arquivada, com o roteiro congelado e os resultados só para consulta. Os tickets mostram em que versão foram abertos e ganharam o filtro "Aberto na versão" (a lista continua com todas as versões juntas). Quando um cenário que falhou passa (OK) no roteiro da versão nova, os tickets ligados a ele são validados automaticamente, com registro no histórico.',
+        depois: 'Roteiro de testes e Acompanhamento têm um seletor de versão: a V0.0.1 fica arquivada, com o roteiro congelado e os resultados só para consulta. Os tickets mostram em que versão foram abertos e ganharam o filtro "Aberto na versão" (a lista continua com todas as versões juntas). Quando um cenário que falhou passa (OK) no roteiro da versão nova, os tickets ligados a ele são validados automaticamente, com registro no histórico. No roteiro da V0.0.2, os cenários que falharam ou ficaram bloqueados na V0.0.1 aparecem destacados ("Falhou na V0.0.1" / "Bloqueado na V0.0.1") e têm o filtro "Não passaram na V0.0.1".',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Insights',
