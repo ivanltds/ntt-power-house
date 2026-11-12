@@ -1718,3 +1718,20 @@ details.pd-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 .qa-antes-falha { background: var(--bad-soft); color: var(--bad); }
 .qa-antes-bloqueado { background: var(--warn-soft); color: var(--warn); }
 .qa-cen:has(.qa-antes) { box-shadow: inset 3px 0 0 var(--bad); border-radius: 10px; }
+
+/* Lateral (V0.0.2): Recentes sempre visível. As caixas recolhíveis ocupam só o necessário (abertas, até ~5 itens com
+   rolagem própria); Recentes cresce no espaço que sobra, com rolagem própria e altura mínima para umas 4 conversas. */
+#conv-list { overflow-y: auto; }
+#conv-list .conv-box.recolhe { flex: none; }
+#conv-list .conv-box.recolhe > details > summary.conv-box-head { cursor: pointer; list-style: none; margin: 0; }
+#conv-list .conv-box.recolhe > details > summary.conv-box-head::-webkit-details-marker { display: none; }
+#conv-list .conv-box.recolhe > details > summary.conv-box-head:hover { color: var(--brand); }
+#conv-list .conv-box.recolhe > details > summary span:first-of-type { flex: 1; }
+#conv-list .conv-box.recolhe > details > summary .conv-chev { flex: none; margin-left: 4px; }
+#conv-list .conv-box.recolhe > details[open] > summary .conv-chev { transform: rotate(180deg); }
+#conv-list .conv-box.recolhe > details > .conv-box-list { max-height: 11.5rem; overflow-y: auto; overscroll-behavior: contain; }
+#conv-list .box-rec { flex: 1 0 10.5rem; display: flex; flex-direction: column; min-height: 10.5rem; }
+#conv-list .box-rec .conv-box-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+#conv-list .box-rec { align-items: stretch; gap: 0; padding-right: 4px; }
+#conv-list .box-rec .conv-box-list { overflow-x: hidden; }
+#conv-list .box-rec > .conv-box-head { justify-content: flex-start; }
