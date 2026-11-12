@@ -103,7 +103,7 @@ const FEEDBACK = ['feedback', 'message', 'Enviar feedback', () => carregando(), 
   const { areas, tipos } = q.rotulos;
   const imagens = [];
   body.insertAdjacentHTML('beforeend', `
-    <p>Conte o que aconteceu. Cada envio vira um ticket com um <b>código de correção</b> (ex.: CR-001) para você acompanhar em <b>Tickets</b>.</p>
+    <p>Conte o que aconteceu. Cada envio recebe um <b>código</b> (ex.: CR-001), que o time usa para acompanhar o que você relatou.</p>
     <form id="qa-fb" class="qa-form">
       ${campoNome('id="qa-fb-nome"')}${listaNomes(q)}
       <div class="qa-row">
@@ -148,7 +148,7 @@ const FEEDBACK = ['feedback', 'message', 'Enviar feedback', () => carregando(), 
       document.dispatchEvent(new CustomEvent('radar:feedback-enviado'));
       $('#qa-fb-nome', body).value = '';
       const t = r.ticket;
-      out.innerHTML = `<div class="qa-ok-box">${icon('check', { size: 18 })}<div><b>Ticket ${esc(t.codigo)} aberto.</b> Guarde o código para acompanhar a correção em Tickets.
+      out.innerHTML = `<div class="qa-ok-box">${icon('check', { size: 18 })}<div><b>Ticket ${esc(t.codigo)} aberto.</b> Obrigado! Guarde o código se quiser falar com o time sobre ele.
         ${t.descricaoImagens.length ? `<p class="small"><b>O que a IA viu nas imagens:</b></p><ul class="small">${t.descricaoImagens.map((d) => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}</div></div>`;
       $('#qa-fb-texto', body).value = '';
       imagens.length = 0;

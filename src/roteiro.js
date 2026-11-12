@@ -565,8 +565,8 @@ export const ROTEIRO = [
   c('C44', 'media', 'Ajuda e versão na lateral das conversas',
     'Ver se a ajuda está à vista, sem depender do menu.',
     [NOVA],
-    ['Olhe o fim da coluna da esquerda.', 'Clique em "Como usar o Radar" e feche.', 'Clique em "Versão, feedback e testes" e feche.'],
-    ['A coluna da esquerda tem o fundo no tom azul da marca e, no fim, os atalhos "Como usar o Radar", "Versão, feedback e testes" e "Enviar feedback".', 'Cada atalho abre a tela certa.', 'O logo da ImpactAI ("Criado e desenvolvido por") fica sempre visível no fim da coluna.'],
+    ['Olhe o fim da coluna da esquerda.', 'Clique em "Como usar o Radar" e feche.', 'Clique em "Enviar feedback" e feche sem enviar.'],
+    ['A coluna da esquerda tem o fundo no tom azul da marca e, no fim, os atalhos "Como usar o Radar" e "Enviar feedback".', '"Como usar o Radar" abre o guia; "Enviar feedback" abre só o formulário de feedback, sem as telas de versão, tickets e testes.', 'O logo da ImpactAI ("Criado e desenvolvido por") fica sempre visível no fim da coluna.'],
     { tickets: ['CR-026', 'CR-003'] }),
 
   c('P26', 'alta', 'Filtros ativos como etiquetas e "Ver N projetos"',

@@ -8,7 +8,7 @@ import { initPainel } from './painel.js';
 import { initCampanha } from './campanha.js';
 import { showGuide, showTech } from './ajuda.js';
 import { showSdlc } from './sdlc.js';
-import { VERSAO, showReleaseNotes } from './versao.js';
+import { VERSAO, showReleaseNotes, showFeedback } from './versao.js';
 import { initActivities } from './atividades.js';
 import { welcomeOnFirstVisit, showPolicy } from './aviso.js';
 import { renderTyped, bindTyped, typeTag, citeNames } from './respostas.js';
@@ -60,7 +60,7 @@ async function init() {
   initUploads();
   initInsights();
   initPainel();
-  initCampanha(() => showReleaseNotes('feedback'));
+  initCampanha(() => showFeedback());
   initActivities();
   newConversation();
   loadConversations();
@@ -92,7 +92,7 @@ function setupMenu() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
   // CR-006: botão X no menu (depois de trocar o "Ver como" o menu fica aberto para mostrar as opções do perfil).
   // CR-026: Ajuda, versão e feedback visíveis na lateral das conversas (antes só no menu ⋮).
-  $$('[data-side]').forEach((b) => (b.onclick = () => ({ ajuda: showGuide, versao: () => showReleaseNotes(), feedback: () => showReleaseNotes('feedback') })[b.dataset.side]()));
+  $$('[data-side]').forEach((b) => (b.onclick = () => ({ ajuda: showGuide, feedback: showFeedback })[b.dataset.side]()));
   $('#menu-fechar').onclick = (e) => { e.stopPropagation(); toggle(false); btn.focus(); };
   $$('[data-menu]', pop).forEach((b) => (b.onclick = () => {
     toggle(false);

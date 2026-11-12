@@ -104,7 +104,7 @@ export const NOTAS = [
         tipo: 'melhoria', status: 'feito', area: 'Geral', tickets: ['CR-006', 'CR-015', 'CR-025', 'CR-026'],
         titulo: 'Menu com X, seção atual em destaque, títulos da ficha e lateral com ajuda',
         antes: 'O menu ⋮ só fechava clicando fora; a aba atual era pouco visível; os títulos da ficha eram pequenos e cinza; a ajuda ficava escondida no menu.',
-        depois: 'O menu tem X (e Esc). A aba atual fica em azul cheio com um traço embaixo. Os títulos das seções da ficha estão maiores, em azul. A coluna de conversas ganhou o tom da marca e os atalhos "Como usar o Radar", "Versão, feedback e testes" e "Enviar feedback". Cards têm um ícone por segmento.',
+        depois: 'O menu tem X (e Esc). A aba atual fica em azul cheio com um traço embaixo. Os títulos das seções da ficha estão maiores, em azul. A coluna de conversas ganhou o tom da marca e os atalhos "Como usar o Radar" e "Enviar feedback" (que abre só o formulário). Cards têm um ícone por segmento.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
@@ -210,6 +210,11 @@ const COMO = ['como', 'info', 'Como ler', () => `
   <h4>Feedbacks e testes</h4>
   <p><b>Enviar feedback</b> abre um ticket com código (CR-001, CR-002…). <b>Tickets</b> mostra os abertos e o retorno de cada correção. <b>Roteiro de testes</b> é o checklist regressivo da versão: cada analista marca OK, Falhou ou Bloqueado; uma falha abre um ticket automaticamente. <b>Acompanhamento</b> mostra o andamento em gráficos.</p>
   ${tip('Ao publicar uma versão nova, o roteiro começa zerado para ela. Os tickets não resolvidos continuam abertos e o histórico das versões anteriores fica no Acompanhamento.')}`];
+
+// Só o formulário de feedback, sem as seções de versão, tickets e testes (lateral das conversas e convite de opinião).
+export function showFeedback() {
+  render('Enviar feedback', 'Conte o que aconteceu ou o que você mudaria', [SECOES_QUALIDADE.find(([id]) => id === 'feedback')]);
+}
 
 export function showReleaseNotes(v = NOTAS[0].versao) {
   render(`Versão ${VERSAO}`, 'Notas da versão, feedbacks e testes regressivos · protótipo com dados fictícios', [...NOTAS.map(secao), ...SECOES_QUALIDADE, COMO], v);
