@@ -567,6 +567,8 @@ async function toggleFavorite(id, favorita) {
 // CR-035: excluir pede confirmação num diálogo com o título da conversa.
 let conversas = [];
 const GRUPOS_KEY = 'radar.conversas.gruposAbertos';
+const CAIXAS_KEY = 'radar.conversas.caixasAbertas';
+const caixasAbertas = () => { try { return new Set(JSON.parse(localStorage.getItem(CAIXAS_KEY)) ?? []); } catch { return new Set(); } };
 const gruposAbertos = () => { try { return new Set(JSON.parse(localStorage.getItem(GRUPOS_KEY)) ?? []); } catch { return new Set(); } };
 async function loadConversations() {
   const params = new URLSearchParams({ userId: userId(), busca: $('#conv-search').value });
@@ -591,12 +593,24 @@ async function loadConversations() {
   };
   // Um componente (caixa) para cada tipo: Favoritas, Grupos, Arquivadas (recolhida) e Recentes.
   const caixa = (ic, titulo, n, corpo, extra = '') => `<li class="conv-box${extra}" role="presentation"><div class="conv-box-head">${icon(ic, { size: 14 })}<span>${titulo}</span><em>${n}</em></div><ul class="conv-box-list">${corpo}</ul></li>`;
+  // Favoritas, Grupos e Arquivadas recolhem e começam fechadas (o navegador lembra as abertas); com busca, abrem todas.
+  // Recentes fica sempre aberta e ocupa o espaço que sobra, com rolagem própria, para nunca sumir da tela.
+  const buscando = Boolean($('#conv-search').value.trim());
+  // A caixa que tem a conversa aberta na tela abre sozinha (ex.: conversa de um grupo ou arquivada).
+  const contemAtual = (chave) => Boolean(state.conv?.id) && ({ fav: favs, grupos: ativas.filter((c) => c.grupo), arq: arquivadas }[chave] ?? []).some((c) => c.id === state.conv.id);
+  const caixaRecolhivel = (chave, ic, titulo, n, corpo) => `<li class="conv-box box-${chave} recolhe" role="presentation"><details data-caixa="${chave}"${buscando || caixasAbertas().has(chave) || contemAtual(chave) ? ' open' : ''}><summary class="conv-box-head">${icon(ic, { size: 14 })}<span>${titulo}</span><em>${n}</em><span class="conv-chev">${icon('chevronDown', { size: 14 })}</span></summary><ul class="conv-box-list">${corpo}</ul></details></li>`;
   $('#conv-list').innerHTML = conversas.length
-    ? (favs.length ? caixa('star', 'Favoritas', favs.length, favs.map(item).join(''), ' box-fav') : '')
-      + (grupos.length ? caixa('folder', 'Grupos', grupos.length, grupos.map(blocoGrupo).join(''), ' box-grupos') : '')
-      + (arquivadas.length ? `<li class="conv-box box-arq" role="presentation"><details><summary class="conv-box-head">${icon('archive', { size: 14 })}<span>Arquivadas</span><em>${arquivadas.length}</em><span class="conv-chev">${icon('chevronDown', { size: 14 })}</span></summary><ul class="conv-box-list">${arquivadas.map(item).join('')}</ul></details></li>` : '')
+    ? (favs.length ? caixaRecolhivel('fav', 'star', 'Favoritas', favs.length, favs.map(item).join('')) : '')
+      + (grupos.length ? caixaRecolhivel('grupos', 'folder', 'Grupos', grupos.length, grupos.map(blocoGrupo).join('')) : '')
+      + (arquivadas.length ? caixaRecolhivel('arq', 'archive', 'Arquivadas', arquivadas.length, arquivadas.map(item).join('')) : '')
       + (avulsas.length ? caixa('clock', 'Recentes', avulsas.length, avulsas.map(item).join(''), ' box-rec') : '')
     : `<li class="empty">${icon('message', { size: 16 })}${$('#conv-search').value ? 'Nenhuma conversa com essa busca' : 'Suas conversas aparecem aqui'}</li>`;
+  $$('#conv-list [data-caixa]').forEach((d) => d.addEventListener('toggle', () => {
+    if (buscando) return;
+    const abertas = caixasAbertas();
+    if (d.open) abertas.add(d.dataset.caixa); else abertas.delete(d.dataset.caixa);
+    try { localStorage.setItem(CAIXAS_KEY, JSON.stringify([...abertas])); } catch { /* navegação privada */ }
+  }));
   $$('#conv-list [data-grupo-sec]').forEach((d) => d.addEventListener('toggle', () => {
     const abertos = gruposAbertos();
     if (d.open) abertos.add(d.dataset.grupoSec); else abertos.delete(d.dataset.grupoSec);
