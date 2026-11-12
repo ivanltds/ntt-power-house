@@ -523,8 +523,8 @@ export const ROTEIRO = [
   c('C38', 'alta', 'Grupos de conversas, arquivar e menu da conversa',
     'Ver se dá para organizar as conversas por cliente ou proposta.',
     ['Faça o cenário C27 (tenha a sua conversa "Teste do roteiro").'],
-    ['Na coluna da esquerda, passe o mouse sobre a sua conversa e clique nos três pontinhos (⋯).', 'Em "Mover para grupo", escreva "Roteiro" seguido do seu nome e clique no +.', 'Abra o menu de novo e clique em "Renomear"; mude o nome e aperte Enter.', 'Abra o menu e clique em "Arquivar".', 'No fim da lista, abra "Arquivadas", abra o menu da conversa e clique em "Desarquivar".'],
-    ['A conversa passa a aparecer num grupo com o nome escolhido, separado das "Recentes" (se ela for favorita, aparece também em "Favoritas"). Os grupos vêm fechados (só o da conversa aberta abre sozinho); clicar no nome do grupo abre e fecha, e o Radar lembra quais você deixou abertos.', 'O nome muda na lista e aparece o aviso "Conversa renomeada".', 'Arquivada, a conversa sai dos blocos e fica em "Arquivadas", no fim da lista.', 'Desarquivada, ela volta para o grupo.'],
+    ['Na coluna da esquerda, passe o mouse sobre a sua conversa e clique nos três pontinhos (⋯).', 'Em "Mover para grupo", escreva "Roteiro" seguido do seu nome e clique no +.', 'Abra o menu de novo e clique em "Renomear"; mude o nome e aperte Enter.', 'Abra o menu e clique em "Arquivar".', 'Abra a caixa "Arquivadas" (entre Grupos e Recentes), abra o menu da conversa e clique em "Desarquivar".'],
+    ['A conversa passa a aparecer num grupo com o nome escolhido, separado das "Recentes" (se ela for favorita, aparece também em "Favoritas"). Os grupos vêm fechados (só o da conversa aberta abre sozinho); clicar no nome do grupo abre e fecha, e o Radar lembra quais você deixou abertos.', 'O nome muda na lista e aparece o aviso "Conversa renomeada".', 'Arquivada, a conversa sai dos blocos e fica na caixa "Arquivadas", entre Grupos e Recentes.', 'Desarquivada, ela volta para o grupo.'],
     { tickets: ['CR-017', 'CR-018'] }),
 
   c('C39', 'media', 'Editar o título pelo lápis',
