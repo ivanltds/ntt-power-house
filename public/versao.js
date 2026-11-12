@@ -96,9 +96,9 @@ export const NOTAS = [
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Projetos', tickets: ['CR-007', 'CR-031'],
-        titulo: '"Meus projetos" por perfil e etiqueta da visão',
+        titulo: '"Meus projetos" por perfil e perfil ativo sempre visível',
         antes: '"Meus projetos" mostrava a mesma lista para consultor e gestor, e não havia sinal de qual perfil estava ativo.',
-        depois: 'Cada usuário de demonstração representa um responsável da base (Consultor = Marina Costa, Gestor = Thiago Ramos); "Meus projetos" mostra os projetos em que ele é o responsável ou enviou documento. A etiqueta "Visão: …" fica sempre no alto e abre o "Ver como".',
+        depois: 'Cada usuário de demonstração representa um responsável da base (Consultor = Marina Costa, Gestor = Thiago Ramos); "Meus projetos" mostra os projetos em que ele é o responsável ou enviou documento. O botão de conta, no canto superior direito, mostra sempre quem está ativo (iniciais, nome e perfil) e abre o menu com o "Ver como".',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Geral', tickets: ['CR-006', 'CR-015', 'CR-025', 'CR-026'],

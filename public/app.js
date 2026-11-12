@@ -32,13 +32,18 @@ async function init() {
   state.ctx = await api('/api/contexto');
   const reloadContext = async () => { state.ctx = { ...state.ctx, ...(await api(`/api/contexto?userId=${userId()}`)) }; };
   $('#user').innerHTML = state.ctx.usuarios.map((u) => `<option value="${u.id}">${esc(u.perfil.charAt(0).toUpperCase() + u.perfil.slice(1))}</option>`).join('');
-  // CR-031: a etiqueta "Visão: …" mostra sempre qual usuário de demonstração está ativo; clicar abre o menu para trocar.
+  // CR-031: o botão de conta (canto superior direito) mostra sempre quem está ativo — iniciais, primeiro nome e perfil —,
+  // como em qualquer app; clicar abre o menu, com o "Ver como" no topo para trocar de perfil.
   const pintarVisao = () => {
     const u = state.ctx.usuarios.find((x) => x.id === $('#user').value);
-    $('#visao-nome').textContent = `Visão: ${$('#user').selectedOptions[0]?.textContent ?? ''}${u?.pessoa ? ` · ${u.pessoa}` : ''}`;
+    const perfil = $('#user').selectedOptions[0]?.textContent ?? '';
+    const nome = u?.pessoa ?? perfil;
+    $('#conta-av').textContent = nome.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase();
+    $('#conta-nome').textContent = nome.split(/\s+/)[0];
+    $('#conta-perfil').textContent = perfil;
+    $('#menu-btn').title = `${nome} · ${perfil} (demonstração). Clique para trocar de perfil e ver as opções.`;
   };
   pintarVisao();
-  $('#visao-tag').onclick = (e) => { e.stopPropagation(); $('#menu-btn').click(); $('#user').focus(); };
   $('#user').onchange = async () => { pintarVisao(); await reloadContext(); setFocus(null); newConversation(); loadDocs(); loadConversations(); notifyUserChange(); toast(`Agora você vê o Radar como ${$('#user').selectedOptions[0]?.textContent}.`); };
   setupFocus();
   setupTheme();

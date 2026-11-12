@@ -293,7 +293,7 @@ export const ROTEIRO = [
     'Ver o filtro de projetos ligados a você.',
     [CONSULTOR, PROJETOS, FILTROS],
     ['Clique em "Meus projetos", no alto do painel de filtros, e anote os projetos.', 'Clique de novo para desligar.', GESTOR, 'Ligue "Meus projetos" de novo.'],
-    ['No alto da tela, a etiqueta mostra "Visão: Consultor · Marina Costa" e depois "Visão: Gestor · Thiago Ramos".', 'Como consultor, aparecem os projetos em que Marina Costa é a responsável (ou em que esse perfil enviou documento).', 'Como gestor, a lista é outra: os projetos de Thiago Ramos.', 'Clicando de novo, a lista completa volta.']),
+    ['No canto superior direito, o botão de conta mostra "MC Marina · Consultor" e depois "TR Thiago · Gestor".', 'Como consultor, aparecem os projetos em que Marina Costa é a responsável (ou em que esse perfil enviou documento).', 'Como gestor, a lista é outra: os projetos de Thiago Ramos.', 'Clicando de novo, a lista completa volta.']),
 
   c('P10', 'alta', 'Buscar no conteúdo dos documentos',
     'Ver se a busca encontra projetos pelo que está escrito nos documentos.',
@@ -558,8 +558,8 @@ export const ROTEIRO = [
   c('C43', 'media', 'Etiqueta da visão, menu e seção atual',
     'Ver se fica claro com que perfil e em que seção você está.',
     [],
-    ['Olhe o alto da tela.', 'Clique na etiqueta "Visão: …".', 'No menu, troque o "Ver como".', 'Clique no X no alto do menu.', 'Clique nas abas Projetos, Enviar e Insights.'],
-    ['A etiqueta "Visão: Consultor · Marina Costa" (ou Gestor · Thiago Ramos) aparece no alto, sempre visível.', 'Clicar nela abre o menu no "Ver como"; trocando, a etiqueta muda e aparece um aviso.', 'O X fecha o menu (Esc também).', 'A aba atual fica em azul cheio, com um traço embaixo, bem diferente das outras.'],
+    ['Olhe o canto superior direito da tela.', 'Clique no botão com as iniciais e o nome.', 'No menu, troque o "Ver como".', 'Clique no X no alto do menu.', 'Clique nas abas Projetos, Enviar e Insights.'],
+    ['O botão de conta mostra um círculo com as iniciais, o primeiro nome e, embaixo, o perfil (ex.: "MC Marina · Consultor"), nas cores da página, sempre visível.', 'Clicar nele abre o menu, com o "Ver como" no topo; trocando, o botão passa a mostrar a outra pessoa e o outro perfil, e aparece um aviso.', 'O X fecha o menu (Esc também).', 'A aba atual fica em azul cheio, com um traço embaixo, bem diferente das outras.'],
     { tickets: ['CR-031', 'CR-006', 'CR-025'] }),
 
   c('C44', 'media', 'Ajuda e versão na lateral das conversas',
