@@ -236,7 +236,7 @@ const GUIA = [
       ['Não acho um projeto em Projetos.', 'Limpe os filtros. Se for confidencial, o perfil consultor não o vê.'],
       ['Enviei um PDF e não veio texto.', 'Provavelmente é uma imagem escaneada. O V0 não faz OCR: envie a versão em Word ou PDF com texto.'],
       ['O Radar diz que o arquivo já existe.', 'Um arquivo idêntico já está na base. Abra o projeto para encontrá-lo.'],
-      ['Aparece "IA offline".', 'A DeepSeek não respondeu. O Radar continua funcionando com regras, de forma mais simples.'],
+      ['Aparece "Modo regras" ou "resposta direta da base".', 'A resposta foi montada pelas regras e pela busca por palavras do Radar, direto dos dados da base. Repita a pergunta para ter a resposta com a análise da IA.'],
     ])}`],
 ];
 
@@ -391,7 +391,7 @@ const TECNICO = [
     <h4>5. Conflito de fontes</h4>
     <p>Quando documentos discordam (prazo, valor), vale a fonte de maior confiança: <b>5</b> proposta final aprovada, SOW ou contrato · <b>4</b> proposta ou case · <b>3</b> estimativa, ata validada ou ficha · <b>2</b> transcrição, e-mail ou documento técnico · <b>1</b> rascunho. O cartão mostra "dados divergentes".</p>
     <h4>Sem IA</h4>
-    <p>Se a DeepSeek falhar (timeout de 45 s, chave inválida, JSON malformado), o <b>MockLLM</b> assume com regras: entidades pelo léxico, ranking só pelo score multi-fator e resposta montada a partir dos fatos. A tela mostra "IA offline".</p>`],
+    <p>Se a DeepSeek falhar (timeout de 45 s, chave inválida, JSON malformado), o <b>MockLLM</b> assume com regras: entidades pelo léxico, ranking só pelo score multi-fator e resposta montada a partir dos fatos. A tela mostra "Modo regras" no alto ou "resposta direta da base" na resposta.</p>`],
 
   ['exportacao', 'download', 'Exportação e registro', () => `
     <h4>Exportação de proposta</h4>
