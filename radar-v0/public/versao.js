@@ -108,9 +108,9 @@ export const NOTAS = [
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
-        titulo: 'Roteiro da V0.0.2: 97 cenários, com Insights',
+        titulo: 'Roteiro da V0.0.2: 99 cenários, com Insights',
         antes: 'O roteiro tinha 74 cenários de Conversas, Projetos e Envio.',
-        depois: 'O roteiro da V0.0.2 tem 97 cenários: os 74 anteriores (ajustados às telas novas) e 23 novos, entre eles 7 da aba Insights. Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
+        depois: 'O roteiro da V0.0.2 tem 99 cenários: os 74 anteriores (ajustados às telas novas) e 25 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45) e as seções da ficha que recolhem (P29). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
       },
     ],
   },
