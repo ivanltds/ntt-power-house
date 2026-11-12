@@ -92,11 +92,12 @@ if (typeof document !== 'undefined') {
   });
 }
 
-// Filtros do quadro guardados na sessão do navegador: voltar de um ticket, fechar e reabrir a janela ou recarregar
-// a página não perde a visão nem os filtros.
+// Filtros do quadro guardados no navegador (localStorage): sobrevivem a voltar de um ticket, fechar a janela,
+// ir para outra tela, abrir o Radar em outra aba ou fechar o navegador. "Limpar" volta ao padrão.
+// sessionStorage não servia: vale só para a aba e some no navegador do WhatsApp/Teams a cada abertura.
 const FILTROS_KEY = 'radar.tickets.filtros';
-const lerFiltros = () => { try { const x = JSON.parse(sessionStorage.getItem(FILTROS_KEY)); return x && typeof x === 'object' ? x : null; } catch { return null; } };
-const gravarFiltros = (f) => { try { sessionStorage.setItem(FILTROS_KEY, JSON.stringify({ ...f, nomes: [...f.nomes] })); } catch { /* sem sessionStorage: segue sem lembrar */ } };
+const lerFiltros = () => { try { const x = JSON.parse(localStorage.getItem(FILTROS_KEY)); return x && typeof x === 'object' ? x : null; } catch { return null; } };
+const gravarFiltros = (f) => { try { localStorage.setItem(FILTROS_KEY, JSON.stringify({ ...f, nomes: [...f.nomes] })); } catch { /* navegação privada: segue sem lembrar */ } };
 
 // root: elemento onde o quadro é montado; visao inicial: 'lista' ou 'kanban'.
 export async function montarTickets(root, { visao = 'lista' } = {}) {
