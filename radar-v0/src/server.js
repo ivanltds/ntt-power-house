@@ -329,6 +329,7 @@ const routes = {
     tickets: qualidade.tickets(),
     execucao: qualidade.execucao(v),
     resumo: qualidade.resumo(v),
+    naoPassaramAntes: qualidade.naoPassaramAntes(v, VERSAO),
     };
   },
 

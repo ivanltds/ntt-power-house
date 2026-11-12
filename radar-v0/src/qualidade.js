@@ -223,6 +223,20 @@ export class QualityStore {
     return this.data.execucoes[versao] ?? { inicio: null, resultados: {} };
   }
 
+  // Cenários que não passaram na versão anterior (último resultado Falhou ou Bloqueado), para destacar no roteiro desta.
+  // Devolve { versao, cenarios: { C05: { resultado, ticket } } } ou null quando não há versão anterior.
+  naoPassaramAntes(versao, atual) {
+    const lista = this.versoes(atual).map((v) => v.versao);
+    const anterior = lista[lista.indexOf(versao) + 1];
+    if (!anterior) return null;
+    const cenarios = {};
+    for (const [id, porAnalista] of Object.entries(this.execucao(anterior).resultados)) {
+      const u = maisRecente(porAnalista);
+      if (u && u.resultado !== 'ok') cenarios[id] = { resultado: u.resultado, ticket: u.ticket ?? null };
+    }
+    return { versao: anterior, cenarios };
+  }
+
   // Versões com roteiro: as arquivadas (só leitura), as que já têm resultados e a atual.
   versoes(atual) {
     const todas = [...new Set([...VERSOES_ARQUIVADAS, ...Object.keys(this.data.execucoes), atual])];
