@@ -13,6 +13,16 @@ const ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
 const FILTROS = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', fora_mvp: 'Fora do MVP', resolvidos: 'Resolvidos', todos: 'Todos' };
 const filtro = { tickets: 'abertos', melhorias: 'abertos' };
 const busca = { tickets: '', melhorias: '' };
+// Filtros e busca das tabelas guardados no navegador, como no quadro de tickets.
+const FILTROS_KEY = 'radar.status.filtros';
+try {
+  const s = JSON.parse(localStorage.getItem(FILTROS_KEY)) ?? {};
+  for (const k of Object.keys(filtro)) {
+    if (FILTROS[s.filtro?.[k]]) filtro[k] = s.filtro[k];
+    if (typeof s.busca?.[k] === 'string') busca[k] = s.busca[k];
+  }
+} catch { /* sem localStorage: começa no padrão */ }
+const gravarFiltros = () => { try { localStorage.setItem(FILTROS_KEY, JSON.stringify({ filtro, busca })); } catch { /* navegação privada */ } };
 let q = null;
 
 const chip = (s, rot) => `<span class="qa-chip qa-${s}">${esc(rot[s] ?? s)}</span>`;
@@ -105,10 +115,11 @@ function pintar() {
   $$('[data-sec]').forEach((b) => (b.onclick = () => {
     const k = b.dataset.sec;
     filtro[k] = b.dataset.f;
+    gravarFiltros();
     $$(`[data-sec="${k}"]`).forEach((x) => { const on = x.dataset.f === filtro[k]; x.classList.toggle('on', on); x.setAttribute('aria-checked', on); });
     $(`[data-tabela="${k}"]`).innerHTML = tabela(k, listas[k]);
   }));
-  $$('[data-busca]').forEach((inp) => (inp.oninput = () => { const k = inp.dataset.busca; busca[k] = inp.value.trim(); $(`[data-tabela="${k}"]`).innerHTML = tabela(k, listas[k]); }));
+  $$('[data-busca]').forEach((inp) => (inp.oninput = () => { const k = inp.dataset.busca; busca[k] = inp.value.trim(); gravarFiltros(); $(`[data-tabela="${k}"]`).innerHTML = tabela(k, listas[k]); }));
   $('#st-atualizado').textContent = `Atualizado às ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
 }
 
