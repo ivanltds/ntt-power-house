@@ -285,41 +285,86 @@ function uso(turnos, eventos, ps) {
 const pl = (n, um, varios) => `${n} ${n === 1 ? um : varios}`;
 const br = (v) => Number(v).toLocaleString('pt-BR', { maximumFractionDigits: 1 });
 const fmtMi = (v) => `R$ ${(v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} mi`;
+// Cada manchete: frase (texto, para copiar e para o relatório) + número em destaque, o que ele é, o tom
+// (bom | atencao | info, sempre com ícone e rótulo na tela) e um gráfico pequeno opcional (mini):
+//   { tipo: 'pilha', itens: [{ rotulo, valor }] }  — partes de um todo (ordem fixa, cores categóricas fixas)
+//   { tipo: 'barras', itens: [{ rotulo, valor, sufixo }] } — comparação de poucos itens
+//   { tipo: 'fracao', parte, total } — x de y
+// CR-069 (Insights A + B): manchetes que respondem à pergunta da lente, com o número primeiro.
 function manchetes(l, valores) {
   const out = { negocio: [], tecnica: [], pipeline: [], prevenda: [], curadoria: [] };
+  const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
   const n = l.negocio;
-  if (valores && n.carteira.ganho.valor) out.negocio.push({ texto: `Carteira ganha de ${fmtMi(n.carteira.ganho.valor)} em ${n.carteira.ganho.n} projetos; ${fmtMi(n.carteira.aberto.valor)} em aberto.`, card: 'carteira' });
-  else out.negocio.push({ texto: `${pl(n.carteira.ganho.n, "projeto ganho", "projetos ganhos")}, ${n.carteira.aberto.n} em aberto e ${pl(n.carteira.perdido.n, "perdido", "perdidos")}.`, card: 'carteira' });
-  if (n.concentracao?.maiorSegmento) out.negocio.push({ texto: `${n.concentracao.maiorSegmento.segmento} concentra ${br(n.concentracao.maiorSegmento.pct)}% da carteira ganha.`, card: 'segmentos', filtro: { segmentos: [n.concentracao.maiorSegmento.segmento] } });
+  const { ganho: g, aberto: a, perdido: pd } = n.carteira;
+  const decididos = g.n + pd.n;
+  if (decididos) {
+    const taxa = pct(g.n, decididos);
+    out.negocio.push({
+      texto: `Ganhamos ${g.n} de ${decididos} propostas decididas (${taxa}%)${valores && g.valor ? `, ${fmtMi(g.valor)} em carteira ganha` : ''}; ${pl(a.n, 'segue', 'seguem')} em aberto.`,
+      card: 'carteira', destaque: `${taxa}%`, legenda: `taxa de ganho · ${g.n} de ${decididos} decididas`, tom: taxa >= 60 ? 'bom' : taxa < 40 ? 'atencao' : 'info',
+      mini: { tipo: 'pilha', itens: [{ rotulo: 'Ganhos', valor: g.n, cor: 1 }, { rotulo: 'Em aberto', valor: a.n, cor: 2 }, { rotulo: 'Perdidos', valor: pd.n, cor: 'neutra' }] }, // perdido em cinza: não usar verde nem cores de status
+    });
+  }
+  const segs = (n.porSegmento ?? []).filter((x) => x.decididos >= 2).sort((x, y) => y.taxa - x.taxa || y.ganhos - x.ganhos);
+  const fortes = (n.porSegmento ?? []).filter((x) => x.ganhos).sort((x, y) => (valores ? y.valorGanho - x.valorGanho : y.ganhos - x.ganhos)).slice(0, 3);
+  if (n.concentracao?.maiorSegmento && valores) {
+    out.negocio.push({
+      texto: `${n.concentracao.maiorSegmento.segmento} concentra ${br(n.concentracao.maiorSegmento.pct)}% da carteira ganha.`,
+      card: 'segmentos', filtro: { segmentos: [n.concentracao.maiorSegmento.segmento] }, destaque: `${br(n.concentracao.maiorSegmento.pct)}%`, legenda: `da carteira ganha vem de ${n.concentracao.maiorSegmento.segmento}`, tom: 'info',
+      mini: { tipo: 'barras', itens: fortes.map((x) => ({ rotulo: x.segmento, valor: Math.round(x.valorGanho / 1e5) / 10, sufixo: ' mi' })) },
+    });
+  } else if (fortes.length && (fortes[0].ganhos >= 2 && fortes[0].ganhos > (fortes[1]?.ganhos ?? 0))) { // só com um líder claro
+    out.negocio.push({
+      texto: `Onde mais ganhamos: ${fortes.map((x) => `${x.segmento} (${pl(x.ganhos, 'ganho', 'ganhos')})`).join(', ')}.`,
+      card: 'segmentos', destaque: fortes[0].segmento, legenda: `segmento com mais projetos ganhos (${fortes[0].ganhos})`, tom: 'bom',
+      mini: { tipo: 'barras', itens: fortes.map((x) => ({ rotulo: x.segmento, valor: x.ganhos, sufixo: '' })) },
+    });
+  }
+  if (segs.length && segs.at(-1).taxa < 60) {
+    const fraco = segs.at(-1);
+    out.negocio.push({ texto: `Em ${fraco.segmento} ganhamos ${fraco.ganhos} de ${fraco.decididos} propostas decididas: é onde mais perdemos.`, card: 'segmentos', destaque: `${fraco.taxa}%`, legenda: `taxa de ganho em ${fraco.segmento}`, tom: 'atencao', mini: { tipo: 'fracao', parte: fraco.ganhos, total: fraco.decididos } });
+  }
+  const pac = (n.pacotes ?? [])[0];
+  if (pac && pac.n >= 2) out.negocio.push({ texto: `O pacote mais vendido é ${pac.servicos.join(' + ')}: ${pac.ganhos} de ${pac.n} projetos ganhos.`, card: 'pacotes', destaque: `${pac.ganhos} de ${pac.n}`, legenda: pac.servicos.join(' + '), tom: 'bom', mini: { tipo: 'fracao', parte: pac.ganhos, total: pac.n } });
   const md = n.margemPorDuracao?.filter((x) => x.margem != null && x.n);
-  if (md?.length >= 2) { const lo = md[0], hi = md.at(-1); const d = r1(hi.margem - lo.margem); if (Math.abs(d) >= 3) out.negocio.push({ texto: `Projetos de ${hi.faixa} têm margem ${br(Math.abs(d))} p.p. ${d > 0 ? 'acima' : 'abaixo'} dos de ${lo.faixa} (n = ${lo.n} e ${hi.n}).`, card: 'duracao' }); }
+  if (valores && md?.length >= 2) {
+    const lo = md[0], hi = md.at(-1); const d = r1(hi.margem - lo.margem);
+    if (Math.abs(d) >= 3) out.negocio.push({ texto: `Projetos de ${hi.faixa} têm margem ${br(Math.abs(d))} p.p. ${d > 0 ? 'acima' : 'abaixo'} dos de ${lo.faixa} (n = ${lo.n} e ${hi.n}).`, card: 'duracao', destaque: `${d > 0 ? '+' : '−'}${br(Math.abs(d))} p.p.`, legenda: `margem de ${hi.faixa} contra ${lo.faixa}`, tom: 'info', mini: { tipo: 'barras', itens: md.map((x) => ({ rotulo: x.faixa, valor: x.margem, sufixo: '%' })) } });
+  }
   const fraca = l.prevenda.find((p) => p.nivel === 'fraca') ?? l.prevenda.find((p) => !p.entreguesNoSegmento);
-  if (fraca) out.negocio.push({ texto: `Oportunidade ${fraca.oportunidade.id} (${fraca.oportunidade.segmento}) sem entrega no segmento para usar como prova.`, card: 'prevenda', lente: 'prevenda' });
+  if (fraca) out.negocio.push({ texto: `Oportunidade ${fraca.oportunidade.id} (${fraca.oportunidade.segmento}) sem entrega no segmento para usar como prova.`, card: 'prevenda', lente: 'prevenda', destaque: fraca.oportunidade.id, legenda: `sem entrega em ${fraca.oportunidade.segmento} para usar como prova`, tom: 'atencao' });
 
   const t = l.tecnica;
   const leg = t.licoes.filter((x) => x.legado).length;
-  if (leg) out.tecnica.push({ texto: `${leg} de ${t.licoes.length} lições citam atraso ou retrabalho por sistema, cadastro ou dado legado.`, card: 'licoes' });
-  if (t.riscosQueAconteceram.length) out.tecnica.push({ texto: `${t.riscosQueAconteceram.length} risco(s) previsto(s) na proposta aconteceram de fato (ex.: ${t.riscosQueAconteceram[0].projeto}).`, card: 'riscos' });
+  if (leg) out.tecnica.push({ texto: `${leg} de ${t.licoes.length} lições citam atraso ou retrabalho por sistema, cadastro ou dado legado.`, card: 'licoes', destaque: `${leg} de ${t.licoes.length}`, legenda: 'lições com atraso por legado', tom: 'atencao', mini: { tipo: 'fracao', parte: leg, total: t.licoes.length } });
+  if (t.riscosQueAconteceram.length) out.tecnica.push({ texto: `${t.riscosQueAconteceram.length} risco(s) previsto(s) na proposta aconteceram de fato (ex.: ${t.riscosQueAconteceram[0].projeto}).`, card: 'riscos', destaque: String(t.riscosQueAconteceram.length), legenda: 'riscos previstos que aconteceram', tom: 'atencao' });
+  if (t.estimativa.variacaoValor) out.tecnica.push({ texto: `A proposta sai em média ${br(t.estimativa.variacaoValor.media)}% acima da estimativa preliminar (n = ${t.estimativa.n}).`, card: 'estimativa', destaque: `+${br(t.estimativa.variacaoValor.media)}%`, legenda: 'da estimativa preliminar para a proposta', tom: 'info' });
+  else if (t.estimativa.prazoCresceu.length) out.tecnica.push({ texto: `O prazo cresceu entre estimativa e proposta em ${t.estimativa.prazoCresceu.length} de ${t.estimativa.n} projetos.`, card: 'estimativa', destaque: `${t.estimativa.prazoCresceu.length} de ${t.estimativa.n}`, legenda: 'propostas com prazo maior que a estimativa', tom: 'atencao', mini: { tipo: 'fracao', parte: t.estimativa.prazoCresceu.length, total: t.estimativa.n } });
   const tec = t.esfriando.filter((e) => e.tipo === 'tecnologia');
-  if (tec.length) out.tecnica.push({ texto: `${tec.slice(0, 4).map((e) => e.nome).join(', ')} sem projeto desde ${Math.max(...tec.slice(0, 4).map((e) => e.ultimo))}.`, card: 'esfriando' });
-  if (t.estimativa.variacaoValor) out.tecnica.push({ texto: `A proposta sai em média ${br(t.estimativa.variacaoValor.media)}% acima da estimativa preliminar (n = ${t.estimativa.n}).`, card: 'estimativa' });
-  else if (t.estimativa.prazoCresceu.length) out.tecnica.push({ texto: `O prazo cresceu entre estimativa e proposta em ${t.estimativa.prazoCresceu.length} de ${t.estimativa.n} projetos.`, card: 'estimativa' });
+  if (tec.length) out.tecnica.push({ texto: `${tec.slice(0, 4).map((e) => e.nome).join(', ')} sem projeto desde ${Math.max(...tec.slice(0, 4).map((e) => e.ultimo))}.`, card: 'esfriando', destaque: String(tec.length), legenda: `tecnologias sem projeto recente (${tec.slice(0, 3).map((e) => e.nome).join(', ')}${tec.length > 3 ? '…' : ''})`, tom: 'info', mini: { tipo: 'barras', itens: tec.slice(0, 4).map((e) => ({ rotulo: e.nome, valor: e.n, sufixo: ' proj.' })) } });
 
-  const a = l.pipeline.alertas;
-  const conta2 = (tipo) => a.filter((x) => x.tipo === tipo).length;
-  if (conta2('fora_da_curva')) out.pipeline.push({ texto: `${conta2('fora_da_curva')} proposta(s) com margem fora da faixa dos projetos ganhos.`, card: 'alertas' });
-  if (conta2('parada')) out.pipeline.push({ texto: `${conta2('parada')} proposta(s) sem alteração há ${DIAS_PARADA} dias ou mais.`, card: 'alertas' });
-  if (conta2('incompleta')) out.pipeline.push({ texto: `${conta2('incompleta')} proposta(s) em andamento com cadastro incompleto.`, card: 'alertas' });
-  if (conta2('parecida_com_perdida')) out.pipeline.push({ texto: `${conta2('parecida_com_perdida')} proposta(s) parecida(s) com uma perdida.`, card: 'alertas' });
-  if (!a.length) out.pipeline.push({ texto: 'Nenhum alerta no pipeline.', card: 'alertas' });
+  const al = l.pipeline.alertas;
+  const conta2 = (tipo) => al.filter((x) => x.tipo === tipo).length;
+  const abertos = (l.pipeline.funil ?? []).filter((f) => !['Entregue', 'Perdida', 'Cancelada', 'Vendida', 'Em execução'].includes(f.status));
+  const emAndamento = abertos.reduce((s2, f) => s2 + f.n, 0);
+  out.pipeline.push({ texto: `${pl(emAndamento, 'proposta em andamento', 'propostas em andamento')}${al.length ? `; ${pl(al.length, 'pede', 'pedem')} atenção` : ', nenhuma com alerta'}.`, card: 'alertas', destaque: String(emAndamento), legenda: 'propostas em andamento', tom: al.length ? 'atencao' : 'bom', mini: { tipo: 'pilha', itens: abertos.map((f) => ({ rotulo: f.status, valor: f.n })) } });
+  if (conta2('fora_da_curva')) out.pipeline.push({ texto: `${conta2('fora_da_curva')} proposta(s) com margem fora da faixa dos projetos ganhos.`, card: 'alertas', destaque: String(conta2('fora_da_curva')), legenda: 'com margem fora da faixa dos ganhos', tom: 'atencao' });
+  if (conta2('parada')) out.pipeline.push({ texto: `${conta2('parada')} proposta(s) sem alteração há ${DIAS_PARADA} dias ou mais.`, card: 'alertas', destaque: String(conta2('parada')), legenda: `paradas há ${DIAS_PARADA}+ dias`, tom: 'atencao' });
+  if (conta2('incompleta')) out.pipeline.push({ texto: `${conta2('incompleta')} proposta(s) em andamento com cadastro incompleto.`, card: 'alertas', destaque: String(conta2('incompleta')), legenda: 'com cadastro incompleto', tom: 'atencao' });
+  if (conta2('parecida_com_perdida')) out.pipeline.push({ texto: `${conta2('parecida_com_perdida')} proposta(s) parecida(s) com uma perdida.`, card: 'alertas', destaque: String(conta2('parecida_com_perdida')), legenda: 'parecidas com uma proposta perdida', tom: 'atencao' });
 
-  for (const p of l.prevenda) out.prevenda.push({ texto: `${p.oportunidade.id} · ${p.oportunidade.cliente}: prontidão ${p.nivel} (${p.entregues} entregue(s) parecido(s), ${p.comCase} com case${p.perdidas.length ? `, ${p.perdidas.length} perdida(s) parecida(s)` : ''}).`, card: 'prontidao', oportunidade: p.oportunidade.id });
+  const NIVEL = { forte: ['Pronta', 'bom'], parcial: ['Parcial', 'info'], fraca: ['Pouca prova', 'atencao'] };
+  for (const p of l.prevenda) {
+    const [rot, tom] = NIVEL[p.nivel] ?? [p.nivel, 'info'];
+    out.prevenda.push({ texto: `${p.oportunidade.id} · ${p.oportunidade.cliente}: prontidão ${p.nivel} (${p.entregues} entregue(s) parecido(s), ${p.comCase} com case${p.perdidas.length ? `, ${p.perdidas.length} perdida(s) parecida(s)` : ''}).`, card: 'prontidao', oportunidade: p.oportunidade.id, destaque: rot, legenda: `${p.oportunidade.id} · ${p.oportunidade.cliente}`, tom, mini: { tipo: 'barras', itens: [{ rotulo: 'Entregues parecidos', valor: p.entregues, sufixo: '' }, { rotulo: 'Com case', valor: p.comCase, sufixo: '' }, { rotulo: 'Perdidas parecidas', valor: p.perdidas.length, sufixo: '' }] } });
+  }
 
   const c = l.curadoria;
-  out.curadoria.push({ texto: `${c.saude.documentos - c.saude.revisados} de ${c.saude.documentos} documentos sem revisão humana.`, card: 'revisao' });
-  if (c.suspeitos.length) out.curadoria.push({ texto: `${c.suspeitos.length} cadastro(s) parecem teste e ainda entram nos números.`, card: 'testes' });
-  if (c.termosSuspeitos.length) out.curadoria.push({ texto: `${c.termosSuspeitos.length} termo(s) suspeito(s) na taxonomia.`, card: 'termos' });
-  if (c.areasFora.length) out.curadoria.push({ texto: `${c.areasFora.length} área(s) fora da lista padrão.`, card: 'areas' });
+  const semRev = c.saude.documentos - c.saude.revisados;
+  out.curadoria.push({ texto: `${semRev} de ${c.saude.documentos} documentos sem revisão humana.`, card: 'revisao', destaque: `${pct(c.saude.revisados, c.saude.documentos)}%`, legenda: `dos documentos revisados por uma pessoa (${c.saude.revisados} de ${c.saude.documentos})`, tom: semRev ? 'atencao' : 'bom', mini: { tipo: 'fracao', parte: c.saude.revisados, total: c.saude.documentos } });
+  if (c.suspeitos.length) out.curadoria.push({ texto: `${c.suspeitos.length} cadastro(s) parecem teste e ainda entram nos números.`, card: 'testes', destaque: String(c.suspeitos.length), legenda: 'cadastros que parecem teste', tom: 'atencao' });
+  if (c.termosSuspeitos.length) out.curadoria.push({ texto: `${c.termosSuspeitos.length} termo(s) suspeito(s) na taxonomia.`, card: 'termos', destaque: String(c.termosSuspeitos.length), legenda: 'termos suspeitos na taxonomia', tom: 'atencao' });
+  if (c.areasFora.length) out.curadoria.push({ texto: `${c.areasFora.length} área(s) fora da lista padrão.`, card: 'areas', destaque: String(c.areasFora.length), legenda: 'áreas fora da lista padrão', tom: 'info' });
   for (const k of Object.keys(out)) out[k] = out[k].slice(0, 4);
   return out;
 }

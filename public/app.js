@@ -75,8 +75,8 @@ async function init() {
   // Links "Política de dados" em qualquer tela.
   document.addEventListener('click', (e) => { const a = e.target.closest('[data-politica-link]'); if (a) { e.preventDefault(); showPolicy(); } });
   welcomeOnFirstVisit().catch(() => {});
-  // Insights (novo) não tem aba: abre só pelo endereço /insights-novo, enquanto é avaliado.
-  if (/^\/insig(ht|th)s-novo\/?$/.test(location.pathname)) openTab('painel');
+  // O endereço antigo /insights-novo abre a aba Insights nas visões (as visões viraram a aba principal no CR-069).
+  if (/^\/insig(ht|th)s-novo\/?$/.test(location.pathname)) abrirInsights('visoes');
 }
 
 // ---- Menu "Mais opções": perfil de demonstração, documentos, métricas e ajuda ----

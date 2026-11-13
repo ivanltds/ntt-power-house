@@ -2067,3 +2067,45 @@ span.tec-tag { cursor: default; }
 .ins-abas::-webkit-scrollbar { display: none; }
 #metrics-extra { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr)); gap: 12px; align-items: start; }
 #metrics-extra .panel { margin: 0; }
+/* ---------- Insights · Visões (CR-069): manchetes em cartões ---------- */
+/* Paleta categórica validada (dataviz: light/dark, CVD e piso normal OK); ordem fixa, nunca reciclada. */
+#painel { --viz-1: #2a78d6; --viz-2: #eb6834; --viz-3: #1baf7a; --viz-4: #eda100; --viz-5: #e87ba4; --viz-6: #008300; --viz-7: #6250d6; --viz-8: #e34948; }
+:root[data-theme="dark"] #painel { --viz-1: #3987e5; --viz-2: #d95926; --viz-3: #199e70; --viz-4: #c98500; --viz-5: #d55181; --viz-6: #008300; --viz-7: #9085e9; --viz-8: #e66767; }
+.pn-herois { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); gap: 12px; margin-bottom: 8px; }
+.pn-heroi { position: relative; display: flex; flex-direction: column; align-items: stretch; gap: 6px; text-align: left; font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px 12px; box-shadow: var(--shadow); cursor: pointer; transition: border-color .15s, box-shadow .15s, transform .15s; overflow: hidden; }
+.pn-heroi::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--line-strong); }
+.pn-heroi.tom-bom::before { background: var(--ok); }
+.pn-heroi.tom-atencao::before { background: var(--warn); }
+.pn-heroi.tom-info::before { background: var(--brand); }
+.pn-heroi:hover { border-color: var(--brand); box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+.pn-heroi:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.pn-h-tom { display: inline-flex; align-self: flex-start; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; border-radius: 999px; padding: 2px 8px; }
+.tom-bom .pn-h-tom { color: var(--ok); background: var(--ok-soft); }
+.tom-atencao .pn-h-tom { color: var(--warn); background: var(--warn-soft); }
+.tom-info .pn-h-tom { color: var(--brand-ink); background: var(--brand-soft); }
+:root[data-theme="dark"] .tom-info .pn-h-tom { color: #8fb4ff; }
+.pn-h-num { font-size: 30px; line-height: 1.1; font-weight: 700; letter-spacing: -.02em; color: var(--ink); overflow-wrap: anywhere; }
+.pn-h-legenda { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+.pn-h-txt { font-size: 13px; color: var(--ink-2); line-height: 1.45; margin-top: 2px; }
+.pn-h-ir { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--brand); margin-top: auto; padding-top: 4px; }
+:root[data-theme="dark"] .pn-h-ir { color: #8fb4ff; }
+/* Fração (x de y): trilho neutro + parte na cor 1, ponta arredondada. */
+.pn-h-frac { height: 8px; border-radius: 999px; background: var(--line-2); overflow: hidden; margin: 4px 0 2px; }
+.pn-h-frac > span { display: block; height: 100%; border-radius: 999px; background: var(--viz-1); }
+/* Pilha (partes de um todo): segmentos com 2px de respiro na cor da superfície, legenda com valores. */
+.pn-h-pilha { display: flex; gap: 2px; height: 12px; border-radius: 4px; overflow: hidden; margin: 4px 0 2px; background: var(--panel); }
+.pn-h-pilha > span { min-width: 4px; }
+.pn-h-pilha > span:first-child { border-radius: 4px 0 0 4px; }
+.pn-h-pilha > span:last-child { border-radius: 0 4px 4px 0; }
+.pn-h-leg { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 12px; color: var(--muted); }
+.pn-h-leg li { display: inline-flex; align-items: center; gap: 5px; }
+.pn-h-leg i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+.pn-h-leg b { color: var(--ink); font-weight: 600; }
+/* Barras (poucos itens): rótulo, barra fina de uma cor só, valor em texto. */
+.pn-h-barras { list-style: none; margin: 4px 0 2px; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.pn-h-barras li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto; align-items: center; gap: 8px; font-size: 12px; }
+.pn-h-rot { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pn-h-trilho { height: 6px; border-radius: 999px; background: var(--line-2); overflow: hidden; }
+.pn-h-trilho > span { display: block; height: 100%; border-radius: 0 4px 4px 0; background: var(--viz-1); }
+.pn-h-barras b { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.pn-porta-num { font-size: 15px; color: var(--ink); margin-right: 2px; }
