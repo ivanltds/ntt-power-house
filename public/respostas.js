@@ -153,10 +153,13 @@ function conversa(d) {
   return `${caps ? `<ul class="caps">${caps}</ul>` : ''}${acoes ? `<div class="resp-acoes">${acoes}</div>` : ''}`;
 }
 
+// A fonte aparece uma vez só: recolhida, com o trecho e o link "Abrir no guia" dentro (CR-058).
+// Os botões de ajuda soltos ficam só quando não há fonte (ex.: novidades da versão, "não encontrei na ajuda").
 function ajuda(d) {
-  const fontes = (d.fontes ?? []).map((f) => `<details class="fonte-det"><summary>${icon('info', { size: 13 })}<span>Fonte: ${esc(f.onde)}</span><span class="fonte-ver">ver trecho</span>${icon('chevronDown', { size: 13 })}</summary><blockquote class="fonte-ajuda">${esc(f.trecho)}</blockquote></details>`).join('');
+  const fontes = (d.fontes ?? []).map((f) => `<details class="fonte-det"><summary>${icon('info', { size: 13 })}<span>Fonte: ${esc(f.onde)}</span><span class="fonte-ver">ver trecho</span>${icon('chevronDown', { size: 13 })}</summary><blockquote class="fonte-ajuda">${esc(f.trecho)}<button type="button" class="link-btn fonte-abrir" data-ajuda="${esc(f.tipo)}:${esc(f.secao ?? '')}">${icon('arrowRight', { size: 13 })}Abrir no guia</button></blockquote></details>`).join('');
   const nov = d.novidades ? `<ul class="nov">${d.novidades.itens.slice(0, 8).map((i) => `<li>${icon(i.tipo === 'correcao' ? 'check' : 'sparkles', { size: 13 })}${esc(i.titulo)}</li>`).join('')}</ul>` : '';
-  return `${nov}${fontes}<div class="resp-acoes">${linksAjuda(d.ajuda)}${d.feedback ? botaoFeedback : ''}</div>`;
+  const acoes = `${fontes ? '' : linksAjuda(d.ajuda)}${d.feedback ? botaoFeedback : ''}`;
+  return `${nov}${fontes}${acoes ? `<div class="resp-acoes">${acoes}</div>` : ''}`;
 }
 
 function anexo(d) {

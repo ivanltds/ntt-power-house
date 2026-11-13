@@ -618,9 +618,9 @@ export const ROTEIRO = [
   c('C48', 'alta', 'Tirar uma dúvida de uso no chat',
     'Ver se o Radar responde como usar o produto com base na ajuda e mostra de onde tirou.',
     [CONSULTOR, NOVA],
-    [PERGUNTE('como favorito uma conversa?'), ESPERE, ETIQUETA, 'Clique no botão com o nome da seção, abaixo do trecho citado.', 'Feche a ajuda.', PERGUNTE('o que mudou nesta versão?'), ESPERE],
-    ['A etiqueta diz "Dúvida de uso".', 'A resposta explica, em poucas linhas, que é pela estrela.', 'Abaixo vem, recolhida, a linha "Fonte: Como usar o Radar › Conversas salvas · ver trecho"; ao clicar, abre só o trecho que fala de favoritar (ex.: "Favoritar: Passe o mouse na conversa e clique na ⭐…"), coerente com a resposta, e não o começo da seção.', 'O botão abre a ajuda direto na seção "Conversas salvas".', 'A pergunta sobre a versão lista as novidades da V0.0.2 e oferece o botão "Notas da V0.0.2".'],
-    { tickets: ['CR-053', 'CR-056'] }),
+    [PERGUNTE('como favorito uma conversa?'), ESPERE, ETIQUETA, 'Clique em "ver trecho" e depois em "Abrir no guia", no fim do trecho.', 'Feche a ajuda.', PERGUNTE('o que mudou nesta versão?'), ESPERE],
+    ['A etiqueta diz "Dúvida de uso".', 'A resposta explica, em poucas linhas, que é pela estrela.', 'Abaixo vem, recolhida, a linha "Fonte: Como usar o Radar › Conversas salvas · ver trecho"; ao clicar, abre só o trecho que fala de favoritar (ex.: "Favoritar: Passe o mouse na conversa e clique na ⭐…"), coerente com a resposta, e não o começo da seção.', 'A fonte aparece uma vez só: não há outro botão solto com o nome da seção abaixo da resposta.', '"Abrir no guia" abre a ajuda direto na seção "Conversas salvas".', 'A pergunta sobre a versão lista as novidades da V0.0.2 e oferece o botão "Notas da V0.0.2".'],
+    { tickets: ['CR-053', 'CR-056', 'CR-058'] }),
 
   c('C49', 'media', 'Agradecer e reclamar de uma resposta',
     'Ver se o Radar responde a agradecimento e crítica de forma curta e útil.',
