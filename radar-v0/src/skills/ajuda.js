@@ -1,6 +1,6 @@
 // Skill "ajuda" (UC14.3): dúvidas sobre como usar o Radar, respondidas com a base de ajuda e citando a seção.
 
-import { normalize } from '../text.js';
+import { normalize, tokenize } from '../text.js';
 import { BaseDeAjuda, novidades } from './conhecimento.js';
 import { PERSONA } from './persona.js';
 
@@ -26,7 +26,7 @@ const MIN_SCORE = 2.5;
 // Sinônimos do produto: aproximam a pergunta das palavras que a ajuda usa (a busca da ajuda é lexical).
 const SINONIMOS = [
   [/\b(parecid\w*|semelhan\w*|escolh\w*|ranking|ordena\w*|relevan\w*|score|nota|posicao|calcula\w*)\b/, 'busca semântica score fatores pesos similaridade ranking'],
-  [/\bfavorit\w*/, 'favorita estrela conversas salvas'],
+  [/\bfavorit\w*/, 'favorita favoritar estrela'],
   [/\b(anex\w*|clipe)\b/, 'clipe anexar arquivo conversa enviar'],
   [/\b(exclu\w*|apag\w*|remov\w*)\b/, 'excluir apagar'],
   [/\b(quem pode|quem consegue|permiss\w*|perfil|perfis|consultor|gestor|preco|margem|confidencia\w*)\b/, 'permissões perfil consultor gestor preço margem confidencial'],
@@ -60,7 +60,8 @@ export async function responderAjuda({ query, llm }) {
   if (!trechos.length || trechos[0].score < MIN_SCORE) return fora;
 
   const link = (t) => ({ tipo: t.fonte.tipo, secao: t.fonte.secao, rotulo: t.fonte.onde });
-  const fontesDe = (lista) => lista.map((t) => ({ id: t.id, onde: t.fonte.onde, tipo: t.fonte.tipo, secao: t.fonte.secao, trecho: t.texto.slice(0, 420) }));
+  // Trecho de apoio: só as linhas da seção que têm a ver com a pergunta (e na ordem do guia), não o começo da seção.
+  const fontesDe = (lista) => lista.map((t) => ({ id: t.id, onde: t.fonte.onde, tipo: t.fonte.tipo, secao: t.fonte.secao, trecho: destaque(t.texto, expandir(query)) }));
   let out = null;
   try { out = await llm.grounded?.({ sistema: PROMPT, payload: { duvida: query, trechos: trechos.map((t) => ({ id: t.id, secao: t.fonte.onde, texto: t.texto })) }, maxTokens: 400 }); } catch { out = null; }
   if (out && typeof out.resposta === 'string' && out.resposta.trim()) {
@@ -68,8 +69,19 @@ export async function responderAjuda({ query, llm }) {
     const principal = trechos.find((t) => t.id === out.fonte) ?? trechos[0];
     return { resposta: out.resposta.trim(), dados: { fontes: fontesDe([principal]), ajuda: [link(principal)] }, semEvidencia: false };
   }
-  // Sem IA: mostra o trecho mais relevante, literal, com a seção de origem.
+  // Sem IA: responde com as linhas mais relevantes da seção, literais, e a seção de origem.
   const t = trechos[0];
-  const frase = t.texto.replace(/\s+/g, ' ').slice(0, 320);
-  return { resposta: `Pela ajuda do Radar (${t.fonte.onde}): ${frase}${t.texto.length > 320 ? '…' : ''}`, dados: { fontes: fontesDe(trechos.slice(0, 2)), ajuda: [link(t)] }, semEvidencia: false };
+  return { resposta: `Pela ajuda do Radar (${t.fonte.onde}): ${destaque(t.texto, expandir(query), 2).replace(/\n+/g, ' ')}`, dados: { fontes: fontesDe([t]), ajuda: [link(t)] }, semEvidencia: false };
+}
+
+// Linhas de um trecho que mais combinam com a pergunta (até "max"), mantidas na ordem original.
+export function destaque(texto, pergunta, max = 3) {
+  const q = new Set(tokenize(pergunta));
+  const linhas = String(texto).split(/\n+/).map((l) => l.trim()).filter((l) => l.length > 15);
+  // Densidade: acertos divididos pela raiz do tamanho, para a linha específica ("Favoritar: …") vencer o parágrafo geral.
+  const pontos = linhas.map((l, i) => { const t = tokenize(l); const acertos = t.filter((k) => q.has(k)).length; return { l, i, n: acertos ? acertos / Math.sqrt(t.length) : 0 }; });
+  const topo = Math.max(0, ...pontos.map((x) => x.n));
+  const melhores = pontos.filter((x) => x.n > 0 && x.n >= topo * 0.6).sort((a, b) => b.n - a.n || a.i - b.i).slice(0, max).sort((a, b) => a.i - b.i);
+  const escolhidas = (melhores.length ? melhores : pontos.slice(0, 1)).map((x) => (x.l.length > 280 ? `${x.l.slice(0, 279)}…` : x.l));
+  return escolhidas.join('\n');
 }

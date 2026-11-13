@@ -97,7 +97,7 @@ function contagem(d) {
 function ficha(f) {
   return `<div class="ficha-chat">
     <dl>${f.campos.map((c) => `<dt>${esc(c.rotulo)}</dt><dd class="${c.restrito ? 'restrito' : c.valor == null ? 'vazio' : ''}">${c.restrito ? icon('lock', { size: 13 }) : ''}${c.campo === 'link_sharepoint' && c.valor && /^https?:\/\//.test(c.valor) ? `<a href="${esc(c.valor)}" target="_blank" rel="noopener">${esc(c.valor)}</a>` : esc(c.texto)}</dd>`).join('')}</dl>
-    <p class="muted small">${icon('info', { size: 13 })}Fonte: cadastro do projeto${f.documentos ? ` · ${f.documentos} documento(s)` : ''}${f.conflitos?.length ? ' · há valores divergentes entre os documentos, veja o detalhe' : ''}</p>
+    <p class="muted small">${icon('info', { size: 13 })}Fonte: cadastro do projeto${f.documentos ? ` · ${f.documentos} documento(s)` : ''}</p>
     <div class="resp-acoes"><button type="button" class="chip-btn" data-proj="${esc(f.projeto_id)}">${icon('folder', { size: 14 })}Abrir projeto</button></div>
   </div>`;
 }
@@ -154,14 +154,14 @@ function conversa(d) {
 }
 
 function ajuda(d) {
-  const fontes = (d.fontes ?? []).map((f) => `<blockquote class="fonte-ajuda"><small>${icon('info', { size: 12 })}${esc(f.onde)}</small>${esc(f.trecho)}${f.trecho.length >= 420 ? '…' : ''}</blockquote>`).join('');
+  const fontes = (d.fontes ?? []).map((f) => `<details class="fonte-det"><summary>${icon('info', { size: 13 })}<span>Fonte: ${esc(f.onde)}</span><span class="fonte-ver">ver trecho</span>${icon('chevronDown', { size: 13 })}</summary><blockquote class="fonte-ajuda">${esc(f.trecho)}</blockquote></details>`).join('');
   const nov = d.novidades ? `<ul class="nov">${d.novidades.itens.slice(0, 8).map((i) => `<li>${icon(i.tipo === 'correcao' ? 'check' : 'sparkles', { size: 13 })}${esc(i.titulo)}</li>`).join('')}</ul>` : '';
   return `${nov}${fontes}<div class="resp-acoes">${linksAjuda(d.ajuda)}${d.feedback ? botaoFeedback : ''}</div>`;
 }
 
 function anexo(d) {
   if (d.acao === 'perguntar') {
-    const ev = (d.evidencias ?? []).map((e) => `<blockquote class="fonte-ajuda"><small>${icon('paperclip', { size: 12 })}${esc(e.arquivo)}</small>${esc(e.trecho)}</blockquote>`).join('');
+    const ev = (d.evidencias ?? []).map((e) => `<details class="fonte-det"><summary>${icon('paperclip', { size: 13 })}<span>Fonte: ${esc(e.arquivo)}</span><span class="fonte-ver">ver trecho</span>${icon('chevronDown', { size: 13 })}</summary><blockquote class="fonte-ajuda">${esc(e.trecho)}</blockquote></details>`).join('');
     return ev;
   }
   const r = d.resumo ?? {};

@@ -82,7 +82,7 @@ export const GUIA = [
       <li>Itens que abrem com a setinha (um por vez): <b>Escopo, resultados e lições</b>; <b>Trechos que sustentam a resposta</b>; <b>Por que apareceu nesta posição</b>, com uma barra por critério mostrando quanto ele somou (de 0 a 100%; passe o mouse para ver nota × peso).</li>
       <li><b>Tecnologias</b> no fim, clicáveis: abrem ${ui('Projetos')} filtrado por elas.</li>
       <li><b>Fontes:</b> os documentos de onde veio cada informação, com rótulo de confiança: <b>Oficial</b> (proposta aprovada, SOW), <b>Enviado</b> (proposta, case), <b>Interno</b> (estimativa, ata), <b>Informal</b> (transcrição, e-mail), <b>Rascunho</b>.</li>
-      <li><b>dados divergentes:</b> dois documentos discordam (ex.: prazo de 5 e de 6 meses). O Radar mostra o valor da fonte mais confiável.</li>
+      <li>Quando dois documentos discordam (ex.: prazo de 5 e de 6 meses), o cartão mostra o valor da fonte mais confiável; o aviso de divergência, com as duas fontes, fica na ficha do projeto.</li>
     </ul>
     <h4>Reaproveitar</h4>
     ${table(['Ação', 'O que faz'], [
@@ -135,7 +135,7 @@ export const GUIA = [
     </ul>`],
 
   ['conversas', 'bookmark', 'Conversas salvas', () => `
-    <p>Toda conversa é <b>salva automaticamente</b> na primeira pergunta. A lista fica à esquerda (no celular, no botão ${icon('sidebar', { size: 14 })}), em caixas: <b>Favoritas</b>, <b>Grupos</b>, <b>Arquivadas</b> e <b>Recentes</b>. As três primeiras abrem e fecham clicando no título, e o Radar lembra como você deixou; "Recentes" fica sempre visível, com rolagem própria.</p>
+    <p>Toda conversa é <b>salva automaticamente</b> na primeira pergunta. A lista fica à esquerda (no celular, no botão de painel ${icon('sidebar', { size: 14 })}, à esquerda do título da conversa), em caixas: <b>Favoritas</b>, <b>Grupos</b>, <b>Arquivadas</b> e <b>Recentes</b>. As três primeiras abrem e fecham clicando no título, e o Radar lembra como você deixou; "Recentes" fica sempre visível, com rolagem própria.</p>
     ${table(['Quero…', 'Como'], [
       ['Renomear', `Clique no lápis ao lado do título, no topo do chat, edite e aperte ${kbd('Enter')} (${kbd('Esc')} cancela). Também pelo menu ⋯ da conversa.`],
       ['Favoritar', 'Passe o mouse na conversa e clique na ⭐ (ela fica fixa nas favoritas).'],
@@ -453,7 +453,7 @@ export const TECNICO = [
     ${tip('Travas contra alucinação: a IA só recebe trechos que o usuário pode ver; cita a evidência por id (o texto exibido vem da base, não da IA); só cita projetos com relevância ≥ 0,5; não pode inventar números; e, sem evidência, deve dizer que não há.', 'warn')}
     <p>A nota final do conteúdo mistura 35% do score vetorial e 65% da relevância da IA. Ficam projetos com relevância ≥ 0,4 e score ≥ 0,4, até 5.</p>
     <h4>5. Conflito de fontes</h4>
-    <p>Quando documentos discordam (prazo, valor), vale a fonte de maior confiança: <b>5</b> proposta final aprovada, SOW ou contrato · <b>4</b> proposta ou case · <b>3</b> estimativa, ata validada ou ficha · <b>2</b> transcrição, e-mail ou documento técnico · <b>1</b> rascunho. O cartão mostra "dados divergentes".</p>
+    <p>Quando documentos discordam (prazo, valor), vale a fonte de maior confiança: <b>5</b> proposta final aprovada, SOW ou contrato · <b>4</b> proposta ou case · <b>3</b> estimativa, ata validada ou ficha · <b>2</b> transcrição, e-mail ou documento técnico · <b>1</b> rascunho. A ficha do projeto mostra o aviso "Prazo (ou Valor) diverge entre fontes" com a fonte que prevaleceu; os cartões do chat mostram só o valor escolhido.</p>
     <h4>Sem IA</h4>
     <p>Se a DeepSeek falhar (timeout de 45 s, chave inválida, JSON malformado), o <b>MockLLM</b> assume com regras: entidades pelo léxico, ranking só pelo score multi-fator e resposta montada a partir dos fatos. A tela mostra "Modo regras" no alto ou "resposta direta da base" na resposta.</p>`],
 
