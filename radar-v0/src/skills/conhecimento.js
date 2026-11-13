@@ -15,10 +15,14 @@ export function htmlParaTexto(html) {
     .replace(/<(br|\/p|\/li|\/h[1-6]|\/tr|\/ol|\/ul|\/blockquote|\/small)\s*\/?>/gi, '\n')
     .replace(/<\/t[dh]>\s*(?=<t[dh])/gi, ': ') // células da mesma linha: "Favoritar: Clique na estrela…"
     .replace(/<thead[\s\S]*?<\/thead>/gi, '') // cabeçalho de tabela ("Quero… / Como") não ajuda a responder
+    .replace(/<\/?(b|i|em|strong|span|a|code|kbd|small|u)\b[^>]*>/gi, '') // marcação dentro da frase não vira espaço
     .replace(/<[^>]+>/g, ' '))
     .replace(/[ \t]+/g, ' ')
     .replace(/ ?\n ?/g, '\n')
     .replace(/\n{2,}/g, '\n\n')
+    .replace(/\(\s*\)/g, '') // ícone que estava entre parênteses
+    .replace(/\s+([,.;:)])/g, '$1').replace(/\(\s+/g, '(')
+    .replace(/[ \t]{2,}/g, ' ')
     .trim();
 }
 

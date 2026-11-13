@@ -122,10 +122,16 @@ export const NOTAS = [
         depois: 'O guia foi revisado seção por seção: 3 abas e o envio sempre dentro do projeto ou da conversa; botão de conta e menu completos; o que dá para pedir no chat (com etiqueta de tipo, resposta em blocos, buscas próximas e editar a última pergunta); a seção nova "Ler um arquivo na conversa"; conversas em caixas, grupos, arquivar e excluir; filtros com etiquetas e "N para aprovar" em Projetos; envio e aprovação como funcionam hoje; Métricas do piloto; permissões (excluir projeto, criar a partir de arquivo); dúvidas frequentes; e a seção nova "Novidades, feedback e testes". A parte técnica descreve o registro de skills. Como o chat responde dúvidas de uso com este guia, as respostas também ficaram atualizadas. As Métricas do piloto ganharam "O que pedem ao chat" (perguntas por tipo de pedido e quantas ficaram sem resposta), e a regra das lições voltou a reconhecer "extra".',
       },
       {
+        tipo: 'correcao', status: 'feito', area: 'Chat', tickets: ['CR-054', 'CR-055', 'CR-056', 'CR-057'],
+        titulo: 'Celular: cartão de projeto legível, caixa de pergunta numa linha e fonte da ajuda recolhida',
+        antes: 'No celular, o cartão de projeto da conversa cortava o título ("Det… de…") e sobrepunha "Muito parecido" e "dados divergentes"; com o chat lembrando perguntas, o botão de enviar descia para outra linha; o menu de baixo ficava descentralizado. O aviso "dados divergentes" nos cartões do chat passava desconfiança. Na dúvida de uso, o trecho do guia aparecia aberto, mostrava o começo da seção (que não tinha a ver com a resposta) e tinha buracos onde havia ícones.',
+        depois: 'O cartão de projeto, no celular, fica em duas linhas: ícone, título (até 3 linhas) e setinha em cima; cliente, status e 👍 👎 embaixo. A divergência entre documentos aparece só na ficha do projeto ("Prazo diverge entre fontes"). A caixa de pergunta só quebra linha para a etiqueta "lembrando N perguntas" ou do arquivo; campo e botão de enviar ficam sempre lado a lado, e o título da conversa não sai da tela. O menu de baixo tem uma coluna por aba. Na dúvida de uso e no arquivo da conversa, a fonte vem recolhida ("Fonte: … · ver trecho") e, aberta, mostra só as linhas que respondem à pergunta. A faixa "Desbloqueie a próxima fase do Radar" foi encerrada.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
-        titulo: 'Roteiro da V0.0.2: 111 cenários, com Insights e conversa',
+        titulo: 'Roteiro da V0.0.2: 113 cenários, com Insights, conversa e celular',
         antes: 'O roteiro tinha 74 cenários de Conversas, Projetos e Envio.',
-        depois: 'O roteiro da V0.0.2 tem 111 cenários: os 74 anteriores (ajustados às telas novas) e 37 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45), conversa cordial, dúvidas de uso e arquivo lido na conversa (C46 a C53), as seções da ficha que recolhem (P29) e a ficha com edição no lugar, comentários e exclusão (P30 a P33). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
+        depois: 'O roteiro da V0.0.2 tem 113 cenários: os 74 anteriores (ajustados às telas novas) e 39 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45), conversa cordial, dúvidas de uso e arquivo lido na conversa (C46 a C53), cartão e caixa de pergunta no celular (C54 e C55), as seções da ficha que recolhem (P29) e a ficha com edição no lugar, comentários e exclusão (P30 a P33). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
