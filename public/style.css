@@ -2127,3 +2127,17 @@ span.tec-tag { cursor: default; }
 }
 #painel.pn-atualizando { opacity: .55; pointer-events: none; transition: opacity .15s; }
 #painel { transition: opacity .2s; }
+/* Insights · flor de carregamento (CR-070): surge girando, gira enquanto carrega e, quando os dados chegam,
+   espalha as pétalas para fora. Oito pétalas nas cores da paleta categórica (ordem fixa). */
+.pn-flor-palco { min-height: 340px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
+.pn-flor { position: relative; width: 84px; height: 84px; animation: florSurge .55s cubic-bezier(.2, .8, .2, 1) both, florGira 2.2s linear .55s infinite; }
+.pn-petala { position: absolute; left: 50%; top: 50%; width: 14px; height: 30px; margin: -30px 0 0 -7px; border-radius: 50% 50% 45% 45%; background: var(--c); opacity: .9; transform-origin: 50% 100%; transform: rotate(var(--a)); transition: transform .42s cubic-bezier(.2, .7, .2, 1), opacity .42s ease; transition-delay: calc(var(--i) * 18ms); }
+.pn-miolo { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--panel); box-shadow: 0 0 0 3px var(--line); transition: transform .3s ease, opacity .3s ease; }
+.pn-flor-palco p { transition: opacity .25s ease; }
+.pn-flor-palco.abrir .pn-flor { animation-play-state: paused; }
+.pn-flor-palco.abrir .pn-petala { transform: rotate(var(--a)) translateY(-90px) scale(.35); opacity: 0; }
+.pn-flor-palco.abrir .pn-miolo { transform: scale(1.8); opacity: 0; }
+.pn-flor-palco.abrir p { opacity: 0; }
+@keyframes florSurge { from { transform: scale(.2) rotate(-200deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes florGira { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .pn-flor { animation: none; } .pn-petala, .pn-miolo { transition: none; } }

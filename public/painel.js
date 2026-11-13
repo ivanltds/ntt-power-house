@@ -29,25 +29,37 @@ export const carregarPainel = () => load();
 const lenteInicial = () => localStorage.getItem(KEY) || 'inicio';
 const irPara = (lente) => { view.lente = lente; if (lente !== 'inicio') localStorage.setItem(KEY, lente); render(); window.scrollTo({ top: 0 }); };
 
-// Entrada (CR-070): na primeira carga, esqueleto no formato dos cartões e entrada suave quando os dados chegam.
+// Entrada (CR-070): na primeira carga, a "flor" (oito pétalas nas cores da paleta) surge girando no centro;
+// quando os dados chegam, as pétalas se espalham para fora e os cartões entram em sequência.
 // Ao voltar para a aba (mesmo recorte), mostra na hora o que já tinha e atualiza em segundo plano, sem piscar.
 let ultimaChave = null;
-const esqueleto = () => `<div class="pn-esq" aria-busy="true" aria-label="Carregando as visões">
-    <span class="pn-esq-linha largo"></span><span class="pn-esq-linha"></span>
-    <div class="pn-esq-grade">${'<span class="pn-esq-cartao"></span>'.repeat(4)}</div>
-    <div class="pn-esq-grade tres">${'<span class="pn-esq-cartao alto"></span>'.repeat(3)}</div>
+const FLOR_MIN_MS = 650; // tempo mínimo da flor na primeira carga, para a animação não virar um piscar
+const flor = () => `<div class="pn-flor-palco" aria-busy="true" role="status" aria-label="Carregando as visões">
+    <div class="pn-flor">${Array.from({ length: 8 }, (_, i) => `<span class="pn-petala" style="--a:${i * 45}deg;--c:var(--viz-${i + 1});--i:${i}"></span>`).join('')}<span class="pn-miolo"></span></div>
+    <p class="muted small">Preparando as visões…</p>
   </div>`;
+const espera = (ms) => new Promise((r) => setTimeout(r, ms));
+// Espalha as pétalas e espera a animação terminar (sem espera para quem prefere menos movimento).
+async function espalharFlor() {
+  const f = $('#painel .pn-flor-palco');
+  if (!f) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  f.classList.add('abrir');
+  await espera(420);
+}
 
 async function load() {
   view.lente ??= lenteInicial();
   const q = new URLSearchParams({ userId: userId(), ...Object.fromEntries(Object.entries(view.filtros).filter(([, v]) => v)) });
   const chave = q.toString();
   const temCache = view.dados && ultimaChave === chave;
-  const primeira = !view.dados; // esqueleto só na primeira carga; trocar filtro mantém a tela, esmaecida
-  if (temCache) render(); else if (primeira) $('#painel').innerHTML = esqueleto(); else $('#painel').classList.add('pn-atualizando');
+  const primeira = !view.dados; // flor só na primeira carga; trocar filtro mantém a tela, esmaecida
+  const inicio = Date.now();
+  if (temCache) render(); else if (primeira) $('#painel').innerHTML = flor(); else $('#painel').classList.add('pn-atualizando');
   let dados;
   try {
     dados = await api(`/api/painel?${q}`);
+    if (primeira) { await espera(Math.max(0, FLOR_MIN_MS - (Date.now() - inicio))); await espalharFlor(); }
   } catch (err) {
     $('#painel').classList.remove('pn-atualizando');
     if (!temCache) $('#painel').innerHTML = `<p class="error">${icon('alert', { size: 16 })}${esc(err.message)}</p>`;
