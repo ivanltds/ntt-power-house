@@ -241,3 +241,24 @@ test('percentual realista: escala absoluta, status como desempate e teto pela re
   const ct = forte.resultados[0].fatores[0];
   assert.ok(st.valor <= ct.valor + 1e-9);
 });
+
+test('Insights · manchetes em cartões: número, tom e gráfico válidos em todas as visões (CR-069)', async () => {
+  const { montarPainel } = await import('../src/painel.js');
+  for (const id of ['u-gestor', 'u-consultor']) {
+    const p = montarPainel(engine.repo, engine.user(id), {});
+    for (const [lente, lista] of Object.entries(p.manchetes)) {
+      if (lente === 'negocio') assert.ok(lista.length, 'Negócio sempre tem manchete'); // Pré-venda depende de oportunidades
+      for (const m of lista) {
+        assert.ok(m.texto && m.destaque != null && m.legenda, `${lente}: manchete incompleta ${JSON.stringify(m)}`);
+        assert.ok(['bom', 'atencao', 'info'].includes(m.tom), `${lente}: tom ${m.tom}`);
+        if (m.mini) {
+          assert.ok(['pilha', 'barras', 'fracao'].includes(m.mini.tipo));
+          if (m.mini.tipo === 'fracao') assert.ok(m.mini.parte <= m.mini.total);
+          else assert.ok(m.mini.itens.every((i) => i.rotulo && Number.isFinite(i.valor)));
+        }
+      }
+    }
+    // Sem permissão de ver valores, nenhuma manchete fala em R$.
+    if (id === 'u-consultor') assert.ok(Object.values(p.manchetes).flat().every((m) => !/R\$/.test(`${m.texto} ${m.destaque} ${m.legenda}`)));
+  }
+});

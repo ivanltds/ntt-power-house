@@ -19,10 +19,11 @@ const sugerida = () => (currentUser()?.perfil === 'consultor' ? 'prevenda' : cur
 const KEY = 'radar.painel.lente';
 const view = { lente: null, filtros: { segmento: '', area: '', desde: '' }, dados: null, oportunidade: null };
 
+// Desde o CR-069 as visões moram na aba Insights (aba interna "Visões"); quem chama é public/insights.js.
 export function initPainel() {
-  onTab('painel', load);
-  onUserChange(() => { view.lente = null; if ($('#tab-painel').classList.contains('active')) load(); });
+  onUserChange(() => { view.lente = null; });
 }
+export const carregarPainel = () => load();
 
 // Primeira visita: tela inicial com as perguntas. Depois, volta para a última lente escolhida.
 const lenteInicial = () => localStorage.getItem(KEY) || 'inicio';
@@ -319,6 +320,41 @@ function transversal(u) {
   </div></details>`;
 }
 
+// ---------- Manchetes em cartões (CR-069, opção B) ----------
+// Tom é estado (ícone + rótulo + cor reservada); as marcas dos gráficos usam a paleta categórica em ordem fixa
+// (--viz-1, --viz-2…); textos e números ficam nas cores de texto, nunca na cor da série.
+const TOM = { bom: ['checkCircle', 'Ponto forte'], atencao: ['alert', 'Atenção'], info: ['info', 'Para saber'] };
+const fmtV = (v, suf = '') => `${Number(v).toLocaleString('pt-BR', { maximumFractionDigits: 1 })}${suf}`;
+// Cor da parte: a indicada pelo servidor (número da paleta ou 'neutra') ou a da posição, em ordem fixa.
+const corDe = (i, k) => (i.cor === 'neutra' ? 'var(--line-strong)' : `var(--viz-${((i.cor ?? k + 1) - 1) % 8 + 1})`);
+function miniGrafico(x) {
+  if (!x) return '';
+  if (x.tipo === 'fracao') {
+    const p = x.total ? Math.round((x.parte / x.total) * 100) : 0;
+    return `<div class="pn-h-frac" role="img" aria-label="${x.parte} de ${x.total}" title="${x.parte} de ${x.total} (${p}%)"><span style="width:${Math.max(p, x.parte ? 3 : 0)}%"></span></div>`;
+  }
+  const itens = (x.itens ?? []).filter((i) => i.valor != null);
+  if (!itens.length) return '';
+  if (x.tipo === 'pilha') {
+    const total = itens.reduce((t, i) => t + i.valor, 0) || 1;
+    return `<div class="pn-h-pilha" role="img" aria-label="${esc(itens.map((i) => `${i.rotulo}: ${i.valor}`).join(', '))}">${itens.filter((i) => i.valor).map((i, k) => `<span style="flex:${i.valor};background:${corDe(i, itens.indexOf(i))}" title="${esc(`${i.rotulo}: ${i.valor} (${Math.round((i.valor / total) * 100)}%)`)}"></span>`).join('')}</div>
+      <ul class="pn-h-leg">${itens.map((i, k) => `<li><i style="background:${corDe(i, k)}"></i>${esc(i.rotulo)} <b>${fmtV(i.valor)}</b></li>`).join('')}</ul>`;
+  }
+  const max = Math.max(...itens.map((i) => i.valor), 0) || 1;
+  return `<ol class="pn-h-barras">${itens.map((i) => `<li title="${esc(`${i.rotulo}: ${fmtV(i.valor, i.sufixo)}`)}"><span class="pn-h-rot">${esc(i.rotulo)}</span><span class="pn-h-trilho"><span style="width:${Math.max((i.valor / max) * 100, i.valor ? 4 : 0)}%"></span></span><b>${fmtV(i.valor, i.sufixo)}</b></li>`).join('')}</ol>`;
+}
+function heroi(m) {
+  const [ic, rot] = TOM[m.tom] ?? TOM.info;
+  return `<button type="button" class="pn-heroi tom-${esc(m.tom ?? 'info')}" data-ir="${esc(m.card)}"${m.lente ? ` data-lente-ir="${esc(m.lente)}"` : ''}${m.oportunidade ? ` data-op-ir="${esc(m.oportunidade)}"` : ''} title="${esc(m.texto)}">
+    <span class="pn-h-tom">${icon(ic, { size: 13 })}${rot}</span>
+    <strong class="pn-h-num">${esc(m.destaque ?? '')}</strong>
+    <span class="pn-h-legenda">${esc(m.legenda ?? '')}</span>
+    ${miniGrafico(m.mini)}
+    <span class="pn-h-txt">${esc(m.texto)}</span>
+    <span class="pn-h-ir">Ver os números ${icon('arrowRight', { size: 13 })}</span>
+  </button>`;
+}
+
 // ---------- Tela ----------
 // Tela inicial: "O que você quer saber?" com as cinco perguntas, o primeiro destaque de cada uma e como ler os números.
 function inicio(d) {
@@ -331,7 +367,7 @@ function inicio(d) {
         <span class="pn-porta-ic">${icon(ic, { size: 20 })}</span>
         <span class="pn-porta-txt"><span class="pn-porta-para">${esc(para)}${k === sug ? '<b class="pn-sug">sugerido para você</b>' : ''}</span>
           <strong>${esc(pergunta)}</strong>
-          ${m[0] ? `<span class="pn-porta-m">${esc(m[0].texto)}</span>` : ''}
+          ${m[0] ? `<span class="pn-porta-m">${m[0].destaque ? `<b class="pn-porta-num">${esc(m[0].destaque)}</b> ` : ''}${esc(m[0].legenda ?? m[0].texto)}</span>` : ''}
           <span class="pn-porta-ir">Abrir ${esc(nome)}${m.length > 1 ? ` · ${m.length} destaques` : ''} ${icon('arrowRight', { size: 14 })}</span></span>
       </button>`; }).join('')}
     <section class="pn-comoler" aria-label="Como ler os números">
@@ -348,7 +384,7 @@ function inicio(d) {
 function render() {
   const d = view.dados;
   if (view.lente === 'inicio') {
-    $('#painel').innerHTML = inicio(d) + `<p class="muted small pn-rodape">${icon('info', { size: 13 })} Protótipo · ${d.base.projetos} projetos na base${d.base.testesOcultos ? ` (${d.base.testesOcultos} de teste fora dos números)` : ''} · atualizado ${dateBR(d.geradoEm)}.</p>`;
+    $('#painel').innerHTML = inicio(d) + `<p class="muted small pn-rodape">${icon('info', { size: 13 })} ${d.base.projetos} projetos na base${d.base.testesOcultos ? ` (${d.base.testesOcultos} de teste fora dos números)` : ''} · atualizado ${dateBR(d.geradoEm)}.</p>`;
     bind();
     return;
   }
@@ -359,7 +395,7 @@ function render() {
   const L = d.lentes;
   const corpo = { negocio: () => lenteNegocio(L.negocio, d.valores), tecnica: () => lenteTecnica(L.tecnica, d.valores), pipeline: () => lentePipeline(L.pipeline, d.valores), prevenda: () => lentePrevenda(L.prevenda), curadoria: () => lenteCuradoria(L.curadoria, pode) }[view.lente]();
   $('#painel').innerHTML = `
-    <nav class="pn-trilha"><button type="button" class="btn sm ghost" data-lente="inicio">← Todas as perguntas</button><span class="pn-beta">novo · protótipo</span></nav>
+    <nav class="pn-trilha"><button type="button" class="btn sm ghost" data-lente="inicio">← Todas as perguntas</button></nav>
     <header class="pn-topo">
       <div><p class="pn-porta-para">${icon(ic, { size: 14 })}${esc(nome)} · para ${esc(para.toLowerCase())}</p><h2>${esc(pergunta)}</h2><p class="muted small">${esc(desc)}</p></div>
       <div class="pn-lentes" role="tablist" aria-label="Trocar de visão">${LENTES.map(([k, rot, ic]) => `<button type="button" role="tab" aria-selected="${k === view.lente}" class="${k === view.lente ? 'ativo' : ''}" data-lente="${k}">${icon(ic, { size: 15 })}${rot}</button>`).join('')}</div>
@@ -370,11 +406,11 @@ function render() {
       <button type="button" class="btn sm" id="pn-copiar" title="Copiar as manchetes desta lente para colar num e-mail ou no Teams">${icon('copy', { size: 14 })}Copiar resumo</button>
     </div>
     <h3 class="pn-sec">Em resumo</h3>
-    <section class="pn-manchetes" aria-label="Resumo de ${esc(nome)}">${d.manchetes[view.lente].map((m) => `<button type="button" class="pn-manchete" data-ir="${esc(m.card)}"${m.lente ? ` data-lente-ir="${esc(m.lente)}"` : ''}${m.oportunidade ? ` data-op-ir="${esc(m.oportunidade)}"` : ''}><span class="pn-ponto"></span><span>${esc(m.texto)}</span>${icon('chevronRight', { size: 14 })}</button>`).join('') || '<p class="muted small">Nada a destacar neste recorte.</p>'}</section>
+    <section class="pn-herois" aria-label="Resumo de ${esc(nome)}">${d.manchetes[view.lente].map(heroi).join('') || '<p class="muted small">Nada a destacar neste recorte.</p>'}</section>
     <h3 class="pn-sec">Os números por trás</h3>
     <div class="pn-grid">${corpo}</div>
     ${transversal(d.uso)}
-    <p class="muted small pn-rodape">${icon('info', { size: 13 })} Protótipo do discovery r3 com dados fictícios. Barras hachuradas e o aviso "poucos dados" marcam contas com menos de ${d.amostraMinima} itens. "IA · confira antes de usar": extraído automaticamente, sem revisão humana.</p>`;
+    <p class="muted small pn-rodape">${icon('info', { size: 13 })} Dados fictícios do piloto. Barras hachuradas e o aviso "poucos dados" marcam contas com menos de ${d.amostraMinima} itens. "IA · confira antes de usar": extraído automaticamente, sem revisão humana.</p>`;
   bind();
 }
 

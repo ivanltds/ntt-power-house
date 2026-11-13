@@ -140,10 +140,16 @@ export const NOTAS = [
         depois: 'A semelhança de texto passou a ser absoluta; a avaliação da IA pesa 75% do conteúdo e segue uma escala fixa (mesmo problema e segmento, mesmo problema em outro segmento, semelhança parcial, só tecnologia em comum); o percentual final não passa da relevância da IA + 10 pontos; e o status só desempata. Perguntas com referência forte continuam perto de 100%; perguntas sem referência ficam abaixo de 75% ou sem resultado. O guia ganhou a seção "Como o Radar calcula a semelhança", com os critérios, os pesos, a escala da IA, o teto e um exemplo calculado; o chat responde "como é calculado o percentual?" com ela.',
       },
       {
-        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-066'],
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-068'],
         titulo: 'Métricas do piloto viraram uma aba de Insights',
         antes: 'As Métricas do piloto ficavam numa tela separada, aberta só pelo menu ⋮.',
-        depois: 'Insights tem duas abas internas: "Base de projetos" (os números da base) e "Métricas do piloto" (uso do Radar, utilidade das respostas, reaproveitamento, por que não ajudou e o que pedem ao chat). O item do menu ⋮ abre Insights direto nessa aba, e o Radar lembra a última aba aberta.',
+        depois: 'Insights tem duas abas internas: "Visões" (as cinco perguntas sobre a base) e "Métricas do piloto" (uso do Radar, utilidade das respostas, reaproveitamento, por que não ajudou e o que pedem ao chat). O item do menu ⋮ abre Insights direto nessa aba, e o Radar lembra a última aba aberta.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-069'],
+        titulo: 'Insights: cinco visões com manchetes em cartões',
+        antes: 'A aba Insights mostrava contagens genéricas (números grandes, funil, top 10, projetos por ano) que diziam o que havia na base, mas não o que fazer com isso; o resumo das visões novas era uma lista de frases, e elas ficavam escondidas em /insights-novo.',
+        depois: 'As cinco visões (Negócio, Técnica, Pipeline, Pré-venda e Curadoria) viraram a aba principal de Insights, ao lado das Métricas do piloto. Cada visão abre com manchetes em cartões: tom com ícone (Ponto forte, Atenção, Para saber), número em destaque, o que ele significa, um gráfico pequeno e a frase, com link para os números por trás. Manchetes novas: taxa de ganho, onde mais ganhamos, onde mais perdemos e o pacote de serviços mais vendido. A tela inicial mostra o número principal de cada pergunta. O endereço /insights-novo abre a aba nova.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
