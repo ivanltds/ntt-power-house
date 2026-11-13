@@ -1839,3 +1839,12 @@ details.pd-card-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 .tl-chip.rem { background: var(--bad-soft); color: var(--bad); text-decoration: line-through; }
 .tl-ev-txt { margin: 4px 0 0 8px; font-size: 12.5px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
 @media (max-width: 720px) { .tl-mud { grid-template-columns: 1fr; } .tl-seta { display: none; } }
+
+/* "Comentários e histórico" num cartão próprio, com paginação de 5 em 5 */
+.pd-sec.tl-box { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 12px; box-shadow: var(--shadow); margin-top: 16px; }
+.pd-sec.tl-box > .sect-title { margin-top: 0; }
+.tl-box .tl-form { padding-bottom: 12px; border-bottom: 1px solid var(--line-2); }
+.tl-box .tl { margin-left: 14px; }
+.tl-mais { display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-2); }
+.tl-mais .muted { margin-right: auto; }
+.tl-item[hidden] { display: none; }

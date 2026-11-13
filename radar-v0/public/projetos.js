@@ -239,6 +239,7 @@ const autorDe = (id) => {
   const u = state.ctx.usuarios.find((x) => x.id === id);
   return u?.pessoa ?? u?.nome ?? userName(id) ?? 'Alguém';
 };
+const POR_PAGINA_TL = 5;
 const iniciais = (nome) => String(nome).split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase();
 
 // Linha do tempo da ficha: comentários como balões de conversa e alterações como cartões com antes → depois.
@@ -278,7 +279,7 @@ function linhaDoTempo(historico) {
     const txt = { criar: 'criou', exportar: 'exportou', excluir: 'excluiu', sugerir: 'sugeriu' }[g.acao] ?? g.acao;
     const doc = g.entidade === 'documento';
     return `<li class="tl-item tl-ev">${cab(g.usuario_id, g.em, `${txt}${doc ? ' um documento' : g.acao === 'criar' ? ' o projeto' : ''}`)}<div class="tl-ev-txt">${icon(doc ? 'file' : g.acao === 'exportar' ? 'download' : 'info', { size: 13 })}${esc([g.campo && !['titulo', 'nome'].includes(String(g.campo).split(' · ').pop()) ? ROTULO_HIST[g.campo] ?? g.campo : '', g.depois ?? g.antes ?? ''].filter(Boolean).join(': '))}</div></li>`;
-  }).join('');
+  });
 }
 
 // Modal grande: conteúdo do projeto à esquerda, ficha e conexões à direita.
@@ -305,6 +306,8 @@ export async function openProject(id) {
   // Tags editáveis: lápis abre o editor de chips (consultor escolhe entre as existentes; gestor também cria novas).
   const tagsEd = (campo, lista, cls = '') => `<div class="tags-ed" data-tags="${campo}"><div class="chips">${tags(lista, cls) || '<span class="ed-vazio">Nenhuma ainda</span>'}</div><button type="button" class="ed-btn" data-tags-btn="${campo}" title="Editar ${campo === 'tecnologias' ? 'tecnologias' : 'serviços'}" aria-label="Editar ${campo === 'tecnologias' ? 'tecnologias' : 'serviços'}">${icon('edit', { size: 13 })}</button></div>`;
   const row = (label, value) => `<dt>${label}</dt><dd>${value || '—'}</dd>`;
+  // Linha do tempo paginada: mostra 5 itens e "Mostrar mais" abre de 5 em 5.
+  const tl = linhaDoTempo(d.historico);
 
   $('#project-body').innerHTML = `
     <header class="dlg-head pd-head">
@@ -356,14 +359,16 @@ export async function openProject(id) {
             ${doc.observacoes ? `<p class="pd-note" title="Nota de quem revisou o envio">${icon('info', { size: 13 })} ${esc(doc.observacoes)}</p>` : ''}
             ${doc.palavras_chave?.length ? `<div class="chips">${tags(doc.palavras_chave.slice(0, 8))}</div>` : ''}
           </li>`).join('')}</ul>` : `<p class="muted">Nenhum documento visível para o seu perfil. <a href="#" id="pd-upload-2">Enviar o primeiro</a></p>`}`, 'pd-docs-sec')}
-        <section class="pd-sec pd-tl">
+        <section class="pd-sec pd-tl tl-box">
           <h5 class="sect-title">${icon('message', { size: 16 })}Comentários e histórico</h5>
           <form class="tl-form" id="pd-comentar">
             <span class="tl-av">${esc(iniciais(autorDe(userId())))}</span>
             <textarea name="texto" rows="2" maxlength="2000" placeholder="Escreva um comentário sobre o projeto (ex.: combinado com o cliente, próximos passos)…" aria-label="Comentário"></textarea>
             <button type="submit" class="btn sm primary" disabled>${icon('send', { size: 14 })}Comentar</button>
           </form>
-          ${d.historico.length ? `<ul class="tl">${linhaDoTempo(d.historico)}</ul>` : '<p class="muted small">Nenhum comentário ou alteração ainda.</p>'}
+          ${tl.length ? `<ul class="tl">${tl.map((li, i) => (i < POR_PAGINA_TL ? li : li.replace('<li class="tl-item', '<li hidden class="tl-item'))).join('')}</ul>
+            ${tl.length > POR_PAGINA_TL ? `<div class="tl-mais"><span class="muted small" id="tl-conta">Mostrando ${POR_PAGINA_TL} de ${tl.length}</span><button type="button" class="btn sm" id="tl-mais">Mostrar mais</button><button type="button" class="btn sm ghost hidden" id="tl-menos">Mostrar menos</button></div>` : ''}`
+            : '<p class="muted small">Nenhum comentário ou alteração ainda.</p>'}
         </section>
       </div>
       <aside class="pd-side">
@@ -471,6 +476,17 @@ export async function openProject(id) {
     box.closest('details')?.setAttribute('open', '');
     pintar();
   }));
+  // Paginação da linha do tempo.
+  const tlItens = $$('.tl > .tl-item', body);
+  let tlVisiveis = POR_PAGINA_TL;
+  const pintarTl = () => {
+    tlItens.forEach((li, i) => { li.hidden = i >= tlVisiveis; });
+    $('#tl-conta').textContent = `Mostrando ${Math.min(tlVisiveis, tlItens.length)} de ${tlItens.length}`;
+    $('#tl-mais').classList.toggle('hidden', tlVisiveis >= tlItens.length);
+    $('#tl-menos').classList.toggle('hidden', tlVisiveis <= POR_PAGINA_TL);
+  };
+  $('#tl-mais')?.addEventListener('click', () => { tlVisiveis += POR_PAGINA_TL; pintarTl(); });
+  $('#tl-menos')?.addEventListener('click', () => { tlVisiveis = POR_PAGINA_TL; pintarTl(); $('.pd-tl', body).scrollIntoView({ block: 'nearest' }); });
   // Comentários: entram na linha do tempo, acima do histórico.
   const fc = $('#pd-comentar');
   fc.texto.oninput = () => { $('button', fc).disabled = !fc.texto.value.trim(); };
