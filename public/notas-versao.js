@@ -140,10 +140,16 @@ export const NOTAS = [
         depois: 'A semelhança de texto passou a ser absoluta; a avaliação da IA pesa 75% do conteúdo e segue uma escala fixa (mesmo problema e segmento, mesmo problema em outro segmento, semelhança parcial, só tecnologia em comum); o percentual final não passa da relevância da IA + 10 pontos; e o status só desempata. Perguntas com referência forte continuam perto de 100%; perguntas sem referência ficam abaixo de 75% ou sem resultado. O guia ganhou a seção "Como o Radar calcula a semelhança", com os critérios, os pesos, a escala da IA, o teto e um exemplo calculado; o chat responde "como é calculado o percentual?" com ela.',
       },
       {
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-066'],
+        titulo: 'Métricas do piloto viraram uma aba de Insights',
+        antes: 'As Métricas do piloto ficavam numa tela separada, aberta só pelo menu ⋮.',
+        depois: 'Insights tem duas abas internas: "Base de projetos" (os números da base) e "Métricas do piloto" (uso do Radar, utilidade das respostas, reaproveitamento, por que não ajudou e o que pedem ao chat). O item do menu ⋮ abre Insights direto nessa aba, e o Radar lembra a última aba aberta.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
-        titulo: 'Roteiro da V0.0.2: 115 cenários, com Insights, conversa e celular',
+        titulo: 'Roteiro da V0.0.2: 116 cenários, com Insights, conversa e celular',
         antes: 'O roteiro tinha 74 cenários de Conversas, Projetos e Envio.',
-        depois: 'O roteiro da V0.0.2 tem 115 cenários: os 74 anteriores (ajustados às telas novas) e 41 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45), conversa cordial, dúvidas de uso e arquivo lido na conversa (C46 a C53), cartão e caixa de pergunta no celular (C54 e C55), conversa informal (C56), percentual de semelhança (C57), as seções da ficha que recolhem (P29) e a ficha com edição no lugar, comentários e exclusão (P30 a P33). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
+        depois: 'O roteiro da V0.0.2 tem 116 cenários: os 74 anteriores (ajustados às telas novas) e 42 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45), conversa cordial, dúvidas de uso e arquivo lido na conversa (C46 a C53), cartão e caixa de pergunta no celular (C54 e C55), conversa informal (C56), percentual de semelhança (C57), métricas do piloto em Insights (I08), as seções da ficha que recolhem (P29) e a ficha com edição no lugar, comentários e exclusão (P30 a P33). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',

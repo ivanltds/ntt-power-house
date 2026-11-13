@@ -787,6 +787,13 @@ export const ROTEIRO = [
     [],
     ['Olhe a barra de abas no alto.', 'Na barra de endereço do navegador, troque o fim do endereço por "/insights-novo" e aperte Enter.'],
     ['A barra de abas tem só Perguntar, Projetos e Insights (o envio de arquivos fica dentro do projeto e na conversa).', 'O endereço /insights-novo abre o protótipo "Insights (novo)" direto, para avaliação.']),
+
+  c('I08', 'media', 'Métricas do piloto dentro de Insights',
+    'Ver se as métricas de uso do Radar ficam numa aba de Insights, ao lado da visão da base.',
+    [GESTOR],
+    ['Clique na aba "Insights", no alto da tela.', 'Clique na aba interna "Métricas do piloto".', 'Clique em "Base de projetos" e depois abra o menu ⋮ e clique em "Métricas do piloto".', 'Aperte F5 para recarregar e abra "Insights" de novo.'],
+    ['Insights tem duas abas internas: "Base de projetos" (os números da base) e "Métricas do piloto".', '"Métricas do piloto" mostra buscas, sem resultado, úteis entre os 3 primeiros, tempo até a 1ª referência útil, reaproveitamentos, fontes abertas, tempo de resposta e as tabelas "Por que não ajudou" e "O que pedem ao chat".', 'O item "Métricas do piloto" do menu ⋮ abre Insights já nessa aba; não existe mais uma tela separada.', 'Depois do F5, Insights abre na última aba interna usada.'],
+    { tickets: ['CR-066'] }),
 ];
 
 // Roteiros de versões anteriores, congelados: a versão arquivada só pode ser consultada.

@@ -2057,3 +2057,13 @@ span.tec-tag { cursor: default; }
 .msg.user .msg-editar { left: auto; right: calc(100% + 4px); }
 @media (hover: none) { .msg.user .msg-editar { width: 30px; height: 30px; padding: 0; } }
 @media (max-width: 720px) { .msg.user { max-width: calc(100% - 40px); } } /* sobra lugar para o lápis à esquerda */
+/* Insights: abas internas "Base de projetos" | "Métricas do piloto" */
+.ins-abas { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin: 0 0 16px; overflow-x: auto; }
+.ins-abas button { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 500; padding: 10px 14px; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; white-space: nowrap; }
+.ins-abas button:hover { color: var(--ink); }
+.ins-abas button.on { color: var(--brand-ink); border-bottom-color: var(--brand); font-weight: 600; }
+:root[data-theme="dark"] .ins-abas button.on { color: #8fb4ff; }
+.ins-abas { overflow-y: hidden; scrollbar-width: none; }
+.ins-abas::-webkit-scrollbar { display: none; }
+#metrics-extra { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr)); gap: 12px; align-items: start; }
+#metrics-extra .panel { margin: 0; }

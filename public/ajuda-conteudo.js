@@ -39,7 +39,7 @@ export const GUIA = [
     <h4>Botão de conta e menu ${icon('menu', { size: 14 })}</h4>
     <ul>
       <li><b>Botão de conta</b> (canto superior direito, com iniciais, nome e perfil): mostra quem está ativo e tem o <b>Ver como (demonstração)</b>, que troca entre Consultor (Marina) e Gestor (Thiago). <b>Consultor</b> não vê projetos confidenciais nem o <b>preço e a margem</b> das propostas; os resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos. <b>Gestor</b> vê tudo. Serve para testar as permissões; some quando houver login individual.</li>
-      <li><b>Menu ⋮</b> (ao lado; fecha no X ou com ${kbd('Esc')}): <b>Tema</b> (Auto, Claro ou Escuro), <b>Todos os documentos</b> (arquivos da base com tipo e rótulo de confiança), <b>Métricas do piloto</b>, <b>Registro de atividades</b> (só gestor), <b>Como usar o Radar</b> (este guia), <b>Como o Radar funciona</b> (explicação técnica), <b>Processo SDLC</b> (como a versão foi construída), <b>Versão: notas, feedbacks e testes</b> (novidades, enviar feedback, tickets e roteiro de testes), <b>Política de dados</b> e <b>Sair</b> (a sessão dura 7 dias).</li>
+      <li><b>Menu ⋮</b> (ao lado; fecha no X ou com ${kbd('Esc')}): <b>Tema</b> (Auto, Claro ou Escuro), <b>Todos os documentos</b> (arquivos da base com tipo e rótulo de confiança), <b>Métricas do piloto</b> (atalho para a aba de mesmo nome em Insights), <b>Registro de atividades</b> (só gestor), <b>Como usar o Radar</b> (este guia), <b>Como o Radar funciona</b> (explicação técnica), <b>Processo SDLC</b> (como a versão foi construída), <b>Versão: notas, feedbacks e testes</b> (novidades, enviar feedback, tickets e roteiro de testes), <b>Política de dados</b> e <b>Sair</b> (a sessão dura 7 dias).</li>
       <li><b>Coluna de conversas</b>: no rodapé, atalhos para <b>Como usar o Radar</b> e <b>Enviar feedback</b>.</li>
     </ul>
     ${tip('Na dúvida, pergunte ao próprio Radar: <i>"o que você pode fazer?"</i> ou <i>"como envio um arquivo?"</i>. Ele responde com base neste guia e mostra a seção de onde tirou.')}
@@ -282,8 +282,9 @@ export const GUIA = [
 
   ['insights', 'chart', 'Insights e métricas', () => `
     <h4>Insights</h4>
-    <p>Visão agregada do que o seu perfil enxerga: números grandes no topo (projetos, <b>conversão</b>, segmentos e tecnologias), o <b>funil</b> das propostas por status, o <b>top 10</b> de segmentos e de tecnologias, projetos <b>por ano</b>, tecnologias que <b>andam juntas</b>, <b>resultados comprovados</b> e <b>lições de propostas perdidas</b>. Passe o mouse numa barra para ver o detalhe e clique num item para abrir ${ui('Projetos')} já filtrado. A <b>saúde da base</b> (documentos por tipo, envios a revisar e pendências de cadastro) fica recolhida no fim.</p>
-    <h4>Métricas do piloto (menu ${icon('menu', { size: 14 })})</h4>
+    <p>A aba <b>Base de projetos</b> é a visão agregada do que o seu perfil enxerga: números grandes no topo (projetos, <b>conversão</b>, segmentos e tecnologias), o <b>funil</b> das propostas por status, o <b>top 10</b> de segmentos e de tecnologias, projetos <b>por ano</b>, tecnologias que <b>andam juntas</b>, <b>resultados comprovados</b> e <b>lições de propostas perdidas</b>. Passe o mouse numa barra para ver o detalhe e clique num item para abrir ${ui('Projetos')} já filtrado. A <b>saúde da base</b> (documentos por tipo, envios a revisar e pendências de cadastro) fica recolhida no fim.</p>
+    <h4>Métricas do piloto (aba em Insights)</h4>
+    <p>Em ${ui('Insights')}, a aba <b>Métricas do piloto</b>, ao lado de <b>Base de projetos</b>, mostra se o Radar está sendo usado e ajudando (o item de mesmo nome no menu ⋮ abre direto essa aba; o Radar lembra a última aba aberta).</p>
     ${table(['Indicador', 'O que mede'], [
       ['Buscas', 'Perguntas feitas no chat (passe o mouse para ver o número de conversas).'],
       ['Sem resultado', 'Perguntas em que a base não tinha evidência: lacunas de conteúdo.'],
