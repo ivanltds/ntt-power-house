@@ -672,6 +672,13 @@ export const ROTEIRO = [
     ['"boa noite, tudo bem?" recebe um boa noite (com o nome Marina), diz que está tudo bem e pergunta de volta, em poucas frases; só nesta primeira mensagem o Radar se apresenta.', '"qual seu nome?" responde que é o Radar e o que faz, em uma ou duas frases.', 'Depois da listagem, "bom trabalho!" recebe um agradecimento natural, sem se reapresentar.', '"tudo bem com você?" no meio da conversa responde e pergunta de volta, sem a apresentação inteira de novo.', 'As respostas variam com o que foi dito (não são sempre a mesma frase) e nenhuma inventa projetos ou números.'],
     { tickets: ['CR-061'] }),
 
+  c('C57', 'alta', 'Percentual realista de semelhança',
+    'Ver se o percentual dos cartões reflete o quanto o projeto realmente se parece com a pergunta.',
+    [GESTOR, NOVA],
+    [PERGUNTE('projetos de fraude em seguros'), ESPERE, 'Abra o cartão do primeiro projeto e veja "Por que apareceu nesta posição".', NOVA, PERGUNTE('projeto para uma funilaria de carros'), ESPERE, NOVA, PERGUNTE('sistema de gestão para uma padaria'), ESPERE],
+    ['A pergunta de fraude em seguros traz o projeto da Segura Mais Seguros como "Muito parecido" (perto de 100%).', 'Em "Por que apareceu nesta posição", o Status soma pouco e só junto com um conteúdo parecido.', 'A funilaria não traz nenhum projeto como "Muito parecido": o Radar diz que não encontrou nada relevante ou mostra só "Relacionado"/"Parecido" abaixo de 75%.', 'A padaria também não passa de "Parecido" (abaixo de 75%).'],
+    { tickets: ['CR-064'] }),
+
   c('C55', 'alta', 'Caixa de pergunta no celular com memória da conversa',
     'Ver se a caixa de pergunta continua numa linha só quando o chat está lembrando perguntas anteriores.',
     [CELULAR, NOVA],
