@@ -7,10 +7,10 @@
 
 import fs from 'node:fs';
 
-const MENU = 'o botão de três pontinhos (⋮), no canto superior direito';
-const PERFIL = (p) => `Abra ${MENU}. Em "Ver como", escolha "${p}". Clique fora do menu para fechar.`;
-const CONSULTOR = PERFIL('Consultor(a) de pré-vendas');
-const GESTOR = PERFIL('Gestor(a) comercial');
+// "Ver como" fica no botão de conta (iniciais, nome e perfil), no canto superior direito — separado do menu ⋮.
+const PERFIL = (p, pessoa) => `Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em "Ver como", escolha "${p}" (o botão passa a mostrar ${pessoa}). Clique fora para fechar.`;
+const CONSULTOR = PERFIL('Consultor', 'Marina · Consultor');
+const GESTOR = PERFIL('Gestor', 'Thiago · Gestor');
 const NOVA = 'Na aba "Perguntar", clique no botão azul "Nova conversa", no alto da coluna da esquerda.';
 const PERGUNTE = (q) => `Clique na caixa de texto na parte de baixo da tela, escreva exatamente: "${q}" e aperte Enter.`;
 const ESPERE = 'Espere a resposta aparecer.';
@@ -378,8 +378,8 @@ export const ROTEIRO = [
   c('P23', 'media', 'Editar um projeto e desfazer',
     'Ver se a edição grava e fica no histórico.',
     [GESTOR, PROJETOS, 'Abra o detalhe do projeto da AgroCerrado Cooperativa.'],
-    ['Clique no lápis ("Editar"), no alto da janela.', 'Anote o "Responsável" atual e troque por "Teste roteiro".', 'Clique em "Salvar".', 'Abra o detalhe de novo e clique em "Histórico", na coluna da direita.', 'Edite de novo e volte o Responsável ao nome anotado. Salve.'],
-    ['Depois de salvar, aparece o aviso "P0xx atualizado".', 'O "Histórico" mostra a troca do responsável com o seu perfil e a data.', 'Depois de desfazer, o responsável volta ao original.']),
+    ['Clique no lápis do alto da janela ("Editar tudo num formulário").', 'Anote o "Responsável" atual e troque por "Teste roteiro".', 'Clique em "Salvar".', 'Abra o detalhe de novo e role até "Comentários e histórico", na coluna principal.', 'Edite de novo e volte o Responsável ao nome anotado. Salve.'],
+    ['Depois de salvar, aparece o aviso "P0xx atualizado".', '"Comentários e histórico" mostra um cartão com a troca do responsável (antes riscado → depois), com o nome de quem fez e a data.', 'Depois de desfazer, o responsável volta ao original.']),
 
   c('P24', 'media', 'Lista de documentos',
     'Ver a lista geral de documentos.',
