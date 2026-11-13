@@ -618,7 +618,7 @@ export const ROTEIRO = [
     'Ver a conversa e o registro do que mudou no projeto.',
     [PROJETOS, 'Faça o cenário P30 no mesmo projeto.'],
     ['Na coluna principal, role até "Comentários e histórico".', 'Escreva um comentário com o seu nome e clique em "Comentar".', 'Olhe os itens abaixo do campo de comentário.'],
-    ['O botão "Comentar" só fica ativo com texto; o comentário aparece no topo como um balão, com as iniciais, o nome e a hora.', 'As edições aparecem como cartões com o campo, o valor antigo riscado (vermelho) → o novo (verde); em tecnologias e serviços, chips "+" e "−".', 'Edições feitas juntas ficam num cartão só; exportações e outros registros aparecem como linhas com ícone.']),
+    ['O botão "Comentar" só fica ativo com texto; o comentário aparece no topo como um balão, com as iniciais, o nome e a hora.', 'As edições aparecem como cartões com o campo, o valor antigo riscado (vermelho) → o novo (verde); em tecnologias e serviços, chips "+" e "−".', 'Edições feitas juntas ficam num cartão só; exportações e outros registros aparecem como linhas com ícone.', 'Tudo fica num cartão próprio; aparecem os 5 itens mais recentes e "Mostrar mais" abre de 5 em 5 (com "Mostrando N de M" e "Mostrar menos").']),
 
   c('P33', 'alta', 'Excluir um projeto (só gestor)',
     'Ver se só o gestor exclui projetos e se a exclusão pede confirmação.',
