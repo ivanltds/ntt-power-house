@@ -3,7 +3,7 @@
 > Cópia versionada de `radar-v0/docs/CASOS-DE-USO-conversa-assistente-skills.md` (protótipo), com os links ajustados para esta pasta.
 
 > Demanda: **radar-propostas-cases** · Etapa: NB-02 — Especificação de Requisitos (adendo 6)
-> Status: **Proposta para o PO em 2026-11-13 — aguarda decisões (seção 6) e validação do comitê**
+> Status: **PO aprovou as recomendações (D1–D4) em 2026-11-13. Fases 0 a 4 implementadas no protótipo no mesmo dia (ticket CR-053; cenários C46 a C53). Aguarda validação do comitê.**
 > Base: feature de busca conversacional (UC03), [`CASOS-DE-USO-feedbacks-teste-2026-11-03.md`](./NB-02-adendo-feedbacks-teste-2026-11-03.md) (roteador UC03.17–UC03.23) e [`CASOS-DE-USO-upload-cadastro-consultas.md`](./NB-02-adendo-upload-cadastro-consultas.md) (UC02, envio de arquivos)
 > Evidências: conversas do PO em produção (2026-11-13) e leitura do código do protótipo `radar-v0`
 

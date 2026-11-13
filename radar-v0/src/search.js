@@ -10,8 +10,14 @@ import { normalize, tokenize, sentences } from './text.js';
 import { STORE_PATH, COLLECTION, PRICE_PATTERN, documentFrequency, documentVectors } from './ingest.js';
 import { Repo } from './db/repo.js';
 import { DB_PATH } from './config.js';
+import { toolSchemas, executarFerramenta } from './skills/ferramentas.js';
+import { preRotear, capacidades } from './skills/index.js';
+import { responderConversa } from './skills/conversa.js';
+import { responderAjuda } from './skills/ajuda.js';
+import { resumirAnexos, perguntarAnexo, consultaDoAnexo, destinoDoEnvio } from './skills/anexo.js';
+import { can } from './permissions.js';
 import {
-  IntentTools, VOCAB, CAMPOS_FICHA, classificar, camposPedidos, agrupamentoPedido, temAssunto, toolSchemas, filtrosValidos,
+  IntentTools, VOCAB, CAMPOS_FICHA, classificar, camposPedidos, agrupamentoPedido, temAssunto, filtrosValidos,
   textoListagem, textoContagem, textoFicha, textoComparacao, referenciaAnterior, pedeResultados, textoResultados, textoFichas,
 } from './intents.js';
 
@@ -104,6 +110,9 @@ export function sugerirBuscas(candidates, entities = {}) {
   return out.map((o) => o.pergunta);
 }
 
+// Saudação que veio junto com um pedido ("bom dia, liste…"): cumprimenta em meia frase antes da resposta (UC14.1).
+export const comPrefixo = (prefixo, resposta) => (prefixo && resposta && !String(resposta).startsWith(prefixo) ? `${prefixo}! ${resposta}` : resposta);
+
 export function semResultado(query, sugestoes) {
   const base = `Não encontrei nada relevante na base para "${query}".`;
   return sugestoes.length ? `${base} Buscas próximas que trazem resultado: ${sugestoes.map((s) => `"${s}"`).join(', ')}.`
@@ -164,13 +173,23 @@ export class RadarEngine {
   }
 
   // history: turnos anteriores da conversa (memória — UC03.3 / UC03.14), do mais antigo ao mais recente.
-  async search(query, { userId, opportunityId, history = [] } = {}) {
+  // anexos: arquivos lidos nesta conversa (UC15); indiceAnexos: busca nos trechos deles; pendentes: anexos ainda não enviados à base.
+  async search(query, { userId, opportunityId, history = [], anexos = [], indiceAnexos = null, pendentes = 0 } = {}) {
     const t0 = Date.now();
     const user = this.user(userId);
     const opp = this.focus(opportunityId, user);
+    const original = query;
+
+    // Adendo 6: pré-roteamento por regras. Saudação, agradecimento, dúvida de uso e pedidos sobre o arquivo anexado
+    // são resolvidos sem a IA; "bom dia, liste…" cumprimenta e segue com o pedido.
+    const pre = preRotear(query, { anexos, pendentes });
+    const prefixo = pre?.saudacao && (pre.resto || (pre.skill && pre.skill !== 'conversa')) ? pre.saudacao : null;
+    if (pre?.resto) query = pre.resto;
+    const ctxSkill = { original, user, opp, history, anexos, indiceAnexos, pendentes, prefixo };
+    if (pre?.skill) return this.runSkill(pre, { ...ctxSkill, query, t0 });
 
     // UC03.2 / UC03.3 — interpretação da pergunta considerando o histórico da conversa.
-    const u = await this.llm.understand({ query, history, opportunity: opp });
+    const u = await this.llm.understand({ query, history, opportunity: opp, anexos, pendentes });
     const entendimento = {
       intencao: u.intencao,
       confianca: u.confianca ?? 1,
@@ -180,8 +199,14 @@ export class RadarEngine {
       entidades: { segmentos: u.segmentos, tecnologias: u.tecnologias, servicos: u.servicos, prazoMeses: u.prazoMeses },
     };
     const iaStatus = [u.ia];
-    const base = { query, entendimento, oportunidade: opp, usuario: { id: user.id, nome: user.nome, perfil: user.perfil } };
-    const finish = (out) => ({ ...base, complementares: [], candidatosAvaliados: 0, poucasReferencias: false, ...out, ia: this.iaSummary(iaStatus), tempoMs: Date.now() - t0 });
+    const base = { query: original, entendimento, oportunidade: opp, usuario: { id: user.id, nome: user.nome, perfil: user.perfil } };
+    const finish = (out) => ({ ...base, complementares: [], candidatosAvaliados: 0, poucasReferencias: false, ...out, resposta: comPrefixo(prefixo, out.resposta), ia: this.iaSummary(iaStatus), tempoMs: Date.now() - t0 });
+
+    // Skills do registro escolhidas pela IA (adendo 6).
+    const pelaIA = { conversa: { skill: 'conversa', tipo: u.conversa ?? 'nao_entendi' }, fora_dominio: { skill: 'conversa', tipo: 'fora_escopo' }, ajuda: { skill: 'ajuda' } }[u.intencao]
+      ?? (u.intencao === 'anexo' && anexos.length ? { skill: 'anexo', acao: u.acao ?? 'perguntar' } : null)
+      ?? (u.intencao === 'enviar_arquivo' && pendentes > 0 ? { skill: 'enviar_arquivo' } : null);
+    if (pelaIA) return this.runSkill(pelaIA, { ...ctxSkill, query, t0, iaStatus, entendimento });
 
     // UC03.14 — pedido de detalhe de um resultado da resposta anterior.
     if (u.intencao === 'detalhar' && u.referencia) {
@@ -196,20 +221,18 @@ export class RadarEngine {
         });
       }
     }
-    if (u.intencao === 'fora_dominio') {
-      return finish({
-        entidades: entendimento.entidades,
-        resposta: 'Essa pergunta está fora do que a base de propostas e cases pode responder. Pergunte sobre projetos, clientes, segmentos, tecnologias ou serviços já realizados.',
-        semEvidencia: true,
-        resultados: [],
-      });
-    }
 
     // Adendo 5: listagem, contagem, ficha, comparação, esclarecimento e perguntas compostas têm resposta própria.
     // Só "buscar" segue para a busca de projetos parecidos.
     const roteada = await this.route(u, { query, history, user, finish, entendimento, iaStatus });
     if (roteada) return roteada;
     entendimento.intencao = 'buscar';
+
+    // UC14.6: sem assunto, sem contexto e sem foco não há o que buscar — "não entendi" com exemplos, em vez de "Não encontrei".
+    const temEntidades = u.segmentos.length + u.tecnologias.length + u.servicos.length > 0;
+    if (!u.continuacao && !opp && !temEntidades && !temAssunto(query, { segmentos: [], tecnologias: [], servicos: [] })) {
+      return this.runSkill({ skill: 'conversa', tipo: 'nao_entendi' }, { ...ctxSkill, query, t0, iaStatus, entendimento });
+    }
 
     const entities = {
       segmentos: [...new Set([...u.segmentos, ...(opp ? [opp.segmento] : [])])],
@@ -334,6 +357,52 @@ export class RadarEngine {
       complementares,
       candidatosAvaliados: candidates.length,
     });
+  }
+
+  // ---------- Skills do registro (adendo 6): conversa, ajuda, arquivo na conversa e envio ----------
+  async runSkill(d, { query, original, user, opp, history, anexos, indiceAnexos, pendentes, prefixo, t0, iaStatus = [], entendimento = null }) {
+    const ent = entendimento ?? { intencao: d.skill, confianca: 1, continuacao: false, consulta: query, termos: [], entidades: { segmentos: [], tecnologias: [], servicos: [], prazoMeses: null } };
+    ent.intencao = d.skill;
+    ent.skill = d.skill;
+    if (!entendimento) iaStatus.push({ provedor: 'regras', fallback: false, regras: true });
+    const responder = (tipoResposta, out) => {
+      ent.tipoResposta = tipoResposta;
+      return {
+        query: original, entendimento: ent, oportunidade: opp, usuario: { id: user.id, nome: user.nome, perfil: user.perfil },
+        complementares: [], candidatosAvaliados: 0, poucasReferencias: false, entidades: ent.entidades, semEvidencia: false, resultados: [], tipoResposta,
+        ...out, resposta: comPrefixo(prefixo, out.resposta), ia: this.iaSummary(iaStatus), tempoMs: Date.now() - t0,
+      };
+    };
+    if (d.skill === 'conversa') {
+      const r = responderConversa(d.tipo, { user, capacidades: capacidades(user), query: original, prefixo: d.tipo === 'saudacao' ? '' : d.saudacao });
+      return responder('conversa', r);
+    }
+    if (d.skill === 'ajuda') return responder('ajuda', await responderAjuda({ query, llm: this.llm }));
+    if (d.skill === 'anexo') {
+      if (!anexos.length) return this.runSkill({ skill: 'conversa', tipo: 'sem_anexo' }, { query, original, user, opp, history, anexos, indiceAnexos, pendentes, prefixo, t0, iaStatus, entendimento });
+      if (d.acao === 'parecidos') {
+        const consulta = consultaDoAnexo(anexos);
+        const r = await this.search(consulta, { userId: user.id, history: [] });
+        const nome = anexos[anexos.length - 1].nome;
+        return { ...r, query: original, entendimento: { ...r.entendimento, skill: 'anexo', consulta }, resposta: comPrefixo(prefixo, `Busquei na base projetos parecidos com o arquivo "${nome}".\n\n${r.resposta}`), tempoMs: Date.now() - t0 };
+      }
+      if (d.acao === 'perguntar' && indiceAnexos) return responder('anexo', await perguntarAnexo({ query, indice: indiceAnexos, llm: this.llm }));
+      const r = await resumirAnexos({ anexos, llm: this.llm, user, pendentes, podeCriar: can(user, 'cadastrarProjeto') });
+      if (r.ia) iaStatus.push(r.ia);
+      return responder('anexo', r);
+    }
+    if (d.skill === 'enviar_arquivo') {
+      const projetos = this.tools.visible(user).itens.map((p) => ({ id: p.id, titulo: p.titulo, cliente: p.cliente, segmento: p.segmento }));
+      const foco = opp?.projetoId ? projetos.find((p) => p.id === opp.projetoId) ?? null : null;
+      const dest = destinoDoEnvio(query, { projetos, foco });
+      const n = pendentes > 1 ? `os ${pendentes} arquivos` : 'o arquivo';
+      const resposta = dest.codigoInvalido ? `Não encontrei o ${dest.codigoInvalido} entre os projetos que você pode ver. Para qual projeto vai ${n}? Nada foi enviado ainda.`
+        : dest.projeto ? `Vou enviar ${n} para ${dest.projeto.titulo} (${dest.projeto.cliente}). ${pendentes > 1 ? 'Eles só entram' : 'Ele só entra'} na base depois da sua aprovação.`
+          : dest.opcoes.length ? `Encontrei ${dest.opcoes.length > 1 ? `${dest.opcoes.length} projetos que combinam` : 'este projeto'}. Para qual vai ${n}? Nada foi enviado ainda.`
+            : `Para qual projeto vai ${n}? Diga o cliente ou o código (ex.: "coloca no projeto P003") ou escolha um em "Proposta em foco". Nada foi enviado ainda.${can(user, 'cadastrarProjeto') ? ' Se for um projeto novo, use "Criar projeto com este arquivo".' : ' Se for um projeto que ainda não existe, peça ao gestor para cadastrá-lo e envie depois.'}`;
+      return responder('enviar_arquivo', { resposta, dados: { projeto: dest.projeto, opcoes: dest.opcoes, podeCriar: can(user, 'cadastrarProjeto') } });
+    }
+    return null;
   }
 
   // ---------- Roteamento por intenção (UC03.17–UC03.23) ----------
@@ -499,37 +568,8 @@ export class RadarEngine {
 
   // UC03.23: a IA chama as ferramentas; o servidor executa com as permissões do usuário.
   async composite(query, { history, user, responder, iaStatus }) {
-    const t = this.tools;
-    const exec = async (nome, a = {}) => {
-      if (nome === 'listar_projetos') {
-        const r = t.listar(user, filtrosValidos(a.filtros, VOCAB));
-        return { tipo: 'listagem', dados: r, ids: r.itens.map((i) => i.projeto_id), paraIA: { total: r.total, itens: r.itens.map((i) => ({ id: i.projeto_id, titulo: i.titulo, cliente: i.cliente, segmento: i.segmento, status: i.status, ano: i.ano })), porStatus: r.porStatus, porSegmento: r.porSegmento.slice(0, 8) } };
-      }
-      if (nome === 'contar_por') {
-        const r = t.contar(user, a.campo, filtrosValidos(a.filtros, VOCAB));
-        return { tipo: 'contagem', dados: r, ids: [], paraIA: { campo: r.rotulo, total: r.total, linhas: r.linhas.slice(0, 30) } };
-      }
-      if (nome === 'localizar_projeto') {
-        const c = t.localizar(user, String(a.nome ?? ''));
-        return { tipo: null, dados: { candidatos: c }, ids: c.map((x) => x.projeto_id), paraIA: { candidatos: c } };
-      }
-      if (nome === 'ficha_projeto') {
-        const campos = Array.isArray(a.campos) ? a.campos.filter((c) => CAMPOS_FICHA[c]) : [];
-        const f = t.ficha(user, String(a.projeto_id ?? '').toUpperCase(), campos);
-        if (!f) return { tipo: null, ids: [], paraIA: { erro: 'Projeto não encontrado ou sem permissão.' } };
-        return { tipo: 'ficha', dados: { ficha: f }, ids: [f.projeto_id], paraIA: { projeto_id: f.projeto_id, titulo: f.titulo, cliente: f.cliente, campos: f.campos.map((c) => ({ campo: c.rotulo, valor: c.texto })) } };
-      }
-      if (nome === 'buscar_semelhantes') {
-        const itens = this.quickSimilar(String(a.texto ?? ''), user, filtrosValidos(a.filtros, VOCAB));
-        return { tipo: 'semelhantes', dados: { itens }, ids: itens.map((i) => i.projeto_id), paraIA: { projetos: itens } };
-      }
-      if (nome === 'buscar_trechos') {
-        const r = t.trechos(user, String(a.projeto_id ?? '').toUpperCase(), String(a.assunto ?? ''));
-        if (!r) return { tipo: null, ids: [], paraIA: { erro: 'Projeto não encontrado ou sem permissão.' } };
-        return { tipo: 'trechos', dados: r, ids: [r.projeto_id], paraIA: { frases: r.frases.map((f) => f.texto) } };
-      }
-      return { tipo: null, ids: [], paraIA: { erro: 'Ferramenta desconhecida.' } };
-    };
+    // Despachante único (adendo 6): o mesmo registro de ferramentas para todas as skills.
+    const exec = async (nome, a = {}) => executarFerramenta({ engine: this, user, vocab: VOCAB }, nome, a);
     const out = await this.llm.runTools({ query, history, tools: toolSchemas(VOCAB), execute: exec });
     if (out.ia) iaStatus.push(out.ia);
     const ids = [...new Set(out.passos.flatMap((p) => p.ids ?? []))];
@@ -566,6 +606,8 @@ export class RadarEngine {
     const list = statuses.filter(Boolean);
     const failed = list.find((s) => s.fallback);
     if (failed) return failed;
+    // Resposta resolvida só pelas regras do registro de skills (sem chamar a IA).
+    if (list.length && list.every((s) => s.regras)) return { provedor: 'regras', modelo: 'skills', fallback: false };
     return { provedor: this.llm.provider ?? 'mock', modelo: this.llm.name, fallback: false };
   }
 

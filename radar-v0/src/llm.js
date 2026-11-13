@@ -88,6 +88,11 @@ export class MockLLM {
     };
   }
 
+  // Sem IA real as skills de ajuda e de arquivo respondem com o trecho literal mais relevante.
+  async grounded() {
+    return null;
+  }
+
   // Sem IA real não há reavaliação semântica: o ranking fica com o score lexical/vetorial.
   async analyze() {
     return null;
