@@ -213,6 +213,74 @@ const ORIGEM = { seed: 'Base piloto', upload: 'Criado por upload', manual: 'Cada
 const kb = (n) => (n == null ? '' : n < 1024 ? `${n} B` : `${Math.round(n / 1024)} KB`);
 const when = (iso) => (iso ? new Date(iso).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : '—');
 
+// Campos da ficha que editam no lugar (V0.0.2): passar o mouse mostra o lápis; clicar troca o texto por um campo.
+// tipo: texto | numero | data | url | area (texto longo) | lista (opções fixas) | sugestao (lista com opções; o gestor cria novas)
+const CAMPOS_PROJETO = {
+  titulo: { rotulo: 'Título', tipo: 'texto' },
+  cliente: { rotulo: 'Cliente', tipo: 'sugestao', opcoes: () => state.ctx.catalogo.clientes, novo: 'cadastrarCliente' },
+  segmento: { rotulo: 'Segmento', tipo: 'sugestao', opcoes: () => state.ctx.catalogo.segmentos.map((s) => s.nome), novo: 'criarTermo' },
+  area: { rotulo: 'Área', tipo: 'texto' },
+  dono: { rotulo: 'Responsável', tipo: 'texto' },
+  status_proposta: { rotulo: 'Status', tipo: 'lista', opcoes: () => state.ctx.catalogo.status },
+  confidencialidade: { rotulo: 'Acesso', tipo: 'lista', opcoes: () => currentUser()?.confidencialidades ?? ['interna'] },
+  prazo_meses: { rotulo: 'Prazo (meses)', tipo: 'numero' },
+  valor: { rotulo: 'Valor (R$)', tipo: 'numero' },
+  margem: { rotulo: 'Margem (%)', tipo: 'numero', paraTela: (v) => (v == null ? '' : Math.round(v * 1000) / 10), paraBanco: (v) => (v === '' ? '' : Number(v) / 100) },
+  data_referencia: { rotulo: 'Data de referência', tipo: 'data' },
+  link_sharepoint: { rotulo: 'Pasta no SharePoint', tipo: 'url' },
+  objetivo: { rotulo: 'Objetivo', tipo: 'area' },
+  descricao: { rotulo: 'Contexto', tipo: 'area' },
+};
+const ROTULO_HIST = { ...Object.fromEntries(Object.entries(CAMPOS_PROJETO).map(([k, v]) => [k, v.rotulo.replace(/ \(.*\)$/, '')])), tecnologias: 'Tecnologias', servicos: 'Serviços', teste: 'Marcado como teste' };
+
+// Quem fez: na demonstração, cada perfil representa uma pessoa.
+const autorDe = (id) => {
+  if (id === '__base') return 'Base piloto';
+  const u = state.ctx.usuarios.find((x) => x.id === id);
+  return u?.pessoa ?? u?.nome ?? userName(id) ?? 'Alguém';
+};
+const iniciais = (nome) => String(nome).split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase();
+
+// Linha do tempo da ficha: comentários como balões de conversa e alterações como cartões com antes → depois.
+// Alterações do mesmo autor no mesmo minuto (uma mesma edição) ficam num cartão só.
+function linhaDoTempo(historico) {
+  const grupos = [];
+  for (const h of historico) {
+    const ult = grupos.at(-1);
+    const mesmo = ult && ult.tipo === 'edicao' && h.acao === 'editar' && h.entidade === 'projeto' && ult.usuario_id === h.usuario_id && ult.em.slice(0, 16) === h.em.slice(0, 16);
+    if (mesmo) ult.itens.push(h);
+    else grupos.push(h.acao === 'comentar' ? { tipo: 'comentario', ...h } : h.acao === 'editar' && h.entidade === 'projeto' ? { tipo: 'edicao', usuario_id: h.usuario_id, em: h.em, itens: [h] } : { tipo: 'evento', ...h });
+  }
+  const valor = (campo, v) => {
+    if (v == null || v === '') return '<span class="muted">vazio</span>';
+    if (campo === 'margem') return `${Math.round(Number(v) * 100)}%`;
+    if (campo === 'valor') return brl(Number(v));
+    if (campo === 'prazo_meses') return `${String(v).replace('.', ',')} meses`;
+    if (campo === 'data_referencia') return dateBR(v);
+    return esc(String(v).length > 160 ? `${String(v).slice(0, 160)}…` : v);
+  };
+  const lista = (a, b) => {
+    const antes = String(a ?? '').split(',').map((x) => x.trim()).filter(Boolean);
+    const depois = String(b ?? '').split(',').map((x) => x.trim()).filter(Boolean);
+    const add = depois.filter((x) => !antes.includes(x));
+    const rem = antes.filter((x) => !depois.includes(x));
+    return `${add.map((x) => `<span class="tl-chip add">+ ${esc(x)}</span>`).join('')}${rem.map((x) => `<span class="tl-chip rem">− ${esc(x)}</span>`).join('')}` || '<span class="muted">sem mudança</span>';
+  };
+  const cab = (id, em, txt) => `<div class="tl-cab"><span class="tl-av">${esc(iniciais(autorDe(id)))}</span><b>${esc(autorDe(id))}</b><span class="muted">${txt}</span><time>${when(em)}</time></div>`;
+  return grupos.map((g) => {
+    if (g.tipo === 'comentario') return `<li class="tl-item tl-com">${cab(g.usuario_id, g.em, 'comentou')}<div class="tl-balao">${esc(g.depois ?? '')}</div></li>`;
+    if (g.tipo === 'edicao') {
+      return `<li class="tl-item tl-ed">${cab(g.usuario_id, g.em, `editou ${g.itens.length > 1 ? `${g.itens.length} campos` : 'um campo'}`)}<div class="tl-card">${g.itens.map((h) => `<div class="tl-mud">
+        <span class="tl-campo">${esc(ROTULO_HIST[h.campo] ?? h.campo)}</span>
+        ${['tecnologias', 'servicos'].includes(h.campo) ? `<span class="tl-chips">${lista(h.antes, h.depois)}</span>`
+          : `<span class="tl-antes" title="Antes">${valor(h.campo, h.antes)}</span><span class="tl-seta" aria-label="mudou para">→</span><span class="tl-depois" title="Depois">${valor(h.campo, h.depois)}</span>`}</div>`).join('')}</div></li>`;
+    }
+    const txt = { criar: 'criou', exportar: 'exportou', excluir: 'excluiu', sugerir: 'sugeriu' }[g.acao] ?? g.acao;
+    const doc = g.entidade === 'documento';
+    return `<li class="tl-item tl-ev">${cab(g.usuario_id, g.em, `${txt}${doc ? ' um documento' : g.acao === 'criar' ? ' o projeto' : ''}`)}<div class="tl-ev-txt">${icon(doc ? 'file' : g.acao === 'exportar' ? 'download' : 'info', { size: 13 })}${esc([g.campo && !['titulo', 'nome'].includes(String(g.campo).split(' · ').pop()) ? ROTULO_HIST[g.campo] ?? g.campo : '', g.depois ?? g.antes ?? ''].filter(Boolean).join(': '))}</div></li>`;
+  }).join('');
+}
+
 // Modal grande: conteúdo do projeto à esquerda, ficha e conexões à direita.
 export async function openProject(id) {
   const d = await api(`/api/projeto?id=${encodeURIComponent(id)}&userId=${userId()}`);
@@ -223,6 +291,8 @@ export async function openProject(id) {
   const ents = (tipo) => d.entidades[tipo] ?? [];
   const fontes = (e) => e.documentos.map((id) => `<a href="#" data-doc="${id}">${esc(docTitle.get(id) ?? id)}</a>`).join(', ');
 
+  // Campo editável no lugar: o lápis aparece ao passar o mouse; vazio mostra "Adicionar …".
+  const ed = (campo, html) => `<span class="ed" data-ed="${campo}">${html || `<span class="ed-vazio">Adicionar ${esc(CAMPOS_PROJETO[campo].rotulo.toLowerCase().replace(/ \(.*\)$/, ''))}</span>`}<button type="button" class="ed-btn" data-ed-btn="${campo}" title="Editar ${esc(CAMPOS_PROJETO[campo].rotulo)}" aria-label="Editar ${esc(CAMPOS_PROJETO[campo].rotulo)}">${icon('edit', { size: 13 })}</button></span>`;
   // Resultados, lições, riscos e documentos: seções que recolhem e já vêm fechadas (o título mostra quantos itens há).
   const recolhivel = (ic, label, n, corpo, id = '') => `<details class="pd-sec pd-acc"${id ? ` id="${id}"` : ''}><summary><h5 class="sect-title">${icon(ic, { size: 16 })}${label}<em>${n}</em><span class="pd-acc-chev">${icon('chevronDown', { size: 16 })}</span></h5></summary>${corpo}</details>`;
   // Resultados, lições e riscos com o trecho de onde vieram.
@@ -230,30 +300,35 @@ export async function openProject(id) {
     `<ul class="pd-insights ${tipo}">${ents(tipo).map((e) => `<li><b>${esc(e.valor)}</b>${e.trecho && e.trecho !== e.valor ? `<q>${esc(e.trecho)}</q>` : ''}<small>${icon('file', { size: 12 })}${fontes(e)}</small></li>`).join('')}</ul>`) : '');
   const tags = (list, cls = '') => list.map((t) => `<span class="chip${cls}">${esc(t)}</span>`).join('');
   const side = (ic, label, body, n) => (body ? `<section class="pd-card"><h6>${icon(ic, { size: 15 })}${label}${n ? `<em>${n}</em>` : ''}</h6>${body}</section>` : '');
+  // Card lateral que recolhe e vem fechado (Tecnologias, Palavras-chave, Projetos parecidos).
+  const sideAcc = (ic, label, body, n, extra = '') => (body ? `<details class="pd-card pd-card-acc"${extra}><summary><h6>${icon(ic, { size: 15 })}${label}${n ? `<em>${n}</em>` : ''}<span class="pd-acc-chev">${icon('chevronDown', { size: 14 })}</span></h6></summary>${body}</details>` : '');
+  // Tags editáveis: lápis abre o editor de chips (consultor escolhe entre as existentes; gestor também cria novas).
+  const tagsEd = (campo, lista, cls = '') => `<div class="tags-ed" data-tags="${campo}"><div class="chips">${tags(lista, cls) || '<span class="ed-vazio">Nenhuma ainda</span>'}</div><button type="button" class="ed-btn" data-tags-btn="${campo}" title="Editar ${campo === 'tecnologias' ? 'tecnologias' : 'serviços'}" aria-label="Editar ${campo === 'tecnologias' ? 'tecnologias' : 'serviços'}">${icon('edit', { size: 13 })}</button></div>`;
   const row = (label, value) => `<dt>${label}</dt><dd>${value || '—'}</dd>`;
 
   $('#project-body').innerHTML = `
     <header class="dlg-head pd-head">
       <div class="pd-title">
         <span class="sub">${p.id} · ${statusDot(p.status_proposta)}${p.confidencialidade === 'confidencial' ? ` · ${icon('lock', { size: 13 })}confidencial` : ''}</span>
-        <h3>${esc(p.titulo)}</h3>
-        <span class="sub">${icon('building', { size: 14 })}${esc(p.cliente)} · ${esc(p.segmento ?? '—')}${p.area ? ` · ${esc(p.area)}` : ''}</span>
+        <h3>${ed('titulo', esc(p.titulo))}</h3>
+        <span class="sub">${icon('building', { size: 14 })}${ed('cliente', esc(p.cliente))} · ${ed('segmento', esc(p.segmento ?? ''))}</span>
       </div>
       <div class="actions">
         <button id="pd-export" class="btn sm" title="Gerar apresentação ou resumo executivo">${icon('download', { size: 15 })}<span>Exportar</span></button>
         <button id="pd-ask" class="btn sm ghost" title="Perguntar ao Radar sobre este projeto">${icon('message', { size: 15 })}<span>Perguntar</span></button>
         <button id="pd-base" class="btn sm ghost${pode('cadastrarProjeto') ? '' : ' hidden'}" title="Usar como base para nova proposta">${icon('duplicate', { size: 15 })}<span>Usar como base</span></button>
         <button id="pd-upload" class="icon-btn" title="Enviar documento para este projeto">${icon('upload')}</button>
-        <button id="pd-edit" class="icon-btn" title="Editar">${icon('edit')}</button>
+        <button id="pd-edit" class="icon-btn" title="Editar tudo num formulário">${icon('edit')}</button>
+        ${pode('excluirProjeto') ? `<button id="pd-excluir" class="icon-btn pd-excluir" title="Excluir projeto (só gestor)" aria-label="Excluir projeto">${icon('trash')}</button>` : ''}
         <button id="pd-close" class="icon-btn" title="Fechar">${icon('x')}</button>
       </div>
     </header>
     <div class="pd-kpis">
-      <div><small>${icon('clock', { size: 14 })}Prazo</small><b>${p.prazo_meses ? `${p.prazo_meses} meses` : '—'}</b></div>
-      ${valores ? `<div><small>${icon('money', { size: 14 })}Valor</small><b>${p.valor ? brl(p.valor) : '—'}</b>${p.margem != null ? `<span class="sub">margem ${Math.round(p.margem * 100)}%</span>` : ''}</div>`
-        : `<div title="Valor oculto para o seu perfil"><small>${icon('lock', { size: 14 })}Valor</small><b>oculto</b></div>`}
-      <div><small>${icon('user', { size: 14 })}Responsável</small><b>${esc(p.dono ?? '—')}</b></div>
-      <div><small>${icon('calendar', { size: 14 })}Referência</small><b>${dateBR(p.data_referencia)}</b></div>
+      <div><small>${icon('clock', { size: 14 })}Prazo</small><b>${ed('prazo_meses', p.prazo_meses ? `${String(p.prazo_meses).replace('.', ',')} meses` : '')}</b></div>
+      ${valores ? `<div><small>${icon('money', { size: 14 })}Valor</small><b>${ed('valor', p.valor ? brl(p.valor) : '')}</b><span class="sub">margem ${ed('margem', p.margem != null ? `${Math.round(p.margem * 100)}%` : '')}</span></div>`
+        : `<div title="O preço e a margem da proposta não aparecem para o seu perfil"><small>${icon('lock', { size: 14 })}Valor</small><b>restrito</b></div>`}
+      <div><small>${icon('user', { size: 14 })}Responsável</small><b>${ed('dono', esc(p.dono ?? ''))}</b></div>
+      <div><small>${icon('calendar', { size: 14 })}Referência</small><b>${ed('data_referencia', p.data_referencia ? dateBR(p.data_referencia) : '')}</b></div>
       <div><small>${icon('files', { size: 14 })}Documentos</small><b>${d.documentos.length}</b></div>
       <div title="${q.faltando.length ? `Falta: ${esc(q.faltando.join(', '))}` : 'Cadastro completo'}"><small>${icon('checkCircle', { size: 14 })}Cadastro</small><b>${q.percentual}%</b><span class="bar"><i style="width:${q.percentual}%"></i></span></div>
     </div>
@@ -261,8 +336,8 @@ export async function openProject(id) {
       <small class="pd-fontes">${c.fontes.map((f) => `${esc(f.fonte === 'cadastro' ? 'Cadastro' : docTitle.get(f.fonte) ?? f.fonte)}: ${c.campo === 'valor' ? brl(f.valor) : `${f.valor} meses`}`).join(' · ')}</small></span></p>`).join('')}
     <div class="pd-grid">
       <div class="pd-main">
-        ${p.objetivo ? `<section class="pd-sec"><h5 class="sect-title">${icon('trending', { size: 16 })}Objetivo</h5><div class="pd-text">${md(p.objetivo)}</div></section>` : ''}
-        ${p.descricao ? `<section class="pd-sec"><h5 class="sect-title">${icon('info', { size: 16 })}Contexto</h5><div class="pd-text">${md(p.descricao)}</div></section>` : ''}
+        <section class="pd-sec"><h5 class="sect-title">${icon('trending', { size: 16 })}Objetivo</h5><div class="pd-text">${ed('objetivo', p.objetivo ? md(p.objetivo) : '')}</div></section>
+        <section class="pd-sec"><h5 class="sect-title">${icon('info', { size: 16 })}Contexto</h5><div class="pd-text">${ed('descricao', p.descricao ? md(p.descricao) : '')}</div></section>
         ${insight('kpi', 'chart', 'Resultados')}${insight('licao', 'bulb', 'Lições aprendidas')}${insight('risco', 'alert', 'Riscos')}
         ${recolhivel('files', 'Documentos', d.documentos.length, `
           <div class="pd-envio" id="pd-envio"><label class="btn sm">${icon('upload', { size: 14 })}Enviar arquivo para este projeto<input type="file" id="pd-file" multiple hidden></label><span class="muted small">O arquivo já entra neste projeto; você só confere os dados.</span></div>
@@ -281,23 +356,31 @@ export async function openProject(id) {
             ${doc.observacoes ? `<p class="pd-note" title="Nota de quem revisou o envio">${icon('info', { size: 13 })} ${esc(doc.observacoes)}</p>` : ''}
             ${doc.palavras_chave?.length ? `<div class="chips">${tags(doc.palavras_chave.slice(0, 8))}</div>` : ''}
           </li>`).join('')}</ul>` : `<p class="muted">Nenhum documento visível para o seu perfil. <a href="#" id="pd-upload-2">Enviar o primeiro</a></p>`}`, 'pd-docs-sec')}
+        <section class="pd-sec pd-tl">
+          <h5 class="sect-title">${icon('message', { size: 16 })}Comentários e histórico</h5>
+          <form class="tl-form" id="pd-comentar">
+            <span class="tl-av">${esc(iniciais(autorDe(userId())))}</span>
+            <textarea name="texto" rows="2" maxlength="2000" placeholder="Escreva um comentário sobre o projeto (ex.: combinado com o cliente, próximos passos)…" aria-label="Comentário"></textarea>
+            <button type="submit" class="btn sm primary" disabled>${icon('send', { size: 14 })}Comentar</button>
+          </form>
+          ${d.historico.length ? `<ul class="tl">${linhaDoTempo(d.historico)}</ul>` : '<p class="muted small">Nenhum comentário ou alteração ainda.</p>'}
+        </section>
       </div>
       <aside class="pd-side">
         ${side('briefcase', 'Ficha', `<dl class="pd-dl">
-          ${row('Cliente', esc(p.cliente))}${row('Segmento', esc(p.segmento ?? ''))}${row('Área', esc(p.area ?? ''))}
-          ${row('Status', statusDot(p.status_proposta))}${row('Acesso', esc(p.confidencialidade))}${row('Origem', esc(ORIGEM[p.origem] ?? p.origem))}
-          ${row('Criado por', p.origem === 'seed' ? 'Base piloto' : `${esc(userName(p.criado_por))} · ${when(p.criado_em)}`)}
+          ${row('Cliente', esc(p.cliente))}${row('Segmento', esc(p.segmento ?? ''))}${row('Área', ed('area', esc(p.area ?? '')))}
+          ${row('Status', ed('status_proposta', statusDot(p.status_proposta)))}${row('Acesso', ed('confidencialidade', esc(p.confidencialidade)))}${row('Origem', esc(ORIGEM[p.origem] ?? p.origem))}
+          ${row('Criado por', p.origem === 'seed' ? 'Base piloto' : `${esc(autorDe(p.criado_por))} · ${when(p.criado_em)}`)}
           ${row('Atualizado', when(p.atualizado_em))}
-          ${p.link_sharepoint ? row('Pasta', `<a href="${esc(p.link_sharepoint)}" target="_blank" rel="noopener">${icon('link', { size: 13 })}SharePoint</a>`) : ''}
+          ${row('Pasta', ed('link_sharepoint', p.link_sharepoint ? `<a href="${esc(p.link_sharepoint)}" target="_blank" rel="noopener">${icon('link', { size: 13 })}SharePoint</a>` : ''))}
         </dl>`)}
-        ${side('cpu', 'Tecnologias', p.tecnologias.length ? `<div class="chips">${tags(p.tecnologias)}</div>` : '', p.tecnologias.length)}
-        ${side('layers', 'Serviços', p.servicos.length ? `<div class="chips">${tags(p.servicos, ' alt')}</div>` : '', p.servicos.length)}
+        ${sideAcc('cpu', 'Tecnologias', tagsEd('tecnologias', p.tecnologias), p.tecnologias.length, ' data-acc="tecnologias"')}
+        ${side('layers', 'Serviços', tagsEd('servicos', p.servicos, ' alt'), p.servicos.length)}
         ${side('users', 'Pessoas', ents('pessoa').length ? `<ul class="pd-list">${ents('pessoa').map((e) => `<li>${esc(e.valor)}</li>`).join('')}</ul>` : '', ents('pessoa').length)}
         ${side('building', 'Organizações', ents('organizacao').length ? `<div class="chips">${tags(ents('organizacao').map((e) => e.valor))}</div>` : '', ents('organizacao').length)}
-        ${side('tag', 'Palavras-chave', ents('palavra_chave').length ? `<div class="chips">${tags(ents('palavra_chave').map((e) => e.valor))}</div>` : '')}
-        ${side('link', 'Projetos parecidos', d.relacionados.length ? `<ul class="pd-related">${d.relacionados.map((r) => `<li><a href="#" data-proj="${r.id}" title="${esc(r.motivo)}">${esc(r.titulo)}</a><small>${esc(r.cliente)} · ${matchLabel(r.similaridade)}</small></li>`).join('')}</ul>` : '', d.relacionados.length)}
+        ${sideAcc('tag', 'Palavras-chave', ents('palavra_chave').length ? `<div class="chips">${tags(ents('palavra_chave').map((e) => e.valor))}</div>` : '', ents('palavra_chave').length)}
+        ${sideAcc('link', 'Projetos parecidos', d.relacionados.length ? `<ul class="pd-related">${d.relacionados.map((r) => `<li><a href="#" data-proj="${r.id}" title="${esc(r.motivo)}">${esc(r.titulo)}</a><small>${esc(r.cliente)} · ${matchLabel(r.similaridade)}</small></li>`).join('')}</ul>` : '', d.relacionados.length)}
         ${q.faltando.length ? side('alert', 'Falta no cadastro', `<ul class="pd-list muted">${q.faltando.map((f) => `<li>${esc(f.replace(/_/g, ' '))}</li>`).join('')}</ul><button id="pd-complete" class="link-btn">Completar cadastro</button>`) : ''}
-        ${d.historico.length ? `<details class="pd-card"><summary><h6>${icon('history', { size: 15 })}Histórico<em>${d.historico.length}</em></h6></summary><ul class="hist">${d.historico.map((h) => `<li><span>${h.acao === 'criar' ? `<b>criou</b> ${esc(h.depois ?? '')}` : `<b>${esc(h.campo)}</b> ${esc(h.antes ?? '—')} → ${esc(h.depois ?? '—')}`}</span><small>${when(h.em)} · ${esc(userName(h.usuario_id))}</small></li>`).join('')}</ul></details>` : ''}
       </aside>
     </div>`;
   const body = $('#project-body');
@@ -308,6 +391,119 @@ export async function openProject(id) {
   $$('[data-proj]', body).forEach((a) => (a.onclick = (e) => { e.preventDefault(); openProject(a.dataset.proj); }));
   const close = () => $('#project-dialog').close();
   const edit = () => { close(); openProjectForm(p); };
+  // Grava uma mudança e redesenha a ficha (o histórico ganha o cartão com antes → depois).
+  const salvar = async (dados, aviso) => {
+    try {
+      const r = await api('/api/projeto/atualizar', { id: p.id, userId: userId(), dados });
+      if (r.alteracoes) toast(aviso);
+      state.ctx = await api(`/api/contexto?userId=${userId()}`);
+      await openProject(p.id);
+      if (!$('#tab-projetos').classList.contains('hidden')) search();
+      return true;
+    } catch (err) { toast(err.message, 'error'); return false; }
+  };
+  // Edição no lugar de um campo.
+  $$('[data-ed-btn]', body).forEach((b) => (b.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const campo = b.dataset.edBtn;
+    const cfg = CAMPOS_PROJETO[campo];
+    const alvo = b.closest('.ed');
+    const atual = cfg.paraTela ? cfg.paraTela(p[campo]) : p[campo] ?? '';
+    const listaId = `ed-lista-${campo}`;
+    const opcoes = cfg.opcoes?.() ?? [];
+    const controle = cfg.tipo === 'area' ? `<textarea name="v" rows="4">${esc(atual)}</textarea>`
+      : cfg.tipo === 'lista' ? `<select name="v">${opcoes.map((o) => `<option${String(o) === String(atual) ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`
+      : `<input name="v" type="${{ numero: 'number', data: 'date', url: 'url' }[cfg.tipo] ?? 'text'}"${cfg.tipo === 'numero' ? ' step="any" min="0"' : ''} value="${esc(atual)}"${cfg.tipo === 'sugestao' ? ` list="${listaId}"` : ''}>${cfg.tipo === 'sugestao' ? `<datalist id="${listaId}">${opcoes.map((o) => `<option value="${esc(o)}">`).join('')}</datalist>` : ''}`;
+    alvo.classList.add('editando');
+    alvo.innerHTML = `<form class="ed-form">${controle}<button type="submit" class="icon-btn sm ed-ok" title="Salvar (Enter)" aria-label="Salvar">${icon('check', { size: 14 })}</button><button type="button" class="icon-btn sm ed-cancel" title="Cancelar (Esc)" aria-label="Cancelar">${icon('x', { size: 14 })}</button>${cfg.tipo === 'sugestao' && !pode(cfg.novo) ? `<small class="ed-dica muted">Escolha uma opção da lista${cfg.novo === 'criarTermo' ? '; só o gestor cria opções novas' : '; só o gestor cadastra clientes novos'}.</small>` : ''}</form>`;
+    const form = $('form', alvo);
+    const input = form.v;
+    input.focus();
+    input.select?.();
+    const cancelar = () => openProject(p.id);
+    $('.ed-cancel', form).onclick = cancelar;
+    form.onkeydown = (ev) => {
+      if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); cancelar(); }
+      if (ev.key === 'Enter' && cfg.tipo === 'area' && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); form.requestSubmit(); }
+    };
+    form.onsubmit = async (ev) => {
+      ev.preventDefault();
+      let v = input.value.trim();
+      if (cfg.tipo === 'sugestao' && v && !opcoes.includes(v) && !pode(cfg.novo)) { toast(cfg.novo === 'criarTermo' ? 'Escolha uma opção da lista: só o gestor cria opções novas.' : 'Escolha um cliente da lista: só o gestor cadastra clientes novos.', 'error'); return; }
+      if (cfg.paraBanco) v = cfg.paraBanco(v);
+      await salvar({ [campo]: v }, `${cfg.rotulo.replace(/ \(.*\)$/, '')} atualizado`);
+    };
+  }));
+  // Edição das tags (tecnologias e serviços) no próprio card.
+  $$('[data-tags-btn]', body).forEach((b) => (b.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const campo = b.dataset.tagsBtn;
+    const box = b.closest('.tags-ed');
+    const catalogo = state.ctx.catalogo[campo].map((t) => t.nome);
+    const gestor = pode('criarTermo');
+    const lista = [...p[campo]];
+    const pintar = () => {
+      box.classList.add('editando');
+      box.innerHTML = `<div class="chips">${lista.map((t, i) => `<span class="chip${campo === 'servicos' ? ' alt' : ''}">${esc(t)}<button type="button" class="chip-x" data-tirar="${i}" title="Tirar ${esc(t)}" aria-label="Tirar ${esc(t)}">${icon('x', { size: 11 })}</button></span>`).join('')}</div>
+        <form class="tags-form"><input name="t" list="tags-${campo}" placeholder="${gestor ? 'Escolha ou crie uma opção' : 'Escolha uma opção da lista'}" aria-label="Adicionar"><datalist id="tags-${campo}">${catalogo.filter((t) => !lista.includes(t)).map((t) => `<option value="${esc(t)}">`).join('')}</datalist><button type="submit" class="icon-btn sm" title="Adicionar (Enter)" aria-label="Adicionar">${icon('plus', { size: 14 })}</button></form>
+        <small class="muted">${gestor ? 'Se não existir na lista, a opção é criada.' : 'Só o gestor cria opções novas.'}</small>
+        <div class="tags-acoes"><button type="button" class="btn sm" data-t="cancelar">Cancelar</button><button type="button" class="btn sm primary" data-t="salvar">Salvar</button></div>`;
+      $$('[data-tirar]', box).forEach((x) => (x.onclick = () => { lista.splice(Number(x.dataset.tirar), 1); pintar(); }));
+      const form = $('.tags-form', box);
+      form.onsubmit = (ev) => {
+        ev.preventDefault();
+        const t = form.t.value.trim();
+        if (!t) return;
+        const existente = catalogo.find((c) => c.toLowerCase() === t.toLowerCase());
+        if (!existente && !gestor) { toast('Escolha uma opção da lista: só o gestor cria opções novas.', 'error'); return; }
+        const nome = existente ?? t;
+        if (!lista.includes(nome)) lista.push(nome);
+        pintar();
+        $('.tags-form input', box).focus();
+      };
+      form.onkeydown = (ev) => { if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); openProject(p.id); } };
+      $('[data-t="cancelar"]', box).onclick = () => openProject(p.id);
+      $('[data-t="salvar"]', box).onclick = () => salvar({ [campo]: lista }, `${campo === 'tecnologias' ? 'Tecnologias atualizadas' : 'Serviços atualizados'}`);
+      $('.tags-form input', box).focus();
+    };
+    box.closest('details')?.setAttribute('open', '');
+    pintar();
+  }));
+  // Comentários: entram na linha do tempo, acima do histórico.
+  const fc = $('#pd-comentar');
+  fc.texto.oninput = () => { $('button', fc).disabled = !fc.texto.value.trim(); };
+  fc.texto.onkeydown = (ev) => { if (ev.key === 'Enter' && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); fc.requestSubmit(); } };
+  fc.onsubmit = async (ev) => {
+    ev.preventDefault();
+    const texto = fc.texto.value.trim();
+    if (!texto) return;
+    try {
+      await api('/api/projeto/comentar', { id: p.id, userId: userId(), texto });
+      toast('Comentário publicado');
+      await openProject(p.id);
+      $('#project-body .pd-tl')?.scrollIntoView({ block: 'start' });
+    } catch (err) { toast(err.message, 'error'); }
+  };
+  // Exclusão (só gestor): confirma com o nome do projeto.
+  $('#pd-excluir')?.addEventListener('click', () => {
+    const dlg = $('#dlg-excluir-proj');
+    $('#dlg-excluir-proj-titulo', dlg).textContent = `${p.titulo} (${p.cliente})`;
+    dlg.returnValue = '';
+    dlg.showModal();
+    $('[value="cancelar"]', dlg).focus();
+    dlg.onclose = async () => {
+      if (dlg.returnValue !== 'excluir') return;
+      try {
+        await api('/api/projeto/excluir', { id: p.id, userId: userId() });
+        close();
+        toast(`Projeto ${p.id} excluído`);
+        state.ctx = await api(`/api/contexto?userId=${userId()}`);
+        search();
+      } catch (err) { toast(err.message, 'error'); }
+    };
+  });
   // CR-046: envio pela própria ficha, já vinculado a este projeto. O andamento aparece aqui; "Revisar" abre a conferência
   // (com o destino fixo) e, ao aprovar, "Abrir projeto" volta para esta ficha.
   const upload = (e) => { e?.preventDefault(); $('#pd-docs-sec').open = true; $('#pd-file').click(); };

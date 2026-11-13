@@ -129,8 +129,10 @@ const GUIA = [
       <li><b>Topo:</b> prazo, valor e margem (gestor), responsável, data, número de documentos e quanto do cadastro está completo.</li>
       <li><b>Conteúdo:</b> objetivo, contexto, resultados, lições e riscos, cada um com o trecho e o documento de origem.</li>
       <li><b>Documentos:</b> resumo, tipo, status, palavras-chave e autor. ${icon('edit', { size: 13 })} <b>Editar informações</b> e ${icon('download', { size: 13 })} <b>Baixar</b> (para o consultor, valores saem ocultos).</li>
-      <li><b>Lateral:</b> ficha, tecnologias, serviços, pessoas, organizações, projetos parecidos, o que falta no cadastro e histórico de alterações.</li>
-      <li><b>Ações:</b> ${icon('download', { size: 13 })} <b>Exportar</b> (apresentação ou resumo executivo), Perguntar sobre o projeto, Usar como base (gestor), Enviar documento para ele, Editar.</li>
+      <li><b>Lateral:</b> ficha, tecnologias, serviços, pessoas, organizações, palavras-chave, projetos parecidos e o que falta no cadastro (tecnologias, palavras-chave e projetos parecidos vêm recolhidos).</li>
+      <li><b>Editar no lugar:</b> passe o mouse num campo e clique no lápis; Enter salva, Esc cancela. Tecnologias e serviços editam no card: o consultor escolhe entre as opções existentes; o gestor também cria novas.</li>
+      <li><b>Comentários e histórico:</b> no fim da coluna principal, comentários em balões e cada alteração num cartão com antes → depois.</li>
+      <li><b>Ações:</b> ${icon('download', { size: 13 })} <b>Exportar</b> (apresentação ou resumo executivo), Perguntar sobre o projeto, Usar como base (gestor), Enviar documento para ele, Editar tudo num formulário e, só para o gestor, Excluir (com confirmação).</li>
       <li><b>Ficha:</b> mostra quem criou o projeto e quando.</li>
     </ul>
     <h4>Cadastrar projeto (só gestor)</h4>
@@ -141,7 +143,7 @@ const GUIA = [
       'Confira os obrigatórios: cliente, título, segmento e status. Tecnologias e serviços novos ("+ outro") também são só para o gestor.',
       'Salve. Se já existir um projeto do mesmo cliente com título parecido, o Radar avisa antes de criar.',
     ])}
-    ${tip('Toda edição de projeto ou documento fica no <b>Histórico</b> (quem, quando, antes e depois).')}`],
+    ${tip('Toda edição de projeto ou documento fica em <b>Comentários e histórico</b>, na ficha (quem, quando, antes e depois).')}`],
 
   ['enviar', 'upload', 'Enviar documentos', () => `
     <p>Envie o arquivo e o Radar faz o trabalho pesado. Você só confere e completa.</p>

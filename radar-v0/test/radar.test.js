@@ -1075,3 +1075,23 @@ test('V0.0.2: Insights traz funil, anos e total de tecnologias respeitando o per
   assert.ok(consultor.porAno.every((a) => /^\d{4}$/.test(a.ano)));
   assert.ok(consultor.totalTecnologias >= consultor.porTecnologia.slice(0, 10).length);
 });
+
+test('V0.0.2: excluir projeto só para o gestor; comentários e edições entram no histórico da ficha', async () => {
+  const { can } = await import('../src/permissions.js');
+  const gestor = engine.user('u-gestor');
+  const consultor = engine.user('u-consultor');
+  assert.ok(can(gestor, 'excluirProjeto') && !can(consultor, 'excluirProjeto'));
+  const r = createProject(engine, { titulo: 'Projeto temporário para excluir', cliente: 'Energisul Distribuidora', segmento: 'Utilities / Energia', status_proposta: 'Em elaboração', tecnologias: ['Azure'] }, gestor);
+  const id = r.projeto.id;
+  // Edição de um campo e de tags: o histórico guarda antes e depois.
+  assert.ok(updateProject(engine, id, { prazo_meses: 7, tecnologias: ['Azure', 'Python'] }, consultor).alteracoes >= 2);
+  engine.repo.logActivity({ acao: 'comentar', entidade: 'projeto', entidade_id: id, campo: 'comentario', depois: 'Combinado com o cliente.', usuario_id: consultor.id });
+  const h = engine.repo.projectDetail(id, gestor).historico;
+  assert.ok(h.some((x) => x.acao === 'comentar' && x.depois === 'Combinado com o cliente.'));
+  const prazo = h.find((x) => x.campo === 'prazo_meses');
+  assert.deepEqual([prazo.antes, prazo.depois], [null, '7']);
+  assert.ok(h.find((x) => x.campo === 'tecnologias').depois.includes('Python'));
+  engine.repo.deleteProject(id);
+  assert.equal(engine.repo.project(id), null);
+  assert.equal(engine.repo.get('SELECT count(*) AS n FROM documento WHERE projeto_id = $id', { $id: id }).n, 0, 'documentos saem junto');
+});

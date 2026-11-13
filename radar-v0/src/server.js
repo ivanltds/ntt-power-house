@@ -518,6 +518,36 @@ const routes = {
     return r;
   },
 
+  // Exclusão de projeto: só o gestor (a tela esconde o botão para os outros; a regra vale aqui).
+  'POST /api/projeto/excluir': async (req) => {
+    const { id, userId } = await readJson(req);
+    const user = engine.user(userId);
+    if (!can(user, 'excluirProjeto')) return [403, { erro: PROIBIDO.excluirProjeto }];
+    const p = engine.repo.project(id);
+    if (!p || !user.confidencialidades.includes(p.confidencialidade)) return [404, { erro: 'Projeto não encontrado.' }];
+    engine.repo.tx(() => {
+      engine.repo.logActivity({ acao: 'excluir', entidade: 'projeto', entidade_id: id, campo: 'titulo', antes: `${p.titulo} (${p.cliente})`, usuario_id: user.id });
+      engine.repo.deleteProject(id);
+    });
+    audit.logEvent({ tipo: 'projeto_excluido', projeto_id: id, usuario: user.id });
+    reindex();
+    return { ok: true, id };
+  },
+
+  // Comentário no projeto: entra na linha do tempo da ficha, junto com o histórico de alterações.
+  'POST /api/projeto/comentar': async (req) => {
+    const { id, userId, texto } = await readJson(req, 20_000);
+    const user = engine.user(userId);
+    const p = engine.repo.project(id);
+    if (!p || !user.confidencialidades.includes(p.confidencialidade)) return [404, { erro: 'Projeto não encontrado.' }];
+    const t = String(texto ?? '').trim();
+    if (t.length < 2) return [400, { erro: 'Escreva o comentário.' }];
+    const m = maskSensitive(t.slice(0, 2000));
+    registrarMascaramento('comentario_projeto', user, m.achados);
+    engine.repo.logActivity({ acao: 'comentar', entidade: 'projeto', entidade_id: id, campo: 'comentario', depois: m.texto, usuario_id: user.id });
+    return { ok: true };
+  },
+
   'POST /api/projetos/sugerir': async (req) => {
     const { userId, texto } = await readJson(req);
     if (!texto?.trim()) return [400, { erro: 'Descreva o projeto para receber sugestões.' }];
