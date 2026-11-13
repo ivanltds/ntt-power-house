@@ -12,7 +12,7 @@ import { Repo } from './db/repo.js';
 import { DB_PATH } from './config.js';
 import { toolSchemas, executarFerramenta } from './skills/ferramentas.js';
 import { preRotear, capacidades } from './skills/index.js';
-import { responderConversa } from './skills/conversa.js';
+import { responderConversaIA } from './skills/conversa.js';
 import { responderAjuda } from './skills/ajuda.js';
 import { resumirAnexos, perguntarAnexo, consultaDoAnexo, destinoDoEnvio } from './skills/anexo.js';
 import { can } from './permissions.js';
@@ -60,7 +60,8 @@ export function onlyCitedResults(text, results) {
       .filter((sentence) => [...sentence.matchAll(/\[(P\d{3})\]/g)].every((m) => ids.has(m[1])))
       .join(' ')
       .trim())
-    .filter((bloco) => bloco && !/^(Recomendação|Perfis sugeridos):?$/i.test(bloco))
+    // CR-060: blocos de recomendação e de perfis não entram mais na resposta (mesmo que a IA os escreva).
+    .filter((bloco) => bloco && !/^(Recomendação|Perfis sugeridos)\b/i.test(bloco))
     .join('\n\n');
 }
 
@@ -374,8 +375,10 @@ export class RadarEngine {
       };
     };
     if (d.skill === 'conversa') {
-      const r = responderConversa(d.tipo, { user, capacidades: capacidades(user), query: original, prefixo: d.tipo === 'saudacao' ? '' : d.saudacao });
-      return responder('conversa', r);
+      const r = await responderConversaIA(d.tipo, { user, capacidades: capacidades(user), query: original, prefixo: d.tipo === 'saudacao' ? '' : d.saudacao, llm: this.llm, history });
+      if (r.ia) iaStatus.push(r.ia);
+      const { ia, ...resto } = r;
+      return responder('conversa', resto);
     }
     if (d.skill === 'ajuda') return responder('ajuda', await responderAjuda({ query, llm: this.llm }));
     if (d.skill === 'anexo') {
