@@ -29,17 +29,47 @@ export const carregarPainel = () => load();
 const lenteInicial = () => localStorage.getItem(KEY) || 'inicio';
 const irPara = (lente) => { view.lente = lente; if (lente !== 'inicio') localStorage.setItem(KEY, lente); render(); window.scrollTo({ top: 0 }); };
 
+// Entrada (CR-070): na primeira carga, esqueleto no formato dos cartões e entrada suave quando os dados chegam.
+// Ao voltar para a aba (mesmo recorte), mostra na hora o que já tinha e atualiza em segundo plano, sem piscar.
+let ultimaChave = null;
+const esqueleto = () => `<div class="pn-esq" aria-busy="true" aria-label="Carregando as visões">
+    <span class="pn-esq-linha largo"></span><span class="pn-esq-linha"></span>
+    <div class="pn-esq-grade">${'<span class="pn-esq-cartao"></span>'.repeat(4)}</div>
+    <div class="pn-esq-grade tres">${'<span class="pn-esq-cartao alto"></span>'.repeat(3)}</div>
+  </div>`;
+
 async function load() {
   view.lente ??= lenteInicial();
   const q = new URLSearchParams({ userId: userId(), ...Object.fromEntries(Object.entries(view.filtros).filter(([, v]) => v)) });
-  $('#painel').innerHTML = `<p class="muted pn-carregando">${icon('loader', { size: 16 })}Calculando…</p>`;
+  const chave = q.toString();
+  const temCache = view.dados && ultimaChave === chave;
+  const primeira = !view.dados; // esqueleto só na primeira carga; trocar filtro mantém a tela, esmaecida
+  if (temCache) render(); else if (primeira) $('#painel').innerHTML = esqueleto(); else $('#painel').classList.add('pn-atualizando');
+  let dados;
   try {
-    view.dados = await api(`/api/painel?${q}`);
+    dados = await api(`/api/painel?${q}`);
   } catch (err) {
-    $('#painel').innerHTML = `<p class="error">${icon('alert', { size: 16 })}${esc(err.message)}</p>`;
+    $('#painel').classList.remove('pn-atualizando');
+    if (!temCache) $('#painel').innerHTML = `<p class="error">${icon('alert', { size: 16 })}${esc(err.message)}</p>`;
     return;
   }
+  const mudou = !temCache || JSON.stringify(dados) !== JSON.stringify(view.dados);
+  view.dados = dados;
+  ultimaChave = chave;
+  $('#painel').classList.remove('pn-atualizando');
+  if (!mudou) return;
   render();
+  if (primeira) animarEntrada();
+}
+
+// Cartões entram em sequência (opacidade + leve subida); quem prefere menos movimento não vê animação (CSS).
+function animarEntrada() {
+  const raiz = $('#painel');
+  raiz.classList.remove('pn-entrando');
+  void raiz.offsetWidth; // reinicia a animação
+  raiz.classList.add('pn-entrando');
+  $$('.pn-porta, .pn-heroi, .pn-card', raiz).forEach((el, i) => el.style.setProperty('--atraso', `${Math.min(i, 10) * 45}ms`));
+  setTimeout(() => raiz.classList.remove('pn-entrando'), 1200);
 }
 
 // ---------- Peças visuais ----------

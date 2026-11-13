@@ -146,10 +146,10 @@ export const NOTAS = [
         depois: 'Insights tem duas abas internas: "Visões" (as cinco perguntas sobre a base) e "Métricas do piloto" (uso do Radar, utilidade das respostas, reaproveitamento, por que não ajudou e o que pedem ao chat). O item do menu ⋮ abre Insights direto nessa aba, e o Radar lembra a última aba aberta.',
       },
       {
-        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-069'],
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-069', 'CR-070'],
         titulo: 'Insights: cinco visões com manchetes em cartões',
         antes: 'A aba Insights mostrava contagens genéricas (números grandes, funil, top 10, projetos por ano) que diziam o que havia na base, mas não o que fazer com isso; o resumo das visões novas era uma lista de frases, e elas ficavam escondidas em /insights-novo.',
-        depois: 'As cinco visões (Negócio, Técnica, Pipeline, Pré-venda e Curadoria) viraram a aba principal de Insights, ao lado das Métricas do piloto. Cada visão abre com manchetes em cartões: tom com ícone (Ponto forte, Atenção, Para saber), número em destaque, o que ele significa, um gráfico pequeno e a frase, com link para os números por trás. Manchetes novas: taxa de ganho, onde mais ganhamos, onde mais perdemos e o pacote de serviços mais vendido. A tela inicial mostra o número principal de cada pergunta. O endereço /insights-novo abre a aba nova.',
+        depois: 'As cinco visões (Negócio, Técnica, Pipeline, Pré-venda e Curadoria) viraram a aba principal de Insights, ao lado das Métricas do piloto. Cada visão abre com manchetes em cartões: tom com ícone (Ponto forte, Atenção, Para saber), número em destaque, o que ele significa, um gráfico pequeno e a frase, com link para os números por trás. Manchetes novas: taxa de ganho, onde mais ganhamos, onde mais perdemos e o pacote de serviços mais vendido. A tela inicial mostra o número principal de cada pergunta. O endereço /insights-novo abre a aba nova. Na primeira carga aparece um esqueleto no formato dos cartões, e as visões entram suavemente, em sequência (sem animação para quem prefere menos movimento); ao voltar para a aba, os números aparecem na hora, e trocar um filtro só esmaece a tela.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
