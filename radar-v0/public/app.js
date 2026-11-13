@@ -6,7 +6,6 @@ import { initProjects, openProject, openProjectForm } from './projetos.js';
 import { initUploads } from './upload.js';
 import { initInsights } from './insights.js';
 import { initPainel } from './painel.js';
-import { initCampanha } from './campanha.js';
 import { showGuide, showTech } from './ajuda.js';
 import { showSdlc } from './sdlc.js';
 import { VERSAO, showReleaseNotes, showFeedback } from './versao.js';
@@ -70,7 +69,7 @@ async function init() {
   initUploads();
   initInsights();
   initPainel();
-  initCampanha(() => showFeedback());
+  // A faixa da campanha "Desbloqueie a próxima fase do Radar" foi encerrada em 2026-11-13 (public/campanha.js).
   initActivities();
   newConversation();
   loadConversations();

@@ -1,3 +1,5 @@
+// ENCERRADA em 2026-11-13 a pedido do PO: a faixa não é mais exibida (app.js não chama initCampanha).
+// O resultado medido continua em GET /api/campanha. Para uma nova chamada, troque CAMPANHA e volte a chamar initCampanha.
 // Chamada TEMPORÁRIA para medir alcance: faixa no topo convidando a abrir um feedback (ticket).
 // Sem prêmio e sem promessa: o texto é chamativo, mas honesto. Para desligar, apague a CAMPANHA
 // (ou deixe a data vencer). Mede, por navegador anônimo: viu, clicou, fechou e enviou ticket.
@@ -6,7 +8,7 @@
 import { $, api, userId } from './common.js';
 import { icon } from './icons.js';
 
-export const CAMPANHA = { id: 'opiniao-2026-11', ate: '2026-11-24' };
+export const CAMPANHA = { id: 'opiniao-2026-11', ate: '2026-11-13' };
 
 const chave = (k) => `radar.campanha.${CAMPANHA.id}.${k}`;
 // Id aleatório por navegador: o login é compartilhado, então contamos aparelhos, não pessoas.
