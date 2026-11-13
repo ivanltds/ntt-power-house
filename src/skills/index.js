@@ -81,7 +81,7 @@ export const SKILLS = [
     id: 'ajuda', intencao: 'ajuda',
     regraIA: 'dúvida sobre COMO USAR o Radar: telas, botões, envio de arquivos, conversas, filtros, permissões, novidades da versão ("como favorito uma conversa?", "o que é proposta em foco?", "o que mudou nesta versão?").',
     capacidade: { icone: 'help', titulo: 'Tirar dúvidas de uso', descricao: 'Explico como usar o Radar com base no guia e nas notas da versão, e mostro onde ler mais.', exemplo: 'Como favorito uma conversa?', clicavel: true },
-    exemplos: ['como favorito uma conversa?', 'o que é proposta em foco?', 'o que mudou nesta versão?', 'como envio um arquivo para um projeto?', 'como edito um campo do projeto?', 'quem pode excluir um projeto?', 'como reporto um problema?', 'como coloco uma conversa num grupo?'],
+    exemplos: ['como favorito uma conversa?', 'o que é proposta em foco?', 'o que mudou nesta versão?', 'como envio um arquivo para um projeto?', 'como edito um campo do projeto?', 'quem pode excluir um projeto?', 'como reporto um problema?', 'como coloco uma conversa num grupo?', 'como é calculado o percentual de semelhança?', 'por que um projeto aparece como muito parecido?'],
     naoAtiva: ['como foi o projeto P003?', 'liste os projetos de varejo', 'como resolver o problema de churn em telecom?'],
   },
   {

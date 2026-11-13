@@ -5,8 +5,8 @@ import { BaseDeAjuda, novidades } from './conhecimento.js';
 import { PERSONA } from './persona.js';
 
 // Pergunta de uso: começa como dúvida e fala de uma parte do produto (telas, botões, envio, permissões…).
-const DUVIDA_RE = /^(como|onde|quem pode|quem consegue|o que (e|eh|significa|quer dizer)|pra que serve|para que serve|posso|da (pra|para)|tem como|consigo|existe|qual a diferenca)\b/;
-const PRODUTO_RE = /\b(radar|conversas?|favorit\w*|grupos?|arquiv(ar|ada|adas|o morto)|proposta em foco|foco|envi(ar|o|ou)\w*|anex\w*|upload|clipe|export\w*|planilha|excel|insights?|ficha|edit\w*|exclu\w*|apag\w*|permiss\w*|perfil|perfis|gestor|consultor|tema|modo escuro|escuro|claro|login|sair|sessao|tickets?|feedback|roteiro|versao|novidades?|tela|botao|menu|filtros?|kanban|aprov\w*|revis\w*|report\w*|relatar|bugs?|historico|comentar\w*|coment\w*|tags?|termo|privacidade|dados sensiveis|mascar\w*|metricas|atividades|registro de atividades|cards?|cartoes?|lista de projetos|novo projeto|criar projeto|cadastr\w*|documentos?)\b/;
+const DUVIDA_RE = /^(como|onde|por que|porque|quem pode|quem consegue|o que (e|eh|significa|quer dizer)|pra que serve|para que serve|posso|da (pra|para)|tem como|consigo|existe|qual a diferenca)\b/;
+const PRODUTO_RE = /\b(radar|conversas?|favorit\w*|grupos?|arquiv(ar|ada|adas|o morto)|proposta em foco|foco|envi(ar|o|ou)\w*|anex\w*|upload|clipe|export\w*|planilha|excel|insights?|ficha|edit\w*|exclu\w*|apag\w*|permiss\w*|perfil|perfis|gestor|consultor|tema|modo escuro|escuro|claro|login|sair|sessao|tickets?|feedback|roteiro|versao|novidades?|tela|botao|menu|filtros?|kanban|percentua\w*|porcentagem|semelhan\w*|similaridade|score|muito parecido|aprov\w*|revis\w*|report\w*|relatar|bugs?|historico|comentar\w*|coment\w*|tags?|termo|privacidade|dados sensiveis|mascar\w*|metricas|atividades|registro de atividades|cards?|cartoes?|lista de projetos|novo projeto|criar projeto|cadastr\w*|documentos?)\b/;
 const NOVIDADES_RE = /\b(o que (mudou|ha de novo|tem de novo|e novo)|novidades?|notas da versao|ultima versao|nesta versao|nessa versao|versao atual)\b/;
 
 export function ehDuvidaDeUso(query) {
@@ -25,7 +25,7 @@ const MIN_SCORE = 2.5;
 
 // Sinônimos do produto: aproximam a pergunta das palavras que a ajuda usa (a busca da ajuda é lexical).
 const SINONIMOS = [
-  [/\b(parecid\w*|semelhan\w*|escolh\w*|ranking|ordena\w*|relevan\w*|score|nota|posicao|calcula\w*)\b/, 'busca semântica score fatores pesos similaridade ranking'],
+  [/\b(parecid\w*|semelhan\w*|escolh\w*|ranking|ordena\w*|relevan\w*|score|nota|posicao|calcula\w*|percentua\w*|porcentagem|similaridade)\b/, 'como o radar calcula a semelhança percentual critérios pesos nota da IA teto muito parecido'],
   [/\bfavorit\w*/, 'favorita favoritar estrela'],
   [/\b(anex\w*|clipe)\b/, 'clipe anexar arquivo conversa enviar'],
   [/\b(exclu\w*|apag\w*|remov\w*)\b/, 'excluir apagar'],
