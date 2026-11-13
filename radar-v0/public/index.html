@@ -81,9 +81,8 @@
             <span id="editando" class="memory editando hidden"><i data-icon="edit" data-size="13"></i>Editando a última pergunta<button type="button" id="editando-cancelar" class="link-btn">Cancelar</button></span>
             <span id="memory" class="memory hidden"></span>
             <span id="anexos" class="anexos hidden" aria-live="polite"></span>
-            <label class="icon-btn anexar" title="Anexar arquivo para enviar a um projeto (diga o projeto na mensagem)"><i data-icon="paperclip"></i><input type="file" id="anexar" multiple hidden></label>
             <div class="focus">
-              <button type="button" id="focus-btn" class="focus-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="focus-pop" title="Escolha a proposta que você está montando: as respostas passam a considerar esse projeto"><i data-icon="target" data-size="15"></i><span id="focus-label">Proposta em foco</span><i data-icon="chevronDown" data-size="13" class="focus-chev"></i></button>
+              <button type="button" id="focus-btn" class="focus-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="focus-pop" title="Escolha a proposta que você está montando: as respostas passam a considerar esse projeto"><i data-icon="target" data-size="15"></i><span id="focus-label" class="focus-label">Proposta em foco</span><i data-icon="chevronDown" data-size="13" class="focus-chev"></i></button>
               <button type="button" id="focus-clear" class="focus-clear hidden" title="Tirar o foco" aria-label="Tirar a proposta em foco"><i data-icon="x" data-size="12"></i></button>
               <div id="focus-pop" class="focus-pop hidden">
                 <p class="focus-help">Escolha a proposta que você está montando. O chat passa a responder pensando no <b>cliente, segmento e tecnologias</b> dela. Ex.: “algum case parecido?”</p>
@@ -91,6 +90,7 @@
                 <ul id="focus-list" role="listbox" aria-label="Projetos"></ul>
               </div>
             </div>
+            <label class="icon-btn anexar" title="Anexar arquivo para enviar a um projeto (diga o projeto na mensagem)"><i data-icon="paperclip"></i><input type="file" id="anexar" multiple hidden></label>
             <input id="query" autocomplete="off" enterkeyhint="send" aria-label="Pergunta" placeholder="Pergunte sobre propostas, clientes, tecnologias…">
             <button type="submit" class="icon-btn send" title="Enviar"><i data-icon="send"></i></button>
           </form>
