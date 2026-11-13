@@ -366,14 +366,17 @@ function addMsg(kind, html) {
   return el;
 }
 
-// Citações [P001] da resposta da IA viram etiquetas com o nome do cliente.
-// Resposta em blocos (CR-027): cada parágrafo vira um bloco; "Recomendação:" e "Perfis sugeridos:" ganham destaque.
+// Citações [P001] da resposta da IA viram etiquetas com o nome do cliente. Se dois projetos citados forem do mesmo
+// cliente, a etiqueta leva também o código ("ConectaFibra Telecom · P008"), para não parecer o mesmo projeto (CR-062).
 function renderText(r) {
   const names = citeNames(r);
-  return String(r.resposta ?? '').split(/\n\s*\n/).map((bloco) => `<span class="ans-par">${esc(bloco.trim())
-    .replace(/^(Recomendação|Perfis sugeridos):/, '<b class="ans-rot">$1:</b>')
+  const texto = String(r.resposta ?? '');
+  const citados = [...new Set([...texto.matchAll(/\[(P\d{3})\]/g)].map((m) => m[1]))];
+  const porCliente = citados.reduce((m, id) => m.set(names.get(id) ?? id, (m.get(names.get(id) ?? id) ?? 0) + 1), new Map());
+  const rotulo = (id) => { const c = names.get(id) ?? id; return porCliente.get(c) > 1 ? `${c} · ${id}` : c; };
+  return texto.split(/\n\s*\n/).map((bloco) => `<span class="ans-par">${esc(bloco.trim())
     .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
-    .replace(/\[(P\d{3})\]/g, (m, id) => `<span class="cite" title="${id}">${esc(names.get(id) ?? id)}</span>`)}</span>`).join('');
+    .replace(/\[(P\d{3})\]/g, (m, id) => `<span class="cite" title="${id}">${esc(rotulo(id))}</span>`)}</span>`).join('');
 }
 
 function renderAnswer(r) {

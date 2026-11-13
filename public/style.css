@@ -1614,7 +1614,8 @@ dialog.dlg-confirma { width: min(460px, 94vw); }
 dialog.dlg-confirma .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 .btn.danger { background: var(--bad); color: #fff; border-color: var(--bad); }
 .btn.danger:hover { filter: brightness(.95); }
-@media (hover: none) { #conv-list .star, #conv-list .mais { opacity: 1; } .msg.user .msg-editar { opacity: 1; position: static; transform: none; } }
+/* Toque: o lápis de editar a pergunta fica visível, mas FORA do balão, à esquerda (antes ocupava uma linha inteira dentro dele — CR-063). */
+@media (hover: none) { #conv-list .star, #conv-list .mais { opacity: 1; } .msg.user .msg-editar { opacity: .75; } }
 /* Cabeçalho (V0.0.2): etiqueta da visão (CR-031), X do menu (CR-006) e seção ativa mais clara (CR-025) */
 .visao-tag { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d9d6fe; background: var(--violet-soft); color: var(--violet); border-radius: 999px; padding: 4px 10px; font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 :root[data-theme="dark"] .visao-tag { border-color: #4a3d86; color: #c4b8ff; }
@@ -2052,3 +2053,7 @@ span.tec-tag { cursor: default; }
    da tela no celular: a estrela do título da conversa sumia a 320 px). */
 .conv-bar input, .flt-busca input, .tk-quem input { min-width: 0; }
 .fonte-ajuda .fonte-abrir { display: flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 12.5px; white-space: normal; }
+/* Lápis de editar a última pergunta: inteiro fora do balão, colado à esquerda (CR-063). */
+.msg.user .msg-editar { left: auto; right: calc(100% + 4px); }
+@media (hover: none) { .msg.user .msg-editar { width: 30px; height: 30px; padding: 0; } }
+@media (max-width: 720px) { .msg.user { max-width: calc(100% - 40px); } } /* sobra lugar para o lápis à esquerda */

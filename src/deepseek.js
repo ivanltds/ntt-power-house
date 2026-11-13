@@ -32,7 +32,7 @@ Sua tarefa: entender a pergunta atual do usuário considerando o histórico da c
   "projetos": string[],            // em "ficha" e "comparar": códigos (P001) ou nomes dos projetos citados; posições da resposta anterior viram os códigos mostrados nela
   "campos": string[],              // em "ficha": valores de CAMPOS pedidos
   "opcoes": string[],              // em "esclarecer": 2 ou 3 perguntas reescritas, uma por interpretação possível
-  "conversa": string | null,       // em "conversa": saudacao | capacidades | agradecimento | despedida | critica | fora_escopo
+  "conversa": string | null,       // em "conversa": saudacao | papo | capacidades | agradecimento | despedida | critica | fora_escopo
   "acao": string | null            // em "anexo": resumir | perguntar | parecidos
 }
 Regras de intenção:
@@ -69,10 +69,9 @@ Regras:
 - "relevancia" de 0 a 1: o quanto o projeto é uma referência útil para a pergunta, pelo significado (problema, objetivo, escopo, segmento, tecnologia), não só por palavras iguais. Use < 0.4 para projetos que não ajudam.
 - "justificativa": 1 frase explicando por que o projeto se relaciona (ou não) com a pergunta.
 - "evidencia": o id (ex.: "P001-3") da frase que melhor sustenta a justificativa. Nunca escreva o texto da frase, só o id.
-- "resposta": texto em português, no máximo 110 palavras, em blocos separados por uma linha em branco ("\n\n"), fácil de escanear:
-  1º bloco (1 ou 2 frases): responda diretamente à pergunta e diga por que cada referência citada é relevante. Não misture recomendação neste bloco.
-  2º bloco: comece com "Recomendação:" e diga o que reaproveitar de cada referência, cuidados, riscos e lições (inclusive de propostas perdidas).
-  3º bloco, SÓ se as frases fornecidas citarem papéis ou perfis da equipe (ex.: arquiteto de dados, cientista de dados): comece com "Perfis sugeridos:" e liste esses perfis. Se as frases não citarem papéis, não escreva este bloco e não invente equipe.
+- "resposta": texto em português, no máximo 70 palavras, direto ao ponto: responda à pergunta (sim/não, quantos, quais) e diga em poucas palavras por que cada referência citada serve. Use no máximo 2 parágrafos curtos.
+  NÃO escreva recomendações, listas do que reaproveitar, cuidados genéricos nem perfis de equipe: a tela já mostra escopo, resultados e lições de cada projeto.
+  Se dois projetos citados forem do mesmo cliente, diferencie-os pelo tema (ex.: "o projeto entregue de churn em tempo real" e "a proposta em elaboração").
   Cite projetos como [P001]. Cite apenas projetos com relevância >= 0.5 e não mencione os demais.
 - Use exclusivamente as informações fornecidas. Não invente números, valores, prazos, clientes ou resultados. Se nenhum projeto ajudar, diga claramente que não há evidência suficiente na base.
 - Não mencione valores financeiros que não estejam nas frases fornecidas.`;
@@ -158,7 +157,7 @@ export class DeepSeekLLM extends MockLLM {
         projetos: strs(out.projetos),
         campos: pick(out.campos, Object.keys(CAMPOS_FICHA)),
         opcoes: strs(out.opcoes, 3),
-        conversa: ['saudacao', 'capacidades', 'agradecimento', 'despedida', 'critica', 'fora_escopo'].includes(out.conversa) ? out.conversa : null,
+        conversa: ['saudacao', 'papo', 'capacidades', 'agradecimento', 'despedida', 'critica', 'fora_escopo'].includes(out.conversa) ? out.conversa : null,
         acao: ['resumir', 'perguntar', 'parecidos'].includes(out.acao) ? out.acao : null,
         continuacao: Boolean(out.continuacao),
         consulta: typeof out.consulta === 'string' && out.consulta.trim() ? out.consulta.trim() : query,

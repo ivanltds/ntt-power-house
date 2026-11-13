@@ -1062,7 +1062,8 @@ test('V0.0.2: grupos, arquivar e editar a última pergunta nas conversas; sugest
   assert.match(semResultado('mineração', sug), /Não encontrei nada relevante.*Liste os projetos de Saúde/);
   // CR-027: frases com projeto fora dos resultados saem, mas os blocos ficam.
   const txt = ['Sim, há [P001].', 'Recomendação: reaproveite [P001]. Veja também [P009].', 'Perfis sugeridos: cientista de dados com [P009].'].join(String.fromCharCode(10, 10));
-  assert.equal(onlyCitedResults(txt, [{ projeto_id: 'P001' }]), ['Sim, há [P001].', 'Recomendação: reaproveite [P001].'].join(String.fromCharCode(10, 10)));
+  // CR-060: blocos "Recomendação:" e "Perfis sugeridos:" saem da resposta.
+  assert.equal(onlyCitedResults(txt, [{ projeto_id: 'P001' }]), 'Sim, há [P001].');
 });
 
 test('V0.0.2: Insights traz funil, anos e total de tecnologias respeitando o perfil', () => {

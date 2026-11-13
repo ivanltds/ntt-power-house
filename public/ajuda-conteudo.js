@@ -50,7 +50,7 @@ export const GUIA = [
     ${steps([
       `Clique em ${ui('Perguntar')} e digite no campo de baixo. ${kbd('Enter')} envia (o botão de enviar só acende com texto).`,
       'Olhe a <b>etiqueta</b> acima da resposta, à direita: ela diz o tipo de resposta (Projetos parecidos, Listagem, Contagem, Ficha, Comparação, Dúvida de uso, Arquivo da conversa…).',
-      'Leia a resposta curta: ela vem em blocos, cita os projetos como <b>[P001]</b> e, quando há referências, traz <b>Recomendação:</b> (o que reaproveitar e os cuidados) e, se os documentos citarem papéis, <b>Perfis sugeridos:</b>.',
+      'Leia a resposta curta: ela responde direto e diz por que cada projeto citado serve. Os projetos aparecem com o nome do cliente (e o código, quando dois são do mesmo cliente). O que reaproveitar fica no cartão de cada projeto (escopo, resultados e lições).',
       'Abaixo vêm as tabelas ou os <b>cartões de projeto</b>, do mais parecido para o menos. Clique em um cartão para ver o porquê e as fontes.',
       'Errou a pergunta? A última pergunta tem um ' + icon('edit', { size: 13 }) + ' lápis: edite e reenvie; a pergunta e a resposta antigas são trocadas.',
     ])}
