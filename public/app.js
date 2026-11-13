@@ -220,14 +220,33 @@ function renderBriefing() {
 // definido, o arquivo vai para o envio normal (mascaramento, revisão humana) já com o destino fixo.
 const QUER_ENVIAR = /\b(coloc|envi|sub|adicion|anex|mand|guard|salv|inclu|vincul|associ)\w*\b|\b(é|eh|sao|são|vai|vão|vao) (do|da|de|para o|pro|no) projeto\b|\b(arquivo|pdf|documento|anexo|planilha|apresenta\w*)\b.*\bprojeto\b/i;
 let projetosChat = null;
+// Projeto citado no texto. Só o código (ex.: P003) é certeza; nomes ("projeto de energia") viram candidatos para a
+// pessoa confirmar antes do envio — vários projetos podem combinar (ex.: Energisul, Energia Litoral).
 async function projetoCitado(texto) {
   projetosChat ??= (await api(`/api/projetos?userId=${userId()}&tamanho=100&ordenar=titulo`)).itens;
   const t = normalizeText(texto);
   const cod = /\bp\d{3}\b/.exec(t)?.[0].toUpperCase();
-  if (cod) return projetosChat.find((p) => p.id === cod) ?? null;
-  const palavras = (x) => normalizeText(x).split(/[^a-z0-9]+/).filter((w) => w.length > 3 && !['projeto', 'cliente', 'dados', 'para', 'com'].includes(w));
-  const pontos = projetosChat.map((p) => ({ p, n: [...new Set([...palavras(p.cliente), ...palavras(p.titulo)])].filter((w) => t.includes(w)).length })).sort((a, b) => b.n - a.n);
-  return pontos[0]?.n ? pontos[0].p : null;
+  if (cod) { const p = projetosChat.find((x) => x.id === cod); return { certo: p ?? null, opcoes: p ? [p] : [] }; }
+  const palavras = (x) => normalizeText(x).split(/[^a-z0-9]+/).filter((w) => w.length > 3 && !['projeto', 'projetos', 'cliente', 'dados', 'para', 'com', 'arquivo'].includes(w));
+  const pontos = projetosChat.map((p) => ({ p, n: [...new Set([...palavras(p.cliente), ...palavras(p.titulo), ...palavras(p.segmento ?? '')])].filter((w) => t.includes(w)).length }))
+    .filter((x) => x.n).sort((a, b) => b.n - a.n);
+  return { certo: null, opcoes: pontos.slice(0, 4).map((x) => x.p) };
+}
+
+// Confirmação do destino quando o projeto veio do texto: um botão por candidato; nada é enviado antes do clique.
+function confirmarProjeto(opcoes) {
+  const n = state.anexos.length;
+  const bot = addMsg('bot', `<p class="answer"><span class="ans-par">${opcoes.length > 1 ? `Encontrei ${opcoes.length} projetos que combinam.` : 'Encontrei este projeto.'} Para qual ${n > 1 ? `vão os ${n} arquivos` : 'vai o arquivo'}? Nada foi enviado ainda.</span></p>
+    <div class="resp-acoes confirma-proj">${opcoes.map((p) => `<button type="button" class="chip-btn" data-destino="${esc(p.id)}" title="${esc(p.titulo)}">${icon('folder', { size: 14 })}${esc(p.cliente)} · ${esc(p.titulo.length > 48 ? `${p.titulo.slice(0, 48)}…` : p.titulo)}</button>`).join('')}
+      <button type="button" class="chip-btn ghost" data-destino="">${icon('x', { size: 14 })}Nenhum destes</button></div>`);
+  $$('[data-destino]', bot).forEach((b) => (b.onclick = async () => {
+    $$('[data-destino]', bot).forEach((x) => { x.disabled = true; });
+    if (!b.dataset.destino) { perguntarProjeto(); return; }
+    const p = opcoes.find((x) => x.id === b.dataset.destino);
+    const arquivos = state.anexos.splice(0);
+    pintarAnexos();
+    await enviarParaConversa({ id: p.id, titulo: p.titulo, cliente: p.cliente }, arquivos);
+  }));
 }
 function pintarAnexos() {
   const a = state.anexos ?? [];
@@ -270,9 +289,12 @@ export async function criarProjetoComArquivo(bot, arquivos = state.anexos.splice
 }
 
 async function enviarAnexos(texto) {
-  const projeto = await projetoCitado(texto) ?? (state.foco ? { id: state.foco.id, titulo: state.foco.titulo, cliente: state.foco.cliente } : null);
+  const citado = await projetoCitado(texto);
+  // Envio direto só sem dúvida: código do projeto na mensagem ou "Proposta em foco" escolhida (e o texto não cita outro).
+  const projeto = citado.certo ?? (state.foco && !citado.opcoes.length ? { id: state.foco.id, titulo: state.foco.titulo, cliente: state.foco.cliente } : null);
   $('#chat .welcome')?.remove();
   addMsg('user', `${esc(texto)}<span class="anexos-msg">${state.anexos.map((f) => `${icon('paperclip', { size: 12 })}${esc(f.name)}`).join(' ')}</span>`);
+  if (!projeto && citado.opcoes.length) { confirmarProjeto(citado.opcoes); return; }
   if (!projeto) { perguntarProjeto(); return; }
   const arquivos = state.anexos.splice(0);
   pintarAnexos();
@@ -283,7 +305,7 @@ async function onAsk(e) {
   e?.preventDefault();
   const query = $('#query').value.trim();
   if (!query) return;
-  if (state.anexos?.length && (QUER_ENVIAR.test(query) || await projetoCitado(query))) {
+  if (state.anexos?.length && (QUER_ENVIAR.test(query) || (await projetoCitado(query)).opcoes.length)) {
     $('#query').value = '';
     atualizarEnviar();
     return enviarAnexos(query);
