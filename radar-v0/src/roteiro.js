@@ -569,8 +569,8 @@ export const ROTEIRO = [
   c('C44', 'media', 'Ajuda e versão na lateral das conversas',
     'Ver se a ajuda está à vista, sem depender do menu.',
     [NOVA],
-    ['Olhe o fim da coluna da esquerda.', 'Clique em "Como usar o Radar" e feche.', 'Clique em "Enviar feedback" e feche sem enviar.', 'Se a faixa "Desbloqueie a próxima fase do Radar" aparecer no alto, clique em "Dar minha opinião" e feche sem enviar.'],
-    ['A coluna da esquerda tem o fundo no tom azul da marca e, no fim, os atalhos "Como usar o Radar" e "Enviar feedback" (não há atalho de versão e testes).', '"Como usar o Radar" abre o guia; "Enviar feedback" e "Dar minha opinião" abrem só o formulário de feedback, sem a coluna de versão, tickets e testes, e o texto não fala da tela de Tickets.', 'O logo da ImpactAI ("Criado e desenvolvido por") fica sempre visível no fim da coluna.'],
+    ['Olhe o fim da coluna da esquerda.', 'Clique em "Como usar o Radar" e feche.', 'Clique em "Enviar feedback" e feche sem enviar.', 'Olhe o alto da tela, acima das abas de conteúdo.'],
+    ['A coluna da esquerda tem o fundo no tom azul da marca e, no fim, os atalhos "Como usar o Radar" e "Enviar feedback" (não há atalho de versão e testes).', '"Como usar o Radar" abre o guia; "Enviar feedback" abre só o formulário de feedback, sem a coluna de versão, tickets e testes, e o texto não fala da tela de Tickets.', 'Não aparece mais a faixa "Desbloqueie a próxima fase do Radar" no alto da tela (campanha encerrada).', 'O logo da ImpactAI ("Criado e desenvolvido por") fica sempre visível no fim da coluna.'],
     { tickets: ['CR-026', 'CR-003'] }),
 
   c('P26', 'alta', 'Filtros ativos como etiquetas e "Ver N projetos"',
