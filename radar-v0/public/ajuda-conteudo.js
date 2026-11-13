@@ -33,7 +33,7 @@ export const GUIA = [
     ${table(['Aba', 'Para que serve', 'Quando usar'], [
       [`${icon('message', { size: 14 })} Perguntar`, 'Chat que busca na base pelo significado da pergunta, lista, conta, compara, lê arquivos que você anexar e tira dúvidas sobre o próprio Radar.', 'Começo de uma proposta: "já fizemos algo assim?"'],
       [`${icon('folder', { size: 14 })} Projetos`, 'Lista de todos os projetos com filtros, ficha completa, documentos, comentários e o bloco "Enviar arquivo".', 'Quando você sabe o que procura, quer comparar ou quer guardar um documento.'],
-      [`${icon('chart', { size: 14 })} Insights`, 'Números da base: segmentos, tecnologias, taxa de ganho, lições.', 'Para entender tendências e preparar argumentos.'],
+      [`${icon('chart', { size: 14 })} Insights`, 'Cinco visões da base (Negócio, Técnica, Pipeline, Pré-venda e Curadoria) com manchetes e gráficos, e as métricas de uso do piloto.', 'Para entender onde ganhamos, o que pede atenção e preparar argumentos.'],
     ])}
     <p>Não há uma aba de envio: os arquivos entram <b>sempre dentro de um projeto</b> (bloco "Enviar arquivo" da ficha) ou pela <b>conversa</b> (clipe). Veja "Enviar documentos".</p>
     <h4>Botão de conta e menu ${icon('menu', { size: 14 })}</h4>
@@ -281,10 +281,25 @@ export const GUIA = [
     ${tip('Para o consultor, valores e margens nunca entram, e projetos confidenciais não aparecem nem como referência.', 'warn')}`],
 
   ['insights', 'chart', 'Insights e métricas', () => `
-    <h4>Insights</h4>
-    <p>A aba <b>Base de projetos</b> é a visão agregada do que o seu perfil enxerga: números grandes no topo (projetos, <b>conversão</b>, segmentos e tecnologias), o <b>funil</b> das propostas por status, o <b>top 10</b> de segmentos e de tecnologias, projetos <b>por ano</b>, tecnologias que <b>andam juntas</b>, <b>resultados comprovados</b> e <b>lições de propostas perdidas</b>. Passe o mouse numa barra para ver o detalhe e clique num item para abrir ${ui('Projetos')} já filtrado. A <b>saúde da base</b> (documentos por tipo, envios a revisar e pendências de cadastro) fica recolhida no fim.</p>
+    <p>A aba ${ui('Insights')} tem duas abas internas: <b>Visões</b>, com os números da base de propostas e cases, e <b>Métricas do piloto</b>, com o uso do Radar. O Radar lembra a última aberta.</p>
+    <h4>Visões: cinco perguntas sobre a base</h4>
+    ${table(['Visão', 'Pergunta', 'Para quem'], [
+      ['Negócio', 'Onde estamos ganhando e onde crescer?', 'Diretoria e comercial'],
+      ['Técnica', 'Sabemos entregar o que vendemos?', 'Liderança técnica e arquitetura'],
+      ['Pipeline', 'Que propostas precisam de atenção agora?', 'Gestão comercial, toda semana'],
+      ['Pré-venda', 'Estamos prontos para uma nova oportunidade?', 'Quem está montando uma proposta'],
+      ['Curadoria', 'Dá para confiar nos dados da base?', 'Quem cuida da base'],
+    ])}
+    ${steps([
+      `Em ${ui('Insights')} › ${ui('Visões')}, escolha uma pergunta (a sugerida para o seu perfil vem primeiro). Cada cartão já mostra o número principal.`,
+      '<b>Em resumo</b> traz as manchetes em cartões: uma etiqueta de tom (<b>Ponto forte</b>, <b>Atenção</b> ou <b>Para saber</b>, sempre com ícone), um número grande, o que ele significa, um gráfico pequeno e a frase completa. Passe o mouse nas barras para ver os números.',
+      '<b>Ver os números</b> leva ao gráfico detalhado daquela manchete, em <b>Os números por trás</b>.',
+      'Recorte por <b>Segmento</b>, <b>Prática</b> e <b>Desde</b> (Negócio, Técnica e Pipeline) e use <b>Copiar resumo</b> para levar as manchetes para um e-mail ou para o Teams.',
+      '<b>Ver projetos</b> num gráfico abre <span class="ui">Projetos</span> já filtrado com os projetos daquele número.',
+    ])}
+    ${tip('As manchetes saem de regras sobre os cadastros, não de texto livre da IA. Com poucos projetos no recorte aparece o aviso <b>poucos dados</b>: trate como indício. O selo <b>IA · confira antes de usar</b> marca o que foi extraído dos documentos sem revisão de uma pessoa.')}
     <h4>Métricas do piloto (aba em Insights)</h4>
-    <p>Em ${ui('Insights')}, a aba <b>Métricas do piloto</b>, ao lado de <b>Base de projetos</b>, mostra se o Radar está sendo usado e ajudando (o item de mesmo nome no menu ⋮ abre direto essa aba; o Radar lembra a última aba aberta).</p>
+    <p>Em ${ui('Insights')}, a aba <b>Métricas do piloto</b>, ao lado de <b>Visões</b>, mostra se o Radar está sendo usado e ajudando (o item de mesmo nome no menu ⋮ abre direto essa aba; o Radar lembra a última aba aberta).</p>
     ${table(['Indicador', 'O que mede'], [
       ['Buscas', 'Perguntas feitas no chat (passe o mouse para ver o número de conversas).'],
       ['Sem resultado', 'Perguntas em que a base não tinha evidência: lacunas de conteúdo.'],
