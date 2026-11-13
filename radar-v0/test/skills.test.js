@@ -218,3 +218,26 @@ test('conversa informal: IA escreve a resposta; sem IA, modelo natural que não 
   assert.match(t.resposta, /Tudo ótimo por aqui/);
   assert.match(responderConversa('papo', { user, capacidades: [], query: 'qual seu nome?' }).resposta, /Eu sou o Radar/);
 });
+
+test('percentual realista: escala absoluta, status como desempate e teto pela relevância da IA (CR-064)', async () => {
+  const { MockLLM } = await import('../src/llm.js');
+  // Sem IA: pergunta sem referência boa não vira "Muito parecido"; a forte continua alta.
+  const fraca = await engine.search('sistema de gestão para uma padaria', { userId: 'u-gestor' });
+  assert.ok(fraca.resultados.every((r) => r.score < 0.6), `fraca: ${fraca.resultados.map((r) => r.score)}`);
+  const forte = await engine.search('Já fizemos projetos de churn em telecom?', { userId: 'u-gestor' });
+  assert.equal(forte.resultados[0].projeto_id, 'P008');
+  assert.ok(forte.resultados[0].score >= 0.85);
+  // Com IA: relevância 0,45 limita o percentual a 0,55, mesmo com segmento e status a favor.
+  class IAMorna extends MockLLM {
+    async analyze({ candidates }) {
+      return { avaliacoes: Object.fromEntries(candidates.map((c) => [c.projeto_id, { relevancia: 0.45, justificativa: 'semelhança parcial', evidencia: null }])), resposta: 'Há uma referência parcial [P006].', ia: { provedor: 'deepseek', fallback: false } };
+    }
+  }
+  const e3 = new RadarEngine({ storePath: STORE_PATH, llm: new IAMorna() });
+  const r = await e3.search('projetos de fraude em seguros', { userId: 'u-gestor' });
+  assert.ok(r.resultados.length && r.resultados.every((x) => x.score <= 0.55 + 1e-9), `teto: ${r.resultados.map((x) => x.score)}`);
+  // Status só desempata: vale na proporção do conteúdo.
+  const st = forte.resultados[0].fatores.find((f) => /Status/.test(f.fator));
+  const ct = forte.resultados[0].fatores[0];
+  assert.ok(st.valor <= ct.valor + 1e-9);
+});

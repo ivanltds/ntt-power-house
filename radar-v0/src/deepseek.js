@@ -66,7 +66,12 @@ Devolva SOMENTE um JSON:
   "resposta": string
 }
 Regras:
-- "relevancia" de 0 a 1: o quanto o projeto é uma referência útil para a pergunta, pelo significado (problema, objetivo, escopo, segmento, tecnologia), não só por palavras iguais. Use < 0.4 para projetos que não ajudam.
+- "relevancia" de 0 a 1: o quanto o projeto é uma referência útil para a pergunta, pelo significado (problema, objetivo, escopo, segmento, tecnologia), não só por palavras iguais. Use esta escala e seja exigente:
+  0.9 a 1: mesmo problema ou objetivo e mesmo segmento de cliente.
+  0.7 a 0.85: mesmo problema ou objetivo em outro segmento, ou mesmo segmento com escopo bem parecido.
+  0.5 a 0.65: semelhança parcial que ainda ajuda a montar a proposta (mesma técnica ou serviço aplicável ao problema).
+  0.3 a 0.45: só tecnologia, palavra ou setor vizinho em comum; ajuda pouco.
+  abaixo de 0.3: sem relação útil.
 - "justificativa": 1 frase explicando por que o projeto se relaciona (ou não) com a pergunta.
 - "evidencia": o id (ex.: "P001-3") da frase que melhor sustenta a justificativa. Nunca escreva o texto da frase, só o id.
 - "resposta": texto em português, no máximo 70 palavras, direto ao ponto: responda à pergunta (sim/não, quantos, quais) e diga em poucas palavras por que cada referência citada serve. Use no máximo 2 parágrafos curtos.

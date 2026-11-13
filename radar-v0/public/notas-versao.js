@@ -134,10 +134,16 @@ export const NOTAS = [
         depois: 'A resposta vai direto ao ponto (até ~70 palavras): diz se há referências e por que cada uma serve; o que reaproveitar fica no cartão de cada projeto. Saudação, papo ("tudo bem?", "qual seu nome?", elogios), agradecimento, despedida e pedidos fora do escopo são respondidos pela IA de forma curta e natural, sem se reapresentar no meio da conversa e sem inventar nada sobre a base (sem IA, um texto fixo melhorado). Quando dois projetos citados são do mesmo cliente, a etiqueta mostra também o código. O lápis de editar fica fora do balão.',
       },
       {
+        tipo: 'correcao', status: 'feito', area: 'Chat', tickets: ['CR-064'],
+        titulo: 'Percentual de semelhança mais realista',
+        antes: 'O percentual era inflado: a semelhança de texto era relativa ao melhor da busca (o primeiro sempre recebia 100% nesse critério), o status somava pontos sozinho e, sem segmento ou tecnologia na pergunta, quase todo o peso ia para esse critério relativo. Um projeto de seguros aparecia com 75% para uma pergunta sobre funilaria; sem IA, perguntas sem referência chegavam a 90%.',
+        depois: 'A semelhança de texto passou a ser absoluta; a avaliação da IA pesa 75% do conteúdo e segue uma escala fixa (mesmo problema e segmento, mesmo problema em outro segmento, semelhança parcial, só tecnologia em comum); o percentual final não passa da relevância da IA + 10 pontos; e o status só desempata. Perguntas com referência forte continuam perto de 100%; perguntas sem referência ficam abaixo de 75% ou sem resultado.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
-        titulo: 'Roteiro da V0.0.2: 114 cenários, com Insights, conversa e celular',
+        titulo: 'Roteiro da V0.0.2: 115 cenários, com Insights, conversa e celular',
         antes: 'O roteiro tinha 74 cenários de Conversas, Projetos e Envio.',
-        depois: 'O roteiro da V0.0.2 tem 114 cenários: os 74 anteriores (ajustados às telas novas) e 40 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45), conversa cordial, dúvidas de uso e arquivo lido na conversa (C46 a C53), cartão e caixa de pergunta no celular (C54 e C55), conversa informal (C56), as seções da ficha que recolhem (P29) e a ficha com edição no lugar, comentários e exclusão (P30 a P33). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
+        depois: 'O roteiro da V0.0.2 tem 115 cenários: os 74 anteriores (ajustados às telas novas) e 41 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45), conversa cordial, dúvidas de uso e arquivo lido na conversa (C46 a C53), cartão e caixa de pergunta no celular (C54 e C55), conversa informal (C56), percentual de semelhança (C57), as seções da ficha que recolhem (P29) e a ficha com edição no lugar, comentários e exclusão (P30 a P33). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
