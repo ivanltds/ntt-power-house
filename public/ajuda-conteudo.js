@@ -77,7 +77,7 @@ export const GUIA = [
     ])}
     <h4>Como ler um cartão</h4>
     <ul>
-      <li><b>Muito parecido / Parecido / Relacionado</b>, cliente e status no topo; depois segmento (com ícone), prazo e, para o consultor, "preço e margem restritos".</li>
+      <li><b>Muito parecido</b> (75% ou mais), <b>Parecido</b> (50% a 74%) ou <b>Relacionado</b> (abaixo de 50%), cliente e status no topo; depois segmento (com ícone), prazo e, para o consultor, "preço e margem restritos". O percentual é exigente: um projeto só passa de 75% quando trata do mesmo problema, de preferência no mesmo segmento; semelhança só de tecnologia ou de setor vizinho fica baixa ou nem aparece.</li>
       <li><b>Por que é parecido</b> (justificativa) e o resumo do projeto.</li>
       <li>Itens que abrem com a setinha (um por vez): <b>Escopo, resultados e lições</b>; <b>Trechos que sustentam a resposta</b>; <b>Por que apareceu nesta posição</b>, com uma barra por critério mostrando quanto ele somou (de 0 a 100%; passe o mouse para ver nota × peso).</li>
       <li><b>Tecnologias</b> no fim, clicáveis: abrem ${ui('Projetos')} filtrado por elas.</li>
@@ -440,18 +440,18 @@ export const TECNICO = [
     </ul>
     <h4>3. Score multi-fator</h4>
     ${table(['Fator', 'Peso', 'Como é medido'], [
-      ['Conteúdo', '0,40', '70% do melhor trecho + 30% da média dos 3 melhores, normalizado pelo maior da busca'],
+      ['Conteúdo', '0,40', '70% do melhor trecho + 30% da média dos 3 melhores, em escala absoluta (semelhança 0,10 = 0% e 0,22 = 100%), não relativa ao melhor da busca'],
       ['Segmento', '0,15', 'mesmo segmento da pergunta ou do foco'],
       ['Tecnologias', '0,15', 'proporção das tecnologias pedidas que o projeto usa'],
       ['Serviços', '0,15', 'idem, para serviços'],
       ['Porte', '0,10', 'proximidade do prazo em meses'],
-      ['Status', '0,05', 'Entregue 1,0 · Vendida 0,9 · Em execução 0,85 · Em negociação 0,6 · Enviada 0,5 · Perdida 0,3'],
+      ['Status', '0,05', 'Entregue 1,0 · Vendida 0,9 · Em execução 0,85 · Em negociação 0,6 · Enviada 0,5 · Perdida 0,3, multiplicado pela nota do conteúdo (só desempata entre projetos parecidos)'],
     ])}
     <p>Fatores sem sinal na pergunta não entram e os pesos são <b>renormalizados</b>. Uma pergunta só sobre conteúdo usa só o conteúdo.</p>
     <h4>4. Reavaliação e resposta pela IA</h4>
     <p>Os 8 melhores candidatos vão para a DeepSeek com metadados e <b>frases numeradas</b> dos documentos. Ela devolve, para cada projeto, a relevância (0 a 1), uma justificativa e o <b>id da frase</b> que a sustenta, além da resposta curta com citações [P001].</p>
     ${tip('Travas contra alucinação: a IA só recebe trechos que o usuário pode ver; cita a evidência por id (o texto exibido vem da base, não da IA); só cita projetos com relevância ≥ 0,5; não pode inventar números; e, sem evidência, deve dizer que não há.', 'warn')}
-    <p>A nota final do conteúdo mistura 35% do score vetorial e 65% da relevância da IA. Ficam projetos com relevância ≥ 0,4 e score ≥ 0,4, até 5.</p>
+    <p>A IA avalia cada candidato numa escala fixa (0,9+ mesmo problema e segmento · 0,7 mesmo problema em outro segmento · 0,5 semelhança parcial útil · 0,3 só tecnologia ou palavra em comum · abaixo disso, sem relação). A nota final do conteúdo mistura 25% da semelhança de texto e 75% dessa avaliação, e o percentual final nunca passa da relevância da IA + 10 pontos: segmento, tecnologias e status não inflam um projeto que é fraco no significado. Ficam projetos com relevância ≥ 0,4 e score ≥ 0,4, até 5.</p>
     <h4>5. Conflito de fontes</h4>
     <p>Quando documentos discordam (prazo, valor), vale a fonte de maior confiança: <b>5</b> proposta final aprovada, SOW ou contrato · <b>4</b> proposta ou case · <b>3</b> estimativa, ata validada ou ficha · <b>2</b> transcrição, e-mail ou documento técnico · <b>1</b> rascunho. A ficha do projeto mostra o aviso "Prazo (ou Valor) diverge entre fontes" com a fonte que prevaleceu; os cartões do chat mostram só o valor escolhido.</p>
     <h4>Sem IA</h4>

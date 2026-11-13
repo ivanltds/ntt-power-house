@@ -37,8 +37,14 @@ const MAX_RESULTS = 5;
 // Análise semântica (IA real): quantos candidatos a IA reavalia, quanto a relevância dela pesa no fator
 // de conteúdo e a relevância mínima para um resultado aparecer.
 const SEMANTIC_POOL = 8;
-const SEMANTIC_BLEND = 0.65;
+const SEMANTIC_BLEND = 0.75; // CR-064: a avaliação da IA pesa mais que a semelhança de palavras
 const MIN_RELEVANCE = 0.4;
+// CR-064: semelhança de texto em escala ABSOLUTA (antes era relativa ao melhor da busca, que sempre virava 100%).
+// Com o embedder atual, ~0,10 é ruído e ~0,22 já é um texto muito parecido (medido nas perguntas do roteiro).
+const SIM_PISO = 0.10;
+const SIM_TETO = 0.22;
+// Teto do score: metadados (segmento, tecnologia, status) não levam o projeto além da relevância da IA + esta margem.
+const MARGEM_SOBRE_IA = 0.1;
 // Linhas com preço/margem, ocultadas para perfis sem permissão de ver valores.
 export const PRICE_LINE = /^.*(investimento total|margem praticada|valor preliminar).*$/gim;
 
@@ -262,13 +268,13 @@ export class RadarEngine {
       byProject.set(meta.projeto_id, entry);
     });
     for (const e of byProject.values()) e.chunks.sort((a, b) => b.sim - a.sim);
-    const maxSim = Math.max(0.0001, ...[...byProject.values()].map((e) => e.chunks[0].sim));
+    const simAbsoluta = (raw) => Math.max(0, Math.min(1, (raw - SIM_PISO) / (SIM_TETO - SIM_PISO)));
 
     // UC03.6 — score multi-fator; fatores sem sinal na pergunta não entram e os pesos são renormalizados.
     const candidates = [...byProject.values()].map(({ meta, chunks }) => {
       const top = chunks.slice(0, 3);
       const contentRaw = top[0].sim * 0.7 + (top.reduce((s, c) => s + c.sim, 0) / top.length) * 0.3;
-      const factors = [{ key: 'conteudo', value: Math.min(1, contentRaw / maxSim), raw: contentRaw }];
+      const factors = [{ key: 'conteudo', value: Math.round(simAbsoluta(contentRaw) * 1000) / 1000, raw: contentRaw }];
       const seg = overlapRatio(entities.segmentos, [meta.segmento]);
       if (seg) factors.push({ key: 'segmento', value: seg.value > 0 ? 1 : 0, matches: seg.matches });
       const tec = overlapRatio(entities.tecnologias, meta.tecnologias);
@@ -280,7 +286,8 @@ export class RadarEngine {
         const diff = Math.abs(prazo.value - entities.prazoMeses);
         factors.push({ key: 'porte', value: Math.max(0, 1 - diff / Math.max(prazo.value, entities.prazoMeses)) });
       }
-      factors.push({ key: 'status', value: STATUS_WEIGHT[meta.status_proposta] ?? 0.5 });
+      // CR-064: status desempata, não dá pontos sozinho — vale na proporção da semelhança do conteúdo.
+      factors.push({ key: 'status', value: (STATUS_WEIGHT[meta.status_proposta] ?? 0.5) * factors[0].value, statusBase: STATUS_WEIGHT[meta.status_proposta] ?? 0.5 });
       const totalWeight = factors.reduce((s, f) => s + WEIGHTS[f.key], 0);
       const weighted = factors.map((f) => ({ ...f, label: FACTOR_LABEL[f.key], weight: WEIGHTS[f.key] / totalWeight }));
       return { meta, chunks, factors: weighted, score: scoreOf(weighted) };
@@ -305,8 +312,11 @@ export class RadarEngine {
         const content = c.factors[0];
         content.value = Math.round(((1 - SEMANTIC_BLEND) * content.value + SEMANTIC_BLEND * a.relevancia) * 1000) / 1000;
         content.label = `${FACTOR_LABEL.conteudo} (análise semântica)`;
+        const status = c.factors.find((f) => f.key === 'status');
+        if (status) status.value = Math.round(status.statusBase * content.value * 1000) / 1000;
         c.semantic = { ...a, evidence };
-        c.score = scoreOf(c.factors);
+        // CR-064: o percentual não passa da relevância que a IA deu + margem (metadados não inflam projeto fraco).
+        c.score = Math.min(scoreOf(c.factors), a.relevancia + MARGEM_SOBRE_IA);
       });
       // UC03.7 — a IA pode descartar candidatos irrelevantes; o corte mínimo de score continua valendo.
       ranked = pool
@@ -701,6 +711,7 @@ export class RadarEngine {
         ? `${c.semantic.justificativa}${(c.semantic.evidence ?? evidence) ? ` Evidência: “${c.semantic.evidence ?? evidence}”` : ''}`
         : this.llm.justify({ factors: c.factors, evidence }),
       relevanciaSemantica: c.semantic ? c.semantic.relevancia : null,
+      similaridadeTexto: Math.round(c.factors[0].raw * 1000) / 1000, // semelhança absoluta do texto (antes da normalização)
       evidencias: evidenceChunks.map((x) => ({ doc_id: x.meta.doc_id, tipo: x.meta.tipo_documental, trecho: x.text, similaridade: Math.round(x.sim * 1000) / 1000 })),
       fontes,
       detalhes: {
