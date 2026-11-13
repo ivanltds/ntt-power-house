@@ -132,7 +132,19 @@
     </section>
 
 
-    <section id="tab-insights" class="tab"><div id="insights"></div></section>
+    <section id="tab-insights" class="tab">
+      <div class="ins-abas" role="tablist" aria-label="Visões de Insights">
+        <button type="button" role="tab" data-ins-aba="base" aria-selected="true"><i data-icon="chart" data-size="15"></i>Base de projetos</button>
+        <button type="button" role="tab" data-ins-aba="metricas" aria-selected="false"><i data-icon="gauge" data-size="15"></i>Métricas do piloto</button>
+      </div>
+      <div id="insights" role="tabpanel"></div>
+      <div id="ins-metricas" role="tabpanel" hidden>
+        <header class="page-head"><h2>Métricas do piloto</h2><p class="muted">Indicadores da hipótese para o comitê: uso, utilidade das respostas e reaproveitamento.</p></header>
+        <div id="metrics" class="tiles"></div>
+        <div id="metrics-extra"></div>
+        <p id="base-info" class="foot"></p>
+      </div>
+    </section>
 
     <section id="tab-painel" class="tab"><div id="painel"></div></section>
 
@@ -142,12 +154,6 @@
       <div id="atividades"></div>
     </section>
 
-    <section id="tab-metricas" class="tab">
-      <header class="page-head"><h2>Métricas do piloto</h2><p class="muted">Indicadores da hipótese para o comitê: uso, utilidade das respostas e reaproveitamento.</p></header>
-      <div id="metrics" class="tiles"></div>
-      <div id="metrics-extra"></div>
-      <p id="base-info" class="foot"></p>
-    </section>
   </main>
 
   <dialog id="project-dialog" class="xl" aria-label="Detalhes do projeto"><div id="project-body"></div></dialog>

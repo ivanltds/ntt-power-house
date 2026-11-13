@@ -4,7 +4,7 @@ import { cartoesDeEnvio, abrirRevisao } from './revisao.js';
 import { icon, hydrateIcons } from './icons.js';
 import { initProjects, openProject, openProjectForm } from './projetos.js';
 import { initUploads } from './upload.js';
-import { initInsights } from './insights.js';
+import { initInsights, abrirInsights } from './insights.js';
 import { initPainel } from './painel.js';
 import { showGuide, showTech } from './ajuda.js';
 import { showSdlc } from './sdlc.js';
@@ -64,7 +64,6 @@ async function init() {
   setupMenu();
   setupViews();
   setupConversations();
-  onTab('metricas', loadMetrics);
   initProjects();
   initUploads();
   initInsights();
@@ -117,7 +116,7 @@ function setupMenu() {
   $$('[data-menu]', pop).forEach((b) => (b.onclick = () => {
     toggle(false);
     if (b.dataset.menu === 'docs') { openTab('projetos'); showView('docs'); }
-    if (b.dataset.menu === 'metricas') openTab('metricas');
+    if (b.dataset.menu === 'metricas') abrirInsights('metricas'); // agora é uma aba dentro de Insights
     if (b.dataset.menu === 'atividades') openTab('atividades');
     if (b.dataset.menu === 'sobre') showGuide();
     if (b.dataset.menu === 'tecnico') showTech();
@@ -550,29 +549,6 @@ function renderDocs() {
   $$('[data-proj]', $('#docs')).forEach((a) => (a.onclick = (e) => { e.preventDefault(); openProject(a.dataset.proj); }));
 }
 
-async function loadMetrics() {
-  const m = await api('/api/metricas');
-  const tile = (ic, label, value, hint = '') => `<div class="tile" title="${esc(hint)}">${icon(ic, { size: 20 })}<strong>${value}</strong><span>${label}</span></div>`;
-  $('#metrics').innerHTML = [
-    tile('search', 'buscas', m.buscas, `${m.sessoes} conversas`),
-    tile('xCircle', 'sem resultado', m.percentualSemResultado != null ? `${m.percentualSemResultado}%` : '—', `${m.buscasSemResultado} buscas sem resultado`),
-    tile('thumbsUp', 'úteis entre os 3 primeiros', m.percentualUtilTop3 != null ? `${m.percentualUtilTop3}%` : '—', `${m.feedbacks} avaliações · ${m.percentualUtil ?? '—'}% úteis no geral`),
-    tile('clock', 'até a 1ª referência útil', m.tempoMedioAtePrimeiraReferenciaUtilSeg != null ? `${m.tempoMedioAtePrimeiraReferenciaUtilSeg}s` : '—'),
-    tile('duplicate', 'reaproveitamentos', m.reaproveitamentos ?? 0, 'Abrir projeto, copiar escopo ou usar como base a partir de uma resposta'),
-    tile('eye', 'fontes abertas', m.aberturasDeFonte, `${m.aberturasDeDetalhe} detalhes abertos`),
-    tile('gauge', 'tempo de resposta', m.tempoMedioRespostaMs != null ? `${(m.tempoMedioRespostaMs / 1000).toFixed(1)}s` : '—'),
-  ].join('');
-  // Adendo 6: o que as pessoas pedem ao chat (por skill) e onde ele fica sem resposta.
-  const SKILL = { buscar: 'Projetos parecidos', listar: 'Listagem', agregar: 'Contagem', ficha: 'Ficha do projeto', comparar: 'Comparação', composta: 'Resposta em etapas', detalhar: 'Detalhe de um resultado', conversa: 'Conversa (saudação, ajuda, não entendi)', ajuda: 'Dúvida de uso', anexo: 'Arquivo da conversa', enviar_arquivo: 'Envio de arquivo', esclarecer: 'Pergunta de volta', fora_dominio: 'Fora do escopo' };
-  $('#metrics-extra').innerHTML = (m.motivosNaoUtil?.length
-    ? `<section class="panel"><h4>${icon('thumbsDown', { size: 17 })}Por que não ajudou</h4><table class="tbl">${m.motivosNaoUtil.map((x) => `<tr><td>${esc(x.valor)}</td><td class="num">${x.n}</td></tr>`).join('')}</table></section>`
-    : '')
-    + (m.porSkill?.length
-      ? `<section class="panel"><h4>${icon('message', { size: 17 })}O que pedem ao chat</h4><table class="tbl"><thead><tr><th>Tipo de pedido</th><th class="num">Perguntas</th><th class="num">Sem resposta</th></tr></thead>${m.porSkill.map((x) => `<tr><td>${esc(SKILL[x.skill] ?? x.skill)}</td><td class="num">${x.n}</td><td class="num">${x.semResposta}</td></tr>`).join('')}</table></section>`
-      : '');
-  const b = state.ctx.base;
-  $('#base-info').textContent = `${b.projetos} projetos · ${b.documentos} documentos · ${b.trechos} trechos · ${b.banco}`;
-}
 
 // ---- Conversas: memória, salvamento automático (UC05) e favoritas (UC06) ----
 
