@@ -127,8 +127,8 @@ export const NOTAS = [
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
         titulo: 'Filtros de Tickets e do Roteiro mais claros; leitura rápida dos tickets',
-        antes: 'Os filtros eram fileiras de botões sem rótulo, uma ao lado da outra; não ficava claro o que cada grupo filtrava nem quantos itens sobravam. Para ler um ticket era preciso abri-lo.',
-        depois: 'Cada grupo de filtro fica numa linha com nome e ícone (Situação, Prioridade, Tela/Área, Tipo, Versão, Aberto por), e cada opção mostra quantos itens tem. Nos Tickets, os filtros menos usados ficam em "Mais filtros". Uma linha de resumo diz "Mostrando N de M", lista os filtros ativos como etiquetas que se tiram com um X e oferece "Limpar filtros". Na lista de tickets, clicar na linha expande a descrição e a proposta; clicar no código ou no título abre o ticket.',
+        antes: 'Os filtros eram fileiras de botões, uma ao lado da outra; não ficava claro o que cada grupo filtrava nem quantos itens sobravam. Para ler um ticket era preciso abri-lo.',
+        depois: 'Os filtros viraram campos de seleção, lado a lado e com o nome em cima (Situação, Prioridade, Área ou Tela, Tipo, Aberto na versão, Aberto por). O campo mostra o que está escolhido; ao clicar, abre a lista com ícone e quantidade de cada opção. Situação é escolha única; os demais aceitam várias opções (ex.: Crítica e Alta), com "Limpar seleção". Uma linha de resumo diz "Mostrando N de M", lista os filtros ativos como etiquetas que se tiram com um X e oferece "Limpar filtros". Na lista de tickets, clicar na linha expande a descrição e a proposta; clicar no código ou no título abre o ticket. A busca do "Proposta em foco" voltou a ter borda, e a lupa não fica mais por cima do texto.',
       },
     ],
   },

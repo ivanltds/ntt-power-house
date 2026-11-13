@@ -5,6 +5,7 @@
 import { $, $$, esc, api, dateBR, toast } from './common.js';
 import { icon } from './icons.js';
 import { montarTickets } from './tickets-ui.js';
+import { campoFiltro, resumoSelecao } from './filtros.js';
 
 // O login do Radar é um só, usado por várias pessoas ao mesmo tempo: o nome é pedido em cada registro
 // (feedback, retorno de ticket e resultado de cenário) e nunca vem preenchido. A lista só sugere nomes já usados.
@@ -228,13 +229,15 @@ const ROTEIRO = ['roteiro', 'check', 'Roteiro de testes', () => carregando(), as
 
 function montarRoteiro(body, q) {
   const AREAS = Object.fromEntries(['conversas', 'projetos', 'upload', 'insights'].filter((a) => q.roteiro.some((c) => c.area === a)).map((a) => [a, q.rotulos.areas[a]]));
-  const filtro = { area: 'todas', prioridade: 'todas', situacao: 'todos' };
-  // Filtros em linhas rotuladas, com ícone e quantidade em cada opção (V0.0.2).
+  // Tela e prioridade: multisseleção (vazio = todas). Situação: escolha única.
+  const filtro = { area: new Set(), prioridade: new Set(), situacao: 'todos' };
   const temAntes = Object.keys(q.naoPassaramAntes?.cenarios ?? {}).length > 0;
-  const grupo = (chave, ic, rotulo, ops) => `<div class="flt-row" role="group" aria-label="${rotulo}"><span class="flt-lab">${icon(ic, { size: 14 })}${rotulo}</span><div class="flt-chips">${ops.map(([k, r, oi, cls]) => `<button type="button" class="flt-chip${cls ? ` ${cls}` : ''}" data-f-${chave}="${k}" aria-pressed="false">${oi ? icon(oi, { size: 13 }) : ''}<span>${esc(r)}</span><em></em></button>`).join('')}</div></div>`;
+  const SIT_ROT = { todos: 'Todos', afazer: 'A fazer', falha: 'Com falha ou bloqueio', ...(temAntes ? { antes: `Não passaram na ${q.naoPassaramAntes.versao}` } : {}) };
+  const SIT_IC = { todos: 'layers', afazer: 'clock', falha: 'alert', antes: 'history' };
+  const campos = [];
   const passaR = (c, fx = filtro) => {
     const res = Object.values(q.execucao.resultados[c.id] ?? {});
-    return (fx.area === 'todas' || c.area === fx.area) && (fx.prioridade === 'todas' || c.prioridade === fx.prioridade)
+    return (!fx.area.size || fx.area.has(c.area)) && (!fx.prioridade.size || fx.prioridade.has(c.prioridade))
       && (fx.situacao === 'todos' || (fx.situacao === 'antes' ? Boolean(antes(q, c.id)) : fx.situacao === 'afazer' ? !res.length : res.some((v) => v.resultado !== 'ok')));
   };
   body.insertAdjacentHTML('beforeend', `
@@ -242,30 +245,25 @@ function montarRoteiro(body, q) {
     <p>Roteiro regressivo da <b>${esc(q.versaoVista)}</b>: ${q.roteiro.length} cenários de ${Object.values(AREAS).map(esc).join(', ')}.${q.arquivada ? '' : ' Comece pelos de <b>prioridade alta</b>. Abra o cenário, siga o passo a passo exatamente como está escrito, escreva <b>o seu nome</b> e marque o resultado. Se algo falhar, conte o que aconteceu: o Radar abre um ticket automaticamente. Se um cenário que falhou antes passar agora, o ticket dele é validado automaticamente.'}</p>
     ${q.arquivada ? '' : '<p class="muted small">O usuário do Radar é compartilhado: o nome que você escreve em cada cenário é o que identifica quem testou.</p>'}
     <div class="flt qa-filtros">
-      ${grupo('area', 'grid', 'Tela', [['todas', 'Todas', 'layers'], ...Object.entries(AREAS).map(([k, v]) => [k, v, AREA_ICON[k]])])}
-      ${grupo('prioridade', 'trending', 'Prioridade', [['todas', 'Todas', 'layers'], ['alta', 'Alta', null, 'prio-alta'], ['media', 'Média', null, 'prio-media']])}
-      ${grupo('situacao', 'tag', 'Situação', [['todos', 'Todos', 'layers'], ['afazer', 'A fazer', 'clock'], ['falha', 'Com falha ou bloqueio', 'alert'], ...(temAntes ? [['antes', `Não passaram na ${q.naoPassaramAntes.versao}`, 'history', 'antes']] : [])])}
+      <div class="flt-campos"><div data-campo="area"></div><div data-campo="prioridade"></div><div data-campo="situacao"></div></div>
       <div class="flt-resumo" aria-live="polite"><span id="qa-r-conta"></span><span class="flt-ativos" id="qa-r-ativos"></span><button type="button" class="link-btn" id="qa-r-limpar">${icon('x', { size: 13 })}Limpar filtros</button></div>
     </div>
     <p id="qa-r-prog" class="small"></p>
     <div id="qa-r-lista"></div>${listaNomes(q)}`);
   const pintar = () => {
-    const PADRAO = { area: 'todas', prioridade: 'todas', situacao: 'todos' };
-    for (const k of Object.keys(filtro)) $$(`[data-f-${k}]`, body).forEach((b) => {
-      const v = b.dataset[`f${k[0].toUpperCase()}${k.slice(1)}`];
-      const on = v === filtro[k];
-      b.classList.toggle('on', on);
-      b.setAttribute('aria-pressed', on);
-      $('em', b).textContent = q.roteiro.filter((c) => passaR(c, { ...filtro, [k]: v })).length;
-    });
+    campos.forEach((c) => c.pintar());
     const visiveis = q.roteiro.filter((c) => passaR(c));
-    const ROT = { area: (v) => AREAS[v], prioridade: (v) => ({ alta: 'Alta', media: 'Média' })[v], situacao: (v) => ({ afazer: 'A fazer', falha: 'Com falha ou bloqueio', antes: `Não passaram na ${q.naoPassaramAntes?.versao}` })[v] };
-    const ativos = Object.keys(filtro).filter((k) => filtro[k] !== PADRAO[k]);
+    const ROT = { area: (v) => AREAS[v], prioridade: (v) => ({ alta: 'Alta', media: 'Média' })[v], situacao: (v) => SIT_ROT[v] };
+    const GRUPO = { area: 'Tela', prioridade: 'Prioridade', situacao: 'Situação' };
+    const ativos = [
+      ...['area', 'prioridade'].filter((k) => filtro[k].size).map((k) => [k, resumoSelecao([...filtro[k]].map(ROT[k]))]),
+      ...(filtro.situacao !== 'todos' ? [['situacao', ROT.situacao(filtro.situacao)]] : []),
+    ];
     $('#qa-r-conta', body).textContent = `Mostrando ${visiveis.length} de ${q.roteiro.length} cenários`;
-    $('#qa-r-ativos', body).innerHTML = ativos.map((k) => `<span class="fchip"><span class="muted">${({ area: 'Tela', prioridade: 'Prioridade', situacao: 'Situação' })[k]}:</span>&nbsp;${esc(ROT[k](filtro[k]))}<button type="button" data-tirar-f="${k}" title="Tirar este filtro" aria-label="Tirar o filtro">${icon('x', { size: 11 })}</button></span>`).join('');
-    $$('[data-tirar-f]', body).forEach((b) => (b.onclick = () => { filtro[b.dataset.tirarF] = PADRAO[b.dataset.tirarF]; pintar(); }));
+    $('#qa-r-ativos', body).innerHTML = ativos.map(([k, r]) => `<span class="fchip"><span class="muted">${GRUPO[k]}:</span>&nbsp;${esc(r)}<button type="button" data-tirar-f="${k}" title="Tirar este filtro" aria-label="Tirar o filtro ${GRUPO[k]}">${icon('x', { size: 11 })}</button></span>`).join('');
+    $$('[data-tirar-f]', body).forEach((b) => (b.onclick = () => { const k = b.dataset.tirarF; filtro[k] = k === 'situacao' ? 'todos' : new Set(); pintar(); }));
     $('#qa-r-limpar', body).hidden = !ativos.length;
-    $('#qa-r-limpar', body).onclick = () => { Object.assign(filtro, PADRAO); pintar(); };
+    $('#qa-r-limpar', body).onclick = () => { Object.assign(filtro, { area: new Set(), prioridade: new Set(), situacao: 'todos' }); pintar(); };
     $('#qa-r-lista', body).innerHTML = Object.entries(AREAS).map(([a, rotulo]) => {
       const cs = visiveis.filter((c) => c.area === a);
       return cs.length ? `<h4>${icon(AREA_ICON[a], { size: 16 })} ${esc(rotulo)} <span class="muted small">${cs.length} cenário${cs.length > 1 ? 's' : ''}</span></h4><ul class="qa-cens">${cs.map((c) => cenarioHtml(c, q)).join('')}</ul>` : '';
@@ -325,7 +323,13 @@ function montarRoteiro(body, q) {
       };
     });
   };
-  for (const k of Object.keys(filtro)) $$(`[data-f-${k}]`, body).forEach((b) => (b.onclick = () => { filtro[k] = b.dataset[`f${k[0].toUpperCase()}${k.slice(1)}`]; pintar(); }));
+  const contaR = (k, v) => q.roteiro.filter((c) => passaR(c, { ...filtro, [k]: k === 'situacao' ? v : new Set([v]) })).length;
+  const DEF = {
+    area: { rotulo: 'Tela', icone: 'grid', multi: true, todos: 'Todas', opcoes: () => Object.entries(AREAS).map(([v, r]) => ({ v, r, ic: AREA_ICON[v] })) },
+    prioridade: { rotulo: 'Prioridade', icone: 'trending', multi: true, todos: 'Todas', opcoes: () => [{ v: 'alta', r: 'Alta', marca: 'tk-dot tk-p-alta' }, { v: 'media', r: 'Média', marca: 'tk-dot tk-p-media' }] },
+    situacao: { rotulo: 'Situação', icone: 'tag', padrao: 'todos', opcoes: () => Object.entries(SIT_ROT).map(([v, r]) => ({ v, r, ic: SIT_IC[v] })) },
+  };
+  campos.push(...Object.entries(DEF).map(([k, d]) => campoFiltro($(`[data-campo="${k}"]`, body), { ...d, valor: () => filtro[k], conta: (v) => contaR(k, v), mudar: (novo) => { filtro[k] = novo; pintar(); } })));
   pintar();
 }
 
