@@ -676,8 +676,8 @@ export const ROTEIRO = [
     'Ver se o percentual dos cartões reflete o quanto o projeto realmente se parece com a pergunta.',
     [GESTOR, NOVA],
     [PERGUNTE('projetos de fraude em seguros'), ESPERE, 'Abra o cartão do primeiro projeto e veja "Por que apareceu nesta posição".', NOVA, PERGUNTE('projeto para uma funilaria de carros'), ESPERE, NOVA, PERGUNTE('sistema de gestão para uma padaria'), ESPERE],
-    ['A pergunta de fraude em seguros traz o projeto da Segura Mais Seguros como "Muito parecido" (perto de 100%).', 'Em "Por que apareceu nesta posição", o Status soma pouco e só junto com um conteúdo parecido.', 'A funilaria não traz nenhum projeto como "Muito parecido": o Radar diz que não encontrou nada relevante ou mostra só "Relacionado"/"Parecido" abaixo de 75%.', 'A padaria também não passa de "Parecido" (abaixo de 75%).'],
-    { tickets: ['CR-064'] }),
+    ['A pergunta de fraude em seguros traz o projeto da Segura Mais Seguros como "Muito parecido" (perto de 100%).', 'Em "Por que apareceu nesta posição", o Status soma pouco e só junto com um conteúdo parecido.', 'A funilaria não traz nenhum projeto como "Muito parecido": o Radar diz que não encontrou nada relevante ou mostra só "Relacionado"/"Parecido" abaixo de 75%.', 'A padaria também não passa de "Parecido" (abaixo de 75%).', 'No menu ⋮ → Como usar o Radar, a seção "Como o Radar calcula a semelhança" explica os critérios, os pesos, a nota da IA e o teto, com o exemplo do churn em telecom (98% e 63%); perguntar no chat "como é calculado o percentual de semelhança?" responde com essa seção.'],
+    { tickets: ['CR-064', 'CR-065'] }),
 
   c('C55', 'alta', 'Caixa de pergunta no celular com memória da conversa',
     'Ver se a caixa de pergunta continua numa linha só quando o chat está lembrando perguntas anteriores.',
