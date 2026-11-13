@@ -138,7 +138,7 @@ export const GUIA = [
     <p>Toda conversa é <b>salva automaticamente</b> na primeira pergunta. A lista fica à esquerda (no celular, no botão de painel ${icon('sidebar', { size: 14 })}, à esquerda do título da conversa), em caixas: <b>Favoritas</b>, <b>Grupos</b>, <b>Arquivadas</b> e <b>Recentes</b>. As três primeiras abrem e fecham clicando no título, e o Radar lembra como você deixou; "Recentes" fica sempre visível, com rolagem própria.</p>
     ${table(['Quero…', 'Como'], [
       ['Renomear', `Clique no lápis ao lado do título, no topo do chat, edite e aperte ${kbd('Enter')} (${kbd('Esc')} cancela). Também pelo menu ⋯ da conversa.`],
-      ['Favoritar', 'Passe o mouse na conversa e clique na ⭐ (ela fica fixa nas favoritas).'],
+      ['Favoritar', 'Clique na ⭐ da conversa (no computador ela aparece ao passar o mouse; no celular fica sempre à vista). Ela fica fixa nas favoritas.'],
       ['Organizar por cliente ou proposta', 'Menu ⋯ da conversa → <b>Mover para grupo</b> (nome livre). Os grupos só organizam a lista; não limitam a busca.'],
       ['Tirar da frente sem apagar', 'Menu ⋯ → <b>Arquivar</b>. Ela vai para a caixa "Arquivadas".'],
       ['Apagar', 'Menu ⋯ → <b>Excluir</b> e confirme na janela. Arquivos lidos nela são apagados junto.'],

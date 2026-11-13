@@ -2051,3 +2051,4 @@ span.tec-tag { cursor: default; }
 /* Campos de texto dentro de linhas flexíveis precisam de min-width: 0 para encolher (senão empurram os botões para fora
    da tela no celular: a estrela do título da conversa sumia a 320 px). */
 .conv-bar input, .flt-busca input, .tk-quem input { min-width: 0; }
+.fonte-ajuda .fonte-abrir { display: flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 12.5px; white-space: normal; }

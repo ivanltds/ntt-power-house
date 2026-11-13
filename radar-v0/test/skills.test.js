@@ -188,3 +188,10 @@ test('chat não mostra "dados divergentes"; o aviso fica só na ficha do projeto
   assert.doesNotMatch(ler('respostas.js'), /valores divergentes/);
   assert.match(ler('projetos.js'), /diverge entre fontes/);
 });
+
+test('fonte da dúvida de uso aparece uma vez só, com "Abrir no guia" dentro; campo sem texto de exemplo (CR-058 / CR-059)', () => {
+  const resp = fs.readFileSync(path.join(ROOT, 'public', 'respostas.js'), 'utf8');
+  assert.match(resp, /fonte-abrir[^\n]*Abrir no guia/);
+  assert.match(resp, /\$\{fontes \? '' : linksAjuda\(d\.ajuda\)\}/, 'sem fonte, os links soltos continuam; com fonte, saem');
+  assert.doesNotMatch(fs.readFileSync(path.join(ROOT, 'public', 'index.html'), 'utf8'), /id="query"[^>]*placeholder/);
+});
