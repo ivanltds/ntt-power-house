@@ -28,12 +28,12 @@ const GUIA = [
   ['inicio', 'radar', 'Primeiros passos', () => `
     <p>O Radar é a memória de propostas e cases da equipe. Ele junta propostas, apresentações, estimativas, atas e cases e
     responde perguntas em linguagem natural, mostrando <b>quais projetos parecidos já fizemos</b> e <b>de onde veio cada informação</b>.</p>
-    ${flow([['Perguntar', 'encontre referências', 'message'], ['Projetos', 'explore e abra os detalhes', 'folder'], ['Enviar', 'alimente a base', 'upload'], ['Insights', 'padrões da base', 'chart']])}
+    ${flow([['Perguntar', 'encontre referências', 'message'], ['Projetos', 'explore, abra e envie arquivos', 'folder'], ['Insights', 'padrões da base', 'chart']])}
     <h4>As 4 áreas</h4>
     ${table(['Área', 'Para que serve', 'Quando usar'], [
       [`${icon('message', { size: 14 })} Perguntar`, 'Chat que busca na base pelo significado da pergunta, não só pelas palavras.', 'Começo de uma proposta: "já fizemos algo assim?"'],
       [`${icon('folder', { size: 14 })} Projetos`, 'Lista de todos os projetos com filtros, detalhe completo e documentos.', 'Quando você sabe o que procura ou quer comparar projetos.'],
-      [`${icon('upload', { size: 14 })} Enviar`, 'Envio de arquivos. O Radar lê, preenche os dados e você revisa.', 'Ao terminar uma proposta, ata ou case.'],
+      [`${icon('upload', { size: 14 })} Enviar arquivo (na ficha do projeto ou na conversa)`, 'O Radar lê, preenche os dados e você aprova.', 'Ao terminar uma proposta, ata ou case.'],
       [`${icon('chart', { size: 14 })} Insights`, 'Números da base: segmentos, tecnologias, taxa de ganho, lições.', 'Para entender tendências e preparar argumentos.'],
     ])}
     <h4>Menu ${icon('menu', { size: 14 })}</h4>
@@ -147,12 +147,12 @@ const GUIA = [
 
   ['enviar', 'upload', 'Enviar documentos', () => `
     <p>Envie o arquivo e o Radar faz o trabalho pesado. Você só confere e completa.</p>
-    ${flow([['Enviar', 'arraste ou escolha', 'upload'], ['Radar lê', '7 etapas automáticas', 'cpu'], ['Você revisa', 'confere e completa', 'eye', true], ['Na base', 'aparece no chat e em Projetos', 'checkCircle']])}
+    ${flow([['Enviar', 'no projeto ou na conversa', 'upload'], ['Radar lê', '7 etapas automáticas', 'cpu'], ['Você revisa', 'confere e completa', 'eye', true], ['Na base', 'aparece no chat e em Projetos', 'checkCircle']])}
     <h4>1. Enviar</h4>
     <ul>
-      <li><b>Formatos:</b> DOCX, PPTX, XLSX, PDF (com texto, não imagem escaneada), EML, MD, TXT, CSV, JSON, HTML, VTT e SRT. Até <b>15 MB</b> cada, vários de uma vez.</li>
-      <li>Se já sabe o projeto, escolha em ${ui(`${icon('folder', { size: 13 })} Projeto de destino`)} antes de enviar. Se não, o Radar sugere.</li>
-      <li>Pode trocar de tela: quando o processamento terminar, um aviso aparece com o botão <b>Revisar</b>.</li>
+      <li><b>Onde:</b> o envio acontece sempre dentro de um projeto — no bloco ${ui(`${icon('upload', { size: 13 })} Enviar arquivo`)} da ficha (acima de "Comentários e histórico") ou pelo clipe da conversa (com "Proposta em foco", o arquivo vai direto para ela; sem foco, diga o projeto). O gestor também cria um projeto novo a partir de um arquivo (${ui('Novo a partir de arquivo')}, em Projetos, ou pela conversa).</li>
+      <li><b>Formatos:</b> PDF (com texto, não imagem escaneada), PPTX, DOCX, XLSX e também CSV, TXT, MD, HTML, EML, VTT, SRT e JSON. Até <b>15 MB</b> cada, vários de uma vez.</li>
+      <li><b>Aprovar:</b> cada arquivo vira um cartão (na ficha, em "Aguardando aprovação", e na conversa) com o que o Radar leu e os pontos para conferir. "Aprovar" usa o que o Radar leu; "Mais detalhes" abre a revisão completa numa janela; com vários prontos, "Aprovar os prontos".</li>
     </ul>
     <h4>2. O que o Radar faz sozinho</h4>
     ${table(['Etapa', 'O que acontece'], [

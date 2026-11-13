@@ -14,7 +14,6 @@
     <nav class="tabs" aria-label="Seções">
       <button data-tab="busca" class="active" aria-current="true" title="Perguntar à base"><i data-icon="message"></i><span>Perguntar</span></button>
       <button data-tab="projetos" title="Projetos"><i data-icon="folder"></i><span>Projetos</span></button>
-      <button data-tab="upload" title="Enviar documentos"><i data-icon="upload"></i><span>Enviar</span><b id="badge-upload" class="count hidden"></b></button>
       <button data-tab="insights" title="Insights da base"><i data-icon="chart"></i><span>Insights</span></button>
     </nav>
     <div class="context">
@@ -112,6 +111,7 @@
         <div class="field-icon grow"><i data-icon="search" data-size="16"></i><input id="proj-q" type="search" aria-label="Buscar projetos" placeholder="Buscar no conteúdo dos documentos"></div>
         <button id="proj-toggle-filters" class="btn" title="Filtros"><i data-icon="filter" data-size="16"></i>Filtros<b id="proj-filter-count" class="count hidden"></b></button>
         <label class="pill" title="Ordenar"><i data-icon="sort" data-size="16"></i><select id="proj-order" aria-label="Ordenar"><option value="relevancia">Relevância</option><option value="data">Recentes</option><option value="prazo">Prazo</option><option value="valor">Valor</option><option value="titulo">A–Z</option><option value="documentos">Documentos</option></select></label>
+        <label id="new-from-file" class="btn" title="O Radar lê o arquivo e preenche os campos do projeto novo para você conferir"><i data-icon="upload" data-size="16"></i>Novo a partir de arquivo<input type="file" id="new-from-file-input" hidden></label>
         <button id="new-project" class="btn primary"><i data-icon="plus" data-size="16"></i>Projeto</button>
       </div>
       <div class="explore">
@@ -131,20 +131,6 @@
       </div>
     </section>
 
-    <section id="tab-upload" class="tab">
-      <div id="drop" class="drop">
-        <i data-icon="upload" data-size="34"></i>
-        <strong>Arraste arquivos ou <label class="link">escolha<input type="file" id="file" multiple hidden></label></strong>
-        <small id="upload-formats"></small>
-        <ol class="upload-steps" aria-label="Como funciona"><li><b>1</b>Envie o arquivo</li><li><b>2</b>O Radar lê e preenche os dados</li><li><b>3</b>Você revisa e completa: autor, versão, link, notas, resultados, lições e riscos</li></ol>
-        <div id="upload-aviso"></div>
-        <label class="pill target" title="Projeto de destino"><i data-icon="folder" data-size="16"></i><select id="upload-target" aria-label="Projeto de destino"></select></label>
-      </div>
-      <div class="upload-layout">
-        <div class="jobs-col"><div id="job-lote" class="job-lote"></div><ul id="job-list" class="jobs"></ul></div>
-        <div id="job-detail" class="job-detail"></div>
-      </div>
-    </section>
 
     <section id="tab-insights" class="tab"><div id="insights"></div></section>
 
@@ -188,6 +174,10 @@
       <p>Ao excluir o projeto “<b id="dlg-excluir-proj-titulo"></b>”, ele sai da base com os documentos, comentários e o histórico dele, e não aparece mais nas buscas. Essa ação não pode ser desfeita.</p>
       <div class="actions"><button class="btn" value="cancelar">Cancelar</button><button class="btn danger" value="excluir">Excluir projeto</button></div>
     </form>
+  </dialog>
+  <dialog id="dlg-revisao" class="wide dlg-revisao" aria-labelledby="rev-nome">
+    <header class="dlg-head"><div><span class="sub">Conferir e aprovar <b id="rev-pos"></b></span><h3 id="rev-nome">Arquivo</h3></div><button type="button" id="rev-fechar" class="icon-btn" title="Fechar (os arquivos continuam aguardando aprovação no projeto)" aria-label="Fechar"><i data-icon="x"></i></button></header>
+    <div id="rev-corpo" class="rev-corpo"></div>
   </dialog>
 </body>
 </html>
