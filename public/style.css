@@ -1863,3 +1863,38 @@ details.pd-card-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 @keyframes focoAbre { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .ask .focus-btn, .ask .focus-btn .focus-label, .ask .focus-btn .focus-chev { transition: none; } .ask .focus-pop:not(.hidden) { animation: none; } }
 @media (max-width: 720px) { .ask .focus-btn #focus-label { display: inline-block; } .ask .focus-btn.on #focus-label { max-width: 110px; } }
+/* Envio dentro do projeto e aprovação por cartões (V0.0.2, sem a aba Enviar) */
+.pd-env { margin-top: 16px; }
+.pd-drop { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border: 1.5px dashed var(--line-strong); border-radius: 10px; padding: 10px 14px; color: var(--ink-2); font-size: 13.5px; cursor: pointer; background: transparent; transition: border-color .15s, background-color .15s; }
+.pd-drop svg { color: var(--brand); }
+.pd-drop:hover, .pd-drop.over { border-color: var(--brand); background: var(--brand-soft); }
+.pd-drop u { color: var(--brand); text-decoration: none; font-weight: 600; }
+.pd-drop small { flex-basis: 100%; font-size: 11.5px; margin-left: 26px; }
+.pd-pend-tit { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 12px 0 6px; }
+.env-cards { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.env-card { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+.env-card:has(> svg) { flex-direction: row; align-items: center; gap: 8px; }
+.env-card.atencao { border-left: 3px solid var(--warn); }
+.env-card.ok { border-left: 3px solid var(--ok); }
+.env-card.erro { border-left: 3px solid var(--bad); }
+.env-card.fim { opacity: .75; }
+.env-top { display: flex; align-items: center; gap: 8px; }
+.env-nome { font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.env-sit { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; font-size: 12px; white-space: nowrap; }
+.env-card.ok .env-sit { color: var(--ok); }
+.env-card.atencao .env-sit { color: var(--warn); }
+.env-pontos { list-style: none; margin: 2px 0 0; padding: 0; display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; color: var(--warn); }
+.env-pontos li { display: flex; gap: 6px; align-items: baseline; }
+.env-acoes { display: flex; justify-content: flex-end; gap: 6px; margin-top: 4px; }
+.env-lote { display: flex; justify-content: flex-end; margin-top: 8px; }
+.chat-envios { margin-top: 8px; max-width: 640px; }
+.pcard .pend { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; color: var(--warn); background: var(--warn-soft); border-radius: 999px; padding: 1px 8px; }
+dialog.dlg-revisao { width: min(760px, 95vw); }
+.rev-corpo .review { margin-top: 8px; }
+details.mais-det > summary { font-weight: 600; color: var(--ink-2); }
+details.mais-det > summary .muted { font-weight: 400; margin-left: 6px; }
+details.mais-det[open] { padding-bottom: 6px; }
+.env-card { text-align: left; align-items: stretch; }
+.env-card:has(> svg) { align-items: center; }
+.env-top { justify-content: flex-start; }
+.env-meta { text-align: left; }

@@ -1,6 +1,7 @@
 // Tela "Projetos": exploração com filtros combinados e facetas (UC08), detalhe (UC07) e cadastro/edição.
 
-import { enviarParaProjeto, situacaoEnvio, revisarEnvio } from './upload.js';
+import { enviarParaProjeto } from './upload.js';
+import { cartoesDeEnvio, meusEnvios, formatosOrdenados, abrirRevisao } from './revisao.js';
 import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText, iconeSegmento } from './common.js';
 import { icon } from './icons.js';
 import { ELISTS, elist, bindEntityLists, readEntityLists } from './entidades.js';
@@ -28,6 +29,20 @@ export function initProjects() {
   onUserChange(() => { reset(); if ($('#tab-projetos').classList.contains('active')) search(); });
   renderStaticFilters();
   $('#new-project').onclick = () => openProjectForm();
+  // Projeto novo a partir de arquivo (só gestor): envia sem projeto, revisa com os campos do projeto preenchidos e cria.
+  $('#new-from-file-input').onchange = async (e) => {
+    const files = [...e.target.files].slice(0, 1);
+    e.target.value = '';
+    if (!files.length) return;
+    const ids = await enviarParaProjeto(files, null);
+    if (!ids.length) return;
+    abrirRevisao(ids, { criarProjeto: true, onFim: async (info) => {
+      if (!info?.documento) return;
+      state.ctx = await api(`/api/contexto?userId=${userId()}`);
+      await search();
+      openProject(info.documento.replace(/-[^-]+$/, ''));
+    } });
+  };
   $('#proj-order').onchange = (e) => { view.ordenar = e.target.value; search(); };
   $('#proj-clear').onclick = () => { reset(); search(); };
   $('#proj-toggle-filters').onclick = () => $('#proj-filters').classList.toggle('hidden');
@@ -82,6 +97,7 @@ async function search() {
   const minha = ++ultimaBusca;
   // Cadastro de projeto só para o gestor (UC07.5).
   $('#new-project').classList.toggle('hidden', !pode('cadastrarProjeto'));
+  $('#new-from-file').classList.toggle('hidden', !pode('cadastrarProjeto'));
   // Ordenar por valor só para quem vê valores (o servidor já ignora para os demais).
   const optValor = $('#proj-order option[value="valor"]');
   optValor.hidden = optValor.disabled = !currentUser()?.verValores;
@@ -166,6 +182,15 @@ function renderResults(r) {
     if (b.dataset.empty === 'perguntar') { openTab('busca'); $('#query').value = view.filtros.q; $('#ask').requestSubmit(); }
     if (b.dataset.empty === 'novo') openProjectForm();
   }));
+  // Contador de arquivos aguardando aprovação em cada projeto (a aba Enviar saiu; a pendência aparece no card).
+  meusEnvios().then((jobs) => {
+    const conta = new Map();
+    for (const j of jobs) if (j.projeto_alvo_id && ['enviado', 'processando', 'aguardando_revisao'].includes(j.status)) conta.set(j.projeto_alvo_id, (conta.get(j.projeto_alvo_id) ?? 0) + 1);
+    $$('.pcard', $('#proj-list')).forEach((c) => {
+      const n = conta.get(c.dataset.id);
+      if (n) $('.ptop', c)?.insertAdjacentHTML('beforeend', `<span class="pend" title="Arquivos enviados por você aguardando aprovação">${icon('upload', { size: 12 })}${n} para aprovar</span>`);
+    });
+  }).catch(() => {});
   $$('.pcard', $('#proj-list')).forEach((c) => {
     c.onclick = () => openProject(c.dataset.id);
     c.onkeydown = (e) => e.key === 'Enter' && openProject(c.dataset.id);
@@ -343,8 +368,6 @@ export async function openProject(id) {
         <section class="pd-sec"><h5 class="sect-title">${icon('info', { size: 16 })}Contexto</h5><div class="pd-text">${ed('descricao', p.descricao ? md(p.descricao) : '')}</div></section>
         ${insight('kpi', 'chart', 'Resultados')}${insight('licao', 'bulb', 'Lições aprendidas')}${insight('risco', 'alert', 'Riscos')}
         ${recolhivel('files', 'Documentos', d.documentos.length, `
-          <div class="pd-envio" id="pd-envio"><label class="btn sm">${icon('upload', { size: 14 })}Enviar arquivo para este projeto<input type="file" id="pd-file" multiple hidden></label><span class="muted small">O arquivo já entra neste projeto; você só confere os dados.</span></div>
-          <ul class="pd-envios" id="pd-envios"></ul>
           ${d.documentos.length ? `<ul class="pd-docs">${d.documentos.map((doc) => `<li>
             <div class="pd-doc-top"><a href="#" data-doc="${doc.id}">${icon('file', { size: 16 })}${esc(doc.titulo)}</a>${trustBadge(doc.nivel_confianca)}<button type="button" class="icon-btn sm" data-edit-doc="${doc.id}" title="Editar informações" aria-label="Editar informações de ${esc(doc.titulo)}">${icon('edit', { size: 15 })}</button><button type="button" class="icon-btn sm" data-dl="${doc.id}" title="Baixar arquivo" aria-label="Baixar ${esc(doc.titulo)}">${icon('download', { size: 16 })}</button></div>
             <span class="sub">${esc(tipoLabel(doc.tipo_documental))}${doc.status_documento ? ` · ${esc(doc.status_documento.replace(/_/g, ' '))}` : ''} · ${dateBR(doc.data_conteudo)}${doc.formato ? ` · ${esc(doc.formato.toUpperCase())}` : ''}${doc.tamanho_bytes ? ` · ${kb(doc.tamanho_bytes)}` : ''}
@@ -359,6 +382,10 @@ export async function openProject(id) {
             ${doc.observacoes ? `<p class="pd-note" title="Nota de quem revisou o envio">${icon('info', { size: 13 })} ${esc(doc.observacoes)}</p>` : ''}
             ${doc.palavras_chave?.length ? `<div class="chips">${tags(doc.palavras_chave.slice(0, 8))}</div>` : ''}
           </li>`).join('')}</ul>` : `<p class="muted">Nenhum documento visível para o seu perfil. <a href="#" id="pd-upload-2">Enviar o primeiro</a></p>`}`, 'pd-docs-sec')}
+        <section class="pd-env" id="pd-env" aria-label="Enviar arquivo para este projeto">
+          <label class="pd-drop" id="pd-drop">${icon('upload', { size: 16 })}<span><b>Enviar arquivo</b> para este projeto: arraste aqui ou <u>escolha</u></span><small class="muted">${formatosOrdenados().map((f) => f.toUpperCase()).join(' · ')} · até ${state.ctx.catalogo.maxUploadMb} MB</small><input type="file" id="pd-file" multiple hidden></label>
+          <div id="pd-pendentes"></div>
+        </section>
         <section class="pd-sec pd-tl tl-box">
           <h5 class="sect-title">${icon('message', { size: 16 })}Comentários e histórico</h5>
           <form class="tl-form" id="pd-comentar">
@@ -520,32 +547,29 @@ export async function openProject(id) {
       } catch (err) { toast(err.message, 'error'); }
     };
   });
-  // CR-046: envio pela própria ficha, já vinculado a este projeto. O andamento aparece aqui; "Revisar" abre a conferência
-  // (com o destino fixo) e, ao aprovar, "Abrir projeto" volta para esta ficha.
-  const upload = (e) => { e?.preventDefault(); $('#pd-docs-sec').open = true; $('#pd-file').click(); };
-  $('#pd-file').onchange = async (e) => {
-    const files = [...e.target.files];
-    e.target.value = '';
+  // Envio dentro do projeto (V0.0.2): bloco discreto acima dos comentários. Os arquivos ainda não aprovados deste projeto
+  // aparecem como cartões (Aprovar, Descartar, Mais detalhes); aprovar atualiza a ficha.
+  let pendentes = (await meusEnvios().catch(() => [])).filter((j) => j.projeto_alvo_id === p.id && ['enviado', 'processando', 'aguardando_revisao', 'erro'].includes(j.status)).map((j) => j.id);
+  const pintarPendentes = () => {
+    const box = $('#pd-pendentes');
+    if (!box) return;
+    if (!pendentes.length) { box.innerHTML = ''; return; }
+    box.innerHTML = '<h6 class="pd-pend-tit">Aguardando aprovação</h6><div class="pd-pend-cards"></div>';
+    cartoesDeEnvio($('.pd-pend-cards', box), pendentes, { aoMudar: (tipo) => { if (tipo === 'aprovado') setTimeout(() => openProject(p.id).then(() => $('#pd-env')?.scrollIntoView({ block: 'nearest' })), 300); } });
+  };
+  pintarPendentes();
+  const enviar = async (files) => {
     if (!files.length) return;
     const ids = await enviarParaProjeto(files, p.id);
-    const lista = $('#pd-envios');
-    for (const id of ids) {
-      const li = document.createElement('li');
-      li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}<span>Extraindo os dados</span>`;
-      lista.appendChild(li);
-      const acompanhar = async () => {
-        if (!li.isConnected) return;
-        const j = await situacaoEnvio(id).catch(() => null);
-        if (!j) return;
-        if (['enviado', 'processando'].includes(j.status)) { setTimeout(acompanhar, 900); return; }
-        li.innerHTML = j.status === 'erro'
-          ? `${icon('xCircle', { size: 14 })}<span><b>${esc(j.nome_arquivo)}</b>: ${esc(j.erro)}</span>`
-          : `${icon('eye', { size: 14 })}<span><b>${esc(j.nome_arquivo)}</b> pronto para conferir</span><button type="button" class="btn sm primary">Revisar</button>`;
-        $('button', li)?.addEventListener('click', () => { close(); revisarEnvio(id); });
-      };
-      acompanhar();
-    }
+    pendentes = [...pendentes, ...ids];
+    pintarPendentes();
   };
+  const upload = (e) => { e?.preventDefault(); $('#pd-env').scrollIntoView({ block: 'center', behavior: 'smooth' }); $('#pd-file').click(); };
+  $('#pd-file').onchange = (e) => { const files = [...e.target.files]; e.target.value = ''; enviar(files); };
+  const drop = $('#pd-drop');
+  drop.ondragover = (e) => { e.preventDefault(); drop.classList.add('over'); };
+  drop.ondragleave = () => drop.classList.remove('over');
+  drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove('over'); enviar([...e.dataTransfer.files]); };
   $('#pd-close').onclick = close;
   $('#pd-export').onclick = () => openExportDialog(p);
   $('#pd-edit').onclick = edit;

@@ -1,5 +1,6 @@
 import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode, iconeSegmento, normalizeText } from './common.js';
-import { enviarParaProjeto, situacaoEnvio, revisarEnvio } from './upload.js';
+import { enviarParaProjeto } from './upload.js';
+import { cartoesDeEnvio, abrirRevisao } from './revisao.js';
 import { icon, hydrateIcons } from './icons.js';
 import { initProjects, openProject, openProjectForm } from './projetos.js';
 import { initUploads } from './upload.js';
@@ -235,33 +236,47 @@ function pintarAnexos() {
   $$('[data-tirar-anexo]').forEach((b) => (b.onclick = () => { state.anexos.splice(Number(b.dataset.tirarAnexo), 1); pintarAnexos(); }));
   atualizarEnviar();
 }
-async function enviarAnexos(texto) {
-  const projeto = await projetoCitado(texto) ?? (QUER_ENVIAR.test(texto) && state.foco ? { id: state.foco.id, titulo: state.foco.titulo, cliente: state.foco.cliente } : null);
-  $('#chat .welcome')?.remove();
-  addMsg('user', `${esc(texto)}<span class="anexos-msg">${state.anexos.map((f) => `${icon('paperclip', { size: 12 })}${esc(f.name)}`).join(' ')}</span>`);
-  if (!projeto) {
-    addMsg('bot', `<p class="answer"><span class="ans-par">Para qual projeto vão ${state.anexos.length > 1 ? `os ${state.anexos.length} arquivos` : `o arquivo <b>${esc(state.anexos[0].name)}</b>`}? Diga o cliente ou o código do projeto (ex.: "é do projeto P003" ou "coloca no projeto da Energisul"). Até lá ${state.anexos.length > 1 ? 'eles ficam' : 'ele fica'} só nesta conversa, fora da base.</span></p>`);
-    return;
-  }
-  const arquivos = state.anexos.splice(0);
-  pintarAnexos();
+// Envia os anexos para um projeto e mostra, na conversa, um cartão por arquivo para aprovar (V0.0.2).
+async function enviarParaConversa(projeto, arquivos) {
   const bot = addMsg('bot', `<p class="answer"><span class="ans-par">${icon('loader', { size: 14, cls: 'spin' })}Enviando para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)})</span></p>`);
   const ids = await enviarParaProjeto(arquivos, projeto.id);
   if (!ids.length) { bot.innerHTML = '<p class="error">Nenhum arquivo foi enviado.</p>'; return; }
-  bot.innerHTML = `<p class="answer"><span class="ans-par">${ids.length > 1 ? `${ids.length} arquivos enviados` : 'Arquivo enviado'} para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)}). O Radar extrai os dados e você confere antes de ${ids.length > 1 ? 'entrarem' : 'entrar'} na base.</span></p><ul class="chat-envios"></ul>`;
-  for (const id of ids) {
-    const li = document.createElement('li');
-    $('.chat-envios', bot).appendChild(li);
-    const acompanhar = async () => {
-      const j = await situacaoEnvio(id).catch(() => null);
-      if (!j || !li.isConnected) return;
-      if (['enviado', 'processando'].includes(j.status)) { li.innerHTML = `${icon('loader', { size: 14, cls: 'spin' })}${esc(j.nome_arquivo)}: extraindo os dados`; setTimeout(acompanhar, 900); return; }
-      li.innerHTML = j.status === 'erro' ? `${icon('xCircle', { size: 14 })}${esc(j.nome_arquivo)}: ${esc(j.erro)}`
-        : `${icon('eye', { size: 14 })}<b>${esc(j.nome_arquivo)}</b> pronto para conferir <button type="button" class="btn sm primary">Revisar</button>`;
-      $('button', li)?.addEventListener('click', () => revisarEnvio(id));
-    };
-    acompanhar();
-  }
+  bot.innerHTML = `<p class="answer"><span class="ans-par">${ids.length > 1 ? `${ids.length} arquivos enviados` : 'Arquivo enviado'} para <b>${esc(projeto.titulo)}</b> (${esc(projeto.cliente)}). Confira e aprove abaixo: ${ids.length > 1 ? 'eles só entram' : 'ele só entra'} na base depois disso.</span></p><div class="chat-envios"></div>`;
+  cartoesDeEnvio($('.chat-envios', bot), ids);
+  bot.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Sem projeto definido: pergunta qual é; o gestor também pode criar um projeto novo a partir do arquivo.
+function perguntarProjeto() {
+  const n = state.anexos.length;
+  const bot = addMsg('bot', `<p class="answer"><span class="ans-par">Para qual projeto ${n > 1 ? `vão os ${n} arquivos` : `vai o arquivo <b>${esc(state.anexos[0].name)}</b>`}? Diga o cliente ou o código (ex.: "é do projeto P003", "coloca no projeto da Energisul") ou escolha um em "Proposta em foco". Até lá ${n > 1 ? 'eles ficam' : 'ele fica'} só nesta conversa, fora da base.</span>
+    ${pode('cadastrarProjeto') ? '<span class="ans-par">Se for um projeto que ainda não existe:</span>' : '<span class="ans-par muted">Se for um projeto que ainda não existe, peça ao gestor para cadastrá-lo e envie depois.</span>'}</p>
+    ${pode('cadastrarProjeto') ? `<div class="resp-acoes"><button type="button" class="chip-btn" data-criar-proj>${icon('plus', { size: 14 })}Criar projeto com ${n > 1 ? 'o primeiro arquivo' : 'este arquivo'}</button></div>` : ''}`);
+  $('[data-criar-proj]', bot)?.addEventListener('click', () => criarProjetoComArquivo(bot));
+}
+
+// Projeto novo a partir de arquivo (só gestor): o Radar lê o arquivo e preenche os campos do projeto para conferir.
+export async function criarProjetoComArquivo(bot, arquivos = state.anexos.splice(0, 1)) {
+  pintarAnexos();
+  const ids = await enviarParaProjeto(arquivos, null);
+  if (!ids.length) return;
+  abrirRevisao(ids, { criarProjeto: true, onFim: async (info) => {
+    if (!info?.documento) return;
+    const projetoId = info.documento.replace(/-[^-]+$/, '');
+    state.ctx = await api(`/api/contexto?userId=${userId()}`);
+    bot?.insertAdjacentHTML('beforeend', `<p class="answer"><span class="ans-par">${icon('checkCircle', { size: 14 })}Projeto criado com o arquivo. <a href="#" data-abrir-novo="${esc(projetoId)}">Abrir projeto</a>${state.anexos.length ? '. Os outros arquivos continuam anexados: diga "coloca no projeto" para enviá-los a ele.' : ''}</span></p>`);
+    $('[data-abrir-novo]', bot)?.addEventListener('click', (e) => { e.preventDefault(); openProject(projetoId); });
+  } });
+}
+
+async function enviarAnexos(texto) {
+  const projeto = await projetoCitado(texto) ?? (state.foco ? { id: state.foco.id, titulo: state.foco.titulo, cliente: state.foco.cliente } : null);
+  $('#chat .welcome')?.remove();
+  addMsg('user', `${esc(texto)}<span class="anexos-msg">${state.anexos.map((f) => `${icon('paperclip', { size: 12 })}${esc(f.name)}`).join(' ')}</span>`);
+  if (!projeto) { perguntarProjeto(); return; }
+  const arquivos = state.anexos.splice(0);
+  pintarAnexos();
+  await enviarParaConversa(projeto, arquivos);
 }
 
 async function onAsk(e) {
@@ -780,7 +795,21 @@ function setupConversations() {
   // CR-037: botão enviar só com texto; Enter com a caixa vazia não faz nada.
   $('#query').addEventListener('input', atualizarEnviar);
   atualizarEnviar();
-  $('#anexar').onchange = (e) => { state.anexos = [...(state.anexos ?? []), ...e.target.files]; e.target.value = ''; pintarAnexos(); $('#query').focus(); };
+  // Com uma proposta em foco, os arquivos anexados já sobem para esse projeto; sem foco, ficam anexados até dizer o projeto.
+  $('#anexar').onchange = async (e) => {
+    const files = [...e.target.files];
+    e.target.value = '';
+    if (!files.length) return;
+    if (state.foco) {
+      $('#chat .welcome')?.remove();
+      addMsg('user', `<span class="anexos-msg">${files.map((f) => `${icon('paperclip', { size: 12 })}${esc(f.name)}`).join(' ')}</span>`);
+      await enviarParaConversa({ id: state.foco.id, titulo: state.foco.titulo, cliente: state.foco.cliente }, files);
+      return;
+    }
+    state.anexos = [...(state.anexos ?? []), ...files];
+    pintarAnexos();
+    $('#query').focus();
+  };
   $('#editando-cancelar').onclick = () => { pararEdicao(); $('#query').value = ''; atualizarEnviar(); };
   // CR-035: clicar fora do diálogo de excluir cancela.
   $('#dlg-excluir-conv').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.close('cancelar'); });

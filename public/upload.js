@@ -23,29 +23,19 @@ const LOW = 0.5;
 
 const statusBadge = (s) => `<span class="st st-${s}">${icon(STATUS[s][0], { size: 14, cls: ['enviado', 'processando'].includes(s) ? 'spin' : '' })}${STATUS[s][1]}</span>`;
 
+// V0.0.2: não há mais a aba Enviar. O envio acontece no bloco "Enviar arquivo" da ficha do projeto ou pelo clipe do chat,
+// e a revisão abre numa janela (public/revisao.js). Este módulo guarda o envio e o formulário de revisão.
 export function initUploads() {
-  onTab('upload', () => { loadProjects(); loadJobs(); });
-  onUserChange(() => { view.selecionado = null; view.status.clear(); $('#job-detail').innerHTML = ''; loadJobs(); if ($('#tab-upload').classList.contains('active')) loadProjects(); });
-  $('#upload-aviso').innerHTML = policyLine();
-  const drop = $('#drop');
-  $('#file').onchange = (e) => sendFiles([...e.target.files]);
-  drop.ondragover = (e) => { e.preventDefault(); drop.classList.add('over'); };
-  drop.ondragleave = () => drop.classList.remove('over');
-  drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove('over'); sendFiles([...e.dataTransfer.files]); };
-  document.addEventListener('radar:upload-para', (e) => { loadProjects().then(() => { $('#upload-target').value = e.detail; }); });
-  loadJobs();
+  onUserChange(() => { view.projetos = []; });
 }
 
+// Projetos visíveis ao usuário (para o destino da revisão e para o que muda na ficha).
 async function loadProjects() {
-  const c = state.ctx.catalogo;
-  $('#upload-formats').textContent = `${c.formatosUpload.join(' · ').toUpperCase()} · até ${c.maxUploadMb} MB`;
   view.carregandoProjetos = api(`/api/projetos?userId=${userId()}&tamanho=100&ordenar=titulo`);
   const r = await view.carregandoProjetos;
   view.projetos = r.itens;
-  const cur = $('#upload-target').value;
-  $('#upload-target').innerHTML = `<option value="">Projeto: detectar automaticamente</option>${r.itens.map((p) => `<option value="${p.id}">${esc(p.cliente)} — ${esc(p.titulo)}</option>`).join('')}`;
-  $('#upload-target').value = cur;
 }
+export async function garantirProjetos() { await loadProjects(); }
 
 const toBase64 = (buf) => {
   const bytes = new Uint8Array(buf);
@@ -70,7 +60,7 @@ export async function enviarParaProjeto(files, projetoId) {
   return ids;
 }
 export async function situacaoEnvio(id) { return api(`/api/upload?id=${encodeURIComponent(id)}&userId=${userId()}`); }
-export function revisarEnvio(id) { view.selecionado = id; openTab('upload'); }
+export function revisarEnvio(id, opts) { return import('./revisao.js').then((m) => m.abrirRevisao([id], opts)); }
 
 async function sendFiles(files) {
   if (!files.length) return;
@@ -97,6 +87,7 @@ async function sendFiles(files) {
 }
 
 async function loadJobs() {
+  if (!$('#job-list')) return;
   const jobs = await api(`/api/uploads?userId=${userId()}`);
   const pendentes = jobs.filter((j) => j.status === 'aguardando_revisao').length;
   // Avisa quando um envio termina de processar e o usuário está em outra tela.
@@ -186,7 +177,9 @@ const low = (f) => f?.valor != null && (f.confianca ?? 0) < LOW;
 const conf = (f) => (low(f) ? `<em class="confira" title="${esc(`Confiança ${Math.round((f.confianca ?? 0) * 100)}% · ${f.metodo}${f.evidencia ? `\n“${f.evidencia}”` : ''}`)}">confira</em>` : '');
 const alts = (f, name) => (f?.alternativas?.length ? `<span class="alts">${f.alternativas.map((a) => `<button type="button" data-alt="${name}" value="${esc(a.valor)}" title="Usar esta alternativa">${esc(name === 'tipo_documental' ? tipoLabel(a.valor) : a.valor)}</button>`).join('')}</span>` : '');
 
-function reviewForm(job, etapas) {
+// opts.enxuta (V0.0.2): só o essencial à vista (tipo, título, acesso, destino, "confira" e o que muda na ficha);
+// o resto fica em "Mais detalhes". opts.criarProjeto: o arquivo cria um projeto novo (só gestor).
+export function reviewForm(job, etapas, opts = {}) {
   const s = job.sugestao;
   const c = s.campos;
   const cat = state.ctx.catalogo;
@@ -209,8 +202,13 @@ function reviewForm(job, etapas) {
     ...(user.verValores ? [['valor', 'Valor', c.valor.valor, projAtual.valor, brl], ['margem', 'Margem', c.margem.valor, projAtual.margem, (x) => `${Math.round(Number(x) * 100)}%`]] : []),
   ].filter(([, , novo, antigo]) => novo != null && novo !== '' && String(novo) !== String(antigo ?? '')) : [];
   const conferir = [c.tipo_documental, c.titulo, c.confidencialidade].filter(low).length;
-  const destinoCerto = v.recomendacao === 'existente' && Boolean(v.projetoAlvo || (v.sugestoes[0]?.score ?? 0) >= 0.6);
+  const criar = Boolean(opts.criarProjeto && pode('cadastrarProjeto'));
+  const destinoCerto = criar || Boolean(alvo) || (v.recomendacao === 'existente' && Boolean(v.projetoAlvo || (v.sugestoes[0]?.score ?? 0) >= 0.6));
   const pontos = avisos.length + conferir + (destinoCerto ? 0 : 1);
+  const difsHtml = difs.length && !criar ? `<details class="sec" open id="atualizar-ficha"><summary>${icon('refresh', { size: 16 })}Atualizar a ficha do projeto<em>${difs.length}</em></summary>
+        <p class="muted small">O arquivo traz dados diferentes da ficha de <b>${esc(projAtual.titulo)}</b>. Marque o que deve ser atualizado (fica no histórico do projeto).</p>
+        ${difs.map(([k, rot, novo, antigo, fmt]) => `<label class="check"><input type="checkbox" name="atualizar_${k}" value="${k}">${esc(rot)}: ${antigo != null && antigo !== '' ? `<s class="muted">${esc(fmt(antigo))}</s> → ` : ''}<b>${esc(fmt(novo))}</b></label>`).join('')}
+      </details>` : '';
   const resumo = pontos
     ? `<p class="ready warn">${icon('eye', { size: 16 })}<span><b>Pronto para revisar</b> · ${pontos} ponto${pontos > 1 ? 's' : ''} de atenção</span></p>`
     : `<p class="ready ok">${icon('checkCircle', { size: 16 })}<span><b>Tudo certo.</b> O Radar leu o documento com alta confiança.</span><button type="button" id="quick-ok" class="btn primary sm">${icon('check', { size: 15 })}Aprovar</button></p>`;
@@ -231,7 +229,9 @@ function reviewForm(job, etapas) {
         <label><span>Acesso ${conf(c.confidencialidade)}</span><select name="confidencialidade" title="${esc(c.confidencialidade.motivos?.join('; ') ?? '')}">${opt(cat.confidencialidades.filter((x) => user.confidencialidades.includes(x)), c.confidencialidade.valor)}</select></label>
       </div>
 
-      <h5 class="sect-title">${icon('folder', { size: 16 })}Em qual projeto entra?${destinoCerto || alvo ? '' : ' <em class="confira">confira</em>'}</h5>
+      ${criar ? `<h5 class="sect-title">${icon('plus', { size: 16 })}Projeto novo <span class="muted small">(preenchido com o que o Radar leu; confira)</span></h5>
+      <input type="hidden" name="destino" value="__novo"><div id="novo-projeto" class="novo">${projectFields(v.projetoNovo, { prefix: 'np_' })}</div>` : `
+      <h5 class="sect-title">${icon('folder', { size: 16 })}Em qual projeto entra?${destinoCerto ? '' : ' <em class="confira">confira</em>'}</h5>
       ${alvo ? `<p class="dest-fixo">${icon('check', { size: 15 })}<span>Vai para <b>${esc(alvo.titulo)}</b> <small class="muted">${esc(alvo.cliente)}</small></span><button type="button" class="link-btn" id="dest-trocar">Trocar projeto</button></p>` : ''}
       <div class="dest${alvo ? ' hidden' : ''}">
         ${v.sugestoes.map((p, i) => `<label class="opt"><input type="radio" name="destino" value="${p.projeto_id}"${(v.projetoAlvo ? v.projetoAlvo === p.projeto_id : v.recomendacao === 'existente' && i === 0) ? ' checked' : ''}>
@@ -240,7 +240,9 @@ function reviewForm(job, etapas) {
           <select name="outro">${view.projetos.map((p) => `<option value="${p.id}"${p.id === v.projetoAlvo ? ' selected' : ''}>${esc(p.cliente)} — ${esc(p.titulo)}</option>`).join('')}</select></label>
         ${pode('cadastrarProjeto') ? `<label class="opt"><input type="radio" name="destino" value="__novo"${!v.projetoAlvo && v.recomendacao === 'novo' ? ' checked' : ''}>${icon('plus', { size: 16 })}<span>Criar projeto novo</span></label>` : `<p class="muted small">${icon('info', { size: 14 })} Não achou o projeto? Só o gestor cadastra projetos novos: peça o cadastro e envie o documento depois.</p>`}
         ${pode('cadastrarProjeto') ? `<div id="novo-projeto" class="novo">${projectFields(v.projetoNovo, { prefix: 'np_' })}</div>` : ''}
-      </div>
+      </div>`}
+      ${difsHtml}
+      ${opts.enxuta ? `<details class="sec mais-det"><summary>${icon('layers', { size: 16 })}Mais detalhes <span class="muted small">autor, tecnologias, outros campos, pessoas e texto extraído</span></summary>` : ''}
 
       <details class="sec" open><summary>${icon('info', { size: 16 })}Sobre o documento</summary>
         <div class="form-grid">
@@ -258,10 +260,6 @@ function reviewForm(job, etapas) {
         <label class="check"><input type="checkbox" name="atualizarProjeto" checked>Adicionar ao projeto</label>
       </details>
 
-      ${difs.length ? `<details class="sec" open id="atualizar-ficha"><summary>${icon('refresh', { size: 16 })}Atualizar a ficha do projeto<em>${difs.length}</em></summary>
-        <p class="muted small">O arquivo traz dados diferentes da ficha de <b>${esc(projAtual.titulo)}</b>. Marque o que deve ser atualizado (fica no histórico do projeto).</p>
-        ${difs.map(([k, rot, novo, antigo, fmt]) => `<label class="check"><input type="checkbox" name="atualizar_${k}" value="${k}">${esc(rot)}: ${antigo != null && antigo !== '' ? `<s class="muted">${esc(fmt(antigo))}</s> → ` : ''}<b>${esc(fmt(novo))}</b></label>`).join('')}
-      </details>` : ''}
 
       <details class="sec"><summary>${icon('edit', { size: 16 })}Mais campos</summary>
         <div class="form-grid">
@@ -285,10 +283,11 @@ function reviewForm(job, etapas) {
       </details>
 
       <details class="sec"><summary>${icon('eye', { size: 16 })}Texto extraído</summary><pre class="preview">${esc(s.previa)}${job.tamanhoTexto > s.previa.length ? '\n…' : ''}</pre></details>
+      ${opts.enxuta ? '</details>' : ''}
       <div id="review-msg"></div>
       <div class="dialog-actions">
         <button type="button" id="job-reject" class="btn ghost">${icon('x', { size: 16 })}Descartar</button>
-        <button type="submit" class="btn primary">${icon('check', { size: 16 })}Aprovar e indexar</button>
+        <button type="submit" class="btn primary">${icon('check', { size: 16 })}${criar ? 'Criar projeto e aprovar' : opts.enxuta ? 'Aprovar' : 'Aprovar e indexar'}</button>
       </div>
     </form>`;
 }
@@ -301,7 +300,8 @@ function readExtras(form) {
   };
 }
 
-function bindReview(job) {
+// opts.onDone(resultado): chamado depois de aprovar ('aprovado') ou descartar ('descartado'), no lugar da lista da aba.
+export function bindReview(job, opts = {}) {
   const form = $('#review');
   const s = job.sugestao.campos;
   bindChipPickers(form);
@@ -313,7 +313,7 @@ function bindReview(job) {
   $('#dest-trocar')?.addEventListener('click', (e) => { e.target.closest('.dest-fixo').remove(); $('.dest', form).classList.remove('hidden'); });
   bindEntityLists(form);
   $$('[data-alt]', form).forEach((b) => (b.onclick = () => { form.querySelector(`[name="${b.dataset.alt}"]`).value = b.value; }));
-  $('#job-reject').onclick = async () => { await api('/api/upload/rejeitar', { id: job.id, userId: userId() }); toast('Documento descartado'); loadJobs(); };
+  $('#job-reject').onclick = async () => { await api('/api/upload/rejeitar', { id: job.id, userId: userId() }); toast('Documento descartado'); if (opts.onDone) opts.onDone('descartado'); else loadJobs(); };
   form.onsubmit = async (e) => {
     e.preventDefault();
     const fields = ['tipo_documental', 'titulo', 'status_documento', 'confidencialidade', 'data_conteudo', 'prazo_meses', 'valor', 'margem', 'idioma', 'resumo'];
@@ -341,7 +341,7 @@ function bindReview(job) {
         const r = await api('/api/upload/confirmar', { id: job.id, userId: userId(), metadados, projeto: { ...projeto, forcar }, tecnologias, servicos, atualizarProjeto: form.atualizarProjeto.checked, atualizarCampos, extras: readExtras(form) });
         toast(`${r.documento} está na base`);
         state.ctx = await api(`/api/contexto?userId=${userId()}`);
-        loadJobs();
+        if (opts.onDone) opts.onDone('aprovado', r); else loadJobs();
       } catch (err) {
         if (err.status === 409 && err.data?.duplicatas) {
           msg(`<p class="alert warn">${icon('alert', { size: 16 })}<span>Já existe: ${err.data.duplicatas.map((d) => `<b>${esc(d.titulo)}</b>`).join(', ')}</span><button type="button" id="force" class="btn sm">Criar mesmo assim</button></p>`);
