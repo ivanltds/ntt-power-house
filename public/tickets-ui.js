@@ -201,18 +201,32 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
     </div>`;
   }
 
+  // Fluxo principal em cima; "Não priorizado no MVP" e "Não procede" ficam separados, numa faixa embaixo.
+  const FORA_DO_FLUXO = ['nao_priorizado', 'nao_procede'];
+  // Cada coluna mostra 5 cartões; "Mostrar mais" carrega mais 5. O limite de cada coluna vale até recarregar a página.
+  const POR_PAGINA_KB = 5;
+  const limites = new Map();
   function kanban(ts) {
-    return `<div class="tk-kanban">${Object.keys(rot.status).map((s) => {
+    const coluna = (s) => {
       const col = ts.filter((t) => t.status === s);
+      const lim = limites.get(s) ?? POR_PAGINA_KB;
+      const resto = col.length - lim;
+      const mais = resto > 0
+        ? `<button type="button" class="btn sm ghost tk-mais-kb" data-mais-kb="${s}">${icon('chevronDown', { size: 14 })}Mostrar mais ${Math.min(POR_PAGINA_KB, resto)} <span class="muted">(${resto} ocultos)</span></button>`
+        : col.length > POR_PAGINA_KB ? `<button type="button" class="btn sm ghost tk-mais-kb" data-menos-kb="${s}">${icon('chevronDown', { size: 14, cls: 'tk-menos-ic' })}Mostrar menos</button>` : '';
       return `<section class="tk-col" data-col="${s}" aria-label="${esc(rot.status[s])}">
         <header>${chipStatus(s, rot)}<span class="muted small">${col.length}</span></header>
-        <div class="tk-cards">${col.map((t) => `<article class="tk-card" draggable="true" data-card="${esc(t.codigo)}" tabindex="0" aria-label="${esc(`${t.codigo}: ${t.titulo}`)}">
+        <div class="tk-cards">${col.slice(0, lim).map((t) => `<article class="tk-card" draggable="true" data-card="${esc(t.codigo)}" tabindex="0" aria-label="${esc(`${t.codigo}: ${t.titulo}`)}">
           <div class="tk-card-top"><b class="qa-cod">${esc(t.codigo)}</b>${chipPrio(t.prioridade, rot)}${clipe(t)}</div>
           <p>${esc(t.titulo || t.texto.slice(0, 80))}</p>
           <span class="muted small">${esc(rot.tipos[t.tipo] ?? t.tipo)} · ${esc(rot.areas[t.area] ?? t.area)}${t.versao ? ` · ${esc(t.versao)}` : ""}</span>
-        </article>`).join('') || '<p class="muted small tk-col-vazia">Arraste um ticket para cá</p>'}</div>
+        </article>`).join('') || '<p class="muted small tk-col-vazia">Arraste um ticket para cá</p>'}</div>${mais}
       </section>`;
-    }).join('')}</div>
+    };
+    const fluxo = Object.keys(rot.status).filter((s) => !FORA_DO_FLUXO.includes(s));
+    const fora = FORA_DO_FLUXO.filter((s) => rot.status[s]);
+    return `<div class="tk-kanban" style="--tk-cols:${fluxo.length}">${fluxo.map(coluna).join('')}</div>
+    ${fora.length ? `<div class="tk-kanban-fora"><h5 class="tk-fora-tit">${icon('archive', { size: 14 })}Fora do fluxo</h5><div class="tk-kanban" style="--tk-cols:${fora.length}">${fora.map(coluna).join('')}</div></div>` : ''}
     <p class="muted small">Arraste um cartão para mudar a situação, ou abra o cartão e escolha a situação.</p>`;
   }
 
@@ -261,6 +275,8 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
       l.onclick = (e) => { if (!e.target.closest('a, button')) alternar(); };
       l.onkeydown = (e) => { if ((e.key === 'Enter' || e.key === ' ') && e.target === l) { e.preventDefault(); alternar(); } };
     });
+    $$('[data-mais-kb]', area).forEach((b) => (b.onclick = () => { const s = b.dataset.maisKb; limites.set(s, (limites.get(s) ?? POR_PAGINA_KB) + POR_PAGINA_KB); pintar(); }));
+    $$('[data-menos-kb]', area).forEach((b) => (b.onclick = () => { limites.set(b.dataset.menosKb, POR_PAGINA_KB); pintar(); }));
     $$('.tk-card', area).forEach((c) => {
       c.onclick = () => detalhe(c.dataset.card);
       c.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); detalhe(c.dataset.card); } };

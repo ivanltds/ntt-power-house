@@ -1964,3 +1964,21 @@ iiii.flt-resumo { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
 .fsel i.tk-dot.tk-p-media::before { content: "■"; }
 .fsel i.tk-dot.tk-p-baixa::before { content: "▼"; }
 .fsel i.tk-dot.tk-p-nd::before { content: "?"; font-weight: 700; color: var(--muted); font-size: 11px; letter-spacing: 0; }
+/* Kanban: títulos longos quebram dentro do cartão em vez de sair da coluna */
+.tk-col, .tk-cards, .tk-card { min-width: 0; }
+.tk-card { overflow: hidden; }
+.tk-card p, .tk-card > span { display: block; overflow-wrap: anywhere; }
+.tk-col header { gap: 6px; align-items: flex-start; min-width: 0; }
+.tk-col header .qa-chip { white-space: normal; min-width: 0; text-align: left; line-height: 1.3; }
+.tk-col header > .muted { flex: none; padding-top: 2px; }
+/* Kanban em duas faixas: fluxo principal em cima; "Não priorizado" e "Não procede" separados embaixo */
+.tk-kanban { grid-template-columns: repeat(var(--tk-cols, 4), minmax(180px, 1fr)); }
+.tk-embed .tk-kanban { grid-template-columns: repeat(var(--tk-cols, 4), minmax(150px, 1fr)); }
+.tk-kanban-fora { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.tk-fora-tit { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+.tk-kanban-fora .tk-col { min-height: 90px; }
+.tk-kanban-fora .tk-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); align-content: start; }
+@media (max-width: 720px) { .tk-kanban, .tk-embed .tk-kanban { grid-template-columns: repeat(var(--tk-cols, 4), 78vw); } .tk-kanban-fora .tk-cards { grid-template-columns: 1fr; } }
+.tk-mais-kb { justify-content: center; width: 100%; gap: 4px; font-size: 12.5px; }
+.tk-mais-kb .muted { font-weight: 400; }
+.tk-menos-ic { transform: rotate(180deg); }
