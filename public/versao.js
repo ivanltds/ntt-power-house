@@ -124,6 +124,12 @@ export const NOTAS = [
         antes: 'O roteiro tinha 74 cenários de Conversas, Projetos e Envio.',
         depois: 'O roteiro da V0.0.2 tem 103 cenários: os 74 anteriores (ajustados às telas novas) e 29 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45), as seções da ficha que recolhem (P29) e a ficha com edição no lugar, comentários e exclusão (P30 a P33). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
       },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Qualidade',
+        titulo: 'Filtros de Tickets e do Roteiro mais claros; leitura rápida dos tickets',
+        antes: 'Os filtros eram fileiras de botões sem rótulo, uma ao lado da outra; não ficava claro o que cada grupo filtrava nem quantos itens sobravam. Para ler um ticket era preciso abri-lo.',
+        depois: 'Cada grupo de filtro fica numa linha com nome e ícone (Situação, Prioridade, Tela/Área, Tipo, Versão, Aberto por), e cada opção mostra quantos itens tem. Nos Tickets, os filtros menos usados ficam em "Mais filtros". Uma linha de resumo diz "Mostrando N de M", lista os filtros ativos como etiquetas que se tiram com um X e oferece "Limpar filtros". Na lista de tickets, clicar na linha expande a descrição e a proposta; clicar no código ou no título abre o ticket.',
+      },
     ],
   },
   {
