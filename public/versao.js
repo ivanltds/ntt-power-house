@@ -113,6 +113,12 @@ export const NOTAS = [
         depois: 'Ao passar o mouse num campo da ficha aparece um lápis: clicar edita ali mesmo (Enter salva, Esc cancela). Tecnologias e serviços editam no card: o consultor escolhe entre as opções existentes e o gestor também cria novas. Na coluna principal, "Comentários e histórico" junta comentários (balões) e alterações (cartões com antes → depois). Tecnologias, Palavras-chave e Projetos parecidos vêm recolhidos. O gestor, e só ele, exclui um projeto, com confirmação.',
       },
       {
+        tipo: 'melhoria', status: 'feito', area: 'Envio', tickets: ['CR-052'],
+        titulo: 'Envio só dentro do projeto ou na conversa, com aprovação em sequência',
+        antes: 'Havia uma aba Enviar separada, que tentava descobrir o projeto sozinha; a revisão era uma tela longa, um arquivo por vez, longe do projeto e da conversa.',
+        depois: 'A aba Enviar saiu. O envio acontece no bloco discreto "Enviar arquivo" da ficha (acima dos comentários) ou pelo clipe da conversa; com "Proposta em foco", o arquivo já vai para ela. Cada arquivo vira um cartão (na ficha, em "Aguardando aprovação", e na conversa) com o que o Radar leu e os pontos para conferir: Aprovar, Descartar ou "Mais detalhes", que abre a revisão enxuta numa janela (1 de N). "Aprovar os prontos" aprova de uma vez os que vieram sem pontos de atenção. O card do projeto mostra quantos arquivos aguardam aprovação. O gestor cria um projeto a partir de um arquivo ("Novo a partir de arquivo", em Projetos, ou pela conversa). Formatos em ordem: PDF, PPTX, DOCX, XLSX e depois os outros.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
         titulo: 'Roteiro da V0.0.2: 103 cenários, com Insights',
         antes: 'O roteiro tinha 74 cenários de Conversas, Projetos e Envio.',
