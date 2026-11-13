@@ -107,10 +107,16 @@ export const NOTAS = [
         depois: 'O menu tem X (e Esc). A aba atual fica em azul cheio com um traço embaixo. Os títulos das seções da ficha estão maiores, em azul. A coluna de conversas ganhou o tom da marca e os atalhos "Como usar o Radar" e "Enviar feedback" (que abre só o formulário). Cards têm um ícone por segmento.',
       },
       {
+        tipo: 'melhoria', status: 'feito', area: 'Projetos',
+        titulo: 'Ficha do projeto: editar no lugar, comentários, histórico e excluir',
+        antes: 'Para corrigir um dado era preciso abrir o formulário inteiro; o histórico ficava escondido na coluna da direita, sem comentários; e não havia como excluir um projeto.',
+        depois: 'Ao passar o mouse num campo da ficha aparece um lápis: clicar edita ali mesmo (Enter salva, Esc cancela). Tecnologias e serviços editam no card: o consultor escolhe entre as opções existentes e o gestor também cria novas. Na coluna principal, "Comentários e histórico" junta comentários (balões) e alterações (cartões com antes → depois). Tecnologias, Palavras-chave e Projetos parecidos vêm recolhidos. O gestor, e só ele, exclui um projeto, com confirmação.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
-        titulo: 'Roteiro da V0.0.2: 99 cenários, com Insights',
+        titulo: 'Roteiro da V0.0.2: 103 cenários, com Insights',
         antes: 'O roteiro tinha 74 cenários de Conversas, Projetos e Envio.',
-        depois: 'O roteiro da V0.0.2 tem 99 cenários: os 74 anteriores (ajustados às telas novas) e 25 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45) e as seções da ficha que recolhem (P29). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
+        depois: 'O roteiro da V0.0.2 tem 103 cenários: os 74 anteriores (ajustados às telas novas) e 29 novos, entre eles 7 da aba Insights, a lista de conversas em caixas (C45), as seções da ficha que recolhem (P29) e a ficha com edição no lugar, comentários e exclusão (P30 a P33). Cada cenário novo diz quais tickets ele retesta; marcar OK valida esses tickets automaticamente.',
       },
     ],
   },

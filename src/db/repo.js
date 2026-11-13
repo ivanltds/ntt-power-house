@@ -411,6 +411,12 @@ export class Repo {
     return changed;
   }
 
+  // Exclusão de projeto (só gestor, checado no servidor): documentos, trechos, tecnologias, serviços e ligações saem
+  // em cascata; o registro de atividades guarda quem excluiu e o título.
+  deleteProject(id) {
+    this.run('DELETE FROM projeto WHERE id = $id', { $id: id });
+  }
+
   deleteDocument(id) {
     this.run('DELETE FROM documento WHERE id = $id', { $id: id });
   }
@@ -638,11 +644,12 @@ Notas do revisor: ${r.observacoes}` : r.texto,
     const relacionados = this.all(`SELECT r.relacionado_id AS id, r.similaridade, r.motivo, p.titulo, c.nome AS cliente, p.status_proposta
       FROM projeto_relacionado r JOIN projeto p ON p.id = r.relacionado_id JOIN cliente c ON c.id = p.cliente_id
       WHERE r.projeto_id = $id AND p.confidencialidade IN (${confIn}) ORDER BY r.similaridade DESC LIMIT 5`, params);
-    const historico = this.all(`SELECT CASE WHEN h.entidade = 'documento' THEN h.entidade_id || ' · ' || h.campo ELSE h.campo END AS campo, h.acao, h.antes, h.depois, h.usuario_id, h.em
+    // Histórico + comentários do projeto (V0.0.2: linha do tempo em balões na coluna principal da ficha).
+    const historico = this.all(`SELECT h.id, h.entidade, CASE WHEN h.entidade = 'documento' THEN h.entidade_id || ' · ' || h.campo ELSE h.campo END AS campo, h.acao, h.antes, h.depois, h.usuario_id, h.em
       FROM historico_alteracao h WHERE (h.entidade = 'projeto' AND h.entidade_id = $id)
         OR (h.entidade = 'documento' AND h.entidade_id IN (SELECT id FROM documento WHERE projeto_id = $id AND confidencialidade IN (${confIn})))
-      ORDER BY h.em DESC LIMIT 50`, params)
-      .filter((h) => user.verValores || !['valor', 'margem'].includes(h.campo.split(' · ').pop()));
+      ORDER BY h.em DESC, h.id DESC LIMIT 150`, params)
+      .filter((h) => user.verValores || !['valor', 'margem'].includes(String(h.campo ?? '').split(' · ').pop()));
 
     // Divergências entre documentos e o cadastro do projeto, resolvidas pela hierarquia de confiança.
     const conflitos = [];

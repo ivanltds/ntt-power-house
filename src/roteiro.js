@@ -328,7 +328,7 @@ export const ROTEIRO = [
   c('P15', 'media', 'Navegar para um projeto parecido e abrir um documento',
     'Ver as ligações entre projetos e os documentos.',
     [GESTOR, PROJETOS, 'Abra o detalhe de um projeto que tenha "Projetos parecidos" na coluna da direita.'],
-    ['Clique num dos "Projetos parecidos".', 'No novo detalhe, abra a seção "Documentos" e clique no nome de um documento.', 'Na janela do documento, clique em "Baixar original".', 'Feche as janelas.'],
+    ['Na coluna da direita, clique em "Projetos parecidos" para abrir o card e clique num dos projetos.', 'No novo detalhe, abra a seção "Documentos" e clique no nome de um documento.', 'Na janela do documento, clique em "Baixar original".', 'Feche as janelas.'],
     ['O detalhe muda para o projeto parecido.', 'O documento abre numa janela com o texto.', '"Baixar original" baixa o arquivo como foi enviado (na base de exemplo os documentos são .md; o botão mostra o formato). PDF e Word gerados pelo Radar ficam em "Exportar", na ficha.']),
 
   c('P16', 'alta', 'Detalhe do projeto como consultor',
@@ -599,8 +599,32 @@ export const ROTEIRO = [
   c('P29', 'media', 'Seções da ficha que recolhem',
     'Ver se a ficha mostra primeiro o essencial e deixa o resto recolhido.',
     [PROJETOS, 'Abra o projeto "Plataforma de dados para redução de perdas não técnicas" (Energisul).'],
-    ['Olhe as seções abaixo de Objetivo e Contexto.', 'Clique em "Resultados", depois em "Lições aprendidas" e em "Riscos".', 'Clique de novo em "Riscos".', 'Feche a ficha e abra de novo.'],
-    ['Objetivo e Contexto aparecem abertos; "Resultados", "Lições aprendidas", "Riscos" e "Documentos" vêm fechados, cada um com a quantidade de itens e uma setinha.', 'Clicar no título abre a seção com os itens e de onde vieram; a setinha vira.', 'Clicar de novo fecha.', 'Ao reabrir a ficha, as quatro seções vêm fechadas de novo.']),
+    ['Olhe as seções abaixo de Objetivo e Contexto.', 'Clique em "Resultados", depois em "Lições aprendidas" e em "Riscos".', 'Clique de novo em "Riscos".', 'Na coluna da direita, clique em "Tecnologias", "Palavras-chave" e "Projetos parecidos".', 'Feche a ficha e abra de novo.'],
+    ['Objetivo e Contexto aparecem abertos; "Resultados", "Lições aprendidas", "Riscos" e "Documentos" vêm fechados, cada um com a quantidade de itens e uma setinha.', 'Clicar no título abre a seção com os itens e de onde vieram; a setinha vira; clicar de novo fecha.', 'Na coluna da direita, "Tecnologias", "Palavras-chave" e "Projetos parecidos" também vêm fechados e abrem ao clicar.', 'Ao reabrir a ficha, essas seções vêm fechadas de novo.']),
+
+  c('P30', 'alta', 'Editar um campo da ficha sem abrir o formulário',
+    'Ver se dá para corrigir um dado do projeto direto na ficha.',
+    [CONSULTOR, PROJETOS, 'Abra um projeto qualquer.'],
+    ['Passe o mouse sobre o prazo (no alto da ficha) e clique no lápis que aparece.', 'Mude o número e aperte Enter.', 'Clique no lápis do "Objetivo", mude o texto e aperte Esc.', 'Clique no lápis do "Segmento", escreva um segmento que não existe e tente salvar.', 'Ao terminar, volte o prazo ao valor original pelo mesmo lápis.'],
+    ['O lápis aparece só ao passar o mouse sobre o campo (título, cliente, segmento, prazo, responsável, data, objetivo, contexto, área, status, acesso e pasta; valor e margem só para o gestor).', 'Enter salva: aparece o aviso "Prazo atualizado" e o novo valor já aparece na ficha.', 'Esc cancela e volta o texto anterior, sem salvar.', 'Como consultor, segmento que não existe não é aceito: aparece "só o gestor cria opções novas".', 'Campo vazio mostra "Adicionar …" para preencher.']),
+
+  c('P31', 'media', 'Tecnologias e serviços pela ficha',
+    'Ver se dá para pôr e tirar tecnologias e serviços direto no card.',
+    [PROJETOS, 'Abra um projeto qualquer.'],
+    [CONSULTOR, 'Na coluna da direita, abra "Tecnologias" e clique no lápis.', 'Escreva parte do nome de uma tecnologia da lista, escolha e aperte Enter.', 'Escreva "Tecnologia Teste" e aperte Enter.', 'Tire a tecnologia que você colocou (X no chip) e clique em "Salvar".', GESTOR, 'Abra o mesmo projeto, clique no lápis de "Serviços", escreva "Serviço Teste" + o seu nome, aperte Enter e depois tire o chip e clique em "Cancelar".'],
+    ['O lápis abre os chips com X para tirar e uma caixa com a lista de opções.', 'Como consultor, só entram opções que já existem; "Tecnologia Teste" mostra "só o gestor cria opções novas".', 'Como gestor, um nome novo entra como chip (é criado ao salvar).', '"Cancelar" não muda nada; "Salvar" grava e aparece o aviso.']),
+
+  c('P32', 'alta', 'Comentários e histórico da ficha',
+    'Ver a conversa e o registro do que mudou no projeto.',
+    [PROJETOS, 'Faça o cenário P30 no mesmo projeto.'],
+    ['Na coluna principal, role até "Comentários e histórico".', 'Escreva um comentário com o seu nome e clique em "Comentar".', 'Olhe os itens abaixo do campo de comentário.'],
+    ['O botão "Comentar" só fica ativo com texto; o comentário aparece no topo como um balão, com as iniciais, o nome e a hora.', 'As edições aparecem como cartões com o campo, o valor antigo riscado (vermelho) → o novo (verde); em tecnologias e serviços, chips "+" e "−".', 'Edições feitas juntas ficam num cartão só; exportações e outros registros aparecem como linhas com ícone.']),
+
+  c('P33', 'alta', 'Excluir um projeto (só gestor)',
+    'Ver se só o gestor exclui projetos e se a exclusão pede confirmação.',
+    [GESTOR, PROJETOS, 'Cadastre um projeto de teste pelo botão azul "Projeto" (título "Projeto para excluir" + o seu nome; cliente, segmento e status quaisquer da lista). Nunca exclua um projeto da base.'],
+    ['Abra o projeto de teste e clique na lixeira, no alto da ficha.', 'Na janela, clique em "Cancelar".', 'Clique na lixeira de novo e em "Excluir projeto".', CONSULTOR, 'Abra um projeto qualquer e procure a lixeira.'],
+    ['A janela "Excluir projeto" mostra o nome do projeto e avisa que a ação não pode ser desfeita.', '"Cancelar" fecha sem excluir.', '"Excluir projeto" fecha a ficha, aparece o aviso e o projeto some da lista e das buscas.', 'Como consultor, a lixeira não aparece.']),
 
   c('U16', 'alta', 'Arquivo recusado: trocar ou remover',
     'Ver se um arquivo de formato errado não trava o envio.',
