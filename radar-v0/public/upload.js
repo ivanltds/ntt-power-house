@@ -37,7 +37,7 @@ async function loadProjects() {
 }
 export async function garantirProjetos() { await loadProjects(); }
 
-const toBase64 = (buf) => {
+export const toBase64 = (buf) => {
   const bytes = new Uint8Array(buf);
   let bin = '';
   for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
