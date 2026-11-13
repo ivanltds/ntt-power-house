@@ -18,10 +18,12 @@ const ETIQUETA = 'Olhe a etiqueta pequena acima da resposta, à direita (ela diz
 const PROJETOS = 'Clique na aba "Projetos", no alto da tela.';
 const FILTROS = 'Clique no botão "Filtros", ao lado da caixa de busca, para abrir o painel de filtros à esquerda.';
 const LIMPAR = 'Ao terminar, clique em "Limpar", no alto do painel de filtros.';
-const ENVIAR = 'Clique na aba "Enviar", no alto da tela. Se aparecer a tela de boas-vindas, clique em "Começar".';
-const ESCOLHA = (a) => `Clique na palavra "escolha", dentro da área tracejada, e selecione o arquivo "${a}" que você baixou (ou arraste o arquivo para a área tracejada).`;
-const ESPERE_ENVIO = 'Espere o arquivo aparecer na lista à esquerda com a situação "Para revisar" e clique nele.';
-const DESCARTAR = 'No fim da revisão, clique em "Descartar" para não colocar o arquivo na base.';
+// Envio de arquivos (V0.0.2): sempre dentro de um projeto (bloco "Enviar arquivo" da ficha) ou pela conversa (clipe).
+const ABRA_PROJETO = (cliente) => `Clique na aba "Projetos", no alto da tela, e abra o projeto da ${cliente}.`;
+const ESCOLHA = (a) => `Role a ficha até o bloco "Enviar arquivo" (logo acima de "Comentários e histórico"), clique em "escolha" e selecione o arquivo "${a}" que você baixou (ou arraste o arquivo para o bloco).`;
+const ESPERE_ENVIO = 'Espere o cartão do arquivo aparecer em "Aguardando aprovação" com "tudo certo" ou "pontos para conferir" e clique em "Mais detalhes" para abrir a revisão.';
+const DESCARTAR = 'No fim, clique em "Descartar" (na janela ou no cartão) para não colocar o arquivo na base.';
+const FOCO = (cliente) => `Na aba "Perguntar", clique no ícone de alvo, na ponta esquerda da caixa de pergunta, e escolha o projeto da ${cliente}.`;
 const CELULAR = 'No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha.';
 
 const c = (id, prioridade, titulo, objetivo, preparo, passos, esperado, extra = {}) => ({ id, area: { C: 'conversas', P: 'projetos', U: 'upload', I: 'insights' }[id[0]], prioridade, titulo, objetivo, preparo, passos, esperado, ...extra });
@@ -392,108 +394,109 @@ export const ROTEIRO = [
     ['Os cards aparecem um embaixo do outro, sem cortar texto.', 'O painel de filtros abre e filtra.', 'O detalhe abre ocupando a tela e fecha pelo X.']),
 
   // =====================================================================
-  // ENVIO DE ARQUIVOS (aba Enviar)
+  // ENVIO DE ARQUIVOS (V0.0.2: dentro do projeto ou pela conversa; a aba Enviar saiu)
   // =====================================================================
-  c('U01', 'alta', 'Enviar um arquivo e revisar o que o Radar leu',
-    'Ver se o Radar lê o arquivo, sugere o projeto e aponta divergências.',
+  c('U01', 'alta', 'Enviar um arquivo pela ficha e revisar o que o Radar leu',
+    'Ver se o Radar lê o arquivo enviado dentro do projeto e aponta o que conferir.',
     ['Baixe o arquivo de exemplo pelo botão deste cenário.', GESTOR],
-    [ENVIAR, ESCOLHA('apresentacao-energisul-fase2.pptx'), ESPERE_ENVIO, 'Leia o topo da revisão e o quadro "Em qual projeto entra?".', DESCARTAR],
-    ['O arquivo passa pelas etapas Recebido, Texto, Regras, Projeto, Conflitos e Qualidade.', 'No topo aparece "Pronto para revisar" com os pontos de atenção.', 'Aparece o aviso de que o prazo diverge do projeto P001.', 'Em "Em qual projeto entra?", o projeto da Energisul Distribuidora vem marcado, com a porcentagem de compatibilidade.', 'O tipo vem como apresentação comercial.'],
-    { arquivo: 'apresentacao-energisul-fase2.pptx' }),
+    [ABRA_PROJETO('Energisul Distribuidora'), 'Leia a linha de formatos aceitos no bloco "Enviar arquivo".', ESCOLHA('apresentacao-energisul-fase2.pptx'), ESPERE_ENVIO, DESCARTAR],
+    ['A linha de formatos começa pelos mais comuns: PDF · PPTX · DOCX · XLSX, depois os outros, e o limite de 15 MB.', 'O cartão mostra o nome, o tipo, o título e o acesso, e os pontos para conferir (ex.: o prazo diverge do projeto).', '"Mais detalhes" abre a janela "Conferir e aprovar" enxuta: tipo, título, acesso, "Vai para" o projeto da Energisul, "Atualizar a ficha do projeto" e o resto recolhido em "Mais detalhes".', 'O tipo vem como apresentação comercial.'],
+    { tickets: ['CR-052'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
 
   c('U02', 'alta', 'Descartar um envio',
     'Ver se é possível desistir de um envio sem que ele entre na base.',
-    ['Faça o cenário U01 até abrir a revisão.'],
-    ['Na revisão, clique em "Descartar".'],
-    ['Aparece o aviso "Documento descartado".', 'O envio passa para a situação "Descartado" na lista.']),
+    ['Faça o cenário U01 até o cartão aparecer.'],
+    ['No cartão, clique em "Descartar".'],
+    ['Aparece o aviso de arquivo descartado e o cartão some de "Aguardando aprovação" (ao reabrir a ficha).', 'O arquivo não aparece em "Documentos".']),
 
   c('U03', 'alta', 'Aprovar um envio com informações extras (fazer uma vez só)',
     'Ver se o documento aprovado entra na base com o que você completou.',
     ['Combine com os outros analistas: só a primeira pessoa aprova. Quem vier depois verá o aviso de duplicidade (cenário U04).', 'Baixe o arquivo pelo botão deste cenário.', GESTOR],
-    [ENVIAR, ESCOLHA('case-segura-mais-resultados.pdf'), ESPERE_ENVIO, 'Em "Sobre o documento", escreva seu nome em "Autor" e "v1" em "Versão".', 'Em "Por que este documento é relevante?", escreva "Teste do roteiro de regressão".', 'Marque "Bom modelo para reaproveitar em novas propostas".', 'Clique em "Aprovar e indexar".', 'Vá na aba "Projetos", abra o projeto da Segura Mais Seguros e procure o documento.'],
-    ['O destino sugerido é o projeto da Segura Mais Seguros.', 'Depois de aprovar, aparece o aviso "… está na base" e o envio passa para "Na base".', 'No detalhe do projeto, o documento aparece com a estrela "bom modelo" e a nota que você escreveu.'],
+    [ABRA_PROJETO('Segura Mais Seguros'), ESCOLHA('case-segura-mais-resultados.pdf'), ESPERE_ENVIO, 'Na janela, abra "Mais detalhes" e, em "Sobre o documento", escreva seu nome em "Autor" e "v1" em "Versão".', 'Em "Por que este documento é relevante?", escreva "Teste do roteiro de regressão" e marque "Bom modelo para reaproveitar em novas propostas".', 'Clique em "Aprovar".'],
+    ['A janela fecha, aparece o aviso "… está na base" e o cartão some de "Aguardando aprovação".', 'Em "Documentos", o novo documento aparece com a estrela "bom modelo" e a nota que você escreveu.'],
     { arquivo: 'case-segura-mais-resultados.pdf' }),
 
   c('U04', 'alta', 'Aviso de arquivo duplicado',
     'Ver se o Radar avisa quando o mesmo arquivo já está na base.',
     ['O cenário U03 precisa ter sido aprovado por alguém antes.', 'Baixe o arquivo pelo botão deste cenário.'],
-    [ENVIAR, ESCOLHA('case-segura-mais-resultados.pdf'), ESPERE_ENVIO, DESCARTAR],
-    ['Aparece o aviso "Arquivo idêntico já está na base", com o nome do documento existente.', 'A tela não trava e é possível descartar.'],
+    [ABRA_PROJETO('Segura Mais Seguros'), ESCOLHA('case-segura-mais-resultados.pdf'), ESPERE_ENVIO, DESCARTAR],
+    ['O cartão e a janela mostram o aviso "Arquivo idêntico já está na base", com o nome do documento existente.', 'A tela não trava e é possível descartar.'],
     { arquivo: 'case-segura-mais-resultados.pdf' }),
 
   c('U05', 'alta', 'Dados pessoais são mascarados',
     'Ver se e-mails e telefones são escondidos de forma discreta.',
     ['Baixe o arquivo pelo botão deste cenário.'],
-    [ENVIAR, ESCOLHA('email-rede-bom-preco-ampliacao.eml'), ESPERE_ENVIO, 'Abra a seção "Texto extraído", no fim da revisão.', 'Abra a seção "Pessoas, resultados, lições e riscos".', DESCARTAR],
-    ['Aparece uma nota discreta: "Removemos 3 dados sensíveis (e-mail, telefone) antes de processar."', 'No texto extraído, os e-mails e o telefone aparecem como "[e-mail removido]" e "[telefone removido]".', 'O envio não é bloqueado.', 'O destino sugerido é o projeto da Rede Bom Preço Supermercados.'],
+    [ABRA_PROJETO('Rede Bom Preço Supermercados'), ESCOLHA('email-rede-bom-preco-ampliacao.eml'), ESPERE_ENVIO, 'Na janela, abra "Mais detalhes" e depois "Texto extraído" e "Pessoas, resultados, lições e riscos".', DESCARTAR],
+    ['Aparece uma nota discreta: "Removemos 3 dados sensíveis (e-mail, telefone) antes de processar."', 'No texto extraído, os e-mails e o telefone aparecem como "[e-mail removido]" e "[telefone removido]".', 'O envio não é bloqueado.'],
     { arquivo: 'email-rede-bom-preco-ampliacao.eml' }),
 
-  c('U06', 'media', 'Escolher o projeto de destino antes de enviar',
-    'Ver se o projeto escolhido é respeitado.',
-    ['Baixe o arquivo pelo botão deste cenário.'],
-    [ENVIAR, 'Clique na caixa "Projeto: detectar automaticamente" e escolha o projeto do Hospital Santa Aurora.', ESCOLHA('levantamento-requisitos-hospital.html'), ESPERE_ENVIO, DESCARTAR],
-    ['Em "Em qual projeto entra?", o projeto do Hospital Santa Aurora vem marcado.', 'O tipo vem como documento técnico.'],
-    { arquivo: 'levantamento-requisitos-hospital.html' }),
+  c('U06', 'alta', 'Enviar pela conversa com uma proposta em foco',
+    'Ver se, com um projeto em foco, o arquivo anexado já vai para ele.',
+    ['Baixe o arquivo pelo botão deste cenário.', NOVA],
+    [FOCO('Hospital Santa Aurora'), 'Clique no clipe, ao lado do ícone de alvo, e escolha o arquivo baixado.', 'Espere o cartão do arquivo aparecer na conversa.', 'No cartão, clique em "Mais detalhes" e leia "Em qual projeto entra?".', DESCARTAR],
+    ['Sem precisar escrever nada, o arquivo é enviado para o projeto do Hospital Santa Aurora e aparece "Arquivo enviado para … Confira e aprove abaixo".', 'O cartão mostra a situação ("extraindo os dados", depois "tudo certo" ou "pontos para conferir") e os botões Mais detalhes, Descartar e Aprovar.', 'A janela mostra "Vai para" o projeto do Hospital; o tipo vem como documento técnico.'],
+    { tickets: ['CR-052'], arquivo: 'levantamento-requisitos-hospital.html' }),
 
-  c('U07', 'media', 'Enviar a partir do detalhe do projeto',
-    'Ver o atalho para enviar documento a um projeto.',
-    [PROJETOS, 'Abra o detalhe do projeto da Energisul Distribuidora.'],
-    ['Clique no ícone de envio (seta para cima), no alto da janela ("Enviar documento para este projeto").'],
-    ['A aba "Enviar" abre sozinha.', 'A caixa de projeto de destino já vem com o projeto da Energisul.']),
+  c('U07', 'media', 'Enviar pela conversa dizendo o projeto',
+    'Ver se, sem foco, o arquivo espera até você dizer o projeto.',
+    ['Baixe o arquivo pelo botão deste cenário.', NOVA, 'Confirme que não há proposta em foco (o ícone de alvo está fechado).'],
+    ['Clique no clipe e escolha o arquivo.', 'Escreva "de qual projeto é esse arquivo?" e aperte Enter.', 'Escreva "é do projeto P003" e aperte Enter.', DESCARTAR],
+    ['O arquivo aparece como etiqueta acima da caixa de texto, com X para tirar.', 'Sem projeto, o Radar pergunta para qual projeto vai; o arquivo continua só na conversa.', 'Com o projeto, o arquivo é enviado para a Rede Bom Preço e aparece o cartão para aprovar.'],
+    { tickets: ['CR-050'], arquivo: 'pipeline-oportunidades.csv' }),
 
-  c('U08', 'media', 'Vários arquivos de uma vez (planilha e transcrição)',
-    'Ver se o Radar aceita mais de um arquivo e formatos diferentes.',
+  c('U08', 'media', 'Vários arquivos de uma vez pela ficha',
+    'Ver a lista de envios do projeto com mais de um arquivo e formatos diferentes.',
     ['Baixe os dois arquivos pelos botões deste cenário.', GESTOR],
-    [ENVIAR, 'Clique em "escolha" e selecione os dois arquivos juntos (segure Ctrl e clique nos dois).', 'Espere os dois chegarem em "Para revisar".', 'Abra a revisão de cada um e leia "Em qual projeto entra?".', 'Descarte os dois.'],
-    ['Os dois aparecem na lista de envios.', 'A planilha vem como estimativa preliminar e a transcrição como transcrição de reunião.', 'Como os clientes não estão na base, a opção "Criar projeto novo" vem marcada e mostra os campos do projeto novo.'],
+    [ABRA_PROJETO('Transportes Rota Certa'), 'No bloco "Enviar arquivo", clique em "escolha" e selecione os dois arquivos juntos (segure Ctrl e clique nos dois).', 'Espere os dois cartões ficarem prontos.', 'Descarte os dois pelos cartões.'],
+    ['Aparecem dois cartões em "Aguardando aprovação", cada um com a sua situação.', 'A planilha vem como estimativa preliminar e a transcrição como transcrição de reunião.', 'Se os dois vierem "tudo certo", aparece "Aprovar os 2 prontos" (não clique: descarte).'],
     { arquivo: 'estimativa-preliminar-banco-aurora.xlsx', arquivo2: 'kickoff-logistica-expressa-norte.vtt' }),
 
-  c('U09', 'alta', 'Consultor não cria projeto pelo envio',
-    'Ver se o consultor só pode enviar para projetos existentes.',
-    ['Baixe o arquivo pelo botão deste cenário.', CONSULTOR],
-    [ENVIAR, ESCOLHA('estimativa-preliminar-banco-aurora.xlsx'), ESPERE_ENVIO, 'Leia o quadro "Em qual projeto entra?".', DESCARTAR],
-    ['A opção "Criar projeto novo" não aparece.', 'Aparece a explicação: "Não achou o projeto? Só o gestor cadastra projetos novos…".', 'Como consultor, os campos Valor e Margem não aparecem em "Mais campos".'],
+  c('U09', 'alta', 'Consultor não cria projeto a partir de arquivo',
+    'Ver se só o gestor cria projeto novo com um arquivo.',
+    ['Baixe o arquivo pelo botão deste cenário.', CONSULTOR, NOVA],
+    [PROJETOS, 'Procure o botão "Novo a partir de arquivo", ao lado da busca.', 'Volte para "Perguntar", clique no clipe e escolha o arquivo.', 'Escreva "esse arquivo é de um cliente novo" e aperte Enter.', 'Tire o anexo pelo X da etiqueta.'],
+    ['Como consultor, o botão "Novo a partir de arquivo" não aparece em Projetos.', 'Na conversa, o Radar pede o projeto e diz para pedir ao gestor se o projeto ainda não existe; não aparece "Criar projeto com este arquivo".'],
     { arquivo: 'estimativa-preliminar-banco-aurora.xlsx' }),
 
   c('U10', 'media', 'Documento confidencial',
     'Ver se o Radar reconhece um documento confidencial.',
     ['Baixe o arquivo pelo botão deste cenário.', GESTOR],
-    [ENVIAR, ESCOLHA('proposta-banco-aurora-antifraude.docx'), ESPERE_ENVIO, 'Olhe o campo "Acesso" no topo da revisão.', DESCARTAR],
+    [ABRA_PROJETO('Cooperativa de Crédito Horizonte'), ESCOLHA('proposta-banco-aurora-antifraude.docx'), ESPERE_ENVIO, 'Olhe o campo "Acesso" no topo da janela.', DESCARTAR],
     ['O campo "Acesso" vem como "confidencial".', 'O tipo vem como proposta comercial.'],
     { arquivo: 'proposta-banco-aurora-antifraude.docx' }),
 
   c('U11', 'media', 'Planilha com divergência de dados',
     'Ver o aviso quando o arquivo contradiz o que já está na base.',
     ['Baixe o arquivo pelo botão deste cenário.'],
-    [ENVIAR, ESCOLHA('pipeline-oportunidades.csv'), ESPERE_ENVIO, DESCARTAR],
-    ['Aparece um aviso de que o prazo diverge do que está na base, explicando qual valor prevalece.', 'O topo mostra "Pronto para revisar" com pontos de atenção.'],
+    [ABRA_PROJETO('Rede Bom Preço Supermercados'), ESCOLHA('pipeline-oportunidades.csv'), ESPERE_ENVIO, DESCARTAR],
+    ['O cartão mostra "pontos para conferir" com o aviso de que o prazo diverge do que está na base, explicando qual valor prevalece.', 'A janela mostra os mesmos pontos no topo.'],
     { arquivo: 'pipeline-oportunidades.csv' }),
 
   c('U12', 'media', 'Corrigir campos na revisão',
     'Ver se dá para mudar o que o Radar leu.',
     ['Baixe o arquivo pelo botão deste cenário.'],
-    [ENVIAR, ESCOLHA('kickoff-logistica-expressa-norte.vtt'), ESPERE_ENVIO, 'Troque o "Tipo" para outra opção da lista.', 'Mude o "Título".', 'Abra "Tecnologias e serviços", tire uma tecnologia clicando no X dela e acrescente outra pela caixa de escolha.', 'Abra "Mais campos" e preencha a "Data".', DESCARTAR],
+    [ABRA_PROJETO('Transportes Rota Certa'), ESCOLHA('kickoff-logistica-expressa-norte.vtt'), ESPERE_ENVIO, 'Troque o "Tipo" e mude o "Título".', 'Abra "Mais detalhes" > "Tecnologias e serviços", tire uma tecnologia pelo X e acrescente outra.', 'Em "Mais campos", preencha a "Data".', DESCARTAR],
     ['Todos os campos aceitam a mudança sem erro.', 'As tecnologias podem ser retiradas e acrescentadas.'],
     { arquivo: 'kickoff-logistica-expressa-norte.vtt' }),
 
   c('U13', 'alta', 'Formato de arquivo não aceito',
     'Ver se o Radar explica quando o formato não é aceito.',
     ['Tenha no computador uma imagem qualquer (.png ou .jpg), por exemplo uma captura de tela.'],
-    [ENVIAR, 'Leia a linha de formatos aceitos, abaixo de "Arraste arquivos ou escolha".', 'Clique em "escolha" e selecione a imagem.', 'Espere e clique no envio na lista.'],
-    ['A linha de formatos lista MD, TXT, CSV, JSON, HTML, HTM, VTT, SRT, EML, DOCX, PPTX, XLSX e PDF, e o limite de 15 MB.', 'O envio da imagem termina com a mensagem "Formato .png não suportado. Formatos aceitos: …" (ou .jpg).', 'A tela não trava.']),
+    [ABRA_PROJETO('Energisul Distribuidora'), 'No bloco "Enviar arquivo", clique em "escolha" e selecione a imagem.', 'Na aba "Perguntar", clique no clipe e escolha a mesma imagem, com uma proposta em foco.'],
+    ['Nos dois casos aparece o aviso de formato não aceito, com a lista de formatos (PDF, PPTX, DOCX, XLSX…).', 'A imagem não vira cartão nem entra na base, e a tela não trava.']),
 
-  c('U14', 'media', 'Aviso quando o envio fica pronto em outra tela',
-    'Ver se o Radar avisa que o arquivo está pronto enquanto você faz outra coisa.',
-    ['Baixe o arquivo pelo botão deste cenário.'],
-    [ENVIAR, ESCOLHA('levantamento-requisitos-hospital.html'), 'Logo depois, clique na aba "Perguntar".', 'Continue nessa aba até o aviso aparecer.', 'Clique no botão "Revisar" do aviso que aparecer.', DESCARTAR],
-    ['Aparece o aviso "… está pronto para revisar", com o botão "Revisar".', 'O botão leva para a revisão desse arquivo.'],
-    { arquivo: 'levantamento-requisitos-hospital.html' }),
+  c('U14', 'alta', 'Projeto novo a partir de um arquivo (gestor)',
+    'Ver se o gestor cria um projeto com os campos preenchidos pelo que o Radar leu.',
+    ['Baixe o arquivo pelo botão deste cenário.', GESTOR],
+    [PROJETOS, 'Clique em "Novo a partir de arquivo", ao lado da busca, e escolha o arquivo baixado.', 'Espere a janela "Conferir e aprovar" carregar.', 'Leia o bloco "Projeto novo".', 'Clique em "Descartar" (não crie o projeto).'],
+    ['A janela mostra "Projeto novo (preenchido com o que o Radar leu; confira)" com cliente, título, segmento, status e acesso preenchidos, e o botão "Criar projeto e aprovar".', '"Descartar" fecha sem criar nada.', 'Na conversa, sem foco e sem projeto, o gestor também vê "Criar projeto com este arquivo".'],
+    { tickets: ['CR-052'], arquivo: 'kickoff-logistica-expressa-norte.vtt' }),
 
   c('U15', 'media', 'Envio no celular',
     'Ver o envio de arquivo pela tela pequena.',
     [CELULAR, 'Tenha no celular um dos arquivos de exemplo (pode baixar pelo botão deste cenário no próprio celular).'],
-    ['Toque na aba "Enviar", na barra de baixo.', 'Toque em "escolha" e selecione o arquivo.', 'Toque no envio quando ficar "Para revisar".', 'Toque em "Descartar".'],
-    ['O arquivo é enviado e a revisão abre inteira, sem cortar botões.', '"Descartar" funciona.'],
+    ['Abra a aba "Projetos", abra um projeto e role até o bloco "Enviar arquivo".', 'Toque em "escolha" e selecione o arquivo.', 'Quando o cartão ficar pronto, toque em "Mais detalhes" e depois em "Descartar".'],
+    ['O arquivo é enviado e a janela de revisão abre inteira, sem cortar botões.', '"Descartar" funciona.'],
     { arquivo: 'levantamento-requisitos-hospital.html' }),
 
   // =====================================================================
@@ -550,15 +553,15 @@ export const ROTEIRO = [
 
   c('C42', 'media', 'Enviar arquivo pelo chat para um projeto',
     'Ver se dá para mandar um documento para um projeto conversando com o Radar.',
-    [GESTOR, NOVA, 'Baixe o arquivo de exemplo deste cenário.'],
-    ['Clique no clipe, à esquerda da caixa de texto, e escolha o arquivo baixado.', 'Escreva "esse arquivo é de qual projeto?" e aperte Enter.', 'Escreva "coloca no projeto da Energisul" e aperte Enter.', 'Quando aparecer "pronto para conferir", clique em "Revisar".', 'Na revisão, clique em "Descartar".'],
-    ['O arquivo aparece como etiqueta acima da caixa de texto, com X para tirar.', 'Sem projeto definido, o Radar pergunta para qual projeto vai e o arquivo continua só na conversa.', 'Com o projeto, aparece "Arquivo enviado para … O Radar extrai os dados e você confere antes de entrar na base." e o andamento mostra "extraindo os dados" até ficar "pronto para conferir".', 'A revisão abre com "Vai para" o projeto da Energisul já escolhido.', '"Descartar" tira o arquivo, sem entrar na base.'],
+    [GESTOR, NOVA, 'Baixe o arquivo de exemplo deste cenário.', 'Confirme que não há proposta em foco.'],
+    ['Clique no clipe e escolha o arquivo baixado.', 'Escreva "esse arquivo é de qual projeto?" e aperte Enter.', 'Escreva "coloca no projeto da Energisul" e aperte Enter.', 'No cartão que aparece, clique em "Mais detalhes" e depois em "Descartar".'],
+    ['O arquivo aparece como etiqueta acima da caixa de texto, com X para tirar.', 'Sem projeto definido, o Radar pergunta para qual projeto vai (o gestor também vê "Criar projeto com este arquivo") e o arquivo continua só na conversa.', 'Com o projeto, aparece "Arquivo enviado para … Confira e aprove abaixo" e um cartão com a situação e os botões Mais detalhes, Descartar e Aprovar.', 'A janela abre com "Vai para" o projeto da Energisul.', '"Descartar" tira o arquivo, sem entrar na base.'],
     { tickets: ['CR-049', 'CR-050'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
 
   c('C43', 'media', 'Etiqueta da visão, menu e seção atual',
     'Ver se fica claro com que perfil e em que seção você está.',
     [],
-    ['Olhe o canto superior direito da tela.', 'Clique no botão com as iniciais e o nome e troque o "Ver como".', 'Clique nos três pontinhos (⋮), ao lado do botão de conta.', 'Clique no X no alto desse menu.', 'Clique nas abas Projetos, Enviar e Insights.'],
+    ['Olhe o canto superior direito da tela.', 'Clique no botão com as iniciais e o nome e troque o "Ver como".', 'Clique nos três pontinhos (⋮), ao lado do botão de conta.', 'Clique no X no alto desse menu.', 'Clique nas abas Projetos e Insights.'],
     ['O botão de conta mostra um círculo com as iniciais, o primeiro nome e, embaixo, o perfil (ex.: "MC Marina · Consultor"), nas cores da página, sempre visível.', 'Clicar nele abre só o perfil, com o "Ver como"; trocando, o botão passa a mostrar a outra pessoa e o outro perfil, e aparece um aviso.', 'O menu ⋮ é separado: tem tema, documentos, métricas, ajuda e versão, mas não o "Ver como"; o X fecha esse menu (Esc também).', 'A aba atual fica em azul cheio, com um traço embaixo, bem diferente das outras.'],
     { tickets: ['CR-031', 'CR-006', 'CR-025'] }),
 
@@ -586,8 +589,8 @@ export const ROTEIRO = [
   c('P28', 'alta', 'Enviar arquivo pela ficha do projeto',
     'Ver se dá para mandar um documento sem sair do projeto.',
     [GESTOR, PROJETOS, 'Baixe o arquivo de exemplo deste cenário.', 'Abra o projeto "Plataforma de dados para redução de perdas não técnicas" (Energisul).'],
-    ['Abra a seção "Documentos" da ficha e clique em "Enviar arquivo para este projeto" e escolha o arquivo baixado.', 'Quando aparecer "pronto para conferir", clique em "Revisar".', 'Na revisão, clique em "Descartar".'],
-    ['O andamento aparece na própria ficha, sem trocar de tela.', 'A revisão abre com "Vai para" o projeto da Energisul (dá para trocar em "Trocar projeto").', '"Descartar" tira o arquivo, sem entrar na base.'],
+    [ESCOLHA('apresentacao-energisul-fase2.pptx'), 'Feche a ficha e veja o card do projeto na lista.', 'Abra a ficha de novo, clique em "Mais detalhes" no cartão e depois em "Descartar".'],
+    ['O bloco "Enviar arquivo" é discreto (linha tracejada) e fica logo acima de "Comentários e histórico".', 'O andamento aparece na própria ficha, em "Aguardando aprovação", sem trocar de tela.', 'Enquanto não for aprovado, o card do projeto na lista mostra "1 para aprovar".', 'A janela abre com "Vai para" o projeto da Energisul; "Descartar" tira o arquivo, sem entrar na base.'],
     { tickets: ['CR-046'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
 
   c('C45', 'alta', 'Lista de conversas em caixas',
@@ -628,23 +631,23 @@ export const ROTEIRO = [
 
   c('U16', 'alta', 'Arquivo recusado: trocar ou remover',
     'Ver se um arquivo de formato errado não trava o envio.',
-    [ENVIAR, 'Tenha no computador uma imagem (PNG ou JPG) qualquer.'],
-    ['Escolha a imagem na área tracejada.'],
-    ['Aparece o aviso de formato não aceito com a lista de formatos (MD, PDF, DOCX…), e a imagem nem entra na lista de envios.', 'Se um envio aparecer com erro na lista, ele tem os botões "Trocar arquivo" e "Remover da lista", e os dois funcionam.'],
+    [ABRA_PROJETO('Energisul Distribuidora'), 'Tenha no computador uma imagem (PNG ou JPG) qualquer.'],
+    ['No bloco "Enviar arquivo", escolha a imagem.'],
+    ['Aparece o aviso de formato não aceito com a lista de formatos (PDF, PPTX, DOCX…), e a imagem nem vira cartão.', 'Se algum envio terminar com erro, o cartão mostra a mensagem e o botão "Remover", que tira o envio da lista.'],
     { tickets: ['CR-010'] }),
 
   c('U17', 'media', 'Atualizar a ficha do projeto ao aprovar um arquivo',
     'Ver se os dados novos do arquivo podem atualizar o projeto.',
-    [GESTOR, ENVIAR, 'Baixe o arquivo de exemplo deste cenário.'],
-    [ESCOLHA('apresentacao-energisul-fase2.pptx'), ESPERE_ENVIO, 'Na revisão, procure a seção "Atualizar a ficha do projeto".', DESCARTAR],
+    [GESTOR, 'Baixe o arquivo de exemplo deste cenário.', ABRA_PROJETO('Energisul Distribuidora')],
+    [ESCOLHA('apresentacao-energisul-fase2.pptx'), ESPERE_ENVIO, 'Na janela, procure a seção "Atualizar a ficha do projeto".', DESCARTAR],
     ['Quando o arquivo traz prazo, data ou valor diferentes da ficha do projeto de destino, aparece a seção com cada diferença (antes → depois) e uma caixa para marcar.', 'Só o que for marcado é atualizado na ficha ao aprovar (e fica no histórico do projeto).'],
     { tickets: ['CR-047'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
 
   c('U18', 'media', 'Aprovar vários envios de uma vez',
     'Ver a aprovação em lote.',
-    [GESTOR, ENVIAR, 'Baixe os dois arquivos de exemplo deste cenário.'],
-    ['Escolha os dois arquivos de uma vez na área tracejada.', 'Espere os dois ficarem "Para revisar".', 'Clique em "Aprovar os prontos (2)", acima da lista.', 'Depois, abra cada documento aprovado e, se não quiser manter, peça a um gestor para excluir (ou repita o cenário só com Descartar).'],
-    ['O botão "Aprovar os prontos" aparece quando há mais de um envio para revisar.', 'Os que têm projeto certo e nenhum ponto de atenção são aprovados; os outros ficam para revisar um a um.', 'Aparece um resumo com quantos foram aprovados e quantos ficaram para revisar.'],
+    [GESTOR, NOVA, 'Baixe os dois arquivos de exemplo deste cenário.', 'Combine com os outros analistas: faça uma vez só (os arquivos entram na base).'],
+    [FOCO('Segura Mais Seguros'), 'Clique no clipe e escolha os dois arquivos juntos (segure Ctrl).', 'Espere os dois cartões ficarem prontos.', 'Se aparecer "Aprovar os N prontos", clique; os que tiverem pontos para conferir, revise em "Mais detalhes" (1 de N) ou descarte.'],
+    ['Os dois arquivos vão direto para o projeto em foco e aparecem como cartões na conversa.', '"Aprovar os N prontos" aprova de uma vez os que vieram "tudo certo"; os com pontos para conferir ficam para revisar um a um.', 'Os cartões aprovados mostram "aprovado e na base".'],
     { tickets: ['CR-048'], arquivo: 'case-segura-mais-resultados.pdf', arquivo2: 'proposta-banco-aurora-antifraude.docx' }),
 
   // =====================================================================
@@ -696,7 +699,7 @@ export const ROTEIRO = [
     'Ver se o protótipo antigo saiu da barra de abas.',
     [],
     ['Olhe a barra de abas no alto.', 'Na barra de endereço do navegador, troque o fim do endereço por "/insights-novo" e aperte Enter.'],
-    ['A barra de abas tem só Perguntar, Projetos, Enviar e Insights.', 'O endereço /insights-novo abre o protótipo "Insights (novo)" direto, para avaliação.']),
+    ['A barra de abas tem só Perguntar, Projetos e Insights (o envio de arquivos fica dentro do projeto e na conversa).', 'O endereço /insights-novo abre o protótipo "Insights (novo)" direto, para avaliação.']),
 ];
 
 // Roteiros de versões anteriores, congelados: a versão arquivada só pode ser consultada.
