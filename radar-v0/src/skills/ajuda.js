@@ -79,7 +79,8 @@ export function destaque(texto, pergunta, max = 3) {
   const q = new Set(tokenize(pergunta));
   const linhas = String(texto).split(/\n+/).map((l) => l.trim()).filter((l) => l.length > 15);
   // Densidade: acertos divididos pela raiz do tamanho, para a linha específica ("Favoritar: …") vencer o parágrafo geral.
-  const pontos = linhas.map((l, i) => { const t = tokenize(l); const acertos = t.filter((k) => q.has(k)).length; return { l, i, n: acertos ? acertos / Math.sqrt(t.length) : 0 }; });
+  // Linha que começa pelo assunto (rótulo de tabela, ex.: "Favoritar: …") vale o dobro.
+  const pontos = linhas.map((l, i) => { const t = tokenize(l); const acertos = t.filter((k) => q.has(k)).length; const rotulo = t.length && q.has(t[0]) ? 2 : 1; return { l, i, n: acertos ? (acertos / Math.sqrt(t.length)) * rotulo : 0 }; });
   const topo = Math.max(0, ...pontos.map((x) => x.n));
   const melhores = pontos.filter((x) => x.n > 0 && x.n >= topo * 0.6).sort((a, b) => b.n - a.n || a.i - b.i).slice(0, max).sort((a, b) => a.i - b.i);
   const escolhidas = (melhores.length ? melhores : pontos.slice(0, 1)).map((x) => (x.l.length > 280 ? `${x.l.slice(0, 279)}…` : x.l));

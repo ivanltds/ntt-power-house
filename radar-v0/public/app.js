@@ -460,7 +460,7 @@ function bindAnswer(container, r) {
     feedback: () => showFeedback(),
     anexar: () => $('#anexar').click(),
     acaoAnexo: (acao, alvo) => {
-      if (acao === 'focar') { $('#query').placeholder = 'Pergunte algo sobre o arquivo (ex.: qual o prazo?)'; $('#query').focus(); }
+      if (acao === 'focar') $('#query').focus();
       if (acao === 'enviar') { if (state.anexos?.length) perguntarProjeto(); else toast('O arquivo já foi enviado ou não está mais anexado.'); }
       if (acao === 'criar') { if (state.anexos?.length) criarProjetoComArquivo(alvo); else toast('O arquivo não está mais anexado. Anexe de novo pelo clipe.'); }
     },
