@@ -401,7 +401,7 @@ export const ROTEIRO = [
     ['Baixe o arquivo de exemplo pelo botão deste cenário.', GESTOR],
     [ABRA_PROJETO('Energisul Distribuidora'), 'Leia a linha de formatos aceitos no bloco "Enviar arquivo".', ESCOLHA('apresentacao-energisul-fase2.pptx'), ESPERE_ENVIO, DESCARTAR],
     ['A linha de formatos começa pelos mais comuns: PDF · PPTX · DOCX · XLSX, depois os outros, e o limite de 15 MB.', 'O cartão mostra o nome, o tipo, o título e o acesso, e os pontos para conferir (ex.: o prazo diverge do projeto).', '"Mais detalhes" abre a janela "Conferir e aprovar" enxuta: tipo, título, acesso, "Vai para" o projeto da Energisul, "Atualizar a ficha do projeto" e o resto recolhido em "Mais detalhes".', 'O tipo vem como apresentação comercial.'],
-    { arquivo: 'apresentacao-energisul-fase2.pptx' }),
+    { tickets: ['CR-052'], arquivo: 'apresentacao-energisul-fase2.pptx' }),
 
   c('U02', 'alta', 'Descartar um envio',
     'Ver se é possível desistir de um envio sem que ele entre na base.',
@@ -435,7 +435,7 @@ export const ROTEIRO = [
     ['Baixe o arquivo pelo botão deste cenário.', NOVA],
     [FOCO('Hospital Santa Aurora'), 'Clique no clipe, ao lado do ícone de alvo, e escolha o arquivo baixado.', 'Espere o cartão do arquivo aparecer na conversa.', 'No cartão, clique em "Mais detalhes" e leia "Em qual projeto entra?".', DESCARTAR],
     ['Sem precisar escrever nada, o arquivo é enviado para o projeto do Hospital Santa Aurora e aparece "Arquivo enviado para … Confira e aprove abaixo".', 'O cartão mostra a situação ("extraindo os dados", depois "tudo certo" ou "pontos para conferir") e os botões Mais detalhes, Descartar e Aprovar.', 'A janela mostra "Vai para" o projeto do Hospital; o tipo vem como documento técnico.'],
-    { arquivo: 'levantamento-requisitos-hospital.html' }),
+    { tickets: ['CR-052'], arquivo: 'levantamento-requisitos-hospital.html' }),
 
   c('U07', 'media', 'Enviar pela conversa dizendo o projeto',
     'Ver se, sem foco, o arquivo espera até você dizer o projeto.',
@@ -490,7 +490,7 @@ export const ROTEIRO = [
     ['Baixe o arquivo pelo botão deste cenário.', GESTOR],
     [PROJETOS, 'Clique em "Novo a partir de arquivo", ao lado da busca, e escolha o arquivo baixado.', 'Espere a janela "Conferir e aprovar" carregar.', 'Leia o bloco "Projeto novo".', 'Clique em "Descartar" (não crie o projeto).'],
     ['A janela mostra "Projeto novo (preenchido com o que o Radar leu; confira)" com cliente, título, segmento, status e acesso preenchidos, e o botão "Criar projeto e aprovar".', '"Descartar" fecha sem criar nada.', 'Na conversa, sem foco e sem projeto, o gestor também vê "Criar projeto com este arquivo".'],
-    { arquivo: 'kickoff-logistica-expressa-norte.vtt' }),
+    { tickets: ['CR-052'], arquivo: 'kickoff-logistica-expressa-norte.vtt' }),
 
   c('U15', 'media', 'Envio no celular',
     'Ver o envio de arquivo pela tela pequena.',
