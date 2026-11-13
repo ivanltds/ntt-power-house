@@ -420,7 +420,6 @@ function renderCard(x) {
     <div class="rhead" data-toggle>
       <span class="seg-ico lg" title="${esc(x.segmento)}" aria-hidden="true">${icon(iconeSegmento(x.segmento), { size: 18 })}</span>
       <div class="rt"><h4>${esc(x.titulo)}</h4><span class="sub">${matchLabel(x.score)} ${esc(x.cliente)} · ${statusDot(x.status)}</span></div>
-      ${x.conflitos.length ? `<span class="tag warn" title="${esc(x.conflitos.map((c) => c.motivo).join(' '))}">${icon('alert', { size: 14 })}dados divergentes</span>` : ''}
       <span class="fb">
         <button class="icon-btn sm" data-util="1" title="Útil" aria-label="Útil">${icon('thumbsUp', { size: 16 })}</button>
         <button class="icon-btn sm" data-util="0" title="Não ajudou" aria-label="Não ajudou">${icon('thumbsDown', { size: 16 })}</button>

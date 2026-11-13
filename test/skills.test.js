@@ -169,3 +169,22 @@ test('arquivo da conversa é só de quem anexou e some com a conversa (D2)', () 
   assert.equal(tmp.list('c1', 'u-gestor').length, 0);
   assert.ok(tmp.add('c2', 'u-gestor', { nome: 'vazio.txt', buffer: Buffer.from('   ') }).erro, 'arquivo sem texto é recusado com aviso');
 });
+
+test('trecho da ajuda traz as linhas da pergunta, sem buracos de ícone (CR-056)', async () => {
+  const { responderAjuda, destaque } = await import('../src/skills/ajuda.js');
+  const { htmlParaTexto } = await import('../src/skills/conhecimento.js');
+  const { MockLLM } = await import('../src/llm.js');
+  const r = await responderAjuda({ query: 'como favorito uma conversa?', llm: new MockLLM() });
+  assert.match(r.dados.fontes[0].trecho, /^Favoritar/, 'começa pela linha que responde, não pelo começo da seção');
+  assert.doesNotMatch(r.dados.fontes[0].trecho, /Toda conversa é salva/);
+  assert.equal(destaque('linha sem relação nenhuma aqui\nComo exportar o projeto em PDF pelo botão', 'exportar pdf', 1), 'Como exportar o projeto em PDF pelo botão');
+  const t = htmlParaTexto('<p>A lista (no celular, no botão <svg><path/></svg>) tem <b>Favoritas</b> , <b>Grupos</b> .</p>');
+  assert.doesNotMatch(t, /\s[),.]|\(\s*\)/);
+});
+
+test('chat não mostra "dados divergentes"; o aviso fica só na ficha do projeto (CR-055)', () => {
+  const ler = (f) => fs.readFileSync(path.join(ROOT, 'public', f), 'utf8');
+  assert.doesNotMatch(ler('app.js'), /dados divergentes/);
+  assert.doesNotMatch(ler('respostas.js'), /valores divergentes/);
+  assert.match(ler('projetos.js'), /diverge entre fontes/);
+});

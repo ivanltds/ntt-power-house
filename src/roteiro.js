@@ -619,8 +619,8 @@ export const ROTEIRO = [
     'Ver se o Radar responde como usar o produto com base na ajuda e mostra de onde tirou.',
     [CONSULTOR, NOVA],
     [PERGUNTE('como favorito uma conversa?'), ESPERE, ETIQUETA, 'Clique no botão com o nome da seção, abaixo do trecho citado.', 'Feche a ajuda.', PERGUNTE('o que mudou nesta versão?'), ESPERE],
-    ['A etiqueta diz "Dúvida de uso".', 'A resposta explica que é pela estrela e mostra o trecho da ajuda com a origem "Como usar o Radar › Conversas salvas".', 'O botão abre a ajuda direto na seção "Conversas salvas".', 'A pergunta sobre a versão lista as novidades da V0.0.2 e oferece o botão "Notas da V0.0.2".'],
-    { tickets: ['CR-053'] }),
+    ['A etiqueta diz "Dúvida de uso".', 'A resposta explica, em poucas linhas, que é pela estrela.', 'Abaixo vem, recolhida, a linha "Fonte: Como usar o Radar › Conversas salvas · ver trecho"; ao clicar, abre só o trecho que fala de favoritar (ex.: "Favoritar: Passe o mouse na conversa e clique na ⭐…"), coerente com a resposta, e não o começo da seção.', 'O botão abre a ajuda direto na seção "Conversas salvas".', 'A pergunta sobre a versão lista as novidades da V0.0.2 e oferece o botão "Notas da V0.0.2".'],
+    { tickets: ['CR-053', 'CR-056'] }),
 
   c('C49', 'media', 'Agradecer e reclamar de uma resposta',
     'Ver se o Radar responde a agradecimento e crítica de forma curta e útil.',
@@ -647,8 +647,8 @@ export const ROTEIRO = [
     'Ver se o Radar responde com o conteúdo do arquivo e usa o arquivo para achar projetos parecidos na base.',
     ['Faça o cenário C51 e continue na mesma conversa.'],
     [PERGUNTE('quais os riscos?'), ESPERE, 'Clique em "Buscar projetos parecidos" na resposta do C51 (ou escreva "tem algo parecido com isso na base?").', ESPERE],
-    ['A resposta sobre riscos cita os riscos do arquivo (acesso aos dados de transações e homologação do modelo) e mostra o trecho do arquivo de onde tirou.', 'A busca de parecidos começa com "Busquei na base projetos parecidos com o arquivo …" e traz cards de projetos (ex.: streaming com Kafka e Databricks).'],
-    { tickets: ['CR-053'], arquivo: 'proposta-banco-aurora-antifraude.docx' }),
+    ['A resposta sobre riscos cita os riscos do arquivo (acesso aos dados de transações e homologação do modelo); o trecho do arquivo de onde tirou fica recolhido em "Fonte: proposta-banco-aurora-antifraude.docx · ver trecho".', 'A busca de parecidos começa com "Busquei na base projetos parecidos com o arquivo …" e traz cards de projetos (ex.: streaming com Kafka e Databricks).'],
+    { tickets: ['CR-053', 'CR-056'], arquivo: 'proposta-banco-aurora-antifraude.docx' }),
 
   c('C53', 'media', 'Enviar à base só quando pedir',
     'Ver se o arquivo lido na conversa só vai para um projeto quando você pede.',
@@ -656,6 +656,21 @@ export const ROTEIRO = [
     [PERGUNTE('coloca no projeto P003'), ESPERE, 'No cartão que aparece, clique em "Descartar".'],
     ['A etiqueta diz "Envio de arquivo" e aparece "Arquivo enviado para Previsão de demanda e reposição automática de estoque (Rede Bom Preço Supermercados). Confira e aprove abaixo".', 'O cartão do envio aparece na conversa; "Descartar" tira o arquivo, sem entrar na base.', 'A etiqueta do arquivo some de cima da caixa de texto depois do envio.'],
     { tickets: ['CR-053'], arquivo: 'proposta-banco-aurora-antifraude.docx' }),
+
+  // ---------- Celular e credibilidade da resposta (CR-054, CR-055, CR-057) ----------
+  c('C54', 'alta', 'Cartão de projeto na conversa, no celular',
+    'Ver se o cartão de projeto da resposta fica legível no celular e sem avisos que confundem.',
+    [CELULAR, GESTOR, NOVA],
+    [PERGUNTE('Já fizemos fraude em seguros?'), ESPERE, 'Olhe o cartão do projeto "Detecção de fraude em sinistros…" (Segura Mais Seguros) sem abrir.', 'Toque no cartão para abrir e depois em "Abrir projeto".'],
+    ['No cartão fechado, em cima ficam o ícone, o título (até 3 linhas, sem cortar em "Det… de…") e a setinha; embaixo do título, "Muito parecido", o cliente e o status, e depois os botões 👍 e 👎. Nada fica por cima de nada.', 'O cartão NÃO mostra "dados divergentes".', 'A linha "Também costumam entrar: …" aparece como uma frase que quebra normalmente, não em colunas.', 'Na ficha do projeto aparece o aviso "Prazo diverge entre fontes", com a fonte que prevaleceu (a divergência fica só dentro do projeto).'],
+    { tickets: ['CR-054', 'CR-055'] }),
+
+  c('C55', 'alta', 'Caixa de pergunta no celular com memória da conversa',
+    'Ver se a caixa de pergunta continua numa linha só quando o chat está lembrando perguntas anteriores.',
+    [CELULAR, NOVA],
+    [PERGUNTE('Já fizemos fraude em seguros?'), ESPERE, PERGUNTE('e em varejo?'), ESPERE, 'Olhe a caixa de pergunta e o título da conversa, no alto.'],
+    ['A etiqueta "lembrando N perguntas" fica numa linha própria, acima.', 'Na linha de baixo ficam, lado a lado, o ícone de alvo, o clipe, o campo de texto (com espaço para escrever) e o botão de enviar; o botão NÃO desce para outra linha.', 'O título da conversa mostra o lápis e a estrela dentro da tela, sem rolagem para o lado.', 'O menu de baixo (Perguntar, Projetos, Insights) fica centralizado, com as três abas do mesmo tamanho.'],
+    { tickets: ['CR-057'] }),
 
   c('P29', 'media', 'Seções da ficha que recolhem',
     'Ver se a ficha mostra primeiro o essencial e deixa o resto recolhido.',

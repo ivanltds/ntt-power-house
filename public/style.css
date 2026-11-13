@@ -2024,3 +2024,30 @@ span.tec-tag { cursor: default; }
   .pd-tl .tl-form textarea { flex: 1 1 calc(100% - 44px); min-width: 0; }
   .pd-tl .tl-form .btn { margin-left: auto; }
 }
+/* Celular: cartão de projeto na conversa em duas linhas — ícone, título (até 3 linhas) e setinha em cima;
+   👍 👎 embaixo do título. Antes tudo disputava uma linha só e o título virava "Det… de…". */
+@media (max-width: 560px) {
+  .rhead { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "ico rt chev" "ico fb fb"; align-items: start; column-gap: 10px; row-gap: 4px; }
+  .rhead > .seg-ico { grid-area: ico; }
+  .rhead > .rt { grid-area: rt; }
+  .rhead > .chev { grid-area: chev; align-self: start; }
+  .rhead > .fb { grid-area: fb; justify-self: start; margin-left: -6px; }
+  .rt h4 { -webkit-line-clamp: 3; }
+  .rt .sub { display: block; white-space: normal; line-height: 1.45; }
+}
+/* "Também costumam entrar": texto corrido que quebra como frase (antes virava colunas no celular). */
+.also { display: block; line-height: 1.5; }
+.also > svg { vertical-align: -3px; margin-right: 6px; }
+/* Fonte da resposta (dúvida de uso e arquivo da conversa): recolhida, para não competir com a resposta direta. */
+.fonte-det { margin: 8px 0 4px; }
+.fonte-det > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); padding: 3px 0; }
+.fonte-det > summary::-webkit-details-marker { display: none; }
+.fonte-det > summary .fonte-ver { color: var(--brand); font-weight: 500; }
+:root[data-theme="dark"] .fonte-det > summary .fonte-ver { color: #8fb4ff; }
+.fonte-det > summary svg:last-child { transition: transform .15s; }
+.fonte-det[open] > summary svg:last-child { transform: rotate(180deg); }
+.fonte-det[open] > summary .fonte-ver { display: none; }
+.fonte-det .fonte-ajuda { margin-top: 6px; }
+/* Campos de texto dentro de linhas flexíveis precisam de min-width: 0 para encolher (senão empurram os botões para fora
+   da tela no celular: a estrela do título da conversa sumia a 320 px). */
+.conv-bar input, .flt-busca input, .tk-quem input { min-width: 0; }
