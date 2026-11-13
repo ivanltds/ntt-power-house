@@ -25,7 +25,7 @@ const perdido = (p) => p.status_proposta === 'Perdida';
 const andamento = (p) => STATUS_ANDAMENTO.includes(p.status_proposta);
 const temCase = (p) => p.docs.some((d) => d.tipo === 'case_sucesso');
 const PALAVRAS_VAZIAS = new Set('a o e de da do das dos em no na nos nas para por com sem um uma que se os as ao foi mais menos entre sobre como'.split(' '));
-const ACONTECEU = /atras|estend|precisou|mudaram|caminho cr[ií]tico|retrabalho|custou|extra|aument/i;
+const ACONTECEU = /atras|estend|precisou|mudaram|caminho cr[ií]tico|retrabalho|custou|\bextras?\b|aument/i;
 const termos = (s) => normalize(s).split(' ').filter((t) => t.length > 3 && !PALAVRAS_VAZIAS.has(t));
 
 // Valores em R$ citados num KPI ("R$ 18 milhões", "R$ 9 mi", "R$ 450 mil").

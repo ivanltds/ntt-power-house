@@ -112,6 +112,10 @@ export class AuditLog {
       tempoMedioRespostaMs: turns.length ? Math.round(turns.reduce((a, t) => a + t.tempoMs, 0) / turns.length) : null,
       reaproveitamentos: events.filter((e) => e.tipo === 'reaproveitar').length,
       motivosNaoUtil: count(events.filter((e) => e.tipo === 'feedback_motivo').map((e) => e.motivo)),
+      // Adendo 6: perguntas por skill do chat e quantas ficaram sem resposta (turnos antigos usam a intenção).
+      porSkill: count(turns.map((t) => t.skill ?? t.intencao ?? 'buscar')).map((x) => ({
+        skill: x.valor, n: x.n, semResposta: turns.filter((t) => (t.skill ?? t.intencao ?? 'buscar') === x.valor && t.semEvidencia).length,
+      })),
     };
   }
 }
