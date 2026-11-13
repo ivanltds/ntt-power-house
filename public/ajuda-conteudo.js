@@ -28,35 +28,44 @@ export const GUIA = [
   ['inicio', 'radar', 'Primeiros passos', () => `
     <p>O Radar é a memória de propostas e cases da equipe. Ele junta propostas, apresentações, estimativas, atas e cases e
     responde perguntas em linguagem natural, mostrando <b>quais projetos parecidos já fizemos</b> e <b>de onde veio cada informação</b>.</p>
-    ${flow([['Perguntar', 'encontre referências', 'message'], ['Projetos', 'explore, abra e envie arquivos', 'folder'], ['Insights', 'padrões da base', 'chart']])}
-    <h4>As 4 áreas</h4>
-    ${table(['Área', 'Para que serve', 'Quando usar'], [
-      [`${icon('message', { size: 14 })} Perguntar`, 'Chat que busca na base pelo significado da pergunta, não só pelas palavras.', 'Começo de uma proposta: "já fizemos algo assim?"'],
-      [`${icon('folder', { size: 14 })} Projetos`, 'Lista de todos os projetos com filtros, detalhe completo e documentos.', 'Quando você sabe o que procura ou quer comparar projetos.'],
-      [`${icon('upload', { size: 14 })} Enviar arquivo (na ficha do projeto ou na conversa)`, 'O Radar lê, preenche os dados e você aprova.', 'Ao terminar uma proposta, ata ou case.'],
+    ${flow([['Perguntar', 'converse e encontre referências', 'message'], ['Projetos', 'explore, abra, edite e envie arquivos', 'folder'], ['Insights', 'padrões da base', 'chart']])}
+    <h4>As 3 abas</h4>
+    ${table(['Aba', 'Para que serve', 'Quando usar'], [
+      [`${icon('message', { size: 14 })} Perguntar`, 'Chat que busca na base pelo significado da pergunta, lista, conta, compara, lê arquivos que você anexar e tira dúvidas sobre o próprio Radar.', 'Começo de uma proposta: "já fizemos algo assim?"'],
+      [`${icon('folder', { size: 14 })} Projetos`, 'Lista de todos os projetos com filtros, ficha completa, documentos, comentários e o bloco "Enviar arquivo".', 'Quando você sabe o que procura, quer comparar ou quer guardar um documento.'],
       [`${icon('chart', { size: 14 })} Insights`, 'Números da base: segmentos, tecnologias, taxa de ganho, lições.', 'Para entender tendências e preparar argumentos.'],
     ])}
-    <h4>Menu ${icon('menu', { size: 14 })}</h4>
+    <p>Não há uma aba de envio: os arquivos entram <b>sempre dentro de um projeto</b> (bloco "Enviar arquivo" da ficha) ou pela <b>conversa</b> (clipe). Veja "Enviar documentos".</p>
+    <h4>Botão de conta e menu ${icon('menu', { size: 14 })}</h4>
     <ul>
-      <li><b>Ver como (demonstração):</b> troca o usuário de demonstração (Consultor ou Gestor); o botão de conta, no canto superior direito, mostra quem está ativo (iniciais, nome e perfil); clique nele para trocar. O menu ⋮, ao lado, tem as demais opções. <b>Consultor</b> não vê projetos confidenciais nem o <b>preço e a margem</b> das propostas; os resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos. <b>Gestor</b> vê tudo. "Meus projetos" mostra os projetos em que o usuário é o responsável ou enviou documento. Serve para testar as permissões; some quando houver login individual.</li>
-      <li><b>Todos os documentos:</b> lista de arquivos da base com tipo e rótulo de confiança.</li>
-      <li><b>Métricas do piloto:</b> indicadores que o comitê usa para avaliar o Radar.</li>
-      <li><b>Registro de atividades</b> (só gestor): quem criou, editou, excluiu ou exportou cada item.</li>
-      <li><b>Tema:</b> Auto (segue o sistema), Claro ou Escuro.</li>
-      <li><b>Processo SDLC:</b> como esta versão foi construída (fases, etapas e gates humanos) e em que ponto a demanda está.</li>
-      <li><b>Como o Radar funciona:</b> a explicação técnica, com os fluxos de extração e busca.</li>
-      <li><b>Sair:</b> encerra a sessão neste navegador. A sessão dura 7 dias.</li>
+      <li><b>Botão de conta</b> (canto superior direito, com iniciais, nome e perfil): mostra quem está ativo e tem o <b>Ver como (demonstração)</b>, que troca entre Consultor (Marina) e Gestor (Thiago). <b>Consultor</b> não vê projetos confidenciais nem o <b>preço e a margem</b> das propostas; os resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos. <b>Gestor</b> vê tudo. Serve para testar as permissões; some quando houver login individual.</li>
+      <li><b>Menu ⋮</b> (ao lado; fecha no X ou com ${kbd('Esc')}): <b>Tema</b> (Auto, Claro ou Escuro), <b>Todos os documentos</b> (arquivos da base com tipo e rótulo de confiança), <b>Métricas do piloto</b>, <b>Registro de atividades</b> (só gestor), <b>Como usar o Radar</b> (este guia), <b>Como o Radar funciona</b> (explicação técnica), <b>Processo SDLC</b> (como a versão foi construída), <b>Versão: notas, feedbacks e testes</b> (novidades, enviar feedback, tickets e roteiro de testes), <b>Política de dados</b> e <b>Sair</b> (a sessão dura 7 dias).</li>
+      <li><b>Coluna de conversas</b>: no rodapé, atalhos para <b>Como usar o Radar</b> e <b>Enviar feedback</b>.</li>
     </ul>
+    ${tip('Na dúvida, pergunte ao próprio Radar: <i>"o que você pode fazer?"</i> ou <i>"como envio um arquivo?"</i>. Ele responde com base neste guia e mostra a seção de onde tirou.')}
     ${tip('Todos os dados desta versão são <b>fictícios</b>. Pode testar à vontade: perguntar, enviar arquivos e editar não afeta nenhum cliente real.')}`],
 
   ['perguntar', 'message', 'Perguntar ao Radar', () => `
     <p>Escreva como falaria com um colega. O Radar entende sinônimos e o sentido da frase: "distribuidora de luz" encontra projetos de <i>Utilities / Energia</i>.</p>
     ${steps([
-      `Clique em ${ui('Perguntar')} e digite no campo de baixo. ${kbd('Enter')} envia.`,
-      'Leia a resposta curta no topo: ela resume as referências e cita os projetos como <b>[P001]</b>.',
-      'Abaixo vêm os <b>cartões de projeto</b>, do mais parecido para o menos. Clique em um cartão para ver o porquê e as fontes.',
-      'Use as ações do cartão para reaproveitar (veja abaixo) e avalie com 👍 ou 👎.',
+      `Clique em ${ui('Perguntar')} e digite no campo de baixo. ${kbd('Enter')} envia (o botão de enviar só acende com texto).`,
+      'Olhe a <b>etiqueta</b> acima da resposta, à direita: ela diz o tipo de resposta (Projetos parecidos, Listagem, Contagem, Ficha, Comparação, Dúvida de uso, Arquivo da conversa…).',
+      'Leia a resposta curta: ela vem em blocos, cita os projetos como <b>[P001]</b> e, quando há referências, traz <b>Recomendação:</b> (o que reaproveitar e os cuidados) e, se os documentos citarem papéis, <b>Perfis sugeridos:</b>.',
+      'Abaixo vêm as tabelas ou os <b>cartões de projeto</b>, do mais parecido para o menos. Clique em um cartão para ver o porquê e as fontes.',
+      'Errou a pergunta? A última pergunta tem um ' + icon('edit', { size: 13 }) + ' lápis: edite e reenvie; a pergunta e a resposta antigas são trocadas.',
     ])}
+    <h4>O que dá para pedir</h4>
+    ${table(['Pedido', 'Exemplo', 'Resposta'], [
+      ['Projetos parecidos', '<i>"Já fizemos fraude em seguros?"</i>', 'Cartões de projeto com o porquê e as fontes'],
+      ['Listar a base', '<i>"Liste os projetos entregues em 2025"</i>', 'Tabela com total e distribuição por status e segmento'],
+      ['Contar e agrupar', '<i>"Quantos projetos por tecnologia?"</i>', 'Lista com a quantidade de cada item'],
+      ['Ficha de um projeto', '<i>"Qual o prazo e o responsável do P003?"</i>', 'Os campos do cadastro (valores só para o gestor)'],
+      ['Comparar', '<i>"Compare o P001 com o P006"</i> ou <i>"compare os dois"</i>', 'Tabela lado a lado'],
+      ['Em etapas', '<i>"Liste os de seguros e compare os dois primeiros"</i>', 'A IA combina as consultas acima'],
+      ['Ler um arquivo', 'Anexe pelo clipe e escreva <i>"resuma"</i>', 'Resumo, perguntas sobre ele e projetos parecidos (veja "Ler um arquivo na conversa")'],
+      ['Dúvida de uso', '<i>"Como favorito uma conversa?"</i>, <i>"o que mudou nesta versão?"</i>', 'Explicação com o trecho deste guia e um botão que abre a seção'],
+    ])}
+    <p>O Radar também conversa: responde a um <i>"olá"</i>, explica <i>"o que você pode fazer?"</i> (em cartões com exemplos, conforme o seu perfil), agradece, pede desculpas e oferece <b>Enviar feedback</b> quando a resposta não ajudou e diz com educação quando algo foge do que ele faz. Se não entender, ele avisa e mostra exemplos do que dá para pedir. Quando a pergunta tem leituras diferentes, ele devolve <b>opções clicáveis</b> ("Pergunta de volta").</p>
     <h4>Bons exemplos de pergunta</h4>
     ${table(['Objetivo', 'Pergunta'], [
       ['Achar referência', '<i>"Propostas de utilities com Databricks"</i>'],
@@ -64,20 +73,25 @@ export const GUIA = [
       ['Aprender com perdas', '<i>"Propostas perdidas e o que aprendemos"</i>'],
       ['Estimar', '<i>"Quanto tempo levou um projeto de churn?"</i> (valores só para gestor)'],
       ['Riscos', '<i>"Que riscos aparecem em projetos de IA generativa?"</i>'],
+      ['Continuar', '<i>"Quais os resultados neles?"</i> (sobre os projetos da resposta anterior)'],
     ])}
     <h4>Como ler um cartão</h4>
     <ul>
-      <li><b>Muito parecido / Parecido / Relacionado:</b> o quanto o projeto combina com a pergunta. Passe o mouse para ver o percentual.</li>
-      <li><b>Por que apareceu:</b> ao abrir o cartão, a frase de justificativa e os fatores (conteúdo, segmento, tecnologias, serviços, porte, status).</li>
+      <li><b>Muito parecido / Parecido / Relacionado</b>, cliente e status no topo; depois segmento (com ícone), prazo e, para o consultor, "preço e margem restritos".</li>
+      <li><b>Por que é parecido</b> (justificativa) e o resumo do projeto.</li>
+      <li>Itens que abrem com a setinha (um por vez): <b>Escopo, resultados e lições</b>; <b>Trechos que sustentam a resposta</b>; <b>Por que apareceu nesta posição</b>, com uma barra por critério mostrando quanto ele somou (de 0 a 100%; passe o mouse para ver nota × peso).</li>
+      <li><b>Tecnologias</b> no fim, clicáveis: abrem ${ui('Projetos')} filtrado por elas.</li>
       <li><b>Fontes:</b> os documentos de onde veio cada informação, com rótulo de confiança: <b>Oficial</b> (proposta aprovada, SOW), <b>Enviado</b> (proposta, case), <b>Interno</b> (estimativa, ata), <b>Informal</b> (transcrição, e-mail), <b>Rascunho</b>.</li>
       <li><b>dados divergentes:</b> dois documentos discordam (ex.: prazo de 5 e de 6 meses). O Radar mostra o valor da fonte mais confiável.</li>
     </ul>
     <h4>Reaproveitar</h4>
     ${table(['Ação', 'O que faz'], [
-      [`${icon('folder', { size: 14 })} Abrir projeto`, 'Abre o detalhe completo, com todos os documentos.'],
+      [`${icon('folder', { size: 14 })} Abrir projeto`, 'Abre a ficha completa, com todos os documentos.'],
       [`${icon('copy', { size: 14 })} Copiar escopo`, 'Copia o título, o cliente e a seção de escopo do projeto para colar na sua proposta.'],
-      [`${icon('duplicate', { size: 14 })} Usar como base`, 'Abre o cadastro de um projeto novo já preenchido com segmento, tecnologias, serviços, prazo e objetivo do escolhido.'],
+      [`${icon('duplicate', { size: 14 })} Usar como base`, 'Abre o cadastro de um projeto novo já preenchido com segmento, tecnologias, serviços, prazo e objetivo do escolhido (gestor).'],
     ])}
+    <h4>Quando não há nada na base</h4>
+    <p>O Radar diz <i>"Não encontrei nada relevante na base"</i> e oferece até 3 <b>buscas próximas</b> como botões, que sempre trazem resultado para o seu perfil. Também aparecem "Explorar projetos" e, se houver, "Perguntar sem o foco" e "Nova conversa".</p>
     <h4>Conversa com memória</h4>
     <p>O Radar lembra as últimas <b>8 perguntas</b> da conversa (aparece "lembrando N perguntas"). Por isso dá para continuar:</p>
     ${steps(['<i>"Projetos de churn em telecom"</i>', '<i>"E em varejo?"</i> (entende que ainda é churn)', '<i>"Detalhe o segundo"</i> (abre o 2º resultado da resposta anterior)'])}
@@ -89,25 +103,46 @@ export const GUIA = [
   ['foco', 'target', 'Proposta em foco', () => `
     <p>Quando você está montando uma proposta, escolha um projeto como <b>foco</b>. A partir daí, cada pergunta considera o cliente, o segmento, as tecnologias, os serviços e o prazo dele, mesmo que você não escreva isso.</p>
     ${steps([
-      `Na ponta esquerda da caixa de pergunta, clique no ícone ${ui(`${icon('target', { size: 13 })} Proposta em foco`)}: ele se abre com a lista de projetos.`,
+      `Na ponta esquerda da caixa de pergunta, clique no ícone de alvo ${icon('target', { size: 13 })}: ele se abre, com uma animação, mostrando "Proposta em foco" e a lista de projetos.`,
       'Digite parte do cliente, do título ou o código (ex.: <i>"energ"</i>, <i>"P012"</i>). A lista filtra enquanto você digita.',
       `Escolha com o mouse, ou com ${kbd('↑')} ${kbd('↓')} e ${kbd('Enter')}. Projetos <b>Em andamento</b> (em elaboração, enviada, em negociação) aparecem primeiro.`,
-      'O botão fica azul com "Foco: " e o nome do cliente (o X ao lado tira o foco), e o chat mostra "Respondendo com foco em…".',
+      'O botão passa a mostrar "Foco: " e o nome do cliente (o X ao lado tira o foco), e o chat mostra "Respondendo com foco em…".',
       'Agora pergunte de forma curta: <i>"algum case parecido?"</i>, <i>"que riscos considerar?"</i>.',
     ])}
     ${flow([['Pergunta curta', '"algum case parecido?"', 'message'], ['+ contexto do foco', 'cliente, segmento, tecnologias, serviços, prazo', 'briefcase', true], ['Busca', 'referências para esse cliente', 'search']])}
     <ul>
       <li>O próprio projeto em foco <b>não aparece</b> nos resultados: você quer referências <i>para</i> ele.</li>
+      <li>Com foco, um arquivo anexado pelo clipe <b>vai direto para esse projeto</b> (para revisão e aprovação).</li>
       <li>Para voltar à busca geral, clique no ✕ da faixa azul ou escolha <b>Sem foco</b>.</li>
       <li>O foco fica salvo na conversa e volta quando você a reabre.</li>
     </ul>`],
 
+  ['arquivo', 'paperclip', 'Ler um arquivo na conversa', () => `
+    <p>Recebeu um documento e quer entender rápido o que é, ou saber se já fizemos algo parecido? Anexe na conversa: o Radar <b>lê, resume e responde sobre ele</b>, sem colocar nada na base.</p>
+    ${flow([['Anexar', 'clipe ao lado da caixa', 'paperclip'], ['Radar lê', 'tipo, cliente, tema, prazo, pontos, tecnologias', 'cpu', true], ['Conversar', 'perguntas e projetos parecidos', 'message'], ['Base?', 'só se você pedir', 'upload']])}
+    ${steps([
+      `Sem proposta em foco, clique no clipe ${icon('paperclip', { size: 13 })} e escolha o arquivo. Ele aparece como etiqueta acima da caixa de texto (o X tira).`,
+      'Escreva o que quer, por exemplo <i>"leia esse arquivo"</i> ou <i>"resuma"</i>, e aperte Enter (enviar só o arquivo também vale como "resuma"). Aparece "Lendo o arquivo…".',
+      'A resposta diz o que é o documento e mostra um cartão com o tema, o tipo, o cliente, o prazo, os pontos principais e as tecnologias.',
+      'Continue: <i>"quais os riscos?"</i>, <i>"qual o prazo?"</i> (a resposta mostra o trecho do arquivo) ou clique em <b>Buscar projetos parecidos</b>.',
+      'Quer guardar na base? Clique em <b>Enviar para um projeto</b> ou diga <i>"coloca no projeto P003"</i>. Se o nome combinar com mais de um projeto, o Radar mostra as opções para você escolher; nada é enviado antes disso. O gestor também vê <b>Criar projeto com este arquivo</b>.',
+    ])}
+    ${tip('O arquivo fica <b>só nesta conversa</b> e só para você: não entra na base, não aparece para outras pessoas e é apagado junto com a conversa. Dados pessoais são mascarados antes de qualquer leitura pela IA.', 'warn')}
+    <ul>
+      <li>Formatos e limite iguais aos do envio: PDF com texto, PPTX, DOCX, XLSX, CSV, TXT, MD, HTML, EML, VTT, SRT e JSON, até 15 MB; até 5 arquivos por conversa.</li>
+      <li>Arquivo muito longo: o Radar lê o começo e o fim e avisa no cartão.</li>
+      <li>Numa conversa nova, os arquivos que ainda estiverem anexados são lidos de novo.</li>
+    </ul>`],
+
   ['conversas', 'bookmark', 'Conversas salvas', () => `
-    <p>Toda conversa é <b>salva automaticamente</b> na primeira pergunta. A lista fica à esquerda (no celular, no botão ${icon('sidebar', { size: 14 })}).</p>
+    <p>Toda conversa é <b>salva automaticamente</b> na primeira pergunta. A lista fica à esquerda (no celular, no botão ${icon('sidebar', { size: 14 })}), em caixas: <b>Favoritas</b>, <b>Grupos</b>, <b>Arquivadas</b> e <b>Recentes</b>. As três primeiras abrem e fecham clicando no título, e o Radar lembra como você deixou; "Recentes" fica sempre visível, com rolagem própria.</p>
     ${table(['Quero…', 'Como'], [
-      ['Renomear', `Clique no título no topo do chat, edite e aperte ${kbd('Enter')}.`],
-      ['Favoritar', 'Clique na ⭐. As favoritas ficam no topo da lista, antes das recentes.'],
-      ['Encontrar uma conversa', 'Use "Buscar conversas" na lista.'],
+      ['Renomear', `Clique no lápis ao lado do título, no topo do chat, edite e aperte ${kbd('Enter')} (${kbd('Esc')} cancela). Também pelo menu ⋯ da conversa.`],
+      ['Favoritar', 'Passe o mouse na conversa e clique na ⭐ (ela fica fixa nas favoritas).'],
+      ['Organizar por cliente ou proposta', 'Menu ⋯ da conversa → <b>Mover para grupo</b> (nome livre). Os grupos só organizam a lista; não limitam a busca.'],
+      ['Tirar da frente sem apagar', 'Menu ⋯ → <b>Arquivar</b>. Ela vai para a caixa "Arquivadas".'],
+      ['Apagar', 'Menu ⋯ → <b>Excluir</b> e confirme na janela. Arquivos lidos nela são apagados junto.'],
+      ['Encontrar uma conversa', 'Use "Buscar conversas" no alto da lista.'],
       ['Continuar de onde parou', 'Abra a conversa: a memória e o foco voltam junto.'],
       ['Começar do zero', `${ui('Nova conversa')}.`],
     ])}`],
@@ -122,17 +157,20 @@ export const GUIA = [
       '<b>Facetas:</b> segmento, status, tecnologias, serviços e tipo de documento, com a contagem de projetos. Em tecnologias e serviços, <i>todas</i> exige todas as marcadas e <i>qualquer</i> aceita uma delas.',
       '<b>Ordenar:</b> relevância, recentes, prazo, valor, A–Z ou número de documentos.',
     ])}
+    <p>O painel de filtros aplica na hora e fecha em <b>Ver N projetos</b> (ou ${kbd('Esc')}). Os filtros ativos viram <b>etiquetas</b> acima da lista, cada uma com X, e "Limpar tudo". Filtros vindos do chat ou dos Insights (ex.: clicar numa tecnologia) aparecem do mesmo jeito.</p>
     ${tip('Os filtros se somam. Se nada aparecer, use "Limpar filtros" ou "Perguntar ao Radar", que busca pelo significado.')}
+    <p>O card do projeto mostra mês e ano e, quando há arquivos esperando aprovação, "N para aprovar". O gestor tem ${ui('+ Projeto')} e ${ui('Novo a partir de arquivo')} ao lado da busca.</p>
     <h4>Detalhe do projeto</h4>
     <p>Clique em um cartão para abrir o detalhe em tela grande:</p>
     <ul>
       <li><b>Topo:</b> prazo, valor e margem (gestor), responsável, data, número de documentos e quanto do cadastro está completo.</li>
       <li><b>Conteúdo:</b> objetivo, contexto, resultados, lições e riscos, cada um com o trecho e o documento de origem.</li>
-      <li><b>Documentos:</b> resumo, tipo, status, palavras-chave e autor. ${icon('edit', { size: 13 })} <b>Editar informações</b> e ${icon('download', { size: 13 })} <b>Baixar</b> (para o consultor, valores saem ocultos).</li>
+      <li><b>Documentos:</b> resumo, tipo, status, palavras-chave e autor. ${icon('edit', { size: 13 })} <b>Editar informações</b> e ${icon('download', { size: 13 })} <b>Baixar original</b>, no formato em que foi enviado (para o consultor, valores saem ocultos).</li>
+      <li><b>Enviar arquivo:</b> bloco discreto acima de "Comentários e histórico", com os envios "Aguardando aprovação" (veja "Enviar documentos").</li>
       <li><b>Lateral:</b> ficha, tecnologias, serviços, pessoas, organizações, palavras-chave, projetos parecidos e o que falta no cadastro (tecnologias, palavras-chave e projetos parecidos vêm recolhidos).</li>
       <li><b>Editar no lugar:</b> passe o mouse num campo e clique no lápis; Enter salva, Esc cancela. Tecnologias e serviços editam no card: o consultor escolhe entre as opções existentes; o gestor também cria novas.</li>
-      <li><b>Comentários e histórico:</b> no fim da coluna principal, comentários em balões e cada alteração num cartão com antes → depois.</li>
-      <li><b>Ações:</b> ${icon('download', { size: 13 })} <b>Exportar</b> (apresentação ou resumo executivo), Perguntar sobre o projeto, Usar como base (gestor), Enviar documento para ele, Editar tudo num formulário e, só para o gestor, Excluir (com confirmação).</li>
+      <li><b>Comentários e histórico:</b> no fim da coluna principal, escreva um comentário e veja comentários em balões e cada alteração num cartão com antes → depois, 5 por vez ("Mostrar mais").</li>
+      <li><b>Ações:</b> ${icon('download', { size: 13 })} <b>Exportar</b> (apresentação ou resumo executivo), Perguntar sobre o projeto, Usar como base (gestor), Editar tudo num formulário (lápis no alto) e, só para o gestor, Excluir (com confirmação).</li>
       <li><b>Ficha:</b> mostra quem criou o projeto e quando.</li>
     </ul>
     <h4>Cadastrar projeto (só gestor)</h4>
@@ -146,13 +184,14 @@ export const GUIA = [
     ${tip('Toda edição de projeto ou documento fica em <b>Comentários e histórico</b>, na ficha (quem, quando, antes e depois).')}`],
 
   ['enviar', 'upload', 'Enviar documentos', () => `
-    <p>Envie o arquivo e o Radar faz o trabalho pesado. Você só confere e completa.</p>
-    ${flow([['Enviar', 'no projeto ou na conversa', 'upload'], ['Radar lê', '7 etapas automáticas', 'cpu'], ['Você revisa', 'confere e completa', 'eye', true], ['Na base', 'aparece no chat e em Projetos', 'checkCircle']])}
+    <p>Envie o arquivo e o Radar faz o trabalho pesado. Você só confere e aprova.</p>
+    ${flow([['Enviar', 'no projeto ou na conversa', 'upload'], ['Radar lê', '7 etapas automáticas', 'cpu'], ['Você confere', 'cartão e "Mais detalhes"', 'eye', true], ['Na base', 'aparece no chat e em Projetos', 'checkCircle']])}
     <h4>1. Enviar</h4>
     <ul>
-      <li><b>Onde:</b> o envio acontece sempre dentro de um projeto — no bloco ${ui(`${icon('upload', { size: 13 })} Enviar arquivo`)} da ficha (acima de "Comentários e histórico") ou pelo clipe da conversa (com "Proposta em foco", o arquivo vai direto para ela; sem foco, diga o projeto). O gestor também cria um projeto novo a partir de um arquivo (${ui('Novo a partir de arquivo')}, em Projetos, ou pela conversa).</li>
-      <li><b>Formatos:</b> PDF (com texto, não imagem escaneada), PPTX, DOCX, XLSX e também CSV, TXT, MD, HTML, EML, VTT, SRT e JSON. Até <b>15 MB</b> cada, vários de uma vez.</li>
-      <li><b>Aprovar:</b> cada arquivo vira um cartão (na ficha, em "Aguardando aprovação", e na conversa) com o que o Radar leu e os pontos para conferir. "Aprovar" usa o que o Radar leu; "Mais detalhes" abre a revisão completa numa janela; com vários prontos, "Aprovar os prontos".</li>
+      <li><b>Na ficha do projeto:</b> bloco ${ui(`${icon('upload', { size: 13 })} Enviar arquivo`)}, acima de "Comentários e histórico". Clique em "escolha" ou arraste os arquivos.</li>
+      <li><b>Pela conversa:</b> com "Proposta em foco", o arquivo anexado pelo clipe vai direto para ela. Sem foco, o arquivo fica só na conversa (o Radar pode lê-lo, veja "Ler um arquivo na conversa") até você dizer o projeto: <i>"coloca no projeto P003"</i>. Com o código o envio é direto; com um nome (<i>"o projeto de energia"</i>) o Radar mostra os projetos possíveis para você escolher.</li>
+      <li><b>Projeto novo (só gestor):</b> ${ui('Novo a partir de arquivo')}, em Projetos, ou "Criar projeto com este arquivo", na conversa: o Radar preenche os campos do projeto para você conferir.</li>
+      <li><b>Formatos:</b> a linha do bloco começa pelos mais comuns: PDF (com texto, não imagem escaneada), PPTX, DOCX, XLSX e depois CSV, TXT, MD, HTML, EML, VTT, SRT e JSON. Até <b>15 MB</b> cada, vários de uma vez. Formato não aceito é avisado antes do envio; envio com erro tem "Trocar arquivo" e "Remover da lista".</li>
     </ul>
     <h4>2. O que o Radar faz sozinho</h4>
     ${table(['Etapa', 'O que acontece'], [
@@ -160,19 +199,18 @@ export const GUIA = [
       ['Texto', 'Extrai o texto e as propriedades (título, autor, data, páginas, slides).'],
       ['Regras', 'Identifica tipo, cliente, segmento, tecnologias, serviços, prazo, valor, datas, pessoas, riscos, lições e dados pessoais.'],
       ['IA', 'A DeepSeek complementa pelo significado. O que ela "inventar" e não estiver no texto é descartado.'],
-      ['Projeto', 'Sugere em qual projeto o documento entra ou propõe criar um novo.'],
+      ['Projeto', 'Usa o projeto em que você enviou (ou sugere um, quando é projeto novo).'],
       ['Conflitos', 'Bloqueia arquivo idêntico e avisa se prazo, valor ou cliente divergem do projeto.'],
       ['Qualidade', 'Calcula quantos % dos campos ficaram preenchidos.'],
     ])}
-    <h4>3. Revisar (a parte humana)</h4>
+    <h4>3. Conferir e aprovar (a parte humana)</h4>
     ${steps([
-      'Leia o resumo no topo: <b>Tudo certo</b> (dá para aprovar com um clique) ou <b>N pontos de atenção</b>.',
+      'Cada arquivo vira um <b>cartão</b> (na ficha, em "Aguardando aprovação", e na conversa) com o que o Radar leu e a situação: <b>tudo certo</b> ou <b>N pontos para conferir</b>. O card do projeto em <span class="ui">Projetos</span> mostra quantos arquivos aguardam aprovação.',
+      'No cartão: <b>Aprovar</b> (usa o que o Radar leu), <b>Descartar</b> (não grava nada) ou <b>Mais detalhes</b>, que abre a janela "Conferir e aprovar" (com vários arquivos, "1 de N").',
+      'Na janela: tipo, título e acesso; <b>Vai para</b> (o projeto de destino, com opção de trocar); <b>Atualizar a ficha do projeto</b> (marque o que o arquivo traz de diferente: prazo, data e, para o gestor, valor e margem). O resto fica recolhido em "Mais detalhes".',
       'Campos marcados com <em class="confira">confira</em> têm baixa confiança. Passe o mouse para ver o trecho que gerou a sugestão. Botões cinza abaixo do campo são <b>alternativas</b> que você aplica com um clique.',
-      '<b>Em qual projeto entra?</b> Escolha uma sugestão (com % de compatibilidade), outro projeto, ou <b>Criar projeto novo</b> (já vem preenchido).',
-      '<b>Sobre o documento:</b> autor, versão, link do original, <b>por que é relevante</b> (essa nota entra na busca) e ⭐ <b>bom modelo para reaproveitar</b>.',
-      `<b>Tecnologias e serviços:</b> confirme ou ajuste. "Adicionar ao projeto" leva os novos itens para a ficha do projeto.`,
-      `<b>Pessoas, resultados, lições e riscos:</b> remova com ✕ o que não procede e acrescente o que faltou (digite e ${kbd('Enter')}).`,
-      '<b>Aprovar e indexar</b> grava e coloca o documento na busca. <b>Descartar</b> não grava nada.',
+      `Em "Mais detalhes": autor, versão, link do original, <b>por que é relevante</b> (essa nota entra na busca), ⭐ <b>bom modelo para reaproveitar</b>, tecnologias e serviços, e pessoas, resultados, lições e riscos (remova com ✕ e acrescente digitando e ${kbd('Enter')}).`,
+      'Com vários arquivos prontos e sem pontos para conferir, <b>Aprovar os N prontos</b> aprova todos de uma vez.',
     ])}
     ${tip('Cada correção que você faz é registrada para medir onde a leitura automática erra. Corrigir é tão valioso quanto aprovar.')}
     ${tip('Documento que se declara confidencial só pode ser aprovado por quem tem acesso a confidencial (gestor).', 'warn')}`],
@@ -205,41 +243,61 @@ export const GUIA = [
     <p>Visão agregada do que o seu perfil enxerga: números grandes no topo (projetos, <b>conversão</b>, segmentos e tecnologias), o <b>funil</b> das propostas por status, o <b>top 10</b> de segmentos e de tecnologias, projetos <b>por ano</b>, tecnologias que <b>andam juntas</b>, <b>resultados comprovados</b> e <b>lições de propostas perdidas</b>. Passe o mouse numa barra para ver o detalhe e clique num item para abrir ${ui('Projetos')} já filtrado. A <b>saúde da base</b> (documentos por tipo, envios a revisar e pendências de cadastro) fica recolhida no fim.</p>
     <h4>Métricas do piloto (menu ${icon('menu', { size: 14 })})</h4>
     ${table(['Indicador', 'O que mede'], [
-      ['Buscas e sessões', 'Uso do Radar.'],
-      ['% úteis (e no top 3)', 'Quantas avaliações foram 👍, geral e só nos 3 primeiros resultados.'],
+      ['Buscas', 'Perguntas feitas no chat (passe o mouse para ver o número de conversas).'],
       ['Sem resultado', 'Perguntas em que a base não tinha evidência: lacunas de conteúdo.'],
-      ['Tempo até a 1ª referência útil', 'Da primeira pergunta ao primeiro 👍 da sessão.'],
-      ['Reaproveitamentos', 'Cliques em Abrir projeto, Copiar escopo e Usar como base.'],
+      ['Úteis entre os 3 primeiros', 'Quantas avaliações dos 3 primeiros resultados foram 👍 (e o % geral na dica).'],
+      ['Até a 1ª referência útil', 'Da primeira pergunta ao primeiro 👍 da conversa.'],
+      ['Reaproveitamentos', 'Cliques em Abrir projeto, Copiar escopo e Usar como base a partir de uma resposta.'],
+      ['Fontes abertas', 'Documentos de origem abertos (e fichas abertas, na dica).'],
+      ['Tempo de resposta', 'Tempo médio até a resposta do chat.'],
       ['Por que não ajudou', 'Motivos dos 👎.'],
+      ['O que pedem ao chat', 'Perguntas por tipo de pedido (parecidos, listagem, conversa, dúvida de uso, arquivo…) e quantas ficaram sem resposta.'],
     ])}`],
 
   ['permissoes', 'lock', 'Permissões e privacidade', () => `
     ${table(['', 'Consultor', 'Gestor'], [
       ['Documentos públicos e internos', '✔', '✔'],
       ['Documentos e projetos confidenciais', '—', '✔'],
-      ['Valores e margens', 'ocultos (inclusive no download)', '✔'],
+      ['Preço e margem das propostas', 'ocultos (inclusive no download)', '✔'],
+      ['Editar campos da ficha e comentar', '✔', '✔'],
       ['Classificar algo como confidencial', '—', '✔'],
-      ['Cadastrar projeto e cliente novo', '—', '✔'],
-      ['Criar tecnologia ou serviço novo', 'sugere ao gestor', '✔'],
+      ['Cadastrar projeto e cliente novo (inclusive a partir de um arquivo)', '—', '✔'],
+      ['Excluir projeto', '—', '✔'],
+      ['Criar tecnologia ou serviço novo', 'escolhe entre os existentes', '✔'],
       ['Exportar apresentação e resumo', '✔ (sem valores)', '✔'],
       ['Consultar o registro de atividades', '—', '✔'],
     ])}
     <ul>
       <li>O filtro de permissão é aplicado <b>antes</b> da busca e da IA: um conteúdo que você não pode ver nunca entra na resposta.</li>
-      <li>Dados pessoais (CPF, CNPJ, e-mail, telefone) são detectados no envio e aparecem mascarados.</li>
+      <li>Dados pessoais (CPF, CNPJ, e-mail, telefone) são detectados no envio, nas perguntas e nos arquivos lidos na conversa e aparecem mascarados.</li>
       <li>O acesso de um documento nunca fica mais aberto que o do projeto dele.</li>
+      <li>Arquivo lido na conversa é só de quem anexou e é apagado junto com a conversa.</li>
     </ul>`],
 
   ['duvidas', 'info', 'Dúvidas frequentes', () => `
     ${table(['Situação', 'O que fazer'], [
       ['A resposta trouxe projetos que não têm nada a ver.', 'Dê 👎 com o motivo. Reformule com mais contexto (segmento, objetivo) ou use o foco.'],
-      ['"Não há evidência suficiente na base."', 'A base não tem esse assunto. Vale enviar documentos sobre ele.'],
+      ['"Não encontrei nada relevante na base."', 'A base não tem esse assunto. Experimente as buscas próximas sugeridas ou envie documentos sobre ele.'],
+      ['O Radar disse que não entendeu.', 'Escreva o assunto (cliente, segmento, tecnologia ou problema) ou use um dos exemplos que ele mostrou.'],
       ['Mudei de assunto e as respostas ficaram estranhas.', 'A memória da conversa ainda está ativa: clique no ✕ de "lembrando N perguntas".'],
+      ['Anexei um arquivo e quero só entender o que ele é.', 'Escreva "resuma" ou "leia esse arquivo": nada vai para a base sem você pedir.'],
       ['Não acho um projeto em Projetos.', 'Limpe os filtros. Se for confidencial, o perfil consultor não o vê.'],
       ['Enviei um PDF e não veio texto.', 'Provavelmente é uma imagem escaneada. O V0 não faz OCR: envie a versão em Word ou PDF com texto.'],
       ['O Radar diz que o arquivo já existe.', 'Um arquivo idêntico já está na base. Abra o projeto para encontrá-lo.'],
-      ['Aparece "Modo regras" ou "resposta direta da base".', 'A resposta foi montada pelas regras e pela busca por palavras do Radar, direto dos dados da base. Repita a pergunta para ter a resposta com a análise da IA.'],
+      ['Aparece "resposta direta da base".', 'A resposta foi montada pelas regras e pela busca por palavras do Radar, direto dos dados da base. Repita a pergunta para ter a resposta com a análise da IA.'],
+      ['Encontrei um problema ou tenho uma ideia.', 'Use "Enviar feedback" (rodapé da coluna de conversas ou menu ⋮ → Versão). Você recebe um código CR-NNN para acompanhar em Tickets.'],
     ])}`],
+
+  ['versao', 'sparkles', 'Novidades, feedback e testes', () => `
+    <p>No menu ⋮, <b>Versão: notas, feedbacks e testes</b> reúne o que mudou e o acompanhamento da qualidade.</p>
+    ${table(['Seção', 'Para que serve'], [
+      ['Notas da versão', 'O que entrou em cada versão, com o antes e o depois de cada item e os tickets ligados.'],
+      ['Enviar feedback', 'Conte o que aconteceu (onde, tipo e descrição) e anexe até algumas capturas de tela (também com Ctrl+V). A IA descreve as imagens. Cada envio vira um ticket com código (ex.: CR-053).'],
+      ['Tickets', 'Lista ou kanban de tudo o que foi relatado. Na lista, clicar na linha mostra a descrição e a proposta de solução; clicar no código ou no título abre o ticket. Filtros em campos de seleção (Situação, Prioridade, Área, Tipo, Aberto na versão, Aberto por). No kanban, o fluxo fica em cima e "Não priorizado no MVP" e "Não procede" ficam separados embaixo; cada coluna mostra 5 cartões e "Mostrar mais" carrega mais.'],
+      ['Roteiro de testes', 'Cenários passo a passo por tela, com seletor de versão. Abra um cenário, siga o passo a passo, escreva o seu nome e marque OK, Falhou ou Bloqueado. Uma falha abre um ticket; um OK num cenário que retesta um ticket valida esse ticket.'],
+      ['Acompanhamento', 'Andamento do roteiro da versão (por prioridade, área e analista) e os tickets por situação.'],
+    ])}
+    ${tip('Versões anteriores ficam arquivadas: dá para consultar o roteiro e os resultados delas, mas não registrar.')}`],
 ];
 
 // ---------- Como o Radar funciona (técnico) ----------
@@ -360,7 +418,7 @@ export const TECNICO = [
     ], { vertical: true })}
     <h4>1. Entendimento</h4>
     <p>A DeepSeek recebe a pergunta, o histórico e o foco e devolve um JSON com a <b>intenção</b>, a <b>consulta reescrita</b> sem ambiguidade (ex.: "e em varejo?" → "projetos de churn em varejo") e as entidades, escolhidas apenas do vocabulário controlado.</p>
-    <p>Cada intenção tem uma resposta própria. Só <i>buscar</i> segue para a busca de projetos parecidos descrita abaixo:</p>
+    <p>As capacidades do chat ficam num <b>registro de skills</b> (<code>src/skills/</code>): cada skill declara a intenção, quando usar, o que mostra em "o que você pode fazer?" (por perfil) e frases de exemplo, testadas automaticamente. Casos claros (saudação, agradecimento, dúvida de uso, pedidos sobre o arquivo anexado) são resolvidos por regras <b>antes</b> da IA. Cada intenção tem uma resposta própria; só <i>buscar</i> segue para a busca de projetos parecidos descrita abaixo:</p>
     ${table(['Intenção', 'Exemplo', 'Como responde'], [
       ['<b>buscar</b>', '"Já fizemos fraude em seguros?"', 'Busca híbrida, score e análise da IA (passos 2 a 5).'],
       ['<b>listar</b>', '"Consolidado de todos os projetos"', 'Consulta ao banco com filtros e permissões: total, tabela e distribuição por status e segmento.'],
@@ -369,6 +427,10 @@ export const TECNICO = [
       ['<b>comparar</b>', '"Compare o P001 com o P002", "compare os dois"', 'Tabela lado a lado dos projetos citados ou mostrados na resposta anterior.'],
       ['<b>composta</b>', '"Liste os de varejo e compare os dois"', 'A IA chama ferramentas (listar, contar, localizar, ficha, parecidos, trechos), no máximo 4, em até 20 s. O servidor executa cada uma com as permissões do usuário.'],
       ['<b>esclarecer</b>', 'Pergunta com leituras realmente diferentes', 'Devolve 2 ou 3 opções clicáveis. Nunca duas vezes seguidas.'],
+      ['<b>conversa</b>', '"olá", "o que você pode fazer?", "valeu"', 'Respostas por modelo (sem IA): saudação, capacidades do registro filtradas por perfil, agradecimento, crítica (com "Enviar feedback"), fora do escopo e "não entendi".'],
+      ['<b>ajuda</b>', '"como favorito uma conversa?"', 'Busca (BM25) na base de ajuda, gerada deste guia e das notas da versão, e a IA resume só com os trechos achados, citando a seção.'],
+      ['<b>anexo</b>', '"leia esse arquivo", "qual o prazo?"', 'Usa o arquivo anexado na conversa: resumo (regras + IA), perguntas respondidas com o trecho do arquivo, ou o resumo como consulta da busca de parecidos.'],
+      ['<b>enviar_arquivo</b>', '"coloca no projeto P003"', 'O servidor decide o destino: código é certeza, nome vira opções para confirmar, foco vale se nada for citado.'],
     ])}
     <p>Sem IA, regras de palavras-chave fazem a mesma classificação. Números, listas e fichas sempre vêm do banco; a IA só escreve a síntese. O conjunto de avaliação fica em <code>test/avaliacao-intencoes.js</code>.</p>
     <h4>2. Recuperação híbrida</h4>
@@ -418,6 +480,7 @@ export const TECNICO = [
       <li><b>Segredos:</b> a chave da IA fica só no servidor (arquivo com acesso restrito), nunca no navegador.</li>
       <li><b>Mascaramento:</b> CPF, RG, e-mail, telefone, cartão, senhas e chaves são trocados por marcadores no servidor antes de gravar, indexar ou enviar texto à DeepSeek (envio, cadastro, sugestão, edição e perguntas). O envio nunca é bloqueado; o registro guarda só o tipo e a quantidade.</li>
       <li><b>Termo de uso:</b> aceito uma vez por perfil e por versão, na tela de boas-vindas.</li>
+      <li><b>Arquivo lido na conversa:</b> o texto extraído é mascarado e guardado só para a conversa de quem anexou; é apagado quando a conversa é excluída (e, na partida do servidor, os de conversas que não existem mais).</li>
       <li><b>Dados:</b> no piloto, use documentos de exemplo ou públicos.</li>
     </ul>
     <h4>Limites conhecidos (V0)</h4>
@@ -426,6 +489,7 @@ export const TECNICO = [
       ['Base vetorial em JSON, reconstruída a cada alteração.', 'Chroma ou pgvector com atualização incremental.'],
       ['Login único compartilhado; "Ver como" simula perfis.', 'SSO corporativo com perfil real por pessoa.'],
       ['Sem OCR para PDFs escaneados.', 'Etapa de OCR no pipeline de extração.'],
+      ['A busca na ajuda e no arquivo anexado é por palavras (BM25, com sinônimos do produto).', 'Usar o mesmo modelo de embeddings da base quando ele for trocado.'],
       ['Um único servidor pequeno.', 'Infra dimensionada para o volume real.'],
     ])}`],
 ];

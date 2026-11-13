@@ -6,7 +6,7 @@ import { PERSONA } from './persona.js';
 
 // Pergunta de uso: começa como dúvida e fala de uma parte do produto (telas, botões, envio, permissões…).
 const DUVIDA_RE = /^(como|onde|quem pode|quem consegue|o que (e|eh|significa|quer dizer)|pra que serve|para que serve|posso|da (pra|para)|tem como|consigo|existe|qual a diferenca)\b/;
-const PRODUTO_RE = /\b(radar|conversas?|favorit\w*|grupos?|arquiv(ar|ada|adas|o morto)|proposta em foco|foco|envi(ar|o|ou)\w*|anex\w*|upload|clipe|export\w*|planilha|excel|insights?|ficha|edit\w*|exclu\w*|apag\w*|permiss\w*|perfil|perfis|gestor|consultor|tema|modo escuro|escuro|claro|login|sair|sessao|tickets?|feedback|roteiro|versao|novidades?|tela|botao|menu|filtros?|kanban|aprova\w*|revis\w*|historico|comentar\w*|coment\w*|tags?|termo|privacidade|dados sensiveis|mascar\w*|metricas|atividades|registro de atividades|cards?|cartoes?|lista de projetos|novo projeto|criar projeto|cadastr\w*|documentos?)\b/;
+const PRODUTO_RE = /\b(radar|conversas?|favorit\w*|grupos?|arquiv(ar|ada|adas|o morto)|proposta em foco|foco|envi(ar|o|ou)\w*|anex\w*|upload|clipe|export\w*|planilha|excel|insights?|ficha|edit\w*|exclu\w*|apag\w*|permiss\w*|perfil|perfis|gestor|consultor|tema|modo escuro|escuro|claro|login|sair|sessao|tickets?|feedback|roteiro|versao|novidades?|tela|botao|menu|filtros?|kanban|aprov\w*|revis\w*|report\w*|relatar|bugs?|historico|comentar\w*|coment\w*|tags?|termo|privacidade|dados sensiveis|mascar\w*|metricas|atividades|registro de atividades|cards?|cartoes?|lista de projetos|novo projeto|criar projeto|cadastr\w*|documentos?)\b/;
 const NOVIDADES_RE = /\b(o que (mudou|ha de novo|tem de novo|e novo)|novidades?|notas da versao|ultima versao|nesta versao|nessa versao|versao atual)\b/;
 
 export function ehDuvidaDeUso(query) {
@@ -29,9 +29,13 @@ const SINONIMOS = [
   [/\bfavorit\w*/, 'favorita estrela conversas salvas'],
   [/\b(anex\w*|clipe)\b/, 'clipe anexar arquivo conversa enviar'],
   [/\b(exclu\w*|apag\w*|remov\w*)\b/, 'excluir apagar'],
-  [/\b(permiss\w*|perfil|perfis|consultor|gestor|preco|margem|confidencia\w*)\b/, 'permissões perfil consultor gestor preço margem confidencial'],
+  [/\b(quem pode|quem consegue|permiss\w*|perfil|perfis|consultor|gestor|preco|margem|confidencia\w*)\b/, 'permissões perfil consultor gestor preço margem confidencial'],
   [/\b(export\w*|pdf|pptx|docx|word|powerpoint)\b/, 'exportar formato modelo PDF PPTX DOCX'],
   [/\b(foco|focad\w*)\b/, 'proposta em foco'],
+  [/\b(edit\w*|alter\w*|corrig\w*|mud(ar|o|e) (o|um|a) (campo|prazo|responsavel|status))\b/, 'editar no lugar lápis campo ficha Enter salva'],
+  [/\b(grupos?|arquiv(ar|ada|adas)|renome\w*|organiz\w*)\b/, 'mover para grupo arquivar renomear menu conversas'],
+  [/\b(tickets?|feedback|problema|bug|roteiro|testes?|cenarios?)\b/, 'enviar feedback tickets roteiro de testes versão'],
+  [/\b(ler|leia|resum\w*|entender) (um |o |esse |este )?(arquivo|documento)\b/, 'ler um arquivo na conversa clipe resumo'],
 ];
 const expandir = (query) => {
   const norm = normalize(query);

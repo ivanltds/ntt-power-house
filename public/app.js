@@ -561,9 +561,14 @@ async function loadMetrics() {
     tile('eye', 'fontes abertas', m.aberturasDeFonte, `${m.aberturasDeDetalhe} detalhes abertos`),
     tile('gauge', 'tempo de resposta', m.tempoMedioRespostaMs != null ? `${(m.tempoMedioRespostaMs / 1000).toFixed(1)}s` : '—'),
   ].join('');
-  $('#metrics-extra').innerHTML = m.motivosNaoUtil?.length
+  // Adendo 6: o que as pessoas pedem ao chat (por skill) e onde ele fica sem resposta.
+  const SKILL = { buscar: 'Projetos parecidos', listar: 'Listagem', agregar: 'Contagem', ficha: 'Ficha do projeto', comparar: 'Comparação', composta: 'Resposta em etapas', detalhar: 'Detalhe de um resultado', conversa: 'Conversa (saudação, ajuda, não entendi)', ajuda: 'Dúvida de uso', anexo: 'Arquivo da conversa', enviar_arquivo: 'Envio de arquivo', esclarecer: 'Pergunta de volta', fora_dominio: 'Fora do escopo' };
+  $('#metrics-extra').innerHTML = (m.motivosNaoUtil?.length
     ? `<section class="panel"><h4>${icon('thumbsDown', { size: 17 })}Por que não ajudou</h4><table class="tbl">${m.motivosNaoUtil.map((x) => `<tr><td>${esc(x.valor)}</td><td class="num">${x.n}</td></tr>`).join('')}</table></section>`
-    : '';
+    : '')
+    + (m.porSkill?.length
+      ? `<section class="panel"><h4>${icon('message', { size: 17 })}O que pedem ao chat</h4><table class="tbl"><thead><tr><th>Tipo de pedido</th><th class="num">Perguntas</th><th class="num">Sem resposta</th></tr></thead>${m.porSkill.map((x) => `<tr><td>${esc(SKILL[x.skill] ?? x.skill)}</td><td class="num">${x.n}</td><td class="num">${x.semResposta}</td></tr>`).join('')}</table></section>`
+      : '');
   const b = state.ctx.base;
   $('#base-info').textContent = `${b.projetos} projetos · ${b.documentos} documentos · ${b.trechos} trechos · ${b.banco}`;
 }
