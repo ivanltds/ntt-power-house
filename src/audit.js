@@ -53,6 +53,7 @@ export class AuditLog {
       pergunta: result.query,
       consulta: result.entendimento?.consulta ?? result.query,
       intencao: result.entendimento?.intencao ?? 'buscar',
+      skill: result.entendimento?.skill ?? result.entendimento?.intencao ?? 'buscar',
       confianca: result.entendimento?.confianca ?? null,
       tipoResposta: result.tipoResposta ?? 'semelhantes',
       ferramentas: result.ferramentas ?? undefined,

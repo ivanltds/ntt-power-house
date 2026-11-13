@@ -355,31 +355,7 @@ const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // ---------- Catálogo para a IA (opção C) ----------
 
-const FILTROS_SCHEMA = (vocab) => ({
-  type: 'object',
-  description: 'Filtros opcionais. Use só valores das listas.',
-  properties: {
-    segmentos: { type: 'array', items: { type: 'string', enum: vocab.segmentos } },
-    tecnologias: { type: 'array', items: { type: 'string', enum: vocab.tecnologias } },
-    servicos: { type: 'array', items: { type: 'string', enum: vocab.servicos } },
-    status: { type: 'array', items: { type: 'string', enum: STATUS_PROPOSTA } },
-    cliente: { type: 'string', description: 'Parte do nome do cliente' },
-    anoDe: { type: 'integer' },
-    anoAte: { type: 'integer' },
-  },
-});
-
-export function toolSchemas(vocab) {
-  const fn = (name, description, properties, required = []) => ({ type: 'function', function: { name, description, parameters: { type: 'object', properties, required } } });
-  return [
-    fn('listar_projetos', 'Lista projetos da base com filtros. Devolve o total, até 20 projetos e a distribuição por status e segmento.', { filtros: FILTROS_SCHEMA(vocab) }),
-    fn('contar_por', 'Conta projetos agrupados por um campo (lista distinta com quantidade).', { campo: { type: 'string', enum: Object.keys(AGRUPAVEIS) }, filtros: FILTROS_SCHEMA(vocab) }, ['campo']),
-    fn('localizar_projeto', 'Acha projetos pelo código (P001), pelo título ou pelo nome do cliente.', { nome: { type: 'string' } }, ['nome']),
-    fn('ficha_projeto', 'Campos cadastrados de um projeto. Use depois de localizar_projeto.', { projeto_id: { type: 'string' }, campos: { type: 'array', items: { type: 'string', enum: Object.keys(CAMPOS_FICHA) } } }, ['projeto_id']),
-    fn('buscar_semelhantes', 'Projetos parecidos com um tema, problema ou proposta (busca semântica).', { texto: { type: 'string' }, filtros: FILTROS_SCHEMA(vocab) }, ['texto']),
-    fn('buscar_trechos', 'Frases dos documentos de um projeto sobre um assunto (resultados, riscos, lições, escopo).', { projeto_id: { type: 'string' }, assunto: { type: 'string' } }, ['projeto_id', 'assunto']),
-  ];
-}
+// Os schemas das ferramentas ficam no registro único: src/skills/ferramentas.js (adendo 6).
 
 // Valida os filtros pedidos pela IA contra os vocabulários (nada fora das listas passa).
 export function filtrosValidos(f = {}, vocab) {

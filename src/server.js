@@ -23,6 +23,8 @@ import { STATUS_PROPOSTA, CONFIDENCIALIDADES } from './db/repo.js';
 import { SUPPORTED } from './extract/formats.js';
 import { maskSensitive, maskFields, TERMO_VERSAO } from './sensitive.js';
 import { ROOT, DB_PATH, STORE_PATH, AUDITORIA_DIR, CONVERSAS_PATH, CORPUS_DIR, DATA_DIR } from './config.js';
+import { AnexoStore, resumoPublico } from './skills/anexos.js';
+import { capacidades } from './skills/index.js';
 import { QualityStore, roteiroDe, AREAS, TIPOS, STATUS, RESULTADOS, MAX_IMAGENS, MAX_IMAGENS_TICKET, PRIORIDADES, lerImagens } from './qualidade.js';
 import { criarHospedagem, hospedarTodas } from './imagens.js';
 import { VERSAO } from './version.js';
@@ -45,6 +47,14 @@ if (!fs.existsSync(DB_PATH) || !fs.existsSync(STORE_PATH)) {
 const engine = new RadarEngine({ llm: createLLM() });
 const audit = new AuditLog(AUDITORIA_DIR);
 const conversations = new ConversationStore(CONVERSAS_PATH);
+// UC15: arquivos lidos na conversa ficam só nela e são apagados com ela. Na partida, apaga os de conversas que não existem mais.
+const anexosConversa = new AnexoStore(path.join(DATA_DIR, 'anexos'));
+try {
+  for (const f of fs.readdirSync(anexosConversa.dir)) {
+    const id = f.replace(/\.json$/, '');
+    if (!conversations.items.has(id)) anexosConversa.remove(id);
+  }
+} catch { /* pasta ainda não existe */ }
 const auth = createAuth();
 const relatorio = criarAcessoRelatorio();
 
@@ -209,20 +219,41 @@ const routes = {
 
   // A conversa dá a memória da busca: os turnos anteriores entram como contexto (UC03.3 / UC03.14).
   'POST /api/buscar': async (req) => {
-    const { query: bruta, userId, opportunityId, conversaId } = await readJson(req);
+    const { query: bruta, userId, opportunityId, conversaId, pendentes = 0 } = await readJson(req);
     if (!bruta?.trim()) return [400, { erro: 'Informe uma pergunta.' }];
     const user = engine.user(userId);
     // A pergunta também vai à IA externa: dados sensíveis saem antes (UC13.2).
     const { texto: query, achados } = maskSensitive(bruta);
     registrarMascaramento('pergunta', user, achados);
     const conversa = conversations.open(conversaId, { userId: user.id, opportunityId });
-    const result = await engine.search(query, { userId: user.id, opportunityId, history: conversations.history(conversa) });
+    const anexos = anexosConversa.list(conversa.id, user.id);
+    const result = await engine.search(query, {
+      userId: user.id, opportunityId, history: conversations.history(conversa),
+      anexos, indiceAnexos: anexos.length ? anexosConversa.indice(conversa.id, user.id) : null, pendentes: Math.max(0, Number(pendentes) || 0),
+    });
     const turnoId = audit.logTurn({ sessionId: conversa.id, result });
     conversations.addTurn(conversa, { turnoId, pergunta: query, resultado: result });
     // Toda conversa com pergunta fica salva: o usuário só decide se é favorita.
     if (!conversa.salva) conversations.save(conversa.id, user.id);
     return { ...result, turnoId, conversa: { id: conversa.id, titulo: conversa.titulo, salva: conversa.salva, favorita: conversa.favorita, turnos: conversa.turnos.length } };
   },
+
+  // UC15: anexar um arquivo à conversa para o Radar ler (não entra na base). Cria a conversa se ainda não existir.
+  'POST /api/conversa/anexo': async (req) => {
+    const { nome, conteudoBase64, userId, opportunityId, conversaId } = await readJson(req, Math.ceil(MAX_UPLOAD_BYTES * 1.4) + 10_000);
+    const user = engine.user(userId);
+    const buffer = Buffer.from(conteudoBase64 ?? '', 'base64');
+    if (!nome || !buffer.length) return [400, { erro: 'Arquivo vazio.' }];
+    if (buffer.length > MAX_UPLOAD_BYTES) return [400, { erro: `Arquivo maior que ${MAX_UPLOAD_BYTES / 1024 / 1024} MB.` }];
+    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId });
+    const r = anexosConversa.add(conversa.id, user.id, { nome, buffer, clientes: engine.repo.clients(user) });
+    if (r.erro) return [400, { erro: r.erro, conversa: { id: conversa.id } }];
+    audit.logEvent?.({ tipo: 'anexo_conversa', usuario: user.id, conversa: conversa.id, arquivo: r.anexo.nome, formato: r.anexo.formato, mascarados: r.anexo.mascarados });
+    return { anexo: resumoPublico(r.anexo), conversa: { id: conversa.id, titulo: conversa.titulo, salva: conversa.salva, favorita: conversa.favorita, turnos: conversa.turnos.length } };
+  },
+
+  // "O que você pode fazer?" na tela (boas-vindas): capacidades do registro de skills, filtradas pelo perfil.
+  'GET /api/capacidades': (req, url) => capacidades(engine.user(url.searchParams.get('userId'))),
 
   // UC05 / UC06 — conversas salvas e favoritas.
   'GET /api/conversas': (req, url) =>
@@ -232,8 +263,9 @@ const routes = {
     }),
 
   'GET /api/conversa': (req, url) => {
-    const c = conversations.get(url.searchParams.get('id'), engine.user(url.searchParams.get('userId')).id);
-    return c ? c : [404, { erro: 'Conversa não encontrada.' }];
+    const user = engine.user(url.searchParams.get('userId'));
+    const c = conversations.get(url.searchParams.get('id'), user.id);
+    return c ? { ...c, anexos: anexosConversa.list(c.id, user.id).map(resumoPublico) } : [404, { erro: 'Conversa não encontrada.' }];
   },
 
   'POST /api/conversa/salvar': async (req) => {
@@ -268,7 +300,9 @@ const routes = {
 
   'POST /api/conversa/excluir': async (req) => {
     const { id, userId } = await readJson(req);
-    return conversations.remove(id, engine.user(userId).id) ? { ok: true } : [404, { erro: 'Conversa não encontrada.' }];
+    const ok = conversations.remove(id, engine.user(userId).id);
+    if (ok) anexosConversa.remove(id); // os arquivos lidos na conversa vão junto (D2 do adendo 6)
+    return ok ? { ok: true } : [404, { erro: 'Conversa não encontrada.' }];
   },
 
   'POST /api/evento': async (req) => {

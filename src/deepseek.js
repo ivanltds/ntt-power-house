@@ -7,14 +7,15 @@ import { MockLLM } from './llm.js';
 import { SEGMENTS, TECHNOLOGIES, SERVICES } from './lexicon.js';
 import { AGRUPAVEIS, CAMPOS_FICHA, classificar } from './intents.js';
 import { STATUS_PROPOSTA } from './db/repo.js';
+import { INTENCOES, regrasDoRoteador } from './skills/index.js';
+import { PERSONA } from './skills/persona.js';
 
 export const VOCAB = { segmentos: Object.keys(SEGMENTS), tecnologias: Object.keys(TECHNOLOGIES), servicos: Object.keys(SERVICES) };
-const INTENCOES = ['buscar', 'listar', 'agregar', 'ficha', 'comparar', 'composta', 'detalhar', 'fora_dominio', 'esclarecer'];
 
 const UNDERSTAND_PROMPT = `Você é o módulo de interpretação do "Radar de Propostas & Cases", uma base interna de propostas comerciais, apresentações, estimativas, transcrições de reunião e cases de projetos de dados e tecnologia.
-Sua tarefa: entender a pergunta atual do usuário considerando o histórico da conversa e devolver SOMENTE um JSON com:
+Sua tarefa: entender a pergunta atual do usuário considerando o histórico da conversa, os arquivos anexados nesta conversa ("anexos") e os arquivos ainda não enviados à base ("pendentes"), e devolver SOMENTE um JSON com:
 {
-  "intencao": "buscar" | "listar" | "agregar" | "ficha" | "comparar" | "composta" | "detalhar" | "fora_dominio" | "esclarecer",
+  "intencao": ${INTENCOES.map((i) => `"${i}"`).join(' | ')},
   "confianca": number,             // 0 a 1: quão seguro você está da intenção
   "continuacao": boolean,          // true se a pergunta depende do contexto de turnos anteriores
   "consulta": string,              // pergunta reescrita de forma autossuficiente, em português, incorporando o contexto quando for continuação
@@ -30,17 +31,13 @@ Sua tarefa: entender a pergunta atual do usuário considerando o histórico da c
   "agruparPor": string | null,     // em "agregar": um valor de AGRUPAVEIS
   "projetos": string[],            // em "ficha" e "comparar": códigos (P001) ou nomes dos projetos citados; posições da resposta anterior viram os códigos mostrados nela
   "campos": string[],              // em "ficha": valores de CAMPOS pedidos
-  "opcoes": string[]               // em "esclarecer": 2 ou 3 perguntas reescritas, uma por interpretação possível
+  "opcoes": string[],              // em "esclarecer": 2 ou 3 perguntas reescritas, uma por interpretação possível
+  "conversa": string | null,       // em "conversa": saudacao | capacidades | agradecimento | despedida | critica | fora_escopo
+  "acao": string | null            // em "anexo": resumir | perguntar | parecidos
 }
 Regras de intenção:
-- "buscar": projetos, propostas ou cases PARECIDOS com um tema, problema, cliente ou oportunidade ("já fizemos fraude em seguros?", "projetos de churn").
-- "listar": inventário da base por atributos, sem tema ("consolidado de todos os projetos", "liste as propostas perdidas de 2025", "quantos projetos temos em varejo").
-- "agregar": lista distinta ou contagem de um atributo ("quais áreas/segmentos têm projetos", "quantos projetos por tecnologia", "quais clientes já atendemos"). "Áreas" e "setores" = segmento, salvo se falar em prática da NTT.
-- "ficha": campos de um projeto específico citado pelo nome ou código ("qual o prazo, valor e responsável do projeto X?").
-- "comparar": comparar 2 a 4 projetos citados ou mostrados na resposta anterior.
-- "composta": pedido com mais de um passo que combina as anteriores ("liste os de seguros e compare os dois", "quais segmentos têm perdidas e qual a lição mais comum").
-- "detalhar": o usuário quer saber mais de um resultado já mostrado ("e o segundo?", "detalhe o primeiro").
-- "fora_dominio": a pergunta não tem relação com propostas, projetos, clientes, serviços ou tecnologia.
+${regrasDoRoteador()}
+- "fora_dominio": não use; pedidos fora do escopo são "conversa" com "conversa": "fora_escopo".
 - "esclarecer": só quando a pergunta admite interpretações realmente diferentes e você não consegue escolher (confianca < 0.5). Nunca para perguntas claras.
 - Em continuação ("e só com Databricks?", "e em seguros?"), mantenha os filtros anteriores que ainda fazem sentido e aplique a mudança pedida. Se o usuário mudar de assunto, não carregue filtros antigos.
 - Infira segmento, tecnologia e serviço pelo significado, mesmo sem a palavra exata (ex.: "distribuidora de luz" => "Utilities / Energia"; "prever cancelamento de clientes" => serviço de ciência de dados).
@@ -53,14 +50,16 @@ CAMPOS: ${JSON.stringify(Object.keys(CAMPOS_FICHA))}`;
 
 // Opção C (UC03.23): a IA decide quais ferramentas chamar. Ela nunca acessa o banco: só pede, e o servidor executa
 // com as permissões do usuário. Números e listas exibidos vêm dos resultados das ferramentas.
-const TOOLS_PROMPT = `Você é o assistente do "Radar de Propostas & Cases", base interna de projetos, propostas e cases.
+const TOOLS_PROMPT = `${PERSONA}
+Nesta tarefa você responde sobre o "Radar de Propostas & Cases", base interna de projetos, propostas e cases.
 Responda à pergunta usando as ferramentas disponíveis. Faça só as chamadas necessárias (no máximo 4).
 Depois escreva a resposta final em português, com no máximo 60 palavras, respondendo exatamente ao que foi perguntado.
 A tela já mostra em tabelas tudo o que as ferramentas devolveram: não repita campos, listas nem fichas. Traga só a conclusão, a diferença principal ou o insight. Texto corrido, sem markdown nem listas.
 Cite projetos como [P001]. Use apenas informações devolvidas pelas ferramentas. Não invente números, valores, clientes ou prazos.
 Se uma informação vier como restrita ou não informada, diga isso. Não repita listas longas: a tela já mostra as tabelas.`;
 
-const ANALYZE_PROMPT = `Você é o analista do "Radar de Propostas & Cases". Recebe uma pergunta de um profissional de pré-vendas e projetos candidatos recuperados da base interna, cada um com metadados e frases numeradas extraídas dos documentos.
+const ANALYZE_PROMPT = `${PERSONA}
+Nesta tarefa você é o analista do "Radar de Propostas & Cases". Recebe uma pergunta de um profissional de pré-vendas e projetos candidatos recuperados da base interna, cada um com metadados e frases numeradas extraídas dos documentos.
 Devolva SOMENTE um JSON:
 {
   "avaliacoes": [ { "projeto_id": string, "relevancia": number, "justificativa": string, "evidencia": string } ],
@@ -123,12 +122,17 @@ export class DeepSeekLLM extends MockLLM {
     return JSON.parse(data.choices?.[0]?.message?.content ?? '{}');
   }
 
+  // Resposta com base em trechos fornecidos (ajuda e arquivo anexado): devolve o JSON pedido no prompt.
+  async grounded({ sistema, payload, maxTokens = 500 }) {
+    return this.chat(sistema, JSON.stringify(payload), maxTokens);
+  }
+
   fallbackStatus(err) {
     const motivo = err.name === 'TimeoutError' ? 'tempo esgotado' : err.message;
     return { provedor: 'mock', fallback: true, erro: `DeepSeek indisponível (${motivo}); usado o modo offline.` };
   }
 
-  async understand({ query, history = [], opportunity }) {
+  async understand({ query, history = [], opportunity, anexos = [], pendentes = 0 }) {
     const conversa = history.slice(-6).map((t, i) => ({
       turno: i + 1,
       pergunta: t.pergunta,
@@ -136,7 +140,7 @@ export class DeepSeekLLM extends MockLLM {
       entidades: t.entidades,
       resultados: (t.resultados ?? []).map((r, j) => `${j + 1}. ${r.projeto_id} ${r.titulo} (${r.cliente})`),
     }));
-    const payload = { historico: conversa, briefing: opportunity ? { cliente: opportunity.cliente, segmento: opportunity.segmento, descricao: opportunity.descricao } : null, pergunta: query };
+    const payload = { historico: conversa, briefing: opportunity ? { cliente: opportunity.cliente, segmento: opportunity.segmento, descricao: opportunity.descricao } : null, anexos: anexos.map((a) => ({ nome: a.nome, tipo: a.analise?.tipo ?? null })), pendentes, pergunta: query };
     try {
       const out = await this.chat(UNDERSTAND_PROMPT, JSON.stringify(payload), 600);
       const intencao = INTENCOES.includes(out.intencao) ? out.intencao : 'buscar';
@@ -154,6 +158,8 @@ export class DeepSeekLLM extends MockLLM {
         projetos: strs(out.projetos),
         campos: pick(out.campos, Object.keys(CAMPOS_FICHA)),
         opcoes: strs(out.opcoes, 3),
+        conversa: ['saudacao', 'capacidades', 'agradecimento', 'despedida', 'critica', 'fora_escopo'].includes(out.conversa) ? out.conversa : null,
+        acao: ['resumir', 'perguntar', 'parecidos'].includes(out.acao) ? out.acao : null,
         continuacao: Boolean(out.continuacao),
         consulta: typeof out.consulta === 'string' && out.consulta.trim() ? out.consulta.trim() : query,
         segmentos: pick(out.segmentos, VOCAB.segmentos),
@@ -165,7 +171,7 @@ export class DeepSeekLLM extends MockLLM {
         ia: { provedor: 'deepseek', fallback: false },
       };
     } catch (err) {
-      return { ...(await super.understand({ query, history })), ia: this.fallbackStatus(err) };
+      return { ...(await super.understand({ query, history, anexos, pendentes })), ia: this.fallbackStatus(err) };
     }
   }
 

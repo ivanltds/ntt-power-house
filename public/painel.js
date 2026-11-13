@@ -53,6 +53,9 @@ const vazio = (txt = 'Sem dados suficientes neste recorte.') => `<p class="muted
 const semValores = () => `<p class="muted small">${icon('lock', { size: 14 })} Valores e margens aparecem só para quem tem permissão de ver valores.</p>`;
 
 // amostra: o cartão mostra uma taxa ou média; com n pequeno, o 'n' fica em destaque (indício, não conclusão).
+// Nomes das skills do chat para o painel (adendo 6).
+const ROTULO_SKILL = { buscar: 'parecidos', listar: 'listagem', agregar: 'contagem', ficha: 'ficha', comparar: 'comparação', composta: 'em etapas', detalhar: 'detalhe', conversa: 'conversa', ajuda: 'dúvida de uso', anexo: 'arquivo', enviar_arquivo: 'envio de arquivo', esclarecer: 'pergunta de volta', fora_dominio: 'fora do escopo' };
+
 function card({ id, pergunta, corpo, origem = 'calculado', n = null, como = '', dica = '', drill = null, perguntar = null, largo = false, amostra = false }) {
   return `<section class="pn-card${largo ? ' largo' : ''}" id="pn-${id}" data-card="${id}">
     <header><h4>${esc(pergunta)}</h4>${como ? `<button type="button" class="icon-btn pn-info" title="${esc(`Como calculamos: ${como}`)}" aria-label="Como calculamos">${icon('info', { size: 15 })}</button>` : ''}</header>
@@ -309,7 +312,8 @@ function lenteCuradoria(c, pode) {
 function transversal(u) {
   const max = Math.max(1, ...u.funil.map((f) => f.n));
   return `<details class="pn-uso"><summary>${icon('gauge', { size: 16 })}Uso do Radar e o que o time procura</summary><div class="pn-grid">
-    ${card({ id: 'uso', pergunta: 'O Radar está sendo usado para montar propostas?', n: u.perguntas, como: 'Registro de uso: perguntas no chat, projetos abertos, "usar como base" e exportações.', corpo: barras(u.funil.map((f) => ({ rotulo: f.etapa, valor: f.n })), { max, fmt: (x) => `${x}` }) + `<p class="muted small">${u.semResposta} pergunta(s) sem resposta.</p>` })}
+    ${card({ id: 'uso', pergunta: 'O Radar está sendo usado para montar propostas?', n: u.perguntas, como: 'Registro de uso: perguntas no chat, projetos abertos, "usar como base" e exportações.', corpo: barras(u.funil.map((f) => ({ rotulo: f.etapa, valor: f.n })), { max, fmt: (x) => `${x}` }) + `<p class="muted small">${u.semResposta} pergunta(s) sem resposta.</p>`
+      + (u.porSkill?.length ? `<p class="muted small" title="Skill do chat que atendeu cada pergunta (adendo 6)">Por tipo de pedido: ${u.porSkill.map((x) => `${esc(ROTULO_SKILL[x.skill] ?? x.skill)} ${x.n}${x.semResposta ? ` (${x.semResposta} sem resposta)` : ''}`).join(' · ')}</p>` : '') })}
     ${card({ id: 'procurados', pergunta: 'O que procuram mais do que temos?', n: u.procurados.reduce((a, p) => a + p.citacoes, 0), como: 'Serviços citados nas perguntas do chat comparados aos projetos ganhos com o mesmo serviço. O uso atual é do time em teste e segue o roteiro.', corpo: barras(u.procurados.map((p) => ({ rotulo: p.servico, valor: p.citacoes, extra: `${p.ganhos} ganho(s)` })), { fmt: (x) => `${x} citações`, drill: (i) => ({ servicos: [i.rotulo] }) }) })}
     ${card({ id: 'reuso', pergunta: 'O que mais é reaproveitado?', n: u.reuso.reduce((a, r) => a + r.n, 0), como: 'Projetos com mais "usar como base".', corpo: frases(u.reuso, (r) => `<li>${projLink(r.id, `${r.id} · ${r.titulo}`)} <span class="muted">· ${r.n}×</span></li>`) })}
   </div></details>`;

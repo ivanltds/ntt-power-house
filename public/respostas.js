@@ -14,6 +14,10 @@ export const TIPO_LABEL = {
   esclarecimento: ['message', 'Pergunta de volta'],
   composta: ['layers', 'Resposta em etapas'],
   resultados: ['star', 'Resultados'],
+  conversa: ['message', 'Conversa'],
+  ajuda: ['help', 'Dúvida de uso'],
+  anexo: ['paperclip', 'Arquivo da conversa'],
+  enviar_arquivo: ['upload', 'Envio de arquivo'],
 };
 
 const FERRAMENTA = {
@@ -135,6 +139,50 @@ const BLOCO = {
   listagem: (d) => listagem(d), contagem: (d) => contagem(d), ficha: (d) => ficha(d.ficha), semelhantes: (d) => semelhantes(d), trechos: (d) => trechos(d),
 };
 
+// ---------- Adendo 6: conversa, dúvida de uso e arquivo da conversa ----------
+const linksAjuda = (links = []) => links.map((l) => `<button type="button" class="chip-btn ghost" data-ajuda="${esc(l.tipo)}:${esc(l.secao ?? '')}">${icon(l.tipo === 'notas' ? 'sparkles' : 'info', { size: 14 })}${esc(l.rotulo)}</button>`).join('');
+const chipsPerguntar = (lista = []) => lista.map((q) => `<button type="button" class="chip-btn" data-perguntar="${esc(q)}">${icon('message', { size: 14 })}${esc(q)}</button>`).join('');
+const botaoFeedback = '<button type="button" class="chip-btn ghost" data-feedback>' + icon('message', { size: 14 }) + 'Enviar feedback</button>';
+
+function conversa(d) {
+  const caps = (d.capacidades ?? []).map((c) => `<li class="cap">
+      <span class="cap-ic">${icon(c.icone, { size: 18 })}</span>
+      <span class="cap-txt"><b>${esc(c.titulo)}</b><small>${esc(c.descricao)}</small>
+        ${c.clicavel ? `<button type="button" class="link-btn cap-ex" data-perguntar="${esc(c.exemplo)}">${icon('chevronRight', { size: 13 })}${esc(c.exemplo)}</button>` : `<span class="cap-ex muted">${esc(c.exemplo)}</span>`}</span></li>`).join('');
+  const acoes = [chipsPerguntar(d.sugestoes), d.anexar ? `<button type="button" class="chip-btn" data-anexar>${icon('paperclip', { size: 14 })}Anexar um arquivo</button>` : '', d.feedback ? botaoFeedback : '', linksAjuda(d.ajuda)].join('');
+  return `${caps ? `<ul class="caps">${caps}</ul>` : ''}${acoes ? `<div class="resp-acoes">${acoes}</div>` : ''}`;
+}
+
+function ajuda(d) {
+  const fontes = (d.fontes ?? []).map((f) => `<blockquote class="fonte-ajuda"><small>${icon('info', { size: 12 })}${esc(f.onde)}</small>${esc(f.trecho)}${f.trecho.length >= 420 ? '…' : ''}</blockquote>`).join('');
+  const nov = d.novidades ? `<ul class="nov">${d.novidades.itens.slice(0, 8).map((i) => `<li>${icon(i.tipo === 'correcao' ? 'check' : 'sparkles', { size: 13 })}${esc(i.titulo)}</li>`).join('')}</ul>` : '';
+  return `${nov}${fontes}<div class="resp-acoes">${linksAjuda(d.ajuda)}${d.feedback ? botaoFeedback : ''}</div>`;
+}
+
+function anexo(d) {
+  if (d.acao === 'perguntar') {
+    const ev = (d.evidencias ?? []).map((e) => `<blockquote class="fonte-ajuda"><small>${icon('paperclip', { size: 12 })}${esc(e.arquivo)}</small>${esc(e.trecho)}</blockquote>`).join('');
+    return ev;
+  }
+  const r = d.resumo ?? {};
+  const fatos = [
+    r.tipo ? `<span title="Tipo de documento">${icon('file', { size: 14 })}${esc(r.tipo)}</span>` : '',
+    r.cliente ? `<span title="Cliente">${icon('briefcase', { size: 14 })}${esc(r.cliente)}</span>` : '',
+    r.segmento ? `<span title="Segmento">${icon('grid', { size: 14 })}${esc(r.segmento)}</span>` : '',
+    r.prazoMeses ? `<span title="Prazo citado">${icon('clock', { size: 14 })}${esc(r.prazoMeses)} meses</span>` : '',
+  ].join('');
+  return `<div class="anexo-card">
+    <div class="anexo-top">${icon('paperclip', { size: 16 })}<b>${esc(d.anexo?.nome ?? '')}</b>${d.anexo?.truncado ? '<span class="muted small"> · arquivo longo: li o início</span>' : ''}</div>
+    ${r.tema ? `<p class="anexo-tema">${esc(r.tema)}</p>` : ''}
+    ${fatos ? `<div class="facts">${fatos}</div>` : ''}
+    ${r.pontos?.length ? `<h5>Pontos principais</h5><ul>${r.pontos.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+    ${r.tecnologias?.length ? `<div class="tec-tags"><span class="muted small">Tecnologias:</span>${r.tecnologias.map((t) => `<span class="tec-tag">${esc(t)}</span>`).join('')}</div>` : ''}
+  </div>
+  <div class="resp-acoes">${(d.acoes ?? []).map((a) => (a.acao === 'perguntar'
+    ? `<button type="button" class="chip-btn" data-perguntar="${esc(a.pergunta)}">${icon(a.icone, { size: 14 })}${esc(a.rotulo)}</button>`
+    : `<button type="button" class="chip-btn" data-acao-anexo="${esc(a.acao)}">${icon(a.icone, { size: 14 })}${esc(a.rotulo)}</button>`)).join('')}</div>`;
+}
+
 // Corpo da resposta para os tipos novos. Devolve null para "semelhantes" (cards do fluxo original).
 export function renderTyped(r) {
   const d = r.dados ?? {};
@@ -144,6 +192,10 @@ export function renderTyped(r) {
     case 'ficha': return d.ficha ? ficha(d.ficha) : '';
     case 'comparacao': return comparacao(d.fichas);
     case 'resultados': return resultados(d);
+    case 'conversa': return conversa(d);
+    case 'ajuda': return ajuda(d);
+    case 'anexo': return anexo(d);
+    case 'enviar_arquivo': return '<div class="envio-destino"></div>';
     case 'esclarecimento': return d.opcoes?.length ? `<div class="resp-acoes opcoes">${d.opcoes.map((o) => `<button type="button" class="chip-btn" data-perguntar="${esc(o)}">${icon('message', { size: 14 })}${esc(o)}</button>`).join('')}</div>` : '';
     case 'composta': {
       // Uma ficha por projeto e só o último bloco de cada tipo de lista, para não repetir tabelas.
@@ -165,7 +217,11 @@ export function renderTyped(r) {
 }
 
 // Liga os botões dos blocos: abrir projeto, abrir a tela de Projetos filtrada e perguntar de novo.
-export function bindTyped(container, { ask }) {
+export function bindTyped(container, { ask, ajuda: abrirAjuda, feedback, anexar, acaoAnexo } = {}) {
+  $$('[data-ajuda]', container).forEach((b) => (b.onclick = () => { const [tipo, secao] = b.dataset.ajuda.split(':'); abrirAjuda?.(tipo, secao || undefined); }));
+  $$('[data-feedback]', container).forEach((b) => (b.onclick = () => feedback?.()));
+  $$('[data-anexar]', container).forEach((b) => (b.onclick = () => anexar?.()));
+  $$('[data-acao-anexo]', container).forEach((b) => (b.onclick = () => acaoAnexo?.(b.dataset.acaoAnexo, container)));
   $$('[data-proj]', container).forEach((el) => {
     const abrir = (e) => { e.preventDefault?.(); openProject(el.dataset.proj); };
     el.onclick = abrir;

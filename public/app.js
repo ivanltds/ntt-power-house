@@ -1,5 +1,5 @@
-import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode, iconeSegmento, normalizeText } from './common.js';
-import { enviarParaProjeto } from './upload.js';
+import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode, iconeSegmento } from './common.js';
+import { enviarParaProjeto, toBase64 } from './upload.js';
 import { cartoesDeEnvio, abrirRevisao } from './revisao.js';
 import { icon, hydrateIcons } from './icons.js';
 import { initProjects, openProject, openProjectForm } from './projetos.js';
@@ -214,40 +214,51 @@ function renderBriefing() {
   }
 }
 
-// ---- CR-049 / CR-050: arquivos pelo chat ----
-// O clipe anexa arquivos à conversa. Eles ficam pendentes (não entram na base) até a pessoa dizer o projeto, na mesma
-// mensagem ("coloca essa proposta no projeto da Energisul") ou depois ("aquele PDF é do projeto P003"). Com o projeto
-// definido, o arquivo vai para o envio normal (mascaramento, revisão humana) já com o destino fixo.
-const QUER_ENVIAR = /\b(coloc|envi|sub|adicion|anex|mand|guard|salv|inclu|vincul|associ)\w*\b|\b(é|eh|sao|são|vai|vão|vao) (do|da|de|para o|pro|no) projeto\b|\b(arquivo|pdf|documento|anexo|planilha|apresenta\w*)\b.*\bprojeto\b/i;
-let projetosChat = null;
-// Projeto citado no texto. Só o código (ex.: P003) é certeza; nomes ("projeto de energia") viram candidatos para a
-// pessoa confirmar antes do envio — vários projetos podem combinar (ex.: Energisul, Energia Litoral).
-async function projetoCitado(texto) {
-  projetosChat ??= (await api(`/api/projetos?userId=${userId()}&tamanho=100&ordenar=titulo`)).itens;
-  const t = normalizeText(texto);
-  const cod = /\bp\d{3}\b/.exec(t)?.[0].toUpperCase();
-  if (cod) { const p = projetosChat.find((x) => x.id === cod); return { certo: p ?? null, opcoes: p ? [p] : [] }; }
-  const palavras = (x) => normalizeText(x).split(/[^a-z0-9]+/).filter((w) => w.length > 3 && !['projeto', 'projetos', 'cliente', 'dados', 'para', 'com', 'arquivo'].includes(w));
-  const pontos = projetosChat.map((p) => ({ p, n: [...new Set([...palavras(p.cliente), ...palavras(p.titulo), ...palavras(p.segmento ?? '')])].filter((w) => t.includes(w)).length }))
-    .filter((x) => x.n).sort((a, b) => b.n - a.n);
-  return { certo: null, opcoes: pontos.slice(0, 4).map((x) => x.p) };
+// ---- CR-049 / CR-050 e adendo 6 (UC15): arquivos pelo chat ----
+// O clipe anexa arquivos à conversa. Ao enviar a mensagem, eles são registrados como CONTEXTO da conversa: o Radar lê,
+// resume e responde sobre eles, sem colocá-los na base. Para a base, só por pedido explícito ("coloca no projeto P003"),
+// e quem decide o destino é a skill "enviar_arquivo" no servidor. Os arquivos ficam no navegador até lá (state.anexos).
+async function registrarAnexos() {
+  const novos = (state.anexos ?? []).filter((f) => !f._ctx);
+  for (const f of novos) {
+    try {
+      const r = await api('/api/conversa/anexo', { nome: f.name, conteudoBase64: toBase64(await f.arrayBuffer()), userId: userId(), opportunityId: state.foco?.id || undefined, conversaId: state.conv?.id });
+      f._ctx = r.anexo.id;
+      state.conv = state.conv?.id === r.conversa.id ? state.conv : r.conversa;
+    } catch (err) {
+      f._ctx = 'erro';
+      if (err.data?.conversa?.id && !state.conv) state.conv = { id: err.data.conversa.id, turnos: 0 };
+      toast(`${f.name}: ${err.message}`, 'error');
+    }
+  }
 }
 
-// Confirmação do destino quando o projeto veio do texto: um botão por candidato; nada é enviado antes do clique.
-function confirmarProjeto(opcoes) {
-  const n = state.anexos.length;
-  const bot = addMsg('bot', `<p class="answer"><span class="ans-par">${opcoes.length > 1 ? `Encontrei ${opcoes.length} projetos que combinam.` : 'Encontrei este projeto.'} Para qual ${n > 1 ? `vão os ${n} arquivos` : 'vai o arquivo'}? Nada foi enviado ainda.</span></p>
-    <div class="resp-acoes confirma-proj">${opcoes.map((p) => `<button type="button" class="chip-btn" data-destino="${esc(p.id)}" title="${esc(p.titulo)}">${icon('folder', { size: 14 })}${esc(p.cliente)} · ${esc(p.titulo.length > 48 ? `${p.titulo.slice(0, 48)}…` : p.titulo)}</button>`).join('')}
-      <button type="button" class="chip-btn ghost" data-destino="">${icon('x', { size: 14 })}Nenhum destes</button></div>`);
-  $$('[data-destino]', bot).forEach((b) => (b.onclick = async () => {
-    $$('[data-destino]', bot).forEach((x) => { x.disabled = true; });
+// Destino do envio decidido pelo servidor (skill enviar_arquivo): envia direto, oferece opções ou pergunta o projeto.
+function destinoDoEnvio(container, d = {}) {
+  const alvo = $('.envio-destino', container);
+  if (!alvo) return;
+  if (!state.anexos?.length) { alvo.innerHTML = `<p class="muted small">${icon('info', { size: 14 })}Não há arquivo esperando envio nesta conversa. Anexe pelo clipe e diga o projeto.</p>`; return; }
+  if (d.projeto) {
+    const arquivos = state.anexos.splice(0);
+    pintarAnexos();
+    enviarParaConversa(d.projeto, arquivos);
+    return;
+  }
+  const opcoes = d.opcoes ?? [];
+  alvo.innerHTML = `<div class="resp-acoes confirma-proj">${opcoes.map((p) => `<button type="button" class="chip-btn" data-destino="${esc(p.id)}" title="${esc(p.titulo)}">${icon('folder', { size: 14 })}${esc(p.cliente)} · ${esc(p.titulo.length > 48 ? `${p.titulo.slice(0, 48)}…` : p.titulo)}</button>`).join('')}
+    ${opcoes.length ? `<button type="button" class="chip-btn ghost" data-destino="">${icon('x', { size: 14 })}Nenhum destes</button>` : ''}
+    ${d.podeCriar ? `<button type="button" class="chip-btn" data-criar-proj>${icon('plus', { size: 14 })}Criar projeto com este arquivo</button>` : ''}</div>`;
+  $$('[data-destino]', alvo).forEach((b) => (b.onclick = async () => {
+    $$('[data-destino]', alvo).forEach((x) => { x.disabled = true; });
     if (!b.dataset.destino) { perguntarProjeto(); return; }
     const p = opcoes.find((x) => x.id === b.dataset.destino);
     const arquivos = state.anexos.splice(0);
     pintarAnexos();
     await enviarParaConversa({ id: p.id, titulo: p.titulo, cliente: p.cliente }, arquivos);
   }));
+  $('[data-criar-proj]', alvo)?.addEventListener('click', () => criarProjetoComArquivo(container));
 }
+
 function pintarAnexos() {
   const a = state.anexos ?? [];
   $('#anexos').innerHTML = a.map((f, i) => `<span class="anexo">${icon('paperclip', { size: 13 })}${esc(f.name)}<button type="button" data-tirar-anexo="${i}" title="Tirar o anexo" aria-label="Tirar ${esc(f.name)}">${icon('x', { size: 12 })}</button></span>`).join('');
@@ -288,28 +299,12 @@ export async function criarProjetoComArquivo(bot, arquivos = state.anexos.splice
   } });
 }
 
-async function enviarAnexos(texto) {
-  const citado = await projetoCitado(texto);
-  // Envio direto só sem dúvida: código do projeto na mensagem ou "Proposta em foco" escolhida (e o texto não cita outro).
-  const projeto = citado.certo ?? (state.foco && !citado.opcoes.length ? { id: state.foco.id, titulo: state.foco.titulo, cliente: state.foco.cliente } : null);
-  $('#chat .welcome')?.remove();
-  addMsg('user', `${esc(texto)}<span class="anexos-msg">${state.anexos.map((f) => `${icon('paperclip', { size: 12 })}${esc(f.name)}`).join(' ')}</span>`);
-  if (!projeto && citado.opcoes.length) { confirmarProjeto(citado.opcoes); return; }
-  if (!projeto) { perguntarProjeto(); return; }
-  const arquivos = state.anexos.splice(0);
-  pintarAnexos();
-  await enviarParaConversa(projeto, arquivos);
-}
 
 async function onAsk(e) {
   e?.preventDefault();
-  const query = $('#query').value.trim();
+  // Só o arquivo, sem texto: vale como "resuma o arquivo" (UC15.1).
+  const query = $('#query').value.trim() || (state.anexos?.length ? 'Resuma o arquivo anexado' : '');
   if (!query) return;
-  if (state.anexos?.length && (QUER_ENVIAR.test(query) || (await projetoCitado(query)).opcoes.length)) {
-    $('#query').value = '';
-    atualizarEnviar();
-    return enviarAnexos(query);
-  }
   // CR-044: editar a última pergunta — a pergunta e a resposta anteriores saem da conversa e a nova entra no lugar.
   if (state.editando && state.conv?.id) {
     try { await api('/api/conversa/desfazer-ultima', { id: state.conv.id, userId: userId() }); } catch { /* conversa nova: segue como pergunta normal */ }
@@ -322,12 +317,16 @@ async function onAsk(e) {
   atualizarEnviar();
   $('#chat .welcome')?.remove();
   $$('#chat .msg.user .msg-editar').forEach((b) => b.remove());
-  const msgUser = addMsg('user', esc(query));
+  const novosAnexos = (state.anexos ?? []).filter((f) => !f._mostrado);
+  novosAnexos.forEach((f) => { f._mostrado = true; });
+  const msgUser = addMsg('user', `${esc(query)}${novosAnexos.length ? `<span class="anexos-msg">${novosAnexos.map((f) => `${icon('paperclip', { size: 12 })}${esc(f.name)}`).join(' ')}</span>` : ''}`);
   msgUser.insertAdjacentHTML('beforeend', `<button type="button" class="icon-btn sm msg-editar" title="Editar esta pergunta e reenviar" aria-label="Editar a última pergunta">${icon('edit', { size: 14 })}</button>`);
   $('.msg-editar', msgUser).onclick = () => editarUltima(query);
-  const pending = addMsg('bot', `<span class="typing">${icon('loader', { cls: 'spin' })}Buscando…</span>`);
+  const lendo = (state.anexos ?? []).some((f) => !f._ctx);
+  const pending = addMsg('bot', `<span class="typing">${icon('loader', { cls: 'spin' })}${lendo ? 'Lendo o arquivo…' : 'Buscando…'}</span>`);
   try {
-    const r = await api('/api/buscar', { query, userId: userId(), opportunityId: state.foco?.id || undefined, conversaId: state.conv?.id });
+    if (lendo) await registrarAnexos();
+    const r = await api('/api/buscar', { query, userId: userId(), opportunityId: state.foco?.id || undefined, conversaId: state.conv?.id, pendentes: state.anexos?.length ?? 0 });
     pending.innerHTML = renderAnswer(r);
     bindAnswer(pending, r);
     state.conv = r.conversa;
@@ -355,7 +354,7 @@ function pararEdicao() {
 }
 // CR-037: enviar só fica habilitado com texto de verdade (não vale vazio nem só espaços).
 function atualizarEnviar() {
-  const vazio = !$('#query').value.trim();
+  const vazio = !$('#query').value.trim() && !state.anexos?.length;
   $('#ask .send').disabled = vazio;
   $('#ask .send').title = vazio ? 'Escreva uma pergunta para enviar' : 'Enviar';
 }
@@ -456,7 +455,19 @@ function renderCard(x) {
 }
 
 function bindAnswer(container, r) {
-  bindTyped(container, { ask: (q) => { $('#query').value = q; onAsk(); } });
+  bindTyped(container, {
+    ask: (q) => { $('#query').value = q; onAsk(); },
+    // Links para a ajuda citada na resposta (UC14.2 / UC14.3).
+    ajuda: (tipo, secao) => (tipo === 'tecnico' ? showTech(secao) : tipo === 'notas' ? showReleaseNotes(secao) : showGuide(secao)),
+    feedback: () => showFeedback(),
+    anexar: () => $('#anexar').click(),
+    acaoAnexo: (acao, alvo) => {
+      if (acao === 'focar') { $('#query').placeholder = 'Pergunte algo sobre o arquivo (ex.: qual o prazo?)'; $('#query').focus(); }
+      if (acao === 'enviar') { if (state.anexos?.length) perguntarProjeto(); else toast('O arquivo já foi enviado ou não está mais anexado.'); }
+      if (acao === 'criar') { if (state.anexos?.length) criarProjetoComArquivo(alvo); else toast('O arquivo não está mais anexado. Anexe de novo pelo clipe.'); }
+    },
+  });
+  if (r.tipoResposta === 'enviar_arquivo') destinoDoEnvio(container, r.dados);
   $$('.noresult [data-ask]', container).forEach((b) => (b.onclick = () => { $('#query').value = b.dataset.ask; onAsk(); }));
   $$('[data-act]', container).forEach((b) => (b.onclick = () => {
     const last = $$('#chat .msg.user').pop()?.textContent ?? '';
@@ -559,8 +570,12 @@ async function loadMetrics() {
 
 // ---- Conversas: memória, salvamento automático (UC05) e favoritas (UC06) ----
 
+// Arquivos ainda anexados valem para a conversa em que foram lidos: numa conversa nova (ou outra), são lidos de novo.
+const reanexar = () => (state.anexos ?? []).forEach((f) => { delete f._ctx; delete f._mostrado; });
+
 function newConversation() {
   state.conv = null;
+  reanexar();
   pararEdicao();
   const perfil = currentUser()?.perfil;
   const o = state.foco;
@@ -573,7 +588,7 @@ function newConversation() {
     <p class="lead-in">Encontre propostas, cases e lições de ${b.projetos} projetos, sempre com as fontes.</p>
     ${primeiraVez ? `<div class="intro-card">${introSteps()}<div class="intro-actions"><button type="button" id="intro-guide" class="link-btn">${icon('info', { size: 15 })}Ver o guia completo</button><button type="button" id="intro-ok" class="btn sm">${icon('check', { size: 15 })}Entendi</button></div></div>` : ''}
     <div class="suggest">${sugestoes.map((s) => `<button type="button" class="chip-btn">${esc(s)}</button>`).join('')}</div>
-    <p class="hint-tipos">${icon('sparkles', { size: 14 })}Peça projetos parecidos, listas, contagens, a ficha de um projeto ou comparações.</p></div>`;
+    <p class="hint-tipos">${icon('sparkles', { size: 14 })}Peça projetos parecidos, listas, contagens, a ficha de um projeto ou comparações. Anexe um arquivo pelo clipe para eu ler, ou pergunte como usar o Radar.</p></div>`;
   $$('#chat .suggest .chip-btn').forEach((btn) => (btn.onclick = () => { $('#query').value = btn.textContent; onAsk(); }));
   if (primeiraVez) $('#intro-guide').onclick = () => showGuide();
   if (primeiraVez) $('#intro-ok').onclick = () => { localStorage.setItem(INTRO_KEY, '1'); $('.intro-card').remove(); };
@@ -783,6 +798,7 @@ function highlightConv() {
 async function openConversation(id) {
   const c = await api(`/api/conversa?id=${encodeURIComponent(id)}&userId=${userId()}`);
   state.conv = { id: c.id, titulo: c.titulo, salva: c.salva, favorita: c.favorita, turnos: c.turnos.length };
+  reanexar();
   setFocus(c.oportunidadeId ? await api(`/api/foco?id=${encodeURIComponent(c.oportunidadeId)}&userId=${userId()}`).catch(() => null) : null);
   $('#chat').innerHTML = '';
   for (const t of c.turnos) {

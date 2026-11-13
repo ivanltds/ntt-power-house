@@ -274,7 +274,11 @@ function uso(turnos, eventos, ps) {
     .sort((a, b) => b.citacoes / (b.ganhos + 1) - a.citacoes / (a.ganhos + 1)).slice(0, 6);
   const reuso = [...conta(eventos.filter((e) => e.tipo === 'reaproveitar' && e.projeto_id), (e) => e.projeto_id)].map(([id, n]) => ({ id, n, titulo: ps.find((p) => p.id === id)?.titulo ?? null })).filter((x) => x.titulo).sort((a, b) => b.n - a.n).slice(0, 5);
   const semResposta = turnos.filter((t) => t.semEvidencia).length;
-  return { funil, procurados, reuso, perguntas: turnos.length, semResposta };
+  // Adendo 6: uso por skill (o que as pessoas pedem e onde o Radar fica sem resposta). Turnos antigos usam a intenção.
+  const porSkill = [...conta(turnos, (t) => t.skill ?? t.intencao ?? 'buscar')].map(([skill, n]) => ({
+    skill, n, semResposta: turnos.filter((t) => (t.skill ?? t.intencao ?? 'buscar') === skill && t.semEvidencia).length,
+  })).sort((a, b) => b.n - a.n);
+  return { funil, procurados, reuso, perguntas: turnos.length, semResposta, porSkill };
 }
 
 // ---------------- Manchetes (regras sobre os números) ----------------
