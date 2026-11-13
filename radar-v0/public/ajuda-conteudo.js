@@ -77,7 +77,7 @@ export const GUIA = [
     ])}
     <h4>Como ler um cartão</h4>
     <ul>
-      <li><b>Muito parecido</b> (75% ou mais), <b>Parecido</b> (50% a 74%) ou <b>Relacionado</b> (abaixo de 50%), cliente e status no topo; depois segmento (com ícone), prazo e, para o consultor, "preço e margem restritos". O percentual é exigente: um projeto só passa de 75% quando trata do mesmo problema, de preferência no mesmo segmento; semelhança só de tecnologia ou de setor vizinho fica baixa ou nem aparece.</li>
+      <li><b>Muito parecido</b> (75% ou mais), <b>Parecido</b> (50% a 74%) ou <b>Relacionado</b> (abaixo de 50%), cliente e status no topo; depois segmento (com ícone), prazo e, para o consultor, "preço e margem restritos". O percentual é exigente: um projeto só passa de 75% quando trata do mesmo problema, de preferência no mesmo segmento; semelhança só de tecnologia ou de setor vizinho fica baixa ou nem aparece. A conta completa, com exemplo, está em "Como o Radar calcula a semelhança".</li>
       <li><b>Por que é parecido</b> (justificativa) e o resumo do projeto.</li>
       <li>Itens que abrem com a setinha (um por vez): <b>Escopo, resultados e lições</b>; <b>Trechos que sustentam a resposta</b>; <b>Por que apareceu nesta posição</b>, com uma barra por critério mostrando quanto ele somou (de 0 a 100%; passe o mouse para ver nota × peso).</li>
       <li><b>Tecnologias</b> no fim, clicáveis: abrem ${ui('Projetos')} filtrado por elas.</li>
@@ -99,6 +99,48 @@ export const GUIA = [
     <h4>Avaliar</h4>
     <p>👍 conta como referência útil. 👎 pergunta o motivo (Não é parecido, Informação errada, Desatualizado, Outro). Essas avaliações alimentam as <b>Métricas do piloto</b>.</p>
     ${tip('A IA nunca inventa: ela só pode citar o que está nos documentos que você tem permissão de ver. Se não houver evidência, a resposta diz isso.', 'warn')}`],
+
+  ['semelhanca', 'chart', 'Como o Radar calcula a semelhança', () => `
+    <p>Cada cartão de projeto mostra um percentual de semelhança com a sua pergunta e um rótulo: <b>Muito parecido</b> (75% ou mais), <b>Parecido</b> (50% a 74%) ou <b>Relacionado</b> (abaixo de 50%). O cálculo é exigente de propósito: passar de 75% exige que o projeto trate do <b>mesmo problema</b>, de preferência no <b>mesmo segmento</b> de cliente.</p>
+    ${flow([['Sua pergunta', 'tema, segmento, tecnologias, serviços, prazo', 'message'], ['Texto parecido', 'trechos dos documentos', 'search'], ['IA avalia', 'o quanto o projeto ajuda', 'sparkles', true], ['Critérios', 'cada um com um peso', 'chart'], ['Percentual', 'com teto pela avaliação da IA', 'checkCircle']])}
+    <h4>1. Os critérios e os pesos</h4>
+    <p>O Radar só usa os critérios que aparecem na pergunta (ou na proposta em foco). Os que não aparecem saem da conta, e os pesos dos que ficam são redistribuídos para somar 100%.</p>
+    ${table(['Critério', 'Peso de partida', 'Como é medido'], [
+      ['Descrição, objetivo e escopo', '40%', 'Combina a semelhança do texto dos documentos com a pergunta (25%) e a avaliação da IA (75%). É o critério principal.'],
+      ['Segmento', '15%', '100% se o projeto é do segmento citado (ex.: Telecom), 0% se não é.'],
+      ['Tecnologias', '15%', 'Parte das tecnologias citadas que o projeto usa (ex.: pediu Kafka e Databricks, o projeto usa as duas = 100%).'],
+      ['Serviços / área', '15%', 'Parte dos serviços citados que o projeto envolve (ex.: ciência de dados).'],
+      ['Prazo / porte', '10%', 'Quanto o prazo do projeto se aproxima do prazo citado ("um projeto de 6 meses").'],
+      ['Status', '5%', 'Só desempata entre projetos parecidos: Entregue vale mais que Perdida, mas na proporção do quanto o texto se parece.'],
+    ])}
+    <h4>2. A avaliação da IA</h4>
+    <p>A IA lê a pergunta e as frases de cada projeto e dá uma nota de relevância numa escala fixa:</p>
+    ${table(['Nota da IA', 'Quando'], [
+      ['0,9 a 1', 'Mesmo problema ou objetivo e mesmo segmento de cliente.'],
+      ['0,7 a 0,85', 'Mesmo problema em outro segmento, ou mesmo segmento com escopo bem parecido.'],
+      ['0,5 a 0,65', 'Semelhança parcial que ainda ajuda a montar a proposta.'],
+      ['0,3 a 0,45', 'Só tecnologia, palavra ou setor vizinho em comum: ajuda pouco.'],
+      ['abaixo de 0,4', 'O projeto nem aparece na resposta.'],
+    ])}
+    ${tip('<b>Teto:</b> o percentual final nunca passa da nota da IA + 10 pontos. Assim, segmento, tecnologias e status não levam lá para cima um projeto que, no significado, é fraco.')}
+    <h4>3. Exemplo: "Já fizemos projetos de churn em telecom?"</h4>
+    <p>A pergunta cita um segmento (Telecom) e um serviço (ciência de dados), mas não cita tecnologia nem prazo. Ficam 4 critérios, e os pesos de partida (40% + 15% + 15% + 5% = 75%) são redistribuídos para somar 100%: conteúdo 53%, segmento 20%, serviços 20%, status 7%.</p>
+    ${table(['Critério (peso)', 'Predição de churn em tempo real · ConectaFibra Telecom', 'Modelo de churn no CRM · ModaViva E-commerce'], [
+      ['Conteúdo (53%)', 'IA 0,95 e texto muito parecido → nota 96% → soma <b>51 pontos</b>', 'IA 0,7 (mesmo problema, outro segmento) → nota 78% → soma <b>41,5 pontos</b>'],
+      ['Segmento (20%)', 'Telecom = Telecom → <b>20 pontos</b>', 'Varejo ≠ Telecom → <b>0</b>'],
+      ['Serviços (20%)', 'ciência de dados → <b>20 pontos</b>', 'ciência de dados → <b>20 pontos</b>'],
+      ['Status (7%)', 'Entregue × 96% → <b>6,5 pontos</b>', 'Perdida × 78% → <b>1,5 ponto</b>'],
+      ['<b>Total</b>', '<b>98% · Muito parecido</b> (51 + 20 + 20 + 6,5, arredondado)', '<b>63% · Parecido</b> (41,5 + 0 + 20 + 1,5)'],
+    ])}
+    <p>Já uma pergunta como <i>"projeto para uma funilaria de carros"</i> não encontra nenhum projeto com nota da IA a partir de 0,4: o Radar diz que não encontrou nada relevante e sugere buscas próximas, em vez de mostrar um projeto de seguros como se fosse parecido.</p>
+    <h4>4. Onde ver a conta de cada projeto</h4>
+    <p>No cartão, abra <b>Por que apareceu nesta posição</b>: cada barra é quanto um critério somou para o percentual daquele projeto (passe o mouse para ver nota × peso). A justificativa e os <b>Trechos que sustentam a resposta</b> mostram de onde veio a avaliação.</p>
+    <h4>Como conseguir percentuais mais precisos</h4>
+    <ul>
+      <li>Diga o <b>segmento</b> do cliente e as <b>tecnologias</b> ou o <b>tipo de serviço</b>: cada um vira um critério a mais na conta.</li>
+      <li>Use a <b>Proposta em foco</b>: o cliente, o segmento, as tecnologias e o prazo do projeto escolhido entram na conta sem você escrever.</li>
+      <li>Percentual baixo em todos os resultados é um sinal útil: a base ainda não tem uma boa referência para esse tema.</li>
+    </ul>`],
 
   ['foco', 'target', 'Proposta em foco', () => `
     <p>Quando você está montando uma proposta, escolha um projeto como <b>foco</b>. A partir daí, cada pergunta considera o cliente, o segmento, as tecnologias, os serviços e o prazo dele, mesmo que você não escreva isso.</p>
