@@ -86,9 +86,9 @@ export const SKILLS = [
   },
   {
     id: 'conversa', intencao: 'conversa',
-    regraIA: 'saudação, pergunta sobre o que o Radar faz, agradecimento, despedida, crítica à resposta ou pedido fora do escopo (tempo, piadas, esportes). Preencha "conversa": "saudacao" | "capacidades" | "agradecimento" | "despedida" | "critica" | "fora_escopo".',
+    regraIA: 'saudação, papo informal ("tudo bem?", "qual seu nome?", elogio, brincadeira), pergunta sobre o que o Radar faz, agradecimento, despedida, crítica à resposta ou pedido fora do escopo (tempo, piadas, esportes). Preencha "conversa": "saudacao" | "papo" | "capacidades" | "agradecimento" | "despedida" | "critica" | "fora_escopo".',
     capacidade: null,
-    exemplos: ['olá', 'oi', 'boa noite', 'Boa noite, o que vc pode fazer ?', 'o que você pode fazer?', 'valeu', 'obrigado pela ajuda', 'tchau', 'essa resposta está errada', 'qual a previsão do tempo?', 'ajuda', 'leia esse arquivo'],
+    exemplos: ['olá', 'oi', 'boa noite', 'Boa noite, o que vc pode fazer ?', 'o que você pode fazer?', 'valeu', 'obrigado pela ajuda', 'tchau', 'essa resposta está errada', 'qual a previsão do tempo?', 'ajuda', 'leia esse arquivo', 'tudo bem com você?', 'qual seu nome?', 'você é uma IA?', 'bom trabalho!', 'boa noite, tudo bem?'],
     naoAtiva: ['bom dia, liste os projetos de varejo', 'ok liste os projetos de varejo', 'me ajuda a achar projetos de churn'],
   },
 ];

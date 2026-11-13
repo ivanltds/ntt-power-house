@@ -195,3 +195,26 @@ test('fonte da dúvida de uso aparece uma vez só, com "Abrir no guia" dentro; c
   assert.match(resp, /\$\{fontes \? '' : linksAjuda\(d\.ajuda\)\}/, 'sem fonte, os links soltos continuam; com fonte, saem');
   assert.doesNotMatch(fs.readFileSync(path.join(ROOT, 'public', 'index.html'), 'utf8'), /id="query"[^>]*placeholder/);
 });
+
+test('conversa informal: IA escreve a resposta; sem IA, modelo natural que não se reapresenta no meio da conversa (CR-061)', async () => {
+  const { MockLLM } = await import('../src/llm.js');
+  const { responderConversa } = await import('../src/skills/conversa.js');
+  class LLMConversa extends MockLLM {
+    async grounded({ payload }) { this.ultimo = payload; return { resposta: 'Boa noite, Marina! Tudo ótimo por aqui, e com você? Se quiser, já procuro uma referência para a sua proposta.' }; }
+  }
+  const llm = new LLMConversa();
+  const e2 = new RadarEngine({ storePath: STORE_PATH, llm });
+  const r = await e2.search('boa noite, tudo bem?', { userId: 'u-consultor' });
+  assert.equal(r.tipoResposta, 'conversa');
+  assert.match(r.resposta, /^Boa noite, Marina! Tudo ótimo/);
+  assert.equal(llm.ultimo.primeira_mensagem, true);
+  const meio = await e2.search('tudo bem com você?', { userId: 'u-consultor', history: [{ pergunta: 'liste os projetos', resultados: [] }] });
+  assert.equal(llm.ultimo.primeira_mensagem, false, 'a IA sabe que a conversa já começou');
+  assert.equal(meio.dados.conversa, 'saudacao');
+  // Sem IA (modelo de texto): no meio da conversa não se reapresenta e responde ao "tudo bem?".
+  const user = engine.user('u-consultor');
+  const t = responderConversa('saudacao', { user, capacidades: [], query: 'boa noite, tudo bem?', history: [{}] });
+  assert.doesNotMatch(t.resposta, /Sou o Radar/);
+  assert.match(t.resposta, /Tudo ótimo por aqui/);
+  assert.match(responderConversa('papo', { user, capacidades: [], query: 'qual seu nome?' }).resposta, /Eu sou o Radar/);
+});
