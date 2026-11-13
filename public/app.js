@@ -20,7 +20,7 @@ const SUGESTOES = {
 };
 const INTRO = [
   ['message', 'Pergunte', 'Descreva a proposta que você está montando. O Radar mostra projetos parecidos e de onde veio cada informação.'],
-  ['briefcase', 'Dê contexto', 'Em “Proposta em foco”, ao lado do clipe na caixa de pergunta, escolha o projeto que você está montando e as respostas passam a considerar aquele cliente.'],
+  ['briefcase', 'Dê contexto', 'No ícone de alvo, na ponta esquerda da caixa de pergunta (“Proposta em foco”), escolha o projeto que você está montando e as respostas passam a considerar aquele cliente.'],
   ['folder', 'Explore', 'Em Projetos, filtre por segmento, tecnologia ou status e abra os documentos originais.'],
   ['upload', 'Alimente', 'Envie propostas, atas e cases. O Radar extrai os dados e você só confere.'],
 ];

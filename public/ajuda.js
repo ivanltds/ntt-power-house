@@ -89,7 +89,7 @@ const GUIA = [
   ['foco', 'target', 'Proposta em foco', () => `
     <p>Quando você está montando uma proposta, escolha um projeto como <b>foco</b>. A partir daí, cada pergunta considera o cliente, o segmento, as tecnologias, os serviços e o prazo dele, mesmo que você não escreva isso.</p>
     ${steps([
-      `Na caixa de pergunta, ao lado do clipe, clique em ${ui(`${icon('target', { size: 13 })} Proposta em foco`)}.`,
+      `Na ponta esquerda da caixa de pergunta, clique no ícone ${ui(`${icon('target', { size: 13 })} Proposta em foco`)}: ele se abre com a lista de projetos.`,
       'Digite parte do cliente, do título ou o código (ex.: <i>"energ"</i>, <i>"P012"</i>). A lista filtra enquanto você digita.',
       `Escolha com o mouse, ou com ${kbd('↑')} ${kbd('↓')} e ${kbd('Enter')}. Projetos <b>Em andamento</b> (em elaboração, enviada, em negociação) aparecem primeiro.`,
       'O botão fica azul com "Foco: " e o nome do cliente (o X ao lado tira o foco), e o chat mostra "Respondendo com foco em…".',

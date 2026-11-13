@@ -167,8 +167,8 @@ export const ROTEIRO = [
   c('C23', 'alta', 'Dar foco a um projeto ("Proposta em foco")',
     'Ver se o chat passa a responder pensando no projeto escolhido.',
     [CONSULTOR, NOVA],
-    ['Na caixa de pergunta, ao lado do clipe, clique em "Proposta em foco".', 'Na caixa de busca que abrir, escreva "Bom Preço" e clique no projeto da Rede Bom Preço Supermercados.', 'Leia a faixa que aparece acima do chat e as sugestões da tela.', PERGUNTE('algum case parecido?'), ESPERE, 'Na faixa "Respondendo com foco em…", clique no X.', 'Escolha o foco de novo e tire pelo X do botão "Foco: …".'],
-    ['Aparece a faixa "Respondendo com foco em Rede Bom Preço Supermercados".', 'As sugestões da tela inicial mudam para perguntas sobre esse cliente.', 'A resposta traz cards de projetos parecidos com o da Rede Bom Preço.', 'O botão ao lado do clipe mostra "Foco: Rede Bom Preço Supermercados", em azul, com um X.', 'Depois do X (da faixa ou do botão), a faixa some e o botão volta a dizer "Proposta em foco".']),
+    ['Na ponta esquerda da caixa de pergunta, clique no ícone de alvo ("Proposta em foco").', 'Na caixa de busca que abrir, escreva "Bom Preço" e clique no projeto da Rede Bom Preço Supermercados.', 'Leia a faixa que aparece acima do chat e as sugestões da tela.', PERGUNTE('algum case parecido?'), ESPERE, 'Na faixa "Respondendo com foco em…", clique no X.', 'Escolha o foco de novo e tire pelo X do botão "Foco: …".'],
+    ['Aparece a faixa "Respondendo com foco em Rede Bom Preço Supermercados".', 'As sugestões da tela inicial mudam para perguntas sobre esse cliente.', 'A resposta traz cards de projetos parecidos com o da Rede Bom Preço.', 'Antes de clicar, o botão é só um ícone; ao clicar, ele se abre com uma animação suave mostrando "Proposta em foco" e a lista. Com o projeto escolhido, mostra "Foco: Rede Bom Preço Supermercados", em azul, com um X.', 'Depois do X (da faixa ou do botão), a faixa some e o botão volta a ser só o ícone.']),
 
   c('C24', 'alta', 'Ver os detalhes de um card de resposta',
     'Ver se o card mostra as evidências e a explicação da posição.',

@@ -1848,3 +1848,18 @@ details.pd-card-acc[open] .pd-acc-chev { transform: rotate(180deg); }
 .tl-mais { display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-2); }
 .tl-mais .muted { margin-right: auto; }
 .tl-item[hidden] { display: none; }
+/* "Proposta em foco": só o ícone, na ponta esquerda da caixa de pergunta; ao clicar (ou com projeto escolhido)
+   expande com animação suave mostrando o nome e a seleção. */
+.ask .focus { order: -1; margin-left: -6px; }
+.ask .focus-btn { gap: 0; transition: max-width .28s ease, padding .28s ease, background-color .2s ease, border-color .2s ease, color .2s ease; }
+.ask .focus-btn .focus-label { display: inline-block; max-width: 180px; opacity: 1; margin-left: 6px; transition: max-width .28s ease, opacity .2s ease .05s, margin .28s ease; }
+.ask .focus-btn .focus-chev { display: inline-flex; width: 13px; margin-left: 4px; opacity: 1; transition: width .28s ease, opacity .2s ease, margin .28s ease; }
+.ask .focus-btn:not(.on)[aria-expanded="false"] { padding: 6px; border-color: transparent; background: none; }
+.ask .focus-btn:not(.on)[aria-expanded="false"]:hover { background: var(--line-2); }
+.ask .focus-btn:not(.on)[aria-expanded="false"] .focus-label { max-width: 0; opacity: 0; margin-left: 0; }
+.ask .focus-btn:not(.on)[aria-expanded="false"] .focus-chev { width: 0; opacity: 0; margin-left: 0; }
+.ask .focus-btn.on .focus-chev { display: none; }
+.ask .focus-pop:not(.hidden) { animation: focoAbre .22s ease; }
+@keyframes focoAbre { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ask .focus-btn, .ask .focus-btn .focus-label, .ask .focus-btn .focus-chev { transition: none; } .ask .focus-pop:not(.hidden) { animation: none; } }
+@media (max-width: 720px) { .ask .focus-btn #focus-label { display: inline-block; } .ask .focus-btn.on #focus-label { max-width: 110px; } }
