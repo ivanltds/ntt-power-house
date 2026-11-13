@@ -5,6 +5,7 @@
 
 import { $, $$, esc, api, dateBR, toast } from './common.js';
 import { icon } from './icons.js';
+import { campoFiltro, resumoSelecao } from './filtros.js';
 
 const ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
 const ORDEM_PRIO = ['critica', 'alta', 'media', 'baixa', null];
@@ -101,26 +102,28 @@ if (typeof document !== 'undefined') {
 // sessionStorage não servia: vale só para a aba e some no navegador do WhatsApp/Teams a cada abertura.
 const FILTROS_KEY = 'radar.tickets.filtros';
 const lerFiltros = () => { try { const x = JSON.parse(localStorage.getItem(FILTROS_KEY)); return x && typeof x === 'object' ? x : null; } catch { return null; } };
-const gravarFiltros = (f) => { try { localStorage.setItem(FILTROS_KEY, JSON.stringify({ ...f, nomes: [...f.nomes] })); } catch { /* navegação privada: segue sem lembrar */ } };
+const MULTI = ['prioridade', 'area', 'tipo', 'versao', 'nomes'];
+const gravarFiltros = (f) => { try { localStorage.setItem(FILTROS_KEY, JSON.stringify({ ...f, ...Object.fromEntries(MULTI.map((g) => [g, [...f[g]]])) })); } catch { /* navegação privada: segue sem lembrar */ } };
 
 // root: elemento onde o quadro é montado; visao inicial: 'lista' ou 'kanban'.
 export async function montarTickets(root, { visao = 'lista' } = {}) {
   let q = await api('/api/qualidade');
   const rot = q.rotulos;
-  const f = { visao, situacao: 'abertos', tipo: '', area: '', prioridade: '', versao: '', ordenar: 'prioridade', busca: '', nomes: new Set() };
+  // Situação é seleção única; prioridade, área, tipo, versão e quem abriu são multisseleção (Set vazio = todos).
+  const f = { visao, situacao: 'abertos', ordenar: 'prioridade', busca: '', ...Object.fromEntries(MULTI.map((g) => [g, new Set()])) };
   const salvos = lerFiltros();
   if (salvos) {
-    for (const k of ['visao', 'situacao', 'tipo', 'area', 'prioridade', 'versao', 'ordenar', 'busca']) if (typeof salvos[k] === 'string') f[k] = salvos[k];
+    for (const k of ['visao', 'situacao', 'ordenar', 'busca']) if (typeof salvos[k] === 'string') f[k] = salvos[k];
     if (!SITUACOES[f.situacao]) f.situacao = 'abertos';
+    if (!ORDENAR[f.ordenar]) f.ordenar = 'prioridade';
     if (f.visao !== 'kanban') f.visao = 'lista';
-    if (Array.isArray(salvos.nomes)) f.nomes = new Set(salvos.nomes.map(String));
+    // Filtros gravados antes eram um valor só (texto); agora são listas.
+    for (const g of MULTI) f[g] = new Set((Array.isArray(salvos[g]) ? salvos[g] : salvos[g] ? [salvos[g]] : []).map(String));
   }
   // Quem abriu: lista de nomes para o filtro de multisseleção (com a quantidade de tickets de cada um).
   const contaNomes = () => q.tickets.reduce((m, t) => m.set(t.nome, (m.get(t.nome) ?? 0) + 1), new Map());
   // Versão em que cada ticket foi aberto (filtro "Aberto na versão"); a lista mostra todas as versões juntas.
   const versoesTk = [...new Set(q.tickets.map((t) => t.versao).filter(Boolean))].sort().reverse();
-  // Pílula de filtro: [valor, rótulo, ícone, classe do marcador colorido]; a quantidade é preenchida em pintar().
-  const chips = (g, ops) => ops.map(([v, r, ic, dot]) => `<button type="button" class="flt-chip" data-g="${g}" data-v="${esc(v)}" aria-pressed="false">${ic ? icon(ic, { size: 13 }) : dot ? `<i class="${dot}"></i>` : ''}<span>${esc(r)}</span><em></em></button>`).join('');
   const opts = (obj, todos) => `<option value="">${todos}</option>${Object.entries(obj).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('')}`;
 
   root.innerHTML = `
@@ -137,14 +140,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
         <label class="flt-busca">${icon('search', { size: 15 })}<input id="tk-busca" type="search" placeholder="Buscar por código, título, nome ou texto" aria-label="Buscar tickets"></label>
         <label class="flt-ordem">${icon('sort', { size: 15 })}<span>Ordenar</span><select id="tk-ordem" aria-label="Ordenar">${Object.entries(ORDENAR).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select></label>
       </div>
-      <div class="flt-row tk-sit" role="group" aria-label="Situação"><span class="flt-lab">${icon('tag', { size: 14 })}Situação</span><div class="flt-chips">${chips('situacao', Object.entries(SITUACOES).map(([k, v]) => [k, v, ICONE_SIT[k]]))}</div></div>
-      <div class="flt-row" role="group" aria-label="Prioridade"><span class="flt-lab">${icon('trending', { size: 14 })}Prioridade</span><div class="flt-chips">${chips('prioridade', [['', 'Todas', 'layers'], ...Object.entries(rot.prioridades).map(([k, v]) => [k, v, null, `tk-dot tk-p-${k}`]), ['nd', 'A definir', null, 'tk-dot tk-p-nd']])}</div></div>
-      <details class="flt-mais" id="tk-mais"><summary>${icon('filter', { size: 14 })}Mais filtros<em id="tk-mais-n"></em><span class="flt-chev">${icon('chevronDown', { size: 13 })}</span></summary>
-        <div class="flt-row" role="group" aria-label="Área"><span class="flt-lab">${icon('grid', { size: 14 })}Área</span><div class="flt-chips">${chips('area', [['', 'Todas', 'layers'], ...Object.entries(rot.areas).map(([k, v]) => [k, v, ICONE_AREA[k]])])}</div></div>
-        <div class="flt-row" role="group" aria-label="Tipo"><span class="flt-lab">${icon('files', { size: 14 })}Tipo</span><div class="flt-chips">${chips('tipo', [['', 'Todos', 'layers'], ...Object.entries(rot.tipos).map(([k, v]) => [k, v, ICONE_TIPO[k]])])}</div></div>
-        <div class="flt-row" role="group" aria-label="Aberto na versão"><span class="flt-lab">${icon('history', { size: 14 })}Versão</span><div class="flt-chips">${chips('versao', [['', 'Todas', 'layers'], ...versoesTk.map((v) => [v, `Aberto na ${v}`, 'tag'])])}</div></div>
-        <div class="flt-row"><span class="flt-lab">${icon('user', { size: 14 })}Aberto por</span><div class="flt-chips"><details class="tk-multi" id="tk-nomes-f"><summary class="flt-chip"><span id="tk-nomes-rot">Todos</span>${icon('chevronDown', { size: 13 })}</summary><div class="tk-multi-pop" role="group" aria-label="Filtrar por quem abriu"></div></details></div></div>
-      </details>
+      <div class="flt-campos" id="tk-campos"><div data-campo="situacao" class="tk-sit"></div><div data-campo="prioridade"></div><div data-campo="area"></div><div data-campo="tipo"></div><div data-campo="versao"></div><div data-campo="nomes"></div></div>
       <div class="flt-resumo" aria-live="polite"><span id="tk-conta"></span><span class="flt-ativos" id="tk-ativos"></span><button type="button" class="link-btn" id="tk-limpar">${icon('x', { size: 13 })}Limpar filtros</button></div>
     </div>
     <div id="tk-area-lista"></div>
@@ -166,12 +162,13 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
   const passa = (t, fx = f) => {
     const termo = fx.busca.toLowerCase();
     return (fx.visao === 'kanban' || passaSituacao(t, fx.situacao))
-      && (!fx.tipo || t.tipo === fx.tipo) && (!fx.area || t.area === fx.area)
-      && (!fx.prioridade || (fx.prioridade === 'nd' ? !t.prioridade : t.prioridade === fx.prioridade))
-      && (!fx.nomes.size || fx.nomes.has(t.nome)) && (!fx.versao || t.versao === fx.versao)
+      && (!fx.tipo.size || fx.tipo.has(t.tipo)) && (!fx.area.size || fx.area.has(t.area))
+      && (!fx.prioridade.size || fx.prioridade.has(t.prioridade || 'nd'))
+      && (!fx.nomes.size || fx.nomes.has(t.nome)) && (!fx.versao.size || fx.versao.has(t.versao))
       && (!termo || `${t.codigo} ${t.titulo} ${t.nome} ${t.texto} ${t.proposta ?? ''}`.toLowerCase().includes(termo));
   };
-  const conta = (g, v) => q.tickets.filter((t) => passa(t, { ...f, [g]: v })).length;
+  // Quantidade de cada opção: quantos tickets sobrariam com só essa opção no grupo (e os outros filtros como estão).
+  const conta = (g, v) => q.tickets.filter((t) => passa(t, { ...f, [g]: MULTI.includes(g) ? new Set([v]) : v })).length;
   const filtrados = () => {
     const lista = q.tickets.filter((t) => passa(t));
     const prio = (t) => ORDEM_PRIO.indexOf(t.prioridade ?? null);
@@ -231,34 +228,25 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
   function pintar() {
     gravarFiltros(f);
     $$('[data-visao]', root).forEach((b) => { const on = b.dataset.visao === f.visao; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
-    $$('.flt-chip[data-g]', root).forEach((b) => {
-      const on = (f[b.dataset.g] ?? '') === b.dataset.v;
-      b.classList.toggle('on', on);
-      b.setAttribute('aria-pressed', on);
-      $('em', b).textContent = conta(b.dataset.g, b.dataset.v);
-    });
+    campos.forEach((c) => c.pintar());
     $('.tk-sit', root).hidden = f.visao === 'kanban';
     $('.tk-quem', root).hidden = f.visao !== 'kanban';
     const ts = filtrados();
     // Resumo: o que está filtrando agora, cada um com X para tirar.
-    const ROT = { situacao: (v) => SITUACOES[v], prioridade: (v) => (v === 'nd' ? 'A definir' : rot.prioridades[v]), area: (v) => rot.areas[v], tipo: (v) => rot.tipos[v], versao: (v) => `Aberto na ${v}` };
+    const ROT = { prioridade: (v) => (v === 'nd' ? 'A definir' : rot.prioridades[v]), area: (v) => rot.areas[v], tipo: (v) => rot.tipos[v], versao: (v) => v, nomes: (v) => v };
+    const GRUPO = { situacao: 'Situação', prioridade: 'Prioridade', area: 'Área', tipo: 'Tipo', versao: 'Aberto na versão', nomes: 'Aberto por', busca: 'Busca' };
     const ativosLista = [
       ...(f.visao === 'lista' && f.situacao !== 'abertos' ? [['situacao', SITUACOES[f.situacao]]] : []),
-      ...['prioridade', 'area', 'tipo', 'versao'].filter((g) => f[g]).map((g) => [g, ROT[g](f[g])]),
-      ...(f.nomes.size ? [['nomes', f.nomes.size === 1 ? `Aberto por ${[...f.nomes][0]}` : `Aberto por ${f.nomes.size} pessoas`]] : []),
+      ...MULTI.filter((g) => f[g].size).map((g) => [g, resumoSelecao([...f[g]].map((v) => ROT[g](v) ?? v))]),
       ...(f.busca ? [['busca', `“${f.busca}”`]] : []),
     ];
-    $('#tk-nomes-rot', root).textContent = !f.nomes.size ? 'Todos' : f.nomes.size === 1 ? [...f.nomes][0] : `${f.nomes.size} pessoas`;
     $('#tk-conta', root).textContent = `Mostrando ${ts.length} de ${q.tickets.length} ticket${q.tickets.length === 1 ? '' : 's'}`;
-    const GRUPO = { situacao: 'Situação', prioridade: 'Prioridade', area: 'Área', tipo: 'Tipo', versao: 'Versão' };
-    $('#tk-ativos', root).innerHTML = ativosLista.map(([g, r]) => `<span class="fchip">${GRUPO[g] ? `<span class="muted">${GRUPO[g]}:</span>&nbsp;` : ''}${esc(r)}<button type="button" data-tirar-flt="${g}" title="Tirar este filtro" aria-label="Tirar o filtro ${esc(r)}">${icon('x', { size: 11 })}</button></span>`).join('');
+    $('#tk-ativos', root).innerHTML = ativosLista.map(([g, r]) => `<span class="fchip"><span class="muted">${GRUPO[g]}:</span>&nbsp;${esc(r)}<button type="button" data-tirar-flt="${g}" title="Tirar este filtro" aria-label="Tirar o filtro ${GRUPO[g]}">${icon('x', { size: 11 })}</button></span>`).join('');
     $$('[data-tirar-flt]', root).forEach((b) => (b.onclick = () => {
       const g = b.dataset.tirarFlt;
-      if (g === 'situacao') f.situacao = 'abertos'; else if (g === 'nomes') { f.nomes.clear(); pintarNomes(); } else if (g === 'busca') { f.busca = ''; $('#tk-busca', root).value = ''; } else f[g] = '';
+      if (g === 'situacao') f.situacao = 'abertos'; else if (g === 'busca') { f.busca = ''; $('#tk-busca', root).value = ''; } else f[g] = new Set();
       pintar();
     }));
-    const extras = ['area', 'tipo', 'versao'].filter((g) => f[g]).length + (f.nomes.size ? 1 : 0);
-    $('#tk-mais-n', root).textContent = extras ? String(extras) : '';
     $('#tk-limpar', root).hidden = !ativosLista.length;
     const area = $('#tk-area-lista', root);
     area.innerHTML = f.visao === 'kanban' ? kanban(ts) : lista(ts);
@@ -470,27 +458,25 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
   }
 
   // ---------- Filtros ----------
-  const pintarNomes = () => {
-    const pop = $('.tk-multi-pop', root);
-    const nomes = [...contaNomes()].sort(([a], [b]) => a.localeCompare(b, 'pt-BR'));
-    pop.innerHTML = `<div class="tk-multi-acoes"><button type="button" class="btn sm ghost" data-nomes="todos">Todos</button><button type="button" class="btn sm ghost" data-nomes="nenhum">Limpar</button></div>
-      ${nomes.map(([n, c]) => `<label><input type="checkbox" value="${esc(n)}"${f.nomes.has(n) ? ' checked' : ''}><span>${esc(n)}</span><em class="muted small">${c}</em></label>`).join('') || '<p class="muted small">Nenhum nome ainda.</p>'}`;
-    $$('input[type=checkbox]', pop).forEach((c) => (c.onchange = () => { if (c.checked) f.nomes.add(c.value); else f.nomes.delete(c.value); pintar(); }));
-    $('[data-nomes=todos]', pop).onclick = () => { nomes.forEach(([n]) => f.nomes.add(n)); pintarNomes(); pintar(); };
-    $('[data-nomes=nenhum]', pop).onclick = () => { f.nomes.clear(); pintarNomes(); pintar(); };
+  // Campos de filtro (lista suspensa): situação é escolha única; os demais aceitam várias opções.
+  const nomesOrdenados = () => [...contaNomes().keys()].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+  const DEF = {
+    situacao: { rotulo: 'Situação', icone: 'tag', padrao: 'abertos', opcoes: () => Object.entries(SITUACOES).map(([v, r]) => ({ v, r, ic: ICONE_SIT[v] })) },
+    prioridade: { rotulo: 'Prioridade', icone: 'trending', multi: true, todos: 'Todas', opcoes: () => [...Object.entries(rot.prioridades).map(([v, r]) => ({ v, r, marca: `tk-dot tk-p-${v}` })), { v: 'nd', r: 'A definir', marca: 'tk-dot tk-p-nd' }] },
+    area: { rotulo: 'Área', icone: 'grid', multi: true, todos: 'Todas', opcoes: () => Object.entries(rot.areas).map(([v, r]) => ({ v, r, ic: ICONE_AREA[v] })) },
+    tipo: { rotulo: 'Tipo', icone: 'files', multi: true, todos: 'Todos', opcoes: () => Object.entries(rot.tipos).map(([v, r]) => ({ v, r, ic: ICONE_TIPO[v] })) },
+    versao: { rotulo: 'Aberto na versão', icone: 'history', multi: true, todos: 'Todas', opcoes: () => versoesTk.map((v) => ({ v, r: v, ic: 'tag' })) },
+    nomes: { rotulo: 'Aberto por', icone: 'user', multi: true, todos: 'Todos', opcoes: () => nomesOrdenados().map((v) => ({ v, r: v })) },
   };
-  pintarNomes();
-  // Fecha a lista de nomes ao clicar fora dela.
-  (root.closest('dialog') ?? document).addEventListener('click', (e) => { const d = $('#tk-nomes-f', root); if (d.open && !d.contains(e.target)) d.open = false; });
+  const campos = Object.entries(DEF).map(([g, d]) => campoFiltro($(`[data-campo="${g}"]`, root), {
+    ...d, valor: () => f[g], conta: (v) => conta(g, v), mudar: (novo) => { f[g] = novo; pintar(); },
+  }));
   $$('[data-visao]', root).forEach((b) => (b.onclick = () => { f.visao = b.dataset.visao; pintar(); }));
-  $$('.flt-chip[data-g]', root).forEach((b) => (b.onclick = () => { f[b.dataset.g] = b.dataset.v; pintar(); }));
-  if (['area', 'tipo', 'versao'].some((g) => f[g]) || f.nomes.size) $('#tk-mais', root).open = true;
   $('#tk-busca', root).oninput = (e) => { f.busca = e.target.value.trim(); pintar(); };
   $('#tk-ordem', root).onchange = (e) => { f.ordenar = e.target.value; pintar(); };
   $('#tk-limpar', root).onclick = () => {
-    Object.assign(f, { situacao: 'abertos', tipo: '', area: '', prioridade: '', versao: '', busca: '' });
-    f.nomes.clear();
-    pintarNomes();
+    Object.assign(f, { situacao: 'abertos', busca: '' });
+    for (const g of MULTI) f[g] = new Set();
     $('#tk-busca', root).value = '';
 
     pintar();
