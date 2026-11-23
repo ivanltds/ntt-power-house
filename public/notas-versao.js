@@ -44,6 +44,18 @@ export const NOTAS = [
         depois: 'A visão Negócio tem o cartão "O que está acontecendo no setor?": notícias de fontes curadas, coletadas uma vez por dia, com a relevância para nós (cliente da carteira, tecnologia que já entregamos no setor ou só o setor), o porquê, o link da fonte e "O que já fizemos sobre isso?". O Radar guarda só título, data, link e um trecho, por 90 dias, e uma fonte fora do ar não afeta o resto. A lista de fontes está sendo definida com a Kelly e o Bruno Miranda.',
       },
       {
+        tipo: 'melhoria', status: 'feito', area: 'Geral',
+        titulo: 'Base de testes com 500 projetos fictícios',
+        antes: 'A base tinha 11 projetos fictícios (um por setor) e 5 cadastrados à mão: cada busca tinha 1 ou 2 candidatos e os Insights trabalhavam com 1 a 3 projetos por segmento.',
+        depois: 'Entraram 500 projetos fictícios (P101 a P600) e 2.204 documentos, de abr/2024 a nov/2026, em 10 setores e 25 temas que se repetem entre setores, com 66 clientes, 35 responsáveis e taxa de ganho de ~53%. Toda proposta tem documento financeiro; as perdidas têm ata com o motivo e, às vezes, o e-mail do cliente. Os projetos cadastrados pelos usuários foram mantidos. Um gabarito de 60 perguntas mede a qualidade das respostas a cada versão.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Chat', tickets: ['CR-080'],
+        titulo: 'Por que perdemos',
+        antes: '"Por que perdemos propostas de fraude?" trazia projetos parecidos de qualquer status, sem organizar as perdas; o motivo só aparecia em parte das respostas.',
+        depois: 'O chat olha só as propostas perdidas parecidas com o tema (ou todas, sem tema), agrupa os motivos em barras e mostra uma tabela com o motivo de cada perda ("registrado na ata" ou "sugerido pelo Radar"), a lição e com quem falar. No gabarito, o motivo passou a ser citado em todas as perguntas.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Projetos',
         titulo: 'Revisão de qualidade e documento financeiro',
         antes: 'A ficha não avisava que a proposta passaria pela revisão de qualidade, e uma planilha financeira podia ser marcada como "bom modelo" como qualquer documento.',

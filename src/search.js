@@ -19,6 +19,7 @@ import { can } from './permissions.js';
 import { temaDoPedido, refereListaAnterior, refereFoco, codigoNoTexto } from './skills/cases.js';
 import { onePageContent } from './export/onepage.js';
 import { casesParaApresentacao } from './export/index.js';
+import { responderPerdas } from './skills/perdas.js';
 import {
   IntentTools, VOCAB, CAMPOS_FICHA, classificar, camposPedidos, agrupamentoPedido, temAssunto, filtrosValidos,
   textoListagem, textoContagem, textoFicha, textoComparacao, referenciaAnterior, pedeResultados, textoResultados, textoFichas,
@@ -216,7 +217,7 @@ export class RadarEngine {
     const pelaIA = { conversa: { skill: 'conversa', tipo: u.conversa ?? 'nao_entendi' }, fora_dominio: { skill: 'conversa', tipo: 'fora_escopo' }, ajuda: { skill: 'ajuda' } }[u.intencao]
       ?? (u.intencao === 'anexo' && anexos.length ? { skill: 'anexo', acao: u.acao ?? 'perguntar' } : null)
       ?? (u.intencao === 'enviar_arquivo' && pendentes > 0 ? { skill: 'enviar_arquivo' } : null)
-      ?? (['gerar_onepage', 'apresentacao_cases'].includes(u.intencao) ? { skill: u.intencao } : null);
+      ?? (['gerar_onepage', 'apresentacao_cases', 'perdas'].includes(u.intencao) ? { skill: u.intencao } : null);
     if (pelaIA) return this.runSkill(pelaIA, { ...ctxSkill, query, t0, iaStatus, entendimento });
 
     // UC03.14 — pedido de detalhe de um resultado da resposta anterior.
@@ -415,6 +416,7 @@ Com quem falar: ${[...new Set(pessoas)].join('; ')}. Pergunte como ganharam, o q
       if (r.ia) iaStatus.push(r.ia);
       return responder('anexo', r);
     }
+    if (d.skill === 'perdas') return responder('perdas', responderPerdas(this, query, user));
     if (d.skill === 'gerar_onepage') return responder('onepage', await this.skillOnePage(query, { user, opp, history }));
     if (d.skill === 'apresentacao_cases') return responder('apresentacao', await this.skillApresentacao(query, { user, opp, history }));
     if (d.skill === 'enviar_arquivo') {

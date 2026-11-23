@@ -876,6 +876,13 @@ export const ROTEIRO = [
     ['Sem fontes configuradas, o cartão explica que a lista de fontes está sendo definida, e o resto dos Insights funciona normalmente.', 'Com fontes configuradas, cada notícia mostra a relevância (Alta, Média ou Baixa), o porquê, o link da fonte e o botão "O que já fizemos sobre isso?", que abre o chat.'],
     { tickets: ['CR-079'] }),
 
+  c('C62', 'alta', 'Por que perdemos',
+    'Ver se o Radar explica as perdas de um tema com os motivos, as lições e com quem falar.',
+    [GESTOR],
+    [NOVA, PERGUNTE('Por que perdemos propostas de detecção de fraude?'), ESPERE, 'Olhe as barras de motivos e a tabela abaixo da resposta.', 'Clique numa linha da tabela.', PERGUNTE('o que aprendemos com as propostas perdidas?'), ESPERE],
+    ['A etiqueta da resposta é "Por que perdemos" e o texto diz quantas propostas perdidas foram olhadas, os motivos mais comuns, uma lição e "Com quem falar".', 'A tabela só tem propostas perdidas, cada uma com o motivo ("registrado na ata" ou "sugerido pelo Radar", ou "sem motivo claro"), a lição e o responsável.', 'Clicar na linha abre o projeto.', 'A segunda pergunta olha as perdidas da base toda, sem tema.'],
+    { tickets: ['CR-080'] }),
+
   c('P38', 'media', 'Aviso de revisão de qualidade',
     'Ver se a ficha avisa cedo que a proposta passa pela revisão de qualidade.',
     [GESTOR],
