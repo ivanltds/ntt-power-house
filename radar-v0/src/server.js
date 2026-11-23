@@ -31,6 +31,7 @@ import { VERSAO } from './version.js';
 import { criarAcessoRelatorio, montarRelatorio, RELATORIO_PATH, RELATORIO_INSIGHTS_PATH, usuarioRelatorio } from './relatorio.js';
 import { resumoCampanha } from './campanha.js';
 import { montarPainel, resumoExecutivo } from './painel.js';
+import { SinaisStore, agendarColeta } from './sinais.js';
 
 loadEnv(path.join(ROOT, '.env'));
 
@@ -99,6 +100,11 @@ function registrarMascaramento(contexto, user, achados) {
 }
 // Qualidade da versão: feedbacks com código de correção e roteiro regressivo (só texto em disco).
 const qualidade = new QualityStore(path.join(DATA_DIR, 'qualidade.json'));
+
+// CR-079: sinais do setor (fontes curadas em DATA_DIR/sinais-fontes.json), coletados de madrugada.
+const sinais = new SinaisStore(DATA_DIR);
+const vocabSinais = () => { const t = engine.repo.taxonomy(); return { segmentos: t.segmentos.map((x) => x.nome), tecnologias: t.tecnologias.map((x) => x.nome) }; };
+agendarColeta(sinais, vocabSinais);
 
 function painelPara(user, filtros = {}) {
   return montarPainel(engine.repo, user, { oportunidades: engine.opportunities, turnos: audit.read(audit.turnsFile), eventos: audit.read(audit.eventsFile), filtros });
@@ -684,7 +690,25 @@ const routes = {
     segmento: url.searchParams.get('segmento') || null,
     area: url.searchParams.get('area') || null,
     desde: url.searchParams.get('desde') || null,
+    fy: url.searchParams.get('fy') || null, // CR-078: ano fiscal (abril a março), ex.: FY26
   }),
+
+  // CR-079: as 5 notícias mais relevantes para nós no setor filtrado, com o porquê (só sobre o que o usuário pode ver).
+  'GET /api/sinais': (req, url) => {
+    const user = engine.user(url.searchParams.get('userId'));
+    const projetos = engine.tools.visible(user).itens.map((p) => ({ id: p.id, cliente: p.cliente, segmento: p.segmento, status_proposta: p.status_proposta, tecnologias: p.tecnologias, dono: p.dono }));
+    return { itens: sinais.relevantes(projetos, { segmento: url.searchParams.get('segmento') || null }), saude: sinais.saude(), podeColetar: can(user, 'marcarTeste') };
+  },
+
+  // Coleta manual (gestor): útil logo depois de configurar as fontes.
+  'POST /api/sinais/coletar': async (req) => {
+    const { userId } = await readJson(req, 2_000);
+    const user = engine.user(userId);
+    if (!can(user, 'marcarTeste')) return [403, { erro: 'Só o gestor pode disparar a coleta de sinais.' }];
+    const r = await sinais.coletar(vocabSinais());
+    audit.logEvent({ tipo: 'sinais_coleta', fontes: r.fontes, novos: r.novos, falhas: r.falhas.length, usuario: user.id });
+    return r;
+  },
 
   'POST /api/projeto/teste': async (req) => {
     const b = await readJson(req, 10_000);

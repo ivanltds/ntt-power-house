@@ -6,6 +6,7 @@
 
 import { normalize } from './text.js';
 import { STATUS_GANHO, STATUS_ANDAMENTO, faixaValor } from './db/repo.js';
+import { sugerirMotivos, MOTIVOS_PERDA, MOTIVOS_GANHO } from './motivos.js';
 
 export const LENTES = ['negocio', 'tecnica', 'pipeline', 'prevenda', 'curadoria'];
 export const AMOSTRA_MINIMA = 3;
@@ -19,7 +20,17 @@ const media = (xs) => (xs.length ? soma(xs) / xs.length : null);
 const conta = (xs, key) => xs.reduce((m, x) => m.set(key(x), (m.get(key(x)) ?? 0) + 1), new Map());
 const jaccard = (a, b) => { const A = new Set(a), B = new Set(b); const i = [...A].filter((x) => B.has(x)).length; const u = new Set([...A, ...B]).size; return u ? i / u : 0; };
 const margemPond = (ps) => { const v = ps.filter((p) => p.valor > 0 && p.margem != null); const t = soma(v.map((p) => p.valor)); return t ? r1((100 * soma(v.map((p) => p.valor * p.margem))) / t) : null; };
-const ano = (p) => (p.data_referencia ? Number(String(p.data_referencia).slice(0, 4)) : null);
+// CR-078: o "ano" dos Insights é o ano fiscal da NTT DATA, de abril a março. FY26 = abr/2026 a mar/2027.
+// Guardamos o ano de início (2026) e mostramos "FY26".
+export function fyDe(data) {
+  if (!data) return null;
+  const s = String(data);
+  const y = Number(s.slice(0, 4)), m = Number(s.slice(5, 7)) || 1;
+  return Number.isFinite(y) ? (m >= 4 ? y : y - 1) : null;
+}
+export const rotuloFY = (y) => (y == null ? null : `FY${String(y % 100).padStart(2, '0')}`);
+export const periodoFY = (y) => `abr/${y} a mar/${y + 1}`;
+const ano = (p) => fyDe(p.data_referencia);
 const ganho = (p) => STATUS_GANHO.includes(p.status_proposta);
 const perdido = (p) => p.status_proposta === 'Perdida';
 const andamento = (p) => STATUS_ANDAMENTO.includes(p.status_proposta);
@@ -78,8 +89,11 @@ function carregar(repo, user) {
   return projetos;
 }
 
-function aplicarFiltros(ps, { segmento, area, desde } = {}) {
-  return ps.filter((p) => (!segmento || p.segmento === segmento) && (!area || p.area === area) && (!desde || (ano(p) ?? 0) >= Number(desde)));
+// fy: ano fiscal ("FY26" ou 2026); desde: a partir de um ano fiscal (compatível com o filtro antigo).
+const fyNum = (v) => { const m = /^FY([0-9]{2})$/i.exec(String(v ?? '').trim()); return m ? 2000 + Number(m[1]) : Number(v) || null; };
+function aplicarFiltros(ps, { segmento, area, desde, fy } = {}) {
+  const f = fyNum(fy), d = fyNum(desde);
+  return ps.filter((p) => (!segmento || p.segmento === segmento) && (!area || p.area === area) && (!d || (ano(p) ?? 0) >= d) && (!f || ano(p) === f));
 }
 
 // ---------------- Negócio ----------------
@@ -139,7 +153,31 @@ function negocio(ps, valores) {
   } : null;
   if (impacto?.contratos) impacto.multiplo = r1(impacto.reais / impacto.contratos);
 
-  return { carteira, porSegmento, margemPorDuracao, concentracao, pacotes, quadrante, resultados, impacto };
+  return { carteira, porSegmento, margemPorDuracao, concentracao, pacotes, quadrante, resultados, impacto, ganhasPerdas: ganhasPerdas(ps, valores),
+    metodoTaxa: 'Taxa de ganho = ganhas ÷ (ganhas + perdidas). Só propostas decididas entram na conta (em aberto e canceladas ficam fora). O período é o ano fiscal da data de referência do projeto (abril a março). Número a alinhar com o oficial do comercial (Cristiane Divino).' };
+}
+
+// "Ganhamos × perdemos" (CR-078, R19-06): o que as ganhas e as perdidas do recorte têm em comum, os motivos
+// sugeridos (lista controlada, a partir das lições) e as perdas que viraram aprendizado, com quem conduziu.
+function ganhasPerdas(ps, valores) {
+  const G = ps.filter(ganho), P = ps.filter(perdido);
+  const topo = (lista, f) => [...conta(lista.flatMap(f), (x) => x)].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([nome, n]) => ({ nome, n, pct: pct(n, lista.length) }));
+  const mediana = (xs) => { const v = xs.filter((x) => x != null).sort((a, b) => a - b); return v.length ? v[Math.floor((v.length - 1) / 2)] : null; };
+  const perfil = (g) => ({
+    n: g.length, ids: g.map((p) => p.id),
+    tecnologias: topo(g, (p) => p.tecnologias), servicos: topo(g, (p) => p.servicos),
+    prazoMediano: mediana(g.map((p) => p.prazo_meses)),
+    valorMediano: valores ? mediana(g.map((p) => p.valor)) : null,
+    comCase: pct(g.filter((p) => p.relacionados.some((r) => r.sim >= 0.3 && ps.find((x) => x.id === r.id && temCase(x)))).length, g.length),
+  });
+  const textoDe = (p) => [...p.licoes.map((l) => l.texto)].join(' ');
+  const motivos = (g, lista) => {
+    const m = new Map();
+    for (const p of g) for (const x of sugerirMotivos(textoDe(p), lista)) { const e = m.get(x.motivo) ?? { ...x, ids: [] }; e.ids.push(p.id); m.set(x.motivo, e); }
+    return [...m.values()].sort((a, b) => b.ids.length - a.ids.length);
+  };
+  const aprendizados = P.filter((p) => p.licoes.length).map((p) => ({ projeto: p.id, cliente: p.cliente, segmento: p.segmento, licao: p.licoes[0].texto, motivos: sugerirMotivos(textoDe(p)).map((x) => x.rotulo), contato: p.dono ?? null }));
+  return { ganhas: perfil(G), perdidas: perfil(P), motivosPerda: motivos(P, MOTIVOS_PERDA), motivosGanho: motivos(G, MOTIVOS_GANHO), aprendizados, origem: 'IA · sugerido' };
 }
 
 // ---------------- Técnica ----------------
@@ -153,11 +191,12 @@ function tecnica(ps, valores, anoAtual) {
   const comAno = ps.filter((p) => ano(p) && !andamento(p));
   const anos = [...new Set(comAno.map(ano))].sort();
   const topTec = [...conta(comAno.flatMap((p) => p.tecnologias), (t) => t)].sort((a, b) => b[1] - a[1]).slice(0, 10).map(([t]) => t);
-  const tendencia = { linhas: topTec, colunas: anos, celulas: topTec.map((t) => anos.map((a) => comAno.filter((p) => ano(p) === a && p.tecnologias.includes(t)).map((p) => p.id))) };
+  const tendencia = { linhas: topTec, colunas: anos.map(rotuloFY), celulas: topTec.map((t) => anos.map((a) => comAno.filter((p) => ano(p) === a && p.tecnologias.includes(t)).map((p) => p.id))) };
 
   const ultimo = (lista) => { const m = new Map(); for (const p of comAno) for (const t of lista(p)) { const e = m.get(t) ?? { ultimo: 0, n: 0 }; e.ultimo = Math.max(e.ultimo, ano(p)); e.n += 1; m.set(t, e); } return m; };
   const esfriando = [...[...ultimo((p) => p.tecnologias)].map(([nome, e]) => ({ tipo: 'tecnologia', nome, ...e })), ...[...ultimo((p) => p.servicos)].map(([nome, e]) => ({ tipo: 'serviço', nome, ...e }))]
-    .filter((e) => e.ultimo <= anoAtual - ANOS_ESFRIANDO).sort((a, b) => a.ultimo - b.ultimo || a.nome.localeCompare(b.nome));
+    .filter((e) => e.ultimo <= anoAtual - ANOS_ESFRIANDO).sort((a, b) => a.ultimo - b.ultimo || a.nome.localeCompare(b.nome))
+    .map((e) => ({ ...e, ultimoFY: rotuloFY(e.ultimo) }));
 
   // Estimativa preliminar × proposta do mesmo projeto (T3).
   const pares = ps.map((p) => ({ p, e: p.docs.find((d) => d.tipo === 'estimativa_preliminar'), pr: p.docs.find((d) => d.tipo === 'proposta_comercial') })).filter((x) => x.e && x.pr);
@@ -341,7 +380,7 @@ function manchetes(l, valores) {
   if (t.estimativa.variacaoValor) out.tecnica.push({ texto: `A proposta sai em média ${br(t.estimativa.variacaoValor.media)}% acima da estimativa preliminar (n = ${t.estimativa.n}).`, card: 'estimativa', destaque: `+${br(t.estimativa.variacaoValor.media)}%`, legenda: 'da estimativa preliminar para a proposta', tom: 'info' });
   else if (t.estimativa.prazoCresceu.length) out.tecnica.push({ texto: `O prazo cresceu entre estimativa e proposta em ${t.estimativa.prazoCresceu.length} de ${t.estimativa.n} projetos.`, card: 'estimativa', destaque: `${t.estimativa.prazoCresceu.length} de ${t.estimativa.n}`, legenda: 'propostas com prazo maior que a estimativa', tom: 'atencao', mini: { tipo: 'fracao', parte: t.estimativa.prazoCresceu.length, total: t.estimativa.n } });
   const tec = t.esfriando.filter((e) => e.tipo === 'tecnologia');
-  if (tec.length) out.tecnica.push({ texto: `${tec.slice(0, 4).map((e) => e.nome).join(', ')} sem projeto desde ${Math.max(...tec.slice(0, 4).map((e) => e.ultimo))}.`, card: 'esfriando', destaque: String(tec.length), legenda: `tecnologias sem projeto recente (${tec.slice(0, 3).map((e) => e.nome).join(', ')}${tec.length > 3 ? '…' : ''})`, tom: 'info', mini: { tipo: 'barras', itens: tec.slice(0, 4).map((e) => ({ rotulo: e.nome, valor: e.n, sufixo: ' proj.' })) } });
+  if (tec.length) out.tecnica.push({ texto: `${tec.slice(0, 4).map((e) => e.nome).join(', ')} sem projeto desde o ${rotuloFY(Math.max(...tec.slice(0, 4).map((e) => e.ultimo)))}.`, card: 'esfriando', destaque: String(tec.length), legenda: `tecnologias sem projeto recente (${tec.slice(0, 3).map((e) => e.nome).join(', ')}${tec.length > 3 ? '…' : ''})`, tom: 'info', mini: { tipo: 'barras', itens: tec.slice(0, 4).map((e) => ({ rotulo: e.nome, valor: e.n, sufixo: ' proj.' })) } });
 
   const al = l.pipeline.alertas;
   const conta2 = (tipo) => al.filter((x) => x.tipo === tipo).length;
@@ -376,7 +415,7 @@ export function montarPainel(repo, user, { oportunidades = [], turnos = [], even
   const vivos = todos.filter((p) => !p.teste);
   const ps = aplicarFiltros(vivos, filtros);
   const areasPadrao = [...new Set(todos.filter((p) => p.origem === 'seed' && p.area).map((p) => p.area))].sort();
-  const anoAtual = hoje.getFullYear();
+  const anoAtual = fyDe(hoje.toISOString());
   const l = {
     negocio: negocio(ps, valores),
     tecnica: tecnica(ps, valores, anoAtual),
@@ -389,7 +428,11 @@ export function montarPainel(repo, user, { oportunidades = [], turnos = [], even
     valores,
     amostraMinima: AMOSTRA_MINIMA,
     base: { projetos: ps.length, visiveis: vivos.length, testesOcultos: todos.length - vivos.length },
-    opcoes: { segmentos: [...new Set(vivos.map((p) => p.segmento).filter(Boolean))].sort(), areas: areasPadrao, anos: [...new Set(vivos.map(ano).filter(Boolean))].sort() },
+    opcoes: {
+      segmentos: [...new Set(vivos.map((p) => p.segmento).filter(Boolean))].sort(), areas: areasPadrao, anos: [...new Set(vivos.map(ano).filter(Boolean))].sort(),
+      fys: [...new Set([...vivos.map(ano).filter(Boolean), anoAtual])].sort().map((y) => ({ valor: rotuloFY(y), rotulo: `${rotuloFY(y)} (${periodoFY(y)})${y === anoAtual ? ' · atual' : ''}` })),
+      fyAtual: rotuloFY(anoAtual),
+    },
     filtros,
     manchetes: manchetes(l, valores),
     lentes: l,
