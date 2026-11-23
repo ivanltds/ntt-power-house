@@ -2,9 +2,10 @@
 
 import { enviarParaProjeto } from './upload.js';
 import { cartoesDeEnvio, meusEnvios, formatosOrdenados, abrirRevisao } from './revisao.js';
-import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText, iconeSegmento } from './common.js';
+import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, copyText, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText, iconeSegmento } from './common.js';
 import { icon } from './icons.js';
 import { openOnePage, openApresentacao } from './onepage.js';
+import { montarConversaFicha } from './conversa-ficha.js';
 import { ELISTS, elist, bindEntityLists, readEntityLists } from './entidades.js';
 import { ensureTerms, handleTermsError, maskNote, policyLine } from './aviso.js';
 
@@ -367,6 +368,7 @@ export async function openProject(id) {
       <div class="pd-main">
         <section class="pd-sec"><h5 class="sect-title">${icon('trending', { size: 16 })}Objetivo</h5><div class="pd-text">${ed('objetivo', p.objetivo ? md(p.objetivo) : '')}</div></section>
         <section class="pd-sec"><h5 class="sect-title">${icon('info', { size: 16 })}Contexto</h5><div class="pd-text">${ed('descricao', p.descricao ? md(p.descricao) : '')}</div></section>
+        <details class="pd-sec pd-acc pd-conv" id="pd-conv" open><summary><h5 class="sect-title">${icon('message', { size: 16 })}Conversar sobre este projeto<span class="pd-acc-chev">${icon('chevronDown', { size: 16 })}</span></h5></summary><div id="pd-conv-body"><p class="muted small">${icon('loader', { size: 14, cls: 'spin' })} Carregando a conversa…</p></div></details>
         ${insight('kpi', 'chart', 'Resultados')}${insight('licao', 'bulb', 'Lições aprendidas')}${insight('risco', 'alert', 'Riscos')}
         ${recolhivel('files', 'Documentos', d.documentos.length, `
           ${d.documentos.length ? `<ul class="pd-docs">${d.documentos.map((doc) => `<li>
@@ -407,6 +409,8 @@ export async function openProject(id) {
           ${row('Atualizado', when(p.atualizado_em))}
           ${row('Pasta', ed('link_sharepoint', p.link_sharepoint ? `<a href="${esc(p.link_sharepoint)}" target="_blank" rel="noopener">${icon('link', { size: 13 })}SharePoint</a>` : ''))}
         </dl>`)}
+        ${p.dono ? side('users', 'Quem pode te contar como foi', `<p class="pd-contato"><b>${esc(p.dono)}</b><small>Responsável pelo projeto${p.area ? ` · ${esc(p.area)}` : ''}${p.segmento ? ` · setor ${esc(p.segmento)}` : ''}</small></p>
+          <button type="button" class="link-btn" id="pd-contato">${icon('copy', { size: 13 })}Copiar mensagem para ${esc(p.dono.split(' ')[0])}</button>`) : ''}
         ${sideAcc('cpu', 'Tecnologias', tagsEd('tecnologias', p.tecnologias), p.tecnologias.length, ' data-acc="tecnologias"')}
         ${side('layers', 'Serviços', tagsEd('servicos', p.servicos, ' alt'), p.servicos.length)}
         ${side('users', 'Pessoas', ents('pessoa').length ? `<ul class="pd-list">${ents('pessoa').map((e) => `<li>${esc(e.valor)}</li>`).join('')}</ul>` : '', ents('pessoa').length)}
@@ -581,7 +585,13 @@ export async function openProject(id) {
   };
   $('#pd-upload').onclick = upload;
   $('#pd-upload-2')?.addEventListener('click', upload);
-  $('#pd-ask').onclick = () => { close(); openTab('busca'); $('#query').value = `${p.titulo} (${p.cliente})`; $('#query').focus(); };
+  // CR-077: "Perguntar" leva à conversa da própria ficha, com o foco fixo no projeto (sem sair da ficha).
+  montarConversaFicha($('#pd-conv-body'), p, { fecharFicha: close });
+  $('#pd-contato')?.addEventListener('click', async () => {
+    await copyText(`Oi, ${p.dono}! Vi no Radar o projeto "${p.titulo}" (${p.cliente}). Estou preparando uma proposta parecida e queria entender como foi: por que ganhamos ou perdemos, o que pesou no preço e o que doeu entre vender e entregar. Podemos conversar 15 minutos?`);
+    toast('Mensagem copiada: cole no Teams ou no e-mail');
+  });
+  $('#pd-ask').onclick = () => { const s = $('#pd-conv'); s.open = true; s.scrollIntoView({ block: 'start', behavior: 'smooth' }); setTimeout(() => $('#pd-conv textarea')?.focus(), 300); };
   if (!$('#project-dialog').open) $('#project-dialog').showModal();
 }
 

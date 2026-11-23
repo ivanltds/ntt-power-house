@@ -38,11 +38,12 @@ export class ConversationStore {
   }
 
   // Continua a conversa informada ou cria uma nova quando o id não existe ou é de outro usuário.
-  open(id, { userId, opportunityId }) {
+  // projetoId (CR-077): conversa aberta dentro da ficha do projeto, com o foco fixo nele.
+  open(id, { userId, opportunityId, projetoId = null }) {
     const existing = id && this.get(id, userId);
     if (existing) return existing;
     const now = new Date().toISOString();
-    const c = { id: crypto.randomUUID(), userId, oportunidadeId: opportunityId ?? null, titulo: null, salva: false, favorita: false, criadaEm: now, atualizadaEm: now, turnos: [] };
+    const c = { id: crypto.randomUUID(), userId, oportunidadeId: opportunityId ?? projetoId ?? null, projetoId, titulo: null, salva: false, favorita: false, criadaEm: now, atualizadaEm: now, turnos: [] };
     this.items.set(c.id, c);
     return c;
   }
@@ -148,6 +149,13 @@ export class ConversationStore {
       .filter((c) => c.userId === userId && c.salva && (!soFavoritas || c.favorita))
       .filter((c) => !q || c.titulo.toLowerCase().includes(q) || c.turnos.some((t) => t.pergunta.toLowerCase().includes(q)))
       .sort((a, b) => Number(b.favorita) - Number(a.favorita) || b.atualizadaEm.localeCompare(a.atualizadaEm))
-      .map(({ id, titulo, favorita, grupo, arquivada, oportunidadeId, criadaEm, atualizadaEm, turnos }) => ({ id, titulo, favorita, grupo: grupo ?? null, arquivada: Boolean(arquivada), oportunidadeId, criadaEm, atualizadaEm, turnos: turnos.length }));
+      .map(({ id, titulo, favorita, grupo, arquivada, oportunidadeId, projetoId, criadaEm, atualizadaEm, turnos }) => ({ id, titulo, favorita, grupo: grupo ?? null, arquivada: Boolean(arquivada), oportunidadeId, projetoId: projetoId ?? null, criadaEm, atualizadaEm, turnos: turnos.length }));
+  }
+
+  // CR-077: a conversa mais recente do usuário aberta na ficha deste projeto (para retomar ao reabrir a ficha).
+  ultimaDoProjeto(userId, projetoId) {
+    return [...this.items.values()]
+      .filter((c) => c.userId === userId && c.projetoId === projetoId && c.turnos.length && !c.arquivada)
+      .sort((a, b) => b.atualizadaEm.localeCompare(a.atualizadaEm))[0] ?? null;
   }
 }

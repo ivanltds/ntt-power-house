@@ -254,13 +254,17 @@ const routes = {
 
   // A conversa dá a memória da busca: os turnos anteriores entram como contexto (UC03.3 / UC03.14).
   'POST /api/buscar': async (req) => {
-    const { query: bruta, userId, opportunityId, conversaId, pendentes = 0 } = await readJson(req);
+    const { query: bruta, userId, opportunityId: oppPedida, conversaId, pendentes = 0, projetoId: pedidoProjeto = null } = await readJson(req);
     if (!bruta?.trim()) return [400, { erro: 'Informe uma pergunta.' }];
     const user = engine.user(userId);
+    // CR-077: conversa da ficha do projeto, com o foco fixo nele (só se o perfil pode ver o projeto).
+    const projetoId = pedidoProjeto && engine.focus(String(pedidoProjeto), user)?.projetoId ? String(pedidoProjeto) : null;
+    if (pedidoProjeto && !projetoId) return [404, { erro: 'Projeto não encontrado ou sem permissão.' }];
+    const opportunityId = projetoId ?? oppPedida;
     // A pergunta também vai à IA externa: dados sensíveis saem antes (UC13.2).
     const { texto: query, achados } = maskSensitive(bruta);
     registrarMascaramento('pergunta', user, achados);
-    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId });
+    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId, projetoId });
     const anexos = anexosConversa.list(conversa.id, user.id);
     const result = await engine.search(query, {
       userId: user.id, opportunityId, history: conversations.history(conversa),
@@ -275,16 +279,34 @@ const routes = {
 
   // UC15: anexar um arquivo à conversa para o Radar ler (não entra na base). Cria a conversa se ainda não existir.
   'POST /api/conversa/anexo': async (req) => {
-    const { nome, conteudoBase64, userId, opportunityId, conversaId } = await readJson(req, Math.ceil(MAX_UPLOAD_BYTES * 1.4) + 10_000);
+    const { nome, conteudoBase64, userId, opportunityId: oppPedida, conversaId, projetoId: pedidoProjeto = null } = await readJson(req, Math.ceil(MAX_UPLOAD_BYTES * 1.4) + 10_000);
     const user = engine.user(userId);
     const buffer = Buffer.from(conteudoBase64 ?? '', 'base64');
     if (!nome || !buffer.length) return [400, { erro: 'Arquivo vazio.' }];
     if (buffer.length > MAX_UPLOAD_BYTES) return [400, { erro: `Arquivo maior que ${MAX_UPLOAD_BYTES / 1024 / 1024} MB.` }];
-    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId });
+    const projetoId = pedidoProjeto && engine.focus(String(pedidoProjeto), user)?.projetoId ? String(pedidoProjeto) : null;
+    const opportunityId = projetoId ?? oppPedida;
+    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId, projetoId });
     const r = anexosConversa.add(conversa.id, user.id, { nome, buffer, clientes: engine.repo.clients(user) });
     if (r.erro) return [400, { erro: r.erro, conversa: { id: conversa.id } }];
     audit.logEvent?.({ tipo: 'anexo_conversa', usuario: user.id, conversa: conversa.id, arquivo: r.anexo.nome, formato: r.anexo.formato, mascarados: r.anexo.mascarados });
     return { anexo: resumoPublico(r.anexo), conversa: { id: conversa.id, titulo: conversa.titulo, salva: conversa.salva, favorita: conversa.favorita, turnos: conversa.turnos.length } };
+  },
+
+  // CR-077: conversa da ficha — a mais recente do usuário neste projeto, com as 3 últimas trocas.
+  'GET /api/conversa/projeto': (req, url) => {
+    const user = engine.user(url.searchParams.get('userId'));
+    const id = url.searchParams.get('id') ?? '';
+    if (!engine.focus(id, user)?.projetoId) return [404, { erro: 'Projeto não encontrado ou sem permissão.' }];
+    const c = conversations.ultimaDoProjeto(user.id, id);
+    if (!c) return { conversa: null };
+    return {
+      conversa: {
+        id: c.id, titulo: c.titulo, favorita: c.favorita, total: c.turnos.length, atualizadaEm: c.atualizadaEm,
+        turnos: c.turnos.slice(-3).map((t) => ({ turnoId: t.turnoId, pergunta: t.pergunta, resultado: t.resultado })),
+        anexos: anexosConversa.list(c.id, user.id).map(resumoPublico),
+      },
+    };
   },
 
   // "O que você pode fazer?" na tela (boas-vindas): capacidades do registro de skills, filtradas pelo perfil.
