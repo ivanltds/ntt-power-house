@@ -801,7 +801,7 @@ export const ROTEIRO = [
 // Roteiros de versões anteriores, congelados: a versão arquivada só pode ser consultada.
 // O arquivo JSON de cada uma é uma foto do roteiro no dia em que a versão foi fechada; um teste garante que não muda.
 const ARQUIVO = (v) => new URL(`./roteiros/${v}.json`, import.meta.url);
-export const VERSOES_ARQUIVADAS = ['V0.0.1'];
+export const VERSOES_ARQUIVADAS = ['V0.0.1', 'V0.0.2'];
 const congelar = (o) => { Object.values(o).forEach((v) => v && typeof v === 'object' && congelar(v)); return Object.freeze(o); };
 const ARQUIVADOS = Object.fromEntries(VERSOES_ARQUIVADAS.map((v) => [v, congelar(JSON.parse(fs.readFileSync(ARQUIVO(v), 'utf8')))]));
 export const versaoArquivada = (v) => Object.hasOwn(ARQUIVADOS, v);

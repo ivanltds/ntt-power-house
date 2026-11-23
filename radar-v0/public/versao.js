@@ -7,7 +7,7 @@ import { icon } from './icons.js';
 import { render, table, tip } from './ajuda.js';
 import { SECOES_QUALIDADE } from './qualidade.js';
 
-export const VERSAO = 'V0.0.2';
+export const VERSAO = 'V0.0.3';
 
 export { NOTAS } from './notas-versao.js';
 import { NOTAS } from './notas-versao.js';
