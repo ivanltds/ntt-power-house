@@ -262,3 +262,33 @@ test('Insights · manchetes em cartões: número, tom e gráfico válidos em tod
     if (id === 'u-consultor') assert.ok(Object.values(p.manchetes).flat().every((m) => !/R\$/.test(`${m.texto} ${m.destaque} ${m.legenda}`)));
   }
 });
+
+test('ajuda conferida com o código: notas superadas não valem como "Agora" e dúvidas novas vão à seção certa', async () => {
+  const { responderAjuda } = await import('../src/skills/ajuda.js');
+  const { novidades } = await import('../src/skills/conhecimento.js');
+  const { MockLLM } = await import('../src/llm.js');
+  const { NOTAS } = await import('../public/notas-versao.js');
+  const { GUIA } = await import('../public/ajuda-conteudo.js');
+  // Itens superados ficam marcados e saem da lista de novidades do chat.
+  const superados = NOTAS[0].itens.filter((i) => i.substituido);
+  assert.ok(superados.length >= 3);
+  assert.ok(novidades().itens.every((i) => !superados.some((s) => s.titulo === i.titulo)));
+  // O guia não promete o que o código não faz.
+  const guia = GUIA.map(([, , , html]) => html()).join(' ');
+  assert.doesNotMatch(guia, /Documentos públicos e internos/);
+  assert.match(guia, /Ctrl<\/kbd> \+ <kbd>Enter<\/kbd> salva/);
+  assert.match(guia, /Página de status/);
+  // Dúvidas novas respondidas pela seção certa do guia.
+  const casos = [
+    ['como desarquivo uma conversa?', 'Conversas salvas'],
+    ['como tiro uma conversa do grupo?', 'Conversas salvas'],
+    ['onde vejo todos os documentos?', 'Explorar projetos'],
+    ['como marco um projeto como teste?', 'Insights e métricas'],
+    ['quem pode ver documentos confidenciais?', 'Permissões e privacidade'],
+    ['o que significa modo regras?', 'Primeiros passos'],
+  ];
+  for (const [q, secao] of casos) {
+    const r = await responderAjuda({ query: q, llm: new MockLLM() });
+    assert.ok(r.dados.ajuda[0].rotulo.endsWith(secao), `${q} → ${r.dados.ajuda[0].rotulo}`);
+  }
+});

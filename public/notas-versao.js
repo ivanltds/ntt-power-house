@@ -16,6 +16,7 @@ export const NOTAS = [
       {
         tipo: 'melhoria', status: 'feito', area: 'Insights',
         titulo: 'Insights (novo) sai das abas e fica só no endereço /insights-novo',
+        substituido: 'Substituído pelo item "Insights: cinco visões com manchetes em cartões" (CR-069): as cinco visões viraram a aba principal de Insights, e o endereço /insights-novo só abre essa aba.',
         antes: 'A aba "Insights (novo)" aparecia para todos ao lado de Insights, ainda em protótipo.',
         depois: 'A aba saiu da barra. O protótipo continua acessível pelo endereço /insights-novo, para avaliação do time durante a semana; ele volta com melhorias numa versão seguinte (provavelmente a V0.0.3).',
       },
@@ -28,12 +29,14 @@ export const NOTAS = [
       {
         tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-009'],
         titulo: 'Aba Insights refeita: números grandes, funil e top 10',
+        substituido: 'Substituído pelo item "Insights: cinco visões com manchetes em cartões" (CR-069): os números grandes, o funil e os top 10 deram lugar às cinco visões (Negócio, Técnica, Pipeline, Pré-venda e Curadoria) com manchetes em cartões.',
         antes: 'Tabelas com barras pequenas e sem cor, a lista inteira de segmentos e tecnologias e os dados de curadoria misturados com os de negócio.',
         depois: 'Quatro números grandes no topo (projetos, conversão, segmentos, tecnologias), funil das propostas por status em barra colorida, top 10 segmentos e top 10 tecnologias em barras, projetos por ano, pares de tecnologias, resultados comprovados e lições das perdidas. Cada barra tem dica com o número e leva aos projetos. A curadoria ficou recolhida em "Saúde da base". É um paliativo: o "efeito uau" ainda depende de definições de produto, e o Insights novo é avaliado à parte (V0.0.3).',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Chat', tickets: ['CR-027'],
         titulo: 'Resposta em blocos fáceis de ler',
+        substituido: 'Substituído pelo item "Resposta mais direta e conversa informal mais humana" (CR-060): os blocos "Recomendação:" e "Perfis sugeridos:" saíram; a resposta vai direto ao ponto e o que reaproveitar fica no cartão de cada projeto.',
         antes: 'Um parágrafo longo misturava a resposta, a justificativa e o que reaproveitar.',
         depois: 'A resposta vem em blocos: primeiro a resposta direta e por que cada projeto é relevante; depois "Recomendação:", com o que reaproveitar e os cuidados; e "Perfis sugeridos:" só quando os documentos citam papéis da equipe.',
       },
@@ -162,6 +165,12 @@ export const NOTAS = [
         titulo: 'Filtros de Tickets e do Roteiro mais claros; leitura rápida dos tickets',
         antes: 'Os filtros eram fileiras de botões, uma ao lado da outra; não ficava claro o que cada grupo filtrava nem quantos itens sobravam. Para ler um ticket era preciso abri-lo.',
         depois: 'Os filtros viraram campos de seleção, lado a lado e com o nome em cima (Situação, Prioridade, Área ou Tela, Tipo, Aberto na versão, Aberto por). O campo mostra o que está escolhido; ao clicar, abre a lista com ícone e quantidade de cada opção. Situação é escolha única; os demais aceitam várias opções (ex.: Crítica e Alta), com "Limpar seleção". Uma linha de resumo diz "Mostrando N de M", lista os filtros ativos como etiquetas que se tiram com um X e oferece "Limpar filtros". Na lista de tickets, clicar na linha expande a descrição e a proposta; clicar no código ou no título abre o ticket. A busca do "Proposta em foco" voltou a ter borda, e a lupa não fica mais por cima do texto. No kanban, o fluxo (Aberto, Em correção, Corrigido, Validado) fica em cima e \"Não priorizado no MVP\" e \"Não procede\" ficam separados embaixo, em \"Fora do fluxo\"; cada coluna mostra 5 cartões e \"Mostrar mais\" carrega mais 5; títulos longos quebram dentro do cartão.',
+      },
+      {
+        tipo: 'correcao', status: 'feito', area: 'Geral',
+        titulo: 'Guia, dúvidas frequentes e ajuda do chat conferidos com o funcionamento real',
+        antes: 'O guia dizia que o consultor vê documentos "públicos e internos" (nenhum perfil vê o nível público), que o original sai com valores ocultos para o consultor (PDF e Office com valores não baixam), que Enter salva qualquer campo da ficha (nos textos longos é Ctrl+Enter) e que a IA lê as 8 últimas perguntas (ela lê as 6 mais recentes). Não citava a Página de status no menu, a visão Documentos em Projetos, Desarquivar e Tirar do grupo, o cabeçalho da resposta (continuando a conversa, ícone de informações), "Também costumam entrar", o primeiro acesso, nem Marcar como teste na Curadoria. Três notas desta versão, já superadas, ainda apareciam como "Agora" e eram usadas pelo chat.',
+        depois: 'Guia e explicação técnica revisados contra o código, com as correções acima e as seções novas; Dúvidas frequentes com 8 situações novas (Modo regras, percentual baixo, download recusado, botões de cadastro, aprovação de confidencial, conversas por perfil, cadastro de teste, poucos dados); notas superadas marcadas como "Substituído", e o chat passa a responder com o que vale hoje. Os documentos "Como funciona o Radar" e "Como usar o Radar" (docs/) descrevem o mesmo, com diagramas.',
       },
     ],
   },

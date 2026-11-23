@@ -6,7 +6,7 @@ import { PERSONA } from './persona.js';
 
 // Pergunta de uso: começa como dúvida e fala de uma parte do produto (telas, botões, envio, permissões…).
 const DUVIDA_RE = /^(como|onde|por que|porque|quem pode|quem consegue|o que (e|eh|significa|quer dizer)|pra que serve|para que serve|posso|da (pra|para)|tem como|consigo|existe|qual a diferenca)\b/;
-const PRODUTO_RE = /\b(radar|conversas?|favorit\w*|grupos?|arquiv(ar|ada|adas|o morto)|proposta em foco|foco|envi(ar|o|ou)\w*|anex\w*|upload|clipe|export\w*|planilha|excel|insights?|ficha|edit\w*|exclu\w*|apag\w*|permiss\w*|perfil|perfis|gestor|consultor|tema|modo escuro|escuro|claro|login|sair|sessao|tickets?|feedback|roteiro|versao|novidades?|tela|botao|menu|filtros?|kanban|percentua\w*|porcentagem|semelhan\w*|similaridade|score|muito parecido|aprov\w*|revis\w*|report\w*|relatar|bugs?|historico|comentar\w*|coment\w*|tags?|termo|privacidade|dados sensiveis|mascar\w*|metricas|atividades|registro de atividades|cards?|cartoes?|lista de projetos|novo projeto|criar projeto|cadastr\w*|documentos?)\b/;
+const PRODUTO_RE = /\b(radar|conversas?|favorit\w*|grupos?|arquiv(ar|ada|adas|o morto)|proposta em foco|foco|envi(ar|o|ou)\w*|anex\w*|upload|clipe|export\w*|planilha|excel|insights?|ficha|edit\w*|exclu\w*|apag\w*|permiss\w*|perfil|perfis|gestor|consultor|tema|modo escuro|escuro|claro|login|sair|sessao|tickets?|feedback|roteiro|versao|novidades?|tela|botao|menu|filtros?|kanban|percentua\w*|porcentagem|semelhan\w*|similaridade|score|muito parecido|aprov\w*|revis\w*|report\w*|relatar|bugs?|historico|comentar\w*|coment\w*|tags?|termo|privacidade|dados sensiveis|mascar\w*|metricas|atividades|registro de atividades|cards?|cartoes?|lista de projetos|novo projeto|criar projeto|cadastr\w*|documentos?|desarquiv\w*|baix(ar|o|ei|a)|download|original|pagina de status|modo regras|curadoria|marc\w* (o |um )?(projeto |cadastro )?como teste|visoes?|memoria|lembrando|poucos dados)\b/;
 const NOVIDADES_RE = /\b(o que (mudou|ha de novo|tem de novo|e novo)|novidades?|notas da versao|ultima versao|nesta versao|nessa versao|versao atual)\b/;
 
 export function ehDuvidaDeUso(query) {
@@ -29,13 +29,23 @@ const SINONIMOS = [
   [/\bfavorit\w*/, 'favorita favoritar estrela'],
   [/\b(anex\w*|clipe)\b/, 'clipe anexar arquivo conversa enviar'],
   [/\b(exclu\w*|apag\w*|remov\w*)\b/, 'excluir apagar'],
-  [/\b(quem pode|quem consegue|permiss\w*|perfil|perfis|consultor|gestor|preco|margem|confidencia\w*)\b/, 'permissões perfil consultor gestor preço margem confidencial'],
+  [/\b(quem pode|quem consegue|permiss\w*|perfil|perfis|consultor|gestor|preco|margem|confidencia\w*)\b/, 'permissões perfil consultor gestor preço margem documentos e projetos confidenciais não aparecem em nenhuma tela'],
   [/\b(export\w*|pdf|pptx|docx|word|powerpoint)\b/, 'exportar formato modelo PDF PPTX DOCX'],
   [/\b(foco|focad\w*)\b/, 'proposta em foco'],
   [/\b(edit\w*|alter\w*|corrig\w*|mud(ar|o|e) (o|um|a) (campo|prazo|responsavel|status))\b/, 'editar no lugar lápis campo ficha Enter salva'],
   [/\b(grupos?|arquiv(ar|ada|adas)|renome\w*|organiz\w*)\b/, 'mover para grupo arquivar renomear menu conversas'],
-  [/\b(tickets?|feedback|problema|bug|roteiro|testes?|cenarios?)\b/, 'enviar feedback tickets roteiro de testes versão'],
+  [/\btir\w* (a |uma )?(conversa )?do grupo\b/, 'Tirar do grupo menu volta para Recentes'],
+  [/\bdesarquiv\w*/, 'Desarquivar caixa Arquivadas menu da conversa'],
+  // "testes" (plural) é o roteiro de testes; "marcar como teste" é a curadoria dos Insights.
+  [/\b(tickets?|feedback|problema|bug|roteiro|testes|cenarios?)\b/, 'enviar feedback tickets roteiro de testes versão'],
+  [/\b(marc\w* (o projeto |um projeto |o cadastro )?como teste|cadastros? de teste|curadoria)\b/, 'Cadastros de teste Marcar como teste curadoria Voltar aos números gestor'],
   [/\b(ler|leia|resum\w*|entender) (um |o |esse |este )?(arquivo|documento)\b/, 'ler um arquivo na conversa clipe resumo'],
+  [/\b(baix\w*|download|original)\b/, 'Baixar original não é baixado peça o original ao gestor do projeto valor oculto para o seu perfil'],
+  [/\b(pagina de status|link para compartilhar)\b/, 'Página de status abre /status aba nova versões tickets feedbacks link para compartilhar'],
+  [/\b(todos os documentos|lista de documentos|ver os documentos)\b/, 'Todos os documentos visão Documentos seletor Projetos | Documentos'],
+  [/\b(memoria|lembr\w*|esquec\w*|mudei de assunto)\b/, 'memória guarda as últimas 8 perguntas lembrando N perguntas Nova conversa'],
+  [/\bmodo regras\b/, 'Modo regras etiqueta no topo IA não está configurada'],
+  [/\b(visoes?|manchetes?|poucos dados)\b/, 'Insights visões manchetes poucos dados Negócio Técnica Pipeline Pré-venda Curadoria'],
 ];
 const expandir = (query) => {
   const norm = normalize(query);

@@ -3,7 +3,7 @@
 // enviada em "Authorization: Bearer <chave>" ou, para agentes que só fazem GET simples, em ?chave=<chave>.
 // Sem a variável definida, o endpoint fica desligado (404).
 import crypto from 'node:crypto';
-import { ROTEIRO, AREAS, TIPOS, STATUS, RESULTADOS, PRIORIDADES } from './qualidade.js';
+import { roteiroDe, AREAS, TIPOS, STATUS, RESULTADOS, PRIORIDADES } from './qualidade.js';
 
 export const RELATORIO_PATH = '/api/relatorio/qualidade';
 // Resumo executivo dos insights (manchetes por lente e números-chave), com a mesma chave.
@@ -46,7 +46,12 @@ export function montarRelatorio(qualidade, versao) {
     regraMetrica: resumo.regra,
     rotulos: { areas: AREAS, tipos: TIPOS, status: STATUS, resultados: RESULTADOS, prioridades: PRIORIDADES },
     resumo,
-    roteiro: ROTEIRO.map(({ id, titulo, area, prioridade }) => ({ id, titulo, area, prioridade })),
+    // Roteiro completo da versão (passo a passo e resultado esperado), com a situação atual de cada cenário.
+    roteiroVersao: versao,
+    roteiro: roteiroDe(versao).map(({ id, titulo, area, prioridade, objetivo, preparo, passos, esperado, tickets: retesta = [] }) => {
+      const c = resumo.porCenario.find((x) => x.id === id);
+      return { id, titulo, area, prioridade, objetivo, preparo, passos, esperado, retesta, situacao: c?.situacao ?? 'pendente', analista: c?.analista ?? null, em: c?.em ?? null, ticket: c?.ticket ?? null };
+    }),
     tickets,
   };
 }
