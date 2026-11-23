@@ -2214,3 +2214,17 @@ span.tec-tag { cursor: default; }
 .rcard .contato > svg { color: var(--brand); }
 .rcard .contato small, .pd-contato small { color: var(--muted); font-size: 12px; }
 .pd-contato { margin: 0 0 6px; display: grid; gap: 2px; }
+
+/* ---------- V0.0.3: Ganhamos × perdemos (CR-078) ---------- */
+.pn-gp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pn-gp-lado { border-radius: 10px; padding: 10px 12px; background: var(--bg); border-top: 3px solid var(--ok); }
+.pn-gp-lado.perdidas { border-top-color: var(--bad); }
+.pn-gp-lado h5 { margin: 0 0 6px; font-size: 14px; display: flex; gap: 6px; align-items: baseline; }
+.pn-gp-lado h5 em { font-style: normal; color: var(--muted); font-size: 12px; }
+.pn-gp-lado dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; margin: 0 0 6px; font-size: 13px; }
+.pn-gp-lado dt { color: var(--muted); }
+.pn-gp-lado dd { margin: 0; }
+.pn-gp-lado small { color: var(--muted); }
+.pn-gp-tit { margin: 14px 0 6px; font-size: 13px; }
+.pn-gp-motivos { margin: 0; padding-left: 18px; font-size: 13px; display: grid; gap: 4px; }
+@media (max-width: 760px) { .pn-gp { grid-template-columns: 1fr; } }

@@ -17,7 +17,7 @@ const LENTES = [
 // Lente sugerida pelo perfil (só um destaque na tela inicial; a pessoa escolhe).
 const sugerida = () => (currentUser()?.perfil === 'consultor' ? 'prevenda' : currentUser()?.perfil === 'gestor' ? 'negocio' : null);
 const KEY = 'radar.painel.lente';
-const view = { lente: null, filtros: { segmento: '', area: '', desde: '' }, dados: null, oportunidade: null };
+const view = { lente: null, filtros: { segmento: '', area: '', fy: '' }, dados: null, oportunidade: null };
 
 // Desde o CR-069 as visões moram na aba Insights (aba interna "Visões"); quem chama é public/insights.js.
 export function initPainel() {
@@ -176,9 +176,35 @@ function lenteNegocio(n, v) {
   }));
   cards.push(card({
     id: 'segmentos', amostra: true, dica: 'De cada 100 propostas decididas no segmento, quantas ganhamos.', pergunta: 'Onde ganhamos?', n: n.porSegmento.reduce((a, s) => a + s.decididos, 0),
-    como: 'Taxa de ganho = ganhas ÷ (ganhas + perdidas), por segmento. Barras cinza: menos de 3 propostas decididas.',
+    como: n.metodoTaxa ?? 'Taxa de ganho = ganhas ÷ (ganhas + perdidas), por segmento. Barras cinza: menos de 3 propostas decididas.',
     corpo: barras(n.porSegmento.filter((s) => s.decididos).map((s) => ({ rotulo: s.segmento, valor: s.taxa, n: s.decididos, extra: `${s.ganhos} de ${s.decididos}` })), { max: 100, fmt: (x) => `${num(x, 0)}%`, drill: (i) => ({ segmentos: [i.rotulo] }) }),
     perguntar: 'Em quais segmentos mais ganhamos propostas e por quê?',
+  }));
+  // CR-078 / R19-06: o que as ganhas e as perdidas têm em comum, motivos sugeridos e perdas que viraram aprendizado.
+  const gp = n.ganhasPerdas;
+  if (gp && (gp.ganhas.n || gp.perdidas.n)) {
+    const lado = (t, x, cls) => `<div class="pn-gp-lado ${cls}"><h5>${t} <em>${x.n}</em></h5>
+      ${x.n ? `<dl>
+        <dt>Tecnologias</dt><dd>${x.tecnologias.map((i) => `${esc(i.nome)} <small>${num(i.pct, 0)}%</small>`).join(' · ') || '—'}</dd>
+        <dt>Serviços</dt><dd>${x.servicos.map((i) => `${esc(i.nome)} <small>${num(i.pct, 0)}%</small>`).join(' · ') || '—'}</dd>
+        <dt>Prazo típico</dt><dd>${x.prazoMediano ? `${num(x.prazoMediano)} meses` : '—'}</dd>
+        ${v ? `<dt>Valor típico</dt><dd>${mi(x.valorMediano)}</dd>` : ''}
+      </dl><a href="#" class="small" data-drill='${esc(JSON.stringify({ status: cls === 'ganhas' ? ['Vendida', 'Em execução', 'Entregue'] : ['Perdida'] }))}'>Ver os ${x.n} projetos</a>` : '<p class="muted small">Nenhuma neste recorte.</p>'}</div>`;
+    const motivos = (lista, vazio) => (lista.length ? `<ul class="pn-gp-motivos">${lista.map((m) => `<li><b>${esc(m.rotulo)}</b> <span class="muted small">${m.ids.length} projeto(s): ${m.ids.map((id) => projLink(id)).join(', ')}</span></li>`).join('')}</ul>` : `<p class="muted small">${vazio}</p>`);
+    cards.push(card({
+      id: 'ganhasperdas', pergunta: 'Ganhamos × perdemos: o que muda?', origem: 'IA · sugerido', n: gp.ganhas.n + gp.perdidas.n, largo: true, amostra: true,
+      como: 'Ganhas = Vendida, Em execução e Entregue; perdidas = Perdida, no recorte filtrado. Os motivos são sugeridos pelo Radar a partir das lições registradas (lista controlada: preço, escopo, concorrente, relacionamento, prazo, capacidade técnica, desistência) e precisam ser confirmados pelo curador.',
+      corpo: `<div class="pn-gp">${lado('Ganhas', gp.ganhas, 'ganhas')}${lado('Perdidas', gp.perdidas, 'perdidas')}</div>
+        <h5 class="pn-gp-tit">Por que perdemos (sugerido)</h5>${motivos(gp.motivosPerda, 'Sem lição de perda que indique o motivo.')}
+        <h5 class="pn-gp-tit">Perdidas que viraram aprendizado</h5>${frases(gp.aprendizados, (a) => `<li>${esc(a.licao)} <span class="muted">· ${projLink(a.projeto, a.cliente)}${a.contato ? ` · fale com ${esc(a.contato)}` : ''}</span> ${selo('IA · sugerido')}</li>`)}`,
+      perguntar: 'Por que perdemos propostas e o que aprendemos com elas?',
+    }));
+  }
+  // CR-079: sinais do setor (notícias e tendências de fontes curadas); preenchido depois, sem travar a tela.
+  cards.push(card({
+    id: 'sinais', pergunta: 'O que está acontecendo no setor?', origem: 'IA · sugerido', largo: true,
+    como: 'Notícias das fontes curadas, coletadas uma vez por dia (só título, data, link e um trecho; nada da base sai do Radar). Relevância: alta se cita um cliente da carteira, média se fala de tecnologia que já entregamos no setor, baixa se é só do setor. O link original é sempre a referência.',
+    corpo: '<div id="pn-sinais"><p class="muted small">Carregando os sinais…</p></div>',
   }));
   cards.push(card({
     id: 'quadrante', amostra: true, dica: 'Cada segmento cai numa zona. Núcleo é o ideal; Risco e Conversão pedem ação.', pergunta: 'Ganhamos onde sabemos entregar?', largo: false, n: n.quadrante.reduce((a, q) => a + q.n, 0),
@@ -244,7 +270,7 @@ function lenteTecnica(t, v) {
   cards.push(card({
     id: 'esfriando', pergunta: 'Que capacidade está esfriando?', n: t.esfriando.length,
     como: 'Tecnologias e serviços sem projeto há 2 anos ou mais (pela data de referência).',
-    corpo: t.esfriando.length ? `<ul class="pn-lista">${t.esfriando.map((e) => `<li><span class="chip">${esc(e.nome)}</span><span class="muted small">${esc(e.tipo)} · último em ${e.ultimo} · ${e.n} projeto(s)</span></li>`).join('')}</ul>` : vazio('Nenhuma capacidade parada há 2 anos ou mais.'),
+    corpo: t.esfriando.length ? `<ul class="pn-lista">${t.esfriando.map((e) => `<li><span class="chip">${esc(e.nome)}</span><span class="muted small">${esc(e.tipo)} · último no ${esc(e.ultimoFY ?? e.ultimo)} · ${e.n} projeto(s)</span></li>`).join('')}</ul>` : vazio('Nenhuma capacidade parada há 2 anos ou mais.'),
   }));
   cards.push(card({
     id: 'plataforma', amostra: true, pergunta: 'Que plataforma rende mais?', n: t.plataforma?.length ?? null,
@@ -432,7 +458,8 @@ function render() {
   }
   const pode = Boolean(currentUser()?.pode?.marcarTeste);
   const [, nome, ic, desc, pergunta, para] = LENTES.find(([k]) => k === view.lente);
-  const sel = (id, rot, opcoes, valor) => `<label class="pn-filtro"><span>${rot}</span><select id="${id}"><option value="">${id === 'pn-desde' ? 'todo o período' : 'todos'}</option>${opcoes.map((o) => `<option${String(o) === String(valor) ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select></label>`;
+  // Opção: texto simples ou { valor, rotulo } (ano fiscal: "FY26 (abr/2026 a mar/2027) · atual").
+  const sel = (id, rot, opcoes, valor, todos = 'todos') => `<label class="pn-filtro"><span>${rot}</span><select id="${id}"><option value="">${todos}</option>${opcoes.map((o) => { const v = o.valor ?? o; return `<option value="${esc(v)}"${String(v) === String(valor) ? ' selected' : ''}>${esc(o.rotulo ?? o)}</option>`; }).join('')}</select></label>`;
   const filtrosAtivos = view.lente !== 'curadoria' && view.lente !== 'prevenda';
   const L = d.lentes;
   const corpo = { negocio: () => lenteNegocio(L.negocio, d.valores), tecnica: () => lenteTecnica(L.tecnica, d.valores), pipeline: () => lentePipeline(L.pipeline, d.valores), prevenda: () => lentePrevenda(L.prevenda), curadoria: () => lenteCuradoria(L.curadoria, pode) }[view.lente]();
@@ -443,7 +470,7 @@ function render() {
       <div class="pn-lentes" role="tablist" aria-label="Trocar de visão">${LENTES.map(([k, rot, ic]) => `<button type="button" role="tab" aria-selected="${k === view.lente}" class="${k === view.lente ? 'ativo' : ''}" data-lente="${k}">${icon(ic, { size: 15 })}${rot}</button>`).join('')}</div>
     </header>
     <div class="pn-barra">
-      ${filtrosAtivos ? `${sel('pn-seg', 'Segmento', d.opcoes.segmentos, view.filtros.segmento)}${sel('pn-area', 'Prática', d.opcoes.areas, view.filtros.area)}${sel('pn-desde', 'Desde', d.opcoes.anos, view.filtros.desde)}` : `<span class="muted small">${view.lente === 'curadoria' ? 'A curadoria olha a base inteira, inclusive os testes.' : 'A prontidão compara cada oportunidade com a base inteira.'}</span>`}
+      ${filtrosAtivos ? `${sel('pn-seg', 'Segmento', d.opcoes.segmentos, view.filtros.segmento)}${sel('pn-area', 'Prática', d.opcoes.areas, view.filtros.area)}${sel('pn-fy', 'Ano fiscal', d.opcoes.fys ?? [], view.filtros.fy, 'todos os FYs')}` : `<span class="muted small">${view.lente === 'curadoria' ? 'A curadoria olha a base inteira, inclusive os testes.' : 'A prontidão compara cada oportunidade com a base inteira.'}</span>`}
       <span class="pn-meta muted small" title="${d.base.testesOcultos} cadastro(s) de teste fora dos números">${d.base.projetos} projetos${d.base.testesOcultos ? ` · ${d.base.testesOcultos} teste(s) ocultos` : ''} · atualizado ${dateBR(d.geradoEm)} ${new Date(d.geradoEm).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>
       <button type="button" class="btn sm" id="pn-copiar" title="Copiar as manchetes desta lente para colar num e-mail ou no Teams">${icon('copy', { size: 14 })}Copiar resumo</button>
     </div>
@@ -452,8 +479,27 @@ function render() {
     <h3 class="pn-sec">Os números por trás</h3>
     <div class="pn-grid">${corpo}</div>
     ${transversal(d.uso)}
-    <p class="muted small pn-rodape">${icon('info', { size: 13 })} Dados fictícios do piloto. Barras hachuradas e o aviso "poucos dados" marcam contas com menos de ${d.amostraMinima} itens. "IA · confira antes de usar": extraído automaticamente, sem revisão humana.</p>`;
+    <p class="muted small pn-rodape">${icon('info', { size: 13 })} Dados fictícios do piloto. Os anos são fiscais (abril a março: FY26 = abr/2026 a mar/2027). Barras hachuradas e o aviso "poucos dados" marcam contas com menos de ${d.amostraMinima} itens. "IA · confira antes de usar": extraído automaticamente, sem revisão humana.</p>`;
   bind();
+  if (view.lente === 'negocio') carregarSinais();
+}
+
+const NIVEL_SINAL = { alta: ['Alta', 'ok'], media: ['Média', 'warn'], baixa: ['Baixa', ''] };
+async function carregarSinais() {
+  const alvo = $('#pn-sinais');
+  if (!alvo) return;
+  let r;
+  try { r = await api(`/api/sinais?userId=${userId()}${view.filtros.segmento ? `&segmento=${encodeURIComponent(view.filtros.segmento)}` : ''}`); } catch { alvo.innerHTML = vazio('Os sinais do setor não carregaram agora. O resto dos Insights segue normal.'); return; }
+  const s = r.saude;
+  const rodape = `<p class="muted small">${s.fontes ? `${s.fontes} fonte(s) curada(s) · última coleta ${s.ultimaColeta ? dateBR(s.ultimaColeta) : 'ainda não feita'}${s.falhas.length ? ` · ${s.falhas.length} fonte(s) com falha na última coleta (${s.falhas.map((x) => esc(x.fonte)).join(', ')})` : ''}` : 'Nenhuma fonte configurada ainda: a lista de fontes (sites da NTT DATA, imprensa setorial e comunicação interna) está sendo definida com a Kelly e o Bruno Miranda.'}${r.podeColetar && s.fontes ? ' <button type="button" class="link-btn" id="pn-coletar">Coletar agora</button>' : ''}</p>`;
+  alvo.innerHTML = (r.itens.length ? `<ul class="pn-sinais">${r.itens.map((i) => `<li>
+      <div class="pn-sinal-top"><span class="pn-nivel ${NIVEL_SINAL[i.relevancia.nivel][1]}">${NIVEL_SINAL[i.relevancia.nivel][0]}</span><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.titulo)}</a></div>
+      <small class="muted">${esc(i.fonte)}${i.data ? ` · ${dateBR(i.data)}` : ''} · ${esc(i.tipoRotulo)} · por quê: ${esc(i.relevancia.porque)}${i.relevancia.contato ? ` · fale com ${esc(i.relevancia.contato)}` : ''}</small>
+      ${i.resumo ? `<p class="small">${esc(i.resumo)} <span class="pn-selo ia" title="Trecho da fonte, cortado automaticamente">resumo automático</span></p>` : ''}
+      <button type="button" class="link-btn" data-perguntar="${esc(`O que já fizemos sobre: ${i.titulo}`)}">${icon('radar', { size: 13 })}O que já fizemos sobre isso?</button>
+    </li>`).join('')}</ul>` : vazio(s.fontes ? (view.filtros.segmento ? `Nenhum sinal recente de ${view.filtros.segmento}.` : 'Nenhum sinal nos últimos 90 dias.') : 'Ainda sem sinais.')) + rodape;
+  $$('[data-perguntar]', alvo).forEach((b) => (b.onclick = () => { openTab('busca'); const q = $('#query'); q.value = b.dataset.perguntar; q.focus(); }));
+  $('#pn-coletar', alvo)?.addEventListener('click', async (e) => { e.target.disabled = true; e.target.textContent = 'Coletando…'; try { const x = await api('/api/sinais/coletar', { userId: userId() }); toast(`${x.novos} sinal(is) novo(s)${x.falhas.length ? `, ${x.falhas.length} fonte(s) com falha` : ''}`); } catch (err) { toast(err.message, 'error'); } carregarSinais(); });
 }
 
 function drill(det) {
@@ -464,7 +510,7 @@ function drill(det) {
 function bind() {
   const root = $('#painel');
   $$('[data-lente]', root).forEach((b) => (b.onclick = () => irPara(b.dataset.lente)));
-  for (const [id, k] of [['#pn-seg', 'segmento'], ['#pn-area', 'area'], ['#pn-desde', 'desde']]) {
+  for (const [id, k] of [['#pn-seg', 'segmento'], ['#pn-area', 'area'], ['#pn-fy', 'fy']]) {
     const el = $(id, root);
     if (el) el.onchange = () => { view.filtros[k] = el.value; load(); };
   }
