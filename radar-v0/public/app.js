@@ -12,6 +12,10 @@ import { VERSAO, showReleaseNotes, showFeedback } from './versao.js';
 import { initActivities } from './atividades.js';
 import { welcomeOnFirstVisit, showPolicy } from './aviso.js';
 import { renderTyped, bindTyped, typeTag, citeNames } from './respostas.js';
+import { openOnePage, openApresentacao } from './onepage.js';
+
+// Status de projeto ganho (Vendida, Em execução, Entregue): só eles viram case (CR-075, R1P4).
+const GANHO = ['Vendida', 'Em execução', 'Entregue'];
 
 // Sugestões por tipo de pedido (adendo 5, opção E): parecidos, listagem, contagem, ficha e comparação.
 const SUGESTOES = {
@@ -441,6 +445,7 @@ function renderCard(x) {
         <button type="button" class="btn sm" data-reuse="abrir">${icon('folder', { size: 15 })}Abrir projeto</button>
         ${d.escopo ? `<button type="button" class="btn sm" data-reuse="copiar">${icon('copy', { size: 15 })}Copiar escopo</button>` : ''}
         ${pode('cadastrarProjeto') ? `<button type="button" class="btn sm" data-reuse="base">${icon('duplicate', { size: 15 })}Usar como base</button>` : ''}
+        ${GANHO.includes(x.status) ? `<button type="button" class="btn sm" data-reuse="onepage" title="Gerar a one page deste case (cliente anônimo por padrão)">${icon('star', { size: 15 })}One page</button>` : ''}
       </div>
       <div class="accs">
         ${d.resultados || d.licoes || d.escopo ? acordeon(grupo, 'bulb', 'Escopo, resultados e lições', `${d.escopo ? `<h5>Escopo</h5><p>${md(d.escopo)}</p>` : ''}${d.resultados ? `<h5>Resultados</h5><p>${md(d.resultados)}</p>` : ''}${d.licoes ? `<h5>Lições</h5><p>${md(d.licoes)}</p>` : ''}`) : ''}
@@ -510,6 +515,7 @@ function bindAnswer(container, r) {
       if (acao === 'abrir') openProject(projeto_id);
       if (acao === 'copiar') { await copyText(`${x.titulo} (${x.cliente})\n\n${x.detalhes.escopo}`); toast('Escopo copiado'); }
       if (acao === 'base') useAsBase(projeto_id);
+      if (acao === 'onepage') openOnePage(projeto_id);
     }));
   });
 }

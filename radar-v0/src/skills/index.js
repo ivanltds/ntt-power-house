@@ -7,6 +7,7 @@ import { can } from '../permissions.js';
 import { tipoDeConversa, separarSaudacao } from './conversa.js';
 import { ehDuvidaDeUso } from './ajuda.js';
 import { acaoComAnexo } from './anexo.js';
+import { pedeOnePage, pedeApresentacao } from './cases.js';
 
 // Campos de cada skill:
 //   id, intencao (valor que a IA devolve), regraIA (quando escolher, para o prompt do roteador),
@@ -78,6 +79,20 @@ export const SKILLS = [
     exemplos: [], naoAtiva: [],
   },
   {
+    id: 'gerar_onepage', intencao: 'gerar_onepage',
+    regraIA: 'pedido de ONE PAGE (uma página) de um case: de um projeto citado ("one page do P003"), do projeto em foco ou de um tema ("quero um case de antifraude em uma página").',
+    capacidade: { icone: 'star', titulo: 'One page de case', descricao: 'Gero a página única de um case (contexto, desafio, solução, resultados e fontes), com o cliente anônimo quando ele não pode ser citado.', exemplo: 'Gera a one page do P001', clicavel: true },
+    exemplos: ['gera a one page do P001', 'tem algum case de antifraude em seguros? gera uma one page', 'quero um case de churn em uma página'],
+    naoAtiva: ['como gero uma one page?', 'liste os projetos de varejo'],
+  },
+  {
+    id: 'apresentacao_cases', intencao: 'apresentacao_cases',
+    regraIA: 'pedido para MONTAR UMA APRESENTAÇÃO / deck / slides com cases sobre um tema ou com os projetos da resposta anterior ("monta uma apresentação de 10 slides sobre fraude em seguros", "transforma esses em apresentação").',
+    capacidade: { icone: 'layout', titulo: 'Apresentação de cases', descricao: 'Monto um deck com os cases ganhos parecidos com um tema: capa, o que já fizemos, uma one page por case e fontes. Você escolhe os cases antes de gerar.', exemplo: 'Monta uma apresentação sobre fraude em seguros com nossos cases', clicavel: true },
+    exemplos: ['monta uma apresentação de uns 10 slides sobre fraude em seguros com nossos cases', 'apresentação de cases de churn em telecom', 'faz um deck com cases de previsão de demanda no varejo'],
+    naoAtiva: ['qual a apresentação comercial do P003?', 'como exporto uma apresentação?'],
+  },
+  {
     id: 'ajuda', intencao: 'ajuda',
     regraIA: 'dúvida sobre COMO USAR o Radar: telas, botões, envio de arquivos, conversas, filtros, permissões, novidades da versão ("como favorito uma conversa?", "o que é proposta em foco?", "o que mudou nesta versão?").',
     capacidade: { icone: 'help', titulo: 'Tirar dúvidas de uso', descricao: 'Explico como usar o Radar com base no guia e nas notas da versão, e mostro onde ler mais.', exemplo: 'Como favorito uma conversa?', clicavel: true },
@@ -119,6 +134,9 @@ export function preRotear(query, ctx = {}) {
   const tipo = tipoDeConversa(query, ctx);
   if (tipo) return { skill: 'conversa', tipo, saudacao: s?.saudacao };
   if (ehDuvidaDeUso(texto)) return { skill: 'ajuda', saudacao: s?.saudacao };
+  // Adendo 7: pedidos claros de material comercial.
+  if (pedeOnePage(texto)) return { skill: 'gerar_onepage', saudacao: s?.saudacao };
+  if (pedeApresentacao(texto)) return { skill: 'apresentacao_cases', saudacao: s?.saudacao };
   if (s?.resto) return { saudacao: s.saudacao, resto: s.resto };
   return null;
 }

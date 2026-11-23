@@ -270,9 +270,9 @@ test('ajuda conferida com o código: notas superadas não valem como "Agora" e d
   const { NOTAS } = await import('../public/notas-versao.js');
   const { GUIA } = await import('../public/ajuda-conteudo.js');
   // Itens superados ficam marcados e saem da lista de novidades do chat.
-  const superados = NOTAS[0].itens.filter((i) => i.substituido);
+  const superados = NOTAS.find((n) => n.versao === 'V0.0.2').itens.filter((i) => i.substituido);
   assert.ok(superados.length >= 3);
-  assert.ok(novidades().itens.every((i) => !superados.some((s) => s.titulo === i.titulo)));
+  assert.ok(novidades('V0.0.2').itens.every((i) => !superados.some((s) => s.titulo === i.titulo)));
   // O guia não promete o que o código não faz.
   const guia = GUIA.map(([, , , html]) => html()).join(' ');
   assert.doesNotMatch(guia, /Documentos públicos e internos/);
