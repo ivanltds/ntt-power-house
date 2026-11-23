@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Melhorias do Radar · alinhamento com Qualidade de Propostas (19/11/2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: relatório de melhorias levantadas em reunião. */
+:root {
+  --bg: #f4f6f9;
+  --panel: #ffffff;
+  --ink: #142033;
+  --ink-2: #44526a;
+  --muted: #6b778c;
+  --line: #dde3ec;
+  --brand: #0b4fb3;
+  --brand-soft: #e7effb;
+  --crit: #b4232c; --crit-soft: #fbe9ea;
+  --alta: #b3540b; --alta-soft: #fcefe3;
+  --media: #8a6d00; --media-soft: #fbf4d9;
+  --baixa: #4d6b55; --baixa-soft: #e8f1ea;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141c; --panel: #171e29; --ink: #e6ebf3; --ink-2: #b7c1d1; --muted: #8b97aa; --line: #2a3445;
+    --brand: #7fb0ff; --brand-soft: #1b2a44;
+    --crit: #ff8a8f; --crit-soft: #3a1c20; --alta: #ffb072; --alta-soft: #3a2614; --media: #e9cf6a; --media-soft: #33300f; --baixa: #9fcfaa; --baixa-soft: #1b2e22;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141c; --panel: #171e29; --ink: #e6ebf3; --ink-2: #b7c1d1; --muted: #8b97aa; --line: #2a3445;
+  --brand: #7fb0ff; --brand-soft: #1b2a44;
+  --crit: #ff8a8f; --crit-soft: #3a1c20; --alta: #ffb072; --alta-soft: #3a2614; --media: #e9cf6a; --media-soft: #33300f; --baixa: #9fcfaa; --baixa-soft: #1b2e22;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 var(--f-body); }
+main { max-width: 1120px; margin: 0 auto; padding: 32px 20px 64px; display: grid; gap: 40px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: 34px; font-weight: 700; }
+h2 { font-size: 24px; font-weight: 600; }
+h3 { font-size: 17px; font-weight: 600; }
+p { margin: 0; }
+.prose { max-width: 70ch; color: var(--ink-2); }
+section { display: grid; gap: 16px; }
+.sec-head { display: grid; gap: 6px; }
+.eyebrow { font: 600 12px/1 var(--f-display); letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+header.top { display: grid; gap: 10px; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+.fonte { font-size: 13px; color: var(--muted); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; }
+.tile b { font: 600 30px/1 var(--f-display); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 13px; color: var(--muted); }
+.tile.alerta { border-left: 4px solid var(--crit); }
+.resumo { display: grid; gap: 10px; counter-reset: r; padding: 0; margin: 0; list-style: none; }
+.resumo li { display: grid; grid-template-columns: 28px 1fr; gap: 8px; }
+.resumo li::before { counter-increment: r; content: counter(r); font: 600 15px/1.5 var(--f-display); color: var(--brand); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.bars { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 7px; }
+.bars li { display: grid; grid-template-columns: minmax(120px, 42%) 1fr 32px; gap: 10px; align-items: center; font-size: 13.5px; }
+.bars .trk { height: 10px; background: var(--brand-soft); border-radius: 0 4px 4px 0; }
+.bars .fill { height: 100%; background: var(--brand); border-radius: 0 4px 4px 0; }
+.bars em { font-style: normal; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+.ins { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 8px; align-content: start; }
+.ins p { color: var(--ink-2); font-size: 14.5px; }
+.ins .acao { color: var(--ink); font-size: 14px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.ins .acao b { color: var(--brand); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+a.cr, button.cr { font: 500 12px/1 var(--f-mono); padding: 5px 7px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); text-decoration: none; cursor: pointer; }
+a.cr:hover, a.cr:focus-visible { border-color: var(--brand); color: var(--brand); outline: none; }
+a.cr.p-critica { border-left: 3px solid var(--crit); }
+a.cr.p-alta { border-left: 3px solid var(--alta); }
+a.cr.p-media { border-left: 3px solid var(--media); }
+a.cr.p-baixa { border-left: 3px solid var(--baixa); }
+.prio { display: inline-flex; align-items: center; gap: 5px; font: 600 12px/1 var(--f-body); padding: 4px 8px; border-radius: 999px; white-space: nowrap; }
+.prio::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.prio.critica { color: var(--crit); background: var(--crit-soft); }
+.prio.alta { color: var(--alta); background: var(--alta-soft); }
+.prio.media { color: var(--media); background: var(--media-soft); }
+.prio.baixa { color: var(--baixa); background: var(--baixa-soft); }
+.legenda { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--muted); align-items: center; }
+.decisoes { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.decisoes li { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; align-items: center; }
+.decisoes .sug { grid-column: 1 / -1; font-size: 13.5px; color: var(--ink-2); }
+.ondas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.onda { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: var(--radius); padding: 14px; display: grid; gap: 8px; align-content: start; }
+.onda h3 { font-size: 16px; }
+.onda p { font-size: 13px; color: var(--muted); }
+.onda .n { font: 600 13px var(--f-display); color: var(--ink-2); }
+.matriz { display: grid; grid-template-columns: 34px 1fr 1fr 1fr; grid-template-rows: auto auto auto auto; gap: 8px; }
+.matriz .eixo { font: 600 12px/1.2 var(--f-display); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; display: flex; align-items: center; justify-content: center; }
+.matriz .eixo.v { writing-mode: vertical-rl; transform: rotate(180deg); }
+.cel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; min-height: 84px; display: grid; gap: 8px; align-content: start; }
+.cel small { font-size: 12px; color: var(--muted); }
+.cel.destaque { border-color: var(--brand); background: var(--brand-soft); }
+.filtros { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+.filtros label { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); }
+select, input[type="search"] { font: 14px var(--f-body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; min-width: 180px; }
+select:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.contador { font-size: 13px; color: var(--muted); margin-left: auto; }
+.tabwrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 960px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font: 600 12px var(--f-display); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); position: sticky; top: 0; background: var(--panel); }
+td.cod { font: 500 13px var(--f-mono); white-space: nowrap; }
+td .tit { font-weight: 600; display: block; }
+td .meta { color: var(--muted); font-size: 12.5px; }
+td .q { display: block; margin-top: 6px; color: var(--brand); font-size: 13px; }
+tr.alvo td { background: var(--brand-soft); }
+.copiar { font: 500 12.5px var(--f-body); border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 6px; padding: 5px 9px; cursor: pointer; white-space: nowrap; }
+.copiar:hover { border-color: var(--brand); color: var(--brand); }
+.passos { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-2); max-width: 75ch; }
+code { font: 500 13px var(--f-mono); background: var(--brand-soft); padding: 1px 5px; border-radius: 4px; }
+.fechados { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 640px) {
+  h1 { font-size: 27px; }
+  .matriz { grid-template-columns: 1fr; }
+  .matriz .eixo { display: none; }
+  .bars li { grid-template-columns: 110px 1fr 28px; }
+}
+</style>
+<style>
+.grupo { display: grid; gap: 12px; }
+.item { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 8px; }
+.item header { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.item .id { font: 500 13px var(--f-mono); color: var(--muted); }
+.item h3 { flex: 1 1 320px; }
+.item dl { margin: 0; display: grid; grid-template-columns: 150px 1fr; gap: 6px 14px; font-size: 14px; }
+.item dt { color: var(--muted); font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; font-family: var(--f-display); padding-top: 2px; }
+.item dd { margin: 0; color: var(--ink-2); }
+.item dd ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; }
+.cit { font-style: italic; color: var(--ink-2); border-left: 3px solid var(--brand-soft); padding-left: 10px; }
+.aviso { background: var(--media-soft); border: 1px solid var(--line); border-left: 4px solid var(--media); border-radius: var(--radius); padding: 12px 16px; font-size: 14px; color: var(--ink); }
+.toc { display: flex; flex-wrap: wrap; gap: 8px; }
+.toc a { font-size: 13px; color: var(--brand); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; background: var(--panel); }
+@media (max-width: 640px) { .item dl { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <span class="eyebrow">Radar by ImpactAI · alinhamento executivo Power House · 19/11/2026</span>
+    <h1>Melhorias levantadas no alinhamento com a Qualidade de Propostas</h1>
+    <p class="prose">Leitura organizada da reunião de 19/11/2026 (1h02) com Renato Tost Fajardo, diretor que lidera a revisão de qualidade das propostas. Participaram Isabelle Alves Silva, Vania (Aiko) Ogawa Yogui e Andre Yuji Oku. Renato mostrou o Maná, o Ibiza e as planilhas financeiras (GECO Val, GECO e Calculadora), explicou como o time dele revisa propostas e disse onde vê valor no Radar. Cada melhoria abaixo traz o que foi dito, com a marca de tempo da gravação, e o que o Radar já tem hoje.</p>
+    <p class="fonte">Fonte: transcrição automática do Teams, "Alinhamento Executivo_ Power House (1).docx". O arquivo "Power House 1.docx" (2 min, 13h58) só tem conversa de espera, sem conteúdo. Nomes de sistemas e planilhas foram corrigidos a partir do contexto (a transcrição escreve "Jecoval", "Jacoval", "Mageco", "Manoel" etc.).</p>
+    <nav class="toc" aria-label="Seções">
+      <a href="#s-resumo">Resumo</a><a href="#s-narrativa">Narrativa de valor</a><a href="#s-pessoas">Conexão entre pessoas</a><a href="#s-qualidade">Revisão de qualidade</a><a href="#s-dados">Dados e integrações</a><a href="#s-numeros">Números citados</a><a href="#s-tabela">Visão consolidada</a><a href="#s-acoes">Pendências</a><a href="#s-glossario">Glossário</a>
+    </nav>
+  </header>
+
+  <section aria-labelledby="s-resumo">
+    <div class="sec-head"><span class="eyebrow">Em uma leitura</span><h2 id="s-resumo">O que a reunião muda no Radar</h2></div>
+    <ol class="resumo">
+      <li><span><b>O argumento de valor deve ser qualidade e menos risco, não velocidade.</b> Para Renato, o ganho de tempo na elaboração é pequeno e reaproveitar GECO ou PPT de outra proposta pode até aumentar o risco financeiro. Já existem o BID (gera propostas) e um agente que avalia propostas. O Radar precisa mostrar o que acrescenta a eles.</span></li>
+      <li><span><b>O diferencial mais forte é achar a pessoa certa.</b> O valor está em encontrar, em outra conta ou setor, quem já ganhou ou perdeu algo parecido e conversar com ela: por que ganhou, por que perdeu, que dor teve entre vender e entregar.</span></li>
+      <li><span><b>O Radar pode apoiar os 4 eixos da revisão de qualidade</b> (riscos, estimativa e eficiência, equipe, econômico). Hoje o time revisa cerca de 30 a 40 propostas por mês, de um total de pelo menos o dobro.</span></li>
+      <li><span><b>O Maná e as planilhas financeiras são as fontes que valem.</b> Toda oportunidade tem a proposta e o documento financeiro anexados. A GECO Val é o documento oficial. Os números de win rate mostrados não são confiáveis: quem tem os oficiais é Cristiane Divino.</span></li>
+      <li><span><b>Renato ainda não viu a nova versão do MVP.</b> A reunião acabou antes. Ficou de voltar às 11h do mesmo dia.</span></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="s-narrativa">
+    <div class="sec-head"><span class="eyebrow">Grupo A · posicionamento para o comitê</span><h2 id="s-narrativa">Narrativa de valor</h2>
+      <p class="prose">Estes itens não mudam código: mudam o que o time apresenta ao comitê e à Kelly, e o que o Radar destaca na tela.</p></div>
+    <div class="grupo">
+
+      <article class="item">
+        <header><span class="id">R19-01</span><h3>Trocar "ganho de tempo" por "qualidade e redução de risco"</h3><span class="prio critica">Crítica</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd>Vania perguntou se o Radar aumentaria o número de propostas e o win rate. Renato respondeu: <span class="cit">"Eu acho que a gente tem que ir para o caminho da qualidade."</span> Para ele, o ganho de tempo de achar uma proposta parecida "é pouco". O ganho real está em trazer qualidade à entrega pela troca de experiência.</dd>
+          <dt>Quando</dt><dd>51:39 a 56:51 (Renato), 53:17 (Isabelle: a medição de tempo de busca que o time tentou não traz o ganho que precisam mostrar)</dd>
+          <dt>Hoje no Radar</dt><dd>A hipótese do discovery fala em "reduz o tempo para encontrar referências". As Métricas do piloto medem sobretudo uso e tempo.</dd>
+          <dt>Melhoria</dt><dd><ul><li>Reescrever a hipótese e o slide do comitê: qualidade da proposta, risco antecipado e conhecimento NTT replicado. O tempo fica como benefício secundário.</li><li>Incluir nas Métricas do piloto indicadores de qualidade: quantas vezes o usuário abriu uma lição ou risco, contatou uma referência, usou um case ganho como base.</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-02</span><h3>Os dois pilares que o Andre propôs</h3><span class="prio alta">Alta</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd>Andre resumiu o ganho em dois pontos, e Renato concordou ("Concordo, concordo, concordo"): <b>(1) velocidade como cobertura e atendimento</b>, porque há muito projeto <i>blend</i> entre setores e a troca de conhecimento toma tempo; <b>(2) consistência</b>: usar o know-how NTT e replicar cases de sucesso, com uma base centralizada das propostas ganhas que deixe "a régua sempre lá em cima".</dd>
+          <dt>Quando</dt><dd>56:54 a 58:45</dd>
+          <dt>Melhoria</dt><dd>Usar esses dois pilares como estrutura do slide. No produto, marcar e priorizar propostas ganhas como referência (o Radar já tem ⭐ "bom modelo para reaproveitar"; falta o peso de "ganha" no ranking e um filtro explícito "só ganhas").</dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-03</span><h3>Deixar claro o que o Radar acrescenta ao BID e ao agente de avaliação</h3><span class="prio alta">Alta</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><span class="cit">"Tem um ativo nosso chamado BID, que ajuda a fazer proposta. [...] a gente tem um agente também que faz a avaliação da proposta. [...] O que é adicional ao que já existe hoje?"</span></dd>
+          <dt>Quando</dt><dd>51:45 a 52:12</dd>
+          <dt>Melhoria</dt><dd><ul><li>Levantar o que o BID e o agente de avaliação fazem (donos, entradas, saídas).</li><li>Montar um quadro "BID × agente de avaliação × Radar" para o comitê. Posição sugerida: o BID escreve, o agente avalia o documento, e o Radar traz a memória, ou seja, os projetos parecidos, quem os fez, o que deu certo e errado.</li><li>Avaliar se o Radar pode alimentar o agente de avaliação com histórico (integração, não concorrência).</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-04</span><h3>Tirar trabalho operacional do gerente</h3><span class="prio media">Média</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><span class="cit">"Uma pegada de facilitar a vida do gerente. [...] O gerente reclama muito que ele tem que fazer atividade operacional."</span> Ele também sugeriu reduzir riscos de execução que podem ser tratados "em tempo de proposta".</dd>
+          <dt>Quando</dt><dd>52:12 a 53:14</dd>
+          <dt>Melhoria</dt><dd>Destacar na narrativa e nos atalhos do chat as tarefas que poupam trabalho do gerente: preencher ficha a partir dos documentos, resumir riscos de projetos parecidos, montar o rascunho do resumo para o L1.</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="s-pessoas">
+    <div class="sec-head"><span class="eyebrow">Grupo B · funcionalidades</span><h2 id="s-pessoas">Conexão entre pessoas e aprendizado de ganho e perda</h2>
+      <p class="prose">Este foi o ponto em que Renato viu mais valor.</p></div>
+    <div class="grupo">
+
+      <article class="item">
+        <header><span class="id">R19-05</span><h3>"Com quem falar": referência interna em cada projeto parecido</h3><span class="prio critica">Crítica</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><span class="cit">"Eu tenho uma referência de uma pessoa com quem eu posso conversar. Eu posso entender como que ela ganhou. [...] Eu sou de banco, o cara está lá em telco, nem sabia que o cara estava fazendo aquele negócio. Ele ganhou e eu consigo sentar com ele."</span></dd>
+          <dt>Quando</dt><dd>54:51 a 55:24 · reforçado em 55:42 a 56:19</dd>
+          <dt>Hoje no Radar</dt><dd>O projeto já tem "responsável" e pessoas citadas nos documentos. O filtro "Citado nos documentos" aceita pessoa. Não existe um destaque "fale com" nem um caminho de contato.</dd>
+          <dt>Melhoria</dt><dd><ul><li>No card do resultado e na ficha, mostrar um bloco "Quem pode te contar como foi": responsável, gerente e executivos listados na oportunidade (no Maná só eles podem editá-la, então são os donos reais).</li><li>Mostrar o papel de cada pessoa (comercial, pré-venda, gerente de entrega) e de qual conta ou setor ela é, porque o valor está em atravessar setores.</li><li>Botão de contato (abrir chat ou e-mail no Teams) com uma mensagem sugerida citando o projeto.</li><li>No chat: "quem já fez algo parecido com isto fora do meu setor?".</li><li>Ponto de atenção: respeitar o perfil (consultor não vê projetos confidenciais) e não expor dados pessoais além do nome e do contato corporativo.</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-06</span><h3>Motivo estruturado de ganho e de perda</h3><span class="prio alta">Alta</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><span class="cit">"Ele pode ter perdido [...] e eu posso entender com ele por que perdeu. [...] A gente fez um preço muito caro. E no final das contas era um negócio mais simples que o cliente precisava."</span></dd>
+          <dt>Quando</dt><dd>55:26 a 56:19</dd>
+          <dt>Hoje no Radar</dt><dd>Existe o atalho "Propostas perdidas e o que aprendemos" e lições extraídas dos documentos, em texto livre.</dd>
+          <dt>Melhoria</dt><dd><ul><li>Campo estruturado "motivo" com lista controlada (preço acima do mercado, escopo maior que a necessidade, concorrente, relacionamento, prazo, capacidade técnica, cliente desistiu) mais texto livre. Vale para ganhos e para perdas.</li><li>Na revisão de upload, sugerir o motivo a partir dos documentos e pedir confirmação.</li><li>Na visão Negócio, mostrar perdas por motivo e por segmento. No card do projeto parecido, avisar: "projeto parecido foi perdido por preço".</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-07</span><h3>Vendido × executado: a dor entre ganhar e entregar</h3><span class="prio alta">Alta</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><span class="cit">"Eu consigo entender qual que é a dor que ele teve entre ganhar e entregar. Porque pode ser que ele tenha ganhado mais barato do que ele está executando e eu posso me precaver."</span> Renato explicou que o gerente responsável cria uma "baseline de execução" a partir da "baseline de venda" (ex.: "considerei um Renato de 500, mas o contrato é um Renato de 400") e atualiza a GECO durante o projeto, refletindo no SAP.</dd>
+          <dt>Quando</dt><dd>55:11 a 55:42 · 36:53 a 39:11 (baselines e replanejamento) · 56:28 (Maná × SAP)</dd>
+          <dt>Hoje no Radar</dt><dd>A visão Técnica tem "estimativa × proposta" e o roadmap prevê "previsto × realizado vindo do Maná e dos sistemas de entrega" (etapa 7).</dd>
+          <dt>Melhoria</dt><dd><ul><li>Na ficha do projeto, guardar duas fotos: margem, receita, prazo e equipe <b>vendidos</b> (GECO da proposta) e <b>executados</b> (última GECO ou SAP). Mostrar o desvio.</li><li>No resultado da busca, sinalizar "projetos parecidos estouraram margem em média X p.p." quando houver dado.</li><li>Começar com cadastro manual da margem executada no piloto e deixar a integração com SAP para uma onda seguinte.</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-08</span><h3>Detectar escopo multidisciplinar e indicar outras áreas para orçar</h3><span class="prio media">Média</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd>Vania: <span class="cit">"Já peguei projeto que tem change management, que não é a nossa área [...] e a gente depois se tocar: temos que falar com o manager para orçar. Vocês conseguem pegar esse tipo de cruzamento?"</span> Renato adiou a resposta e ela não voltou a ser respondida. Andre reforçou que há muitos projetos <i>blend</i> entre áreas.</dd>
+          <dt>Quando</dt><dd>23:50 a 24:16 · 57:11</dd>
+          <dt>Melhoria</dt><dd><ul><li>Ao analisar uma RFP ou proposta em foco, listar os serviços implícitos no escopo (ex.: change management, infraestrutura, AMS) que não pertencem à área de quem está montando a proposta.</li><li>Para cada um, sugerir a área e pessoas que já orçaram isso em projetos parecidos (liga com R19-05).</li><li>Pergunta para levar ao Renato: o time dele faz esse cruzamento hoje? À mão?</li></ul></dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="s-qualidade">
+    <div class="sec-head"><span class="eyebrow">Grupo C · funcionalidades</span><h2 id="s-qualidade">Apoio à revisão de qualidade da proposta</h2>
+      <p class="prose">Como o time do Renato trabalha: depois de analisar os desvios do ano anterior por unidade de negócio, tipologia e setor, eles concluíram que projetos <i>fixed fee</i> e <i>fixed price</i> desviam muito em proporção ao volume. Projetos <i>time &amp; material</i> também desviam, mas o volume grande dilui o efeito. Daí nasceu a revisão em 4 eixos, feita antes dos comitês L1 e L2 (46:00 a 50:38).</p></div>
+    <div class="grupo">
+
+      <article class="item">
+        <header><span class="id">R19-09</span><h3>Checklist de pré-revisão nos 4 eixos</h3><span class="prio alta">Alta</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><ul>
+            <li><b>Riscos:</b> garantir que todos os fatores de risco do negócio foram considerados.</li>
+            <li><b>Estimativa e eficiência:</b> <span class="cit">"Eu vou usar IA e isso vai me permitir um time 30% mais enxuto. Baseado em qual experiência? Onde você já fez isso?"</span></li>
+            <li><b>Equipe:</b> <span class="cit">"A gente vai fazer isso com uma equipe super júnior e vai descobrir que não consegue."</span> Também: projeto complexo sem gerente, camada de liderança inadequada.</li>
+            <li><b>Econômico:</b> todos os custos levantados, fatores de risco financeiro e provisão de desvio de delivery adequada.</li></ul></dd>
+          <dt>Quando</dt><dd>46:00 a 48:30</dd>
+          <dt>Hoje no Radar</dt><dd>O chat responde "que riscos considerar?" e a visão Pipeline tem alertas (margem fora da faixa, parecida com perdida). Não existe um checklist estruturado.</dd>
+          <dt>Melhoria</dt><dd><ul><li>Com uma proposta em foco, gerar um "pré-check de qualidade" com os 4 eixos. Cada ponto traz uma evidência de projetos parecidos: riscos que aconteceram, eficiência que de fato foi atingida, composição e senioridade de equipe usada, despesas e provisões típicas.</li><li>Para o eixo de eficiência: se a proposta promete ganho com IA ou automação, buscar projetos onde isso foi feito e o resultado real. Se não houver, sinalizar "sem precedente na base".</li><li>Exportar o pré-check para levar ao L1, para que o comitê discuta negócio e não "esqueceu de considerar B" (49:15).</li><li>Validar o formato com o time do Renato antes de construir. Os critérios são deles.</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-10</span><h3>Benchmark de desvio por UEN × setor × tipologia</h3><span class="prio alta">Alta</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><span class="cit">"Quando eu penso em ES telco, [...] dentro de telecom desviam 5%. Por que eu vou colocar na proposta que o desvio é 2? Eu vou colocar 5."</span> O time mantém uma matriz de desvio de delivery por unidade, setor e tipologia de projeto.</dd>
+          <dt>Quando</dt><dd>45:27 a 46:40 · 48:00 a 48:50</dd>
+          <dt>Melhoria</dt><dd><ul><li>Pedir ao Renato a matriz de desvios do ano anterior e carregá-la no Radar como referência.</li><li>Na ficha e no pré-check, comparar a provisão de desvio da proposta com a da matriz e alertar quando estiver abaixo.</li><li>Na visão Técnica, mostrar a matriz com destaque para fixed fee e fixed price.</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-11</span><h3>Avisar quando a proposta exige revisão de qualidade e chamar o time cedo</h3><span class="prio media">Média</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd>O time (5 pessoas) revisa por corte de tipologia e valor: um limite de <b>R$ 500 mil</b> e outro de <b>R$ 2 milhões</b>, um para serviços (<i>time &amp; material</i>, <i>event based</i>) e outro para projetos (<i>fixed price</i>, <i>fixed fee</i>). <span class="cit">"Muitas vezes nos envolvem neste ponto [pré-comitê], o que é errado, eles deveriam envolver a gente antes."</span></dd>
+          <dt>Quando</dt><dd>21:10 a 21:46 · 48:50 a 50:38</dd>
+          <dt>Melhoria</dt><dd><ul><li>Regra na ficha e na visão Pipeline: "esta proposta exige revisão de qualidade" conforme tipologia e valor, com o contato do time.</li><li>Alerta logo que a oportunidade é criada, não no pré-comitê.</li><li><b>A confirmar:</b> a transcrição está ambígua sobre qual limite vale para qual tipologia. Pela lógica do risco, R$ 500 mil seria para fixed price e fee, e R$ 2 milhões para serviços. Confirmar com Renato também se o corte varia por setor ("nesses setores").</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-12</span><h3>Aviso ao reaproveitar documento financeiro</h3><span class="prio media">Média</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><span class="cit">"Até aproveitar uma GECO com o PPT, isso pode virar um problema [...] risco financeiro lá na frente, porque o cara pode esquecer de alguma coisa e errar feio."</span> As planilhas mudam quase todo mês (calendários de promoção e dissídios diferentes: consultoria em janeiro, BPS São Paulo em agosto, BPS Uberlândia possivelmente em novembro, BPO em setembro).</dd>
+          <dt>Quando</dt><dd>56:28 a 56:51 · 17:00 a 20:00</dd>
+          <dt>Hoje no Radar</dt><dd>Existe o ⭐ "bom modelo para reaproveitar", que vale para qualquer documento.</dd>
+          <dt>Melhoria</dt><dd><ul><li>Quando o documento sugerido for financeiro (GECO, GECO Val, Calculadora), exibir: "use como referência de estrutura e equipe, não como base. Baixe a versão do mês no Ibiza".</li><li>Não permitir marcar documento financeiro como "bom modelo para reaproveitar", ou marcar com outra semântica ("boa referência de composição").</li><li>Link direto para Ibiza › Comercial › GECO Val e Calculadora › Ferramentas financeiras.</li></ul></dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="s-dados">
+    <div class="sec-head"><span class="eyebrow">Grupo D · fontes e modelo de dados</span><h2 id="s-dados">Dados e integrações</h2></div>
+    <div class="grupo">
+
+      <article class="item">
+        <header><span class="id">R19-13</span><h3>Mapear os campos da oportunidade do Maná para a ficha do Radar</h3><span class="prio alta">Alta</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd>Renato abriu uma oportunidade e mostrou os campos:<ul>
+            <li><b>Cadastrais e datas:</b> abertura, validade, data prevista da RFP, close date, início e fim do projeto, duração, país.</li>
+            <li><b>Classificação:</b> tipologia de projeto, origem (demanda gerada, continuidade, extensão de algo existente, projeto novo), single cluster ou multi, assets indicados.</li>
+            <li><b>Financeiro:</b> volume financeiro, valor total do contrato, margem (% e absoluta), receita bruta e líquida.</li>
+            <li><b>Pessoas:</b> owner, manager e executivos listados (só eles editam; todos os executivos consultam).</li>
+            <li><b>Related Documents:</b> sempre há a proposta e o documento financeiro. Os documentos são classificados (financeiro, proposta oficial) e versionados, com marcação da última versão.</li>
+            <li><b>Reports e dashboards:</b> relatórios públicos e privados, com filtros por período e BU.</li></ul></dd>
+          <dt>Quando</dt><dd>10:14 a 13:21 · 13:21 a 14:12 · 39:30 a 40:11 · 40:11 a 43:39</dd>
+          <dt>Hoje no Radar</dt><dd>A integração com o Maná está no roadmap ("ondas seguintes"). O MER e o catálogo de informações do projeto já têm parte desses campos.</dd>
+          <dt>Melhoria</dt><dd><ul><li>Atualizar o MER e o catálogo com os campos faltantes: origem, data da RFP, single ou multi cluster, receita bruta e líquida, país, executivos da oportunidade.</li><li>Na ingestão, usar o tipo do Related Document para separar proposta e financeiro e pegar só a versão mais recente.</li><li>Pedido do Andre (9:37): conseguir um dump do Maná que inclua as propostas. Encaminhar com Cristiane Divino.</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-14</span><h3>Ler as planilhas financeiras (GECO Val, GECO, Calculadora)</h3><span class="prio media">Média</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd>Existem três documentos de proposta financeira:<ul>
+            <li><b>GECO Val</b>: o oficial ("oficialíssimo"). Configura nome, localização, tipo de serviço, BU, duração, início, preço calculado ou pré-determinado, reserva de risco (ex.: 5%). Abas: equipe (matrícula ou perfil, categoria, nível, % de dedicação, horas), centers, revenda, ativos, despesas (táxi, licenças como Copilot, adicional noturno, viagens), câmbio. Gera receita, margem % e margem absoluta.</li>
+            <li><b>GECO</b>: anterior à Val, mais fácil para projetos plurianuais, por isso o Brasil ainda a usa. Tem percentuais de dissídio por mês, perfis por matrícula ou por tabela de cargos e salários (T1, T2, T3), horas por mês por pessoa, resumo financeiro e abas de imposto, envio ao SAP e fluxo de caixa (obrigatória quando o cliente paga em prazos longos, ex.: 180 dias).</li>
+            <li><b>Calculadora</b>: usada para precificar perfil (CSR e tarifas). A ideia é que GECO e Calculadora deixem de existir no Brasil.</li></ul>
+            A proposta técnica é texto livre ("permite que você expresse toda a sua criatividade"). A parte financeira segue esses templates.</dd>
+          <dt>Quando</dt><dd>14:02 a 20:28 · 21:46 a 39:11</dd>
+          <dt>Melhoria</dt><dd><ul><li>Extrator específico para essas planilhas: equipe (perfis, senioridade, dedicação, horas), despesas, reserva de risco, provisão de desvio, receita, margem, tipo de preço e duração. Isso alimenta os eixos Equipe e Econômico do R19-09.</li><li>Nova consulta: "qual equipe projetos parecidos usaram?", com distribuição de senioridade.</li><li>Atenção à permissão: valores e margem continuam restritos ao perfil gestor.</li><li>Renato ficou de enviar os templates. Usá-los para criar exemplos fictícios no corpus.</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-15</span><h3>Guardar a margem em valor absoluto e com decimais</h3><span class="prio baixa">Baixa</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd><span class="cit">"Você coloca o percentual e ele calcula o valor absoluto. Pra mim tinha que ser o contrário."</span> O Maná só aceita percentual inteiro (o "32.00" tem decimais apenas de enfeite). No dia anterior, o time do Renato estava comparando a margem de venda do Maná com a do SAP.</dd>
+          <dt>Quando</dt><dd>6:21 a 6:50 · 12:18 a 12:55</dd>
+          <dt>Melhoria</dt><dd>Na ficha do Radar, guardar o valor absoluto e calcular o %, com duas casas decimais. Quando houver documento financeiro, preferir a margem dele à do Maná e mostrar a origem do número.</dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-16</span><h3>Definir o cálculo da taxa de ganho nos Insights</h3><span class="prio media">Média</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd>Na extração do Maná, apareceram 166 ganhas contra 161 abertas em agosto, o que é impossível ("tem algo errado"). O win rate mudou de 38% para 48% e depois para 60% conforme o filtro (sem filtro, close date ou data de criação no ano fiscal). Renato: <span class="cit">"Não anotem esses números."</span></dd>
+          <dt>Quando</dt><dd>6:51 a 9:08 · 43:39 a 44:28</dd>
+          <dt>Hoje no Radar</dt><dd>A visão Negócio mostra "taxa de ganho por segmento".</dd>
+          <dt>Melhoria</dt><dd><ul><li>Documentar na tela o método: coorte por data de criação, só oportunidades encerradas (ganhas e perdidas) no denominador, período explícito.</li><li>Alinhar a definição com Cristiane Divino para bater com o número oficial do comercial.</li></ul></dd>
+        </dl>
+      </article>
+
+      <article class="item">
+        <header><span class="id">R19-17</span><h3>Apontar para a versão vigente dos templates no Ibiza</h3><span class="prio baixa">Baixa</span></header>
+        <dl>
+          <dt>O que foi dito</dt><dd>O Ibiza é o painel usado no Brasil para ver resultado de projetos sem entrar no SAP, estimativas do setor e prévia de fechamento. Em Comercial › GECO Val e Calculadora › Ferramentas financeiras fica a última versão (no dia, a do mês 11). Quem cuida é a área comercial.</dd>
+          <dt>Quando</dt><dd>17:00 a 20:00</dd>
+          <dt>Melhoria</dt><dd>O chat, quando perguntado "onde pego a GECO?", responde com o caminho no Ibiza. O Radar não guarda cópia dos templates. Complementa o R19-12.</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="s-numeros">
+    <div class="sec-head"><span class="eyebrow">Para o business case</span><h2 id="s-numeros">Números citados na reunião</h2></div>
+    <p class="aviso"><b>Preliminares.</b> Renato pediu para não usar esses números como oficiais. Os números exatos devem vir de Cristiane Divino.</p>
+    <div class="tiles">
+      <div class="tile"><b>161 · 155 · 120</b><span>oportunidades em ago, set e out (todas as unidades, extração do Maná)</span></div>
+      <div class="tile alerta"><b>38% a 60%</b><span>win rate conforme o filtro. Não confiável.</span></div>
+      <div class="tile"><b>5 pessoas</b><span>no time de revisão de qualidade</span></div>
+      <div class="tile"><b>30 a 40</b><span>propostas revisadas por mês (21:10 e 50:00)</span></div>
+      <div class="tile"><b>≥ 2×</b><span>total de propostas por mês em relação às revisadas</span></div>
+      <div class="tile"><b>R$ 500 mil · R$ 2 mi</b><span>cortes de revisão por tipologia (ver R19-11)</span></div>
+    </div>
+    <p class="prose">Leitura útil para o slide: hoje, cerca de metade ou menos das propostas passa pela revisão de qualidade. A pergunta da Vania (51:26), "se a IA ajudasse a avaliar o todo", é o argumento de cobertura: o Radar levaria o pré-check (R19-09) às propostas que ficam abaixo do corte.</p>
+  </section>
+
+  <section aria-labelledby="s-tabela">
+    <div class="sec-head"><span class="eyebrow">Visão consolidada</span><h2 id="s-tabela">Todas as melhorias</h2>
+      <p class="prose">A prioridade é uma sugestão a partir da ênfase dada na reunião e do impacto no argumento de valor. Ela deve ser revista pelo time.</p></div>
+    <div class="tabwrap"><table>
+      <thead><tr><th>ID</th><th>Melhoria</th><th>Tipo</th><th>Esforço</th><th>Prioridade</th></tr></thead>
+      <tbody>
+        <tr><td class="cod">R19-01</td><td><span class="tit">Narrativa: qualidade e risco em vez de tempo</span><span class="meta">Hipótese, slide do comitê, métricas do piloto</span></td><td>Narrativa</td><td>Baixo</td><td><span class="prio critica">Crítica</span></td></tr>
+        <tr><td class="cod">R19-05</td><td><span class="tit">"Com quem falar": referência interna por projeto parecido</span><span class="meta">Card, ficha, contato pelo Teams, chat</span></td><td>Produto</td><td>Médio</td><td><span class="prio critica">Crítica</span></td></tr>
+        <tr><td class="cod">R19-02</td><td><span class="tit">Pilares cobertura + consistência; peso para propostas ganhas</span></td><td>Narrativa + produto</td><td>Baixo</td><td><span class="prio alta">Alta</span></td></tr>
+        <tr><td class="cod">R19-03</td><td><span class="tit">Diferenciação frente ao BID e ao agente de avaliação</span></td><td>Narrativa</td><td>Baixo</td><td><span class="prio alta">Alta</span></td></tr>
+        <tr><td class="cod">R19-06</td><td><span class="tit">Motivo estruturado de ganho e perda</span></td><td>Produto + dados</td><td>Médio</td><td><span class="prio alta">Alta</span></td></tr>
+        <tr><td class="cod">R19-07</td><td><span class="tit">Vendido × executado (baseline de venda × execução)</span></td><td>Produto + dados</td><td>Alto</td><td><span class="prio alta">Alta</span></td></tr>
+        <tr><td class="cod">R19-09</td><td><span class="tit">Pré-check de qualidade nos 4 eixos</span></td><td>Produto</td><td>Alto</td><td><span class="prio alta">Alta</span></td></tr>
+        <tr><td class="cod">R19-10</td><td><span class="tit">Benchmark de desvio UEN × setor × tipologia</span></td><td>Dados + produto</td><td>Médio</td><td><span class="prio alta">Alta</span></td></tr>
+        <tr><td class="cod">R19-13</td><td><span class="tit">Mapear campos e Related Documents do Maná</span></td><td>Dados</td><td>Médio</td><td><span class="prio alta">Alta</span></td></tr>
+        <tr><td class="cod">R19-04</td><td><span class="tit">Tirar trabalho operacional do gerente</span></td><td>Narrativa + produto</td><td>Baixo</td><td><span class="prio media">Média</span></td></tr>
+        <tr><td class="cod">R19-08</td><td><span class="tit">Detectar escopo multidisciplinar e indicar áreas para orçar</span></td><td>Produto</td><td>Alto</td><td><span class="prio media">Média</span></td></tr>
+        <tr><td class="cod">R19-11</td><td><span class="tit">Alerta de revisão obrigatória e envolvimento cedo</span></td><td>Produto</td><td>Baixo</td><td><span class="prio media">Média</span></td></tr>
+        <tr><td class="cod">R19-12</td><td><span class="tit">Aviso ao reaproveitar documento financeiro</span></td><td>Produto</td><td>Baixo</td><td><span class="prio media">Média</span></td></tr>
+        <tr><td class="cod">R19-14</td><td><span class="tit">Extrator das planilhas GECO Val, GECO e Calculadora</span></td><td>Dados</td><td>Alto</td><td><span class="prio media">Média</span></td></tr>
+        <tr><td class="cod">R19-16</td><td><span class="tit">Método da taxa de ganho nos Insights</span></td><td>Dados</td><td>Baixo</td><td><span class="prio media">Média</span></td></tr>
+        <tr><td class="cod">R19-15</td><td><span class="tit">Margem absoluta com decimais e origem do número</span></td><td>Dados</td><td>Baixo</td><td><span class="prio baixa">Baixa</span></td></tr>
+        <tr><td class="cod">R19-17</td><td><span class="tit">Apontar para templates vigentes no Ibiza</span></td><td>Produto</td><td>Baixo</td><td><span class="prio baixa">Baixa</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section aria-labelledby="s-acoes">
+    <div class="sec-head"><span class="eyebrow">Depois da reunião</span><h2 id="s-acoes">Pendências e próximos passos</h2></div>
+    <div class="tabwrap"><table>
+      <thead><tr><th>Ação</th><th>Quem</th><th>Origem</th></tr></thead>
+      <tbody>
+        <tr><td>Enviar convite para continuar às 11h e mostrar a nova versão do MVP ao Renato, que não chegou a ver</td><td>Isabelle</td><td>1:00:21 a 1:01:15</td></tr>
+        <tr><td>Procurar Cristiane Divino (líder comercial, administradora do Maná) para obter oportunidades por mês, propostas fechadas, win rate e valor ganho, por BU e por setor</td><td>Time Power House</td><td>58:45 a 59:47</td></tr>
+        <tr><td>Receber os templates GECO Val, GECO e Calculadora</td><td>Renato</td><td>~31:00 ("passo depois esses templates")</td></tr>
+        <tr><td>Pedir a matriz de desvios por UEN × setor × tipologia e o material dos 4 eixos</td><td>Time Power House</td><td>45:27 a 48:50</td></tr>
+        <tr><td>Confirmar os cortes de revisão (R$ 500 mil e R$ 2 mi) por tipologia e setor</td><td>Time Power House com Renato</td><td>21:10 · 49:30</td></tr>
+        <tr><td>Montar o slide de benefícios com a Kelly seguindo a linha qualidade + consistência</td><td>Vania e Isabelle</td><td>1:00:49 a 1:01:26</td></tr>
+        <tr><td>Entender o BID e o agente de avaliação de propostas (donos e escopo)</td><td>Time Power House</td><td>51:45</td></tr>
+        <tr><td>Retomar a pergunta da Vania sobre cruzamento de áreas (change management)</td><td>Vania</td><td>23:50</td></tr>
+        <tr><td>Pedir um dump do Maná que inclua as propostas</td><td>Andre</td><td>9:37</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section aria-labelledby="s-glossario">
+    <div class="sec-head"><span class="eyebrow">Referência</span><h2 id="s-glossario">Glossário</h2></div>
+    <div class="tabwrap"><table>
+      <tbody>
+        <tr><td><b>Maná</b></td><td>Sistema de gestão de oportunidades e propostas (contas, oportunidades, framework agreements, reports, dashboards). Todos os executivos consultam qualquer oportunidade; só os listados nela editam.</td></tr>
+        <tr><td><b>Ibiza</b></td><td>Painel usado no Brasil para resultados de projeto, estimativas do setor e prévia de fechamento sem entrar no SAP. Hospeda as últimas versões dos templates financeiros.</td></tr>
+        <tr><td><b>GECO Val</b></td><td>Template financeiro oficial de proposta.</td></tr>
+        <tr><td><b>GECO</b></td><td>Template anterior, ainda usado no Brasil para projetos plurianuais. Também é o controle financeiro do gerente durante a execução, refletido no SAP.</td></tr>
+        <tr><td><b>Calculadora</b></td><td>Planilha para precificar perfis (CSR e tarifas). Deve ser descontinuada no Brasil.</td></tr>
+        <tr><td><b>L1 / L2</b></td><td>Comitês em que as propostas são apresentadas ao escritório para aprovação da entrega.</td></tr>
+        <tr><td><b>BID</b></td><td>Ativo interno que ajuda a elaborar propostas.</td></tr>
+        <tr><td><b>CSR</b></td><td>Custo de funcionário NTT (service rendered), em oposição a subcontratação (ex.: horas da Índia, NTT Inc.).</td></tr>
+        <tr><td><b>Desvio de delivery</b></td><td>Provisão na proposta para o desvio esperado na entrega, comparada com a matriz UEN × setor.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</main>
+</body>
+</html>

@@ -966,6 +966,10 @@ test('relatório para agentes: exige chave própria, é só leitura e não expõ
   assert.equal(r.tickets[0].imagens[0].apagar, undefined);
   assert.ok(r.regraMetrica.includes('uma vez'));
   assert.equal(r.resumo.porCenario.length, roteiroDe('V0.0.1').length);
+  assert.equal(r.roteiroVersao, 'V0.0.1');
+  assert.equal(r.roteiro.length, roteiroDe('V0.0.1').length, 'o roteiro é o da versão pedida');
+  assert.ok(r.roteiro.every((c) => c.passos.length && c.esperado.length && c.situacao === 'pendente'), 'cada cenário traz o passo a passo, o esperado e a situação');
+  assert.equal(montarRelatorio(q, VERSAO).roteiro.length, roteiroDe(VERSAO).length, 'na versão atual vem o roteiro atual');
   assert.equal(q.ticket(t.codigo).imagens[0].apagar, 'https://ibb.co/apagar/123', 'não altera o dado guardado');
 });
 
