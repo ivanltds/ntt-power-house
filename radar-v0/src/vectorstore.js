@@ -137,6 +137,9 @@ export class LocalVectorStore {
   persist() {
     fs.mkdirSync(path.dirname(this.filePath), { recursive: true });
     const collections = Object.fromEntries([...this.collections].map(([n, c]) => [n, c.toJSON()]));
-    fs.writeFileSync(this.filePath, JSON.stringify({ version: 3, collections }));
+    // Grava num arquivo temporário e troca no fim: se o processo cair no meio, a base anterior continua inteira.
+    const tmp = `${this.filePath}.tmp`;
+    fs.writeFileSync(tmp, JSON.stringify({ version: 3, collections }));
+    fs.renameSync(tmp, this.filePath);
   }
 }
