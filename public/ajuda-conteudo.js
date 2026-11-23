@@ -294,6 +294,42 @@ export const GUIA = [
     ${tip('No PowerPoint e no Word o arquivo é editável: ajuste o texto antes de enviar ao cliente. A exportação fica no registro de atividades.')}
     ${tip('Para o consultor, valores e margens nunca entram, e projetos confidenciais não aparecem nem como referência.', 'warn')}`],
 
+  ['onepage', 'star', 'One page e apresentação de cases', () => `
+    <p>Para uma conversa com cliente: uma <b>one page de case</b> (uma página só) ou uma <b>apresentação de cases</b> com vários cases ganhos sobre um tema. Tudo vem da base, com a fonte no rodapé.</p>
+    <h4>One page de case</h4>
+    ${steps([
+      `Abra pelo chat ("gera a one page do P001", "quero um case de antifraude em uma página"), pelo botão ${ui('One page')} no cartão de um resultado, pelo atalho ${ui('Gerar one page')} na conversa da ficha ou em ${ui(`${icon('download', { size: 13 })} Exportar`)} → <b>One page de case</b>.`,
+      'Confira a prévia: contexto, desafio, objetivo, solução, tecnologias e serviços, benefícios e resultados (com os números em destaque). Os blocos sem registro na base aparecem em amarelo com "complete antes de enviar".',
+      'Edite o texto direto na prévia, se precisar. A edição vale só para o arquivo e não muda a base.',
+      `Escolha PowerPoint ou PDF e clique em ${ui('Baixar')}.`,
+    ])}
+    ${table(['Regra', 'Como funciona'], [
+      ['Nome do cliente', 'sai como "grande cliente do setor …", inclusive no texto, no nome do arquivo e nas propriedades do arquivo. Só o gestor pode marcar "Citar o nome do cliente", e nunca em projeto confidencial.'],
+      ['Investimento', 'só para o gestor, e só se marcar "Incluir investimento". O consultor não vê o bloco.'],
+      ['Projeto que não é case', 'em aberto, perdido ou cancelado: sai só como referência interna, com o selo "Uso interno".'],
+      ['Sem invenção', 'a IA não cria números nem fatos. O que não está na base aparece como "Não há registro".'],
+    ])}
+    <h4>Apresentação de cases</h4>
+    ${steps([
+      'No chat: "monta uma apresentação de uns 10 slides sobre fraude em seguros com nossos cases" ou, depois de uma lista de projetos, "transforma esses em apresentação". Na ficha, o atalho "Montar apresentação de cases" usa o projeto como tema.',
+      'O Radar separa os cases ganhos (Vendida, Em execução, Entregue) e marca os 5 mais parecidos. Perdidas e propostas em aberto ficam de fora (ele diz quantas).',
+      `Clique em ${ui('Montar a apresentação')}, marque ou desmarque cases (até 8), mude a ordem com as setas e, se quiser, inclua o slide de aprendizados (uso interno).`,
+      'Gere em PowerPoint ou PDF: capa, "O que a NTT DATA já fez em …" (números contados na base), uma one page por case e as fontes.',
+    ])}
+    ${tip('Sem case ganho sobre o tema, o Radar não monta material para cliente: mostra o que existe só para consulta interna.', 'warn')}`],
+
+  ['conversa-ficha', 'message', 'Conversar dentro da ficha do projeto', () => `
+    <p>A ficha do projeto tem a seção <b>Conversar sobre este projeto</b>. As perguntas feitas ali consideram o projeto: "projetos parecidos" quer dizer parecidos com este, "one page" é a deste projeto.</p>
+    ${steps([
+      `Abra o projeto e use a seção logo abaixo de Contexto (o botão ${ui('Perguntar')} leva até ela).`,
+      'Use os atalhos: em proposta aberta, "Projetos parecidos", "Riscos de projetos parecidos", "Quem já fez algo parecido", "Montar apresentação de cases" e "Comparar com a RFP anexada"; em projeto ganho, "Gerar one page" e "Resumir resultados".',
+      'Para comparar com uma RFP nova, anexe o arquivo pelo clipe da seção. Ele fica só na conversa e não vai para a base.',
+      `A conversa aparece em Conversas com o selo do projeto (ex.: P012). ${ui('Abrir em Conversas')} continua em tela cheia; ${ui('Nova conversa')} começa outra sobre o mesmo projeto.`,
+    ])}
+    <h4>Com quem falar</h4>
+    <p>Cada resultado parecido e cada ficha mostram <b>quem pode te contar como foi</b> (o responsável pelo projeto, com área e setor) e o botão ${ui('Copiar mensagem')}, com um convite pronto para colar no Teams ou no e-mail. No chat, pergunte "quem já fez algo parecido com isto?".</p>
+    ${tip('Documento financeiro (GECO, GECO Val, Calculadora) serve como referência de estrutura e equipe, não como base: as planilhas mudam quase todo mês. Baixe a versão do mês no Ibiza, em Comercial › GECO Val e Calculadora › Ferramentas financeiras.', 'warn')}`],
+
   ['insights', 'chart', 'Insights e métricas', () => `
     <p>A aba ${ui('Insights')} tem duas abas internas: <b>Visões</b>, com os números da base de propostas e cases, e <b>Métricas do piloto</b>, com o uso do Radar. O Radar lembra a última aberta.</p>
     <h4>Visões: cinco perguntas sobre a base</h4>
@@ -332,6 +368,13 @@ export const GUIA = [
       ['Tempo de resposta', 'Tempo médio até a resposta do chat.'],
       ['Por que não ajudou', 'Motivos dos 👎.'],
       ['O que pedem ao chat', 'Perguntas por tipo de pedido (parecidos, listagem, conversa, dúvida de uso, arquivo…) e quantas ficaram sem resposta.'],
+    ])}
+    <h4>Ano fiscal, Ganhamos × perdemos e sinais do setor (V0.0.3)</h4>
+    ${table(['O quê', 'Como funciona'], [
+      ['Ano fiscal', 'Os anos dos Insights seguem o ano fiscal da NTT DATA, de abril a março: o FY26 vai de abril de 2026 a março de 2027. O filtro "Ano fiscal" mostra um FY por vez (o atual vem marcado como "atual").'],
+      ['Taxa de ganho', 'ganhas ÷ (ganhas + perdidas). Em aberto e canceladas ficam fora da conta. O "como calculamos" de cada cartão explica o método.'],
+      ['Ganhamos × perdemos', 'Na visão Negócio: o que as ganhas e as perdidas têm em comum (tecnologias, serviços, prazo e, para o gestor, valor), os motivos de perda sugeridos a partir das lições (preço, escopo, concorrente, relacionamento, prazo, capacidade técnica, desistência) e as perdidas que viraram aprendizado, com quem conduziu. Os motivos são sugestão: confira.'],
+      ['Sinais do setor', 'Na visão Negócio: notícias das fontes curadas, coletadas uma vez por dia, com o porquê da relevância (cliente da carteira, tecnologia que já entregamos ou só o setor) e o botão "O que já fizemos sobre isso?". O Radar guarda só título, data, link e um trecho; o link original é a referência.'],
     ])}`],
 
   ['permissoes', 'lock', 'Permissões e privacidade', () => `

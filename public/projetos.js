@@ -310,6 +310,9 @@ function linhaDoTempo(historico) {
 }
 
 // Modal grande: conteúdo do projeto à esquerda, ficha e conexões à direita.
+// R19-12: planilhas financeiras (GECO, GECO Val, Calculadora) mudam todo mês e não devem ser reaproveitadas como base.
+const financeiro = (doc) => /\b(geco|calculadora|financeir\w*|precifica\w*)\b/i.test(`${doc.titulo} ${doc.arquivo ?? ''}`) || doc.tipo_documental === 'estimativa_preliminar' && /xlsx?$/i.test(doc.formato ?? '');
+
 export async function openProject(id) {
   const d = await api(`/api/projeto?id=${encodeURIComponent(id)}&userId=${userId()}`);
   const p = d.projeto;
@@ -362,6 +365,7 @@ export async function openProject(id) {
       <div><small>${icon('files', { size: 14 })}Documentos</small><b>${d.documentos.length}</b></div>
       <div title="${q.faltando.length ? `Falta: ${esc(q.faltando.join(', '))}` : 'Cadastro completo'}"><small>${icon('checkCircle', { size: 14 })}Cadastro</small><b>${q.percentual}%</b><span class="bar"><i style="width:${q.percentual}%"></i></span></div>
     </div>
+    ${d.revisaoQualidade ? `<p class="alert warn">${icon('shield', { size: 16 })}<span><b>Exige revisão de qualidade.</b> ${esc(d.revisaoQualidade.motivo)}</span></p>` : ''}
     ${d.conflitos.map((c) => `<p class="alert warn">${icon('alert', { size: 16 })}<span><b>${c.campo === 'prazo_meses' ? 'Prazo' : 'Valor'} diverge entre fontes.</b> Prevalece ${esc(tipoLabel(c.escolhido.tipo))}: ${c.campo === 'valor' ? brl(c.escolhido.valor) : `${c.escolhido.valor} meses`}.
       <small class="pd-fontes">${c.fontes.map((f) => `${esc(f.fonte === 'cadastro' ? 'Cadastro' : docTitle.get(f.fonte) ?? f.fonte)}: ${c.campo === 'valor' ? brl(f.valor) : `${f.valor} meses`}`).join(' · ')}</small></span></p>`).join('')}
     <div class="pd-grid">
@@ -376,11 +380,12 @@ export async function openProject(id) {
             <span class="sub">${esc(tipoLabel(doc.tipo_documental))}${doc.status_documento ? ` · ${esc(doc.status_documento.replace(/_/g, ' '))}` : ''} · ${dateBR(doc.data_conteudo)}${doc.formato ? ` · ${esc(doc.formato.toUpperCase())}` : ''}${doc.tamanho_bytes ? ` · ${kb(doc.tamanho_bytes)}` : ''}
               ${doc.contem_pii ? ` · <span title="Contém dados pessoais">${icon('shield', { size: 13 })}dados pessoais</span>` : ''}${doc.origem === 'upload' ? ` · ${icon('upload', { size: 13 })}enviado${doc.revisado_por ? ` e revisado por ${esc(doc.revisado_por)}` : ''}` : ''}</span>
             ${doc.autor || doc.versao || doc.link_origem || doc.reutilizavel ? `<div class="pd-doc-meta">
-              ${doc.reutilizavel ? `<span class="tag reuse" title="Marcado na revisão como bom modelo para novas propostas">${icon('star', { size: 12 })}bom modelo</span>` : ''}
+              ${doc.reutilizavel ? (financeiro(doc) ? `<span class="tag reuse" title="Documento financeiro: serve de referência de composição, não de base">${icon('star', { size: 12 })}boa referência de composição</span>` : `<span class="tag reuse" title="Marcado na revisão como bom modelo para novas propostas">${icon('star', { size: 12 })}bom modelo</span>`) : ''}
               ${doc.autor ? `<span title="Autor">${icon('user', { size: 13 })}${esc(doc.autor)}</span>` : ''}
               ${doc.versao ? `<span title="Versão">${icon('history', { size: 13 })}${esc(doc.versao)}</span>` : ''}
               ${doc.link_origem ? `<a href="${esc(doc.link_origem)}" target="_blank" rel="noopener">${icon('link', { size: 13 })}original</a>` : ''}
             </div>` : ''}
+            ${financeiro(doc) ? `<p class="pd-note warn">${icon('alert', { size: 13 })} Documento financeiro: use como referência de estrutura e equipe, não como base. As planilhas mudam quase todo mês (dissídios e promoções); baixe a versão do mês no Ibiza, em Comercial › GECO Val e Calculadora › Ferramentas financeiras.</p>` : ''}
             ${doc.resumo ? `<p>${esc(doc.resumo)}</p>` : ''}
             ${doc.observacoes ? `<p class="pd-note" title="Nota de quem revisou o envio">${icon('info', { size: 13 })} ${esc(doc.observacoes)}</p>` : ''}
             ${doc.palavras_chave?.length ? `<div class="chips">${tags(doc.palavras_chave.slice(0, 8))}</div>` : ''}
