@@ -1,0 +1,36 @@
+{
+ "titulo": "Sustentação AMS para aplicações SAP, ServiceNow e Azure em rede varejista",
+ "problema": "A Eletro Mais opera 214 lojas e um e-commerce que responde por 38% do faturamento, com picos de 1,2 milhão de acessos em datas promocionais. O ambiente de aplicações críticas (SAP, ServiceNow e clusters Kubernetes no Azure) acumula 47 chamados P1/P2 por mês e SLA de resolução abaixo de 82%, pressionando a operação de vendas.",
+ "objetivo": "Assumir a sustentação de aplicações (AMS) do parque SAP, ServiceNow e Azure/Kubernetes, elevando o cumprimento de SLA para 95% em incidentes P1/P2 e reduzindo o volume de chamados recorrentes em 20% ao longo de 29 meses.",
+ "escopo": [
+  "Sustentação corretiva e evolutiva dos módulos SAP (SD, MM e FI) com gestão de chamados integrada ao ServiceNow",
+  "Monitoramento e operação de clusters Kubernetes no Azure, incluindo escalonamento, patches e gestão de custos de nuvem",
+  "Administração da plataforma ServiceNow para ITSM, com manutenção de catálogo, fluxos de aprovação e relatórios de SLA",
+  "Gestão de mudanças e releases mensais em janela noturna, cobrindo 100% das aplicações do escopo",
+  "Suporte a incidentes P1/P2 em regime 24x7 com squads em modelo follow-the-sun"
+ ],
+ "entregaveis": [
+  "Catálogo de serviços AMS e matriz RACI consolidados em até 6 semanas",
+  "Relatórios mensais de SLA e KPI com painéis no ServiceNow",
+  "Plano de melhoria contínua com meta de redução de 20% em chamados recorrentes",
+  "Runbooks e base de conhecimento técnica para SAP, Azure/Kubernetes e ServiceNow",
+  "Relatório trimestral de capacidade e custos Azure com recomendações de otimização"
+ ],
+ "fases": [
+  "Transição e diagnóstico do ambiente: 12 semanas",
+  "Estabilização e ajuste de SLAs: 24 semanas",
+  "Operação em regime pleno com melhoria contínua: 84 semanas",
+  "Encerramento e transferência de conhecimento: 6 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 4 analistas de sustentação SAP, 2 engenheiros Azure/Kubernetes e 2 especialistas ServiceNow",
+ "riscos": [
+  "Dependência de documentação incompleta herdada do fornecedor anterior",
+  "Indisponibilidade de janelas noturnas para releases em período de pico de vendas",
+  "Rotatividade de especialistas SAP no mercado e ramp-up acima do previsto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de TI no cliente)",
+  "tecnico": "Paulo Mendonça (Gerente de Projetos NTT DATA)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente, que decidiu prorrogar o contrato com o fornecedor incumbente e postergar a transição de AMS."
+}

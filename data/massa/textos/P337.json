@@ -1,0 +1,35 @@
+{
+ "titulo": "Motor de Precificação Dinâmica com Machine Learning para Varejo",
+ "problema": "A Magazine Estrela Azul, com 120 lojas físicas e e-commerce que representa 35% do faturamento, enfrenta perda de margem de 8% devido a preços estáticos e desalinhados com a concorrência. A empresa precisa responder rapidamente a variações de demanda e custos para proteger a rentabilidade em um mercado com mais de 5.000 SKUs ativos.",
+ "objetivo": "Implementar um motor de precificação dinâmica baseado em Machine Learning para ajustar preços em tempo quase real, aumentando a margem bruta em 5% e reduzindo o tempo de reação a mudanças de mercado de 48 horas para 1 hora.",
+ "escopo": [
+  "Desenvolvimento de modelos de Machine Learning em Python para previsão de demanda e elasticidade-preço, utilizando dados históricos de vendas e concorrência.",
+  "Construção de pipeline de dados na GCP (BigQuery e Dataflow) para ingestão e processamento de dados de múltiplas fontes.",
+  "Implementação de camada analítica no Databricks para exploração de dados e feature engineering, integrada ao ambiente GCP.",
+  "Criação de dashboards de Analytics & BI para monitoramento de KPIs de precificação e margem em tempo real.",
+  "Programa de Change Management para treinar 50 usuários das áreas de pricing, compras e lojas, incluindo comunicação e gestão de resistências."
+ ],
+ "entregaveis": [
+  "Modelo de precificação dinâmica validado com acurácia mínima de 85% em testes cegos.",
+  "Pipeline de dados automatizado na GCP operando com latência inferior a 15 minutos.",
+  "Dashboard executivo de margem e competitividade com atualização horária.",
+  "Relatório de simulações de cenários de preço e impacto financeiro.",
+  "Plano de Change Management concluído com 90% de adesão dos usuários treinados."
+ ],
+ "fases": [
+  "Fase 1 – Discovery e preparação de dados: 6 semanas",
+  "Fase 2 – Desenvolvimento de modelos e pipeline: 10 semanas",
+  "Fase 3 – Integração, testes e dashboards: 6 semanas",
+  "Fase 4 – Rollout e Change Management: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados, 1 analista de BI e 1 gerente de projeto.",
+ "riscos": [
+  "Qualidade e disponibilidade dos dados históricos de concorrência.",
+  "Resistência dos gerentes de loja à adoção de preços dinâmicos.",
+  "Prazo apertado para integração com sistemas legados de precificação."
+ ],
+ "pessoas": {
+  "cliente": "Carla Menezes (Diretora de Pricing)",
+  "tecnico": "Rafael Oliveira (Arquiteto de Dados)"
+ }
+}

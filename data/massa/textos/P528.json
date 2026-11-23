@@ -1,0 +1,50 @@
+{
+ "titulo": "Automação de back-office com RPA e ServiceNow para operação logística",
+ "problema": "A Cargas Rodo Sul processa cerca de 48 mil documentos fiscais e comprovantes de entrega por mês, dos quais 62% ainda passam por conferência manual em planilhas. Esse volume gera um backlog médio de 3 dias na conciliação e um índice de erro de digitação de 4,1% nos lançamentos no ERP.",
+ "objetivo": "Automatizar a conferência, o lançamento e a abertura de chamados de back-office com RPA integrado ao ServiceNow, reduzindo o retrabalho manual em 70% e o prazo de conciliação para menos de 1 dia.",
+ "escopo": [
+  "Mapeamento e priorização de 9 processos de back-office (conciliação de CT-e, conferência de comprovantes, lançamentos no ERP e tratativas de divergências)",
+  "Desenvolvimento de 14 robôs RPA para extração, validação e lançamento de dados, com tratamento de exceções e trilha de auditoria",
+  "Integração dos robôs ao ServiceNow para abertura automática de incidentes e solicitações quando houver divergência ou falha de execução",
+  "Painel de acompanhamento de execuções, SLAs e volumetria dos robôs, com alertas operacionais",
+  "Documentação técnica, testes assistidos com usuários-chave e transferência de conhecimento para a equipe de TI do cliente"
+ ],
+ "entregaveis": [
+  "Catálogo de processos automatizáveis com estimativa de esforço e retorno por processo",
+  "14 robôs RPA em produção, com testes de aceitação assinados pelas áreas de negócio",
+  "Fluxos de integração RPA–ServiceNow configurados e homologados",
+  "Painel de monitoramento de execuções e volumetria com 6 indicadores operacionais",
+  "Manual de operação, plano de sustentação e sessão de treinamento para 12 usuários"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e desenho de solução",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento dos robôs RPA e integração com ServiceNow",
+   "semanas": 6
+  },
+  {
+   "fase": "Testes integrados e homologação com as áreas de negócio",
+   "semanas": 2
+  },
+  {
+   "fase": "Go-live assistido e transferência de conhecimento",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 2 desenvolvedores RPA e 1 analista de processos",
+ "riscos": [
+  "Volumetria e qualidade dos documentos de entrada acima do esperado",
+  "Mudanças de layout em portais e no ERP durante o desenvolvimento",
+  "Baixa disponibilidade dos usuários-chave para homologação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Bortolini (Gerente de Back-office)",
+  "tecnico": "Felipe Andrade (Arquiteto de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 3 meses foi considerado longo demais pela Cargas Rodo Sul, que precisava dos primeiros robôs em operação em até 6 semanas para absorver o pico sazonal de documentos. O concorrente vencedor apresentou um escopo inicial reduzido com go-live parcial mais rápido.",
+ "licoes": "Para propostas semelhantes, oferecer uma primeira onda de automação com go-live em 4 a 6 semanas e fases seguintes incrementais, alinhando o cronograma ao pico operacional do cliente.",
+ "retorno": "Prezados, informamos que optamos por outra proposta para o projeto de automação de back-office. O principal motivo foi o prazo de entrega de 3 meses, acima do que precisamos para o próximo pico de documentos. Agradecemos o esforço da equipe e esperamos contar com a NTT DATA em iniciativas futuras. Atenciosamente, Renata Bortolini, Gerente de Back-office — Cargas Rodo Sul."
+}

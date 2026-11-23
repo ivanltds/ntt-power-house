@@ -1,0 +1,50 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real com Machine Learning para Operadora de Internet",
+ "problema": "A FibraMax Internet, operadora de telecom com 480 mil assinantes residenciais e 12 mil clientes corporativos, registra perdas anuais estimadas em R$ 9,2 milhões com fraudes em cobranças, uso indevido de franquias e abertura de contratos com documentos falsos. O time de prevenção a fraudes analisa manualmente apenas 18% dos alertas gerados, com tempo médio de detecção de 72 horas, o que agrava o impacto financeiro e a experiência do cliente legítimo.",
+ "objetivo": "Implantar uma solução de detecção de fraude baseada em Machine Learning sobre Azure, capaz de classificar eventos de risco em tempo real e reduzir em 40% o tempo médio de detecção no prazo de 5 meses.",
+ "escopo": [
+  "Ingestão e tratamento de dados de cobrança, cadastro e uso de rede em pipelines Python e Azure Data Factory, com volume estimado de 6 TB/mês.",
+  "Construção de feature store e engenharia de atributos para modelos de detecção de fraude em Python e bibliotecas de Machine Learning.",
+  "Treinamento e validação de modelos de classificação supervisionada e não supervisionada no Azure Machine Learning, com meta de AUC acima de 0,85.",
+  "Implementação de scoring em tempo real via Azure Functions e integração com o sistema de prevenção a fraudes existente.",
+  "Painéis de monitoramento de deriva de modelo e alertas operacionais no Azure Monitor e Power BI."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e definição dos 35 atributos de risco priorizados.",
+  "Pipelines de dados reprodutíveis em Python e Azure Data Factory, com testes automatizados.",
+  "Modelos de Machine Learning treinados e validados, com relatório de performance e matriz de confusão.",
+  "API de scoring em tempo real publicada no Azure, com latência inferior a 300 ms por evento.",
+  "Dashboard de monitoramento de fraude e plano de retreinamento trimestral dos modelos."
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Engenharia de dados e feature store",
+   "semanas": 6
+  },
+  {
+   "nome": "Modelagem e validação de Machine Learning",
+   "semanas": 6
+  },
+  {
+   "nome": "Deploy do scoring em tempo real e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto.",
+ "riscos": [
+  "Baixa qualidade e atraso na entrega dos dados históricos de fraude pelo cliente.",
+  "Falta de rótulos confiáveis de fraude para treinamento dos modelos.",
+  "Resistência do time de prevenção a fraudes à adoção do scoring automatizado."
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Prevenção a Fraudes)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de AI & Automation)"
+ },
+ "resultados": "A proposta foi perdida para um concorrente que já possui solução de detecção de fraude instalada e integrada ao ambiente da FibraMax, com contrato de manutenção vigente. O cliente optou por evitar o custo de migração e o risco de descontinuidade operacional.",
+ "licoes": "Mapear antecipadamente a existência de soluções incumbentes e o custo de troca percebido pelo cliente, posicionando a proposta como evolução incremental sobre o que já está instalado em vez de substituição completa.",
+ "retorno": "Prezado Bruno, agradecemos a dedicação da NTT DATA na elaboração da proposta de detecção de fraude. Após avaliação interna, decidimos manter a solução atualmente instalada em nossa operação, pois já está integrada aos nossos sistemas e evita custos de migração neste momento. Registramos a qualidade técnica da proposta e gostaríamos de manter o contato para iniciativas futuras. Atenciosamente, Renata Vasconcelos, Gerente de Prevenção a Fraudes da FibraMax Internet."
+}

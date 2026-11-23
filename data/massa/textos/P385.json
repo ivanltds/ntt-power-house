@@ -1,0 +1,50 @@
+{
+ "titulo": "Implantação de CRM e Jornada do Cliente com Salesforce, Kafka e Azure",
+ "problema": "A Ondas Móvel, com 3,2 milhões de clientes e NPS de 41, enfrenta alta fragmentação de dados e jornadas desconectadas entre canais, resultando em churn de 2,8% ao mês. O atendimento manual consome 65% do tempo dos agentes e a visão 360° do cliente é limitada.",
+ "objetivo": "Implantar uma plataforma de CRM unificada em Salesforce, integrada via Kafka e Azure, para orquestrar jornadas personalizadas e reduzir o churn em 15% em 9 meses.",
+ "escopo": [
+  "Configuração do Salesforce Sales e Service Cloud para 360° do cliente",
+  "Integração de dados em tempo real entre sistemas legados e Salesforce usando Kafka",
+  "Migração e higienização de 3,2 milhões de registros de clientes para Azure Data Lake",
+  "Desenvolvimento de jornadas automatizadas de onboarding, retenção e upsell no Salesforce",
+  "Programa de change management com treinamento de 500 usuários e gestão de mudanças"
+ ],
+ "entregaveis": [
+  "Blueprint de arquitetura de integração e modelo de dados unificado",
+  "Plataforma Salesforce configurada e integrada com Kafka e Azure",
+  "Painéis de jornada do cliente e KPIs de churn e NPS",
+  "Plano de change management e material de treinamento para 500 usuários",
+  "Relatório de go-live e estabilização com métricas de adoção"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e Design",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Implementação e Integração",
+   "duracao_semanas": 16
+  },
+  {
+   "fase": "Testes e Treinamento",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Go-live e Estabilização",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores Salesforce, 2 engenheiros de dados (Kafka/Azure) e 1 especialista em change management",
+ "riscos": [
+  "Resistência dos usuários à mudança de processo",
+  "Complexidade na integração de sistemas legados",
+  "Atraso na disponibilização de dados pela área de TI do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Experiência do Cliente)",
+  "tecnico": "Rafael Almeida (Arquiteto de Soluções CRM)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com a decisora Mariana Costa era fraco; não houve interação direta com ela durante o processo, e o concorrente tinha relacionamento prévio de 2 anos.",
+ "licoes": "Mapear e engajar o decisor desde o início, com reuniões executivas e patrocínio sênior, para fortalecer o relacionamento e aumentar a competitividade.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de CRM não foi selecionada. A decisão foi baseada na confiança e no histórico de relacionamento com outro fornecedor. Agradecemos o esforço da equipe. Atenciosamente, Mariana Costa."
+}

@@ -1,0 +1,44 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real com Databricks e Azure",
+ "problema": "O Banco Ponte Firme enfrenta um crescimento de 35% em transações suspeitas nos últimos 12 meses, com perdas estimadas em R$ 12 milhões anuais. O processo atual de detecção é manual e reativo, levando até 48 horas para identificar padrões de fraude, comprometendo a experiência do cliente e aumentando o risco financeiro.",
+ "objetivo": "Implementar uma solução de detecção de fraude em tempo real, utilizando machine learning e análise de streaming, para reduzir o tempo de identificação de fraudes para menos de 5 minutos e diminuir as perdas em 40% em 12 meses.",
+ "escopo": [
+  "Ingestão de dados transacionais em tempo real usando Kafka e Azure Event Hubs",
+  "Processamento e análise de dados com Databricks e Spark Structured Streaming",
+  "Desenvolvimento de modelos de machine learning em Python para detecção de anomalias",
+  "Integração com sistemas legados do banco via APIs seguras no Azure",
+  "Implementação de dashboards e alertas para equipe de prevenção a fraudes"
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão de dados em tempo real com Kafka e Azure",
+  "Modelo de machine learning treinado e validado com precisão mínima de 90%",
+  "Sistema de scoring de transações em tempo real no Databricks",
+  "Documentação técnica e manuais de operação",
+  "Treinamento para equipe interna do banco sobre a solução"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e Design",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento de Pipeline e Modelos",
+   "semanas": 10
+  },
+  {
+   "nome": "Integração e Testes",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na disponibilização de dados históricos pelo cliente",
+  "Complexidade na integração com sistemas legados",
+  "Mudanças regulatórias durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Prevenção a Fraudes)",
+  "tecnico": "Fernanda Lima (Engenheira de Dados Sênior)"
+ },
+ "diferencial": "Nosso relacionamento de longo prazo e a continuidade com projetos anteriores no Banco Ponte Firme garantem profundo conhecimento do ambiente e agilidade na entrega."
+}

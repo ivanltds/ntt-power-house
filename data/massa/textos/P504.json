@@ -1,0 +1,50 @@
+{
+ "titulo": "Programa de Governança de Dados e Adequação LGPD em Nuvem Híbrida",
+ "problema": "A Seguradora Vértice opera com 14 bases analíticas dispersas entre Azure e ambientes on-premises, sem catálogo corporativo de dados nem classificação de informações pessoais em 62% dos campos mapeados. O passivo de LGPD inclui 37 processos de sinistros com dados sensíveis sem trilha de auditoria completa, elevando o risco de sanções da ANPD e de retrabalho regulatório.",
+ "objetivo": "Implantar um framework de governança de dados com classificação LGPD automatizada e trilhas de auditoria sobre Snowflake, Databricks e Azure, sustentado por um plano de change management para as áreas de sinistros, subscrição e TI.",
+ "escopo": [
+  "Diagnóstico e catálogo de dados corporativo em Snowflake, com classificação de PII automatizada via scripts Python",
+  "Políticas de acesso, mascaramento e retenção implementadas no Databricks e no Azure Purview",
+  "Pipelines de linhagem e trilha de auditoria LGPD em Python e Databricks para 14 bases analíticas",
+  "Painel de conformidade e indicadores de qualidade de dados em Azure Synapse e Power BI",
+  "Programa de change management com 8 workshops e treinamento de 120 usuários-chave em três ondas"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com 100% das 14 bases classificadas e 62% dos campos sensíveis mapeados",
+  "Framework de políticas de acesso e retenção publicado e aprovado pelo jurídico e DPO",
+  "Trilhas de auditoria automatizadas para 37 processos de sinistros prioritários",
+  "Painel executivo de conformidade LGPD com 12 indicadores monitorados mensalmente",
+  "Plano de change management com material de treinamento e relatório de adesão por área"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho do framework",
+   "semanas": 6
+  },
+  {
+   "fase": "Implementação de catálogo e classificação LGPD",
+   "semanas": 8
+  },
+  {
+   "fase": "Automação de trilhas de auditoria e painéis",
+   "semanas": 5
+  },
+  {
+   "fase": "Change management e sustentação",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e LGPD e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas de negócio aos workshops de change management",
+  "Qualidade insuficiente dos metadados das bases legadas on-premises",
+  "Mudanças de escopo regulatório da ANPD durante a execução"
+ ],
+ "pessoas": {
+  "cliente": "Renata Salgado (Diretora de Dados e Compliance)",
+  "tecnico": "Marcos Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o valor total ficou cerca de 28% acima do mercado, com concorrente apresentando escopo equivalente por R$ 1,9 milhão contra nossos R$ 2,7 milhões. O cliente reconheceu a qualidade técnica, mas priorizou o teto orçamentário aprovado pelo comitê.",
+ "licoes": "Para propostas de governança de dados com continuidade, oferecer modelo de escopo faseado com opção de entrada reduzida, ancorando o preço em benchmark de mercado antes da submissão. Validar o teto orçamentário do cliente na fase de qualificação para evitar desgaste comercial.",
+ "retorno": "Prezados, informamos que o comitê decidiu não avançar com a proposta da NTT DATA para o programa de governança de dados e LGPD. A decisão foi motivada exclusivamente pelo valor apresentado, que ficou acima do orçamento aprovado e da referência de mercado recebida. Agradecemos a dedicação da equipe e o nível técnico da proposta. Permanecemos abertos a novas conversas em projetos futuros. Atenciosamente, Renata Salgado, Diretora de Dados e Compliance da Seguradora Vértice."
+}

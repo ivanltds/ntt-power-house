@@ -1,0 +1,46 @@
+{
+ "titulo": "Sustentação AMS para Aplicações em Kubernetes e Azure com ServiceNow",
+ "problema": "O Atacadão Popular Sul, com 45 lojas e faturamento anual de R$ 1,2 bilhão, enfrenta instabilidade em suas aplicações críticas de varejo, que rodam em Kubernetes no Azure e são gerenciadas via ServiceNow. A taxa de indisponibilidade não planejada atingiu 3,5% no último trimestre, impactando vendas e a experiência do cliente.",
+ "objetivo": "Garantir a sustentação contínua das aplicações, com SLA de 99,9% de disponibilidade, reduzindo o tempo médio de resolução de incidentes em 30% e otimizando custos operacionais.",
+ "escopo": [
+  "Monitoramento proativo e gestão de incidentes em cluster Kubernetes no Azure, com ServiceNow para ITSM.",
+  "Administração de ambientes Azure (IaaS/PaaS) com foco em segurança e conformidade.",
+  "Sustentação de aplicações corporativas (ERP, CRM, e-commerce) com equipe dedicada 24x7.",
+  "Automação de rotinas operacionais usando Ansible e Terraform para provisionamento e configuração.",
+  "Gestão de mudanças e problemas integrada ao ServiceNow, com relatórios mensais de desempenho."
+ ],
+ "entregaveis": [
+  "Relatório mensal de disponibilidade e desempenho das aplicações, com indicadores de SLA.",
+  "Plano de melhoria contínua para redução de incidentes recorrentes.",
+  "Documentação atualizada de arquitetura e procedimentos operacionais.",
+  "Dashboard em ServiceNow com visão em tempo real dos chamados e SLAs.",
+  "Relatório trimestral de otimização de custos em Azure."
+ ],
+ "fases": [
+  {
+   "fase": "Transição e diagnóstico",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Estabilização e automação",
+   "duracao_semanas": 12
+  },
+  {
+   "fase": "Operação contínua e melhorias",
+   "duracao_semanas": 108
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções cloud, 2 engenheiros DevOps, 3 analistas de sustentação e 1 especialista em ServiceNow.",
+ "riscos": [
+  "Dependência de terceiros para resolução de incidentes críticos.",
+  "Complexidade na integração entre Kubernetes e ServiceNow.",
+  "Rotatividade da equipe técnica do cliente impactando a comunicação."
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de TI)",
+  "tecnico": "Fernanda Lima (Gerente de Projetos Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 20% acima do mercado, segundo avaliação do cliente. Apesar da qualidade técnica, o valor não foi competitivo frente às demais ofertas.",
+ "licoes": "Para próximas propostas de AMS, é essencial realizar um benchmarking de preços mais agressivo e considerar a possibilidade de oferecer modelos de precificação flexíveis, como base fixa + variável por demanda.",
+ "retorno": "Prezados, informamos que a proposta para o serviço de AMS não foi selecionada. O motivo principal foi o valor apresentado, que ficou acima do mercado. Agradecemos o empenho da equipe da NTT DATA. Atenciosamente, Ricardo Almeida - Diretor de TI"
+}

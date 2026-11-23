@@ -1,0 +1,49 @@
+{
+ "titulo": "Automação de back-office com RPA e ServiceNow em operação de geração eólica",
+ "problema": "A Geradora Ventos do Nordeste opera 14 parques eólicos e processa cerca de 38 mil transações mensais de back-office (faturas, medições e chamados de manutenção), das quais 62% ainda dependem de digitação manual em planilhas e e-mails. Esse volume gera retrabalho, atrasos de até 4 dias úteis na conciliação e baixa rastreabilidade dos chamados internos.",
+ "objetivo": "Automatizar os processos de back-office de maior volume com RPA integrado ao ServiceNow, reduzindo o esforço manual e padronizando o registro e o acompanhamento das demandas internas.",
+ "escopo": [
+  "Mapeamento e redesenho de 9 processos de back-office candidatos à automação com RPA",
+  "Desenvolvimento de 12 robôs RPA para conciliação de faturas, medições de geração e abertura de chamados",
+  "Integração dos robôs ao ServiceNow via API REST para registro, triagem e atualização de tickets",
+  "Painel de monitoramento de robôs com indicadores de execução, falhas e horas economizadas",
+  "Sustentação AMS dos robôs em produção, com SLA de correção de falhas críticas em até 8 horas úteis"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico com 9 processos priorizados por volume e esforço manual",
+  "12 robôs RPA em produção, com documentação técnica e manuais de operação",
+  "Integração validada entre RPA e ServiceNow para 3 fluxos de chamados",
+  "Painel de monitoramento de robôs com 8 indicadores operacionais",
+  "Relatório mensal de AMS com horas economizadas e taxa de sucesso das execuções"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e priorização de processos",
+   "duracao_semanas": 5
+  },
+  {
+   "fase": "Desenvolvimento e testes dos robôs RPA",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Integração com ServiceNow e go-live",
+   "duracao_semanas": 5
+  },
+  {
+   "fase": "Sustentação AMS e estabilização",
+   "duracao_semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA e 1 analista de sustentação AMS",
+ "riscos": [
+  "Instabilidade das APIs do ServiceNow durante a integração",
+  "Baixa adesão das áreas de negócio à mudança de processo",
+  "Rotatividade de usuários-chave do cliente durante os testes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Processos Corporativos)",
+  "tecnico": "Felipe Andrade (Arquiteto de Automação)"
+ },
+ "resultados": "Nas primeiras 6 semanas, 4 robôs já em operação reduziram em 31% o volume de digitação manual nos fluxos de conciliação de faturas.",
+ "diferencial": "Preço competitivo aliado à continuidade do projeto anterior no cliente, o que permitiu reaproveitar componentes de automação e acelerar o diagnóstico em 2 semanas."
+}

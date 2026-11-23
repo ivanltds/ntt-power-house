@@ -1,0 +1,48 @@
+{
+ "titulo": "Painéis executivos e BI para gestão hospitalar com Power BI e SAP",
+ "problema": "A Rede Hospitalar Santa Clara opera 4 unidades com cerca de 1.200 leitos e enfrenta fragmentação de indicadores assistenciais, financeiros e operacionais, hoje consolidados manualmente em planilhas por 18 analistas. O fechamento gerencial mensal leva até 12 dias úteis, atrasando decisões de ocupação, custo por paciente e faturamento de convênios.",
+ "objetivo": "Implantar uma camada de engenharia de dados e painéis executivos em Power BI integrados ao SAP, reduzindo o ciclo de fechamento gerencial para até 3 dias úteis e dando visão única de 60 indicadores estratégicos.",
+ "escopo": [
+  "Extração e integração de dados do SAP (FI, CO, MM e IS-H) para ambiente analítico",
+  "Construção de pipelines de Engenharia de Dados com camadas de tratamento, qualidade e histórico",
+  "Modelagem dimensional e criação de 60 indicadores assistenciais, financeiros e operacionais",
+  "Desenvolvimento de painéis executivos em Power BI para diretoria, controladoria e gestão hospitalar",
+  "Configuração de atualização automatizada diária e governança de métricas com o time de dados do cliente"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e matriz de indicadores validada",
+  "Pipelines de ingestão e transformação operando com dados do SAP",
+  "Modelo semântico em Power BI com 60 indicadores catalogados",
+  "5 painéis executivos publicados (diretoria, financeiro, operações, assistencial e convênios)",
+  "Manual de governança, treinamento de 25 usuários-chave e plano de sustentação"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Engenharia de Dados e integração SAP",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e construção dos painéis Power BI",
+   "semanas": 6
+  },
+  {
+   "fase": "Homologação, treinamento e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 analistas de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados históricos do SAP",
+  "Disponibilidade limitada das áreas assistenciais para validação dos indicadores",
+  "Dependência de acessos e infraestrutura de TI do cliente para atualização automatizada"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Tavares (Diretor de Tecnologia da Informação)",
+  "tecnico": "Fernanda Almeida (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente devido a uma reestruturação orçamentária interna que suspendeu investimentos em projetos de dados no ciclo vigente."
+}

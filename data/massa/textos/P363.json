@@ -1,0 +1,49 @@
+{
+ "titulo": "Detecção de Fraude em Transações no Varejo de Materiais de Construção",
+ "problema": "A Casa & Construção Prime processa cerca de 1,2 milhão de transações por mês em 87 lojas físicas e no canal e-commerce, com perdas estimadas em 0,9% do faturamento por fraudes em pedidos e estornos indevidos. A análise manual atual cobre apenas 15% dos casos suspeitos, com tempo médio de detecção de 72 horas e alto índice de falsos positivos.",
+ "objetivo": "Implantar um motor de detecção de fraude em tempo quase real que reduza as perdas por fraude e aumente a precisão na identificação de transações suspeitas, priorizando os casos de maior risco para análise humana.",
+ "escopo": [
+  "Construção de pipelines de ingestão e tratamento de dados transacionais no Azure Data Lake e Databricks, integrando 87 lojas e o e-commerce",
+  "Desenvolvimento de modelos de machine learning em Python para scoring de risco de fraude por transação, com explicabilidade das features",
+  "Implementação de camada de feature engineering e orquestração de jobs no Databricks para atualização diária dos scores",
+  "Criação de painéis de monitoramento e fila priorizada de alertas integrada aos sistemas de análise de pedidos",
+  "Definição de métricas de avaliação, testes de backtesting e rotina de retreinamento dos modelos"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo de detecção de fraude",
+  "Pipelines de dados em produção no Azure e Databricks com 1,2 milhão de transações/mês processadas",
+  "Modelo de scoring de fraude em Python com AUC superior a 0,85 em validação",
+  "Painel operacional de alertas com fila priorizada para o time de prevenção a fraudes",
+  "Relatório de backtesting e plano de retreinamento mensal dos modelos"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados",
+   "duracao_semanas": 5
+  },
+  {
+   "nome": "Engenharia de dados e feature engineering",
+   "duracao_semanas": 7
+  },
+  {
+   "nome": "Desenvolvimento e validação dos modelos de ML",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Go-live, monitoramento e transferência de conhecimento",
+   "duracao_semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de transações",
+  "Volume elevado de falsos positivos impactando a operação",
+  "Baixa adoção da fila de alertas pelo time de prevenção a fraudes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Prevenção a Fraudes)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de AI & Automation)"
+ },
+ "resultados": "Nas primeiras fases, o pipeline já processa 100% das transações das 87 lojas e o modelo piloto alcançou AUC de 0,87 na base de validação.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, que já identificou padrões de fraude com precisão superior à regra manual vigente."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de Gestão de Saúde Populacional com Machine Learning e Analytics",
+ "problema": "A Operadora Saúde Total acompanha 480 mil vidas em 14 regionais e não consegue priorizar de forma consistente os 12% de beneficiários com maior risco de agravamento crônico. A base de sinistros, exames e utilização está fragmentada em cinco sistemas, o que atrasa em até 30 dias a identificação de coortes para programas de prevenção.",
+ "objetivo": "Construir um modelo preditivo de risco populacional em Machine Learning e um painel de gestão em Power BI que apoie a priorização de 12 coortes de cuidado, com governança de dados sobre as fontes de sinistros e utilização.",
+ "escopo": [
+  "Modelagem de risco de agravamento crônico com Machine Learning em Python, cobrindo 480 mil vidas e 18 variáveis clínicas e de utilização",
+  "Construção de pipeline de dados em Python para integração de sinistros, exames e autorizações de 5 sistemas de origem",
+  "Desenvolvimento de painéis de gestão de saúde populacional em Power BI para 14 regionais e 12 coortes de cuidado",
+  "Definição de indicadores de risco e regras de priorização em conjunto com a área de saúde populacional",
+  "Estruturação de governança de dados com catálogo, dicionário e política de qualidade para as bases clínicas"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de risco populacional documentado e validado com AUC mínima de 0,78",
+  "Pipeline de integração de dados clínicos e de utilização em Python, com 95% de completude nas fontes críticas",
+  "Painel executivo e painéis regionais em Power BI para acompanhamento de 12 coortes",
+  "Catálogo de dados e dicionário de 18 variáveis com regras de qualidade",
+  "Relatório de governança de dados com plano de correção de 20 não conformidades identificadas"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e governança de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Integração e preparação das bases clínicas",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem preditiva em Machine Learning",
+   "semanas": 10
+  },
+  {
+   "fase": "Painéis em Power BI e transferência de conhecimento",
+   "semanas": 7
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e completude das bases de sinistros e exames de 5 sistemas distintos",
+  "Baixa adesão das equipes regionais ao novo processo de priorização de coortes",
+  "Restrições de privacidade e anonimização de dados clínicos de 480 mil vidas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Saúde Populacional)",
+  "tecnico": "Marcelo Tavares (Gerente de Projetos de Data & Analytics)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com a decisora era fraco: a Operadora Saúde Total não tinha histórico de contato próximo com a Diretoria de Saúde Populacional. O concorrente já havia construído essa relação em projetos anteriores, apesar de nossa experiência prévia com o cliente em outra frente.",
+ "licoes": "Mapear e cultivar o patrocinador executivo desde o início do ciclo de vendas e incluir ao menos duas reuniões com o decisor antes da apresentação final. A experiência técnica anterior no cliente não substitui o relacionamento com quem assina a decisão.",
+ "retorno": "Prezado Marcelo, agradecemos a dedicação da NTT DATA na proposta de gestão de saúde populacional. Após avaliação interna, decidimos seguir com outro fornecedor, principalmente pela maior proximidade de relacionamento com nossa Diretoria de Saúde Populacional. Reconhecemos a qualidade técnica da proposta e esperamos manter a parceria em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Saúde Populacional."
+}

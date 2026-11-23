@@ -1,0 +1,50 @@
+{
+ "titulo": "Streaming de dados em tempo real para operações logísticas",
+ "problema": "O Operador Logístico Armazém Brasil opera 12 centros de distribuição e movimenta cerca de 85 mil pedidos por dia, mas os indicadores de estoque e de status de entrega chegam aos gestores com atraso de até 6 horas, gerando 18% de retrabalho na separação e perda de visibilidade sobre 3 mil veículos em rota. A área de operações não consegue reagir a desvios de SLA em tempo hábil e a diretoria cobra redução de 25% nas ocorrências de atraso até o fim do ano.",
+ "objetivo": "Implantar uma plataforma de streaming de dados em tempo real para consolidar eventos de WMS, TMS e telemetria, disponibilizando indicadores operacionais com latência inferior a 2 minutos para as equipes de operação e diretoria.",
+ "escopo": [
+  "Construção de pipelines de ingestão de eventos em Python sobre Azure Event Hubs, com replicação de dados para AWS Kinesis",
+  "Modelagem de camada de streaming e near real-time no Azure Databricks, consumindo dados das origens WMS e TMS",
+  "Criação de 8 dashboards operacionais no Power BI com atualização em janelas de 1 a 2 minutos",
+  "Implementação de alertas automatizados de desvio de SLA em AWS Lambda e Azure Functions",
+  "Plano de change management com treinamento de 120 usuários em 3 ondas e definição de novos rituais de gestão à vista"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming validada em ambiente Azure e AWS",
+  "6 pipelines de ingestão de eventos em produção, documentados e monitorados",
+  "8 dashboards operacionais em tempo real publicados no Power BI",
+  "Catálogo de alertas de SLA com 15 regras automatizadas em operação",
+  "Programa de treinamento executado e material de apoio entregue aos 120 usuários-chave"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura de streaming",
+   "semanas": 4
+  },
+  {
+   "nome": "Construção dos pipelines e integração de fontes",
+   "semanas": 6
+  },
+  {
+   "nome": "Dashboards, alertas e Analytics & BI",
+   "semanas": 4
+  },
+  {
+   "nome": "Change management e go-live assistido",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 consultor de change management, com 1 gerente de projeto dedicado 50%",
+ "riscos": [
+  "Qualidade e padronização dos eventos emitidos pelos sistemas WMS e TMS legados",
+  "Latência de rede entre os 12 centros de distribuição e os serviços de nuvem",
+  "Baixa adesão dos operadores aos novos rituais de gestão à vista"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações Logísticas)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo desenhado ficou maior que a necessidade imediata do cliente: foram ofertados 6 pipelines, 8 dashboards e um programa completo de change management para 120 usuários, enquanto o cliente buscava uma prova de valor menor e mais rápida para apenas 2 centros de distribuição. O investimento e o prazo de 4 meses foram percebidos como excessivos frente à urgência de resultados em 60 dias.",
+ "licoes": "Para propostas de continuidade em clientes existentes, dimensionar o escopo pela dor mais urgente e oferecer uma primeira onda enxuta, com opção de expansão faseada. Ancorar o valor em resultados rápidos e apresentar o change management como serviço opcional ou incremental.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe da NTT DATA na elaboração da proposta. Após avaliação interna, decidimos não avançar com o escopo completo apresentado, pois ele é maior do que a nossa necessidade neste momento: precisamos validar streaming em apenas dois centros de distribuição antes de expandir. O investimento e o cronograma de 4 meses ficaram acima do que podemos absorver agora, e seguiremos com uma iniciativa mais enxuta conduzida internamente. Permanecemos abertos a conversar sobre uma eventual segunda fase no futuro. Atenciosamente, Renata Vasconcelos, Diretora de Operações Logísticas."
+}

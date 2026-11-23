@@ -1,0 +1,36 @@
+{
+ "titulo": "Assistente Virtual com IA Generativa para Atendimento Bancário Digital",
+ "problema": "O Banco Atlântida Digital enfrenta um volume crescente de atendimentos: são cerca de 1,2 milhão de interações mensais, com 65% demandando respostas simples e repetitivas. O tempo médio de espera atual é de 8 minutos, gerando insatisfação e custos operacionais elevados.",
+ "objetivo": "Implementar um assistente virtual com IA generativa no Azure para automatizar 70% dos atendimentos de baixa complexidade, reduzindo o tempo de resposta para menos de 1 minuto e melhorando a experiência do cliente.",
+ "escopo": [
+  "Desenvolvimento de assistente virtual baseado em modelos de linguagem generativa no Azure OpenAI",
+  "Integração com sistemas legados de atendimento via APIs e automação de processos com Azure Logic Apps",
+  "Implementação de pipeline de dados e orquestração para alimentar o modelo com base de conhecimento interna",
+  "Configuração de mecanismos de segurança, compliance e monitoramento no Azure",
+  "Treinamento e ajuste fino do modelo com dados históricos de atendimento"
+ ],
+ "entregaveis": [
+  "Protótipo funcional do assistente virtual integrado ao canal de chat",
+  "Documentação técnica da arquitetura e fluxos de automação",
+  "Modelo de IA generativa treinado e validado com métricas de acurácia",
+  "Relatório de testes de segurança e conformidade",
+  "Manual de operação e plano de treinamento para equipes internas"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Design: 6 semanas",
+  "Fase 2 - Desenvolvimento e Integração: 12 semanas",
+  "Fase 3 - Testes e Homologação: 6 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 engenheiros de IA, 1 desenvolvedor de automação e 1 especialista em segurança",
+ "riscos": [
+  "Baixa adesão dos clientes ao novo canal",
+  "Complexidade na integração com sistemas legados",
+  "Restrições de privacidade e conformidade regulatória"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Atendimento)",
+  "tecnico": "Rafael Almeida (Arquiteto de IA)"
+ },
+ "resultados": "Protótipo inicial já processa 500 interações por dia com 85% de acurácia nas respostas.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito, com resultados superiores aos concorrentes em testes de acurácia e integração."
+}

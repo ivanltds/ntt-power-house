@@ -1,0 +1,50 @@
+{
+ "titulo": "Atendimento omnicanal e service desk com IA generativa para distribuidora de energia",
+ "problema": "A Energia Paulista Distribuição operava com 4 canais de atendimento desconectados (telefone, e-mail, chat e app), gerando 38 mil chamados/mês e tempo médio de primeira resposta de 26 horas. Cerca de 22% das solicitações eram reclassificadas manualmente, elevando o custo por atendimento e a insatisfação (CSAT de 71).",
+ "objetivo": "Unificar o atendimento em uma plataforma omnicanal integrada ao service desk, com triagem e resolução assistidas por IA generativa, reduzindo o tempo de primeira resposta e o retrabalho operacional.",
+ "escopo": [
+  "Implantação de service desk no ServiceNow com ITSM, catálogo de serviços e fluxos de aprovação",
+  "Integração do ServiceNow com o Salesforce para visão única do cliente (CRM) nos 4 canais",
+  "Automação de processos de triagem, classificação e roteamento de chamados",
+  "IA generativa para sumarização de chamados e sugestão de respostas aos atendentes",
+  "Dashboards de SLA, CSAT e volumetria por canal e por tipo de solicitação"
+ ],
+ "entregaveis": [
+  "Plataforma ServiceNow em produção com catálogo de 45 serviços e 12 fluxos automatizados",
+  "Integração Salesforce–ServiceNow com sincronização de dados de cliente em tempo real",
+  "Assistente de IA generativa embarcado para 180 atendentes",
+  "Modelo de automação de triagem com regras e classificação assistida",
+  "Relatórios gerenciais de SLA e CSAT com painel executivo"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e desenho da arquitetura omnicanal",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Configuração do ServiceNow e integração com Salesforce",
+   "duracao_semanas": 14
+  },
+  {
+   "fase": "Automação de processos e IA generativa",
+   "duracao_semanas": 10
+  },
+  {
+   "fase": "Go-live assistido, estabilização e transferência de conhecimento",
+   "duracao_semanas": 7
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores ServiceNow, 1 consultor Salesforce, 1 especialista em IA generativa e 1 analista de automação de processos",
+ "riscos": [
+  "Qualidade e padronização dos dados de cliente entre os sistemas legados",
+  "Baixa adesão dos atendentes às novas rotinas de triagem assistida",
+  "Dependência de janelas de mudança dos sistemas corporativos da distribuidora"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Experiência do Cliente)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "O tempo médio de primeira resposta caiu 41%, de 26 para 15 horas, e o retrabalho de classificação foi reduzido em 58%, com economia estimada de R$ 1,8 milhão/ano em custo de atendimento.",
+ "licoes": "A integração com o CRM exigiu três semanas adicionais por causa da inconsistência de cadastros históricos de clientes. Foi decisivo envolver os supervisores de atendimento desde o discovery, o que acelerou a adoção e ajustou os fluxos de triagem à operação real.",
+ "diferencial": "Ganhamos pela relação de continuidade com a Energia Paulista Distribuição, que já conhecia nossa entrega em Digital & CRM e confiou na evolução do atendimento para o modelo omnicanal com IA."
+}

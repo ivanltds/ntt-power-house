@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de streaming de dados em tempo real para distribuição de gás canalizado",
+ "problema": "A Gás Canalizada Litoral opera 1.850 km de rede e 320 mil unidades consumidoras, mas a telemetria de pressão e vazão chega com atraso de até 4 horas, em lotes noturnos. Isso impede a detecção imediata de anomalias e gera perdas estimadas em 2,3% do volume distribuído por ano.",
+ "objetivo": "Implantar uma plataforma de ingestão e processamento de dados em tempo real na AWS e no Azure, com painéis de Analytics & BI para monitoramento operacional contínuo da rede.",
+ "escopo": [
+  "Ingestão de eventos de 1.200 sensores de pressão e vazão via AWS Kinesis e Azure Event Hubs",
+  "Processamento de streams em tempo quase real com camada de dados unificada entre AWS e Azure",
+  "Catálogo de dados e governança para 45 tabelas operacionais críticas",
+  "Painéis de Analytics & BI com latência máxima de 30 segundos para o centro de controle",
+  "Alertas automáticos de anomalia de pressão com integração ao sistema de despacho de campo"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming multi-cloud documentada",
+  "Pipeline de ingestão e processamento em tempo real em produção",
+  "Catálogo de dados com 45 tabelas governadas",
+  "Conjunto de 8 painéis operacionais no centro de controle",
+  "Plano de alertas automatizados e runbook de operação"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura",
+   "semanas": 6
+  },
+  {
+   "fase": "Construção dos pipelines de streaming",
+   "semanas": 12
+  },
+  {
+   "fase": "Painéis de BI e alertas",
+   "semanas": 10
+  },
+  {
+   "fase": "Homologação e go-live assistido",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Latência de rede nos 1.200 sensores de campo",
+  "Integração entre as camadas AWS e Azure",
+  "Baixa adesão dos operadores ao novo centro de controle"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Rede)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 22% acima do mercado, superando o teto orçamentário definido pela diretoria. O concorrente vencedor apresentou escopo equivalente com valor inferior.",
+ "licoes": "Nas próximas propostas de streaming para utilities, apresentar opção de escopo modular com fases opcionais para caber no teto orçamentário do cliente. Levantar o budget aprovado já no diagnóstico.",
+ "retorno": "Prezados, informamos que a proposta para a plataforma de dados em tempo real não foi selecionada. O valor apresentado ficou aproximadamente 22% acima do teto orçamentário aprovado pela diretoria, e a concorrência ofereceu escopo equivalente com preço inferior. Agradecemos o empenho da equipe e manteremos contato para iniciativas futuras. Atenciosamente, Renata Vasconcelos, Gerente de Operações de Rede."
+}

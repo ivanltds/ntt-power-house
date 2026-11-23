@@ -1,0 +1,50 @@
+{
+ "titulo": "Implantação de CRM Salesforce e Jornada do Cliente Omnicanal com Azure e Kafka",
+ "problema": "A Operadora Saúde Total, com 1,2 milhão de beneficiários e 340 mil atendimentos mensais, operava com dados de clientes dispersos em 7 sistemas legados, sem visão única do beneficiário. Isso gerava tempo médio de resolução de solicitações de 48 horas e taxa de retenção de apenas 71% no segmento de planos coletivos.",
+ "objetivo": "Unificar a visão do beneficiário em uma plataforma de CRM na Salesforce e orquestrar a jornada do cliente em canais digitais e presenciais, com dados integrados em tempo real via Kafka e Azure.",
+ "escopo": [
+  "Modelagem e engenharia de dados no Azure Data Lake para consolidar 7 fontes legadas em uma visão única do beneficiário",
+  "Implementação do Salesforce Sales e Service Cloud com 180 usuários em 4 regionais, incluindo histórico de atendimentos e autorizações",
+  "Integração em tempo real de eventos de sinistros e autorizações via Apache Kafka, com latência alvo inferior a 5 segundos",
+  "Construção de 12 jornadas do cliente omnicanal (onboarding, autorização, reembolso, retenção) com automação de campanhas",
+  "Programa de Change Management com treinamento de 420 colaboradores e rede de 24 agentes multiplicadores"
+ ],
+ "entregaveis": [
+  "Visão 360 do beneficiário consolidada no Azure com 98% de cobertura das fontes mapeadas",
+  "Salesforce CRM em produção com 180 usuários ativos e 12 jornadas automatizadas",
+  "Pipeline Kafka de eventos em tempo real operando com disponibilidade de 99,5%",
+  "Playbook de jornada do cliente e material de treinamento aplicado a 420 colaboradores",
+  "Dashboard executivo de indicadores de retenção, NPS e tempo de resolução"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 10
+  },
+  {
+   "fase": "Engenharia de dados e integrações Kafka/Azure",
+   "semanas": 14
+  },
+  {
+   "fase": "Configuração Salesforce e jornadas omnicanal",
+   "semanas": 12
+  },
+  {
+   "fase": "Change Management, rollout e hipercare",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 engenheiros de dados, 2 consultores Salesforce, 1 especialista Kafka e 1 analista de change management",
+ "riscos": [
+  "Qualidade e duplicidade dos dados em 7 sistemas legados",
+  "Baixa adesão dos 420 colaboradores às novas jornadas",
+  "Dependência de janelas de integração com sistemas de autorização críticos"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Experiência do Beneficiário)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "O tempo médio de resolução de solicitações caiu de 48 para 19 horas e a retenção de planos coletivos subiu de 71% para 83% no primeiro ciclo pós-go-live, com economia estimada de R$ 4,6 milhões em retrabalho e evasão evitada.",
+ "licoes": "A limpeza dos cadastros legados consumiu 6 semanas além do previsto, pressionando a fase de engenharia de dados. A rede de 24 agentes multiplicadores formada desde o início do Change Management foi decisiva para a adoção das jornadas no rollout.",
+ "diferencial": "Ganhamos pela entrega anterior de CRM e integração de dados na própria Operadora Saúde Total, que serviu de case de referência com arquitetura e governança já validadas."
+}

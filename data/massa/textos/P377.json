@@ -1,0 +1,37 @@
+{
+ "titulo": "Indicadores ESG e Emissões para Distribuidora de Gás Canalizado",
+ "problema": "A Gás Canalizada Litoral precisa consolidar dados de emissões de 12 unidades operacionais e 350 medidores para atender ao regulamento ESG do setor, mas os processos manuais em planilhas geram atrasos de 15 dias na divulgação de indicadores e riscos de inconsistência.",
+ "objetivo": "Implementar uma plataforma de dados ESG na nuvem para automatizar a coleta, o cálculo e a visualização de indicadores de emissões, garantindo relatórios mensais confiáveis em até 5 dias úteis.",
+ "escopo": [
+  "Ingestão de dados de emissões de 350 medidores e 12 unidades para o Snowflake via Azure Data Factory",
+  "Desenvolvimento de pipelines de cálculo de indicadores ESG em Python e orquestração no Azure",
+  "Modelagem dimensional no Snowflake para análises de emissões por escopo e unidade",
+  "Criação de dashboards interativos no Power BI para acompanhamento de metas e tendências",
+  "Implementação de governança de dados com catálogo e linhagem no Azure Purview"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG e governança",
+  "Pipeline de ingestão e transformação de dados de emissões no Snowflake",
+  "Modelo analítico e 5 dashboards no Power BI para indicadores ESG",
+  "Relatório de qualidade de dados e catálogo de metadados",
+  "Manual de operação e transferência de conhecimento para a equipe do cliente"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 4 semanas",
+  "Fase 2 - Implementação de Pipelines e Modelagem: 10 semanas",
+  "Fase 3 - Dashboards e Governança: 8 semanas",
+  "Fase 4 - Homologação e Go-live: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados de origem inferior ao esperado",
+  "Atraso na integração com sistemas legados de medição",
+  "Mudanças nos requisitos regulatórios durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de Sustentabilidade)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "Já foram migrados 40% dos dados históricos de emissões e o primeiro dashboard piloto está em validação.",
+ "diferencial": "Ganhamos pela experiência comprovada em projeto similar de indicadores ESG para uma distribuidora de energia, com resultados 30% acima da meta de acurácia."
+}

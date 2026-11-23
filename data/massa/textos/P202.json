@@ -1,0 +1,38 @@
+{
+ "titulo": "Plataforma de Indicadores ESG e Monitoramento de Emissões para Manufatura",
+ "problema": "A Autopeças Motriz precisa consolidar dados de emissões de 12 unidades fabris e 3 centros de distribuição, atualmente dispersos em planilhas e sistemas legados. A empresa enfrenta pressão de montadoras para reportar indicadores ESG trimestralmente, mas gasta 15 dias na consolidação manual, com risco de inconsistências e multas contratuais.",
+ "objetivo": "Implementar uma plataforma de dados ESG na Azure com Snowflake e Power BI para automatizar a coleta, o cálculo e a divulgação de indicadores de emissões (Escopos 1, 2 e 3) e outros KPIs de sustentabilidade, reduzindo o ciclo de reporte para 3 dias úteis.",
+ "escopo": [
+  "Governança de dados: definição de políticas, catálogo e linhagem para métricas ESG usando Python e Azure Purview.",
+  "Pipeline de ingestão de dados de emissões de 12 plantas e 3 CDs, com integração a sensores IoT e planilhas, em Python e Azure Data Factory.",
+  "Modelagem dimensional no Snowflake para cálculo de emissões (fatores de emissão, escopos) e histórico de indicadores.",
+  "Desenvolvimento de dashboards no Power BI para acompanhamento mensal de emissões por unidade e metas de redução.",
+  "Automação de relatórios regulatórios e auditoria de dados com validações e alertas no Azure Monitor."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG e governança (políticas, catálogo e linhagem).",
+  "Pipeline de ingestão automatizado para 15 fontes de dados de emissões, com validação de qualidade.",
+  "Modelo dimensional no Snowflake e dicionário de dados de métricas ESG.",
+  "Conjunto de 8 dashboards no Power BI (visão executiva, por unidade, por escopo e metas).",
+  "Relatório de auditoria e plano de sustentação da plataforma."
+ ],
+ "fases": [
+  "Fase 1 – Diagnóstico e Governança: 4 semanas",
+  "Fase 2 – Ingestão e Modelagem: 8 semanas",
+  "Fase 3 – Analytics e Dashboards: 6 semanas",
+  "Fase 4 – Validação e Rollout: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos dados históricos de emissões nas unidades.",
+  "Resistência das áreas fabris em adotar novos processos de coleta.",
+  "Mudanças nos requisitos regulatórios durante o projeto."
+ ],
+ "pessoas": {
+  "cliente": "Carla Menezes (Gerente de Sustentabilidade)",
+  "tecnico": "Rafael Duarte (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 25% acima do mercado. O cliente optou por um concorrente com escopo similar e prazo de 6 meses, mas com valor inferior.",
+ "licoes": "Para próximas propostas similares, incluir análise de valor percebido e benchmarks de mercado para justificar o preço, além de oferecer opções de escopo modular que caibam no orçamento do cliente.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a Autopeças Motriz decidiu não seguir com a NTT DATA para o projeto de indicadores ESG. O motivo principal foi o valor apresentado, cerca de 25% acima do mercado, incompatível com nosso orçamento aprovado. Agradecemos o esforço da equipe e esperamos colaborar em oportunidades futuras. Atenciosamente, Carla Menezes (Gerente de Sustentabilidade)."
+}

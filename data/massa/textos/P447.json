@@ -1,0 +1,50 @@
+{
+ "titulo": "Governança de dados e conformidade LGPD em Azure e Snowflake",
+ "problema": "A Secretaria Estadual de Saúde do Planalto mantinha dados de 4,2 milhões de cidadãos distribuídos em 27 sistemas legados, sem catálogo único nem classificação de dados pessoais. Isso gerava retrabalho em 38% dos relatórios gerenciais e expunha a Secretaria a riscos de sanções da ANPD.",
+ "objetivo": "Implantar uma estrutura de governança de dados com catálogo, classificação e políticas de privacidade alinhadas à LGPD, consolidando as bases analíticas em Azure e Snowflake.",
+ "escopo": [
+  "Levantamento e catalogação de 1.200 ativos de dados em Azure Purview, com classificação de dados pessoais e sensíveis conforme a LGPD",
+  "Definição de papéis e políticas de acesso (RBAC) no Azure e no Snowflake, cobrindo 180 usuários analíticos",
+  "Implementação de linhagem de dados e mascaramento de PII nas ingestões para o Snowflake",
+  "Criação de comitê de governança e 12 indicadores de qualidade de dados monitorados em dashboards",
+  "Trilhas de auditoria e registro de operações de tratamento de dados pessoais"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com 1.200 ativos classificados e dicionário de dados publicado",
+  "Política de governança e privacidade de dados aprovada pela alta gestão",
+  "Modelo de acessos RBAC implantado em Azure e Snowflake",
+  "Painel de qualidade de dados com 12 indicadores em operação",
+  "Relatório de conformidade LGPD com plano de remediação de 9 lacunas identificadas"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho de governança",
+   "semanas": 6
+  },
+  {
+   "nome": "Catalogação e classificação de dados",
+   "semanas": 8
+  },
+  {
+   "nome": "Implementação de políticas e controles em Azure e Snowflake",
+   "semanas": 10
+  },
+  {
+   "nome": "Operação assistida e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e LGPD e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas de negócio ao comitê de governança",
+  "Qualidade inconsistente dos metadados nos 27 sistemas legados",
+  "Dependência de aprovações jurídicas para as políticas de privacidade"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Informação e Saúde Digital)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Redução de 42% no tempo de elaboração de relatórios gerenciais e eliminação de R$ 1,8 milhão em risco estimado de sanções por tratamento irregular de dados pessoais.",
+ "licoes": "A catalogação dos sistemas legados consumiu 3 semanas além do previsto devido à ausência de documentação técnica. A prova de conceito prévia em Azure e Snowflake foi decisiva para alinhar expectativas e acelerar a aprovação das políticas pela alta gestão.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito com dados reais da Secretaria e pelo histórico de continuidade no cliente."
+}

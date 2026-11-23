@@ -1,0 +1,38 @@
+{
+ "titulo": "Detecção de Fraude com Azure Databricks e Python para Consórcio União Nacional",
+ "problema": "O Consórcio União Nacional, atuante em serviços financeiros, processa cerca de 2,5 milhões de transações mensais e enfrenta um índice de fraude de 0,8%, resultando em perdas anuais estimadas em R$ 12 milhões. O atual modelo de detecção, baseado em regras estáticas, não consegue acompanhar o crescimento de 20% ao ano no volume de transações e apresenta alta taxa de falsos positivos (35%), sobrecarregando a equipe de análise manual.",
+ "objetivo": "Desenvolver e implantar uma solução de detecção de fraude em tempo real utilizando machine learning e engenharia de dados nas plataformas Azure e Databricks, visando reduzir perdas financeiras em 25% e diminuir falsos positivos em 40% em 8 meses.",
+ "escopo": [
+  "Construção de pipeline de ingestão e processamento de dados transacionais em Azure Databricks, integrando fontes como core bancário e sistemas de pagamento.",
+  "Desenvolvimento de modelos de machine learning em Python (scikit-learn, XGBoost) para detecção de anomalias e classificação de fraudes, com treinamento e validação usando dados históricos.",
+  "Implementação de feature store no Databricks para engenharia de atributos em tempo real e governança de dados.",
+  "Criação de API de scoring em Azure Functions para integração com sistemas de autorização em tempo real, com latência inferior a 200 ms.",
+  "Monitoramento contínuo de performance dos modelos e retreinamento automatizado utilizando MLflow e Azure DevOps."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e ML na Azure, incluindo diagramas de fluxo e definições de infraestrutura como código.",
+  "Pipeline de dados batch e streaming no Databricks, com testes de qualidade e catálogo de dados.",
+  "Modelos de detecção de fraude treinados e validados, com relatório de métricas (AUC > 0,90, recall > 0,80).",
+  "API de scoring em produção, integrada ao sistema de autorização, com testes de carga e segurança.",
+  "Dashboard de monitoramento de fraudes e performance dos modelos no Power BI, com alertas automatizados."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 6 semanas",
+  "Fase 2 - Engenharia de Dados e Feature Store: 10 semanas",
+  "Fase 3 - Desenvolvimento e Validação de Modelos: 12 semanas",
+  "Fase 4 - Implantação e Go-Live: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos insuficiente para treinamento dos modelos.",
+  "Resistência das áreas de negócio à mudança de processo de análise de fraudes.",
+  "Latência da API de scoring acima do exigido, impactando autorizações em tempo real."
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Prevenção a Fraudes)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de detecção de fraude instalada no cliente, com contrato de manutenção vigente e integração aos sistemas legados, o que reduziu o custo total de propriedade e o risco percebido pela diretoria.",
+ "licoes": "Para próximas oportunidades com clientes que já têm solução instalada, é crucial mapear antecipadamente o grau de satisfação e os custos de troca, além de apresentar um plano de migração faseado que minimize a disrupção e destaque o ROI incremental.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que decidimos manter a solução atual de detecção de fraude, pois o concorrente já possui integração consolidada com nossos sistemas e um contrato de manutenção em vigor, o que torna a migração desvantajosa no momento. Agradecemos o esforço da equipe da NTT DATA e esperamos contar com vocês em futuras iniciativas. Atenciosamente, Ricardo Almeida - Diretor de Prevenção a Fraudes, Consórcio União Nacional."
+}

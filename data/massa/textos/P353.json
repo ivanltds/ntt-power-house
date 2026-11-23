@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração SAP S/4HANA para nuvem híbrida Azure/AWS com gestão de mudança",
+ "problema": "A Química Fênix opera com SAP ECC em data center próprio, com cerca de 1.200 usuários em 7 plantas industriais e janelas de manutenção que geram até 18 horas de indisponibilidade por trimestre. O custo de infraestrutura on-premise cresceu 22% em dois anos e o fechamento contábil ainda depende de 40 planilhas paralelas fora do ERP.",
+ "objetivo": "Migrar o ambiente SAP para SAP S/4HANA em nuvem híbrida Azure/AWS em 15 meses, reduzindo custo de infraestrutura e eliminando processos manuais de fechamento, com adoção estruturada de Change Management pelas áreas de negócio.",
+ "escopo": [
+  "Assessment e blueprint S/4HANA com definição de landscape em Azure e AWS (produção em Azure, DR e workloads analíticos em AWS)",
+  "Migração de banco e conversão para S/4HANA com SAP DMO, incluindo 7 plantas e 1.200 usuários",
+  "Integração dos módulos FI/CO, MM e PP ao S/4HANA com eliminação de 40 planilhas paralelas de fechamento",
+  "Trilha de Change Management com treinamento de 350 usuários-chave e plano de comunicação por planta",
+  "Hypercare de 8 semanas pós go-live com monitoramento de performance em Azure e AWS"
+ ],
+ "entregaveis": [
+  "Blueprint técnico S/4HANA e plano de migração aprovado",
+  "Ambientes Azure/AWS provisionados e validados com testes de carga",
+  "Conversão de dados e 3 ciclos de testes integrados concluídos",
+  "Plano de Change Management executado com 350 usuários-chave treinados",
+  "Go-live assistido e relatório de hypercare de 8 semanas"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e blueprint",
+   "semanas": 10
+  },
+  {
+   "nome": "Preparação de ambientes e conversão",
+   "semanas": 24
+  },
+  {
+   "nome": "Testes integrados e Change Management",
+   "semanas": 20
+  },
+  {
+   "nome": "Go-live e hypercare",
+   "semanas": 11
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP S/4HANA, 2 consultores funcionais FI/CO e MM, 1 engenheiro de nuvem Azure/AWS e 1 especialista em Change Management",
+ "riscos": [
+  "Indisponibilidade prolongada durante a janela de cutover",
+  "Baixa adesão das plantas ao novo processo de fechamento",
+  "Complexidade de integração entre Azure e AWS no landscape híbrido"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de TI)",
+  "tecnico": "Paulo Menezes (Gerente de Projetos Enterprise Apps)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com a decisora era fraco: a NTT DATA não tinha acesso recorrente à Diretoria de TI e foi posicionada apenas como fornecedor técnico, sem participação nas discussões estratégicas prévias. O concorrente já acompanhava a Química Fênix há dois trimestres e apresentou a proposta com patrocínio executivo consolidado.",
+ "licoes": "Mapear e cultivar o decisor executivo desde a fase de prospecção, com pelo menos duas reuniões de nível diretivo antes da proposta. Aproveitar a continuidade do projeto anterior no cliente para abrir porta de patrocínio sênior, não apenas com o time técnico.",
+ "retorno": "Prezado Paulo, informo que a Química Fênix decidiu não avançar com a proposta de migração para SAP S/4HANA apresentada pela NTT DATA. A decisão considerou a necessidade de um parceiro com maior proximidade da nossa Diretoria de TI e presença consolidada nas discussões estratégicas dos últimos meses. Agradeço o empenho da equipe e permaneço à disposição para futuras oportunidades. Atenciosamente, Renata Vasconcelos, Diretora de TI."
+}

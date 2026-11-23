@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de Indicadores ESG e Monitoramento de Emissões para o Setor Eólico",
+ "problema": "A Geradora Ventos do Nordeste opera 14 parques eólicos com 620 MW de capacidade instalada e precisa consolidar indicadores ESG e dados de emissões de escopo 1 e 2 exigidos por 3 bancos financiadores e pelo mercado regulado. Hoje o acompanhamento é feito em 27 planilhas manuais, com atraso médio de 18 dias na consolidação mensal e risco de inconsistência nos relatórios anuais de sustentabilidade.",
+ "objetivo": "Estruturar uma base governada de dados ESG e emissões em Azure, com pipelines em Python e painéis em Power BI, garantindo consolidação mensal em até 2 dias úteis e rastreabilidade auditável dos indicadores.",
+ "escopo": [
+  "Desenho da arquitetura de dados ESG em Azure (Data Lake e Synapse) integrando medições dos 14 parques e sistemas de faturamento de energia",
+  "Desenvolvimento de pipelines em Python para ingestão, tratamento e cálculo de emissões de escopo 1 e 2 conforme metodologia GHG Protocol",
+  "Implementação de catálogo de dados, linhagem e regras de qualidade para 45 indicadores ESG prioritários",
+  "Construção de 6 dashboards em Power BI para diretoria, área de sustentabilidade e financiadores",
+  "Definição do modelo de governança de dados com papéis, políticas de acesso e rotina de validação mensal"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG e plano de governança aprovado",
+  "Pipelines em Python em produção para cálculo automatizado de emissões de escopo 1 e 2",
+  "Catálogo com 45 indicadores ESG documentados, com regras de qualidade e linhagem",
+  "6 dashboards em Power BI publicados e validados pelas áreas de negócio",
+  "Relatório de encerramento com plano de sustentação e capacitação de 12 usuários-chave"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Engenharia de pipelines e cálculos de emissões",
+   "semanas": 7
+  },
+  {
+   "fase": "Governança e dashboards em Power BI",
+   "semanas": 6
+  },
+  {
+   "fase": "Homologação, treinamento e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e dispersão dos dados históricos dos parques eólicos",
+  "Dependência de validação externa da metodologia de emissões pelos financiadores",
+  "Indisponibilidade das áreas de negócio para homologar indicadores dentro do cronograma"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Sustentabilidade e ESG)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o valor total ficou cerca de 22% acima do orçamento praticado pelo mercado para escopo equivalente, com preço de R$ 1,48 milhão frente à referência de R$ 1,21 milhão. O cliente reconheceu a qualidade técnica e a continuidade do projeto anterior, mas priorizou a adequação ao teto orçamentário aprovado.",
+ "licoes": "Para propostas de continuidade em ESG, apresentar desde o início uma versão enxuta do escopo com faixa de preço aderente ao orçamento do cliente e módulos opcionais. Reaproveitar entregas do projeto anterior como aceleradores para reduzir horas e justificar competitividade sem cortar governança de dados.",
+ "retorno": "Prezado Felipe, após a análise das propostas recebidas, informamos que a NTT DATA não foi selecionada para o projeto de indicadores ESG e emissões. A avaliação técnica foi positiva e o conhecimento da NTT DATA sobre o nosso ambiente pesou a favor, porém o valor apresentado ficou cerca de 22% acima do orçamento aprovado e das demais propostas. Agradecemos o empenho da equipe e esperamos manter a parceria em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Gerente de Sustentabilidade e ESG."
+}

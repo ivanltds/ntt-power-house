@@ -1,0 +1,38 @@
+{
+ "titulo": "Migração de Data Warehouse para Nuvem com Snowflake e Databricks",
+ "problema": "A Cooperativa Sicrédito Planalto opera com um data warehouse on-premises que processa 2,5 TB de dados diários e atende 850 usuários, mas apresenta lentidão e custos de manutenção crescentes. A necessidade de escalar para 5 TB/ano e reduzir o time-to-insight motivou a busca por uma solução em nuvem.",
+ "objetivo": "Migrar o data warehouse para a nuvem em 4 meses, utilizando Snowflake e Databricks nas plataformas Azure e GCP, garantindo escalabilidade e redução de custos operacionais.",
+ "escopo": [
+  "Avaliação e desenho da arquitetura multi-cloud (Azure e GCP) para o data warehouse",
+  "Migração de schemas e dados históricos (2,5 TB) para Snowflake",
+  "Implementação de pipelines de ingestão e transformação com Databricks",
+  "Configuração de governança e segurança de dados nas plataformas Azure e GCP",
+  "Otimização de performance e custos com Snowflake e Databricks"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura alvo e plano de migração detalhado",
+  "Data warehouse migrado e validado em Snowflake",
+  "Pipelines de dados operacionais no Databricks",
+  "Relatório de testes de performance e segurança",
+  "Manual de operação e transferência de conhecimento"
+ ],
+ "fases": [
+  "Fase 1: Assessment e Planejamento - 4 semanas",
+  "Fase 2: Migração de Dados e Schemas para Snowflake - 8 semanas",
+  "Fase 3: Implementação de Pipelines no Databricks - 8 semanas",
+  "Fase 4: Testes, Otimização e Go-Live - 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Snowflake, 1 especialista em Databricks e 1 gerente de projeto",
+ "riscos": [
+  "Complexidade na integração multi-cloud (Azure e GCP)",
+  "Resistência à mudança por parte das equipes internas",
+  "Prazo apertado para migração de grandes volumes de dados"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque a NTT DATA não apresentou casos de sucesso comprovados em migração de data warehouse para nuvem com Snowflake e Databricks, especialmente em ambiente multi-cloud. O cliente optou por um concorrente com experiência documentada no setor financeiro.",
+ "licoes": "Para próximas oportunidades, é essencial incluir referências verificáveis e estudos de caso detalhados de projetos similares, além de destacar certificações e parcerias com Snowflake e Databricks.",
+ "retorno": "Prezados, informamos que a proposta da NTT DATA para a migração do data warehouse não foi selecionada. A decisão foi baseada na necessidade de um parceiro com experiência comprovada e cases de sucesso em projetos similares envolvendo Snowflake e Databricks. Agradecemos o empenho da equipe. Atenciosamente, Mariana Costa (Diretora de Tecnologia)."
+}

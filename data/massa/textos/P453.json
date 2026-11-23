@@ -1,0 +1,50 @@
+{
+ "titulo": "Motor de precificação dinâmica para rede varejista de materiais de construção",
+ "problema": "A Casa & Construção Prime opera 38 lojas e um e-commerce com cerca de 12 mil SKUs ativos, e hoje revisa preços de forma manual e semanal, o que gera margens inconsistentes entre regiões e perda estimada de 3,5 pontos percentuais em categorias de alta concorrência. A base de vendas históricas e de preços de concorrentes já existe em Databricks, mas não há modelo de elasticidade nem rotina automatizada de ajuste.",
+ "objetivo": "Implantar um motor de precificação dinâmica em GCP e Databricks que recomende preços por SKU, loja e canal, com atualização diária e ganho projetado de 2 a 3 pontos de margem nas categorias piloto.",
+ "escopo": [
+  "Modelagem de elasticidade-preço por SKU e região a partir do histórico de vendas no Databricks, com features de sazonalidade e preços de concorrentes",
+  "Pipeline de ingestão e orquestração no GCP (Cloud Storage, Dataflow e BigQuery) para dados de PDV, e-commerce e coleta de preços concorrentes",
+  "Treinamento e validação de modelos de ML no Databricks MLflow com backtesting em 18 meses de histórico",
+  "Camada de recomendação de preços com regras de guarda-corpo de margem mínima e aprovação humana para variações acima de 8%",
+  "Dashboard de acompanhamento de margem e aderência às recomendações para as áreas de categoria e pricing"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e ML em GCP e Databricks",
+  "Modelo de elasticidade-preço validado para 3 categorias piloto (cerca de 1.800 SKUs)",
+  "Pipeline automatizado de ingestão e scoring diário em produção",
+  "Painel de margem e aderência com visão por loja, canal e categoria",
+  "Relatório de resultados do piloto com ganho de margem medido e plano de expansão para as demais categorias"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da arquitetura",
+   "semanas": 4
+  },
+  {
+   "nome": "Engenharia de dados e feature store",
+   "semanas": 5
+  },
+  {
+   "nome": "Modelagem e backtesting",
+   "semanas": 5
+  },
+  {
+   "nome": "Piloto em produção e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados sênior, 1 analista de ML e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura dos dados históricos de preço e concorrência",
+  "Baixa adesão das áreas de categoria às recomendações do modelo",
+  "Restrições de custo e governança no ambiente GCP do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Pricing e Categoria)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o cliente congelou o orçamento de iniciativas de analytics para o semestre, priorizando investimentos em logística e abertura de lojas. Não houve desistência do tema, apenas suspensão da contratação.",
+ "licoes": "Em contas onde o patrocinador é de negócio, vale ancorar a proposta em ganho de margem rápido e oferecer uma fase piloto de menor investimento, reduzindo a barreira orçamentária e mantendo o projeto vivo em ciclos de corte de custo.",
+ "retorno": "Prezados, informo que decidimos suspender a contratação do projeto de precificação dinâmica neste momento. O orçamento de analytics foi congelado para o semestre e as prioridades foram redirecionadas para logística e expansão da rede. Agradecemos o trabalho da equipe e retomaremos a conversa quando houver liberação orçamentária. Atenciosamente, Renata Vasconcelos, Gerente de Pricing e Categoria, Casa & Construção Prime."
+}

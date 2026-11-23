@@ -1,0 +1,34 @@
+{
+ "titulo": "Implantação de CRM e Jornada do Cliente com Kafka, Azure e Salesforce",
+ "problema": "A Casa & Construção Prime, com 45 lojas e faturamento anual de R$ 1,2 bilhão, enfrenta fragmentação no relacionamento com 350 mil clientes ativos, resultando em taxa de recompra de apenas 18% e NPS de 32. A jornada do cliente é gerenciada manualmente, sem visão unificada, o que limita ações de marketing e fidelização.",
+ "objetivo": "Implantar uma plataforma de CRM integrada e orquestrar a jornada do cliente, aumentando a taxa de recompra para 25% e o NPS para 45 em 12 meses.",
+ "escopo": [
+  "Integração de dados de clientes de múltiplas fontes (ERP, e-commerce, lojas físicas) usando Apache Kafka para streaming em tempo real",
+  "Implementação do Salesforce Sales Cloud e Service Cloud para gestão de vendas e atendimento",
+  "Migração e armazenamento de dados na plataforma Azure (Azure Data Lake e Azure SQL Database)",
+  "Desenvolvimento de jornadas personalizadas no Salesforce Marketing Cloud com base em segmentação comportamental",
+  "Execução de programa de Change Management para adoção pelas equipes de vendas e atendimento"
+ ],
+ "entregaveis": [
+  "Plataforma de CRM Salesforce configurada e integrada com fontes de dados via Kafka",
+  "Pipeline de dados em tempo real no Azure para alimentar o CRM",
+  "Mapa da jornada do cliente com 5 estágios e 20 pontos de contato",
+  "Programa de treinamento e comunicação para 500 usuários",
+  "Dashboard de indicadores de desempenho (taxa de recompra, NPS, tempo de resposta)"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Design da Jornada: 12 semanas",
+  "Fase 2 - Implementação Técnica (Kafka, Azure, Salesforce): 24 semanas",
+  "Fase 3 - Change Management e Go-live: 12 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 engenheiros de dados, 2 consultores Salesforce, 1 especialista em change management e 1 analista de negócios",
+ "riscos": [
+  "Resistência das equipes de vendas à nova ferramenta",
+  "Complexidade na integração de dados legados",
+  "Atraso na migração de dados para Azure"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Marketing)",
+  "tecnico": "Fernanda Lima (Arquiteta de Soluções)"
+ }
+}

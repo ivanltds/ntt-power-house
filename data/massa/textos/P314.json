@@ -1,0 +1,50 @@
+{
+ "titulo": "Pipeline de dados em tempo real com Kafka e Databricks para analytics financeiro",
+ "problema": "O Banco Horizonte Sul processa cerca de 4,2 milhões de transações por dia em 3 sistemas legados, mas os relatórios gerenciais chegam com até 36 horas de atraso. Isso limita a detecção de fraudes e a gestão de liquidez em janelas críticas, com perda estimada de R$ 1,8 milhão por trimestre em oportunidades de crédito e prevenção.",
+ "objetivo": "Implantar uma plataforma de streaming de dados em tempo real na AWS para disponibilizar eventos transacionais em menos de 5 segundos às áreas de risco e tesouraria, substituindo as cargas batch atuais.",
+ "escopo": [
+  "Ingestão de eventos transacionais com Kafka (MSK) a partir dos 3 sistemas de origem, com tópicos por domínio e retenção de 7 dias",
+  "Camada de processamento e qualidade com Databricks (Delta Live Tables) e jobs em Python para deduplicação e enriquecimento",
+  "Modelagem de tabelas Delta na AWS S3 com arquitetura medalhão (bronze, prata e ouro) para consumo analítico",
+  "Pipeline de streaming contínuo com latência alvo inferior a 5 segundos e monitoramento de SLAs",
+  "Integração dos dados em tempo real com os dashboards de risco e tesouraria via camada de serving"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência de streaming com Kafka, Databricks e AWS",
+  "Pipeline de ingestão Kafka operando com 4,2 milhões de eventos/dia",
+  "Camada analítica em Databricks com 12 tabelas Delta certificadas",
+  "Painel de monitoramento de latência, volume e qualidade dos dados",
+  "Runbook operacional e transferência de conhecimento para o time de engenharia do banco"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 6
+  },
+  {
+   "nome": "Implementação da ingestão Kafka e camada bronze",
+   "semanas": 10
+  },
+  {
+   "nome": "Processamento Databricks e camada prata/ouro",
+   "semanas": 12
+  },
+  {
+   "nome": "Go-live assistido e hypercare",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em streaming e 1 gerente de projeto",
+ "riscos": [
+  "Latência dos sistemas legados comprometer o SLA de 5 segundos",
+  "Qualidade e duplicidade dos eventos de origem",
+  "Baixa adoção das áreas de risco e tesouraria no novo modelo em tempo real"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Data & Analytics)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de streaming instalada e em operação no banco, com contrato ativo e integrações consolidadas. O cliente optou por expandir a plataforma existente em vez de migrar para uma nova arquitetura.",
+ "licoes": "Mapear previamente as soluções já instaladas no cliente e posicionar a oferta como evolução ou camada complementar ao que já existe. Incluir na proposta um comparativo de custo de migração versus expansão para reduzir a vantagem do incumbente.",
+ "retorno": "Prezados, informamos que a decisão sobre o projeto de dados em tempo real foi concluída e optamos por seguir com o fornecedor atual. A escolha se deve ao fato de já termos uma plataforma de streaming instalada e integrada aos nossos sistemas, o que reduz prazo e risco de implantação. Agradecemos o esforço da equipe da NTT DATA na elaboração da proposta e esperamos contar com vocês em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Data & Analytics do Banco Horizonte Sul."
+}

@@ -1,0 +1,47 @@
+{
+ "titulo": "Predição de churn e retenção de clientes com Machine Learning e AWS",
+ "problema": "A Eletro Mais, rede varejista com 320 lojas e 4,5 milhões de clientes cadastrados no CRM, perde cerca de 18% da base ativa a cada ano, com queda de 22% na recompra entre 90 e 180 dias após a primeira compra. A empresa não consegue identificar de forma antecipada quais clientes têm maior propensão ao churn, o que limita ações de retenção e reduz o retorno das campanhas de CRM.",
+ "objetivo": "Construir um modelo preditivo de churn e uma régua de retenção acionável, elevando a taxa de retenção da base ativa em ao menos 5 pontos percentuais em 12 meses e priorizando os clientes com maior risco e valor.",
+ "escopo": [
+  "Diagnóstico e integração de dados históricos de compras, CRM e interações do cliente em ambiente AWS (S3, Glue e Athena), com ingestão em Python",
+  "Desenvolvimento e treinamento de modelos de Machine Learning de propensão ao churn no Databricks, com validação temporal e explicabilidade das variáveis",
+  "Definição de segmentação por risco e valor do cliente, com scores de churn atualizados mensalmente",
+  "Construção de dashboards de Analytics & BI para acompanhamento de churn, retenção e efetividade das ações de CRM",
+  "Estruturação de plano de Change Management para adoção das réguas de retenção pelas equipes de CRM e lojas"
+ ],
+ "entregaveis": [
+  "Documento de diagnóstico de dados e arquitetura de dados na AWS",
+  "Modelo de Machine Learning de propensão ao churn em produção no Databricks, com métricas de AUC e lift documentadas",
+  "Régua de retenção segmentada por risco e valor, integrada ao CRM",
+  "Painéis de Analytics & BI com indicadores de churn, retenção e ROI das campanhas",
+  "Plano de Change Management com treinamentos e materiais de apoio às equipes de CRM e lojas"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Modelagem e validação de Machine Learning",
+   "semanas": 5
+  },
+  {
+   "nome": "Integração ao CRM e dashboards de Analytics & BI",
+   "semanas": 3
+  },
+  {
+   "nome": "Change Management e go-live assistido",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 analista de change management",
+ "riscos": [
+  "Qualidade e cobertura incompletas dos dados históricos de CRM e compras",
+  "Baixa adesão das equipes de loja às réguas de retenção recomendadas",
+  "Restrições de prazo para integração do modelo ao CRM legado"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de CRM e Retenção)",
+  "tecnico": "Felipe Andrade (Líder Técnico de Data Science)"
+ }
+}

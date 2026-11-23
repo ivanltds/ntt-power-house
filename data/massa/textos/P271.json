@@ -1,0 +1,47 @@
+{
+ "titulo": "Implantação de Indicadores ESG e Monitoramento de Emissões para a Química Fênix",
+ "problema": "A Química Fênix, indústria química de médio porte com 3 plantas e cerca de 1.400 colaboradores, precisa reportar anualmente suas emissões de GEE e indicadores ESG a clientes e órgãos reguladores. Hoje os dados de consumo de energia, água e resíduos estão dispersos em 12 planilhas mantidas por diferentes áreas, o que gera um atraso de até 45 dias na consolidação do relatório e alto risco de inconsistências.",
+ "objetivo": "Estruturar uma base única de dados ESG em Snowflake e entregar dashboards em Power BI para monitoramento mensal das emissões e dos principais indicadores ambientais e sociais, reduzindo o ciclo de consolidação de 45 para 5 dias úteis.",
+ "escopo": [
+  "Mapeamento e definição de métricas ESG (Escopos 1, 2 e 3) e dicionário de dados no Snowflake",
+  "Ingestão e tratamento automatizado dos dados das 3 plantas com pipelines em Python e Azure Data Factory",
+  "Modelagem dimensional e camada semântica de indicadores ESG no Snowflake para consumo pelo Power BI",
+  "Construção de 6 dashboards em Power BI (emissões, energia, água, resíduos, segurança e diversidade) com atualização diária",
+  "Estruturação da governança de dados: políticas de qualidade, catálogo de dados e definição de responsáveis por domínio"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário de indicadores ESG aprovado",
+  "Pipelines de ingestão e tratamento em produção para as 3 plantas",
+  "Camada semântica e modelo de dados ESG publicado no Snowflake",
+  "6 dashboards em Power BI homologados pelas áreas de Sustentabilidade e Diretoria",
+  "Relatório de governança de dados com políticas de qualidade e catálogo de dados implantados"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da arquitetura",
+   "semanas": 4
+  },
+  {
+   "fase": "Ingestão e tratamento de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e dashboards em Power BI",
+   "semanas": 6
+  },
+  {
+   "fase": "Governança, testes e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI, 1 analista de governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização dos dados históricos das 3 plantas",
+  "Dependência de áreas-chave do cliente para validação dos indicadores",
+  "Mudanças nos requisitos regulatórios de reporte ESG durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Marina Vasconcelos (Gerente de Sustentabilidade)",
+  "tecnico": "Rafael Andrade (Arquiteto de Dados Sênior)"
+ }
+}

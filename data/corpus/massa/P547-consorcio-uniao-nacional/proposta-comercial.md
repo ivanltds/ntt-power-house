@@ -1,0 +1,78 @@
+---
+projeto_id: P547
+cliente: Consórcio União Nacional
+titulo: Streaming de dados em tempo real para analytics financeiro no Azure
+segmento: Serviços Financeiros
+tecnologias: ["Python","Azure"]
+servicos: ["Analytics & BI"]
+area: Data & Analytics
+dono: Ana Beatriz Lopes
+confidencialidade: interna
+status_proposta: Perdida
+link_sharepoint: https://sharepoint.exemplo/sites/propostas/P547
+id: P547-PROP
+tipo_documental: proposta_comercial
+status_documento: final_enviada
+data: 2024-06-14
+prazo_meses: 5
+valor: 1380000
+margem: 0.36
+---
+
+# Proposta Comercial — Streaming de dados em tempo real para analytics financeiro no Azure
+
+**Cliente:** Consórcio União Nacional
+**Segmento:** Serviços Financeiros
+**Área responsável:** Data & Analytics · **Dono da proposta:** Ana Beatriz Lopes
+**Data:** 2024-06-14 · **Versão:** final
+
+## 1. Contexto e desafio
+
+O Consórcio União Nacional processa cerca de 1,2 milhão de transações de consórcio por dia, mas os relatórios gerenciais chegam com atraso de até 36 horas, limitando a detecção de anomalias e a gestão de inadimplência. A área financeira precisa de visibilidade em minutos sobre arrecadação, contemplações e atrasos para reduzir perdas e melhorar a tomada de decisão.
+
+## 2. Objetivo
+
+Implantar uma pipeline de dados em tempo real com Python e Azure para disponibilizar indicadores financeiros em até 5 minutos após o evento, integrada à plataforma de Analytics & BI do cliente.
+
+## 3. Escopo da solução
+
+- Ingestão de eventos transacionais em streaming no Azure Event Hubs, com produtores Python e schema padronizado
+- Processamento em tempo quase real com Azure Functions e Python para cálculos de arrecadação, contemplação e atraso
+- Camada analítica no Azure Synapse Analytics com tabelas otimizadas para consultas de BI
+- Dashboards no Power BI conectados à camada analítica, com atualização a cada 5 minutos
+- Monitoramento de pipeline com Azure Monitor e alertas de latência e falha de ingestão
+
+Tecnologias principais: Python, Azure.
+
+## 4. Abordagem e cronograma
+
+O projeto será executado em 5 meses, nas seguintes fases:
+
+- Discovery e arquitetura (4 semanas)
+- Construção da pipeline de streaming (8 semanas)
+- Camada analítica e dashboards (6 semanas)
+- Testes, go-live e transferência de conhecimento (2 semanas)
+
+## 5. Entregáveis
+
+- Documento de arquitetura de streaming e integração com fontes transacionais
+- Pipeline de ingestão e processamento em tempo real em produção
+- Modelo analítico e dashboards de indicadores financeiros no Power BI
+- Plano de monitoramento, alertas e runbook operacional
+- Relatório de testes de carga com 1,2 milhão de eventos diários e latência média
+
+## 6. Equipe proposta
+
+1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto.
+
+## 7. Premissas e riscos
+
+- Risco: Qualidade e padronização dos eventos nas fontes transacionais
+- Risco: Latência da rede entre sistemas legados e Azure
+- Risco: Baixa adoção dos dashboards pelas áreas de negócio
+
+## 8. Investimento
+
+Investimento total: R$ 1.380.000, em parcelas mensais ao longo de 5 meses.
+
+Margem praticada: 36%.

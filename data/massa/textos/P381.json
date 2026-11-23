@@ -1,0 +1,50 @@
+{
+ "titulo": "Sustentação AMS para aplicações críticas com ServiceNow, Kubernetes e SAP",
+ "problema": "A Energia Paulista Distribuição enfrenta desafios na sustentação de suas aplicações críticas, que atendem mais de 2 milhões de clientes. Atualmente, 35% dos incidentes de TI impactam diretamente a operação, com tempo médio de resolução de 8 horas, gerando insatisfação e riscos regulatórios.",
+ "objetivo": "Garantir a continuidade operacional e a melhoria contínua dos serviços de TI por meio de um modelo de AMS que reduza em 30% o tempo de resolução de incidentes e aumente a disponibilidade das aplicações para 99,5%.",
+ "escopo": [
+  "Sustentação de aplicações em ServiceNow, com gestão de incidentes, problemas e mudanças, incluindo configuração e customização de fluxos.",
+  "Administração de ambientes Kubernetes para orquestração de contêineres das aplicações críticas, com monitoramento proativo e escalabilidade.",
+  "Suporte funcional e técnico ao SAP ECC e SAP S/4HANA, abrangendo módulos de faturamento, atendimento ao cliente e gestão de ativos.",
+  "Monitoramento 24x7 dos serviços de TI, com uso de ferramentas de APM e integração com ServiceNow para abertura automática de tickets.",
+  "Gestão de mudanças e liberações (release management) para as aplicações suportadas, seguindo ITIL v4."
+ ],
+ "entregaveis": [
+  "Relatório mensal de desempenho (KPI) com indicadores de disponibilidade, tempo de resolução e satisfação do usuário.",
+  "Plano de melhoria contínua (CSI) com ações para redução de incidentes recorrentes, revisado trimestralmente.",
+  "Documentação atualizada de arquitetura e procedimentos operacionais das aplicações em ServiceNow, Kubernetes e SAP.",
+  "Base de conhecimento consolidada com soluções para os 20 incidentes mais frequentes, acessível via ServiceNow.",
+  "Relatório de auditoria de conformidade com ITIL e segurança da informação, emitido semestralmente."
+ ],
+ "fases": [
+  {
+   "nome": "Transição e diagnóstico",
+   "semanas": 8
+  },
+  {
+   "nome": "Estabilização e quick wins",
+   "semanas": 12
+  },
+  {
+   "nome": "Operação assistida",
+   "semanas": 16
+  },
+  {
+   "nome": "Operação plena e melhoria contínua",
+   "semanas": 28
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 analistas de sustentação ServiceNow, 2 engenheiros Kubernetes, 2 consultores SAP e 1 analista de monitoramento.",
+ "riscos": [
+  "Dependência de conhecimento tácito da equipe atual do cliente, com risco de perda de know-how na transição.",
+  "Complexidade na integração entre ServiceNow e ferramentas de monitoramento legadas.",
+  "Possíveis atrasos na obtenção de acessos e credenciais para os ambientes SAP e Kubernetes."
+ ],
+ "pessoas": {
+  "cliente": "Carlos Eduardo Menezes (Gerente de TI)",
+  "tecnico": "Fernanda Lima (Arquiteta de Soluções)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de AMS instalada na Energia Paulista Distribuição, com contrato vigente e relacionamento estabelecido, o que reduziu nossa competitividade apesar da abordagem técnica diferenciada.",
+ "licoes": "Para próximas oportunidades em clientes com fornecedor incumbente, é crucial mapear antecipadamente o grau de satisfação e os pontos de insatisfação com o atual provedor, além de quantificar o custo de troca para o cliente, a fim de construir uma proposta de valor que justifique a transição.",
+ "retorno": "Prezados, informamos que a proposta para o serviço de AMS foi decidida em favor do fornecedor atual, que já possui solução implantada e contrato vigente. Agradecemos o empenho da equipe da NTT DATA e o detalhamento técnico apresentado. Permanecemos abertos a futuras oportunidades. Atenciosamente, Carlos Eduardo Menezes, Gerente de TI."
+}

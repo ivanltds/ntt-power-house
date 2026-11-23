@@ -1,0 +1,48 @@
+{
+ "titulo": "Previsão de demanda e reposição inteligente para indústria metalúrgica",
+ "problema": "A Metalúrgica Forja Forte opera com cerca de 1.200 SKUs ativos e enfrenta rupturas de estoque em 18% dos itens de alta rotação, enquanto mantém capital imobilizado de R$ 42 milhões em estoque. A reposição é feita hoje por planilhas e regras manuais, sem considerar sazonalidade e variações de pedidos dos 35 maiores clientes.",
+ "objetivo": "Implantar modelos de previsão de demanda por SKU e uma rotina automatizada de sugestão de reposição, reduzindo rupturas e o capital imobilizado em estoque.",
+ "escopo": [
+  "Modelagem de previsão de demanda por SKU e por cliente com Machine Learning em Python, considerando sazonalidade e histórico de 36 meses",
+  "Construção de pipelines de ingestão e tratamento de dados de vendas, produção e estoque no Databricks",
+  "Disponibilização das camadas analíticas e features de previsão no Snowflake",
+  "Motor de sugestão de reposição com regras de ponto de pedido e estoque de segurança calculados por modelo",
+  "Painéis de acompanhamento de acurácia da previsão e aderência das sugestões de compra"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo analítico no Snowflake e Databricks",
+  "Modelos de previsão de demanda treinados e validados para os SKUs de maior giro, com acurácia medida por MAPE",
+  "Rotina automatizada de geração de sugestões de reposição por SKU",
+  "Painel de monitoramento de acurácia e de rupturas por família de produto",
+  "Manual de operação e transferência de conhecimento para a equipe de supply chain"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento dos modelos de previsão",
+   "semanas": 6
+  },
+  {
+   "fase": "Motor de reposição e integração no Snowflake",
+   "semanas": 6
+  },
+  {
+   "fase": "Homologação e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados e 2 cientistas de dados",
+ "riscos": [
+  "Qualidade e granularidade insuficiente do histórico de vendas e estoque",
+  "Baixa adesão da área de supply chain às sugestões automatizadas",
+  "Mudanças de demanda por sazonalidade não capturadas no período de modelagem"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Gerente de Supply Chain)",
+  "tecnico": "Fernanda Costa (Líder Técnica de Data Science)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte no orçamento de transformação digital para o exercício."
+}

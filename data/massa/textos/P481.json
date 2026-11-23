@@ -1,0 +1,49 @@
+{
+ "titulo": "Assistente virtual com IA generativa para atendimento ao cliente em telecom",
+ "problema": "A Ondas Móvel registra cerca de 1,2 milhão de atendimentos digitais por mês, com 38% das interações ainda dependendo de agentes humanos para resolução. O alto volume gera tempo médio de espera de 7 minutos no chat e custo por atendimento 22% acima da meta do setor.",
+ "objetivo": "Implantar um assistente virtual com IA generativa integrado ao atendimento, automatizando a resolução de demandas de primeiro nível e reduzindo o esforço humano em 30% em cinco meses.",
+ "escopo": [
+  "Assistente conversacional em Python integrado ao ServiceNow para consulta e abertura de chamados",
+  "Orquestração de fluxos de automação de processos no ServiceNow com classificação e roteamento inteligente de tickets",
+  "Modelos de IA generativa hospedados no Azure com camada de segurança e governança de dados",
+  "Integração via APIs entre ServiceNow, Azure OpenAI e sistemas de CRM e faturamento da Ondas Móvel",
+  "Painéis de acompanhamento de acurácia, taxa de contenção e satisfação no ServiceNow Performance Analytics"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção atendendo os três principais motivos de contato (fatura, plano e suporte técnico)",
+  "Catálogo de 45 intenções de atendimento mapeadas e treinadas",
+  "Integrações via API implantadas e documentadas no Azure e no ServiceNow",
+  "Relatório de acurácia e taxa de contenção com meta mínima de 70% de resolução no primeiro nível",
+  "Manual de operação e plano de evolução do assistente para o time de atendimento da Ondas Móvel"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e desenho da solução",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento das integrações e do assistente",
+   "semanas": 8
+  },
+  {
+   "nome": "Piloto assistido com 10% do volume de atendimento",
+   "semanas": 5
+  },
+  {
+   "nome": "Go-live e estabilização",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 engenheiros de automação, 1 especialista em IA generativa e 1 analista de ServiceNow",
+ "riscos": [
+  "Baixa qualidade dos dados históricos de atendimento para treinamento do modelo",
+  "Resistência dos agentes à mudança no fluxo de trabalho",
+  "Latência das APIs de faturamento impactando o tempo de resposta do assistente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Canais Digitais de Atendimento)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de AI & Automation)"
+ },
+ "resultados": "O piloto já opera com 72% de resolução no primeiro nível em 10% do volume de atendimento, acima da meta inicial de 70%.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Ondas Móvel, com histórico de entregas no atendimento digital que permitiu iniciar o projeto em duas semanas."
+}

@@ -1,0 +1,49 @@
+{
+ "titulo": "Migração do ERP legado para SAP S/4HANA em nuvem híbrida",
+ "problema": "A Eletro Mais opera com um ERP legado que sustenta 320 lojas e um e-commerce com pico de 45 mil pedidos/dia, mas enfrenta fechamentos contábeis de 12 dias e indisponibilidade de 6 horas em média por mês. A base de dados não integrada impede visão única de estoque em 7 centros de distribuição, gerando perda estimada de 3,5% em vendas por ruptura.",
+ "objetivo": "Migrar os processos de ERP para SAP S/4HANA em 10 meses, com infraestrutura em Azure e AWS, reduzindo o fechamento contábil para 4 dias e eliminando 80% das indisponibilidades não planejadas.",
+ "escopo": [
+  "Migração do ERP legado para SAP S/4HANA (FI, CO, MM, SD e WM) com conversão de 1,2 milhão de registros mestre",
+  "Implantação de SAP S/4HANA em Azure como ambiente primário e AWS para disaster recovery e workloads analíticos",
+  "Integração de 14 sistemas satélites (PDV, WMS, e-commerce) via APIs e SAP BTP",
+  "Programa de Change Management com treinamento de 850 usuários em 3 ondas e rede de 40 multiplicadores",
+  "Migração de 32 relatórios e 9 interfaces críticas para o novo modelo de dados",
+  "Cutover assistido em janela de 72 horas com rollback testado"
+ ],
+ "entregaveis": [
+  "Blueprint técnico e plano de migração aprovado em 6 semanas",
+  "Ambientes SAP S/4HANA provisionados em Azure e AWS com DR validado",
+  "Carga de dados mestres e transacionais convertidos e conciliados",
+  "Pacote de treinamento e 850 usuários certificados por onda",
+  "Go-live em produção com hypercare de 8 semanas e KPIs de estabilização"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e blueprint",
+   "semanas": 8
+  },
+  {
+   "nome": "Build e conversão de dados",
+   "semanas": 18
+  },
+  {
+   "nome": "Testes integrados e treinamento",
+   "semanas": 12
+  },
+  {
+   "nome": "Cutover, go-live e hypercare",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 gerente de projeto, 2 arquitetos SAP S/4HANA, 4 consultores funcionais (FI/CO, MM, SD, WM), 2 engenheiros de nuvem (Azure/AWS), 1 especialista em change management e 1 analista de dados",
+ "riscos": [
+  "Qualidade dos dados mestres legados pode atrasar a conversão",
+  "Janela de cutover de 72 horas sujeita a imprevistos de integração",
+  "Baixa adesão dos 850 usuários ao novo processo no pico de vendas",
+  "Dependência de fornecedores satélites para as 9 interfaces críticas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de TI)",
+  "tecnico": "Paulo Mendonça (Arquiteto SAP S/4HANA)"
+ }
+}

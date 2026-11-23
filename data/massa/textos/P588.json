@@ -1,0 +1,48 @@
+{
+ "titulo": "Modernização de aplicações legadas em containers com GCP e Azure",
+ "problema": "O Tribunal Regional de Contas do Sul opera 38 aplicações críticas de fiscalização e prestação de contas em servidores físicos com fim de vida útil em 2025, gerando 14 horas semanais de indisponibilidade não planejada e custo de manutenção 32% acima do orçado. A ausência de padronização de ambientes impede a adoção de práticas de DevOps e limita a escalabilidade nos picos de auditoria.",
+ "objetivo": "Modernizar as aplicações prioritárias migrando-as para containers em GCP e Azure, reduzindo indisponibilidade e custos operacionais, com sustentação contínua sob modelo AMS.",
+ "escopo": [
+  "Avaliação e priorização de 38 aplicações legadas para conteinerização, com definição de ondas de migração",
+  "Implantação de clusters Kubernetes gerenciados no GCP (GKE) e no Azure (AKS), com padrões de segurança e observabilidade",
+  "Migração de 22 aplicações prioritárias para containers, incluindo refatoração de dependências e pipelines CI/CD",
+  "Configuração de backup, monitoramento e recuperação de desastres entre as duas nuvens",
+  "Transição para o modelo de Sustentação / AMS com SLAs de disponibilidade e catálogo de serviços"
+ ],
+ "entregaveis": [
+  "Relatório de assessment das 38 aplicações com matriz de priorização e roadmap de migração",
+  "Ambientes GKE e AKS provisionados com pipelines CI/CD padronizados",
+  "22 aplicações migradas e validadas em containers, com testes de carga e segurança",
+  "Runbooks operacionais e plano de recuperação de desastres multi-nuvem",
+  "Relatório mensal de sustentação com indicadores de SLA e custos de nuvem"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e planejamento",
+   "semanas": 6
+  },
+  {
+   "nome": "Fundação de plataforma em GCP e Azure",
+   "semanas": 8
+  },
+  {
+   "nome": "Migração das aplicações em ondas",
+   "semanas": 24
+  },
+  {
+   "nome": "Transição para AMS e estabilização",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 2 engenheiros DevOps, 3 engenheiros de migração, 1 especialista em segurança e 1 gerente de projeto",
+ "riscos": [
+  "Dependências legadas não documentadas atrasam a conteinerização",
+  "Restrições de conformidade e LGPD na movimentação de dados entre nuvens",
+  "Baixa disponibilidade das equipes do Tribunal para validações e homologações"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia da Informação)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte orçamentário no exercício e da repriorização para o projeto de renovação do data center."
+}

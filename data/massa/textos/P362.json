@@ -1,0 +1,50 @@
+{
+ "titulo": "Painéis executivos e BI para gestão hospitalar e ambulatorial",
+ "problema": "A Secretaria Estadual de Saúde do Planalto consolida dados de 412 unidades de saúde em planilhas manuais, com atraso de até 15 dias na visão de indicadores e retrabalho de 320 horas/mês da equipe de monitoramento. A ausência de uma camada analítica única impede comparar produção ambulatorial, estoque de insumos e execução orçamentária em tempo hábil para a tomada de decisão.",
+ "objetivo": "Implantar uma plataforma de painéis executivos e BI que integre dados de SAP, bases assistenciais e orçamentárias em uma visão única, reduzindo o ciclo de apuração de indicadores de 15 dias para até 1 dia útil.",
+ "escopo": [
+  "Engenharia de Dados para extração e integração de dados do SAP e das bases assistenciais para o Snowflake, com 28 pipelines monitorados",
+  "Modelagem dimensional no Snowflake para indicadores de produção, estoque de insumos e execução orçamentária",
+  "Construção de 12 painéis executivos no Power BI, com camada semântica certificada e publicação no Azure",
+  "Definição de catálogo de indicadores e regras de negócio com as áreas finalísticas da Secretaria",
+  "Change Management com treinamento de 180 usuários em 6 regionais de saúde e plano de adoção dos painéis"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e catálogo de indicadores validado",
+  "28 pipelines de ingestão em produção no Azure, com testes de qualidade e monitoramento",
+  "Modelo dimensional no Snowflake e camada semântica certificada no Power BI",
+  "12 painéis executivos publicados e homologados pelas áreas de gestão",
+  "Plano de Change Management executado, com treinamento de 180 usuários e relatório de adoção"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 2
+  },
+  {
+   "fase": "Engenharia de Dados e integração SAP/Snowflake",
+   "semanas": 3
+  },
+  {
+   "fase": "Painéis executivos no Power BI e homologação",
+   "semanas": 2
+  },
+  {
+   "fase": "Change Management e go-live assistido",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI, 1 consultor de change management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização dos dados das bases assistenciais",
+  "Restrições de acesso e segurança da informação para integração com o SAP",
+  "Baixa adesão dos gestores regionais ao uso dos painéis no prazo do projeto"
+ ],
+ "pessoas": {
+  "cliente": "Marina Cordeiro (Diretora de Informação e Monitoramento)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente: 12 painéis, 28 pipelines e treinamento de 180 usuários em 2 meses foram percebidos como esforço excessivo frente à urgência de poucos indicadores prioritários.",
+ "licoes": "Para a próxima proposta em continuidade no cliente, iniciar com um escopo enxuto de indicadores prioritários e apresentar uma evolução em ondas, deixando a expansão de pipelines e usuários para fases seguintes condicionadas a resultados.",
+ "retorno": "Prezados, informamos que a proposta para painéis executivos e BI não foi selecionada nesta etapa. A decisão considerou que o escopo proposto ficou acima da necessidade imediata da Secretaria, que busca uma primeira entrega mais enxuta e focada em indicadores prioritários. Agradecemos o empenho da equipe e permanecemos abertos a novas conversas em formato de evolução por etapas. Atenciosamente, Marina Cordeiro, Diretora de Informação e Monitoramento."
+}

@@ -1,0 +1,38 @@
+{
+ "titulo": "Painel ESG e Inventário de Emissões para a Indústria de Embalagens Plastipack",
+ "problema": "A Plastipack opera 4 plantas industriais com produção anual de cerca de 38 mil toneladas de embalagens plásticas e não conseguia consolidar, de forma auditável, os dados de consumo de energia, água e emissões de GEE espalhados em planilhas de cada unidade. O fechamento do relatório ESG anual levava 45 dias e gerava retrabalho em cerca de 30% dos indicadores, expondo a empresa a questionamentos de clientes e financiadores.",
+ "objetivo": "Centralizar e automatizar a apuração de indicadores ESG e de emissões de escopo 1 e 2 em uma plataforma analítica única, reduzindo o ciclo de fechamento e dando rastreabilidade aos dados reportados.",
+ "escopo": [
+  "Ingestão dos dados de consumo de energia, água, resíduos e combustíveis das 4 plantas em Snowflake, com rotinas de qualidade e linhagem",
+  "Modelagem dimensional dos indicadores ESG e cálculo de emissões conforme fatores do GHG Protocol em modelos SQL no Snowflake",
+  "Construção de dashboards executivos e operacionais no Power BI para as áreas de Sustentabilidade, Operações e Diretoria",
+  "Orquestração e monitoramento dos pipelines em Azure Data Factory e Azure Monitor, com alertas de falha e atualização diária",
+  "Trilha de auditoria e versionamento dos fatores de emissão e das premissas de cálculo para suportar auditoria externa"
+ ],
+ "entregaveis": [
+  "Data warehouse ESG em Snowflake com 12 tabelas de fato e dimensões de planta, período e fonte de emissão",
+  "5 dashboards no Power BI: visão executiva, emissões por escopo, energia, água e resíduos",
+  "Documento de premissas e metodologia de cálculo de emissões validado pela área de Sustentabilidade",
+  "Pipeline automatizado em Azure com atualização diária e painel de monitoramento de qualidade de dados",
+  "Trilha de auditoria e manual de operação para o time interno de dados"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e definição de indicadores: 4 semanas",
+  "Fase 2 - Engenharia de dados e modelagem em Snowflake: 8 semanas",
+  "Fase 3 - Dashboards em Power BI e validação com usuários: 6 semanas",
+  "Fase 4 - Homologação, treinamento e go-live: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização dos dados históricos das plantas",
+  "Mudanças nos fatores de emissão durante o projeto",
+  "Disponibilidade limitada dos pontos focais das plantas para validação"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Gerente de Sustentabilidade)",
+  "tecnico": "Rafael Aguiar (Arquiteto de Dados)"
+ },
+ "resultados": "O ciclo de fechamento do relatório ESG caiu de 45 para 12 dias, e a empresa passou a monitorar 100% das emissões de escopo 1 e 2 das 4 plantas em base auditável, com economia estimada de R$ 180 mil por ano em horas de consolidação manual.",
+ "licoes": "A falta de padronização das unidades de medida nos dados históricos das plantas atrasou a fase de engenharia em 3 semanas e exigiu esforço extra de tratamento. Foi decisivo envolver a área de Sustentabilidade desde o discovery na validação das premissas de cálculo, o que evitou retrabalho na homologação.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, em que entregamos em 3 semanas um protótipo funcional de cálculo de emissões em Snowflake e Power BI com dados reais de duas plantas."
+}

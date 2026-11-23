@@ -1,0 +1,46 @@
+{
+ "titulo": "Implantação de CRM Salesforce e Jornada do Cliente Omnichannel no Varejo Livreiro",
+ "problema": "A Livrarias Página Viva, com 87 lojas físicas e e-commerce respondendo por 22% da receita, não conseguia unificar o histórico de compras de seus 1,4 milhão de clientes cadastrados entre PDV, site e central de atendimento. As campanhas de marketing eram disparadas em massa, com taxa de conversão de apenas 1,8% e alto índice de descadastro.",
+ "objetivo": "Implantar uma plataforma de CRM unificada com visão 360º do cliente e jornadas personalizadas por canal, elevando a conversão das campanhas e a retenção dos clientes do programa de fidelidade.",
+ "escopo": [
+  "Implementação do Salesforce Sales Cloud e Marketing Cloud com modelo de dados unificado de cliente",
+  "Integração em tempo real via Apache Kafka entre PDVs, e-commerce e ERP para eventos de compra",
+  "Construção de camada analítica no Azure (Data Lake e Synapse) para segmentação e propensão de compra",
+  "Desenho e automação de 14 jornadas de cliente por ciclo de vida (boas-vindas, reativação, pós-compra)",
+  "Programa de Change Management para 320 usuários nas áreas de marketing, vendas e atendimento"
+ ],
+ "entregaveis": [
+  "Visão 360º do cliente no Salesforce com histórico consolidado de 1,4 milhão de cadastros",
+  "Pipeline de dados em Kafka e Azure operando com latência inferior a 5 minutos",
+  "14 jornadas automatizadas publicadas e monitoradas no Marketing Cloud",
+  "Dashboards de KPIs de CRM e fidelidade no Power BI para 3 níveis gerenciais",
+  "Plano de adoção com treinamento de 320 usuários e 6 agentes multiplicadores internos"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura de dados",
+   "duracao_semanas": 14
+  },
+  {
+   "fase": "Implementação Salesforce e integrações Kafka/Azure",
+   "duracao_semanas": 22
+  },
+  {
+   "fase": "Construção e ativação das jornadas de cliente",
+   "duracao_semanas": 12
+  }
+ ],
+ "equipe": "1 arquiteto de soluções, 2 consultores Salesforce, 2 engenheiros de dados, 1 especialista em change management e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados legados de cadastro com 18% de duplicidades",
+  "Baixa adesão dos lojistas ao novo processo de captura no PDV",
+  "Dependência de janelas do ERP para liberação de integrações"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Marketing e CRM)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "A conversão das campanhas segmentadas subiu de 1,8% para 4,6% nos primeiros 90 dias após o go-live, e a retenção de clientes do programa de fidelidade aumentou 23%, com retorno estimado de R$ 3,2 milhões em receita incremental no primeiro semestre.",
+ "licoes": "A limpeza dos dados legados consumiu 5 semanas além do previsto, exigindo esforço extra de engenharia de dados. Foi decisivo envolver os gerentes regionais de loja desde a fase de discovery, o que acelerou a adoção no PDV.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Livrarias Página Viva, já iniciado em projeto anterior de modernização do e-commerce, o que garantiu conhecimento profundo do ambiente de dados e credibilidade junto às áreas de negócio."
+}

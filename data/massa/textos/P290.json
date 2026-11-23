@@ -1,0 +1,45 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD em Plataforma Analítica Financeira",
+ "problema": "O Banco Atlântida Digital opera com 4,2 milhões de clientes ativos e cerca de 180 fontes de dados distribuídas entre Databricks e Snowflake, sem catálogo corporativo unificado de dados pessoais. A ausência de linhagem e classificação sistemática expõe o banco a riscos de não conformidade com a LGPD em 100% dos processos de tratamento mapeados até o momento.",
+ "objetivo": "Estruturar a governança de dados e o programa de conformidade LGPD na plataforma analítica, com catálogo, classificação e linhagem de dados pessoais, e conduzir a mudança organizacional necessária em 3 meses.",
+ "escopo": [
+  "Catalogação e classificação de dados pessoais nas fontes Databricks e Snowflake, com 100% das tabelas com PII inventariadas",
+  "Mapeamento de linhagem de dados com Python para rastreamento de ponta a ponta dos fluxos de tratamento",
+  "Definição de políticas de acesso, retenção e anonimização aplicadas às camadas analíticas",
+  "Implantação de controles de qualidade e monitoramento de conformidade LGPD nos pipelines Databricks",
+  "Programa de Change Management com trilhas de capacitação para 120 usuários de dados e multiplicadores internos"
+ ],
+ "entregaveis": [
+  "Catálogo corporativo de dados pessoais com classificação de sensibilidade e owners definidos",
+  "Mapa de linhagem de dados das principais jornadas analíticas em Databricks e Snowflake",
+  "Política de governança de dados e matriz de conformidade LGPD aprovada pelo comitê do cliente",
+  "Painel de monitoramento de conformidade com indicadores de qualidade e exposição de dados pessoais",
+  "Plano de comunicação e capacitação executado com registro de adesão dos times de negócio e tecnologia"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e Inventário de Dados Pessoais",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Catálogo, Classificação e Linhagem",
+   "duracao_semanas": 5
+  },
+  {
+   "fase": "Políticas, Controles e Monitoramento",
+   "duracao_semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança e LGPD, 1 consultor de change management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão dos times de negócio ao novo modelo de governança",
+  "Qualidade e completude insuficientes dos metadados nas fontes legadas",
+  "Prazo de 3 meses pressionado pela janela regulatória de conformidade"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Já foram inventariadas 62% das tabelas com dados pessoais e mapeadas as linhagens de 9 jornadas analíticas prioritárias.",
+ "diferencial": "A continuidade do relacionamento com o Banco Atlântida Digital, somada ao conhecimento prévio da plataforma Databricks e Snowflake, permitiu iniciar o inventário de dados pessoais na primeira semana do projeto."
+}

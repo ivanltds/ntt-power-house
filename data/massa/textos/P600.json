@@ -1,0 +1,49 @@
+{
+ "titulo": "Predição de churn e retenção com Salesforce e Machine Learning",
+ "problema": "A FibraMax Internet opera com 480 mil assinantes residenciais e enfrenta churn mensal de 2,9%, concentrado nos primeiros 6 meses de contrato, o que representa perda estimada de R$ 3,1 milhões por mês em receita recorrente. A base de dados de clientes está fragmentada entre CRM e sistemas de billing, sem sinais preditivos consolidados para ações de retenção.",
+ "objetivo": "Reduzir o churn mensal em 0,8 ponto percentual em 12 meses, implantando modelos preditivos integrados ao Salesforce para priorizar e automatizar ações de retenção.",
+ "escopo": [
+  "Modelagem de propensão a churn em Machine Learning com features de uso, pagamento e atendimento",
+  "Integração dos scores preditivos ao Salesforce CRM via APIs para acionamento de campanhas de retenção",
+  "Construção de jornadas de retenção no Salesforce com gatilhos por faixa de risco",
+  "Painéis de monitoramento de churn, retenção e valor em risco na área de Data & Analytics",
+  "Governança do modelo com rotinas de reavaliação mensal e versionamento"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de churn validado com AUC mínima de 0,78",
+  "Integração Salesforce–modelo em produção com scoring diário de 480 mil clientes",
+  "Três jornadas de retenção configuradas no Salesforce por segmento de risco",
+  "Dashboard executivo de churn e efetividade de retenção",
+  "Documentação técnica e plano de governança do modelo"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Desenvolvimento e validação dos modelos",
+   "semanas": 9
+  },
+  {
+   "fase": "Integração com Salesforce e jornadas de retenção",
+   "semanas": 10
+  },
+  {
+   "fase": "Go-live, estabilização e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 2 consultores Salesforce",
+ "riscos": [
+  "Qualidade e fragmentação dos dados de billing",
+  "Baixa adesão das equipes de retenção às jornadas no Salesforce",
+  "Atraso na liberação de acessos e APIs do ambiente Salesforce"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Customer Experience)",
+  "tecnico": "Paulo Menezes (Arquiteto de Data & Analytics)"
+ },
+ "resultados": "Nas duas primeiras fases, o modelo piloto alcançou AUC de 0,81 e identificou 34% dos churns futuros no topo de 10% dos clientes com maior risco.",
+ "diferencial": "Ganhamos pela continuidade do projeto anterior de CRM no cliente e pelo case de referência em predição de churn em operadora de telecom com porte semelhante."
+}

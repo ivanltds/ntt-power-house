@@ -1,0 +1,50 @@
+{
+ "titulo": "Predição de churn e retenção de clientes com Machine Learning e Databricks",
+ "problema": "A Corretora Valor Alto enfrenta uma taxa de churn de 18% ao ano em sua base de 240 mil clientes pessoa física, com perda estimada de R$ 32 milhões em receita recorrente. O time de CRM identifica os riscos de saída apenas de forma reativa, após o cliente reduzir movimentação ou cancelar produtos.",
+ "objetivo": "Construir um modelo preditivo de churn em Databricks com Machine Learning para identificar clientes com alto risco de saída e priorizar ações de retenção, ampliando a efetividade das campanhas do time comercial.",
+ "escopo": [
+  "Diagnóstico e preparação de dados históricos de clientes, produtos e transações no Databricks",
+  "Desenvolvimento de modelos de Machine Learning para scoring de propensão ao churn com validação cruzada",
+  "Construção de dashboards de Analytics & BI com segmentação de risco e coortes de clientes",
+  "Definição de regras de acionamento de campanhas de retenção integradas ao CRM",
+  "Implantação de rotina mensal de re-treinamento e monitoramento de performance dos modelos"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e feature store no Databricks",
+  "Modelo de churn treinado e validado com AUC mínima de 0,80",
+  "Dashboard executivo com indicadores de risco e retenção em Analytics & BI",
+  "Playbook de ações de retenção por faixa de propensão",
+  "Relatório final de resultados e recomendações de evolução"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e experimentação com Machine Learning",
+   "semanas": 8
+  },
+  {
+   "fase": "Construção de dashboards e integração com CRM",
+   "semanas": 8
+  },
+  {
+   "fase": "Piloto de retenção e transferência de conhecimento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de transações",
+  "Baixa adesão do time comercial às ações de retenção",
+  "Prazo apertado para integração com o CRM legado"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de CRM)",
+  "tecnico": "Paulo Mendonça (Arquiteto de Data & Analytics)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente, incluindo frentes de integração e re-treinamento contínuo que ele não havia demandado neste momento.",
+ "licoes": "Para a próxima proposta semelhante, dimensionar o escopo ao problema central e oferecer as frentes adicionais como opcionais ou fase futura, evitando um pacote acima do que o cliente pediu.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe na elaboração da proposta. Após avaliação interna, decidimos não seguir com o projeto neste formato, pois o escopo apresentado ficou acima da nossa necessidade atual de predição de churn. Seguimos abertos a conversas futuras em um formato mais enxuto. Atenciosamente, Renata Vasconcelos, Diretora de CRM, Corretora Valor Alto."
+}

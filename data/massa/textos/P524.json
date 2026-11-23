@@ -1,0 +1,50 @@
+{
+ "titulo": "Manutenção Preditiva de Ativos Logísticos com Data Science e Databricks",
+ "problema": "A Entregas Expressas Já opera com cerca de 1.200 ativos críticos (empilhadeiras, esteiras e veículos de pátio) e registra hoje uma taxa de paradas não planejadas de 14% ao mês, gerando atrasos em 8% das entregas e um custo estimado de R$ 2,3 milhões por ano em manutenção corretiva e horas perdidas. Os dados de sensores e ordens de manutenção estão dispersos entre SAP e planilhas, sem um modelo analítico que antecipe falhas.",
+ "objetivo": "Implantar um modelo de manutenção preditiva que antecipe falhas em ativos críticos com pelo menos 72 horas de antecedência, reduzindo as paradas não planejadas em 25% ao longo do projeto.",
+ "escopo": [
+  "Ingestão e integração dos dados de sensores IoT e ordens de manutenção do SAP em pipeline de Engenharia de Dados no Databricks",
+  "Desenvolvimento de modelos de Data Science / ML em Python para previsão de falha por ativo, com janela de 72 horas",
+  "Construção de camada de features e histórico de manutenção no Databricks, com governança e versionamento",
+  "Integração dos alertas preditivos ao fluxo de ordens do SAP para acionamento da manutenção",
+  "Dashboard de acompanhamento de acurácia, recall e impacto nas paradas não planejadas"
+ ],
+ "entregaveis": [
+  "Pipeline de dados de sensores e SAP operando em rotina diária no Databricks",
+  "Modelo preditivo treinado e validado para as 3 famílias de ativos críticos, com recall mínimo de 80%",
+  "Integração dos alertas ao SAP com regras de priorização de ordens",
+  "Relatório de avaliação de impacto com comparativo de paradas antes e depois",
+  "Documentação técnica e treinamento de 2 analistas do cliente para operar os modelos"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e engenharia de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e validação em Python",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração com SAP e piloto em 200 ativos",
+   "semanas": 4
+  },
+  {
+   "fase": "Rollout e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura irregular dos dados de sensores em parte da frota",
+  "Baixa adesão dos times de manutenção aos alertas preditivos",
+  "Restrições de acesso e latência na integração com o SAP"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Manutenção e Ativos)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente: o pacote de 5 meses com rollout completo e integração SAP foi considerado além do que a Entregas Expressas Já queria validar neste primeiro momento. O cliente optou por uma iniciativa mais enxuta, focada apenas em um piloto de modelagem.",
+ "licoes": "Para contas em continuidade, oferecer primeiro um piloto enxuto de 8 a 10 semanas com escopo fechado e expansão condicionada a resultados, deixando o rollout e a integração SAP como fase opcional. Validar o apetite de investimento do cliente antes de dimensionar o escopo.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe da NTT DATA na elaboração da proposta de manutenção preditiva. Após avaliação interna, decidimos não avançar com o escopo completo apresentado, pois ele excede a necessidade que temos neste momento; nosso foco atual é validar um piloto menor antes de qualquer rollout. Permanecemos abertos a conversar sobre uma versão reduzida da iniciativa. Atenciosamente, Renata Vasconcelos, Gerente de Manutenção e Ativos."
+}

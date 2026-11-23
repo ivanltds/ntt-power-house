@@ -1,0 +1,48 @@
+{
+ "titulo": "Modernização de aplicações em containers e sustentação multicloud para a gestão pública",
+ "problema": "A Prefeitura de Nova Esperança opera 38 sistemas legados de secretarias (tributação, saúde, educação e obras), sendo 14 deles sem suporte do fornecedor original e com indisponibilidade média de 9 horas por mês. O parque atual roda em servidores físicos no datacenter municipal, com 72% das aplicações em versões de runtime fora de suporte, elevando o risco de incidentes e o custo de manutenção em cerca de 27% ao ano.",
+ "objetivo": "Modernizar as aplicações prioritárias em arquitetura de containers com orquestração multicloud e assumir a sustentação contínua, reduzindo indisponibilidade e custo operacional.",
+ "escopo": [
+  "Conteinerização de 12 aplicações prioritárias com imagens padronizadas e pipelines CI/CD executados em GCP e Azure",
+  "Implantação de malha de integração assíncrona com Kafka para 6 fluxos críticos entre secretarias, com tópicos e políticas de retenção definidos",
+  "Migração de cargas de processamento em lote para AWS, com ambientes isolados por secretaria e controle de custos por centro de custo",
+  "Observabilidade centralizada com painéis de disponibilidade, SLOs e alertas para as 38 aplicações do parque municipal",
+  "Operação de sustentação / AMS em modelo 8x5 com plantão estendido para incidentes críticos e gestão de mudanças"
+ ],
+ "entregaveis": [
+  "Catálogo de 12 aplicações modernizadas em containers, com manifesto de implantação e documentação de rollback",
+  "Pipeline CI/CD único com etapas de build, teste e deploy aprovadas para GCP e Azure",
+  "Cluster Kafka em produção com 6 fluxos integrados e documentação de tópicos, schemas e políticas de retenção",
+  "Relatório mensal de AMS com indicadores de disponibilidade, tempo médio de resolução e consumo de nuvem por secretaria",
+  "Plano de continuidade e runbooks operacionais para os 38 sistemas do parque municipal"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da arquitetura",
+   "semanas": 4
+  },
+  {
+   "nome": "Conteinerização e pipeline CI/CD",
+   "semanas": 8
+  },
+  {
+   "nome": "Integração com Kafka e migração de cargas para AWS",
+   "semanas": 8
+  },
+  {
+   "nome": "Estabilização e transição para sustentação / AMS",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de cloud, 3 engenheiros de DevOps, 2 engenheiros de integração e 2 analistas de sustentação",
+ "riscos": [
+  "Dependência de janelas de manutenção das secretarias para cutover das aplicações",
+  "Aplicações legadas sem documentação e com regras de negócio não mapeadas",
+  "Restrições de contratação e conformidade de dados públicos em ambientes multicloud"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Secretária de Tecnologia da Informação)",
+  "tecnico": "Marcos Tavares (Arquiteto de Cloud & Infra)"
+ },
+ "diferencial": "Já sustentamos e modernizamos o parque de aplicações da Prefeitura em contrato anterior, com histórico de redução de indisponibilidade e case de referência semelhante em outro município de porte equivalente."
+}

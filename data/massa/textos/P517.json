@@ -1,0 +1,47 @@
+{
+ "titulo": "Lakehouse de Dados para Análise de Crédito e Cobrança",
+ "problema": "A Financeira Rumo Certo processa cerca de 1,2 milhão de contratos de crédito ativos e recebe mais de 40 milhões de eventos transacionais por mês, hoje distribuídos entre bancos relacionais e planilhas departamentais. Esse cenário gera reconciliações manuais de até 15 dias para relatórios regulatórios e impede a análise em tempo quase real da inadimplência, que fechou o último trimestre em 7,8%.",
+ "objetivo": "Construir uma plataforma lakehouse na Azure com Databricks para unificar dados de crédito, cobrança e risco, reduzindo o tempo de disponibilização de dados de 15 dias para até 1 dia e criando base governada para analytics e modelos de risco.",
+ "escopo": [
+  "Ingestão batch e incremental de fontes transacionais em Azure Data Lake Storage Gen2, orquestrada com Databricks Workflows e pipelines em Python",
+  "Construção de camadas bronze, silver e gold no Databricks com Delta Lake, incluindo histórico de alterações e tabelas de dimensão e fato para crédito e cobrança",
+  "Integração de eventos de parceiros e serviços externos hospedados na AWS por meio de conectores seguros e rotinas Python de reconciliação",
+  "Implementação de catálogo, linhagem e classificação de dados sensíveis com Databricks Unity Catalog e políticas de Governança de Dados alinhadas à LGPD",
+  "Criação de 12 indicadores de inadimplência, aging de carteira e recuperação de crédito disponibilizados em dashboards para as áreas de risco e cobrança"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência do lakehouse em Azure e Databricks aprovado pelas áreas de TI e risco",
+  "Pipelines de ingestão e transformação em produção para 9 fontes prioritárias, com monitoramento e alertas",
+  "Camada gold com 12 indicadores de crédito e cobrança validados contra a base contábil",
+  "Catálogo de dados com 100% das tabelas críticas classificadas e com linhagem documentada",
+  "Plano de sustentação e transferência de conhecimento com treinamento de 20 usuários-chave"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 6
+  },
+  {
+   "nome": "Fundação do lakehouse e governança",
+   "semanas": 8
+  },
+  {
+   "nome": "Pipelines de crédito e cobrança",
+   "semanas": 8
+  },
+  {
+   "nome": "Indicadores, validação e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização insuficientes nos dados legados de cobrança",
+  "Dependência de acessos e liberações de rede entre Azure e AWS",
+  "Baixa disponibilidade das áreas de negócio para validação dos indicadores"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Risco)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ }
+}

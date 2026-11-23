@@ -1,0 +1,50 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real com Kafka, Databricks e Azure",
+ "problema": "A Escudo Auto Seguros processa cerca de 1,2 milhão de sinistros por ano e enfrenta um índice de fraude estimado em 12%, gerando perdas anuais superiores a R$ 180 milhões. O processo atual de detecção é manual e baseado em regras estáticas, com tempo médio de análise de 5 dias, o que atrasa pagamentos legítimos e permite que fraudes passem despercebidas.",
+ "objetivo": "Implementar uma solução de detecção de fraude em tempo real utilizando machine learning e streaming de dados, reduzindo em 30% o tempo de análise e aumentando a precisão na identificação de sinistros fraudulentos.",
+ "escopo": [
+  "Ingestão de dados de sinistros e interações em tempo real via Apache Kafka",
+  "Construção de pipeline de dados e feature engineering no Databricks (Delta Lake)",
+  "Desenvolvimento de modelos de ML para scoring de fraude em tempo real",
+  "Integração com Azure (Event Hubs, Data Lake, Synapse) para armazenamento e processamento",
+  "Dashboard de monitoramento de fraudes e alertas para a equipe de análise"
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão Kafka configurado para 10 mil eventos/segundo",
+  "Modelo de ML treinado e validado com AUC > 0,85",
+  "API de scoring em tempo real integrada ao sistema de sinistros",
+  "Dashboard de monitoramento com indicadores de fraude e performance do modelo",
+  "Documentação técnica e treinamento para equipe interna"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e Design",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento de Pipeline e Modelo",
+   "semanas": 10
+  },
+  {
+   "fase": "Integração e Testes",
+   "semanas": 6
+  },
+  {
+   "fase": "Deploy e Treinamento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos de sinistros",
+  "Resistência à mudança por parte da equipe de análise",
+  "Latência na integração com sistemas legados"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Operações)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 25% acima do mercado, segundo avaliação do cliente. Apesar da qualidade técnica da solução, o valor total não se encaixou no orçamento disponível.",
+ "licoes": "Para propostas futuras em detecção de fraude, incluir opções de escopo modular com preços escalonados e benchmark de mercado para justificar o valor. Também validar antecipadamente a faixa orçamentária do cliente.",
+ "retorno": "Prezados, informamos que decidimos não prosseguir com a proposta para o projeto de detecção de fraude. O valor apresentado ficou acima do orçamento que tínhamos disponível e recebemos uma alternativa mais competitiva. Agradecemos o esforço da equipe. Atenciosamente, Ricardo Almeida."
+}

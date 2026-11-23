@@ -1,0 +1,50 @@
+{
+ "titulo": "Pipeline de detecção de fraude em tempo real com Databricks e Kafka",
+ "problema": "O Crédito Fácil Brasil processa cerca de 2,4 milhões de transações de crédito por mês e sofre com um índice de fraude de 1,8%, o que representa perdas estimadas em R$ 38 milhões ao ano. A análise atual é majoritariamente batch, com latência de até 24 horas, impedindo o bloqueio de operações suspeitas antes da liquidação financeira.",
+ "objetivo": "Construir um pipeline de engenharia de dados em tempo real que ingira eventos transacionais via Kafka e disponibilize features e sinais de risco no Databricks em menos de 2 minutos, subsidiando a detecção de fraude.",
+ "escopo": [
+  "Ingestão de eventos transacionais em streaming com Apache Kafka, com tópicos segregados por canal e retenção de 7 dias",
+  "Construção de camadas bronze, silver e gold no Databricks com Delta Lake, incluindo histórico de 18 meses de transações",
+  "Implementação de jobs de engenharia de dados em Databricks para cálculo de features de risco em janelas de 1h, 24h e 7 dias",
+  "Integração dos datasets gold com o motor antifraude do cliente via API, com SLA de atualização de 2 minutos",
+  "Monitoramento de qualidade de dados e linhagem no Databricks, com alertas para desvios acima de 3% no volume esperado"
+ ],
+ "entregaveis": [
+  "Pipeline de streaming Kafka-Databricks em produção para 100% dos eventos de crédito",
+  "Catálogo de 45 features de risco documentadas e versionadas no Databricks",
+  "Camada gold integrada ao motor antifraude com SLA de 2 minutos",
+  "Dashboards de monitoramento de qualidade e linhagem de dados",
+  "Documentação técnica e transferência de conhecimento para o time interno"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura",
+   "semanas": 4
+  },
+  {
+   "fase": "Ingestão Kafka e camadas bronze/silver",
+   "semanas": 8
+  },
+  {
+   "fase": "Features e camada gold no Databricks",
+   "semanas": 10
+  },
+  {
+   "fase": "Integração, testes e go-live",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em streaming e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e atraso na entrega dos eventos pelos sistemas de origem",
+  "Latência do motor antifraude do cliente incompatível com o SLA de 2 minutos",
+  "Dependência de aprovação de segurança para tráfego de dados sensíveis"
+ ],
+ "pessoas": {
+  "cliente": "Renata Villaça (Diretora de Risco e Prevenção a Fraudes)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o valor apresentado ficou cerca de 28% acima do mercado, apesar da continuidade do projeto anterior no cliente e da aderência técnica da solução. O concorrente vencedor apresentou preço inferior com escopo semelhante.",
+ "licoes": "Para propostas de continuidade, ancorar o preço em benchmark de mercado e oferecer modelo de fases opcionais para reduzir o valor inicial. Revisar a margem antes do envio quando o cliente já tem histórico de comparação com concorrentes.",
+ "retorno": "Prezado Bruno, agradecemos o empenho da NTT DATA na elaboração da proposta de detecção de fraude. Após análise comparativa, decidimos seguir com outro fornecedor, pois o valor apresentado ficou acima do orçamento e da referência de mercado que recebemos. Reforço que a qualidade técnica da proposta foi reconhecida e esperamos retomar a parceria em iniciativas futuras. Atenciosamente, Renata Villaça, Diretora de Risco e Prevenção a Fraudes."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração de Data Warehouse para Nuvem com Databricks e Snowflake",
+ "problema": "A NetVale Provedor enfrenta dificuldades para escalar seu data warehouse on-premises, que processa 2,5 TB de dados diários e apresenta tempo de resposta médio de 8 segundos para consultas analíticas. Além disso, os custos de manutenção da infraestrutura local cresceram 30% no último ano, impactando o orçamento de TI.",
+ "objetivo": "Migrar o data warehouse para uma arquitetura multi-cloud (GCP e AWS) utilizando Databricks e Snowflake, reduzindo custos operacionais em 25% e melhorando o desempenho das consultas em até 5 vezes.",
+ "escopo": [
+  "Avaliação e planejamento da migração dos 2,5 TB de dados históricos para ambiente cloud",
+  "Implementação de pipeline de engenharia de dados com Databricks para ingestão e transformação",
+  "Configuração do Snowflake como camada de armazenamento e consulta analítica na AWS",
+  "Integração com serviços GCP para processamento de dados em tempo real",
+  "Migração de 150 relatórios e dashboards existentes para a nova plataforma"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência multi-cloud (GCP/AWS) com Databricks e Snowflake",
+  "Pipeline de dados implementado e validado para ingestão de 2,5 TB/dia",
+  "Data warehouse migrado e operacional no Snowflake",
+  "Relatórios e dashboards migrados e testados",
+  "Plano de corte e treinamento para equipe interna"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e Planejamento",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Implementação da Infraestrutura Cloud",
+   "duracao_semanas": 16
+  },
+  {
+   "nome": "Migração de Dados e Pipelines",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Migração de Relatórios e Go-Live",
+   "duracao_semanas": 5
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em nuvem e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na migração devido à complexidade dos dados legados",
+  "Resistência da equipe interna à adoção de novas tecnologias",
+  "Estouro de orçamento por custos imprevistos de egress na nuvem"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Andrade (Diretor de TI)",
+  "tecnico": "Mariana Silva (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou 20% acima do mercado, segundo avaliação do cliente. A concorrência ofereceu um valor mais competitivo para o mesmo escopo.",
+ "licoes": "Para próximas propostas similares, revisar a estratégia de precificação e considerar a inclusão de opções de escopo modular para ajustar o valor ao orçamento do cliente. Realizar benchmarking de preços com mais antecedência.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a proposta da NTT DATA não foi selecionada. O motivo principal foi o valor apresentado, que ficou acima do mercado. Agradecemos o empenho da equipe. Atenciosamente, Carlos Andrade."
+}

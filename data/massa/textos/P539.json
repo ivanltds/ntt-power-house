@@ -1,0 +1,47 @@
+{
+ "titulo": "Previsão de Safra e Agricultura de Precisão com Machine Learning na Nuvem",
+ "problema": "A Grãos do Cerrado Trading gerencia 180 mil hectares plantados e sofre com desvios de até 14% entre a produtividade prevista e a realizada em cada safra, o que compromete o planejamento de originação e a alocação de 320 colaboradores no campo. Os dados de clima, solo e imagens de satélite estão dispersos em planilhas e sistemas legados, impedindo decisões de manejo em tempo real.",
+ "objetivo": "Construir uma plataforma de previsão de safra e agricultura de precisão baseada em Machine Learning em Python na AWS, elevando a acurácia das estimativas de produtividade para 92% e reduzindo em 30% o tempo de análise de talhões.",
+ "escopo": [
+  "Ingestão e tratamento de dados históricos de 5 safras, estações meteorológicas e imagens de satélite em pipeline Python na AWS",
+  "Desenvolvimento de modelos de Machine Learning para previsão de produtividade por talhão e por cultura (soja, milho e algodão)",
+  "Construção de dashboards de Analytics & BI com indicadores de produtividade, índices de vegetação e alertas de anomalia",
+  "Integração dos modelos a rotinas de agricultura de precisão para recomendação de manejo e insumos por zona de produtividade",
+  "Implantação de governança de dados e monitoramento de performance dos modelos em ambiente AWS com re-treinamento periódico"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelagem analítica na AWS",
+  "Pipeline de dados automatizado em Python com 12 fontes integradas",
+  "Modelos de Machine Learning treinados e validados para 3 culturas, com acurácia mínima de 92%",
+  "Painéis de Analytics & BI para 4 perfis de usuários (diretoria, agronomia, operações e comercial)",
+  "Relatório de ganhos e plano de evolução para a próxima safra"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Engenharia de dados e pipelines na AWS",
+   "semanas": 8
+  },
+  {
+   "fase": "Modelagem de Machine Learning e agricultura de precisão",
+   "semanas": 12
+  },
+  {
+   "fase": "Dashboards, implantação e transferência de conhecimento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura insuficiente dos dados históricos de campo",
+  "Atraso no acesso a imagens de satélite e integrações com sistemas legados",
+  "Baixa adoção dos modelos pelos times de agronomia e operações"
+ ],
+ "pessoas": {
+  "cliente": "Marina Vasconcelos (Diretora de Operações Agrícolas)",
+  "tecnico": "Rafael Andrade (Arquiteto de Dados Sênior)"
+ }
+}

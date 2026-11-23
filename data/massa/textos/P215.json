@@ -1,0 +1,48 @@
+{
+ "titulo": "Precificação Dinâmica com Analytics Avançado para Rede de Varejo de Moda",
+ "problema": "A Moda Leve Store opera 48 lojas físicas e um e-commerce que responde por 27% da receita, mas pratica uma política de preços estática revisada apenas trimestralmente. Isso gera perda estimada de 8% da margem bruta em coleções sazonais e acúmulo de 35% do estoque em itens com baixo giro.",
+ "objetivo": "Implantar um motor de precificação dinâmica baseado em dados de demanda, concorrência e elasticidade-preço, permitindo ajustes de preço semanais e redução de até 6 p.p. na perda de margem em itens sazonais.",
+ "escopo": [
+  "Ingestão e tratamento de dados históricos de vendas, estoque e concorrência em Python, com pipelines orquestrados no Databricks",
+  "Construção de modelos de elasticidade-preço e previsão de demanda em Python sobre o Databricks Lakehouse",
+  "Implementação de dashboards de Analytics & BI para acompanhamento de margem, giro e aderência às recomendações de preço",
+  "Definição de regras de negócio para limites de variação de preço e aprovação por categoria de produto",
+  "Integração das recomendações de preço ao ERP e ao e-commerce via camada de serving do Databricks"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo de governança de precificação",
+  "Pipeline de dados de demanda e concorrência em produção no Databricks",
+  "Modelo de elasticidade-preço validado com backtesting sobre 24 meses de histórico",
+  "Dashboard executivo de Analytics & BI com indicadores de margem e giro por categoria",
+  "Relatório de recomendações de preço semanais com acurácia mínima de 80%"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da solução",
+   "semanas": 4
+  },
+  {
+   "nome": "Construção dos pipelines e modelos em Python/Databricks",
+   "semanas": 8
+  },
+  {
+   "nome": "Dashboards de Analytics & BI e integração com ERP",
+   "semanas": 5
+  },
+  {
+   "nome": "Piloto em 12 lojas e transferência de conhecimento",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e granularidade insuficiente dos dados históricos de concorrência",
+  "Baixa adesão das equipes comerciais às recomendações de preço",
+  "Restrições de integração com o ERP legado dentro do prazo de 5 meses"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Planejamento Comercial)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente devido à reestruturação do comitê comercial e ao congelamento de investimentos em transformação digital no ciclo vigente."
+}

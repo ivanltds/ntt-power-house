@@ -1,0 +1,38 @@
+{
+ "titulo": "Previsão de demanda e reposição integrada para varejo",
+ "problema": "A Eletro Mais, rede varejista com 120 lojas e faturamento anual de R$ 2,5 bilhões, enfrentava rupturas de estoque em 18% dos SKUs e excesso de inventário em 25% deles, gerando perdas estimadas em R$ 45 milhões/ano. O processo de reposição era manual e baseado em planilhas, com tempo de resposta de 5 dias.",
+ "objetivo": "Implementar um modelo de previsão de demanda e reposição automatizada para reduzir rupturas e excesso de estoque, aumentando a acurácia das previsões e otimizando o capital de giro.",
+ "escopo": [
+  "Integração de dados de vendas, estoque e cadeia de suprimentos via SAP para o Snowflake usando pipelines em Python",
+  "Desenvolvimento de modelos de machine learning para previsão de demanda por SKU e loja em Python",
+  "Automação do cálculo de ponto de pedido e reposição com base nas previsões",
+  "Dashboard de acompanhamento de acurácia e nível de serviço no Snowflake",
+  "Treinamento da equipe do cliente para operar e manter os modelos"
+ ],
+ "entregaveis": [
+  "Pipeline de dados automatizado no Snowflake com atualização diária",
+  "Modelo de previsão de demanda com acurácia de 85% (MAPE)",
+  "Motor de reposição automática integrado ao SAP",
+  "Painel de KPIs de estoque e nível de serviço",
+  "Documentação técnica e sessões de transferência de conhecimento"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e integração de dados: 6 semanas",
+  "Fase 2 - Desenvolvimento de modelos: 10 semanas",
+  "Fase 3 - Automação e integração com SAP: 6 semanas",
+  "Fase 4 - Go-live e treinamento: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos de vendas",
+  "Resistência à mudança no processo de reposição",
+  "Integração complexa com SAP"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Supply Chain)",
+  "tecnico": "Fernanda Lima (Engenheira de Dados Sênior)"
+ },
+ "resultados": "Redução de 30% nas rupturas de estoque e diminuição de 20% no excesso de inventário, liberando R$ 12 milhões em capital de giro.",
+ "licoes": "A integração com SAP atrasou 2 semanas devido a customizações não documentadas; a validação antecipada dos dados com a área de negócio foi decisiva para a acurácia do modelo.",
+ "diferencial": "Preço competitivo aliado à experiência comprovada em projetos anteriores no cliente."
+}

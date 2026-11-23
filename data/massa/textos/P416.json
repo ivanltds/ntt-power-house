@@ -1,0 +1,50 @@
+{
+ "titulo": "Implantação de CRM e Jornada do Cliente Omnichannel",
+ "problema": "A Saúde Garantida Seguros operava com 3 sistemas legados desconectados e um NPS de 31 pontos, com 42% dos atendimentos exigindo retrabalho manual entre áreas. A ausência de uma visão única do cliente ao longo de 1,2 milhão de apólices ativas comprometia a retenção e a conversão de renovações.",
+ "objetivo": "Unificar a jornada do cliente em uma plataforma de CRM integrada ao ecossistema de dados, elevando a eficiência operacional e a satisfação dos segurados.",
+ "escopo": [
+  "Implantação do Salesforce Sales e Service Cloud como camada única de CRM para 850 usuários",
+  "Integração em tempo real de eventos de apólices e sinistros via Apache Kafka",
+  "Construção de camada de dados e APIs no Azure para visão 360 do segurado",
+  "Redesenho de 6 jornadas críticas de cliente (cotação, emissão, renovação, sinistro, vistoria e cancelamento)",
+  "Programa de Change Management com treinamento e gestão de adoção para as áreas comercial e de atendimento"
+ ],
+ "entregaveis": [
+  "Plataforma Salesforce configurada e em produção para 850 usuários",
+  "Pipeline de integração Kafka com 14 tópicos e latência inferior a 2 segundos",
+  "Visão 360 do segurado disponível em dashboard operacional",
+  "6 jornadas de cliente documentadas e implantadas",
+  "Plano de change management executado com materiais de treinamento e métricas de adoção"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e desenho de jornadas",
+   "semanas": 6
+  },
+  {
+   "fase": "Configuração do Salesforce e integrações Kafka/Azure",
+   "semanas": 10
+  },
+  {
+   "fase": "Piloto e rollout por ondas",
+   "semanas": 3
+  },
+  {
+   "fase": "Treinamento, go-live e estabilização",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores Salesforce, 2 engenheiros de dados (Kafka/Azure) e 1 especialista em change management",
+ "riscos": [
+  "Baixa adesão dos times comerciais ao novo CRM",
+  "Complexidade de integração com sistemas legados de apólices",
+  "Qualidade e duplicidade dos dados cadastrais existentes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações e Cliente)",
+  "tecnico": "Marcos Aurélio Prado (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "Redução de 38% no tempo médio de atendimento e aumento de 21 pontos no NPS, de 31 para 52. A conversão de renovações subiu 14%, gerando impacto estimado de R$ 4,2 milhões em receita adicional no primeiro ano.",
+ "licoes": "A migração e deduplicação dos dados cadastrais consumiu 3 semanas além do previsto, exigindo esforço extra de engenharia. O engajamento precoce dos líderes de atendimento desde o discovery foi decisivo para a adoção rápida no go-live.",
+ "diferencial": "Ganhamos pela entrega anterior bem-sucedida de CRM e integração de dados no próprio cliente, que serviu de referência comprovada para o novo escopo."
+}

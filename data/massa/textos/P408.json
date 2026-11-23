@@ -1,0 +1,37 @@
+{
+ "titulo": "Leitura e Triagem Inteligente de Documentos com IA Generativa para Banco Digital",
+ "problema": "O Banco Atlântida Digital recebe mensalmente cerca de 120 mil documentos não estruturados (contratos, comprovantes e propostas) que precisam ser lidos e triados manualmente por 35 analistas, gerando um custo operacional de R$ 280 mil/mês e um tempo médio de resposta ao cliente de 48 horas.",
+ "objetivo": "Automatizar a leitura e triagem de documentos com IA generativa e Python, reduzindo o tempo de processamento em 70% e liberando a equipe para atividades analíticas de maior valor.",
+ "escopo": [
+  "Desenvolvimento de pipeline de ingestão e OCR de documentos PDF e imagens usando Python (PyPDF2, Tesseract) e armazenamento em nuvem.",
+  "Implementação de modelo de IA generativa (LLM) fine-tuned para extração de entidades e classificação de documentos conforme regras de negócio do banco.",
+  "Integração com sistemas legados via APIs REST para consulta e atualização de status dos documentos.",
+  "Dashboard de monitoramento de acurácia e volume processado, com alertas automáticos para casos de baixa confiança.",
+  "Documentação técnica e treinamento da equipe do cliente para operação e manutenção da solução."
+ ],
+ "entregaveis": [
+  "Pipeline de processamento de documentos em produção, com taxa de acurácia mínima de 95% na triagem.",
+  "Modelo de IA generativa customizado e validado com base em 10 mil documentos históricos do banco.",
+  "API de integração documentada e disponível para consumo pelos sistemas internos.",
+  "Dashboard de monitoramento com métricas de desempenho e volume.",
+  "Relatório final de resultados e plano de sustentação."
+ ],
+ "fases": [
+  "Fase 1 - Descoberta e preparação de dados: 6 semanas",
+  "Fase 2 - Desenvolvimento e treinamento do modelo: 10 semanas",
+  "Fase 3 - Integração e testes: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 2 engenheiros de machine learning, 1 desenvolvedor Python e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos documentos digitalizados impactando a acurácia do modelo.",
+  "Resistência à mudança por parte da equipe de triagem.",
+  "Integração complexa com sistemas legados do banco."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Operações)",
+  "tecnico": "Rafael Almeida (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 5 meses foi considerado longo demais pelo cliente, que precisava de uma solução em produção em até 3 meses para atender a uma demanda regulatória iminente.",
+ "licoes": "Para próximas oportunidades com prazo crítico, priorizar escopo mínimo viável (MVP) com entregas parciais a cada 4 semanas e destacar a possibilidade de aceleração com squads dedicados.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a NTT DATA não foi selecionada para o projeto de leitura e triagem de documentos com IA generativa. O prazo de entrega de 5 meses apresentado foi o principal fator, pois necessitamos da solução operacional em até 3 meses. Agradecemos o esforço da equipe e permanecemos abertos a futuras colaborações. Atenciosamente, Mariana Costa, Diretora de Operações do Banco Atlântida Digital."
+}

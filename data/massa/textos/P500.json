@@ -1,0 +1,50 @@
+{
+ "titulo": "Streaming de dados em tempo real para operações e analytics no setor elétrico",
+ "problema": "A Distribuidora Luz do Cerrado opera 2,3 milhões de unidades consumidoras e recebe cerca de 18 milhões de eventos diários de medidores e sensores, hoje processados em lotes com latência de até 6 horas. Isso limita a detecção de perdas não técnicas e a resposta a oscilações de rede, que representam cerca de 7% da energia distribuída.",
+ "objetivo": "Implantar uma plataforma de dados em tempo real na AWS com Kafka e Databricks para reduzir a latência de eventos críticos para menos de 2 minutos e habilitar analytics operacional contínuo.",
+ "escopo": [
+  "Ingestão de eventos de medidores e sensores via Apache Kafka na AWS, com capacidade para 25 mil mensagens por segundo e retenção de 72 horas",
+  "Pipeline de streaming estruturado com Databricks para limpeza, deduplicação e enriquecimento de 18 milhões de eventos diários",
+  "Camada analítica Delta Lake no Databricks com tabelas de perdas, qualidade de energia e disponibilidade de rede atualizadas a cada 2 minutos",
+  "Painéis de Analytics & BI conectados ao Databricks para 120 usuários das áreas de operação e comercial",
+  "Monitoramento, alertas e governança de dados com catálogo e políticas de acesso integradas à AWS"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming aprovada, cobrindo Kafka, Databricks e AWS",
+  "Pipeline de ingestão e processamento em tempo real em produção para 3 fontes prioritárias",
+  "Modelo analítico Delta Lake com 12 indicadores operacionais atualizados continuamente",
+  "Conjunto de 6 painéis de BI publicados para as áreas de operação e comercial",
+  "Plano de operação, runbooks e transferência de conhecimento para a equipe interna"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 6
+  },
+  {
+   "nome": "Construção dos pipelines de streaming",
+   "semanas": 14
+  },
+  {
+   "nome": "Camada analítica e painéis de BI",
+   "semanas": 10
+  },
+  {
+   "nome": "Estabilização e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em analytics e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos eventos das 3 fontes prioritárias",
+  "Capacidade da equipe do cliente para validar regras de negócio em janelas curtas",
+  "Dependências de rede e segurança na integração entre Kafka, Databricks e AWS"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Tecnologia da Informação)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 8 meses foi considerado longo demais pela Distribuidora Luz do Cerrado, que precisava colocar os primeiros indicadores em produção em menos de 4 meses.",
+ "licoes": "Para propostas semelhantes, oferecer uma primeira entrega em produção em até 12 semanas, com escopo inicial reduzido, e planejar as demais fases em continuidade.",
+ "retorno": "Prezados, após a avaliação das propostas recebidas, informamos que decidimos não seguir com a proposta da NTT DATA para o projeto de dados em tempo real. O prazo de entrega de 8 meses foi considerado longo demais para a nossa necessidade de colocar os primeiros indicadores em produção ainda neste ciclo. Agradecemos o esforço da equipe e permanecemos abertos a novas conversas em projetos futuros. Atenciosamente, Renata Vasconcelos, Gerente de Tecnologia da Informação, Distribuidora Luz do Cerrado."
+}

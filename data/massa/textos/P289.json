@@ -1,0 +1,50 @@
+{
+ "titulo": "Precificação dinâmica com Machine Learning para planos de banda larga",
+ "problema": "A FibraMax Internet, com 480 mil assinantes residenciais e 32 mil clientes empresariais, praticava preços fixos por região há mais de três anos, o que gerava perda de margem em bairros de alta demanda e churn elevado de 2,8% ao mês em áreas com concorrência agressiva. A empresa não conseguia reagir a variações de demanda, sazonalidade e ações de concorrentes em menos de 45 dias.",
+ "objetivo": "Implantar um motor de precificação dinâmica baseado em Machine Learning para ajustar preços de planos residenciais e PMEs com granularidade por região e perfil de cliente, reduzindo churn e elevando a margem por assinante.",
+ "escopo": [
+  "Construção de pipelines de dados no Databricks e GCP para consolidar histórico de vendas, churn, inadimplência e concorrência em uma base analítica única",
+  "Desenvolvimento de modelos de propensão a churn e elasticidade-preço em Python e Machine Learning, com treinamento e validação sobre 36 meses de histórico",
+  "Implementação de motor de recomendação de preços por cluster de CEP, perfil de consumo e canal de venda",
+  "Painéis de Analytics & BI para acompanhamento de margem, churn e aderência das ofertas em tempo quase real",
+  "Integração das recomendações ao CRM e ao portal de vendas com regras de aprovação e limites de variação de preço"
+ ],
+ "entregaveis": [
+  "Base analítica unificada no Databricks com 36 meses de dados tratados e dicionário de métricas",
+  "Modelos de churn e elasticidade-preço documentados, com AUC superior a 0,82 em validação",
+  "Motor de precificação dinâmica em produção no GCP, cobrindo 100% das regiões de atuação",
+  "Painéis de Analytics & BI com 12 indicadores de margem, churn e aderência comercial",
+  "Manual de governança de preços e plano de evolução para os próximos 12 meses"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e validação de Machine Learning",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração e piloto em 3 regiões",
+   "semanas": 6
+  },
+  {
+   "fase": "Rollout nacional e transferência de conhecimento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de vendas entre sistemas legados",
+  "Resistência da área comercial à variação de preços por região",
+  "Latência na integração com o CRM durante o rollout nacional"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Marketing e Receita)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "O motor entrou em produção em todas as regiões e reduziu o churn mensal de 2,8% para 2,1% nos primeiros 90 dias, com ganho de margem por assinante de 7,4%, equivalente a R$ 4,2 milhões em receita adicional anualizada.",
+ "licoes": "A limpeza dos dados históricos de vendas consumiu três semanas além do previsto, pois quatro sistemas legados tinham cadastros de CEP divergentes. Foi decisivo envolver a área comercial desde a fase de modelagem, o que garantiu aderência das recomendações e acelerou a adoção no piloto.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência em telecom com precificação dinâmica já em produção, demonstrando domínio de Databricks e GCP e reduzindo a percepção de risco do cliente."
+}

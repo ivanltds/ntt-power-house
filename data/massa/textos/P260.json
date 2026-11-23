@@ -1,0 +1,47 @@
+{
+ "titulo": "Migração do Data Warehouse para Nuvem com Pipeline Unificado",
+ "problema": "A TeleNorte Conecta opera um data warehouse on-premises com 48 TB de dados históricos de 6,2 milhões de assinantes, cujo processamento noturno de faturamento e churn leva mais de 9 horas e sofre indisponibilidades recorrentes. A infraestrutura atual não suporta o crescimento de 35% ao ano no volume de dados de rede e atendimento, limitando a análise em near real-time.",
+ "objetivo": "Migrar o data warehouse legado para uma arquitetura em nuvem com Azure, Snowflake e Databricks em 4 meses, reduzindo o tempo de processamento noturno em pelo menos 60% e habilitando analytics escalável para as áreas de negócio.",
+ "escopo": [
+  "Assessment e desenho da arquitetura-alvo em Azure, definindo landing zone, governança e integração com Snowflake como camada de armazenamento analítico",
+  "Migração de 48 TB de dados históricos e 320 pipelines ETL para Snowflake, com validação de paridade de dados e reconciliação de faturamento",
+  "Implementação de pipelines de engenharia de dados no Databricks para ingestão incremental e transformação em camadas bronze, silver e gold",
+  "Avaliação de workloads de analytics avançado e ML no GCP, com definição de interoperabilidade e estratégia multi-cloud",
+  "Configuração de observabilidade, segurança e FinOps para monitoramento de custos e SLAs dos pipelines migrados"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura-alvo e plano de migração detalhado por domínio de dados",
+  "Data warehouse migrado e validado em Snowflake com 100% dos pipelines críticos em produção",
+  "Camada de engenharia de dados no Databricks com 320 pipelines documentados e monitorados",
+  "Relatório de avaliação multi-cloud com recomendações de workloads elegíveis para GCP",
+  "Dashboard de FinOps e observabilidade com métricas de custo, SLA e qualidade de dados"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e arquitetura-alvo",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Migração de dados e pipelines para Snowflake",
+   "duracao_semanas": 7
+  },
+  {
+   "fase": "Engenharia de dados no Databricks e avaliação GCP",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Estabilização, FinOps e transferência de conhecimento",
+   "duracao_semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Snowflake, 1 especialista em Databricks e 1 gerente de projeto",
+ "riscos": [
+  "Janela de corte limitada para migração de 48 TB sem impacto ao faturamento",
+  "Qualidade e padronização inconsistente dos dados legados",
+  "Dependência de times internos para liberação de acessos e redes em Azure e GCP"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Cloud & Infra)"
+ }
+}

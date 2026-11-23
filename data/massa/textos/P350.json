@@ -1,0 +1,38 @@
+{
+ "titulo": "Plataforma de Gestão de Saúde Populacional com Analytics Preditivo",
+ "problema": "A Rede Hospitalar Santa Clara, com 4 hospitais e 38 unidades ambulatoriais, não conseguia priorizar pacientes crônicos de forma proativa: 62% dos leitos-dia eram ocupados por internações evitáveis de pacientes com doenças crônicas sem acompanhamento estruturado. Os dados estavam dispersos em 3 sistemas legados distintos, sem visão única do histórico assistencial de aproximadamente 1,2 milhão de beneficiários.",
+ "objetivo": "Implantar uma plataforma de gestão de saúde populacional que segmente a população por risco clínico e apoie a priorização de ações preventivas, reduzindo internações evitáveis e o custo assistencial.",
+ "escopo": [
+  "Modelos de Machine Learning em Python para estratificação de risco de pacientes crônicos e predição de risco de internação em 12 meses",
+  "Pipeline de dados no Azure (Data Factory e Databricks) integrando 3 sistemas legados e padronizando o histórico assistencial",
+  "Dashboards no Power BI para gestores clínicos e equipes de atenção primária com indicadores de risco e cobertura de acompanhamento",
+  "Programa de Governança de Dados com catálogo, dicionário de dados e definição de 45 indicadores assistenciais e populacionais",
+  "Serviço de Analytics & BI com rotinas de monitoramento de qualidade de dados e acurácia dos modelos"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de risco de internação validado com AUC de 0,84 em base de teste",
+  "Visão 360º do beneficiário consolidada em lakehouse no Azure",
+  "7 dashboards no Power BI para gestão populacional e acompanhamento de crônicos",
+  "Catálogo de dados e dicionário com 45 indicadores assistenciais",
+  "Relatório final de resultados com recomendações de continuidade"
+ ],
+ "fases": [
+  "Diagnóstico e Governança de Dados: 5 semanas",
+  "Engenharia de Dados e integração no Azure: 8 semanas",
+  "Modelagem de Machine Learning e dashboards em Power BI: 9 semanas",
+  "Homologação, treinamento e go-live: 6 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e inconsistência dos dados nos sistemas legados",
+  "Baixa adesão das equipes clínicas ao novo processo de priorização",
+  "Restrições de privacidade e LGPD no uso de dados de saúde"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Diretora de Saúde Populacional)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados)"
+ },
+ "resultados": "O modelo de estratificação passou a priorizar 18 mil pacientes crônicos de maior risco, com redução de 22% nas internações evitáveis no primeiro semestre pós go-live e economia estimada de R$ 3,4 milhões em custo assistencial.",
+ "licoes": "A integração do terceiro sistema legado atrasou 3 semanas por falta de documentação das regras de negócio, exigindo esforço extra de engenharia reversa. Foi decisivo envolver as equipes clínicas desde a fase de diagnóstico, o que acelerou a validação dos modelos e a adoção dos dashboards no go-live.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Rede Hospitalar Santa Clara, com histórico comprovado de entregas em Data & Analytics e conhecimento prévio do ambiente de dados do cliente."
+}

@@ -1,0 +1,48 @@
+{
+ "titulo": "Automação de Leitura e Triagem de Documentos com IA Generativa",
+ "problema": "A Mútua Previdência Sul recebe cerca de 12 mil documentos por mês entre apólices, sinistros e declarações, com triagem ainda manual em 70% dos casos. O processo atual gera fila média de 3 dias úteis e índice de retrabalho de 18% por classificação incorreta.",
+ "objetivo": "Automatizar a leitura, classificação e triagem de documentos com IA generativa sobre AWS, apoiada por RPA na captura e distribuição, reduzindo o tempo de triagem para até 1 dia útil.",
+ "escopo": [
+  "Pipeline de ingestão de documentos em AWS S3 com extração de texto e OCR",
+  "Modelos de IA generativa na AWS para classificação e sumarização de documentos",
+  "Robôs RPA para captura em caixas de e-mail e sistemas legados e para distribuição às filas corretas",
+  "Camada de validação humana com trilha de auditoria e feedback para retreino",
+  "Dashboards de acurácia, volume processado e tempo médio de triagem"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da solução em AWS com desenho dos fluxos RPA",
+  "Protótipo de classificação com acurácia mínima de 90% em base de 2 mil documentos",
+  "Robôs RPA de captura e distribuição em operação assistida",
+  "Relatório de testes e plano de retreino dos modelos",
+  "Manual operacional e treinamento de 15 usuários-chave"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e desenho da solução",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento do protótipo de IA generativa",
+   "semanas": 6
+  },
+  {
+   "fase": "Implementação dos robôs RPA e integrações",
+   "semanas": 6
+  },
+  {
+   "fase": "Testes integrados e go-live assistido",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de soluções, 2 engenheiros de IA, 1 desenvolvedor RPA e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos documentos digitalizados",
+  "Baixa aderência dos usuários ao novo fluxo de validação",
+  "Dependência de acessos a sistemas legados para o RPA"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Sinistros)",
+  "tecnico": "Paulo Menezes (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de reestruturação interna do orçamento de transformação digital para o exercício."
+}

@@ -1,0 +1,47 @@
+{
+ "titulo": "Previsão de Demanda e Reposição Inteligente com Snowflake e Machine Learning",
+ "problema": "A Metalúrgica Forja Forte opera com cerca de 1.800 SKUs ativos e enfrenta rupturas de estoque em 12% dos itens de alta giro, além de excesso de capital imobilizado em produtos de baixa rotação. A previsão de demanda é feita hoje em planilhas manuais, com acurácia média de 58%, o que compromete o planejamento de reposição junto ao SAP.",
+ "objetivo": "Elevar a acurácia da previsão de demanda para patamar superior a 80% nos itens de maior giro e automatizar a recomendação de reposição integrada ao SAP, reduzindo rupturas e capital imobilizado.",
+ "escopo": [
+  "Construção de pipeline de engenharia de dados no Snowflake para consolidar histórico de vendas, estoques e ordens de produção",
+  "Desenvolvimento de modelos de Machine Learning para previsão de demanda por SKU e por família de produtos",
+  "Motor de recomendação de reposição com regras de ponto de pedido e lote econômico integrado ao SAP",
+  "Painéis de acompanhamento de acurácia, ruptura e nível de estoque para as áreas de Planejamento e Suprimentos",
+  "Rotinas de monitoramento e retreinamento dos modelos de Machine Learning"
+ ],
+ "entregaveis": [
+  "Pipeline de dados no Snowflake documentado e em produção",
+  "Modelos de previsão de demanda validados com acurácia superior a 80% nos itens de alta rotação",
+  "Motor de recomendação de reposição integrado ao SAP em ambiente produtivo",
+  "Painéis de indicadores de demanda, ruptura e estoque disponibilizados aos gestores",
+  "Documentação técnica, manuais de operação e treinamento das equipes do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Modelagem de previsão de demanda",
+   "semanas": 6
+  },
+  {
+   "nome": "Motor de reposição e integração com SAP",
+   "semanas": 7
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos históricos de vendas e estoque no SAP",
+  "Baixa adesão do time de Planejamento às recomendações automáticas",
+  "Restrições de janela para integração em produção com o SAP"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Planejamento e Suprimentos)",
+  "tecnico": "Eduardo Tanaka (Arquiteto de Dados Sênior)"
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "titulo": "Painéis executivos e BI para gestão de saúde populacional",
+ "problema": "A Operadora Saúde Total, com 1,2 milhão de beneficiários, enfrenta dificuldade para consolidar indicadores de sinistralidade e utilização da rede. Os relatórios atuais levam até 5 dias úteis para serem gerados, comprometendo a tomada de decisão executiva.",
+ "objetivo": "Implementar uma solução de painéis executivos em Power BI integrada ao Azure, permitindo análise em tempo quase real dos principais indicadores assistenciais e financeiros.",
+ "escopo": [
+  "Modelagem dimensional no Azure Synapse Analytics para consolidar dados de beneficiários, atendimentos e sinistros",
+  "Desenvolvimento de pipeline de ingestão e transformação no Azure Data Factory",
+  "Criação de 10 painéis executivos no Power BI com indicadores de sinistralidade, custo assistencial e utilização",
+  "Configuração de segurança row-level security (RLS) no Power BI para diferentes níveis gerenciais",
+  "Documentação técnica e treinamento de 20 usuários-chave"
+ ],
+ "entregaveis": [
+  "Repositório de dados analítico no Azure Synapse com 15 tabelas fato e dimensão",
+  "Conjunto de 10 dashboards executivos no Power BI validados pela diretoria",
+  "Pipeline de ETL automatizado com execução diária e monitoramento de falhas",
+  "Manual de governança e dicionário de dados",
+  "Workshop de capacitação para 20 gestores"
+ ],
+ "fases": [
+  "Fase 1 – Discovery e arquitetura de dados: 3 semanas",
+  "Fase 2 – Construção do pipeline de dados no Azure: 4 semanas",
+  "Fase 3 – Desenvolvimento dos painéis em Power BI: 4 semanas",
+  "Fase 4 – Homologação e treinamento: 3 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados de origem inconsistente",
+  "Baixa adoção pelos usuários executivos",
+  "Atraso na liberação de acessos ao Azure"
+ ],
+ "pessoas": {
+  "cliente": "Carla Menezes (Diretora de Tecnologia da Informação)",
+  "tecnico": "Rafael Souza (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com a decisora era fraco; não houve interação prévia suficiente para entender as prioridades estratégicas dela e reforçar o valor da continuidade.",
+ "licoes": "Para próximas oportunidades, mapear e engajar o decisor desde o início, realizando reuniões individuais para alinhar expectativas e demonstrar proximidade com o negócio.",
+ "retorno": "Prezados, após análise criteriosa, informamos que decidimos não seguir com a proposta da NTT DATA para o projeto de painéis executivos. A escolha por outro fornecedor reflete nossa necessidade de maior proximidade com o decisor e alinhamento estratégico. Agradecemos o esforço da equipe. Atenciosamente, Carla Menezes – Diretora de TI"
+}

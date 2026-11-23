@@ -1,0 +1,37 @@
+{
+ "titulo": "Painéis Executivos e BI para Auditoria de Contas",
+ "problema": "O Tribunal Regional de Contas do Sul precisa consolidar dados de auditoria de 184 municípios e 12 secretarias estaduais, com mais de 3.500 processos anuais, em painéis executivos para tomada de decisão. Atualmente, os relatórios são manuais e levam até 15 dias para serem consolidados, comprometendo a agilidade da fiscalização.",
+ "objetivo": "Implantar uma solução de BI em Power BI e Azure para consolidar dados de auditoria e gerar painéis executivos em tempo real, reduzindo o tempo de análise em 70%.",
+ "escopo": [
+  "Modelagem dimensional no Azure Synapse Analytics para integração de 15 fontes de dados distintas.",
+  "Desenvolvimento de 8 painéis executivos em Power BI com indicadores de desempenho e alertas de anomalias.",
+  "Implementação de pipelines de Engenharia de Dados no Azure Data Factory para carga incremental diária.",
+  "Configuração de governança e segurança no Power BI Service com 3 níveis de acesso.",
+  "Treinamento de 25 usuários-chave para uso dos painéis e da plataforma de autoatendimento."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e integração contendo 15 fontes mapeadas.",
+  "8 painéis executivos publicados no Power BI Service com testes de aceitação.",
+  "Pipeline de dados automatizado no Azure Data Factory com monitoramento e logs.",
+  "Manual de governança e segurança do ambiente de BI.",
+  "Relatório de treinamento e capacitação dos 25 usuários-chave."
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e Arquitetura: 3 semanas",
+  "Fase 2 - Engenharia de Dados e Integração: 5 semanas",
+  "Fase 3 - Desenvolvimento de Painéis e Testes: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos dados legados de 15 fontes distintas.",
+  "Resistência dos servidores públicos à mudança de processo manual para digital.",
+  "Atraso na liberação de acessos e credenciais de TI pelo cliente."
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Auditoria)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o Tribunal exigia experiência comprovada em projetos de BI para órgãos de controle, e a NTT DATA não apresentou cases específicos no setor público de contas.",
+ "licoes": "Para próximas propostas no setor público, incluir cases detalhados de BI em tribunais de contas ou órgãos fiscalizadores, mesmo que de outros países, para comprovar expertise no tema.",
+ "retorno": "Prezados, após análise das propostas, informamos que a NTT DATA não foi selecionada para o projeto de painéis executivos e BI. O motivo principal foi a falta de experiência comprovada em projetos similares no setor de controle externo. Agradecemos o esforço da equipe e desejamos sucesso em futuras oportunidades. Atenciosamente, Ricardo Almeida (Diretor de Auditoria)."
+}

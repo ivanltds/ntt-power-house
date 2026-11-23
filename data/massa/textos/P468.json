@@ -1,0 +1,38 @@
+{
+ "titulo": "Detecção de Fraude em Telecom com Machine Learning e Azure",
+ "problema": "A Tríade Telecom enfrenta perdas anuais de aproximadamente R$ 30 milhões devido a fraudes em chamadas e dados, com 15% dos casos não detectados. A área de prevenção a fraudes utiliza processos manuais e regras estáticas, resultando em altos índices de falsos positivos (25%) e tempo de resposta superior a 48 horas.",
+ "objetivo": "Desenvolver um modelo de machine learning em Azure para detecção de fraudes em tempo real, reduzindo perdas em 40% e diminuindo falsos positivos para menos de 10%.",
+ "escopo": [
+  "Análise exploratória dos dados históricos de CDRs e eventos de rede para identificação de padrões de fraude",
+  "Desenvolvimento de modelos de machine learning (classificação e anomalias) utilizando Azure Machine Learning",
+  "Integração do modelo com o sistema de prevenção a fraudes existente via APIs no Azure",
+  "Implementação de pipeline de monitoramento contínuo e retreinamento automático no Azure DevOps",
+  "Documentação técnica e transferência de conhecimento para a equipe de prevenção a fraudes"
+ ],
+ "entregaveis": [
+  "Relatório de análise exploratória com insights sobre padrões de fraude",
+  "Modelo de machine learning treinado e validado com métricas de performance (AUC > 0,85)",
+  "API de scoring em tempo real implantada no Azure Kubernetes Service",
+  "Dashboard de monitoramento de fraudes no Power BI",
+  "Documentação completa e sessão de treinamento para a equipe do cliente"
+ ],
+ "fases": [
+  "Fase 1: Entendimento do negócio e preparação de dados (6 semanas)",
+  "Fase 2: Desenvolvimento e validação de modelos (10 semanas)",
+  "Fase 3: Implantação e integração (6 semanas)",
+  "Fase 4: Monitoramento e transferência de conhecimento (2 semanas)"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 1 engenheiro de machine learning",
+ "riscos": [
+  "Qualidade e disponibilidade dos dados históricos",
+  "Resistência à mudança por parte da equipe de prevenção a fraudes",
+  "Complexidade na integração com sistemas legados"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Prevenção a Fraudes)",
+  "tecnico": "Ana Silva (Arquiteta de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de detecção de fraude implantada na Tríade Telecom, com contrato de manutenção ativo e integração consolidada. Apesar da superioridade técnica da nossa abordagem com Machine Learning e Azure, o cliente optou por evitar custos de transição e manter o fornecedor atual.",
+ "licoes": "Para próximas oportunidades em clientes com solução instalada, devemos realizar um estudo aprofundado do ambiente atual e propor uma abordagem de migração gradual ou complementar, destacando o valor agregado da nova solução em vez de substituição total.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de detecção de fraude foi perdida para um concorrente que já possui solução implantada em nossa operação. A decisão foi baseada na continuidade e nos custos de transição. Agradecemos o empenho da equipe da NTT DATA. Atenciosamente, Carlos Mendes (Diretor de Prevenção a Fraudes)."
+}

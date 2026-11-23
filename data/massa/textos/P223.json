@@ -1,0 +1,49 @@
+{
+ "titulo": "Previsão de Safra e Agricultura de Precisão com Analytics Avançado",
+ "problema": "A Cooperativa Agro Vale Verde, com 1.200 produtores associados e 85 mil hectares monitorados, enfrenta perdas anuais de até 12% na produção devido a falhas na previsão de safra e manejo inadequado de insumos. A ausência de modelos preditivos consolidados impede decisões ágeis sobre irrigação, colheita e alocação de recursos.",
+ "objetivo": "Implementar uma solução de previsão de safra e agricultura de precisão baseada em dados históricos e climáticos, utilizando Power BI e Python, para reduzir perdas em 8% e otimizar o uso de insumos em 15% até o final do projeto.",
+ "escopo": [
+  "Desenvolvimento de modelos de machine learning em Python para previsão de produtividade por talhão, integrando dados históricos de safras, imagens de satélite e variáveis climáticas.",
+  "Construção de dashboards interativos em Power BI para monitoramento em tempo real de indicadores de safra, mapas de calor e alertas de anomalias.",
+  "Implementação de pipeline de dados para ingestão e tratamento de dados de campo, estações meteorológicas e sensores IoT, garantindo qualidade e atualização diária.",
+  "Criação de sistema de recomendação para agricultura de precisão, com sugestões de manejo e alocação de insumos baseadas nos modelos preditivos.",
+  "Capacitação da equipe técnica da cooperativa no uso das ferramentas e na interpretação dos resultados analíticos."
+ ],
+ "entregaveis": [
+  "Modelo preditivo de safra validado com acurácia mínima de 85% para as principais culturas (soja, milho e algodão).",
+  "Dashboard executivo em Power BI com visões por cultura, talhão e período, acessível via web e mobile.",
+  "Relatório mensal de desempenho com insights acionáveis e recomendações de manejo.",
+  "Documentação técnica completa dos modelos, pipelines e dashboards, incluindo guias de operação.",
+  "Workshop de capacitação para 30 colaboradores da cooperativa, com material didático e certificação interna."
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Preparação de Dados",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Desenvolvimento de Modelos Preditivos",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Construção de Dashboards e Integração",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Validação e Capacitação",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade inconsistente dos dados históricos de campo",
+  "Atraso na integração com sistemas legados da cooperativa",
+  "Resistência dos produtores à adoção das recomendações baseadas em modelos"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Operações Agrícolas)",
+  "tecnico": "Fernanda Lima (Cientista de Dados Sênior)"
+ },
+ "resultados": "Nas primeiras 12 semanas, o modelo piloto já alcançou 82% de acurácia na previsão de produtividade de soja em 15 talhões selecionados.",
+ "diferencial": "Ganhamos o projeto por termos um case de referência em previsão de safra para uma cooperativa similar, com resultados comprovados de redução de perdas em 10%."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Streaming de dados em tempo real para operações de distribuição de energia",
+ "problema": "A Distribuidora Luz do Cerrado, com cerca de 1,2 milhão de unidades consumidoras e 3,5 mil medidores inteligentes gerando leituras a cada 15 minutos, não conseguia consolidar os eventos de campo em menos de 6 horas, atrasando a detecção de perdas e a resposta a oscilações de rede. A área de operações dependia de cargas batch noturnas e de planilhas manuais, o que elevava o índice de perdas não técnicas a 8,7% e impedia o acompanhamento em tempo real da qualidade da energia.",
+ "objetivo": "Implantar uma plataforma de streaming de dados em nuvem que reduza a latência de ingestão e disponibilização de eventos de campo de horas para segundos, sustentando a operação e a análise em tempo quase real.",
+ "escopo": [
+  "Ingestão contínua de eventos de medidores e sensores via Azure Event Hubs e AWS Kinesis, com throughput projetado de 4.500 eventos por segundo no pico",
+  "Camada de processamento em stream no Azure Databricks Structured Streaming e AWS Glue para cálculo de perdas, interrupções e indicadores de qualidade em janelas de 1 a 5 minutos",
+  "Pipeline de dados em tempo real com armazenamento em camadas bronze, prata e ouro no Azure Data Lake Storage e Amazon S3, com catálogo unificado",
+  "Integração dos fluxos em tempo real com os painéis operacionais e o data warehouse existente, disponibilizando 18 indicadores de rede atualizados a cada 2 minutos",
+  "Monitoramento, alertas e observabilidade dos pipelines com métricas de latência, volume e falhas, incluindo política de retenção e reprocessamento"
+ ],
+ "entregaveis": [
+  "Plataforma de streaming em produção processando 4.500 eventos por segundo no pico, com latência média de 90 segundos",
+  "18 indicadores operacionais e de qualidade de energia publicados em painéis atualizados a cada 2 minutos",
+  "Catálogo de dados unificado e documentação técnica dos pipelines em Azure e AWS",
+  "Conjunto de alertas automatizados para falhas de ingestão e desvios de latência, com runbooks de operação",
+  "Transferência de conhecimento para a equipe interna, com 6 sessões de capacitação e documentação de sustentação"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de streaming",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Construção dos pipelines de ingestão e processamento",
+   "duracao_semanas": 14
+  },
+  {
+   "nome": "Integração com painéis e indicadores operacionais",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Homologação, go-live e sustentação assistida",
+   "duracao_semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em streaming e 1 gerente de projeto",
+ "riscos": [
+  "Volume de eventos acima do previsto nos horários de pico",
+  "Qualidade e padronização irregular dos dados de medidores legados",
+  "Dependência de janelas de manutenção dos sistemas de campo do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Rede)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A latência de disponibilização de eventos caiu de cerca de 6 horas para 90 segundos, e o índice de perdas não técnicas identificadas em tempo real passou a ser monitorado com cobertura de 92% das unidades consumidoras, gerando economia estimada de R$ 1,8 milhão no primeiro ano.",
+ "licoes": "A integração com os sistemas legados de medição consumiu 3 semanas além do previsto, devido à falta de padronização dos formatos de eventos. Foi decisivo para o sucesso o reaproveitamento da arquitetura de dados já implantada em projeto anterior no cliente, que encurtou a fase de construção em cerca de 25%.",
+ "diferencial": "Ganhamos por apresentar um case de referência de streaming em utilities com arquitetura multinuvem e por já conhecermos a fundação de dados do cliente, reduzindo o risco de implantação."
+}

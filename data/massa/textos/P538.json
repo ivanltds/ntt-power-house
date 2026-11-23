@@ -1,0 +1,46 @@
+{
+ "titulo": "Painéis executivos e BI para gestão assistencial e financeira",
+ "problema": "A Operadora Saúde Total, com 850 mil beneficiários ativos e 12 mil prestadores credenciados, consolida indicadores assistenciais e financeiros em planilhas manuais de 14 áreas, gerando atraso de até 9 dias na divulgação dos números à diretoria. A ausência de uma visão única eleva o custo administrativo em cerca de 6% e dificulta a detecção de desvios de sinistralidade.",
+ "objetivo": "Implantar uma plataforma de analytics com painéis executivos em Azure, Power BI e Snowflake, unificando dados assistenciais e financeiros para a diretoria em até 2 meses.",
+ "escopo": [
+  "Ingestão e integração de dados de sinistros, autorizações e faturamento no Snowflake via pipelines no Azure Data Factory",
+  "Modelagem dimensional de indicadores de sinistralidade, glosa e custo assistencial no Snowflake",
+  "Construção de 8 painéis executivos no Power BI para diretoria, financeiro e gestão de rede",
+  "Publicação e governança dos datasets no Azure, com controle de acesso por perfil e atualização diária",
+  "Migração dos relatórios manuais das 14 áreas para os novos painéis, com validação de paridade de dados"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e catálogo de indicadores homologado",
+  "Pipeline de ingestão no Azure operando com carga diária de 3 milhões de registros",
+  "Modelo dimensional no Snowflake com 45 métricas de negócio certificadas",
+  "8 painéis executivos publicados no Power BI com tempos de resposta abaixo de 5 segundos",
+  "Manual de governança e treinamento de 30 usuários-chave nas áreas de negócio"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura",
+   "semanas": 3
+  },
+  {
+   "fase": "Implementação de pipelines e modelagem no Snowflake",
+   "semanas": 3
+  },
+  {
+   "fase": "Construção dos painéis no Power BI e validação",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados legados de sinistros",
+  "Dependência de aprovação de acessos às bases assistenciais",
+  "Escopo de indicadores expandido durante a execução"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia e Dados)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o valor apresentado ficou cerca de 28% acima do mercado, apesar da continuidade do projeto anterior no cliente e da aderência técnica da solução. O cliente priorizou a redução de custo no orçamento de 2025.",
+ "licoes": "Nas próximas propostas para clientes com continuidade, ancorar o preço em benchmark de mercado e oferecer opção de escopo modular para caber no orçamento. Apresentar o valor da continuidade em termos de redução de retrabalho e prazo.",
+ "retorno": "Prezados, após a análise das propostas recebidas, informamos que decidimos não seguir com a proposta da NTT DATA para o projeto de painéis executivos e BI. O valor apresentado ficou cerca de 28% acima das demais ofertas e do nosso orçamento aprovado para 2025, o que foi determinante para a decisão. Agradecemos o esforço da equipe e o histórico de parceria no projeto anterior. Permanecemos abertos a novas conversas em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Tecnologia e Dados, Operadora Saúde Total."
+}

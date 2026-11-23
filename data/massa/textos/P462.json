@@ -1,0 +1,48 @@
+{
+ "titulo": "Modernização de aplicações legadas com containers em Kubernetes na nuvem híbrida",
+ "problema": "A NetVale Provedor opera 38 aplicações de atendimento e billing em VMs legadas, com 22 delas fora de suporte e janelas de manutenção de até 6 horas por release. A base de 1,4 milhão de assinantes exige escalabilidade em picos de 3x no tráfego, e o custo de infraestrutura cresceu 27% em 12 meses sem ganho proporcional de disponibilidade.",
+ "objetivo": "Modernizar o portfólio de aplicações críticas para containers orquestrados em Kubernetes, com migração para Azure e AWS, reduzindo o tempo de release e o custo de infraestrutura.",
+ "escopo": [
+  "Avaliação e priorização de 38 aplicações, com definição do padrão de containers e imagens Docker para 22 aplicações fora de suporte",
+  "Provisionamento de clusters Kubernetes gerenciados em Azure (AKS) e AWS (EKS), com malha de serviço, observabilidade e política de auto-scaling",
+  "Migração de 12 aplicações prioritárias para containers, incluindo refatoração de configuração, secrets e pipelines CI/CD",
+  "Implementação de sustentação / AMS com SLA de 99,9%, runbooks e plantão 24x7 para o ambiente containerizado",
+  "Plano de cutover e rollback por onda, com testes de carga simulando picos de 3x a base atual de assinantes"
+ ],
+ "entregaveis": [
+  "Inventário técnico das 38 aplicações com matriz de priorização e roadmap de ondas",
+  "Arquitetura de referência multi-cloud com clusters Kubernetes em Azure e AWS documentada",
+  "12 aplicações migradas e em produção em containers, com pipelines CI/CD ativos",
+  "Catálogo de serviços de sustentação / AMS com SLA 99,9%, indicadores e runbooks operacionais",
+  "Relatório de testes de carga e plano de cutover/rollback validado por onda"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de referência",
+   "semanas": 8
+  },
+  {
+   "nome": "Provisionamento dos clusters e pipelines",
+   "semanas": 10
+  },
+  {
+   "nome": "Migração por ondas e testes de carga",
+   "semanas": 14
+  },
+  {
+   "nome": "Estabilização e transição para sustentação / AMS",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de cloud, 3 engenheiros de plataforma Kubernetes e 2 engenheiros de aplicação",
+ "riscos": [
+  "Dependências entre aplicações legadas atrasam a migração por ondas",
+  "Janelas de manutenção restritas em horário de pico de assinantes",
+  "Curva de aprendizado interna em Kubernetes reduz a adoção do modelo AMS"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Felipe Andrade (Arquiteto de Cloud & Infra)"
+ },
+ "resultados": "A oportunidade foi cancelada porque o cliente suspendeu o orçamento de modernização e priorizou a continuidade do projeto anterior de sustentação, adiando a migração para containers."
+}

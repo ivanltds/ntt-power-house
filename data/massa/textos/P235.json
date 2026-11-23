@@ -1,0 +1,50 @@
+{
+ "titulo": "Automação de Back-Office com RPA e ServiceNow para Processos SAP",
+ "problema": "A Autopeças Motriz processa cerca de 18 mil notas fiscais e 6,5 mil pedidos de compra por mês, dos quais aproximadamente 40% ainda exigem digitação manual em SAP e planilhas de controle. O time de back-office tem 22 pessoas e opera com índice de retrabalho de 9% em lançamentos fiscais, gerando multas e atrasos recorrentes.",
+ "objetivo": "Automatizar os processos de lançamento fiscal, cadastro de fornecedores e tratativas de segunda via de pagamento, reduzindo o esforço manual em 60% em três meses e liberando o time para atividades analíticas.",
+ "escopo": [
+  "Mapeamento e redesenho de 5 processos de back-office com interface em SAP ECC e portal de fornecedores",
+  "Desenvolvimento de robôs RPA para lançamento de notas fiscais e conferência de pedidos em SAP",
+  "Orquestração de filas e monitoramento dos robôs via ServiceNow",
+  "Scripts em Python para tratamento de exceções, validação de dados e geração de relatórios gerenciais",
+  "Estrutura de sustentação AMS com SLA de 4 horas úteis para correção de falhas nos robôs"
+ ],
+ "entregaveis": [
+  "Catálogo de processos automatizados com PDD e SDD dos 5 fluxos priorizados",
+  "8 robôs RPA em produção, integrados a SAP e ServiceNow",
+  "Painel de monitoramento de execuções, falhas e economia de horas no ServiceNow",
+  "Scripts Python de validação documentados e versionados",
+  "Relatório mensal de indicadores e plano de sustentação AMS"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho",
+   "semanas": 3
+  },
+  {
+   "fase": "Desenvolvimento dos robôs e integrações",
+   "semanas": 5
+  },
+  {
+   "fase": "Homologação e go-live assistido",
+   "semanas": 3
+  },
+  {
+   "fase": "Estabilização e transição para AMS",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA, 1 especialista SAP e 1 analista de sustentação",
+ "riscos": [
+  "Acessos e credenciais SAP liberados com atraso pelo cliente",
+  "Mudanças de layout no portal de fornecedores quebrarem os robôs",
+  "Baixa adesão do time de back-office ao novo modelo de exceções"
+ ],
+ "pessoas": {
+  "cliente": "Renata Villaça (Gerente de Back-Office)",
+  "tecnico": "Felipe Andrade (Arquiteto de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade do cliente: a Autopeças Motriz queria automatizar apenas 2 processos piloto, enquanto a oferta previa 5 fluxos, 8 robôs e uma estrutura de AMS completa. O cliente optou por um fornecedor com escopo enxuto e entrada mais rápida.",
+ "licoes": "Para propostas de continuidade, dimensionar o escopo a partir do volume real de processos que o cliente quer atacar no curto prazo e oferecer uma fase piloto opcional, deixando a expansão para uma segunda onda.",
+ "retorno": "Prezados, após a análise das propostas recebidas, informamos que optamos por seguir com outro fornecedor. A decisão foi motivada pelo fato de a proposta da NTT DATA abranger cinco processos e uma estrutura de AMS completa, enquanto nosso objetivo imediato era validar apenas dois processos piloto. Agradecemos o empenho da equipe e o detalhamento técnico apresentado. Permanecemos à disposição para futuras oportunidades. Atenciosamente, Renata Villaça (Gerente de Back-Office)"
+}

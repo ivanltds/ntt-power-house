@@ -1,0 +1,46 @@
+{
+ "titulo": "FinOps e Otimização de Custos Multicloud com Kubernetes e Power BI",
+ "problema": "O Atacadão Popular Sul, com 45 lojas e faturamento anual de R$ 2,3 bilhões, enfrenta custos de nuvem crescentes: GCP e Azure somam R$ 1,8 milhão/ano, 30% acima do orçado, sem visibilidade granular por centro de custo. A migração para Kubernetes aumentou a complexidade de alocação, e a falta de governança impede decisões eficazes de otimização.",
+ "objetivo": "Reduzir em 25% os custos de nuvem em 3 meses, implantando práticas de FinOps, dashboards no Power BI e otimização de workloads em Kubernetes nos ambientes GCP e Azure.",
+ "escopo": [
+  "Avaliação de custos e uso atual nas plataformas GCP e Azure, com tagging e alocação por centro de custo",
+  "Implementação de políticas de FinOps e automação de rightsizing e desligamento de recursos ociosos em Kubernetes",
+  "Desenvolvimento de dashboards no Power BI para visibilidade de custos em tempo real e chargeback",
+  "Otimização de clusters Kubernetes no GCP (GKE) e Azure (AKS), incluindo configuração de HPA e VPA",
+  "Capacitação da equipe do cliente em práticas de FinOps e governança de custos"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de custos e oportunidades de economia (quick wins) com meta de 25%",
+  "Dashboards no Power BI para acompanhamento de custos por área e projeto",
+  "Plano de otimização de recursos Kubernetes com ações priorizadas e cronograma",
+  "Políticas e processos de FinOps documentados e implantados",
+  "Workshop de capacitação e material de suporte para equipe interna"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Planejamento",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Implementação de FinOps e Dashboards",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Otimização de Kubernetes e Automação",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de nuvem, 2 engenheiros DevOps, 1 analista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Resistência cultural à mudança de práticas de consumo",
+  "Complexidade na integração de dados de custos entre GCP e Azure",
+  "Prazo curto para implementação completa em 3 meses"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Gerente de TI)",
+  "tecnico": "Fernanda Lima (Arquiteta de Soluções Cloud)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou 18% acima do mercado, inviabilizando a contratação dentro do orçamento aprovado pelo cliente.",
+ "licoes": "Para próximas propostas de FinOps, incluir análise de valor baseada em economia potencial e oferecer modelo de precificação flexível com base em success fee para alinhar custo ao resultado.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de FinOps não foi selecionada. O motivo principal foi o valor acima do mercado, que excedeu nosso orçamento disponível. Agradecemos o esforço da equipe da NTT DATA e esperamos colaborar em oportunidades futuras. Atenciosamente, Ricardo Almeida (Gerente de TI, Atacadão Popular Sul)."
+}

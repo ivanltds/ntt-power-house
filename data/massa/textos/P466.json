@@ -1,0 +1,50 @@
+{
+ "titulo": "Streaming de dados em tempo real para operações de distribuição de energia",
+ "problema": "A Distribuidora Luz do Cerrado opera 1,2 milhão de unidades consumidoras e enfrenta latência de até 6 horas na consolidação de dados de medição e eventos de rede, o que atrasa a detecção de perdas e a resposta a anomalias. Cerca de 18% dos eventos críticos chegam ao centro de operações sem contexto analítico em tempo hábil.",
+ "objetivo": "Implantar uma plataforma de streaming de dados em tempo real para ingestão, processamento e analytics de eventos de medição e rede, reduzindo a latência de dados de horas para menos de 2 minutos.",
+ "escopo": [
+  "Ingestão contínua de eventos de medidores e sensores de rede via Azure Event Hubs e AWS Kinesis, com volume estimado de 4 TB/dia",
+  "Pipeline de processamento em streaming com Azure Stream Analytics e AWS Lambda para enriquecimento e detecção de anomalias",
+  "Camada analítica em tempo real com Azure Synapse Analytics e Amazon Redshift para dashboards operacionais",
+  "Integração com sistemas legados de medição e gestão de ativos via APIs e conectores CDC",
+  "Monitoramento e observabilidade do fluxo com Azure Monitor e Amazon CloudWatch, incluindo alertas de latência e falhas"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming multi-cloud documentada e validada",
+  "Pipeline de ingestão e processamento em tempo real em produção para 100% dos medidores prioritários",
+  "Painéis de Analytics & BI com latência inferior a 2 minutos para o centro de operações",
+  "Catálogo de dados e políticas de governança para os fluxos em streaming",
+  "Plano de operação assistida e runbook de incidentes para a plataforma de streaming"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura",
+   "semanas": 6
+  },
+  {
+   "nome": "Construção dos pipelines de streaming",
+   "semanas": 14
+  },
+  {
+   "nome": "Analytics e dashboards em tempo real",
+   "semanas": 8
+  },
+  {
+   "nome": "Homologação e go-live assistido",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em analytics e 1 gerente de projeto",
+ "riscos": [
+  "Latência e throughput dos conectores legados de medição",
+  "Complexidade de operação simultânea em Azure e AWS",
+  "Dependência de janelas de manutenção dos sistemas de campo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Tecnologia da Informação)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de streaming instalada e operante na Distribuidora Luz do Cerrado, com contrato de suporte vigente. O cliente optou por expandir a base existente em vez de migrar para uma nova plataforma.",
+ "licoes": "Mapear antecipadamente o parque tecnológico já instalado no cliente e o grau de satisfação com fornecedores incumbentes antes de investir esforço na proposta. Priorizar abordagens de complementação ou substituição gradual quando houver solução concorrente já operante.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de dados em tempo real com streaming não foi selecionada. A decisão foi tomada porque já temos uma solução de streaming implantada e em operação, e optamos por expandir a plataforma existente para reduzir riscos e custos de transição. Agradecemos o empenho da equipe da NTT DATA e manteremos a parceria para iniciativas futuras. Atenciosamente, Renata Vasconcelos, Gerente de Tecnologia da Informação, Distribuidora Luz do Cerrado."
+}

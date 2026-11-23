@@ -1,0 +1,50 @@
+{
+ "titulo": "Programa de Governança de Dados e Adequação LGPD em Ambiente Azure/Databricks",
+ "problema": "A Saúde Garantida Seguros opera com 3,2 milhões de apólices ativas e 14 bases de dados distribuídas entre áreas de sinistros, subscrição e marketing, sem catálogo único de dados nem classificação de informações pessoais sensíveis. A auditoria interna de 2024 apontou 62% dos processos de tratamento de dados sem base legal documentada, expondo a seguradora a sanções da ANPD e a riscos reputacionais.",
+ "objetivo": "Estruturar a governança de dados corporativa e adequar os processos de tratamento de dados pessoais à LGPD, com catálogo, classificação e controles de acesso implementados em Azure e Databricks ao longo de 7 meses.",
+ "escopo": [
+  "Diagnóstico de maturidade de governança e mapeamento de 100% dos fluxos de dados pessoais nas 14 bases corporativas",
+  "Implantação de catálogo de dados e linhagem no Azure Purview, integrado ao Azure Data Lake Storage Gen2",
+  "Classificação automatizada de dados pessoais e sensíveis em pipelines Databricks, com políticas de mascaramento e controle de acesso por perfil",
+  "Definição de papéis e comitê de governança, com 12 políticas e procedimentos de tratamento de dados alinhados à LGPD",
+  "Programa de Change Management com treinamento de 180 colaboradores e plano de comunicação para as áreas de negócio"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de maturidade com plano de ação priorizado em 3 ondas",
+  "Catálogo de dados corporativo no Azure Purview com 100% das bases críticas catalogadas e linhagem documentada",
+  "Matriz de classificação de dados pessoais e regras de mascaramento implementadas em Databricks",
+  "Política corporativa de governança de dados e LGPD aprovada pelo comitê executivo",
+  "Relatório final de conformidade com indicadores de aderência e trilha de auditoria"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da governança",
+   "semanas": 6
+  },
+  {
+   "fase": "Implantação técnica em Azure e Databricks",
+   "semanas": 12
+  },
+  {
+   "fase": "Políticas, papéis e Change Management",
+   "semanas": 8
+  },
+  {
+   "fase": "Estabilização e relatório de conformidade",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em LGPD, 1 consultor de Change Management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas de negócio ao novo modelo de governança",
+  "Qualidade e completidão insuficientes dos metadados nas 14 bases legadas",
+  "Dependência de aprovações jurídicas para as políticas de tratamento de dados"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Compliance)",
+  "tecnico": "Paulo Menezes (Gerente de Projeto Sênior)"
+ },
+ "resultados": "A proposta foi perdida por preço acima do mercado: o valor total ficou cerca de 28% superior ao da concorrente vencedora, sem que houvesse diferenciação percebida suficiente no escopo técnico. A continuidade do projeto anterior no cliente não foi suficiente para compensar a diferença comercial.",
+ "licoes": "Para propostas de governança de dados em clientes com histórico de continuidade, modular o escopo em ondas opcionais e apresentar comparativo de valor por fase, evitando um pacote único de 7 meses que dificulte a comparação de preço.",
+ "retorno": "Prezado Paulo, informamos que a Saúde Garantida Seguros concluiu o processo de avaliação e optou por seguir com outra proposta para o programa de governança de dados e LGPD. O fator determinante foi o valor apresentado, que ficou acima do praticado no mercado para escopo equivalente. Agradecemos o empenho da equipe da NTT DATA e reforçamos o interesse em manter a parceria em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Dados e Compliance."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD para Regime Próprio de Previdência",
+ "problema": "O Instituto de Previdência Municipal administra cerca de 12 mil beneficiários entre servidores ativos, aposentados e pensionistas, com dados pessoais e financeiros dispersos em 7 sistemas legados e 43 planilhas manuais. A ausência de catálogo, políticas de classificação e trilhas de consentimento expunha o Instituto a riscos de sanções da ANPD e a inconsistências em relatórios atuariais enviados ao Tribunal de Contas.",
+ "objetivo": "Estruturar a governança de dados e adequar o Instituto à LGPD em 6 meses, criando catálogo único, políticas de classificação e controles de acesso rastreáveis sobre a base analítica em nuvem.",
+ "escopo": [
+  "Diagnóstico de maturidade de dados e mapeamento de 100% dos fluxos com dados pessoais, com base em entrevistas e inventário de fontes",
+  "Implantação de catálogo e lineage no Databricks, com ingestão de dados dos sistemas de folha e previdência via Python e Azure Data Factory",
+  "Modelagem de camadas Bronze, Silver e Gold no Snowflake para dados de beneficiários, com mascaramento e pseudonimização de campos sensíveis",
+  "Definição de 18 políticas de classificação, retenção e descarte, além de matriz de papéis e bases legais por tratamento de dados",
+  "Painel de conformidade em Azure com indicadores de consentimentos, acessos e incidentes, integrado ao fluxo de resposta a titulares"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de maturidade e inventário de dados pessoais com 7 fontes mapeadas",
+  "Catálogo de dados e lineage no Databricks cobrindo 120 tabelas críticas",
+  "Política de governança de dados e LGPD aprovada pela diretoria do Instituto",
+  "Ambiente Snowflake com camadas de dados e regras de mascaramento em produção",
+  "Dashboard de conformidade e plano de resposta a incidentes com 12 indicadores"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e inventário",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenho de políticas e arquitetura",
+   "semanas": 6
+  },
+  {
+   "fase": "Implantação técnica e catálogo",
+   "semanas": 8
+  },
+  {
+   "fase": "Painéis, treinamento e sustentação",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 1 especialista em privacidade e LGPD, 2 engenheiros de dados e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização dos dados nos sistemas legados",
+  "Disponibilidade limitada das áreas de RH e jurídico para validações",
+  "Mudanças de interpretação regulatória da ANPD durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Administração e Benefícios)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "O Instituto passou a rastrear 100% dos acessos a dados pessoais e reduziu em 62% o tempo de resposta a solicitações de titulares, com economia estimada de R$ 380 mil/ano em retrabalho e riscos evitados.",
+ "licoes": "A integração dos sistemas legados de folha consumiu 3 semanas além do previsto por ausência de documentação de APIs. Foi decisivo envolver a área jurídica desde a primeira fase, o que acelerou a aprovação das políticas de retenção e evitou retrabalho no desenho.",
+ "diferencial": "Apresentamos um case de referência de governança de dados e LGPD em outro regime próprio de previdência, com arquitetura semelhante em Databricks e Snowflake, o que deu segurança técnica e regulatória à decisão do Instituto."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração SAP S/4HANA para nuvem em frigorífico de grande porte",
+ "problema": "O Frigorífico Campo Nobre opera com SAP ECC em servidores on-premises defasados, com janelas de manutenção de até 9 horas e custo de infraestrutura 22% acima do orçado. O crescimento de 18% no volume de abates nos últimos dois anos pressiona o ERP, que já apresenta lentidão em fechamentos contábeis mensais.",
+ "objetivo": "Migrar o ambiente SAP para SAP S/4HANA em nuvem, com integração entre Azure e AWS, em 11 meses, reduzindo custo de infraestrutura e ampliando a disponibilidade dos processos críticos de produção e fiscal.",
+ "escopo": [
+  "Assessment e blueprint do SAP ECC atual para conversão ao SAP S/4HANA, com mapeamento de 340 objetos customizados",
+  "Migração de cargas de trabalho SAP para Azure, com integração de serviços de dados e backup em AWS",
+  "Conversão de banco de dados para SAP HANA e ajuste de 120 relatórios e interfaces",
+  "Implementação de observabilidade e monitoramento de performance em Azure e AWS",
+  "Cutover assistido e suporte hipercare durante 8 semanas pós-go-live"
+ ],
+ "entregaveis": [
+  "Relatório de assessment com inventário técnico e plano de conversão detalhado",
+  "Ambiente SAP S/4HANA provisionado em Azure com integração AWS homologado",
+  "Plano de cutover com runbook e matriz de rollback",
+  "Relatório de testes de performance e aceite funcional",
+  "Suporte hipercare pós-go-live com relatórios semanais de estabilização"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e blueprint",
+   "semanas": 6
+  },
+  {
+   "fase": "Preparação de ambientes e conversão",
+   "semanas": 16
+  },
+  {
+   "fase": "Testes integrados e cutover",
+   "semanas": 14
+  },
+  {
+   "fase": "Hipercare e estabilização",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 gerente de projeto, 2 arquitetos SAP S/4HANA, 3 consultores funcionais, 2 engenheiros de nuvem Azure/AWS e 1 especialista em banco SAP HANA",
+ "riscos": [
+  "Customizações legadas com baixa documentação atrasam a conversão",
+  "Janela de cutover insuficiente para o volume de dados de produção",
+  "Dependência de terceiros na integração fiscal e de balanças"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Menezes (CIO do Frigorífico Campo Nobre)",
+  "tecnico": "Fernanda Toledo (Arquiteta SAP S/4HANA na NTT DATA)"
+ },
+ "resultados": "A proposta foi perdida porque o cliente desistiu do projeto neste ciclo: o conselho congelou o orçamento de transformação de TI por tempo indeterminado, priorizando investimentos em capacidade frigorífica.",
+ "licoes": "Mapear o ciclo orçamentário do cliente antes de investir em proposta detalhada e condicionar o cronograma à aprovação formal do CAPEX, evitando esforço de pré-venda sem verba confirmada.",
+ "retorno": "Prezados, informamos que o projeto de migração para SAP S/4HANA não seguirá adiante neste momento. O conselho deliberou pelo congelamento do orçamento de TI para priorizar investimentos em capacidade frigorífica, sem previsão de retomada. Agradecemos o empenho da equipe da NTT DATA na elaboração da proposta e manteremos contato caso o cenário mude. Atenciosamente, Ricardo Menezes, CIO do Frigorífico Campo Nobre."
+}

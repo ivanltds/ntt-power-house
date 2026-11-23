@@ -1,0 +1,48 @@
+{
+ "titulo": "Plataforma Lakehouse com Kafka e Databricks para Análise de Crédito e Risco",
+ "problema": "O Banco Horizonte Sul processa cerca de 12 milhões de transações mensais em sistemas legados, com relatórios gerenciais que levam até 48 horas para consolidar dados de crédito e risco. A ausência de uma camada analítica unificada gera divergências em 8% dos indicadores reportados à diretoria e à área regulatória.",
+ "objetivo": "Construir uma plataforma de dados lakehouse em Databricks alimentada por streaming Kafka, reduzindo o tempo de disponibilização de dados analíticos de 48 para até 2 horas e unificando os indicadores de crédito e risco em uma única fonte confiável.",
+ "escopo": [
+  "Ingestão em streaming de eventos transacionais e de crédito via Apache Kafka, com tópicos segmentados por domínio de negócio",
+  "Implementação do lakehouse no Databricks com arquitetura medallion (bronze, silver e gold) sobre armazenamento em nuvem",
+  "Modelagem de dados analíticos de crédito, risco e inadimplência na camada gold, com tabelas Delta otimizadas",
+  "Pipeline de engenharia de dados orquestrado com processamento incremental e controle de qualidade automatizado",
+  "Governança de dados com catálogo, linhagem e políticas de acesso aplicadas às camadas do lakehouse"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência do lakehouse documentada, incluindo topologia Kafka-Databricks e padrões de ingestão",
+  "Pipelines de streaming Kafka para Databricks em produção para os 3 domínios prioritários de crédito",
+  "Camada gold com 15 tabelas analíticas certificadas para relatórios de crédito e risco",
+  "Painéis de monitoramento de qualidade de dados e latência dos pipelines com alertas automatizados",
+  "Documentação técnica, runbooks operacionais e treinamento de 20 usuários das áreas de dados e negócio"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura",
+   "semanas": 6
+  },
+  {
+   "fase": "Ingestão Kafka e camada bronze/silver",
+   "semanas": 14
+  },
+  {
+   "fase": "Modelagem gold e qualidade de dados",
+   "semanas": 12
+  },
+  {
+   "fase": "Go-live, estabilização e transferência de conhecimento",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em Kafka e 1 gerente de projeto",
+ "riscos": [
+  "Latência e volume de eventos Kafka acima do previsto podem exigir redimensionamento do cluster",
+  "Dependência de liberação de acessos às fontes legadas pelo time de infraestrutura do banco",
+  "Mudanças em requisitos regulatórios durante a construção da camada gold"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Paulo Menezes (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de reestruturação orçamentária interna, que suspendeu as iniciativas de modernização de dados previstas para o ciclo."
+}

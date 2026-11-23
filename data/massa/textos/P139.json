@@ -1,0 +1,48 @@
+{
+ "titulo": "Predição de churn e retenção para o varejo",
+ "problema": "A Eletro Mais, varejista com 4,2 milhões de clientes cadastrados no programa de fidelidade, enfrenta taxa de churn anual de 27% na base ativa e perde cerca de R$ 18 milhões por ano em receita recorrente. A empresa não consegue identificar os clientes com maior propensão a abandonar a marca antes que a evasão aconteça, e as ações de retenção são hoje genéricas e sem priorização.",
+ "objetivo": "Construir um modelo de predição de churn e uma esteira de ações de retenção priorizadas, aumentando a taxa de retenção da base ativa em pelo menos 8 pontos percentuais em 12 meses.",
+ "escopo": [
+  "Modelagem de propensão a churn em Databricks com features de comportamento de compra, recência e engajamento no programa de fidelidade",
+  "Pipeline de ingestão e tratamento de dados na AWS (S3, Glue e EMR) com orquestração de jobs em Python",
+  "Desenvolvimento e validação de modelos de machine learning em Python (scikit-learn e MLflow) com explicabilidade das variáveis",
+  "Integração dos scores de churn ao Salesforce CRM para acionamento automático de campanhas de retenção",
+  "Dashboards de acompanhamento de churn, coortes e efetividade das ações em Analytics & BI",
+  ""
+ ],
+ "entregaveis": [
+  "Modelo de churn treinado e validado com AUC superior a 0,80 e documentação de variáveis",
+  "Pipeline de dados automatizado na AWS e Databricks com monitoramento de qualidade",
+  "Scores de propensão integrados ao Salesforce CRM e regras de priorização de ofertas de retenção",
+  "Painéis de BI com indicadores de churn, retenção e ROI das campanhas",
+  "Relatório de recomendação de próximos passos e plano de evolução do modelo"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico de dados e definição de indicadores",
+   "semanas": 3
+  },
+  {
+   "nome": "Engenharia de dados e feature store",
+   "semanas": 4
+  },
+  {
+   "nome": "Modelagem de churn e validação",
+   "semanas": 3
+  },
+  {
+   "nome": "Integração com CRM e dashboards",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 consultor de CRM e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de compra e engajamento",
+  "Baixa adoção das ações de retenção pelas equipes de loja e CRM",
+  "Prazo curto de 3 meses para integração com o Salesforce"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de CRM e Fidelidade)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ }
+}

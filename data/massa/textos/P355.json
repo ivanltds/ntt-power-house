@@ -1,0 +1,48 @@
+{
+ "titulo": "Assistente Virtual com IA Generativa para Atendimento ao Cliente",
+ "problema": "A FibraMax Internet enfrenta um volume crescente de chamados no atendimento, com mais de 15.000 solicitações mensais e um tempo médio de espera de 12 minutos. A taxa de resolução no primeiro contato é de apenas 55%, impactando a satisfação dos clientes e os custos operacionais.",
+ "objetivo": "Implementar um assistente virtual com IA generativa integrado ao ServiceNow e Salesforce para automatizar o atendimento de nível 1, reduzir o tempo de espera em 40% e aumentar a resolução no primeiro contato para 75%.",
+ "escopo": [
+  "Desenvolvimento de assistente virtual com IA generativa integrado ao ServiceNow para triagem e resolução automática de chamados de suporte técnico.",
+  "Integração do assistente com o Salesforce para personalização do atendimento com base no histórico do cliente e ofertas de serviços.",
+  "Automação de processos de atendimento, incluindo roteamento inteligente e escalonamento para atendentes humanos.",
+  "Implementação de painel de monitoramento e analytics para acompanhar métricas de desempenho do assistente.",
+  "Treinamento do modelo de IA com base em dados históricos de atendimento da FibraMax Internet."
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção integrado ao ServiceNow e Salesforce, com capacidade de lidar com 70% dos chamados de nível 1.",
+  "Documentação técnica da arquitetura e dos fluxos de automação.",
+  "Relatório de métricas de desempenho e plano de melhoria contínua.",
+  "Treinamento para equipe de atendimento e administradores dos sistemas.",
+  "Prova de conceito validada com resultados de redução de tempo de espera e aumento de resolução."
+ ],
+ "fases": [
+  {
+   "nome": "Descoberta e Planejamento",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento e Integração",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Testes e Homologação",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Go-live e Suporte",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 desenvolvedores ServiceNow, 1 desenvolvedor Salesforce e 1 especialista em automação de processos.",
+ "riscos": [
+  "Resistência dos atendentes à adoção do assistente virtual.",
+  "Qualidade dos dados históricos para treinamento do modelo de IA.",
+  "Complexidade na integração entre ServiceNow e Salesforce."
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Atendimento)",
+  "tecnico": "Fernanda Lima (Arquiteta de Soluções de IA)"
+ },
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, que comprovou a eficácia da IA generativa integrada ao ServiceNow e Salesforce, com resultados concretos de redução de tempo de atendimento."
+}

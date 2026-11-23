@@ -1,0 +1,37 @@
+{
+ "titulo": "Streaming de Dados em Tempo Real para Análise de Rede",
+ "problema": "A Ondas Móvel precisa monitorar 12 milhões de dispositivos em tempo real para reduzir falhas de rede que impactam 8% dos usuários mensalmente. Os sistemas atuais processam dados com latência de 15 minutos, inviabilizando ações proativas.",
+ "objetivo": "Implementar uma plataforma de streaming com Kafka e Databricks na AWS para ingestão e análise de eventos em tempo real, reduzindo a latência para menos de 5 segundos e aumentando a precisão na detecção de anomalias.",
+ "escopo": [
+  "Configuração de clusters Kafka na AWS para ingestão de 500 mil eventos/segundo",
+  "Desenvolvimento de pipelines de dados com Databricks e Python para processamento em tempo real",
+  "Integração com fontes de dados de rede e sistemas legados via conectores Kafka",
+  "Implementação de dashboards de monitoramento com Analytics & BI para visualização de métricas",
+  "Otimização de custos e performance na AWS com auto scaling e políticas de retenção"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de streaming validado",
+  "Pipeline de ingestão Kafka operacional com 99,9% de disponibilidade",
+  "Jobs Databricks para processamento de eventos em tempo real",
+  "Dashboard de monitoramento de rede com alertas automatizados",
+  "Relatório de testes de carga e performance"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 4 semanas",
+  "Fase 2 - Implementação de Ingestão e Processamento: 12 semanas",
+  "Fase 3 - Integração e Visualização: 8 semanas",
+  "Fase 4 - Testes, Go-live e Estabilização: 8 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em streaming e 1 gerente de projeto",
+ "riscos": [
+  "Volatilidade no volume de eventos durante picos de tráfego",
+  "Integração com sistemas legados com protocolos proprietários",
+  "Dependência de serviços AWS para escalabilidade"
+ ],
+ "pessoas": {
+  "cliente": "Carla Mendes (Diretora de Tecnologia)",
+  "tecnico": "Rafael Oliveira (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Já processamos 2 TB de dados de eventos em tempo real nos primeiros dois meses, com latência média de 3 segundos.",
+ "diferencial": "Nosso relacionamento de longo prazo com a Ondas Móvel e a continuidade da equipe garantem profundo conhecimento do ambiente, acelerando a entrega e reduzindo riscos."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Programa de FinOps e Otimização de Custos Multicloud para Banco Cidadela",
+ "problema": "O Banco Cidadela opera cargas críticas em GCP, Azure e clusters Kubernetes, com gasto mensal de nuvem de aproximadamente R$ 4,8 milhões e crescimento de 27% nos últimos 12 meses. Cerca de 38% dos ambientes de não produção ficam ligados 24x7 e não há visibilidade consolidada de custos por squad, o que dificulta decisões de otimização.",
+ "objetivo": "Implantar uma disciplina de FinOps com visibilidade unificada de custos multicloud e reduzir o gasto mensal de nuvem em 18% em 4 meses, sem afetar os SLAs das cargas críticas.",
+ "escopo": [
+  "Implantação de dashboards de Analytics & BI para custos por squad, produto e centro de custo, consolidando GCP e Azure",
+  "Análise e rightsizing de clusters Kubernetes (GKE e AKS), incluindo políticas de desligamento de ambientes de não produção",
+  "Avaliação de migração para Nuvem de cargas on-premises remanescentes para instâncias e serviços gerenciados mais econômicos",
+  "Definição de guardrails de custo, budgets e alertas automatizados por projeto e por tag de responsabilidade",
+  "Programa de Change Management com treinamento de 120 usuários e rituais mensais de revisão de custos com as squads"
+ ],
+ "entregaveis": [
+  "Mapa de custos unificado de GCP e Azure com dashboards de Analytics & BI publicados",
+  "Relatório de rightsizing com plano de ação para 100% dos clusters Kubernetes mapeados",
+  "Catálogo de guardrails de custo e políticas de tagging implantado",
+  "Plano de migração para Nuvem priorizado por retorno financeiro e risco",
+  "Programa de capacitação em FinOps concluído com material e indicadores de adoção"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e visibilidade de custos",
+   "semanas": 4
+  },
+  {
+   "nome": "Otimização de Kubernetes e rightsizing",
+   "semanas": 5
+  },
+  {
+   "nome": "Guardrails, migração e automação",
+   "semanas": 5
+  },
+  {
+   "nome": "Change Management e sustentação",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de cloud, 2 engenheiros de plataforma Kubernetes, 1 analista de FinOps, 1 especialista em change management e 1 gerente de projeto",
+ "riscos": [
+  "Resistência das squads à mudança de práticas de provisionamento",
+  "Dependência de dados de billing incompletos ou mal tagueados",
+  "Impacto em SLAs durante o desligamento de ambientes de não produção"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Infraestrutura e Cloud)",
+  "tecnico": "Paulo Menezes (Arquiteto de Soluções Cloud & Infra)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor total de R$ 1,95 milhão superou em cerca de 22% a melhor oferta concorrente. O cliente reconheceu a qualidade técnica, mas priorizou o orçamento disponível para o ciclo.",
+ "licoes": "Nas próximas propostas de FinOps para bancos, oferecer um modelo de escopo modular com uma fase inicial de diagnóstico de menor valor e ganhos rápidos comprováveis, comparando explicitamente o preço ao benchmark de mercado antes do envio.",
+ "retorno": "Prezados, após a conclusão do processo de avaliação, informamos que a proposta da NTT DATA para o programa de FinOps não foi selecionada. A decisão foi tomada porque o valor apresentado ficou acima do mercado, cerca de 22% superior à proposta concorrente mais competitiva, e o orçamento aprovado para este ciclo é limitado. Agradecemos a dedicação da equipe e o nível técnico da proposta. Permanecemos abertos a novas conversas em futuros ciclos. Atenciosamente, Renata Vasconcelos, Gerente de Infraestrutura e Cloud do Banco Cidadela."
+}

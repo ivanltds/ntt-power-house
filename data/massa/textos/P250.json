@@ -1,0 +1,49 @@
+{
+ "titulo": "Sustentação AMS SAP e Azure para distribuidora de energia",
+ "problema": "A Distribuidora Luz do Cerrado atende 1,2 milhão de unidades consumidoras e opera um parque de 38 aplicações críticas, das quais 14 rodam em SAP e 9 em contêineres Kubernetes no Azure. O time interno de 22 analistas acumula 31% dos chamados fora do SLA e não cobre janelas noturnas de faturamento e arrecadação.",
+ "objetivo": "Assumir a sustentação contínua do ambiente SAP e das aplicações em Kubernetes no Azure, com gestão de chamados via ServiceNow, elevando o cumprimento de SLA para 95% em 25 meses.",
+ "escopo": [
+  "Sustentação corretiva e evolutiva dos módulos SAP (FI-CA, MM, PM) com resolução de chamados N1 a N3",
+  "Operação e monitoramento dos clusters Kubernetes no Azure, incluindo pipelines de deploy e gestão de capacidade",
+  "Gestão de incidentes, problemas e mudanças no ServiceNow com catálogo de serviços e relatórios mensais de SLA",
+  "Integrações SAP–Azure via APIs e jobs de interface, com tratamento de erros e reprocessamento",
+  "Janela noturna estendida (22h às 6h) para faturamento, arrecadação e fechamento contábil"
+ ],
+ "entregaveis": [
+  "Relatórios mensais de SLA e volumetria de chamados por criticidade",
+  "Backlog priorizado de melhorias SAP e Kubernetes revisado em comitê bimestral",
+  "Runbooks atualizados das 38 aplicações críticas em base de conhecimento no ServiceNow",
+  "Plano de capacidade e custos Azure revisado trimestralmente",
+  "Dashboard executivo de disponibilidade e MTTR das aplicações sustentadas"
+ ],
+ "fases": [
+  [
+   "Transição assistida e absorção do conhecimento",
+   10
+  ],
+  [
+   "Estabilização e redução de chamados fora do SLA",
+   20
+  ],
+  [
+   "Operação plena em regime AMS",
+   55
+  ],
+  [
+   "Otimização contínua e automação de rotinas",
+   15
+  ]
+ ],
+ "equipe": "1 gerente de projeto, 2 arquitetos SAP, 4 analistas de sustentação SAP, 3 engenheiros de plataforma Azure/Kubernetes e 2 analistas de ServiceNow",
+ "riscos": [
+  "Dependência de conhecimento tácito do time interno na transição",
+  "Indisponibilidade de janelas para mudanças em períodos de fechamento",
+  "Volatilidade de custos e capacidade nos clusters Azure"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de TI Corporativa)",
+  "tecnico": "Marcelo Andrade (Gerente de Serviços AMS)"
+ },
+ "resultados": "Nos primeiros 6 meses, o cumprimento de SLA subiu de 69% para 88%, com redução de 24% no volume de incidentes recorrentes.",
+ "diferencial": "Fomos escolhidos pela continuidade do relacionamento com a Distribuidora Luz do Cerrado, já conhecedores do ambiente SAP e do modelo de governança da área de TI."
+}

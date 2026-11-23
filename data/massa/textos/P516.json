@@ -1,0 +1,49 @@
+{
+ "titulo": "Streaming de dados em tempo real para operação e manutenção de parques eólicos",
+ "problema": "A Geradora Ventos do Nordeste opera 12 parques eólicos com 480 aerogeradores e enfrenta latência de até 4 horas na consolidação de dados de sensores, dificultando a detecção de anomalias e a manutenção preditiva. A empresa precisa processar 2,5 TB/dia de telemetria em tempo real para reduzir paradas não planejadas, que hoje representam 8% da geração.",
+ "objetivo": "Implantar uma plataforma de streaming de dados na Azure com Kafka para ingestão e processamento em tempo real, permitindo analytics operacional e manutenção preditiva com latência inferior a 5 segundos.",
+ "escopo": [
+  "Configuração de cluster Kafka na Azure (HDInsight ou Confluent Cloud) para ingestão de telemetria de 480 aerogeradores",
+  "Desenvolvimento de pipelines de streaming com Azure Stream Analytics e Kafka Streams para cálculo de KPIs em tempo real",
+  "Integração com Azure Data Lake Storage Gen2 para armazenamento de dados brutos e processados",
+  "Implementação de dashboards em Power BI conectados ao Azure Synapse Analytics para monitoramento operacional",
+  "Modelos de machine learning para detecção de anomalias e manutenção preditiva usando Azure Machine Learning"
+ ],
+ "entregaveis": [
+  "Plataforma de streaming Kafka implantada e operacional na Azure",
+  "Pipelines de ingestão e processamento em tempo real validados com latência < 5 segundos",
+  "Dashboards de monitoramento operacional e de manutenção preditiva entregues",
+  "Modelo de detecção de anomalias treinado e integrado ao fluxo de alertas",
+  "Documentação técnica e transferência de conhecimento para a equipe do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Implementação da plataforma de streaming",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Analytics e modelos preditivos",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Go-live e estabilização",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Volume e velocidade dos dados podem exigir ajustes no dimensionamento do cluster Kafka",
+  "Integração com sistemas legados de SCADA pode apresentar incompatibilidades de protocolo",
+  "Disponibilidade de dados históricos para treinamento dos modelos preditivos"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de Operações)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "Já foram processados 1,2 TB/dia de telemetria em ambiente de homologação, com latência média de 3 segundos.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, que atingiu 99,5% de acurácia na detecção de anomalias em tempo real."
+}

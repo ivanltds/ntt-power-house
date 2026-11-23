@@ -1,0 +1,49 @@
+{
+ "titulo": "Governança de Dados e Adequação LGPD para Analytics Clínico",
+ "problema": "O Hospital São Lucas do Vale mantém dados de 1,2 milhão de pacientes distribuídos entre sistemas de prontuário eletrônico, faturamento e laboratório, sem catálogo único nem classificação de dados sensíveis. A ausência de políticas formais de governança expõe o hospital a riscos de sanções da ANPD e a inconsistências em 38% dos relatórios gerenciais usados pela diretoria.",
+ "objetivo": "Implantar uma estrutura de governança de dados com base na LGPD, criando catálogo, classificação e políticas de acesso que sustentem a operação analítica do hospital em Azure, Databricks e Snowflake.",
+ "escopo": [
+  "Mapeamento e catalogação de 45 fontes de dados clínicos e administrativos com Databricks e Azure Purview",
+  "Classificação de dados pessoais e sensíveis conforme a LGPD, com mascaramento aplicado em pipelines Python",
+  "Definição de políticas de acesso baseadas em papéis (RBAC) no Snowflake para 6 perfis de usuários",
+  "Construção de data products de indicadores assistenciais no Databricks, com linhagem e qualidade monitoradas",
+  "Programa de Change Management com treinamento de 120 colaboradores em 4 trilhas de conscientização"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com 45 fontes catalogadas e 100% dos campos sensíveis classificados",
+  "Matriz de políticas de acesso e mascaramento publicada e validada pelo jurídico e pelo DPO",
+  "Painel de conformidade LGPD com 12 indicadores de monitoramento contínuo",
+  "Plano de resposta a incidentes de dados e roteiro de notificação à ANPD",
+  "Relatório de encerramento com plano de sustentação e capacitação de 120 colaboradores"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e mapeamento de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Classificação LGPD e políticas de acesso",
+   "semanas": 6
+  },
+  {
+   "nome": "Implementação técnica em Azure, Databricks e Snowflake",
+   "semanas": 8
+  },
+  {
+   "nome": "Change Management e sustentação",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e LGPD, 1 analista de change management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas clínicas aos novos processos de classificação",
+  "Qualidade inconsistente dos metadados nas 45 fontes mapeadas",
+  "Atraso na validação jurídica das políticas de tratamento de dados"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Diretora de Tecnologia e Informação)",
+  "tecnico": "Bruno Carvalho (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Já foram catalogadas 28 das 45 fontes de dados e classificados 62% dos campos sensíveis identificados no diagnóstico inicial.",
+ "diferencial": "Ganhamos pela experiência da NTT DATA em um case de referência de governança de dados e LGPD em rede hospitalar de porte semelhante, com metodologia de classificação já validada."
+}

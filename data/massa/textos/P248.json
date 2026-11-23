@@ -1,0 +1,49 @@
+{
+ "titulo": "Lakehouse de Dados para Integração AWS/Azure com Governança — Fase 2",
+ "problema": "A Agência Estadual de Trânsito mantém dados operacionais distribuídos em 14 sistemas legados, com mais de 40 milhões de registros de veículos e condutores duplicados entre bases. Relatórios gerenciais levam até 9 dias para serem consolidados, comprometendo a fiscalização e a prestação de contas.",
+ "objetivo": "Evoluir a plataforma lakehouse em AWS e Azure, consolidando as fontes de dados com governança corporativa e reduzindo o tempo de disponibilização de dados analíticos para até 24 horas.",
+ "escopo": [
+  "Ingestão incremental de 14 fontes legadas no data lake em AWS S3, com catálogo no AWS Glue",
+  "Camada analítica em Azure Synapse e Data Lake Storage Gen2 para consumo de relatórios e painéis",
+  "Implementação de catálogo corporativo e linhagem de dados com políticas de governança de dados",
+  "Definição de 120 regras de qualidade de dados e 35 indicadores de conformidade",
+  "Pipelines de orquestração com monitoramento de SLA e alertas de falha"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com 100% das fontes críticas mapeadas e linhagem documentada",
+  "Pipeline de ingestão em produção para as 14 fontes legadas",
+  "Painel de qualidade de dados com 120 regras ativas",
+  "Documento de políticas de governança e matriz de responsabilidades (RACI)",
+  "Relatório mensal de conformidade e SLA de dados"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho de governança",
+   "semanas": 4
+  },
+  {
+   "nome": "Ingestão e catalogação de fontes",
+   "semanas": 6
+  },
+  {
+   "nome": "Camada analítica e regras de qualidade",
+   "semanas": 6
+  },
+  {
+   "nome": "Homologação e entrada em produção",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Acesso restrito às bases legadas pode atrasar a ingestão",
+  "Baixa qualidade dos dados de origem exige retrabalho nas regras",
+  "Dependência de aprovação de mudanças pela área de TI do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia da Informação)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Já foram migradas 6 das 14 fontes legadas, com 62% das regras de qualidade implementadas e validadas em ambiente de homologação.",
+ "diferencial": "Ganhamos pela continuidade da Fase 1 no cliente e por um case de referência semelhante em outro órgão público, com lakehouse AWS/Azure entregue em 5 meses."
+}

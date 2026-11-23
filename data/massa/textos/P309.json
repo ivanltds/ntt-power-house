@@ -1,0 +1,50 @@
+{
+ "titulo": "Painéis executivos e BI para rede de calçados com integração SAP e Power BI",
+ "problema": "A Calçados Passo Firme opera 212 lojas próprias e 3 centros de distribuição, com fechamento gerencial feito em planilhas que levam até 9 dias úteis para consolidar vendas, estoque e margem por loja. A diretoria não tem visão confiável de ruptura e giro por SKU, e as decisões de compra e remanejamento são tomadas com dados defasados.",
+ "objetivo": "Implantar uma camada de painéis executivos em Power BI alimentada por dados integrados do SAP, reduzindo o ciclo de fechamento gerencial para até 1 dia útil e dando visibilidade diária de vendas, estoque, ruptura e margem por loja e por SKU.",
+ "escopo": [
+  "Extração e integração de dados de vendas, estoque e financeiro do SAP (ECC) para camada analítica, com ingestão incremental diária",
+  "Modelagem dimensional em star schema no Power BI, com métricas de margem, giro, ruptura e sell-out por loja e por SKU",
+  "Construção de 4 painéis executivos: Visão Diretoria, Vendas, Estoque/Ruptura e Margem por Canal",
+  "Camada de governança de dados com catálogo de indicadores, dicionário de métricas e controle de acesso por perfil no Power BI",
+  "Engenharia de dados para rotinas de qualidade e reconciliação entre SAP e a base analítica, com alertas de divergência acima de 0,5%"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e definição dos indicadores corporativos validado pela diretoria",
+  "Pipeline de ingestão SAP para a camada analítica em operação diária",
+  "4 painéis executivos em Power BI publicados e homologados, com controle de acesso por perfil",
+  "Dicionário de dados e catálogo de métricas com regras de cálculo de margem, giro e ruptura",
+  "Relatório de reconciliação SAP x base analítica e plano de sustentação para a área de dados"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da arquitetura",
+   "semanas": 4
+  },
+  {
+   "fase": "Engenharia de dados e integração SAP",
+   "semanas": 8
+  },
+  {
+   "fase": "Construção e homologação dos painéis em Power BI",
+   "semanas": 10
+  },
+  {
+   "fase": "Go-live, treinamento e sustentação assistida",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos cadastros de produto e loja no SAP",
+  "Indisponibilidade das janelas de extração do SAP durante fechamento mensal",
+  "Baixa adoção dos painéis pela diretoria e pelas gerências regionais"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de TI e Transformação Digital)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade do cliente: incluía engenharia de dados completa, governança e sustentação, quando a Calçados Passo Firme buscava inicialmente apenas 2 painéis executivos de vendas e estoque. O cliente optou por uma alternativa mais enxuta e de menor investimento.",
+ "licoes": "Em propostas de continuidade, dimensionar o escopo pelo menor recorte que gera valor imediato e apresentar o restante como fases opcionais. Validar com o patrocinador o nível mínimo de entrega antes de incluir governança e sustentação no escopo base.",
+ "retorno": "Prezados, após a avaliação das propostas recebidas, informamos que optamos por não seguir com a proposta da NTT DATA para o projeto de painéis executivos e BI. A decisão se deve ao fato de o escopo apresentado ser mais amplo do que a nossa necessidade neste momento, que se concentra em dois painéis de vendas e estoque, e o investimento ficou acima do orçamento aprovado para esta fase. Agradecemos a dedicação da equipe e o nível de detalhe do material entregue. Permanecemos abertos a novas conversas em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de TI e Transformação Digital, Calçados Passo Firme."
+}

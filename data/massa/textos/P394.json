@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma Lakehouse para Dados de Varejo com Kafka, Databricks e Nuvem Híbrida",
+ "problema": "A Eletro Mais, com 320 lojas e faturamento anual de R$ 4,2 bilhões, enfrenta dados fragmentados em sistemas legados e planilhas, levando a decisões lentas e perda de oportunidades. O time de BI gasta 70% do tempo em extração manual, sem visão unificada de estoque e vendas em tempo real.",
+ "objetivo": "Implementar uma plataforma lakehouse em 9 meses para unificar dados de vendas, estoque e clientes, permitindo analytics em tempo real e governança centralizada.",
+ "escopo": [
+  "Migração de 12 fontes de dados on-premises para Azure e AWS, com ingestão via Kafka para eventos de vendas e estoque",
+  "Construção de camadas bronze, silver e gold no Databricks, com Delta Lake para armazenamento",
+  "Implementação de catálogo de dados e linhagem no Databricks Unity Catalog para governança",
+  "Integração de dados de 320 lojas e e-commerce, com pipelines em tempo real para 50 mil eventos/minuto",
+  "Treinamento de 40 usuários de negócio e TI para autoatendimento analítico"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência do lakehouse com diagramas de fluxo de dados",
+  "Pipelines de ingestão Kafka-Databricks operacionais para 12 fontes",
+  "Catálogo de dados com 200 ativos catalogados e políticas de acesso",
+  "Dashboards de vendas e estoque em tempo real para 5 áreas de negócio",
+  "Relatório de migração e corte de 8 sistemas legados, com plano de descomissionamento"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e Arquitetura",
+   "semanas": 8
+  },
+  {
+   "fase": "Migração e Ingestão",
+   "semanas": 14
+  },
+  {
+   "fase": "Governança e Analytics",
+   "semanas": 10
+  },
+  {
+   "fase": "Go-live e Suporte",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em governança e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na migração de fontes legadas devido à complexidade dos sistemas",
+  "Resistência dos usuários à mudança para autoatendimento",
+  "Integração de dados em tempo real com latência acima do esperado"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de TI)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou 22% acima do mercado, apesar da qualidade técnica e do conhecimento prévio do cliente. O cliente optou por um concorrente com preço 15% menor.",
+ "licoes": "Para próximas propostas em varejo, incluir análise de valor percebido e modularização do escopo para oferecer opções de preço mais competitivas, além de destacar o ROI da continuidade.",
+ "retorno": "Prezados, informamos que a proposta para a plataforma lakehouse não foi selecionada. O motivo principal foi o preço acima do mercado, que ficou 22% superior ao orçamento aprovado. Agradecemos o esforço da equipe da NTT DATA e esperamos colaborar em futuras oportunidades. Atenciosamente, Mariana Costa, Diretora de TI."
+}

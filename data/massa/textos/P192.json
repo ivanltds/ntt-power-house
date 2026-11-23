@@ -1,0 +1,47 @@
+{
+ "titulo": "Pipeline de Dados em Tempo Real com Streaming Kafka no Azure",
+ "problema": "A NetVale Provedor monitora hoje cerca de 480 mil assinantes de banda larga e TV, mas os indicadores de consumo e qualidade de rede chegam aos painéis com atraso de até 6 horas, gerando retrabalho na operação e perda estimada de 3% em receita de upgrades. A base de dados atual também não suporta picos de 12 mil eventos por segundo durante janelas de manutenção e lançamentos comerciais.",
+ "objetivo": "Implantar uma plataforma de streaming de dados em tempo real no Azure para disponibilizar indicadores operacionais e comerciais em menos de 2 minutos após o evento, com processamento escalável e integração analítica.",
+ "escopo": [
+  "Implementação de cluster Kafka (Event Hubs compatível) no Azure para ingestão de eventos de rede e CRM, com throughput inicial de 12 mil mensagens por segundo",
+  "Desenvolvimento de pipelines de processamento em Python para enriquecimento, deduplicação e agregação de eventos em janelas de 1 minuto",
+  "Modelagem e carga em camada analítica (Azure Data Lake e Synapse) para consumo por ferramentas de BI",
+  "Criação de 18 indicadores operacionais em tempo real (disponibilidade, consumo, falhas por região) com atualização a cada 60 segundos",
+  "Configuração de monitoramento, alertas e política de retenção de 90 dias para tópicos de streaming"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência do pipeline de streaming no Azure com Kafka e Python",
+  "Pipeline de ingestão e processamento em produção suportando 12 mil eventos por segundo",
+  "Camada analítica integrada com 18 indicadores operacionais em tempo real",
+  "Painéis de BI com atualização automática a cada 60 segundos para 4 áreas de negócio",
+  "Runbook de operação, monitoramento e plano de contingência para falhas de streaming"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura de streaming",
+   "semanas": 4
+  },
+  {
+   "nome": "Implementação de ingestão Kafka e pipelines Python",
+   "semanas": 8
+  },
+  {
+   "nome": "Modelagem analítica e painéis de BI em tempo real",
+   "semanas": 6
+  },
+  {
+   "nome": "Homologação, go-live e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Volume de eventos acima do previsto durante picos de tráfego",
+  "Qualidade e padronização dos eventos originados em sistemas legados",
+  "Dependência de janelas de manutenção para testes em ambiente produtivo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Rede)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Programa de Governança de Dados e Adequação LGPD para Corretora",
+ "problema": "A Corretora Valor Alto opera com cerca de 480 mil clientes pessoas físicas e 12 mil contas institucionais, mas seus dados cadastrais e de suitability estão distribuídos em 7 sistemas distintos, sem catálogo único nem linhagem documentada. Com o aumento das exigências da LGPD e auditorias internas apontando 23 lacunas de tratamento de dados pessoais, o cliente precisa estruturar governança antes de ampliar produtos de investimento.",
+ "objetivo": "Implantar um modelo de governança de dados com catálogo, linhagem e políticas de privacidade, garantindo conformidade LGPD e rastreabilidade dos dados de clientes em 8 meses.",
+ "escopo": [
+  "Diagnóstico e catalogação de ativos de dados em Snowflake e origens legadas, com mapeamento de linhagem via Python",
+  "Definição de papéis, políticas e processos de governança de dados pessoais, incluindo base legal e retenção",
+  "Implementação de controles de qualidade e mascaramento de dados sensíveis no Databricks",
+  "Estruturação de painéis de monitoramento de conformidade e indicadores de privacidade",
+  "Plano de change management com treinamentos e comunicação para 320 colaboradores das áreas de negócio"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com 100% dos domínios críticos mapeados e classificação de dados pessoais",
+  "Política corporativa de governança de dados e LGPD aprovada pela diretoria",
+  "Pipeline de qualidade e mascaramento em Databricks operando em produção",
+  "Dashboard executivo de conformidade com 15 indicadores-chave",
+  "Programa de capacitação concluído com taxa de adesão mínima de 85%"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho",
+   "semanas": 8
+  },
+  {
+   "nome": "Implementação técnica",
+   "semanas": 14
+  },
+  {
+   "nome": "Change management e capacitação",
+   "semanas": 8
+  },
+  {
+   "nome": "Estabilização e sustentação",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e 1 consultor de change management",
+ "riscos": [
+  "Baixa adesão das áreas de negócio ao novo modelo de governança",
+  "Qualidade insuficiente dos metadados nas origens legadas",
+  "Mudanças regulatórias durante a execução do projeto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Diretora de Risco e Compliance)",
+  "tecnico": "Felipe Moraes (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente, incluindo frentes de maturidade e sustentação que ele não havia solicitado. O cliente optou por um fornecedor com escopo mais enxuto e focado apenas no diagnóstico e nas políticas essenciais.",
+ "licoes": "Para contas com continuidade de projeto anterior, dimensionar a proposta ao escopo mínimo viável e apresentar fases opcionais separadas, evitando empacotar change management e sustentação no bloco principal.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe da NTT DATA na elaboração da proposta. Após análise do comitê, decidimos seguir com um fornecedor de escopo mais restrito, pois o programa apresentado excedia nossa necessidade atual de governança e LGPD. Permanecemos abertos a conversas futuras em frentes específicas. Atenciosamente, Renata Almeida, Diretora de Risco e Compliance."
+}

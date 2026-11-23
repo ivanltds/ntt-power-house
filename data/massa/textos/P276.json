@@ -1,0 +1,50 @@
+{
+ "titulo": "Lakehouse de dados clínicos e operacionais em Snowflake na nuvem híbrida",
+ "problema": "O Hospital São Lucas do Vale operava com dados clínicos, financeiros e assistenciais dispersos em 14 sistemas legados, incluindo um data warehouse on-premises com janelas de carga noturnas de até 9 horas. Relatórios de ocupação de leitos e faturamento de convênios chegavam com 48 horas de atraso, prejudicando a gestão de 320 leitos e o ciclo de recebimento de R$ 38 milhões/mês.",
+ "objetivo": "Implantar uma plataforma lakehouse em Snowflake sobre AWS e Azure, unificando dados clínicos e administrativos para análises quase em tempo real e redução do custo de armazenamento e processamento.",
+ "escopo": [
+  "Migração do data warehouse on-premises para Snowflake, com ingestão via AWS S3 e pipelines em Python para 14 fontes de dados",
+  "Integração híbrida com o ERP hospitalar e sistemas de prontuário eletrônico, usando Azure Data Factory para as fontes corporativas",
+  "Modelagem em camadas (raw, curadoria e consumo) com 180 tabelas e visões semânticas para as áreas assistencial, financeira e operacional",
+  "Orquestração e monitoramento de cargas com alertas automatizados e SLA de atualização de 30 minutos para indicadores críticos",
+  "Governança de dados com catálogo, linhagem e políticas de acesso a dados sensíveis de pacientes (LGPD)"
+ ],
+ "entregaveis": [
+  "Plataforma lakehouse em produção no Snowflake com 14 fontes integradas e 99,5% de disponibilidade",
+  "120 dashboards e relatórios migrados, incluindo ocupação de leitos, produção assistencial e faturamento de convênios",
+  "Pipeline de dados em Python com 240 execuções diárias automatizadas e logs centralizados",
+  "Documentação técnica, runbooks operacionais e catálogo de dados com 180 tabelas catalogadas",
+  "Treinamento de 45 usuários-chave e 8 analistas internos em Snowflake e boas práticas de engenharia de dados"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura",
+   "semanas": 8
+  },
+  {
+   "fase": "Construção dos pipelines e migração das fontes",
+   "semanas": 20
+  },
+  {
+   "fase": "Modelagem analítica e migração de relatórios",
+   "semanas": 14
+  },
+  {
+   "fase": "Go-live, estabilização e transferência de conhecimento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em Snowflake, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Indisponibilidade das equipes de TI do hospital para validação das fontes legadas",
+  "Qualidade e inconsistência dos dados históricos de prontuário",
+  "Restrições de acesso e conformidade LGPD para dados sensíveis de pacientes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia e Informação)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "O tempo de disponibilização dos indicadores assistenciais caiu de 48 horas para 25 minutos, e o custo mensal de armazenamento e processamento foi reduzido em 37%, gerando economia estimada de R$ 1,2 milhão/ano.",
+ "licoes": "A validação tardia das regras de negócio de faturamento de convênios, concentrada na fase de migração de relatórios, gerou duas semanas de retrabalho. Foi decisiva a criação de um comitê semanal com as áreas assistencial e financeira, que antecipou decisões de modelagem e manteve o cronograma de 11 meses.",
+ "diferencial": "Ganhamos pela relação de continuidade construída em projetos anteriores no hospital, que permitiu à equipe da NTT DATA conhecer os sistemas legados e os fluxos assistenciais e reduzir o risco de transição."
+}

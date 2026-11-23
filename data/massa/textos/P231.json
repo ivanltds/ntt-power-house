@@ -1,0 +1,49 @@
+{
+ "titulo": "Sustentação AMS SAP, ServiceNow e Azure para Trânsito Estadual",
+ "problema": "A Agência Estadual de Trânsito opera mais de 40 sistemas críticos de habilitação, veículos e infrações, atendendo cerca de 9 milhões de cidadãos e 2.800 unidades de atendimento. O ambiente SAP, ServiceNow e Azure apresenta 1.200 chamados mensais de sustentação, com SLA de 4 horas para incidentes críticos e risco de indisponibilidade em períodos de pico.",
+ "objetivo": "Garantir a sustentação contínua das aplicações SAP, ServiceNow e Azure com cumprimento de SLA, estabilidade operacional e evolução controlada do ambiente, reduzindo o volume de incidentes recorrentes.",
+ "escopo": [
+  "Sustentação corretiva e evolutiva dos módulos SAP (FI, MM, HR e integrações), com atendimento a 1.200 chamados/mês",
+  "Gestão de incidentes, requisições e mudanças no ServiceNow, incluindo catálogo de serviços e base de conhecimento",
+  "Administração e monitoramento da infraestrutura Azure, com 99,9% de disponibilidade acordada e gestão de backups",
+  "Gestão de mudanças e liberações (CAB) com janelas controladas e documentação de rollback",
+  "Monitoramento proativo proativo e análise de causa raiz dos 50 incidentes recorrentes mapeados"
+ ],
+ "entregaveis": [
+  "Relatórios mensais de SLA com indicadores de disponibilidade, tempo de atendimento e backlog",
+  "Base de conhecimento consolidada no ServiceNow com 300 artigos técnicos publicados",
+  "Plano de melhoria contínua e redução de incidentes recorrentes por trimestre",
+  "Documentação de arquitetura e procedimentos operacionais do ambiente SAP e Azure atualizada",
+  "Relatório de governança trimestral com o comitê gestor da Agência"
+ ],
+ "fases": [
+  {
+   "nome": "Transição e estabilização",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Operação assistida e ajuste de SLAs",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Sustentação plena e melhoria contínua",
+   "duracao_semanas": 60
+  },
+  {
+   "nome": "Encerramento e transferência de conhecimento",
+   "duracao_semanas": 6
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 3 analistas SAP, 2 analistas ServiceNow, 2 engenheiros Azure e 1 analista de qualidade de serviços",
+ "riscos": [
+  "Indisponibilidade em picos de atendimento ao cidadão",
+  "Dependência de fornecedores terceiros para integrações SAP",
+  "Rotatividade de conhecimento técnico do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Andrade (Diretor de Tecnologia da Informação)",
+  "tecnico": "Fernanda Lima (Gerente de Projeto AMS)"
+ },
+ "resultados": "Nos primeiros 6 meses de operação, o tempo médio de resolução de incidentes críticos caiu 22%, passando de 5h10 para 4h02.",
+ "diferencial": "A continuidade do relacionamento com a Agência, somada ao conhecimento acumulado do ambiente SAP, ServiceNow e Azure, permitiu transição sem ruptura e ganho imediato de SLA."
+}

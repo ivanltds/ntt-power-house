@@ -1,0 +1,48 @@
+{
+ "titulo": "Previsão de Safra e Agricultura de Precisão com Analytics na Nuvem",
+ "problema": "A Agropecuária Terra Boa acompanha 12 mil hectares de soja e milho com estimativas de safra feitas em planilhas desconectadas, o que gera desvios de até 18% entre a previsão e a colheita real. A ausência de visão unificada sobre clima, solo e produtividade por talhão impede decisões de manejo em tempo hábil e causa perdas estimadas em R$ 3,2 milhões por ciclo.",
+ "objetivo": "Implantar uma solução de previsão de safra e agricultura de precisão baseada em machine learning e dashboards gerenciais, elevando a acurácia das estimativas para um erro máximo de 6% e reduzindo em 20% as perdas por manejo tardio.",
+ "escopo": [
+  "Modelos de Data Science/ML para previsão de produtividade por talhão, treinados com séries históricas de clima, solo e índices de vegetação, executados em AWS SageMaker",
+  "Pipeline de ingestão e tratamento de dados na AWS (S3, Glue e Athena) integrando dados de sensores de campo e estações meteorológicas",
+  "Dashboards de Analytics & BI em Power BI com visão de safra, mapa de calor de produtividade e alertas de desvio por fazenda",
+  "Painel de agricultura de precisão com recomendação de insumos por talhão e acompanhamento de janelas de plantio e colheita",
+  "Governança de dados e documentação dos indicadores (KPIs) de safra para uso pela equipe agronômica"
+ ],
+ "entregaveis": [
+  "Modelo de previsão de produtividade por talhão validado com erro médio absoluto abaixo de 6%",
+  "Pipeline de dados na AWS em produção com atualização diária das fontes de clima e sensores",
+  "Conjunto de 5 dashboards em Power BI publicados para diretoria, gestores agrícolas e operação de campo",
+  "Relatório de recomendação de insumos por talhão gerado automaticamente por ciclo",
+  "Documentação técnica, dicionário de dados e treinamento de 25 usuários-chave do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento de modelos de ML e pipelines AWS",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Construção dos dashboards em Power BI",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 especialista em Power BI",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de sensores de campo",
+  "Baixa adesão da equipe agronômica às recomendações geradas pelo modelo",
+  "Atraso na liberação de acessos e integrações com sistemas de terceiros"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Operações Agrícolas)",
+  "tecnico": "Fernanda Costa (Gerente de Projetos de Data & Analytics)"
+ },
+ "diferencial": "Ganhamos pela entrega anterior de Data & Analytics no cliente e pelo case de referência em previsão de safra com resultados comprovados em outro produtor de grãos de porte similar."
+}

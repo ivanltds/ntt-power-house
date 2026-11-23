@@ -1,0 +1,50 @@
+{
+ "titulo": "Pipeline de dados em tempo real para análise de risco e crédito com Azure e Python",
+ "problema": "O Banco Horizonte Sul processava cerca de 4,2 milhões de transações por dia em lotes noturnos, com latência média de 9 horas para relatórios de risco e crédito. Isso limitava a detecção de fraudes e a gestão de limites de exposição em tempo quase real, gerando perdas estimadas em R$ 3,8 milhões anuais.",
+ "objetivo": "Implantar uma plataforma de streaming de dados no Azure, com engenharia em Python, para disponibilizar eventos financeiros em até 2 minutos e alimentar análises de risco e crédito em tempo real.",
+ "escopo": [
+  "Ingestão contínua de eventos transacionais via Azure Event Hubs, com 15 mil mensagens por segundo de pico",
+  "Processamento e transformação em streaming com Python no Azure Databricks, aplicando regras de qualidade e deduplicação",
+  "Camada analítica em Azure Synapse Analytics com tabelas Delta para risco e crédito, atualizadas a cada 90 segundos",
+  "Orquestração e monitoramento de pipelines com Azure Data Factory e alertas de falha em até 5 minutos",
+  "Painéis de Analytics & BI no Power BI conectados à camada de streaming, com 12 indicadores de risco e exposição"
+ ],
+ "entregaveis": [
+  "Pipeline de streaming em produção com latência ponta a ponta inferior a 2 minutos",
+  "Modelo de dados Delta com 28 tabelas de risco, crédito e transações, documentado",
+  "12 painéis de Analytics & BI com atualização quase em tempo real",
+  "Runbooks de operação e 40 alertas configurados para falhas e atrasos",
+  "Treinamento de 25 usuários das áreas de risco e crédito, com material de apoio"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de streaming",
+   "duracao_semanas": 5
+  },
+  {
+   "nome": "Construção dos pipelines de ingestão e processamento",
+   "duracao_semanas": 9
+  },
+  {
+   "nome": "Camada analítica e painéis de BI",
+   "duracao_semanas": 7
+  },
+  {
+   "nome": "Go-live assistido e transferência de conhecimento",
+   "duracao_semanas": 5
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Volume de picos transacionais acima do previsto comprometer a latência",
+  "Qualidade inconsistente nos eventos de origem gerar descartes indevidos",
+  "Dependência de janelas de mudança em sistemas legados do banco"
+ ],
+ "pessoas": {
+  "cliente": "Marina Cordeiro (Gerente de Risco de Crédito)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A latência dos relatórios de risco caiu de 9 horas para 2 minutos, e a detecção de transações suspeitas aumentou 37% no primeiro trimestre após o go-live. A operação passou a monitorar 100% dos eventos transacionais em tempo quase real, com redução estimada de R$ 2,1 milhões em perdas anuais por fraude.",
+ "licoes": "A integração com os sistemas legados de crédito consumiu 3 semanas além do previsto, por causa de formatos de dados não documentados. Foi decisiva a realização de testes de carga com volumes reais desde a fase de arquitetura, o que permitiu ajustar a capacidade do Azure antes do go-live.",
+ "diferencial": "Ganhamos pela experiência comprovada em um case de referência de streaming de dados no setor financeiro, com arquitetura Azure e Python já validada em escala semelhante."
+}

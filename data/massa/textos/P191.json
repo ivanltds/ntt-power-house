@@ -1,0 +1,38 @@
+{
+ "titulo": "Otimização de Rotas e Frota com Data Science e Analytics",
+ "problema": "A Entregas Expressas Já opera com 350 veículos e enfrenta custos logísticos 18% acima da média do setor devido a rotas ineficientes e baixa visibilidade da frota. A empresa não possui modelos preditivos para planejamento de demanda e depende de planilhas manuais para alocação de entregas.",
+ "objetivo": "Desenvolver um modelo de otimização de rotas baseado em machine learning e um dashboard analítico para reduzir em até 15% o custo por entrega e aumentar a pontualidade em 20% em 4 meses.",
+ "escopo": [
+  "Construção de pipeline de dados no GCP (BigQuery, Dataflow) para ingestão de dados telemétricos e de pedidos",
+  "Desenvolvimento de modelo de previsão de demanda e otimização de rotas com Data Science/ML no Vertex AI",
+  "Criação de dashboards no Power BI para monitoramento de KPIs logísticos em tempo real",
+  "Implementação de alertas de desvio de rota e manutenção preditiva da frota",
+  "Capacitação da equipe do cliente para operar as soluções de analytics"
+ ],
+ "entregaveis": [
+  "Modelo de otimização de rotas validado com redução mínima de 10% no custo por entrega",
+  "Dashboard executivo no Power BI com visão de frota, rotas e pontualidade",
+  "Documentação técnica e playbook de operação dos modelos",
+  "Workshop de capacitação para 15 analistas do cliente",
+  "Relatório de resultados com comparativo antes/depois dos indicadores"
+ ],
+ "fases": [
+  "Fase 1 – Diagnóstico e preparação de dados: 4 semanas",
+  "Fase 2 – Desenvolvimento de modelos e dashboards: 8 semanas",
+  "Fase 3 – Piloto e ajustes: 4 semanas",
+  "Fase 4 – Rollout e capacitação: 4 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade insuficiente dos dados telemétricos da frota",
+  "Resistência dos motoristas à adoção de rotas otimizadas",
+  "Prazo apertado para integração com sistemas legados"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Operações)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior do que a necessidade imediata do cliente, incluindo módulos de manutenção preditiva e capacitação extensiva que não estavam no orçamento inicial. O cliente optou por uma solução mais enxuta e focada apenas em otimização de rotas.",
+ "licoes": "Para próximas oportunidades, validar melhor o escopo mínimo viável com o cliente antes de propor módulos adicionais, oferecendo uma abordagem faseada e flexível.",
+ "retorno": "Prezados, informamos que decidimos não prosseguir com a proposta para o projeto de otimização de rotas. O escopo apresentado mostrou-se mais amplo do que nossa necessidade atual, especialmente pela inclusão de manutenção preditiva e capacitação extensiva, o que impactou o orçamento. Agradecemos o esforço da equipe e esperamos manter o contato para futuras oportunidades mais alinhadas. Atenciosamente, Ricardo Almeida – Diretor de Operações, Entregas Expressas Já."
+}

@@ -1,0 +1,37 @@
+{
+ "titulo": "Indicadores ESG e Emissões para o Setor Financeiro",
+ "problema": "O Consórcio União Nacional, com 2,5 milhões de clientes e R$ 48 bilhões em ativos, precisa reportar indicadores ESG e emissões de gases de efeito estufa (GEE) de forma auditável para atender às exigências do Banco Central e de investidores institucionais. Atualmente, 70% dos dados de emissões são coletados manualmente em planilhas, gerando atrasos de 15 dias e riscos de inconsistência nos relatórios trimestrais.",
+ "objetivo": "Implementar uma solução de analytics para automatizar a coleta, o cálculo e a visualização de indicadores ESG e emissões, garantindo confiabilidade e agilidade na prestação de contas.",
+ "escopo": [
+  "Integração de fontes de dados de emissões (planilhas, sistemas internos) ao Snowflake, com pipelines de ingestão e transformação.",
+  "Desenvolvimento de modelo de dados ESG no Snowflake, incluindo cálculos de Escopos 1, 2 e 3 conforme GHG Protocol.",
+  "Criação de dashboards interativos no Power BI para monitoramento de indicadores ESG e emissões por unidade de negócio.",
+  "Configuração de alertas e validações de qualidade de dados no Power BI para garantir consistência dos relatórios.",
+  "Documentação técnica e treinamento de usuários-chave para sustentação da solução."
+ ],
+ "entregaveis": [
+  "Pipeline de dados automatizado no Snowflake para coleta de dados de emissões de 12 fontes distintas.",
+  "Modelo analítico ESG no Snowflake com cálculos de emissões nos Escopos 1, 2 e 3.",
+  "Conjunto de 5 dashboards no Power BI para acompanhamento de indicadores ESG e emissões.",
+  "Relatório de validação de dados e plano de qualidade com 20 regras de checagem.",
+  "Sessão de treinamento para 15 usuários e documentação de suporte."
+ ],
+ "fases": [
+  "Fase 1: Discovery e design da solução (4 semanas)",
+  "Fase 2: Implementação de pipelines no Snowflake (6 semanas)",
+  "Fase 3: Desenvolvimento de dashboards no Power BI (4 semanas)",
+  "Fase 4: Testes, treinamento e go-live (2 semanas)"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos dados de emissões fornecidos por áreas internas",
+  "Mudanças nos requisitos regulatórios durante o projeto",
+  "Dependência de terceiros para dados de Escopo 3"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Sustentabilidade)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "Até o momento, 60% das fontes de dados já foram integradas ao Snowflake, com redução de 40% no tempo de coleta manual.",
+ "diferencial": "Ganhamos pela capacidade técnica comprovada na prova de conceito, que demonstrou em 3 semanas a viabilidade de automatizar 80% dos cálculos de emissões com as tecnologias propostas."
+}

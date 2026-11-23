@@ -1,0 +1,47 @@
+{
+ "titulo": "Governança de Dados e Adequação LGPD com Databricks no Hospital São Lucas do Vale",
+ "problema": "O Hospital São Lucas do Vale mantém dados de aproximadamente 480 mil pacientes distribuídos em 7 sistemas distintos (prontuário eletrônico, faturamento, laboratório, imagem e CRM), sem catálogo único de dados nem mapeamento de bases legais de tratamento. A ausência de governança formal expõe o hospital a sanções da ANPD e a riscos de vazamento em 12 rotinas manuais de extração que hoje trafegam dados sensíveis sem controle de acesso auditável.",
+ "objetivo": "Estruturar a governança de dados e adequar o tratamento de dados pessoais à LGPD, implantando catálogo, políticas e controles auditáveis na plataforma Databricks, com adoção sustentada pelas áreas assistencial, administrativa e de TI ao longo de 8 meses.",
+ "escopo": [
+  "Diagnóstico de maturidade de governança de dados e mapeamento do ciclo de vida de dados pessoais em 7 sistemas do hospital",
+  "Implantação de catálogo de dados e linhagem no Databricks Unity Catalog, cobrindo 100% das tabelas com dados pessoais sensíveis",
+  "Definição e implementação de políticas de mascaramento, controle de acesso baseado em papéis e trilhas de auditoria com Databricks e scripts Python de automação",
+  "Construção de inventário de tratamentos e base legal com 60 registros iniciais, integrado a painéis de conformidade LGPD",
+  "Programa de Change Management com treinamentos para 180 colaboradores, plano de comunicação e rede de 12 data stewards por área"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de maturidade e mapa de fluxo de dados pessoais dos 7 sistemas",
+  "Catálogo de dados e linhagem operacional no Databricks Unity Catalog com políticas de acesso aplicadas",
+  "Inventário de tratamentos e base legal LGPD com 60 registros e painel de conformidade",
+  "Conjunto de políticas, procedimentos e scripts Python de automação de controles e auditoria",
+  "Plano de Change Management executado, com 180 colaboradores treinados e 12 data stewards certificados"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e mapeamento de dados pessoais",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Desenho de políticas e arquitetura de governança no Databricks",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Implantação de controles, catálogo e automações em Python",
+   "duracao_semanas": 12
+  },
+  {
+   "fase": "Change Management, treinamentos e sustentação",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e LGPD, 1 consultor de Change Management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão dos data stewards das áreas assistenciais às rotinas de governança",
+  "Qualidade e completude insuficientes dos metadados dos sistemas legados",
+  "Mudanças de prioridade regulatória ou de patrocínio executivo durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Dra. Helena Vasconcelos (Diretora de Tecnologia e Informação)",
+  "tecnico": "Rafael Andrade (Arquiteto de Dados Sênior)"
+ }
+}

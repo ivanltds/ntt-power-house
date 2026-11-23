@@ -1,0 +1,47 @@
+{
+ "titulo": "Implantação de CRM Salesforce e Jornada do Cliente com Dados Integrados via Kafka",
+ "problema": "O Banco Cidadela atende 2,3 milhões de clientes em canais digitais e físicos, mas mantém dados de relacionamento fragmentados em 4 sistemas legados, o que limita a visão 360º e a personalização de ofertas. Com isso, a taxa de conversão de campanhas gira em torno de 1,8% e o tempo médio de resposta a demandas de clientes chega a 48 horas.",
+ "objetivo": "Implantar uma plataforma de CRM no Salesforce integrada por streaming de dados com Azure e Kafka, unificando a jornada do cliente e elevando a conversão de campanhas para 3,5% e reduzindo o tempo de resposta para 12 horas em 10 meses.",
+ "escopo": [
+  "Configuração do Salesforce Financial Services Cloud para visão 360º de 2,3 milhões de clientes e gestão de jornadas",
+  "Construção de pipeline de engenharia de dados no Azure Data Lake e Azure Data Factory para ingestão de 4 fontes legadas",
+  "Integração em tempo real via Apache Kafka entre os sistemas transacionais do banco e o Salesforce, com SLA de latência inferior a 3 segundos",
+  "Implementação de automação de campanhas e next best action no Salesforce com 12 jornadas prioritárias",
+  "Programa de Change Management para 320 usuários em 3 regionais, incluindo treinamento e comunicação corporativa"
+ ],
+ "entregaveis": [
+  "Blueprint de arquitetura de integração Salesforce, Azure e Kafka aprovado em 6 semanas",
+  "Pipeline de dados operacional com 4 fontes integradas e monitoramento de qualidade de dados",
+  "12 jornadas de cliente configuradas e homologadas no Salesforce",
+  "Painel de indicadores de conversão, tempo de resposta e NPS com 15 métricas",
+  "Plano de change management executado com 320 usuários treinados e pesquisa de adoção com meta de 85%"
+ ],
+ "fases": [
+  {
+   "nome": "Descoberta e arquitetura",
+   "semanas": 8
+  },
+  {
+   "nome": "Engenharia de dados e integração Kafka",
+   "semanas": 14
+  },
+  {
+   "nome": "Configuração de CRM e jornadas no Salesforce",
+   "semanas": 12
+  },
+  {
+   "nome": "Rollout, treinamento e estabilização",
+   "semanas": 9
+  }
+ ],
+ "equipe": "1 arquiteto de soluções, 1 tech lead Salesforce, 2 engenheiros de dados, 1 especialista Kafka, 1 consultor de change management e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e duplicidade dos dados dos 4 sistemas legados",
+  "Baixa adesão dos 320 usuários às novas jornadas de CRM",
+  "Latência e disponibilidade da integração Kafka em horário de pico"
+ ],
+ "pessoas": {
+  "cliente": "Marina Vasconcelos (Diretora de Canais e Relacionamento)",
+  "tecnico": "Rafael Andrade (Gerente de Projeto Digital & CRM)"
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "titulo": "Redução de Perdas Não Técnicas com Analytics Avançado",
+ "problema": "A Energia Paulista Distribuição enfrenta um índice de perdas não técnicas de 8,2%, equivalente a cerca de 1,2 TWh/ano, com impacto financeiro estimado em R$ 350 milhões. A empresa precisa identificar e mitigar fraudes e ligações irregulares de forma mais eficaz, utilizando dados de medidores e inspeções.",
+ "objetivo": "Desenvolver uma solução de engenharia de dados e analytics para identificar padrões de perdas não técnicas e priorizar ações de campo, visando reduzir o índice em 1,5 ponto percentual em 9 meses.",
+ "escopo": [
+  "Ingestão e integração de dados de medidores smart, sistemas de faturamento e inspeções no Databricks",
+  "Implementação de pipeline de dados para cálculo de indicadores de perdas e detecção de anomalias",
+  "Desenvolvimento de modelos analíticos para priorização de inspeções com base em risco",
+  "Criação de dashboards interativos no Power BI para acompanhamento de perdas por região e equipe",
+  "Capacitação da equipe do cliente para operar e manter a solução"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e definição de indicadores de perdas",
+  "Pipeline de dados no Databricks para ingestão e tratamento de dados de medidores e inspeções",
+  "Modelo de priorização de inspeções baseado em dados",
+  "Dashboard no Power BI com visões gerenciais e operacionais",
+  "Relatório final de resultados e recomendações"
+ ],
+ "fases": [
+  "Fase 1: Descoberta e Arquitetura - 4 semanas",
+  "Fase 2: Implementação de Engenharia de Dados - 12 semanas",
+  "Fase 3: Modelagem Analítica e Dashboards - 12 semanas",
+  "Fase 4: Validação e Capacitação - 8 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados de medidores e inspeções pode ser insuficiente",
+  "Resistência das áreas de campo à mudança de processo",
+  "Integração com sistemas legados pode apresentar atrasos"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Eduardo Menezes (Gerente de Operações de Distribuição)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior do que a necessidade imediata do cliente, que buscava uma solução mais enxuta e focada em quick wins. O cliente optou por um concorrente com abordagem mais modular e menor prazo.",
+ "licoes": "Para próximas oportunidades, é crucial validar melhor o escopo mínimo viável com o cliente e propor uma abordagem faseada que permita entregas rápidas e menor investimento inicial.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que decidimos não seguir com a proposta da NTT DATA para o projeto de redução de perdas não técnicas. O escopo apresentado mostrou-se mais abrangente do que nossa necessidade atual, e optamos por uma solução mais enxuta e modular. Agradecemos o esforço da equipe e esperamos colaborar em futuras oportunidades. Atenciosamente, Carlos Eduardo Menezes - Gerente de Operações de Distribuição."
+}

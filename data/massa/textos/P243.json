@@ -1,0 +1,49 @@
+{
+ "titulo": "Atendimento omnicanal e service desk com ServiceNow e IA Generativa",
+ "problema": "O NetVale Provedor concentra hoje cerca de 62 mil atendimentos/mês em canais fragmentados (telefone, WhatsApp e e-mail), com 38% dos chamados de suporte técnico abertos por telefone e tempo médio de primeira resposta de 9 minutos. O service desk opera em planilhas e ferramentas desconectadas ao CRM, o que gera retrabalho em 27% dos tickets e baixa visibilidade da jornada do assinante.",
+ "objetivo": "Unificar o atendimento omnicanal e o service desk em uma plataforma única baseada em ServiceNow, com automação de processos e IA Generativa para triagem e resposta assistida, reduzindo o tempo de primeira resposta e o retrabalho operacional.",
+ "escopo": [
+  "Implantação do módulo de atendimento omnicanal no ServiceNow integrado ao CRM do NetVale, unificando telefone, WhatsApp e e-mail em fila única",
+  "Configuração de service desk com catálogo de serviços, SLA e roteamento automático de tickets de suporte técnico e comercial",
+  "Automação de processos com fluxos de triagem, escalonamento e encerramento assistido para os 62 mil atendimentos/mês",
+  "Uso de IA Generativa para sugestão de resposta a atendentes e resumo automático de histórico do assinante",
+  "Sustentação / AMS com monitoramento, gestão de incidentes e evolução contínua da plataforma após o go-live"
+ ],
+ "entregaveis": [
+  "Blueprint de atendimento omnicanal e matriz de canais integrados ao CRM aprovados",
+  "Service desk em ServiceNow configurado com catálogo, SLA e roteamento automático em produção",
+  "Fluxos de automação de processos publicados para triagem e escalonamento de tickets",
+  "Modelo de IA Generativa em operação assistida para sugestão de respostas e resumos de atendimento",
+  "Relatório de estabilização e plano de sustentação / AMS com indicadores de operação"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da jornada omnicanal",
+   "semanas": 4
+  },
+  {
+   "nome": "Configuração do ServiceNow e integração com CRM",
+   "semanas": 6
+  },
+  {
+   "nome": "Automação de processos e IA Generativa em operação assistida",
+   "semanas": 4
+  },
+  {
+   "nome": "Estabilização e transição para sustentação / AMS",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções ServiceNow, 2 consultores de CRM e automação de processos e 1 especialista em IA Generativa",
+ "riscos": [
+  "Qualidade e disponibilidade dos dados de assinantes no CRM legado",
+  "Baixa adesão dos atendentes às respostas sugeridas pela IA Generativa",
+  "Dependência de integrações com canais de WhatsApp e telefonia"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Atendimento e Experiência do Cliente)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções ServiceNow)"
+ },
+ "resultados": "Nas primeiras semanas de execução, a fila única de atendimento já cobre 3 canais e 41% dos tickets de suporte técnico passam por triagem automatizada.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com o NetVale Provedor, somada à experiência da área Digital & CRM da NTT DATA em service desk e automação no setor de Telecom."
+}

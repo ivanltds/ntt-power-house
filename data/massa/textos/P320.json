@@ -1,0 +1,47 @@
+{
+ "titulo": "Painel ESG e Inventário de Emissões com Power BI e Snowflake",
+ "problema": "O Crédito Fácil Brasil precisa reportar indicadores ESG a reguladores e investidores, mas hoje consolida dados de emissões de 3 fontes distintas em planilhas manuais, com cerca de 40 horas mensais de retrabalho e risco de inconsistência. A ausência de uma base única de dados dificulta a rastreabilidade das métricas de escopo 1 e 2 exigidas no relatório anual.",
+ "objetivo": "Estruturar uma base analítica centralizada em Snowflake e painéis em Power BI para automatizar o cálculo e a divulgação de indicadores ESG e emissões, garantindo rastreabilidade e redução do esforço manual de consolidação.",
+ "escopo": [
+  "Modelagem dimensional no Snowflake para fatos de emissões (escopos 1 e 2) e dimensões de unidade, período e fonte de dados",
+  "Pipeline de ingestão e tratamento dos dados de consumo energético, frota e resíduos no Snowflake, com regras de qualidade e validação",
+  "Camada semântica e dashboards em Power BI com indicadores ESG, comparativos trimestrais e drill-down por unidade de negócio",
+  "Catálogo de dados e dicionário de métricas ESG com linhagem documentada no Snowflake",
+  "Configuração de atualização agendada e alertas de inconsistência nos painéis Power BI"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG em Snowflake aprovado",
+  "Pipeline de ingestão e transformação das 3 fontes de emissões em produção",
+  "5 dashboards Power BI de indicadores ESG e emissões publicados",
+  "Dicionário de dados e catálogo de métricas com linhagem",
+  "Relatório de validação e plano de sustentação operacional"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Implementação do pipeline e modelagem no Snowflake",
+   "semanas": 6
+  },
+  {
+   "nome": "Construção dos dashboards em Power BI",
+   "semanas": 4
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização das fontes de emissões",
+  "Atraso na validação das métricas ESG pelas áreas de negócio",
+  "Mudanças de requisitos regulatórios durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Vasconcelos (Gerente de Sustentabilidade e ESG)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados Sênior)"
+ }
+}

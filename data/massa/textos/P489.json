@@ -1,0 +1,50 @@
+{
+ "titulo": "Previsão de Demanda e Reposição de Estoque com Machine Learning para Distribuidora de Energia",
+ "problema": "A Distribuidora Luz do Cerrado opera 42 centros de distribuição de materiais elétricos e hidráulicos, com um estoque médio de R$ 38 milhões e perdas de cerca de R$ 4,2 milhões ao ano por ruptura e obsolescência. A reposição é feita hoje por planilhas e regras manuais, gerando cobertura irregular: 18% dos SKUs críticos ficam abaixo do ponto de pedido enquanto 23% do capital fica parado em itens de baixo giro.",
+ "objetivo": "Implantar um modelo de previsão de demanda e recomendação de reposição por SKU e centro de distribuição, integrado ao SAP, para reduzir rupturas e liberar capital de giro em até 6 meses de projeto.",
+ "escopo": [
+  "Engenharia de dados para extrair históricos de consumo, ordens de compra e níveis de estoque do SAP para um data lake em Python",
+  "Construção de modelos de Machine Learning de previsão de demanda por SKU, sazonalidade e centro de distribuição",
+  "Motor de recomendação de ponto de pedido e lote de reposição com lógica de criticidade e lead time de fornecedor",
+  "Integração dos resultados ao SAP para apoiar o planejamento de compras e o MRP",
+  "Dashboards de acuracidade do modelo, cobertura de estoque e capital liberado para a área de suprimentos"
+ ],
+ "entregaveis": [
+  "Pipeline de dados de demanda e estoque validado com 36 meses de histórico",
+  "Modelo de previsão de demanda com acuracidade MAPE abaixo de 15% nos SKUs de alto giro",
+  "Relatório de recomendação de reposição por centro de distribuição, integrado ao SAP",
+  "Painel gerencial de cobertura de estoque, rupturas e capital de giro",
+  "Documentação técnica e treinamento de 12 analistas de suprimentos"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e engenharia de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem de previsão e validação com o negócio",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração ao SAP e piloto em 8 centros de distribuição",
+   "semanas": 6
+  },
+  {
+   "fase": "Rollout, treinamento e sustentação",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e granularidade insuficiente do histórico de consumo no SAP",
+  "Baixa adesão dos planejadores de suprimentos ao novo processo de reposição",
+  "Lead time dos fornecedores instável, afetando a recomendação de lote"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Suprimentos e Logística)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente: incluía rollout completo, integração SAP ampla e treinamento extensivo, enquanto a Distribuidora buscava inicialmente apenas um piloto de previsão para 5 centros de distribuição. O concorrente vencedor apresentou uma abordagem mais enxuta e de menor investimento inicial.",
+ "licoes": "Para projetos de continuidade no cliente, dimensionar a proposta em fases menores e começar por um piloto de escopo reduzido, com opção de expansão, em vez de apresentar o programa completo de uma vez. Validar previamente com o patrocinador o apetite de investimento antes de fechar o escopo.",
+ "retorno": "Prezados, obrigada pela proposta apresentada para o projeto de previsão de demanda e reposição. Após análise interna, decidimos não avançar com a NTT DATA nesta iniciativa, pois o escopo proposto ficou acima da necessidade e do orçamento que temos aprovados para esta fase. Seguimos com um piloto mais enxuto e manteremos a NTT DATA no radar para as próximas etapas de expansão. Atenciosamente, Renata Vasconcelos, Gerente de Suprimentos e Logística, Distribuidora Luz do Cerrado."
+}

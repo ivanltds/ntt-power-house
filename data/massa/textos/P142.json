@@ -1,0 +1,49 @@
+{
+ "titulo": "Governança de Dados e Adequação à LGPD para Regime Próprio de Previdência",
+ "problema": "O Instituto de Previdência Municipal administra cerca de 18 mil benefícios previdenciários e mantém dados sensíveis de segurados espalhados em 7 sistemas legados, sem catálogo único nem classificação de dados pessoais. A ausência de políticas formais de governança expõe o cliente a riscos de sanções da ANPD e a inconsistências em relatórios atuariais entregues trimestralmente.",
+ "objetivo": "Estruturar a governança de dados e adequar os processos de tratamento de dados pessoais à LGPD, com catálogo de dados centralizado em Snowflake e trilhas de auditoria automatizadas em Python, em 4 meses.",
+ "escopo": [
+  "Diagnóstico e mapeamento de 100% dos fluxos de dados pessoais, com inventário de titulares e bases legais",
+  "Implantação de catálogo de dados e políticas de classificação em Snowflake, integrando as 7 fontes legadas",
+  "Desenvolvimento de rotinas em Python para anonimização, mascaramento e geração de logs de auditoria de acessos",
+  "Definição de papéis e matriz RACI de governança, com Comitê de Dados e encarregado (DPO) formalizados",
+  "Programa de Change Management com treinamentos e comunicação para 120 colaboradores das áreas de benefícios e TI"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico LGPD com matriz de gaps e plano de ação priorizado",
+  "Catálogo de dados e dicionário de metadados publicado em Snowflake",
+  "Pipelines em Python de mascaramento e auditoria em produção",
+  "Política de Governança de Dados e Privacidade aprovada pela diretoria",
+  "Plano de Change Management com trilhas de capacitação e indicadores de adesão"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e mapeamento de dados pessoais",
+   "semanas": 4
+  },
+  {
+   "nome": "Implantação do catálogo e pipelines em Snowflake e Python",
+   "semanas": 6
+  },
+  {
+   "nome": "Políticas de governança e matriz de responsabilidades",
+   "semanas": 3
+  },
+  {
+   "nome": "Change Management e capacitação",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados e 1 especialista em Change Management",
+ "riscos": [
+  "Baixa adesão das áreas de negócio às novas políticas de tratamento de dados",
+  "Qualidade e completidão dos metadados das 7 fontes legadas",
+  "Indisponibilidade de janelas dos times do cliente para workshops de capacitação"
+ ],
+ "pessoas": {
+  "cliente": "Helena Vasconcelos (Diretora de Benefícios)",
+  "tecnico": "Rafael Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "Concluída a fase de diagnóstico com 92% dos fluxos de dados pessoais mapeados e 34 gaps de conformidade catalogados.",
+ "diferencial": "Ganhamos por apresentar case de referência de governança de dados e LGPD em outro regime próprio de previdência municipal, com ganhos comprovados de rastreabilidade em prazo similar."
+}

@@ -1,0 +1,46 @@
+{
+ "titulo": "Sustentação AMS SAP, ServiceNow e Azure para rede de farmácias",
+ "problema": "A rede Farmácias Vida Plena opera 412 lojas e processa cerca de 1,2 milhão de transações de PDV por mês, com o ERP SAP sustentado por uma equipe interna reduzida. A volatilidade de chamados críticos e a falta de visibilidade sobre mudanças em ServiceNow e Azure geravam indisponibilidade média de 9 horas/mês em horário comercial.",
+ "objetivo": "Assumir a sustentação AMS do ambiente SAP, ServiceNow e Azure com SLA de resolução em até 4 horas para incidentes críticos, reduzindo indisponibilidade e controlando mudanças de forma padronizada.",
+ "escopo": [
+  "Sustentação corretiva e evolutiva do SAP ECC e SAP PI, incluindo monitoração de jobs e interfaces",
+  "Gestão de incidentes, requisições e problemas na plataforma ServiceNow com fila dedicada 24x7",
+  "Administração de workloads Azure (VMs, App Services e backups) com patching mensal",
+  "Processo de Change Management com CAB semanal e janelas de mudança controladas",
+  "Relatórios mensais de SLA, volumetria de chamados e indicadores de disponibilidade"
+ ],
+ "entregaveis": [
+  "Catálogo de serviços e matriz RACI de sustentação SAP, ServiceNow e Azure",
+  "Runbook operacional com 68 procedimentos de atendimento e escalonamento",
+  "Painel de SLA no ServiceNow com 12 indicadores de disponibilidade e prazo",
+  "Relatório mensal de governança com volumetria e análise de causa raiz",
+  "Plano de melhoria contínua com 15 ações de redução de reincidência"
+ ],
+ "fases": [
+  {
+   "nome": "Transição e estabilização",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Operação em regime AMS",
+   "duracao_semanas": 52
+  },
+  {
+   "nome": "Otimização e melhoria contínua",
+   "duracao_semanas": 18
+  }
+ ],
+ "equipe": "1 gerente de serviços, 1 arquiteto SAP, 3 analistas de sustentação SAP, 1 analista ServiceNow, 1 engenheiro Azure e 1 analista de mudanças",
+ "riscos": [
+  "Dependência de conhecimento tácito da equipe interna do cliente",
+  "Janelas de mudança limitadas pelo calendário comercial das lojas",
+  "Picos de chamados em fechamento fiscal e campanhas promocionais"
+ ],
+ "pessoas": {
+  "cliente": "Renata Coelho (Gerente de TI)",
+  "tecnico": "Marcelo Tavares (Gerente de Serviços AMS)"
+ },
+ "resultados": "A disponibilidade dos sistemas SAP subiu de 97,1% para 99,6% em 12 meses, com redução de 38% no volume de incidentes críticos. O modelo de Change Management evitou cerca de R$ 420 mil em retrabalho e horas paradas no período.",
+ "licoes": "A fase de transição custou duas semanas a mais do que o previsto por falta de documentação atualizada das interfaces SAP. Foi decisivo manter um analista dedicado ao ServiceNow desde a primeira semana, o que estruturou o SLA e a priorização dos chamados.",
+ "diferencial": "Ganhamos por apresentar um case de referência de AMS em rede varejista com SAP e Azure e um modelo de transição já validado em projeto anterior no próprio cliente."
+}

@@ -1,0 +1,38 @@
+{
+ "titulo": "Redução de Perdas Não Técnicas com Analytics Avançado e Machine Learning",
+ "problema": "A Energia Paulista Distribuição enfrenta perdas não técnicas de aproximadamente 8,5% da energia distribuída, o que representa cerca de R$ 120 milhões anuais. A identificação manual de fraudes e ligações clandestinas é lenta e cobre apenas 30% dos casos suspeitos.",
+ "objetivo": "Reduzir as perdas não técnicas em 2 pontos percentuais em 12 meses, por meio de um modelo preditivo de detecção de fraudes e automação da análise de dados.",
+ "escopo": [
+  "Ingestão e tratamento de dados de consumo, cadastro e inspeções usando Databricks e Azure Data Lake",
+  "Desenvolvimento de modelo de machine learning para priorização de inspeções com base em padrões de consumo",
+  "Integração do modelo com sistemas de field service para direcionamento de equipes",
+  "Painéis de monitoramento de perdas e efetividade das inspeções em Power BI",
+  "Pipeline de retraining automatizado do modelo com novos dados"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo de governança",
+  "Modelo preditivo de detecção de fraudes com acurácia mínima de 75%",
+  "Dashboard de acompanhamento de perdas e KPIs de inspeção",
+  "Relatório de resultados do piloto em 3 subestações",
+  "Manual de operação e treinamento para equipe interna"
+ ],
+ "fases": [
+  "Fase 1: Diagnóstico e preparação de dados (6 semanas)",
+  "Fase 2: Desenvolvimento e treinamento do modelo (10 semanas)",
+  "Fase 3: Piloto e ajustes (8 semanas)",
+  "Fase 4: Rollout e transferência de conhecimento (8 semanas)"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados sênior e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos dados históricos de inspeções",
+  "Resistência das equipes de campo à priorização baseada em modelo",
+  "Dependência de aprovação regulatória para uso de dados de consumo"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Gerente de Operações de Distribuição)",
+  "tecnico": "Fernanda Oliveira (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou 25% acima do orçamento aprovado pelo cliente e cerca de 15% superior ao valor de mercado para escopo similar.",
+ "licoes": "Para próximas propostas em utilities, incluir análise de benchmark de preços e oferecer opção de escopo modular para adequar ao orçamento do cliente.",
+ "retorno": "Prezados, após análise detalhada, decidimos não prosseguir com a proposta da NTT DATA para o projeto de redução de perdas não técnicas. O valor apresentado ficou acima do nosso orçamento e das alternativas de mercado. Agradecemos o esforço da equipe. Atenciosamente, Carlos Mendes."
+}

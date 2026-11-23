@@ -1,0 +1,47 @@
+{
+ "titulo": "Implatação de plataforma lakehouse Databricks no Azure para dados financeiros",
+ "problema": "O Banco Ponte Firme processa cerca de 12 milhões de transações diárias em sistemas legados que geram relatórios com atraso de até 48 horas para as áreas de crédito e risco. A ausência de uma camada analítica unificada impede a reconciliação automática de 8% dos lançamentos contábeis e limita a adoção de modelos de risco em tempo quase real.",
+ "objetivo": "Implantar uma plataforma lakehouse em Databricks sobre Azure que consolide dados transacionais e cadastrais em camadas bronze, silver e gold, reduzindo o tempo de disponibilização de dados analíticos de 48 para até 4 horas.",
+ "escopo": [
+  "Provisionamento da infraestrutura no Azure (Data Lake Storage Gen2, Azure Data Factory e workspace Databricks) com rede privada e políticas de governança",
+  "Construção de pipelines de ingestão incremental no Databricks para 14 fontes transacionais e cadastrais, com orquestração e controle de qualidade",
+  "Modelagem das camadas bronze, silver e gold com tabelas Delta Lake e histórico de alterações para trilha de auditoria",
+  "Implementação de 25 regras de qualidade e reconciliação de dados contábeis, com alertas automáticos para a equipe de risco",
+  "Criação de catálogo de dados e controle de acesso por perfil no Databricks Unity Catalog para 6 áreas consumidoras"
+ ],
+ "entregaveis": [
+  "Infraestrutura Azure e workspace Databricks configurados e documentados em ambiente de produção",
+  "14 pipelines de ingestão em operação com monitoramento e SLA de carga definidos",
+  "Modelo lakehouse em Delta Lake com camadas bronze, silver e gold homologado pela área de dados",
+  "Painel de qualidade e reconciliação com 25 regras ativas e relatório diário de divergências",
+  "Documentação técnica, runbooks operacionais e treinamento de 20 usuários das áreas de crédito e risco"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 4
+  },
+  {
+   "nome": "Infraestrutura e ingestão",
+   "semanas": 8
+  },
+  {
+   "nome": "Modelagem e qualidade de dados",
+   "semanas": 10
+  },
+  {
+   "nome": "Governança, testes e go-live",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em governança e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos às fontes legadas pelo time de segurança do banco",
+  "Volume e qualidade irregulares em 3 das 14 fontes mapeadas",
+  "Dependência de janelas noturnas curtas para cargas de dados críticas"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Vasconcelos (Gerente de Dados e Analytics)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados Sênior)"
+ }
+}

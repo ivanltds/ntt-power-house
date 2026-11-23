@@ -1,0 +1,48 @@
+{
+ "titulo": "Otimização de Rotas e Frota com Machine Learning e Analytics para Operação Logística",
+ "problema": "O Porto Seco Interior opera com uma frota de 180 caminhões e enfrenta rotas definidas manualmente, gerando 22% de quilometragem ociosa e atrasos em 15% das entregas. A ausência de visibilidade consolidada sobre custo por rota e ocupação da frota impede decisões de curto prazo e pressiona a margem operacional.",
+ "objetivo": "Reduzir em até 18% o custo logístico por entrega e elevar a pontualidade para 95% por meio de otimização de rotas baseada em Machine Learning e painéis analíticos de frota.",
+ "escopo": [
+  "Modelagem de otimização de rotas com Machine Learning em Python, considerando restrições de janela de entrega, capacidade e trânsito",
+  "Construção de pipeline de dados em GCP para ingestão de telemetria da frota, pedidos e custos operacionais",
+  "Desenvolvimento de dashboards em Power BI para acompanhamento de ocupação, custo por rota e aderência ao plano",
+  "Implantação de rotina de previsão de demanda por região para dimensionamento diário da frota",
+  "Programa de Change Management com treinamento de 45 operadores e gestores na nova rotina de planejamento"
+ ],
+ "entregaveis": [
+  "Modelo de otimização de rotas validado em piloto com 40 veículos",
+  "Pipeline de dados operacionais consolidado em GCP",
+  "Conjunto de 6 dashboards em Power BI para gestão de frota e custos",
+  "Relatório de ganhos com comparativo antes/depois de quilometragem e pontualidade",
+  "Plano de Change Management com materiais de treinamento e cronograma de adoção"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento de modelos e dashboards",
+   "semanas": 10
+  },
+  {
+   "nome": "Piloto com frota selecionada",
+   "semanas": 6
+  },
+  {
+   "nome": "Rollout e Change Management",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados, 1 analista de BI e 1 especialista em change management",
+ "riscos": [
+  "Qualidade e cobertura dos dados de telemetria da frota",
+  "Resistência dos operadores à nova rotina de planejamento",
+  "Restrições de trânsito e sazonalidade afetando a acurácia do modelo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Diretora de Operações)",
+  "tecnico": "Bruno Carvalho (Líder Técnico de Data Science)"
+ },
+ "diferencial": "Nosso relacionamento prévio e a continuidade de engajamento com o Porto Seco Interior permitiram um diagnóstico acelerado e um plano de execução alinhado às prioridades reais da operação."
+}

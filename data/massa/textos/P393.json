@@ -1,0 +1,49 @@
+{
+ "titulo": "Assistente Virtual com IA Generativa no Atendimento ao Cidadão",
+ "problema": "A Prefeitura de Nova Esperança enfrenta um volume de 12.000 atendimentos mensais, com tempo médio de espera de 18 minutos e índice de resolução no primeiro contato de apenas 55%. A falta de automação sobrecarrega as equipes e gera insatisfação dos cidadãos.",
+ "objetivo": "Implantar um assistente virtual com IA Generativa integrado ao Salesforce para automatizar 60% dos atendimentos de baixa complexidade e reduzir o tempo de espera para até 5 minutos em 5 meses.",
+ "escopo": [
+  "Desenvolvimento de assistente virtual com IA Generativa (modelo de linguagem) integrado ao Salesforce Service Cloud para atendimento via chat no portal do cidadão.",
+  "Automação de processos de triagem e roteamento de solicitações usando Salesforce Flow e regras de negócio.",
+  "Integração do assistente com a base de conhecimento da prefeitura e sistemas legados via APIs.",
+  "Implementação de painel de métricas no Salesforce para monitorar volume de atendimentos, taxa de resolução automática e tempo médio de resposta.",
+  "Condução de programa de Change Management com treinamentos e comunicação para 80 atendentes e gestores."
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção integrado ao Salesforce, com pelo menos 50 intenções de atendimento mapeadas.",
+  "Documentação técnica de arquitetura e integrações.",
+  "Relatório de automação de processos com fluxos otimizados no Salesforce.",
+  "Plano de Change Management executado, incluindo workshops e materiais de apoio.",
+  "Dashboard de acompanhamento de KPIs com relatórios semanais durante o projeto."
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Design",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento e Integração",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Testes e Homologação",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Go-live e Change Management",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 desenvolvedores Salesforce, 1 especialista em IA Generativa e 1 analista de change management.",
+ "riscos": [
+  "Baixa adesão dos atendentes ao novo assistente virtual.",
+  "Complexidade na integração com sistemas legados da prefeitura.",
+  "Limitações na qualidade das respostas da IA Generativa por falta de dados estruturados."
+ ],
+ "pessoas": {
+  "cliente": "Carlos Pereira (Secretário de Atendimento ao Cidadão)",
+  "tecnico": "Mariana Costa (Arquiteta de Soluções de IA)"
+ },
+ "resultados": "Até o momento, 3 fluxos de atendimento automatizados já foram implementados, reduzindo em 20% o tempo de espera nas primeiras semanas de operação assistida.",
+ "diferencial": "Nosso relacionamento prévio com a Prefeitura de Nova Esperança em projetos de modernização e a continuidade da equipe técnica garantem agilidade e alinhamento estratégico."
+}

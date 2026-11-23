@@ -1,0 +1,78 @@
+---
+projeto_id: P333
+cliente: Metalúrgica Forja Forte
+titulo: Migração para SAP S/4HANA com Change Management e integração multicloud
+segmento: Manufatura
+tecnologias: ["Azure","AWS","SAP"]
+servicos: ["Change Management"]
+area: Enterprise Apps
+dono: Tiago Fernandes
+confidencialidade: confidencial
+status_proposta: Em elaboração
+link_sharepoint: https://sharepoint.exemplo/sites/propostas/P333
+id: P333-PROP
+tipo_documental: proposta_comercial
+status_documento: preliminar
+data: 2026-10-22
+prazo_meses: 10
+valor: 810000
+margem: 0.24
+---
+
+# Proposta Comercial — Migração para SAP S/4HANA com Change Management e integração multicloud
+
+**Cliente:** Metalúrgica Forja Forte
+**Segmento:** Manufatura
+**Área responsável:** Enterprise Apps · **Dono da proposta:** Tiago Fernandes
+**Data:** 2026-10-22 · **Versão:** final
+
+## 1. Contexto e desafio
+
+A Metalúrgica Forja Forte opera com SAP ECC 6.0 há 12 anos, com 45 customizações críticas e 3 sistemas legados de produção que geram retrabalho e custos de manutenção de R$ 2,8 milhões/ano. A empresa precisa migrar para SAP S/4HANA para manter suporte até 2027 e reduzir o fechamento contábil de 15 para 5 dias.
+
+## 2. Objetivo
+
+Migrar os processos de manufatura e financeiros para SAP S/4HANA em 10 meses, com infraestrutura em Azure e AWS, e garantir a adoção pelos 350 usuários por meio de um programa estruturado de Change Management.
+
+## 3. Escopo da solução
+
+- Assessment e blueprint de migração do SAP ECC para SAP S/4HANA, incluindo análise de customizações e limpeza de dados
+- Migração e integração de ambientes SAP em Azure (produção) e AWS (DR e testes), com conectividade híbrida
+- Execução de 3 ciclos de teste integrado e 1 go-live assistido, com suporte de 4 semanas pós-produção
+- Programa de Change Management: 8 workshops, 12 sessões de treinamento e plano de comunicação para 350 usuários
+- Documentação técnica e transferência de conhecimento para equipe interna de 10 analistas
+
+Tecnologias principais: Azure, AWS, SAP.
+
+## 4. Abordagem e cronograma
+
+O projeto será executado em 10 meses, nas seguintes fases:
+
+- Fase 1 – Assessment e Planejamento: 8 semanas
+- Fase 2 – Migração e Integração: 20 semanas
+- Fase 3 – Testes e Change Management: 10 semanas
+- Fase 4 – Go-live e Suporte: 6 semanas
+
+## 5. Entregáveis
+
+- Relatório de assessment com mapa de customizações e plano de migração detalhado
+- Ambiente SAP S/4HANA produtivo em Azure e ambiente de DR em AWS, com testes de failover documentados
+- Plano de Change Management executado, incluindo materiais de treinamento e pesquisa de adoção com meta de 85% de satisfação
+- Relatórios de testes integrados e termo de aceite do go-live
+- Documentação as-built e sessões de transferência de conhecimento realizadas
+
+## 6. Equipe proposta
+
+1 gerente de projeto, 1 arquiteto SAP S/4HANA, 2 consultores funcionais SAP, 1 engenheiro de cloud (Azure/AWS) e 1 especialista em Change Management.
+
+## 7. Premissas e riscos
+
+- Risco: Resistência dos usuários à mudança de processos, impactando a adoção
+- Risco: Complexidade na migração de customizações e dados legados
+- Risco: Indisponibilidade de ambientes cloud durante janelas de teste
+
+## 8. Investimento
+
+Investimento total: R$ 810.000, em parcelas mensais ao longo de 10 meses.
+
+Margem praticada: 24%.

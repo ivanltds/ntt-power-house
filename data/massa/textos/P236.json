@@ -1,0 +1,38 @@
+{
+ "titulo": "Leitura e triagem de documentos com IA generativa para seguradora",
+ "problema": "A Saúde Garantida Seguros processa mensalmente cerca de 12.000 documentos não estruturados, como apólices, sinistros e laudos médicos, e a triagem manual consome 1.800 horas e atrasa a análise em até 5 dias úteis. A empresa busca reduzir custos operacionais e melhorar a experiência do cliente.",
+ "objetivo": "Automatizar a leitura e triagem de documentos com IA generativa, RPA e Azure, reduzindo o tempo de processamento em 60% e liberando a equipe para tarefas analíticas.",
+ "escopo": [
+  "Desenvolvimento de pipeline de ingestão e extração de dados de documentos usando IA Generativa no Azure OpenAI.",
+  "Implementação de RPA para orquestração do fluxo de triagem e classificação automática de documentos.",
+  "Integração com sistemas legados via APIs no Azure, garantindo segurança e conformidade com a LGPD.",
+  "Criação de painel de monitoramento e feedback humano no Azure para melhoria contínua do modelo.",
+  "Treinamento da equipe do cliente para operação e manutenção da solução."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da solução e plano de implantação.",
+  "Protótipo funcional de leitura e triagem para 3 tipos de documentos prioritários.",
+  "Solução em produção com RPA e IA Generativa integrada aos sistemas do cliente.",
+  "Manual técnico e de usuário, além de sessões de capacitação realizadas.",
+  "Relatório de resultados com métricas de acurácia e redução de tempo."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e definição de requisitos: 4 semanas",
+  "Fase 2 - Desenvolvimento e testes do protótipo: 8 semanas",
+  "Fase 3 - Implantação e integração em produção: 6 semanas",
+  "Fase 4 - Estabilização e transferência de conhecimento: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 2 engenheiros de software, 1 especialista em RPA e 1 gerente de projeto.",
+ "riscos": [
+  "Baixa qualidade dos documentos digitalizados impactando a acurácia da IA.",
+  "Resistência à mudança por parte das equipes operacionais.",
+  "Atrasos na integração com sistemas legados do cliente."
+ ],
+ "pessoas": {
+  "cliente": "Carla Menezes (Diretora de Operações)",
+  "tecnico": "Rafael Oliveira (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 25% acima do mercado, inviabilizando a competitividade da oferta.",
+ "licoes": "Para próximas propostas similares, realizar benchmarking de preços com concorrentes e considerar alternativas de escopo faseado para adequar o valor ao orçamento do cliente.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a proposta da NTT DATA não foi selecionada. O motivo principal foi o valor apresentado, que ficou acima do mercado. Agradecemos o empenho da equipe. Atenciosamente, Carla Menezes - Diretora de Operações."
+}

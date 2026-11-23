@@ -1,0 +1,38 @@
+{
+ "titulo": "Assistente Virtual com IA Generativa para Atendimento no Setor de Telecom",
+ "problema": "A TeleNorte Conecta enfrenta um volume crescente de chamados no atendimento, com mais de 1,2 milhão de interações mensais e um tempo médio de espera de 12 minutos. Cerca de 65% das solicitações são de baixa complexidade, sobrecarregando a equipe humana e elevando o custo por atendimento em 18% ao ano.",
+ "objetivo": "Implementar um assistente virtual baseado em IA generativa para automatizar o atendimento de nível 1, reduzindo o tempo de resposta em 40% e liberando a equipe para casos complexos.",
+ "escopo": [
+  "Desenvolvimento de chatbot com IA generativa integrado ao ServiceNow para triagem e resolução de chamados de baixa complexidade",
+  "Implementação de modelos de linguagem natural customizados para o setor de telecom, com treinamento em base histórica de atendimentos",
+  "Integração com Azure Cognitive Services para processamento de linguagem natural e reconhecimento de intenção",
+  "Automação de processos de atendimento via Python, incluindo orquestração de fluxos e integração com sistemas legados",
+  "Dashboards de monitoramento de desempenho do assistente no ServiceNow, com métricas de acurácia e satisfação do cliente"
+ ],
+ "entregaveis": [
+  "Assistente virtual funcional integrado ao ServiceNow, com pelo menos 20 intenções de atendimento mapeadas",
+  "Documentação técnica da arquitetura e dos fluxos de automação",
+  "Modelo de IA generativa treinado e validado com taxa de acerto mínima de 85%",
+  "Relatório de testes de usabilidade e plano de implantação gradual",
+  "Manual de operação e transferência de conhecimento para a equipe interna"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Design (6 semanas): levantamento de requisitos, mapeamento de processos e definição da arquitetura",
+  "Fase 2 - Desenvolvimento e Integração (12 semanas): construção do assistente, integrações com ServiceNow e Azure, e automações em Python",
+  "Fase 3 - Testes e Homologação (4 semanas): testes de qualidade, usabilidade e ajustes finais",
+  "Fase 4 - Go-live e Estabilização (2 semanas): implantação em produção e suporte inicial"
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 2 engenheiros de software, 1 especialista em ServiceNow, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão dos clientes ao canal virtual",
+  "Complexidade na integração com sistemas legados",
+  "Limitações na qualidade dos dados históricos para treinamento da IA"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Atendimento)",
+  "tecnico": "Rafael Almeida (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 25% acima do mercado, segundo avaliação do cliente. A TeleNorte Conecta optou por um concorrente com valor mais competitivo, apesar da qualidade técnica da solução.",
+ "licoes": "Para próximas oportunidades com escopo semelhante, devemos realizar um benchmarking de preços mais detalhado e considerar opções de redução de custo, como uso de componentes open source ou modularização do escopo.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a proposta da NTT DATA não foi selecionada. O principal motivo foi o valor apresentado, que ficou acima do orçamento disponível e da média de mercado. Agradecemos o empenho da equipe. Atenciosamente, Mariana Costa - Diretora de Atendimento"
+}

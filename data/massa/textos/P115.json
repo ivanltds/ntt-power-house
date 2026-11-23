@@ -1,0 +1,50 @@
+{
+ "titulo": "Streaming de dados em tempo real para operadora de telecom",
+ "problema": "A Operadora Sinal Forte processava cerca de 40 milhões de eventos de rede por dia em lotes noturnos, com latência de até 8 horas na detecção de falhas de qualidade e consumo de dados. Isso limitava a ação proativa em 2,3 milhões de clientes e gerava perda estimada de R$ 1,8 milhão por mês em churn não endereçado.",
+ "objetivo": "Implantar uma plataforma de dados em tempo real com Databricks e Kafka para reduzir a latência de eventos de rede a menos de 2 minutos e habilitar analytics operacional e de experiência do cliente em near real-time.",
+ "escopo": [
+  "Ingestão contínua de eventos de rede e de uso em tópicos Kafka, com volumes de 40 milhões de eventos/dia",
+  "Pipeline de streaming estruturado no Databricks com camadas bronze, silver e gold e governança de dados",
+  "Modelagem de indicadores de qualidade de rede e experiência do cliente para consumo em dashboards de Analytics & BI",
+  "Alertas em tempo real para times de operações e retenção, integrados aos sistemas de atendimento",
+  "Plano de Change Management com treinamento de 120 usuários e comunicação em 3 ondas"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming Kafka + Databricks documentada e aprovada",
+  "Pipelines de streaming em produção com SLA de 2 minutos de latência",
+  "5 dashboards de qualidade de rede e experiência do cliente publicados",
+  "Motor de alertas em tempo real operando com 12 regras de negócio",
+  "Programa de capacitação concluído com 120 usuários treinados e material de apoio"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura",
+   "semanas": 6
+  },
+  {
+   "fase": "Implementação de ingestão e pipelines de streaming",
+   "semanas": 16
+  },
+  {
+   "fase": "Analytics, alertas e dashboards",
+   "semanas": 10
+  },
+  {
+   "fase": "Change Management e go-live assistido",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Volume de eventos acima do previsto nos horários de pico",
+  "Qualidade e padronização dos eventos de rede de múltiplos vendors",
+  "Baixa adoção dos dashboards pelos times operacionais"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações de Rede)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ },
+ "resultados": "A latência de detecção de falhas caiu de 8 horas para menos de 2 minutos, com 94% dos alertas críticos tratados dentro do SLA. A operação passou a endereçar proativamente 2,3 milhões de clientes, com redução de 11% no churn nos segmentos monitorados.",
+ "licoes": "A integração com sistemas legados de atendimento consumiu 3 semanas além do previsto por falta de documentação de APIs. Foi decisivo envolver os times de operações desde a fase de discovery, o que acelerou a validação das regras de alerta e a adoção no go-live.",
+ "diferencial": "Ganhamos pela relação de confiança construída com a Operadora Sinal Forte em projetos anteriores e pela capacidade de dar continuidade ao roadmap de dados da operadora sem curva de aprendizado."
+}

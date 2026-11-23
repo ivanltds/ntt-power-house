@@ -1,0 +1,46 @@
+{
+ "titulo": "Plataforma de Dados Lakehouse para Varejo Omnichannel",
+ "problema": "A Magazine Estrela Azul, com 320 lojas físicas e faturamento anual de R$ 8,5 bilhões, enfrenta dificuldades para consolidar dados de vendas, estoque e clientes provenientes de sistemas legados e canais digitais. Atualmente, 70% dos relatórios gerenciais são manuais e levam até 5 dias para serem produzidos, impactando a agilidade na tomada de decisão.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse baseada em Snowflake e Databricks para centralizar e governar os dados do varejo, reduzindo o tempo de geração de relatórios para menos de 1 dia e habilitando análises avançadas de comportamento do cliente.",
+ "escopo": [
+  "Migração de 15 bases de dados legadas (Oracle, SQL Server) para o Snowflake, com ingestão de 2 TB de dados históricos.",
+  "Implementação de pipeline de dados no Databricks para processamento em near real-time de eventos de vendas e estoque.",
+  "Definição e implementação de catálogo de dados e políticas de governança no Snowflake, cobrindo 200 tabelas críticas.",
+  "Integração de fontes de dados de e-commerce e marketplaces via conectores nativos do Databricks.",
+  "Treinamento de 30 usuários-chave em ferramentas de analytics e governança de dados."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência lakehouse aprovado.",
+  "Pipeline de ingestão e transformação de dados operacional em Snowflake e Databricks.",
+  "Catálogo de dados com metadados e linhagem para 200 tabelas.",
+  "Painéis de monitoramento de qualidade de dados e performance.",
+  "Relatório final de migração e plano de sustentação."
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Arquitetura",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Implementação da Plataforma",
+   "duracao_semanas": 20
+  },
+  {
+   "nome": "Governança e Migração",
+   "duracao_semanas": 12
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto.",
+ "riscos": [
+  "Resistência à mudança por parte das equipes de TI legadas.",
+  "Complexidade na integração de fontes de dados heterogêneas.",
+  "Atrasos na aprovação de políticas de governança de dados."
+ ],
+ "pessoas": {
+  "cliente": "Ana Beatriz Mendes (Diretora de TI)",
+  "tecnico": "Carlos Eduardo Lima (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era significativamente maior do que a necessidade imediata do cliente, que buscava uma solução mais enxuta e de rápida implementação para consolidar apenas os dados de vendas.",
+ "licoes": "Para o próximo projeto no setor de varejo, é crucial realizar um discovery mais aprofundado para dimensionar o escopo de acordo com a maturidade analítica do cliente, oferecendo uma abordagem faseada e modular que permita ganhos rápidos.",
+ "retorno": "Prezados, após análise interna, decidimos não prosseguir com a proposta para a plataforma de dados lakehouse. O escopo apresentado mostrou-se mais abrangente do que o necessário para o momento, e optamos por uma solução mais focada e de menor complexidade inicial. Agradecemos o esforço da equipe da NTT DATA. Atenciosamente, Ana Beatriz Mendes, Diretora de TI."
+}

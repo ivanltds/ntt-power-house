@@ -1,0 +1,48 @@
+{
+ "titulo": "Programa de Governança de Dados e Adequação LGPD para Operações de Crédito",
+ "problema": "A Financeira Rumo Certo opera 42 milhões de registros de clientes distribuídos em 7 sistemas legados, sem catálogo único de dados nem classificação de informações pessoais sensíveis. O último diagnóstico interno apontou 63% dos campos de dados pessoais sem mapeamento de base legal, expondo a empresa a sanções da ANPD e a retrabalho em auditorias trimestrais.",
+ "objetivo": "Implantar uma estrutura de governança de dados com classificação LGPD, linhagem e controles de acesso sobre Python, Snowflake e Databricks, além de conduzir a mudança organizacional para adoção sustentada pelos times de negócio e tecnologia.",
+ "escopo": [
+  "Mapeamento e classificação de dados pessoais e sensíveis em 7 sistemas de origem, com pipelines de catalogação em Python e carga no Snowflake",
+  "Implementação de linhagem de dados e política de retenção no Databricks, cobrindo 42 milhões de registros e 120 tabelas críticas",
+  "Definição de papéis e matriz RACI de governança, com 4 bases legais documentadas e fluxo de atendimento a titulares em até 15 dias",
+  "Configuração de controles de acesso baseados em perfil e mascaramento de dados sensíveis no Snowflake para 180 usuários",
+  "Plano de Change Management com 8 workshops, treinamento de 60 colaboradores-chave e rede de 12 data stewards por área de negócio"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com classificação LGPD de 120 tabelas críticas e dicionário de dados publicado",
+  "Relatório de linhagem e mapa de fluxo de dados pessoais entre os 7 sistemas de origem",
+  "Política de governança de dados e matriz RACI aprovada pelo comitê executivo",
+  "Painel de monitoramento de conformidade LGPD com 15 indicadores no Snowflake",
+  "Programa de capacitação executado com 60 colaboradores treinados e 12 data stewards certificados"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e mapeamento de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Implementação de catálogo, linhagem e controles",
+   "semanas": 8
+  },
+  {
+   "nome": "Capacitação e Change Management",
+   "semanas": 4
+  },
+  {
+   "nome": "Estabilização e entrega de indicadores",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança e LGPD e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização dos metadados nos 7 sistemas legados",
+  "Resistência dos times de negócio à mudança de papéis e responsabilidades",
+  "Indisponibilidade de especialistas jurídicos do cliente para validação das bases legais"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Risco e Compliance)",
+  "tecnico": "Paulo Menezes (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente após reestruturação do orçamento de compliance, que priorizou investimentos emergenciais em segurança cibernética e postergou o programa de governança de dados."
+}

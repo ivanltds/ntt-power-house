@@ -1,0 +1,50 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real com Machine Learning e Databricks",
+ "problema": "A FibraMax Internet, operadora de telecom com 1,2 milhão de assinantes, registrava perdas de aproximadamente R$ 8,4 milhões por ano com fraudes em cadastros e uso indevido de planos. O processo de análise era manual, cobria apenas 30% das transações suspeitas e levava até 72 horas para identificar um caso confirmado.",
+ "objetivo": "Implantar um modelo de detecção de fraude em tempo real sobre a plataforma Databricks, automatizando a análise de transações e reduzindo o tempo de identificação de fraudes de dias para minutos.",
+ "escopo": [
+  "Construção de pipeline de engenharia de dados no Databricks para ingestão de 4,5 milhões de eventos mensais de cadastro, recarga e consumo.",
+  "Desenvolvimento de modelos de Machine Learning supervisionados e de detecção de anomalias com taxa de acerto superior a 90% na base de validação.",
+  "Criação de camada de feature store e score de risco por assinante atualizado a cada transação.",
+  "Integração do scoring em tempo real via API com os sistemas de cadastro e antifraude da operadora.",
+  "Painéis de monitoramento de modelos e alertas operacionais para o time de prevenção a fraudes."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e ML na plataforma Databricks.",
+  "Modelos de Machine Learning treinados e validados com relatório de performance.",
+  "Pipeline de engenharia de dados em produção com processamento em tempo real.",
+  "API de scoring de fraude integrada aos sistemas da FibraMax.",
+  "Dashboard de monitoramento de fraude e manual de operação dos modelos."
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e validação dos modelos de ML",
+   "semanas": 10
+  },
+  {
+   "fase": "Integração em tempo real e dashboards",
+   "semanas": 6
+  },
+  {
+   "fase": "Homologação e entrada em produção",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de fraude",
+  "Latência na integração em tempo real com sistemas legados",
+  "Baixa adesão do time operacional ao novo fluxo de alertas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Prevenção a Fraudes)",
+  "tecnico": "Diego Almeida (Líder Técnico de Data Science)"
+ },
+ "resultados": "O modelo passou a cobrir 100% das transações elegíveis e reduziu o tempo médio de identificação de fraude de 72 horas para 8 minutos. A operadora estima economia anual de R$ 6,1 milhões com a redução de perdas fraudulentas.",
+ "licoes": "A integração com os sistemas legados de cadastro exigiu duas semanas adicionais por conta de APIs sem documentação atualizada. Foi decisivo envolver o time de prevenção a fraudes desde a fase de diagnóstico, o que acelerou a validação das regras de negócio e a adoção dos alertas.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência muito parecido em operadora de telecom, com resultados comprovados em detecção de fraude em tempo real."
+}

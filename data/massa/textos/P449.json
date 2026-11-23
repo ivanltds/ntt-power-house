@@ -1,0 +1,50 @@
+{
+ "titulo": "Redução de Perdas Não Técnicas com Analytics Avançado em Utilities",
+ "problema": "A Geradora Ventos do Nordeste identificou que 7,4% da energia distribuída em sua área de concessão era perdida por fraude e ligações irregulares, o que representava cerca de R$ 18 milhões em receita não faturada por ano. A detecção era feita por inspeções manuais em apenas 3% dos medidores por mês, sem priorização baseada em dados.",
+ "objetivo": "Reduzir as perdas não técnicas por meio de modelos de priorização de inspeções e de um painel analítico que oriente as equipes de campo às unidades com maior probabilidade de irregularidade.",
+ "escopo": [
+  "Construção de pipeline de ingestão de dados de medição, cadastro e inspeções no Databricks, com camadas bronze, silver e gold",
+  "Desenvolvimento de modelo de machine learning para scoring de probabilidade de fraude por medidor, com features de consumo, histórico e perfil de rede",
+  "Painéis no Power BI para priorização diária de inspeções por regional e acompanhamento de recuperação de receita",
+  "Integração do scoring ao processo de field service, com atualização semanal dos rankings de inspeção",
+  "Monitoramento de deriva do modelo e documentação dos indicadores de perdas não técnicas"
+ ],
+ "entregaveis": [
+  "Pipeline de dados no Databricks com 24 meses de histórico de medição e inspeções tratado",
+  "Modelo de scoring de fraude com AUC de validação acima de 0,80 e relatório de explicabilidade",
+  "Painel Power BI com ranking de inspeções, taxa de acerto e receita recuperada por regional",
+  "Guia de operação do processo de priorização e treinamento das equipes de campo",
+  "Relatório final de resultados com comparação entre período baseline e pós-implantação"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e engenharia de dados",
+   "semanas": 10
+  },
+  {
+   "fase": "Modelagem e validação do scoring",
+   "semanas": 12
+  },
+  {
+   "fase": "Painéis e integração operacional",
+   "semanas": 8
+  },
+  {
+   "fase": "Piloto, ajustes e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados de medidores legados",
+  "Baixa adesão das equipes de campo ao novo ranking de inspeções",
+  "Mudanças regulatórias no cálculo de perdas durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações Comerciais)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "O modelo elevou a taxa de acerto das inspeções de 22% para 51% e permitiu recuperar R$ 6,3 milhões em receita nos primeiros seis meses após a entrada em produção.",
+ "licoes": "A integração com o sistema legado de field service consumiu três semanas além do previsto por falta de documentação de APIs. Foi decisivo envolver as equipes de campo desde a fase de modelagem, o que ajustou as features ao processo real de inspeção.",
+ "diferencial": "Entregamos em 8 meses um projeto de analytics com modelo em produção e ganho mensurável de receita, graças à reutilização da base de dados já construída em projeto anterior no cliente."
+}

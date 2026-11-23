@@ -1,0 +1,47 @@
+{
+ "titulo": "Plataforma de Indicadores ESG e Emissões para Reporte Regulatório",
+ "problema": "O Banco Cidadela consolida hoje os indicadores ESG de 3 carteiras de crédito e 2 unidades de operação em 14 planilhas manuais, com atraso médio de 18 dias na publicação do relatório trimestral e retrabalho em cerca de 30% dos cálculos de emissões Escopo 1 e 2. A ausência de linhagem e de regras únicas de cálculo eleva o risco de inconsistência perante auditoria externa e exigências do Banco Central.",
+ "objetivo": "Implantar uma plataforma de dados ESG que automatize o cálculo de emissões e a publicação de indicadores auditáveis, reduzindo o ciclo de reporte de 18 para 5 dias úteis.",
+ "escopo": [
+  "Ingestão de dados de emissões, consumo energético e carteira de crédito no Snowflake, com pipelines em Python para cálculo de Escopo 1, 2 e 3",
+  "Modelagem dimensional e camada semântica de indicadores ESG no Snowflake, com regras de cálculo versionadas",
+  "Painéis de indicadores ESG e emissões no Power BI para as áreas de Sustentabilidade, Riscos e Finanças",
+  "Orquestração e governança no Azure, incluindo catálogo, linhagem e trilha de auditoria dos dados",
+  "Definição de políticas de qualidade de dados e processo de validação mensal dos indicadores"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG e dicionário de 45 indicadores",
+  "Pipelines de ingestão e cálculo de emissões em produção no Snowflake",
+  "3 dashboards Power BI publicados: inventário de emissões, metas ESG e visão executiva",
+  "Catálogo de dados e linhagem no Azure com rastreabilidade por indicador",
+  "Relatório de qualidade de dados e plano de evolução para Escopo 3"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da arquitetura",
+   "semanas": 4
+  },
+  {
+   "nome": "Construção dos pipelines e cálculos de emissões",
+   "semanas": 8
+  },
+  {
+   "nome": "Dashboards Power BI e governança de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos dados históricos de consumo e emissões",
+  "Mudança de critérios regulatórios durante a construção",
+  "Dependência de validação tardia das áreas de Riscos e Sustentabilidade"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Vasconcelos (Gerente de Sustentabilidade e Reporte ESG)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados Sênior)"
+ }
+}

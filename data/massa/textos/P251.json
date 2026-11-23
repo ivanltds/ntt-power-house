@@ -1,0 +1,48 @@
+{
+ "titulo": "Assistente Virtual com IA Generativa para Atendimento no Banco Aurora",
+ "problema": "O Banco Aurora registra cerca de 4,2 milhões de atendimentos por mês em canais digitais, com 38% das interações ainda exigindo retrabalho manual e tempo médio de primeira resposta de 9 minutos. A base de conhecimento fragmentada entre Salesforce e sistemas legados eleva o custo por atendimento em 22% e reduz o CSAT para 71 pontos.",
+ "objetivo": "Implantar um assistente virtual com IA generativa integrado ao Salesforce e à Azure, automatizando respostas e reduzindo o tempo de primeira resposta em 50% em 5 meses.",
+ "escopo": [
+  "Desenho da arquitetura do assistente virtual em Azure OpenAI, com camada de orquestração e governança de prompts",
+  "Integração do assistente ao Salesforce Service Cloud para consulta de histórico e abertura automática de casos",
+  "Construção de base de conhecimento vetorizada com 12 mil artigos e políticas de atendimento do banco",
+  "Implementação de guardrails de IA generativa, logs de auditoria e painel de acurácia das respostas",
+  "Programa de Change Management para 350 atendentes, com treinamentos e materiais de apoio"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção para 3 jornadas de atendimento prioritárias",
+  "Integração Salesforce–Azure documentada e homologada",
+  "Base de conhecimento vetorizada com 12 mil artigos indexados",
+  "Painel de métricas de acurácia, tempo de resposta e CSAT",
+  "Plano de Change Management executado com 350 atendentes treinados"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e integrações",
+   "semanas": 8
+  },
+  {
+   "fase": "Piloto controlado e ajustes",
+   "semanas": 4
+  },
+  {
+   "fase": "Rollout e Change Management",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 engenheiros de IA generativa, 1 especialista Salesforce e 1 analista de change management",
+ "riscos": [
+  "Baixa qualidade dos dados na base de conhecimento legada",
+  "Adoção limitada pelos atendentes no rollout",
+  "Latência das respostas do modelo generativo"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Vasconcelos (Diretora de Experiência do Cliente)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Soluções de IA)"
+ },
+ "diferencial": "Ganhamos pela relação consolidada e pela continuidade de projetos anteriores no Banco Aurora, o que reduz riscos de integração e acelera a entrega."
+}

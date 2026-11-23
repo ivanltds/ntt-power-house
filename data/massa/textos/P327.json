@@ -1,0 +1,46 @@
+{
+ "titulo": "Modernização de Aplicações com Containers e Serviços Gerenciados",
+ "problema": "O Banco Horizonte Sul enfrenta desafios para manter suas aplicações legadas, que demandam alto esforço operacional e custos crescentes de infraestrutura. Com um volume de 2,5 milhões de transações diárias e uma base de 1,8 milhão de clientes, a agilidade para lançar novos produtos financeiros é limitada pela complexidade do ambiente atual.",
+ "objetivo": "Modernizar o ambiente de aplicações por meio da adoção de containers e orquestração, visando reduzir custos operacionais e acelerar o time-to-market de novos serviços financeiros.",
+ "escopo": [
+  "Avaliação e migração de 15 aplicações críticas para containers Kubernetes na AWS e GCP",
+  "Implementação de pipeline CI/CD para automação de deploys e testes",
+  "Configuração de monitoramento e observabilidade com ferramentas nativas de cloud",
+  "Definição de políticas de segurança e governança para ambientes multicloud",
+  "Capacitação da equipe do cliente em práticas de DevOps e operação de containers"
+ ],
+ "entregaveis": [
+  "Relatório de avaliação e plano de migração detalhado",
+  "Ambiente Kubernetes configurado e operacional na AWS e GCP",
+  "Pipeline CI/CD implementado para as aplicações priorizadas",
+  "Dashboards de monitoramento e alertas configurados",
+  "Documentação técnica e sessões de transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "nome": "Avaliação e Planejamento",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Implementação de Infraestrutura e Migração",
+   "duracao_semanas": 14
+  },
+  {
+   "nome": "Automação e Otimização",
+   "duracao_semanas": 8
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 2 engenheiros DevOps, 1 especialista em segurança e 1 gerente de projeto",
+ "riscos": [
+  "Resistência à mudança por parte das equipes internas",
+  "Complexidade na integração de sistemas legados",
+  "Atrasos na obtenção de aprovações de segurança e compliance"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Tecnologia)",
+  "tecnico": "Fernanda Oliveira (Arquiteta de Soluções Cloud)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 7 meses foi considerado muito longo pelo cliente, que precisava de uma implementação mais acelerada para atender às demandas regulatórias.",
+ "licoes": "Para próximas oportunidades, devemos oferecer opções de cronograma mais agressivas, com fases iniciais de quick wins, e destacar a possibilidade de aceleração com equipes dedicadas.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de modernização de aplicações com containers não foi selecionada. O prazo de entrega de 7 meses foi um fator decisivo, pois necessitamos de uma solução mais ágil para atender aos requisitos regulatórios. Agradecemos o empenho da equipe da NTT DATA. Atenciosamente, Carlos Mendes (Diretor de Tecnologia)."
+}

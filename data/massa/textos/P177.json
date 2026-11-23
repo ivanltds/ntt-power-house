@@ -1,0 +1,50 @@
+{
+ "titulo": "Modernização de aplicações do varejo com containers, Kafka e GCP",
+ "problema": "A Casa & Construção Prime operava 42 lojas físicas e um e-commerce com picos de 380 mil sessões em datas promocionais, sustentados por aplicações monolíticas em servidores legados que geravam indisponibilidades de até 6 horas por mês. O custo de infraestrutura on-premise crescia 18% ao ano e os deploys levavam em média 9 dias, limitando a velocidade de lançamento de novas campanhas.",
+ "objetivo": "Modernizar as aplicações críticas de vendas e catálogo para uma arquitetura em containers na GCP, com integração de eventos via Kafka, reduzindo indisponibilidade e acelerando o ciclo de entrega.",
+ "escopo": [
+  "Conteinerização das aplicações de catálogo, carrinho e checkout com orquestração em GKE na GCP",
+  "Implantação de cluster Kafka para streaming de eventos de pedidos, estoque e preço entre lojas físicas e e-commerce",
+  "Migração de 14 workloads legados para a GCP com pipeline CI/CD automatizado",
+  "Configuração de observabilidade, autoscaling e políticas de backup nos ambientes GCP",
+  "Operação de sustentação AMS com SLA de atendimento e monitoramento contínuo dos containers e tópicos Kafka"
+ ],
+ "entregaveis": [
+  "14 aplicações migradas e em execução em containers no GKE",
+  "Cluster Kafka em produção com 3 tópicos principais e retenção de 7 dias",
+  "Pipeline CI/CD com deploys automatizados e rollback em até 15 minutos",
+  "Runbooks de operação, dashboard de observabilidade e plano de DR",
+  "Relatório de encerramento com métricas de disponibilidade e custo mensal"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e desenho da arquitetura alvo",
+   "semanas": 6
+  },
+  {
+   "fase": "Conteinerização e implantação do Kafka",
+   "semanas": 10
+  },
+  {
+   "fase": "Migração dos workloads para GCP e go-live",
+   "semanas": 8
+  },
+  {
+   "fase": "Estabilização e transição para AMS",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 3 engenheiros DevOps, 2 engenheiros de dados especialistas em Kafka e 1 gerente de projeto",
+ "riscos": [
+  "Janela de congelamento de vendas em datas promocionais reduz o período útil de migração",
+  "Dependências de sistemas legados sem documentação atualizada",
+  "Curva de aprendizado das equipes do cliente em GCP e Kafka"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "A indisponibilidade mensal caiu de 6 horas para 25 minutos e o custo de infraestrutura foi reduzido em 32%, gerando economia anual estimada de R$ 1,4 milhão. O tempo médio de deploy passou de 9 dias para 4 horas.",
+ "licoes": "A migração de dois sistemas legados sem documentação atrasou a fase de go-live em 3 semanas e exigiu esforço extra de engenharia reversa. A realização de testes de carga com o volume real de picos promocionais foi decisiva para dimensionar o cluster Kafka e evitar incidentes na Black Friday.",
+ "diferencial": "Ganhamos pela relação de confiança construída com a Casa & Construção Prime em projetos anteriores, que permitiu acesso antecipado às áreas de negócio e alinhamento rápido do escopo."
+}

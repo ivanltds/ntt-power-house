@@ -1,0 +1,50 @@
+{
+ "titulo": "Implantação de CRM e Jornada do Cliente com Engenharia de Dados em Azure e Kafka",
+ "problema": "A Operadora Saúde Total, com cerca de 1,2 milhão de beneficiários e 4.800 colaboradores, operava com dados de clientes dispersos em 7 sistemas legados, gerando atendimentos duplicados e tempo médio de resolução de chamados de 9 dias. A ausência de uma visão unificada da jornada impedia ações de retenção e elevava o churn anual para 14,8% na carteira de planos individuais.",
+ "objetivo": "Implantar uma plataforma de CRM unificada com jornada do cliente integrada, apoiada em streaming de dados no Kafka e serviços Azure, para reduzir o tempo de atendimento e aumentar a retenção de beneficiários.",
+ "escopo": [
+  "Integração de 7 sistemas legados via Kafka, com tópicos de eventos de beneficiários e sinistros em streaming near real-time",
+  "Construção de pipeline de dados no Azure Data Factory e Azure Databricks para consolidar a visão 360º do cliente",
+  "Implantação do CRM com cadastro único, histórico de interações e régua de relacionamento para 1,2 milhão de beneficiários",
+  "Modelagem de jornada do cliente com 12 pontos de contato mapeados e painéis de indicadores no Power BI",
+  "Programa de Change Management com treinamento de 1.800 usuários em 3 ondas e comunicação interna estruturada"
+ ],
+ "entregaveis": [
+  "Plataforma de CRM em produção com cadastro único de beneficiários e histórico unificado de interações",
+  "Pipeline de streaming Kafka e camada analítica em Azure operando com latência inferior a 5 minutos",
+  "Mapa da jornada do cliente com 12 pontos de contato e 24 indicadores de monitoramento",
+  "Painéis gerenciais de retenção, churn e tempo de atendimento no Power BI",
+  "Plano de Change Management concluído, com 1.800 usuários treinados e material de apoio publicado"
+ ],
+ "fases": [
+  [
+   "Descoberta e Arquitetura",
+   8
+  ],
+  [
+   "Construção dos Pipelines de Dados e Integrações Kafka/Azure",
+   14
+  ],
+  [
+   "Implantação do CRM e Modelagem da Jornada",
+   12
+  ],
+  [
+   "Rollout, Treinamento e Estabilização",
+   10
+  ]
+ ],
+ "equipe": "1 arquiteto de soluções, 2 engenheiros de dados, 1 especialista em CRM, 1 analista de change management e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados dos 7 sistemas legados",
+  "Resistência dos 1.800 usuários à adoção do novo CRM",
+  "Dependência de janelas de integração com sistemas de terceiros"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Experiência do Cliente)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "O tempo médio de resolução de atendimentos caiu 42%, de 9 para 5,2 dias, e o churn da carteira de planos individuais recuou de 14,8% para 11,3% no primeiro trimestre pós-go-live, com ganho estimado de R$ 6,4 milhões em receita retida.",
+ "licoes": "A limpeza e padronização dos dados legados consumiu 3 semanas adicionais ao cronograma, exigindo reforço da equipe de engenharia de dados. Foi decisivo envolver os gestores das áreas de atendimento desde a fase de descoberta, o que acelerou a adoção do CRM nas três ondas de treinamento.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, que integrou em 4 semanas eventos de dois sistemas legados via Kafka com visualização em Azure, comprovando viabilidade antes da contratação."
+}

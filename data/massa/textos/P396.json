@@ -1,0 +1,47 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real com Machine Learning e Kafka",
+ "problema": "A Companhia de Saneamento Rio Claro registra cerca de 1,2 milhão de ligações de água e 850 mil economias ativas, com perdas não técnicas estimadas em 18% do volume faturado. A análise de inconsistências de consumo hoje é manual e trimestral, cobrindo apenas 6% dos hidrômetros, o que atrasa a identificação de fraudes e limita a recuperação de receita a R$ 4,5 milhões por ano.",
+ "objetivo": "Implantar um motor de detecção de fraude em tempo real que priorize casos suspeitos com base em Machine Learning sobre o fluxo de leituras e eventos, elevando a taxa de acerto das vistorias e ampliando a recuperação de receita não técnica.",
+ "escopo": [
+  "Ingestão contínua de leituras de hidrômetros e eventos de campo via Apache Kafka, com tópicos segregados por região e latência máxima de 5 segundos",
+  "Modelos de Machine Learning para scoring de anomalias de consumo, com explicabilidade das variáveis e retreino mensal",
+  "Pipeline de features em streaming combinando histórico de consumo, inadimplência e ocorrências de vistoria",
+  "Painel de priorização de casos para as equipes de campo, com ranking diário de até 2.500 ordens de vistoria",
+  "Monitoramento de deriva de modelo e métricas de precisão/recall com alertas automáticos"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência do pipeline Kafka e do ambiente de ML documentada e validada",
+  "Modelo de detecção de fraude em produção com recall mínimo de 70% sobre a base de validação",
+  "Painel de priorização de vistorias integrado ao processo das equipes de campo",
+  "Relatório de avaliação de desempenho com ganho estimado de recuperação de receita",
+  "Plano de retreino e monitoramento contínuo dos modelos"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento dos modelos e pipeline Kafka",
+   "semanas": 14
+  },
+  {
+   "nome": "Integração com operação de campo e piloto",
+   "semanas": 8
+  },
+  {
+   "nome": "Go-live, estabilização e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados, 1 especialista em Kafka e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e atraso na entrega das bases históricas de consumo e vistorias",
+  "Baixa adesão das equipes de campo ao novo ranking de priorização",
+  "Deriva de comportamento de fraude que reduza a precisão do modelo após o go-live"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Tavares (Gerente de Receita e Combate a Perdas)",
+  "tecnico": "Fernanda Queiroz (Lead Data Scientist)"
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Leitura e Triagem Inteligente de Documentos com RPA e IA Generativa",
+ "problema": "O Instituto de Previdência Municipal recebia cerca de 4.200 documentos por mês entre requerimentos de aposentadoria, certidões e comprovantes, com triagem 100% manual e prazo médio de 6 dias úteis por processo. O retrabalho por classificação incorreta atingia 18% dos lotes, sobrecarregando as equipes de análise previdenciária.",
+ "objetivo": "Automatizar a leitura, classificação e triagem de documentos previdenciários com RPA e IA Generativa, reduzindo o tempo de triagem e aumentando a precisão da classificação documental.",
+ "escopo": [
+  "Bot de RPA para captura e organização dos documentos recebidos nos canais digitais e físicos digitalizados",
+  "Pipeline de OCR e extração de campos com IA Generativa para requerimentos, certidões e comprovantes",
+  "Classificação automática por tipo documental e roteamento para as filas de análise correspondentes",
+  "Painel de conferência humana para validação de casos de baixa confiança do modelo",
+  "Integração com o sistema de protocolo existente do Instituto via APIs"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da solução de automação e IA",
+  "Robôs RPA de captura e roteamento em produção",
+  "Modelo de IA Generativa ajustado ao vocabulário previdenciário municipal",
+  "Relatório de acurácia e testes com amostra de 1.500 documentos",
+  "Manual de operação e treinamento das equipes de triagem"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da solução",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento dos robôs RPA e pipeline de IA",
+   "duracao_semanas": 9
+  },
+  {
+   "fase": "Testes integrados e ajuste de acurácia",
+   "duracao_semanas": 5
+  },
+  {
+   "fase": "Go-live e estabilização assistida",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de automação, 2 desenvolvedores RPA, 1 especialista em IA Generativa e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade variável dos documentos digitalizados",
+  "Baixa adesão das equipes à conferência assistida",
+  "Mudanças nas regras de classificação previdenciária durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Benefícios)",
+  "tecnico": "Felipe Andrade (Especialista em Automação e IA)"
+ },
+ "resultados": "A triagem automatizada elevou a precisão de classificação para 96% e reduziu o prazo médio de triagem de 6 para 1,5 dia útil. A operação passou a absorver 4.200 documentos mensais com 35% menos esforço manual.",
+ "licoes": "A fase de testes exigiu 2 semanas adicionais por causa da baixa legibilidade de documentos antigos digitalizados. Ter iniciado o projeto como continuidade de uma automação anterior no cliente foi decisivo para acelerar integrações e a confiança das áreas usuárias.",
+ "diferencial": "Ganhamos pela entrega anterior de automação no mesmo Instituto, usada como case de referência em leitura documental no setor público."
+}

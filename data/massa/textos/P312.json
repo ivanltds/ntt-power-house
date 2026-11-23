@@ -1,0 +1,49 @@
+{
+ "titulo": "Precificação Dinâmica com Machine Learning para Seguros de Saúde",
+ "problema": "A Saúde Garantida Seguros enfrenta perda de competitividade em um mercado com mais de 1.200 apólices coletivas renegociadas por ano, hoje precificadas por planilhas e regras estáticas que levam até 9 dias para responder a uma cotação. A sinistralidade da carteira coletiva cresceu 6,8 pontos percentuais nos últimos 12 meses, pressionando o resultado técnico.",
+ "objetivo": "Implantar um motor de precificação dinâmica baseado em Machine Learning que reduza o tempo de resposta de cotação para menos de 1 dia e melhore a acurácia do prêmio técnico em 15%.",
+ "escopo": [
+  "Modelagem de risco e sinistralidade em Python com pipelines de feature engineering sobre histórico de apólices e sinistros",
+  "Treinamento e validação de modelos de Machine Learning de precificação com monitoramento de deriva",
+  "Deploy dos modelos em GCP (Vertex AI) com APIs de scoring integradas ao sistema de cotação",
+  "Camada de Analytics & BI em GCP para acompanhamento de prêmio técnico, conversão e sinistralidade por segmento",
+  "Governança de modelos com versionamento, trilhas de auditoria e painéis de explicabilidade para a área atuarial"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelagem aprovado pela área atuarial",
+  "Modelos de precificação dinâmica treinados e validados em ambiente de homologação",
+  "API de scoring em GCP integrada ao fluxo de cotação",
+  "Dashboards de Analytics & BI com indicadores de prêmio, conversão e sinistralidade",
+  "Plano de monitoramento e retreinamento dos modelos com SLAs definidos"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento e validação dos modelos",
+   "semanas": 8
+  },
+  {
+   "nome": "Deploy em GCP e integração com cotação",
+   "semanas": 4
+  },
+  {
+   "nome": "Analytics & BI e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 2 cientistas de dados, 1 engenheiro de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de sinistros",
+  "Baixa adoção do motor de precificação pela área comercial",
+  "Restrições de latência na integração com o sistema de cotação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Produtos e Precificação)",
+  "tecnico": "Felipe Andrade (Tech Lead de Data Science)"
+ },
+ "resultados": "Nas primeiras fases, o modelo em validação já apresenta ganho de 11% na acurácia do prêmio técnico sobre a regra atual em 3 linhas de produto testadas.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito, em que o modelo superou a régua atual de precificação em testes com dados reais do cliente."
+}

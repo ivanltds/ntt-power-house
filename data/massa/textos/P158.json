@@ -1,0 +1,47 @@
+{
+ "titulo": "Programa de Governança de Dados e Adequação LGPD para Banco Meridiano",
+ "problema": "O Banco Meridiano opera com 14 sistemas de origem distintos e cerca de 2,3 milhões de clientes ativos, mas não possui catálogo corporativo de dados nem mapeamento consolidado de informações pessoais. A ausência de classificação padronizada e de trilhas de auditoria expõe o banco a riscos de conformidade com a LGPD e a retrabalho em solicitações de titulares, hoje respondidas em até 12 dias úteis.",
+ "objetivo": "Estruturar a governança de dados do banco com catálogo corporativo, classificação de dados pessoais e controles de conformidade LGPD, reduzindo o prazo de atendimento a titulares para até 5 dias úteis em 4 meses.",
+ "escopo": [
+  "Levantamento e catalogação de ativos de dados de 14 sistemas de origem em Databricks, com metadados técnicos e de negócio",
+  "Classificação de dados pessoais e sensíveis conforme a LGPD, com políticas versionadas e linhagem de dados em Snowflake e Azure Purview",
+  "Implementação de rotinas em Python para varredura automatizada de PII e geração de relatórios de conformidade no Azure",
+  "Definição de papéis e comitê de governança de dados, com 3 rituais mensais de acompanhamento",
+  "Plano de change management com treinamento de 180 colaboradores das áreas de crédito, riscos e atendimento"
+ ],
+ "entregaveis": [
+  "Catálogo corporativo de dados com no mínimo 400 ativos catalogados e classificados",
+  "Matriz de classificação de dados pessoais e relatório de lacunas LGPD por sistema de origem",
+  "Políticas de governança de dados aprovadas pelo comitê e publicadas no Azure",
+  "Painel de conformidade com 10 indicadores de qualidade e privacidade de dados",
+  "Plano de change management executado com trilha de treinamento e pesquisa de adoção acima de 80%"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e mapeamento de dados",
+   "semanas": 5
+  },
+  {
+   "nome": "Classificação e políticas de governança",
+   "semanas": 5
+  },
+  {
+   "nome": "Implementação técnica e automação",
+   "semanas": 4
+  },
+  {
+   "nome": "Capacitação e sustentação",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 1 especialista em privacidade e LGPD, 2 engenheiros de dados, 1 analista de change management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos metadados dos 14 sistemas de origem",
+  "Resistência das áreas de negócio à classificação de dados",
+  "Atraso no acesso aos ambientes Azure e Snowflake para implementação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Riscos e Compliance)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ }
+}

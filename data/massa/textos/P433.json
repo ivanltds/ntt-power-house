@@ -1,0 +1,50 @@
+{
+ "titulo": "Painéis Executivos e BI para Gestão de Rede de Clínicas",
+ "problema": "A Rede de Clínicas Bem Viver, com 38 unidades e cerca de 1.200 colaboradores, consolidava indicadores de faturamento, ocupação e sinistralidade em planilhas manuais enviadas por e-mail, gerando atraso de até 12 dias na visão consolidada e divergências entre as áreas. A diretoria não tinha uma fonte única de verdade para acompanhar metas assistenciais e financeiras.",
+ "objetivo": "Implantar uma plataforma de painéis executivos e BI no Azure com Power BI, entregando visão consolidada confiável em até 1 dia após o fechamento e automação dos relatórios gerenciais das 38 unidades.",
+ "escopo": [
+  "Modelagem de camada analítica no Azure Synapse/Data Lake para consolidar dados de faturamento, ocupação e sinistralidade das 38 unidades",
+  "Construção de 6 painéis executivos em Power BI (financeiro, operacional, assistencial, pessoas, metas e sinistralidade)",
+  "Implementação de pipelines de ingestão automatizada no Azure Data Factory com atualização diária",
+  "Definição de catálogo de indicadores e regras de negócio comuns às áreas financeira e assistencial",
+  "Programa de Change Management com treinamento de 120 gestores e material de apoio à leitura dos painéis"
+ ],
+ "entregaveis": [
+  "Data lake estruturado no Azure com dados históricos de 24 meses das 38 unidades",
+  "6 painéis executivos publicados no Power BI Service com controle de acesso por perfil",
+  "Pipeline de atualização automática diária com monitoramento de falhas",
+  "Catálogo de 45 indicadores documentados com regras de cálculo",
+  "Trilha de treinamento para 120 gestores e guia de uso dos painéis"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da arquitetura analítica",
+   "semanas": 4
+  },
+  {
+   "fase": "Construção da camada de dados no Azure",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento dos painéis em Power BI",
+   "semanas": 4
+  },
+  {
+   "fase": "Treinamento, Change Management e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI, 1 analista de Change Management e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados legados das 38 unidades",
+  "Baixa adesão dos gestores ao novo modelo de leitura dos painéis",
+  "Dependência de acessos e liberações de TI do cliente dentro do prazo"
+ ],
+ "pessoas": {
+  "cliente": "Marina Albuquerque (Diretora de Operações)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados)"
+ },
+ "resultados": "O tempo de consolidação dos indicadores caiu de 12 dias para 1 dia útil, e a identificação de desvios de sinistralidade permitiu ação corretiva que gerou economia estimada de R$ 1,8 milhão no primeiro ano. A adoção dos painéis alcançou 87% dos gestores treinados em 60 dias após o go-live.",
+ "licoes": "A falta de padronização dos cadastros das unidades atrasou em 2 semanas a fase de construção da camada de dados. Foi decisivo envolver a Diretora de Operações como patrocinadora desde o diagnóstico, o que acelerou as decisões de negócio e a adesão ao programa de treinamento.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência semelhante em rede de saúde, com arquitetura Azure e Power BI já validada e cronograma de 4 meses compatível com a expectativa da diretoria."
+}

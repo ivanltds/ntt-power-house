@@ -1,0 +1,50 @@
+{
+ "titulo": "Lakehouse Databricks no Azure para Centralização de Dados Financeiros",
+ "problema": "A Cooperativa Sicrédito Planalto, com 480 mil cooperados e R$ 9,2 bilhões em ativos, opera com dados distribuídos em 7 sistemas legados e um data warehouse on-premises que leva até 36 horas para consolidar o fechamento diário. Isso limita a análise de risco de crédito em tempo real e atrasa a entrega de relatórios regulatórios ao Banco Central.",
+ "objetivo": "Construir uma plataforma lakehouse no Azure com Databricks, unificando dados de crédito, transações e cadastro para reduzir o tempo de consolidação para menos de 2 horas e habilitar analytics avançado.",
+ "escopo": [
+  "Migração do data warehouse on-premises para Azure Data Lake Storage Gen2 com ingestão incremental via Azure Data Factory",
+  "Implementação de camadas bronze, silver e gold no Databricks com Delta Lake para 42 tabelas de negócio",
+  "Criação de 18 pipelines de qualidade de dados e orquestração de jobs no Databricks Workflows",
+  "Modelagem de 6 data marts de crédito, cobrança e compliance no Databricks SQL",
+  "Configuração de governança e catálogo de dados com Unity Catalog no Databricks"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura lakehouse no Azure com Databricks aprovado",
+  "42 tabelas migradas e validadas com testes de reconciliação",
+  "18 pipelines de ingestão e qualidade em produção",
+  "6 data marts publicados para consumo das áreas de negócio",
+  "Plano de capacitação e transferência de conhecimento para 12 analistas do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 8
+  },
+  {
+   "nome": "Ingestão e migração de dados",
+   "semanas": 16
+  },
+  {
+   "nome": "Modelagem e data marts",
+   "semanas": 12
+  },
+  {
+   "nome": "Go-live e estabilização",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista Databricks, 1 analista de qualidade de dados e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos às fontes legadas pelo time de infraestrutura do cliente",
+  "Qualidade dos dados de cadastro de cooperados abaixo do esperado",
+  "Dependência de janelas noturnas curtas para extração dos sistemas core"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia e Dados)",
+  "tecnico": "Paulo Menezes (Arquiteto de Soluções Data & Analytics)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 28% acima do mercado: o cliente optou por um concorrente com escopo semelhante e valor inferior. O diferencial técnico e a continuidade do projeto anterior não compensaram a diferença de investimento.",
+ "licoes": "Para clientes com continuidade de projeto anterior, apresentar desde o início um modelo de custo enxuto com reaproveitamento de ativos já entregues. Incluir uma opção de escopo faseado que caiba no orçamento declarado pelo cliente antes de submeter a proposta final.",
+ "retorno": "Prezados, após concluirmos a avaliação das propostas recebidas para a plataforma lakehouse, informamos que a decisão foi pela não contratação da NTT DATA nesta oportunidade. O motivo principal foi o valor apresentado, que ficou acima do orçamento aprovado e da faixa praticada pelo mercado para escopo equivalente. Agradecemos o empenho da equipe e o histórico de parceria nos projetos anteriores. Permanecemos abertos a novas conversas em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Tecnologia e Dados, Cooperativa Sicrédito Planalto."
+}
