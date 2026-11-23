@@ -1,0 +1,47 @@
+{
+ "titulo": "Indicadores ESG e Inventário de Emissões com Snowflake e Power BI",
+ "problema": "A Cooperativa Sicrédito Planalto reporta hoje seus indicadores ESG em planilhas manuais, consolidando dados de 48 agências e mais de 320 mil cooperados, com atraso médio de 25 dias e retrabalho estimado em 30% do esforço da área de sustentabilidade. A ausência de uma base única de emissões (escopos 1, 2 e 3) dificulta a auditoria externa e a prestação de contas a órgãos reguladores e cooperados.",
+ "objetivo": "Implantar uma plataforma de dados ESG no Snowflake, com pipelines em Python e dashboards em Power BI, para automatizar o cálculo de emissões e a publicação mensal de indicadores auditáveis em até 4 meses.",
+ "escopo": [
+  "Construção de pipelines em Python para ingestão e tratamento dos dados de consumo energético, combustível, resíduos e viagens das 48 agências",
+  "Modelagem dimensional no Snowflake com camadas raw, tratada e analítica para os indicadores ESG e fatores de emissão versionados",
+  "Implementação dos cálculos de escopos 1, 2 e 3 conforme GHG Protocol dentro do Snowflake, com trilha de auditoria",
+  "Desenvolvimento de dashboards em Power BI para comitê executivo, área de sustentabilidade e relatório a cooperados",
+  "Definição de catálogo de dados, regras de qualidade e política de acesso na camada de Governança de Dados"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG e dicionário de indicadores com 60 métricas priorizadas",
+  "Pipeline Python em produção com 12 fontes integradas ao Snowflake e carga diária automatizada",
+  "Modelo analítico de emissões com fatores GHG Protocol versionados e trilha de auditoria",
+  "Painéis Power BI: visão executiva, visão por agência e relatório anual de sustentabilidade",
+  "Relatório de qualidade de dados com metas de completude e acuracidade acima de 98%"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados ESG",
+   "semanas": 4
+  },
+  {
+   "nome": "Ingestão e modelagem no Snowflake",
+   "semanas": 6
+  },
+  {
+   "nome": "Cálculo de emissões e dashboards Power BI",
+   "semanas": 4
+  },
+  {
+   "nome": "Homologação, governança e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e dispersão dos dados de consumo nas 48 agências",
+  "Mudanças nos fatores de emissão do GHG Protocol durante o projeto",
+  "Dependência de validação da área de sustentabilidade e auditoria externa"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Sustentabilidade e ESG)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ }
+}

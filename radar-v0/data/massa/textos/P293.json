@@ -1,0 +1,50 @@
+{
+ "titulo": "Manutenção Preditiva de Ativos com Machine Learning em Databricks e Azure",
+ "problema": "A Energia Paulista Distribuição opera cerca de 1.850 transformadores de distribuição e 320 km de linhas de média tensão, com 38% das falhas corretivas ainda detectadas de forma reativa. As paradas não programadas geram multas regulatórias e um custo estimado de R$ 4,2 milhões por ano em manutenção emergencial e perdas de energia.",
+ "objetivo": "Implantar um modelo de manutenção preditiva baseado em Machine Learning para antecipar falhas de transformadores e trechos de rede, reduzindo em até 25% as intervenções corretivas não programadas em 7 meses.",
+ "escopo": [
+  "Construção de pipeline de engenharia de dados no Azure Data Lake e Databricks para ingestão de sensores IoT, histórico de ordens de serviço e dados meteorológicos",
+  "Desenvolvimento de modelos de Machine Learning de classificação de risco e regressão de vida útil dos ativos em Databricks",
+  "Integração dos scores preditivos ao sistema de gestão de manutenção via API no Azure",
+  "Painéis de monitoramento de ativos críticos e alertas automatizados para equipes de campo",
+  "Módulo de MLOps com versionamento de modelos e monitoramento de deriva no Azure Machine Learning"
+ ],
+ "entregaveis": [
+  "Pipeline de dados de ativos e sensores operacional no Databricks",
+  "Modelo preditivo de falha de transformadores com AUC mínima de 0,80",
+  "Ranking semanal de ativos prioritários para inspeção",
+  "Dashboard de saúde da frota de ativos no Azure",
+  "Documentação técnica e treinamento de 12 analistas do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 8
+  },
+  {
+   "nome": "Desenvolvimento e validação de modelos",
+   "semanas": 12
+  },
+  {
+   "nome": "Integração e painéis operacionais",
+   "semanas": 6
+  },
+  {
+   "nome": "Homologação e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade ou lacunas nos dados históricos de sensores",
+  "Integração limitada com o sistema legado de gestão de manutenção",
+  "Baixa adesão das equipes de campo aos alertas preditivos"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Manutenção de Ativos)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de AI & Automation)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente: incluía MLOps e painéis adicionais além do piloto de 7 meses solicitado. O cliente optou por um fornecedor com escopo mais enxuto e focado apenas em transformadores.",
+ "licoes": "Nas próximas propostas para utilities, dimensionar o escopo exatamente ao pedido do edital, deixando módulos adicionais como opcionais em fases futuras. Validar com o cliente, antes da submissão, se o tamanho da solução está aderente à urgência e ao orçamento.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de manutenção preditiva de ativos não foi selecionada. A decisão considerou que o escopo apresentado excedia a necessidade atual da nossa área de manutenção, que busca um piloto mais enxuto para este ciclo. Agradecemos o empenho da equipe e manteremos a NTT DATA no radar para iniciativas futuras de analytics. Atenciosamente, Renata Vasconcelos, Gerente de Manutenção de Ativos."
+}

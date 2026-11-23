@@ -1,0 +1,36 @@
+{
+ "titulo": "FinOps e Otimização de Custos Multicloud para Varejo",
+ "problema": "A Moda Leve Store opera com 320 lojas físicas e um e-commerce que representa 28% da receita, mas enfrenta custos de nuvem crescentes: AWS, Azure e GCP somam R$ 1,2 milhão/mês, com 35% de desperdício identificado em clusters Kubernetes superprovisionados e recursos ociosos. A falta de visibilidade por unidade de negócio impede decisões de otimização e ameaça a margem operacional de 8%.",
+ "objetivo": "Reduzir em até 30% o gasto mensal com nuvem em 3 meses, implantando práticas de FinOps, governança de custos e otimização de workloads Kubernetes nos três provedores.",
+ "escopo": [
+  "Assessment de custos nas contas AWS, Azure e GCP com ferramentas nativas e AWS Cost Explorer, Azure Cost Management e GCP Billing",
+  "Otimização de clusters Kubernetes (EKS, AKS e GKE) com rightsizing, HPA e políticas de desligamento programado",
+  "Implementação de dashboards de FinOps e chargeback por unidade de negócio usando Analytics & BI",
+  "Migração de cargas legadas para instâncias spot e reservadas nos três provedores",
+  "Capacitação em Change Management para times de TI e negócio sobre cultura de custos"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico com mapa de custos por serviço, conta e tag, e identificação de 35% de desperdício",
+  "Plano de otimização com 20 ações priorizadas por impacto financeiro e esforço",
+  "Dashboards de FinOps em Power BI com visão mensal de custos por loja e por canal",
+  "Clusters Kubernetes reconfigurados com redução de 25% no custo computacional",
+  "Playbook de governança de custos e treinamento de 40 pessoas em Change Management"
+ ],
+ "fases": [
+  "Fase 1 – Diagnóstico e visibilidade: 4 semanas",
+  "Fase 2 – Otimização de Kubernetes e migração para spot/reservado: 5 semanas",
+  "Fase 3 – Dashboards de FinOps e chargeback: 3 semanas",
+  "Fase 4 – Change management e encerramento: 1 semana"
+ ],
+ "equipe": "1 arquiteto de nuvem sênior, 2 engenheiros DevOps, 1 analista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Resistência dos times de produto à mudança de instâncias e desligamento de recursos",
+  "Janela de otimização coincidir com pico de vendas (Black Friday)",
+  "Dependência de aprovação financeira para reservas de longo prazo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Albuquerque (Diretora de Tecnologia)",
+  "tecnico": "Paulo Mendes (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "O cliente cancelou o projeto devido a uma reestruturação interna que congelou investimentos em consultoria externa por tempo indeterminado."
+}

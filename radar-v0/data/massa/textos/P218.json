@@ -1,0 +1,38 @@
+{
+ "titulo": "Predição de churn e retenção para rede de calçados",
+ "problema": "A Calçados Passo Firme, rede varejista com 120 lojas físicas e e-commerce, enfrenta taxa de churn de 28% ao ano, com perda estimada de R$ 4,2 milhões em receita recorrente. A empresa não consegue identificar clientes em risco de abandono nem personalizar ações de retenção em tempo hábil.",
+ "objetivo": "Implementar modelo preditivo de churn e automação de campanhas de retenção, reduzindo a taxa de evasão em 15% em 6 meses.",
+ "escopo": [
+  "Construção de pipeline de dados no Databricks para integração de históricos de compras, interações e dados cadastrais",
+  "Desenvolvimento de modelo de propensão ao churn em Python, com variáveis comportamentais e transacionais",
+  "Integração do modelo ao Salesforce CRM para acionamento de jornadas de retenção personalizadas",
+  "Implementação de dashboards de monitoramento no Databricks e alertas automatizados via AWS Lambda",
+  "Definição de métricas de acompanhamento e testes A/B para validar ações de retenção"
+ ],
+ "entregaveis": [
+  "Pipeline de dados unificado e documentado no Databricks",
+  "Modelo preditivo de churn validado com acurácia mínima de 85%",
+  "Integração do modelo ao Salesforce com pontuação de risco em tempo real",
+  "Dashboard executivo de acompanhamento de churn e efetividade das ações",
+  "Relatório final com resultados e recomendações de melhoria contínua"
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e preparação de dados: 6 semanas",
+  "Fase 2 - Desenvolvimento do modelo preditivo: 8 semanas",
+  "Fase 3 - Integração com CRM e automação: 6 semanas",
+  "Fase 4 - Testes, ajustes e go-live: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos de clientes",
+  "Baixa adesão das equipes de loja às ações de retenção",
+  "Prazo curto para integração com Salesforce"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Marketing)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 25% acima do mercado, inviabilizando a aprovação orçamentária. O cliente optou por um concorrente com escopo similar e valor inferior.",
+ "licoes": "Para próximas oportunidades em varejo, incluir análise de valor percebido e opções de escopo modular para ajustar o preço ao orçamento do cliente. Negociar antecipadamente com o cliente para entender a faixa de investimento disponível.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de predição de churn não foi selecionada. O motivo principal foi o valor apresentado, que ficou acima do orçamento disponível e da média de mercado. Agradecemos o empenho da equipe e esperamos contar com a NTT DATA em futuras oportunidades. Atenciosamente, Mariana Costa."
+}

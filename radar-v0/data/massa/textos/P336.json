@@ -1,0 +1,38 @@
+{
+ "titulo": "Leitura e Triagem de Documentos com IA Generativa para Previdência Municipal",
+ "problema": "O Instituto de Previdência Municipal recebe mensalmente cerca de 12.000 documentos previdenciários (requerimentos, certidões, comprovantes) que são triados manualmente por 15 servidores, gerando atraso médio de 7 dias úteis e alto índice de erros (12% de classificações incorretas).",
+ "objetivo": "Automatizar a leitura e triagem de documentos previdenciários com IA generativa, reduzindo o tempo de processamento em 60% e aumentando a acurácia para acima de 95% em 5 meses.",
+ "escopo": [
+  "Ingestão e OCR de documentos digitalizados usando Azure Form Recognizer e Python para extração de texto e metadados.",
+  "Classificação e extração de informações com IA Generativa (Azure OpenAI) para identificar tipo de documento e campos relevantes.",
+  "Orquestração de fluxo de triagem com RPA (Power Automate) integrado ao sistema de protocolo do Instituto.",
+  "Interface de revisão humana com validação e correção assistida por IA para os casos de baixa confiança.",
+  "Monitoramento e retreinamento contínuo do modelo com métricas de acurácia e volume processado."
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão e OCR implantado no Azure, processando 100% dos documentos recebidos.",
+  "Modelo de IA generativa customizado para classificação e extração de 20 tipos documentais, com acurácia mínima de 95%.",
+  "Fluxo RPA de triagem automática integrado ao sistema de protocolo, com fallback para revisão humana.",
+  "Painel de monitoramento de desempenho (volume, acurácia, tempo médio) em Power BI.",
+  "Documentação técnica e treinamento para 15 servidores do Instituto."
+ ],
+ "fases": [
+  "Fase 1 – Discovery e preparação de dados: 6 semanas",
+  "Fase 2 – Desenvolvimento do modelo de IA e pipeline de OCR: 10 semanas",
+  "Fase 3 – Integração com RPA e sistema de protocolo: 6 semanas",
+  "Fase 4 – Testes, treinamento e go-live assistido: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 1 cientista de dados, 1 engenheiro de RPA, 1 desenvolvedor Python e 1 gerente de projeto.",
+ "riscos": [
+  "Baixa qualidade dos documentos digitalizados impactando a acurácia do OCR.",
+  "Resistência dos servidores à mudança no processo de triagem.",
+  "Integração complexa com o sistema de protocolo legado do Instituto."
+ ],
+ "pessoas": {
+  "cliente": "Carlos Eduardo Nogueira (Diretor de Tecnologia da Informação)",
+  "tecnico": "Fernanda Lima (Arquiteta de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 25% acima do mercado, inviabilizando a contratação dentro do orçamento disponível do Instituto.",
+ "licoes": "Para próximas propostas em setor público, incluir análise de concorrência e ajustar o escopo para oferecer uma versão modular com custo mais competitivo, destacando o retorno sobre investimento em prazos curtos.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de leitura e triagem de documentos com IA generativa não foi selecionada. O motivo principal foi o valor apresentado, que ficou acima do orçamento estimado e das demais propostas recebidas. Agradecemos o empenho da equipe da NTT DATA e esperamos contar com sua participação em futuras oportunidades. Atenciosamente, Carlos Eduardo Nogueira, Diretor de TI do Instituto de Previdência Municipal."
+}

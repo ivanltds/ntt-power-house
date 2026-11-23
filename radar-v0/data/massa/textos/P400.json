@@ -1,0 +1,38 @@
+{
+ "titulo": "Predição de Churn e Retenção para Rede Hospitalar",
+ "problema": "A Rede Hospitalar Santa Clara, com 12 hospitais e 8.500 colaboradores, enfrenta uma taxa de churn de 18% ao ano em seus planos de saúde, resultando em perda estimada de R$ 45 milhões em receita recorrente. A dificuldade em identificar precocemente os pacientes com risco de evasão impede ações de retenção eficazes.",
+ "objetivo": "Desenvolver um modelo preditivo de churn utilizando dados históricos de utilização e CRM para direcionar campanhas de retenção personalizadas, visando reduzir a taxa de evasão em 25% em 12 meses.",
+ "escopo": [
+  "Integração de dados de CRM (Salesforce) e sistemas transacionais com Databricks na AWS para criação de uma base analítica unificada.",
+  "Análise exploratória e engenharia de features para identificar os principais indicadores de churn.",
+  "Desenvolvimento e validação de modelos de machine learning (regressão logística, random forest e XGBoost) para predição de churn com acurácia mínima de 85%.",
+  "Implementação de dashboards no Salesforce para visualização dos scores de propensão e ações de retenção.",
+  "Automação do pipeline de dados e do processo de scoring semanal utilizando Databricks e AWS Lambda."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e pipeline de integração.",
+  "Relatório de análise exploratória com insights sobre os fatores de churn.",
+  "Modelo preditivo treinado e validado, com documentação de métricas de performance.",
+  "Dashboard interativo no Salesforce com indicadores de churn e segmentação de pacientes.",
+  "Manual de operação e transferência de conhecimento para a equipe do cliente."
+ ],
+ "fases": [
+  "Fase 1: Discovery e integração de dados (6 semanas)",
+  "Fase 2: Análise exploratória e engenharia de features (4 semanas)",
+  "Fase 3: Modelagem e validação (4 semanas)",
+  "Fase 4: Implementação de dashboards e automação (2 semanas)"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos insuficiente para treinamento robusto.",
+  "Resistência das equipes de CRM em adotar os scores preditivos.",
+  "Prazo apertado para integração com sistemas legados."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Inovação e Dados)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de predição de churn implantada na Rede Hospitalar Santa Clara, com contrato de manutenção ativo e relacionamento consolidado com a área de negócios, o que reduziu nossa vantagem competitiva.",
+ "licoes": "Para próximas oportunidades em clientes com solução instalada, é crucial mapear antecipadamente o grau de satisfação com o fornecedor atual e destacar diferenciais como integração nativa com Databricks e AWS, além de oferecer um projeto piloto de curto prazo para demonstrar valor rápido.",
+ "retorno": "Prezado Rafael, informamos que a proposta para o projeto de predição de churn não foi selecionada. A decisão foi baseada na continuidade da solução já implantada por outro fornecedor, que atende satisfatoriamente às necessidades atuais. Agradecemos o empenho da equipe NTT DATA e esperamos colaborar em futuras iniciativas. Atenciosamente, Mariana Costa, Diretora de Inovação e Dados."
+}

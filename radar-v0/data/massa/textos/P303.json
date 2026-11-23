@@ -1,0 +1,49 @@
+{
+ "titulo": "Detecção de fraude em tempo real com Machine Learning e Kafka no varejo",
+ "problema": "O Atacadão Popular Sul processa cerca de 1,2 milhão de transações por mês em 48 lojas e no e-commerce, com perdas estimadas em 0,9% do faturamento por fraudes em cartões e devoluções indevidas. A análise atual é manual e reativa, com detecção média de 36 horas após a ocorrência.",
+ "objetivo": "Implantar um motor de detecção de fraude em tempo real com Machine Learning sobre streaming Kafka, reduzindo o tempo de detecção para menos de 5 minutos e as perdas em 30% no primeiro ano.",
+ "escopo": [
+  "Modelagem de features e treinamento de modelos supervisionados em Python para scoring de risco transacional",
+  "Pipeline de streaming com Kafka para ingestão de eventos de PDV e e-commerce com latência inferior a 2 segundos",
+  "API de scoring em Python integrada ao antifraude e ao checkout, com decisão em tempo real",
+  "Painel de monitoramento de drift e performance dos modelos com alertas automáticos",
+  "Regras de negócio híbridas (modelo + listas) para bloqueio e revisão manual de transações suspeitas"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da solução de detecção em tempo real",
+  "Modelos de ML treinados e validados com AUC acima de 0,90 em base histórica de 24 meses",
+  "Pipeline Kafka em produção processando 100% dos eventos de PDV e e-commerce",
+  "API de scoring com SLA de 150 ms no percentil 95",
+  "Dashboard de monitoramento e relatório mensal de eficácia do antifraude"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento e treinamento dos modelos",
+   "semanas": 10
+  },
+  {
+   "nome": "Integração com Kafka e sistemas transacionais",
+   "semanas": 8
+  },
+  {
+   "nome": "Go-live assistido e otimização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 1 engenheiro de dados",
+ "riscos": [
+  "Qualidade e atraso na disponibilização dos dados históricos de transações",
+  "Latência da infraestrutura de PDV impactando o streaming em tempo real",
+  "Falsos positivos elevados gerando atrito no atendimento ao cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Riscos e Prevenção a Fraudes)",
+  "tecnico": "Bruno Tavares (Lead Data Scientist)"
+ },
+ "resultados": "Modelo piloto já em shadow mode em 12 lojas, com AUC de 0,93 e redução de 18% nos falsos positivos frente à régua atual.",
+ "diferencial": "Ganhamos pela relação de continuidade com o Atacadão Popular Sul, iniciada no projeto de dados de sortimento, o que acelerou o acesso aos dados e a confiança das áreas de negócio."
+}

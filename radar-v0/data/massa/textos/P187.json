@@ -1,0 +1,38 @@
+{
+ "titulo": "Previsão de Safra e Agricultura de Precisão com Machine Learning e Analytics",
+ "problema": "A Agropecuária Terra Boa enfrenta perdas anuais de até 12% na produção devido a falhas na previsão de safra e manejo inadequado de áreas de cultivo. Com 85 mil hectares plantados e 15% de desperdício de insumos, a empresa busca maior precisão para reduzir custos e aumentar a produtividade.",
+ "objetivo": "Desenvolver modelos preditivos de safra e uma plataforma de agricultura de precisão para otimizar o uso de insumos e melhorar a tomada de decisão, reduzindo perdas em pelo menos 8% no primeiro ano.",
+ "escopo": [
+  "Coleta e integração de dados históricos de produtividade, clima e sensores de campo usando Python e pipelines de dados.",
+  "Desenvolvimento de modelos de Machine Learning para previsão de safra por talhão, com validação cruzada e ajuste de hiperparâmetros.",
+  "Implementação de dashboards interativos de Analytics & BI para monitoramento em tempo real das previsões e indicadores agronômicos.",
+  "Criação de sistema de recomendação para aplicação localizada de insumos com base nos modelos preditivos.",
+  "Capacitação da equipe técnica do cliente no uso das ferramentas e manutenção dos modelos."
+ ],
+ "entregaveis": [
+  "Relatório de análise exploratória dos dados e definição de variáveis-chave para os modelos.",
+  "Modelos de Machine Learning treinados e validados para previsão de safra, com acurácia mínima de 85%.",
+  "Dashboard de Agricultura de Precisão com visualizações de mapas de produtividade e recomendações de insumos.",
+  "Documentação técnica dos modelos e pipelines de dados.",
+  "Workshop de transferência de conhecimento para a equipe do cliente."
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e Preparação de Dados: 4 semanas",
+  "Fase 2 - Desenvolvimento de Modelos Preditivos: 10 semanas",
+  "Fase 3 - Implementação de Dashboards e Sistema de Recomendação: 12 semanas",
+  "Fase 4 - Validação e Capacitação: 6 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e disponibilidade dos dados históricos de campo",
+  "Resistência dos usuários à adoção de novas ferramentas",
+  "Integração com sistemas legados de gestão agrícola"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Operações Agrícolas)",
+  "tecnico": "Fernanda Lima (Gerente de Projetos de Data & Analytics)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 8 meses foi considerado longo demais pela Agropecuária Terra Boa, que precisava de resultados em menos de 6 meses para a safra seguinte.",
+ "licoes": "Para projetos com sazonalidade agrícola, é crucial propor fases iniciais mais curtas e entregas parciais rápidas, alinhadas ao calendário de plantio e colheita, para atender à urgência do cliente.",
+ "retorno": "Prezados, após análise interna, decidimos não avançar com a proposta para o projeto de previsão de safra e agricultura de precisão. O prazo de 8 meses não atende à nossa necessidade de implementação antes do próximo ciclo de plantio, que se inicia em 5 meses. Agradecemos o esforço da equipe da NTT DATA e esperamos colaborar em oportunidades futuras. Atenciosamente, Carlos Mendes - Diretor de Operações Agrícolas."
+}

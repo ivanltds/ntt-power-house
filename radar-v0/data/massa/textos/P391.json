@@ -1,0 +1,50 @@
+{
+ "titulo": "Triagem Inteligente de Documentos com IA Generativa para Operações de Sinistros",
+ "problema": "A Seguradora Amparo recebe cerca de 180 mil documentos por mês entre avisos de sinistro, laudos, boletins de ocorrência e comprovantes, e 62% chegam sem padronização, exigindo triagem manual. O processo atual leva em média 4,5 dias para classificação inicial e consome 38 pessoas em atividades repetitivas, gerando retrabalho em 21% dos casos.",
+ "objetivo": "Automatizar a leitura, classificação e extração de dados de documentos com IA generativa, reduzindo o tempo de triagem para até 1 dia e liberando a equipe para análise de sinistros complexos.",
+ "escopo": [
+  "Pipeline em Python para ingestão e pré-processamento de documentos digitalizados e nativos digitais",
+  "Modelo de IA Generativa no Azure OpenAI para classificação de tipos documentais e extração de campos-chave",
+  "Orquestração de tarefas repetitivas com RPA para roteamento automático aos sistemas de sinistro",
+  "Camada de validação humana com painel de revisão e feedback para melhoria contínua do modelo",
+  "Integração com o repositório documental existente no Azure, com logs de auditoria e trilha de decisão"
+ ],
+ "entregaveis": [
+  "Blueprint técnico da solução de triagem com IA generativa e RPA",
+  "Protótipo funcional cobrindo 5 tipos documentais prioritários",
+  "Pipeline em produção para classificação e extração de dados em lote",
+  "Painel de acompanhamento de acurácia, volume e tempo médio de triagem",
+  "Documentação técnica e treinamento de 2 turmas de usuários-chave"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e definição de arquitetura",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento do protótipo e validação com amostra real",
+   "semanas": 8
+  },
+  {
+   "nome": "Industrialização, integrações e RPA",
+   "semanas": 8
+  },
+  {
+   "nome": "Go-live assistido e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 2 engenheiros de dados, 1 especialista em IA generativa, 1 analista de RPA e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e variedade dos documentos digitalizados podem reduzir a acurácia inicial do modelo",
+  "Integração com sistemas legados de sinistro pode sofrer atrasos por dependência de times internos",
+  "Baixa adesão dos analistas ao novo fluxo de validação humana"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações de Sinistros)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor total apresentado foi cerca de 28% superior ao da concorrente vencedora, sem que houvesse diferenciação percebida suficiente no escopo.",
+ "licoes": "Para propostas semelhantes, apresentar desde o início uma versão enxuta do escopo com faixa de preço competitiva e comparativo de valor por entregável, evitando surpresa do cliente na rodada final.",
+ "retorno": "Prezados, após avaliação das propostas recebidas, informamos que a Seguradora Amparo decidiu não seguir com a NTT DATA neste projeto. O motivo principal foi o valor apresentado, que ficou acima do mercado frente às demais propostas. Agradecemos o empenho da equipe e o detalhamento técnico enviado. Permanecemos abertos a novas oportunidades futuras. Atenciosamente, Renata Vasconcelos, Diretora de Operações de Sinistros."
+}

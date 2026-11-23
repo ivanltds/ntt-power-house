@@ -1,0 +1,47 @@
+{
+ "titulo": "Painéis executivos e BI para operação logística com Power BI, Azure e Snowflake",
+ "problema": "O Operador Logístico Armazém Brasil acompanha 42 indicadores operacionais em planilhas manuais e relatórios SAP extraídos sob demanda, o que gera até 5 dias de defasagem na visão de custo por entrega e ocupação de armazém. A diretoria não dispõe de uma camada única confiável para decisões sobre 18 centros de distribuição e cerca de 2,3 mil veículos/dia.",
+ "objetivo": "Implantar uma plataforma de dados e painéis executivos em Power BI sobre Azure e Snowflake, integrada ao SAP, para disponibilizar indicadores logísticos em até D-1 com uma única versão da verdade.",
+ "escopo": [
+  "Integração dos dados de SAP (SD, MM e TM) ao Azure Data Lake via pipelines de ingestão incremental",
+  "Modelagem dimensional e camada semântica no Snowflake para custo por entrega, ocupação de armazém e nível de serviço",
+  "Construção de 8 painéis executivos em Power BI com segurança por centro de distribuição e atualização diária",
+  "Orquestração e monitoramento de cargas no Azure Data Factory com alertas de falha e SLA de execução",
+  "Definição de catálogo de indicadores e regras de qualidade de dados para 42 KPIs prioritários"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e catálogo dos 42 KPIs com regras de cálculo",
+  "Pipelines de ingestão SAP para Azure e Snowflake em produção",
+  "Modelo semântico e camada de dados publicada no Snowflake",
+  "8 painéis executivos em Power BI homologados pela diretoria",
+  "Manual de operação, monitoramento e plano de sustentação da plataforma"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 3
+  },
+  {
+   "fase": "Ingestão e engenharia de dados no Azure e Snowflake",
+   "semanas": 5
+  },
+  {
+   "fase": "Construção e homologação dos painéis em Power BI",
+   "semanas": 3
+  },
+  {
+   "fase": "Go-live assistido e transferência de conhecimento",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados extraídos do SAP",
+  "Restrições de acesso e janelas de extração nos sistemas legados",
+  "Baixa adoção dos painéis pelas áreas operacionais"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Logística e Operações)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ }
+}

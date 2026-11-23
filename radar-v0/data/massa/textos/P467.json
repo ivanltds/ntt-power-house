@@ -1,0 +1,48 @@
+{
+ "titulo": "Predição de churn e retenção inteligente para base B2C",
+ "problema": "A NetVale Provedor enfrenta churn mensal de 2,8% na base residencial, o que representa perda de aproximadamente 14 mil clientes por ano e R$ 9,2 milhões em receita recorrente. A empresa não consegue identificar com antecedência os assinantes com maior propensão a cancelar, atuando apenas de forma reativa após a abertura do pedido de cancelamento.",
+ "objetivo": "Implementar um modelo de Machine Learning em Python capaz de prever churn com no mínimo 30 dias de antecedência e integrar os scores ao Salesforce para acionar jornadas de retenção proativas.",
+ "escopo": [
+  "Construção de pipeline de dados em Python para consolidar histórico de consumo, faturas, reclamações e interações de suporte dos últimos 24 meses",
+  "Desenvolvimento e validação de modelos de Machine Learning de classificação de churn com meta de AUC superior a 0,80",
+  "Integração dos scores preditivos ao Salesforce CRM, com gatilhos para ofertas de retenção segmentadas por faixa de risco",
+  "Definição de régua de retenção com 5 jornadas distintas e dashboards de acompanhamento de taxa de retenção e receita salva",
+  "Execução de plano de Change Management com treinamento de 60 usuários das áreas de retenção e atendimento"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de churn em produção, com acurácia monitorada e documentação técnica",
+  "Integração dos scores de propensão ao Salesforce com 3 gatilhos automatizados de retenção",
+  "Régua de retenção com 5 jornadas segmentadas por nível de risco e valor do cliente",
+  "Dashboard executivo de churn, retenção e receita preservada",
+  "Plano de Change Management concluído, com material de treinamento e 60 usuários capacitados"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e validação do modelo de Machine Learning",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração com Salesforce e construção da régua de retenção",
+   "semanas": 6
+  },
+  {
+   "fase": "Change Management, go-live e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de integração Salesforce, 1 analista de Change Management e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de consumo e suporte",
+  "Baixa adesão das equipes de retenção à nova régua de acionamento",
+  "Prazo de integração com o Salesforce condicionado à janela de TI do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Experiência do Cliente)",
+  "tecnico": "Felipe Andrade (Líder Técnico de Data & Analytics)"
+ },
+ "diferencial": "Ganhamos pela capacidade técnica comprovada na prova de conceito, em que o modelo preliminar atingiu AUC de 0,84 com dados reais da NetVale, somada à continuidade do relacionamento já estabelecido no cliente."
+}

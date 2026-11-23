@@ -1,0 +1,38 @@
+{
+ "titulo": "Previsão de Demanda e Reposição com Machine Learning para Rede de Varejo de Materiais de Construção",
+ "problema": "A Casa & Construção Prime enfrenta altos índices de ruptura de estoque (8,5%) e excesso de capital imobilizado em produtos de baixo giro, com uma acurácia de previsão atual de apenas 62%. A empresa tem 45 lojas e precisa reduzir perdas e melhorar o nível de serviço ao cliente.",
+ "objetivo": "Desenvolver um modelo de previsão de demanda e um sistema de reposição automática que aumente a acurácia para 85% e reduza rupturas para 3% em 5 meses.",
+ "escopo": [
+  "Análise exploratória dos dados históricos de vendas, estoque e sazonalidade usando Python e Snowflake.",
+  "Desenvolvimento de modelos de Machine Learning para previsão de demanda por SKU e loja, com validação cruzada temporal.",
+  "Implementação de pipeline de engenharia de dados para ingestão e transformação de dados no Snowflake.",
+  "Criação de algoritmo de reposição automática baseado nas previsões, considerando lead time e lote econômico.",
+  "Dashboard de acompanhamento de acurácia e nível de serviço para gestores."
+ ],
+ "entregaveis": [
+  "Modelo de previsão de demanda treinado e validado com acurácia mínima de 85%.",
+  "Pipeline de dados automatizado no Snowflake para atualização diária das previsões.",
+  "Sistema de reposição automática integrado ao ERP do cliente.",
+  "Documentação técnica e manual do usuário.",
+  "Treinamento para a equipe de planejamento e compras."
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e preparação de dados: 4 semanas",
+  "Fase 2 - Desenvolvimento de modelos de ML: 8 semanas",
+  "Fase 3 - Implementação do sistema de reposição e dashboard: 6 semanas",
+  "Fase 4 - Testes, treinamento e go-live: 2 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 1 engenheiro de dados, 2 cientistas de dados e 1 analista de negócios.",
+ "riscos": [
+  "Qualidade insuficiente dos dados históricos de vendas e estoque.",
+  "Resistência dos gestores de loja à mudança no processo de reposição.",
+  "Integração complexa com o ERP legado do cliente."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Operações)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o cliente optou por um concorrente que já possuía uma solução de previsão de demanda instalada e em operação, reduzindo o tempo de implantação e o risco percebido.",
+ "licoes": "Para próximas oportunidades, enfatizar a integração com soluções existentes e o valor agregado da nossa abordagem customizada, além de buscar entender melhor o cenário de fornecedores já presentes no cliente.",
+ "retorno": "Prezado Rafael, agradecemos a proposta apresentada. Após análise, decidimos seguir com outro fornecedor que já possui uma solução de previsão de demanda implantada em nossa operação, o que facilita a continuidade e reduz o prazo de implementação. Agradecemos o esforço da equipe da NTT DATA. Atenciosamente, Mariana Costa - Diretora de Operações"
+}

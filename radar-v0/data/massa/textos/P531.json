@@ -1,0 +1,38 @@
+{
+ "titulo": "Implantação de CRM e Jornada do Cliente para Seguradora",
+ "problema": "A Proteja Seguros enfrenta dificuldades na gestão do relacionamento com 1,2 milhão de clientes devido a sistemas fragmentados e falta de visão unificada. A jornada do cliente é inconsistente, resultando em taxa de retenção de 68% e NPS de 32, abaixo da média do setor.",
+ "objetivo": "Implementar uma plataforma de CRM integrada e uma jornada do cliente personalizada para aumentar a retenção em 15% e elevar o NPS para 45 em 12 meses.",
+ "escopo": [
+  "Configuração do Salesforce Sales Cloud e Service Cloud para gestão de clientes e atendimento",
+  "Integração de dados de sistemas legados via Kafka e Azure Data Factory",
+  "Desenvolvimento de painéis analíticos no Azure Synapse para monitoramento da jornada",
+  "Implementação de automação de marketing e personalização com Salesforce Marketing Cloud",
+  "Capacitação de 150 usuários e gestão de mudança para adoção do CRM"
+ ],
+ "entregaveis": [
+  "Plataforma Salesforce configurada e integrada com fontes de dados",
+  "Pipeline de dados em tempo real com Kafka e Azure",
+  "Dashboard de indicadores de jornada do cliente no Power BI",
+  "Plano de change management e treinamento executado",
+  "Documentação técnica e de processos"
+ ],
+ "fases": [
+  "Fase 1: Discovery e Design (6 semanas)",
+  "Fase 2: Implementação Salesforce e Integrações (12 semanas)",
+  "Fase 3: Engenharia de Dados e Analytics (8 semanas)",
+  "Fase 4: Change Management e Go-live (4 semanas)"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores Salesforce, 2 engenheiros de dados, 1 especialista em change management",
+ "riscos": [
+  "Resistência dos usuários à mudança de processos",
+  "Complexidade na integração com sistemas legados",
+  "Atrasos na disponibilização de dados pelas áreas de negócio"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia)",
+  "tecnico": "Rafael Almeida (Arquiteto de Soluções)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior do que a necessidade imediata do cliente, incluindo módulos e integrações não prioritários que elevaram o custo e o prazo. A Proteja Seguros buscava uma solução mais enxuta e faseada.",
+ "licoes": "Para próximas oportunidades, é essencial qualificar melhor o escopo mínimo viável e propor uma abordagem modular, alinhada ao orçamento e às prioridades do cliente, evitando superdimensionar a solução.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a proposta da NTT DATA não foi selecionada. O escopo apresentado mostrou-se mais abrangente do que a necessidade atual da Proteja Seguros, com módulos e integrações que não são prioritários neste momento. Agradecemos o empenho da equipe e esperamos contar com a NTT DATA em futuras oportunidades. Atenciosamente, Mariana Costa, Diretora de Tecnologia."
+}

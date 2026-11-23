@@ -1,0 +1,47 @@
+{
+ "titulo": "Plataforma Lakehouse na AWS com Kafka e Snowflake para Análise de Dados",
+ "problema": "A NetVale Provedor, com cerca de 480 mil assinantes de internet e TV, enfrenta dificuldades para consolidar dados de rede, atendimento e faturamento em um data warehouse legado que processa lotes noturnos de até 9 horas. Relatórios de churn e consumo levam mais de 24 horas para ficar disponíveis, atrasando decisões comerciais e de retenção.",
+ "objetivo": "Implantar uma plataforma de dados lakehouse na AWS com ingestão em streaming via Kafka e camada analítica em Snowflake, reduzindo a latência de dados de 24 horas para menos de 2 horas em 6 meses.",
+ "escopo": [
+  "Ingestão em streaming de eventos de rede e atendimento com Apache Kafka na AWS (Amazon MSK)",
+  "Construção de camadas bronze, prata e ouro em Amazon S3 com pipelines em Python e AWS Glue",
+  "Modelagem dimensional e cargas incrementais no Snowflake para consumo analítico",
+  "Implementação de catálogo, linhagem e políticas de acesso com AWS Lake Formation e Snowflake RBAC",
+  "Migração de 120 tabelas do data warehouse legado para a nova plataforma, com validação de paridade"
+ ],
+ "entregaveis": [
+  "Pipeline de streaming Kafka operando com throughput de 15 mil eventos por segundo",
+  "Camada ouro no Snowflake com 8 data marts de churn, consumo e faturamento",
+  "Catálogo de dados com 250 ativos catalogados e 100% dos data marts com linhagem documentada",
+  "Relatório de migração das 120 tabelas legadas com taxa de paridade superior a 99,5%",
+  "Documentação técnica e plano de sustentação com 40 horas de transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "nome": "Descoberta e Arquitetura",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Ingestão e Lakehouse",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Migração e Modelagem no Snowflake",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Governança e Go-Live",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados legados pode exigir esforço extra de limpeza",
+  "Janela de migração limitada pela operação 24x7 do provedor",
+  "Dependência de acesso à infraestrutura de rede do cliente para ingestão Kafka"
+ ],
+ "pessoas": {
+  "cliente": "Renata Coelho (Diretora de Tecnologia)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ }
+}

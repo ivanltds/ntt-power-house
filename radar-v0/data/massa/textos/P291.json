@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de streaming de dados em tempo real para analytics de rede",
+ "problema": "A Conecta Brasil Telecom monitora cerca de 4,2 milhões de linhas móveis e 780 mil assinantes de banda larga, mas os painéis de qualidade de rede são atualizados apenas a cada 6 horas, gerando atraso na detecção de incidentes. Isso resulta em um tempo médio de resposta a falhas de 3h40 e em multas regulatórias de aproximadamente R$ 1,8 milhão no último ano.",
+ "objetivo": "Implantar uma plataforma de streaming em tempo real no Azure, com processamento em Python, para reduzir a latência dos indicadores de rede de horas para menos de 2 minutos e subsidiar ações proativas de operação e analytics.",
+ "escopo": [
+  "Ingestão contínua de eventos de rede (CDRs, KPIs de células e alarmes) via Azure Event Hubs, com volume estimado de 25 mil eventos por segundo",
+  "Processamento de streams em Python com Azure Databricks Structured Streaming para cálculo de indicadores de qualidade em janelas de 1 e 5 minutos",
+  "Camada analítica no Azure Synapse Analytics com tabelas Delta Lake para consultas históricas e em tempo quase real",
+  "Painéis de Analytics & BI no Power BI conectados ao Synapse, com atualização automática a cada 2 minutos e alertas de anomalia",
+  "Pipeline CI/CD para deploy dos jobs Python, monitoramento com Azure Monitor e política de retenção de 13 meses"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming aprovada, incluindo dimensionamento de Event Hubs e Databricks",
+  "Pipeline de ingestão e processamento em Python operando com latência ponta a ponta inferior a 2 minutos",
+  "Modelo analítico no Synapse com 18 indicadores de qualidade de rede e histórico de 13 meses",
+  "Conjunto de 6 painéis de Analytics & BI no Power BI com alertas automáticos de degradação",
+  "Documentação técnica, runbooks de operação e treinamento de 16 horas para 8 analistas do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura",
+   "semanas": 5
+  },
+  {
+   "nome": "Ingestão e processamento de streams",
+   "semanas": 10
+  },
+  {
+   "nome": "Camada analítica e painéis de BI",
+   "semanas": 9
+  },
+  {
+   "nome": "Homologação, go-live e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Volume real de eventos acima do estimado, exigindo redimensionamento do Event Hubs",
+  "Qualidade e padronização dos dados de origem de diferentes sistemas de rede",
+  "Baixa adoção dos novos painéis pelas áreas operacionais"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Rede)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o cliente congelou o orçamento de novos projetos de dados para o exercício, priorizando investimentos em expansão de cobertura 5G. A decisão foi comunicada antes da fase de negociação comercial, sem abertura para revisão de escopo ou prazo.",
+ "licoes": "Em propostas para clientes com projeto anterior em andamento, validar antecipadamente o ciclo orçamentário e o patrocinador executivo antes de investir em detalhamento técnico. Incluir uma opção de escopo modular de menor investimento aumenta a chance de manter o projeto vivo em cenários de contenção.",
+ "retorno": "Prezados, após revisão do nosso ciclo de investimentos, decidimos não seguir com a proposta de plataforma de streaming em tempo real para este ano. O orçamento de projetos de dados foi congelado e os recursos serão direcionados à expansão da rede 5G. Agradecemos o esforço da equipe e esperamos retomar a conversa no próximo ciclo orçamentário. Atenciosamente, Renata Vasconcelos, Gerente de Operações de Rede."
+}

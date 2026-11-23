@@ -1,0 +1,47 @@
+{
+ "titulo": "Plataforma Lakehouse para Análise de Dados Financeiros com Azure e Databricks",
+ "problema": "A Corretora Valor Alto processa cerca de 2,5 milhões de transações por dia e enfrenta dificuldades para consolidar dados de diferentes fontes, resultando em relatórios gerenciais com atraso de até 48 horas. Além disso, a falta de governança sobre os dados tem gerado retrabalho e riscos de conformidade regulatória.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse na nuvem Azure, utilizando Databricks e Python, para centralizar e governar os dados financeiros, reduzindo o tempo de geração de relatórios para menos de 2 horas e garantindo conformidade com as normas do setor.",
+ "escopo": [
+  "Desenho e implementação da arquitetura lakehouse no Azure Data Lake Storage Gen2 com Databricks.",
+  "Desenvolvimento de pipelines de ingestão e transformação de dados utilizando Python e Spark.",
+  "Migração de cargas de trabalho on-premises para a nuvem Azure, incluindo bancos de dados SQL Server e arquivos CSV.",
+  "Implementação de catálogo de dados e políticas de governança com Unity Catalog no Databricks.",
+  "Criação de camada de consumo (gold) para relatórios e dashboards no Power BI."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura lakehouse e plano de migração.",
+  "Pipelines de dados automatizados para ingestão de 15 fontes distintas.",
+  "Catálogo de dados corporativo com metadados e linhagem.",
+  "Camada de dados curados (gold) disponível para consultas analíticas.",
+  "Relatório de testes de qualidade e validação de dados."
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e Arquitetura",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Implementação da Plataforma e Pipelines",
+   "duracao_semanas": 18
+  },
+  {
+   "nome": "Governança e Migração de Dados",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Testes e Go-Live",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na migração de dados legados devido à complexidade das fontes.",
+  "Resistência dos usuários à mudança de processos de relatórios.",
+  "Requisitos regulatórios não mapeados completamente durante o discovery."
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Tecnologia)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ }
+}

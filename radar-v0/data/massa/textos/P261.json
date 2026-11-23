@@ -1,0 +1,37 @@
+{
+ "titulo": "Migração do Data Warehouse da Saúde para Nuvem Multi-Cloud",
+ "problema": "A Secretaria Estadual de Saúde do Planalto mantém um data warehouse on-premises com 45 TB de dados que processa 1,2 milhão de atendimentos por mês, mas enfrenta lentidão nas consultas analíticas (tempo médio de 12 minutos) e custos crescentes de manutenção de hardware. A falta de escalabilidade impede a expansão de relatórios para 300 novos usuários previstos para 2025.",
+ "objetivo": "Migrar o data warehouse para uma arquitetura multi-cloud (GCP e Azure) com Databricks e Snowflake, reduzindo o tempo de consulta em 70% e permitindo escalabilidade elástica para até 2 milhões de atendimentos/mês.",
+ "escopo": [
+  "Avaliação e refatoração de 120 pipelines ETL legados para Databricks (PySpark) com orquestração no Azure Data Factory",
+  "Migração de 45 TB de dados históricos para Snowflake na GCP, com modelagem dimensional e políticas de governança",
+  "Implementação de camada de ingestão em tempo real via Pub/Sub (GCP) e Event Hubs (Azure) para 15 fontes de dados",
+  "Configuração de ambiente de Disaster Recovery em Azure com replicação assíncrona do Snowflake",
+  "Treinamento de 40 usuários-chave e documentação técnica da nova arquitetura"
+ ],
+ "entregaveis": [
+  "Relatório de assessment e roadmap de migração em 4 semanas",
+  "Pipeline de ingestão em tempo real operacional para 15 fontes",
+  "Data warehouse migrado e validado com 45 TB e 120 pipelines refatorados",
+  "Runbook de operação e plano de DR testado com RTO de 4 horas",
+  "Workshops de capacitação realizados para 40 usuários e 10 técnicos da Secretaria"
+ ],
+ "fases": [
+  "Fase 1 – Assessment e Arquitetura: 6 semanas",
+  "Fase 2 – Migração de Dados e Pipelines: 10 semanas",
+  "Fase 3 – Validação e Go-Live: 6 semanas",
+  "Fase 4 – Estabilização e Transferência: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em nuvem (GCP/Azure) e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos e credenciais pelos órgãos de segurança do Estado",
+  "Qualidade dos dados legados com 15% de registros inconsistentes",
+  "Resistência à mudança por parte das equipes técnicas da Secretaria"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Tecnologia da Informação)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "Já migramos 18 TB (40% do total) e refatoramos 52 pipelines, com redução de 35% no tempo de processamento batch.",
+ "diferencial": "Ganhamos pela experiência comprovada em projeto anterior de migração de data warehouse para nuvem na mesma Secretaria, com case de referência em saúde pública que reduziu custos em 30%."
+}

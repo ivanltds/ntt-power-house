@@ -1,0 +1,50 @@
+{
+ "titulo": "Painéis executivos e plataforma de BI para gestão de exames e faturamento",
+ "problema": "O Laboratório Diagnóstico Preciso realiza cerca de 85 mil exames por mês em 12 unidades e não consegue consolidar indicadores de produção, tempo de laudo e faturamento em uma visão única. Hoje, 60% dos relatórios gerenciais são montados manualmente em planilhas, com atraso de até 8 dias e divergências entre as áreas.",
+ "objetivo": "Implantar painéis executivos em Power BI com dados integrados no Azure, reduzindo o ciclo de apuração gerencial de 8 dias para até 1 dia e dando visibilidade em tempo quase real à diretoria.",
+ "escopo": [
+  "Modelagem e construção de camada analítica no Azure Synapse, com ingestão de dados dos sistemas de LIS, ERP e CRM",
+  "Pipeline de Engenharia de Dados no Azure Data Factory para carga diária de exames, laudos e faturamento",
+  "Construção de 5 painéis executivos em Power BI: produção por unidade, tempo de laudo, faturamento por convênio, margem e ocupação da agenda",
+  "Configuração de governança no Power BI Service, com 3 níveis de acesso e atualização agendada",
+  "Treinamento de 20 usuários-chave para adoção dos painéis executivos"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário de indicadores com 45 métricas homologadas",
+  "Camada analítica no Azure Synapse com 8 tabelas-fato e 12 dimensões modeladas",
+  "5 painéis executivos em Power BI publicados e validados pela diretoria",
+  "Rotina de atualização automática diária com monitoramento de falhas",
+  "Capacitação de 20 usuários e manual de uso dos painéis"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da arquitetura",
+   "semanas": 2
+  },
+  {
+   "fase": "Engenharia de Dados e integrações no Azure",
+   "semanas": 3
+  },
+  {
+   "fase": "Construção e homologação dos painéis em Power BI",
+   "semanas": 2
+  },
+  {
+   "fase": "Go-live e treinamento",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados de exames nas 12 unidades",
+  "Dependência de acesso às bases do LIS e do ERP dentro do prazo",
+  "Baixa adoção dos painéis pela diretoria após o go-live"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações)",
+  "tecnico": "Paulo Menezes (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o valor apresentado ficou cerca de 25% acima do mercado, mesmo com o histórico de continuidade no cliente. A concorrência apresentou escopo semelhante por um preço inferior, e o cliente priorizou o orçamento.",
+ "licoes": "Para propostas de continuidade em BI, ancorar o preço em um pacote enxuto de MVP com fases opcionais, evitando levar todo o escopo de uma vez. Revisar o benchmark de preço antes do envio em contas com histórico de concorrência forte.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe na elaboração da proposta de painéis executivos e BI. Após análise do comitê, decidimos seguir com outro fornecedor, pois o valor apresentado ficou acima do orçamento que havíamos definido para esta iniciativa. Reforçamos o bom relacionamento com a NTT DATA e esperamos contar com vocês em projetos futuros. Atenciosamente, Renata Vasconcelos, Diretora de Operações do Laboratório Diagnóstico Preciso."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Modelo de risco de crédito com Snowflake e AWS para fintech de pagamentos",
+ "problema": "A Fintech Pagaí, com carteira de crédito de R$ 1,2 bilhão e 480 mil clientes ativos, decide concessão de limite em planilhas e modelos legados, com tempo médio de resposta de 4 horas e inadimplência de 9,8%. A ausência de governança sobre os dados de crédito impede auditorias rápidas e retrabalho em 30% das análises.",
+ "objetivo": "Construir e implantar um modelo de risco de crédito em Snowflake e AWS, elevando a precisão da decisão e reduzindo o tempo de resposta para menos de 5 minutos, com governança de dados auditável.",
+ "escopo": [
+  "Ingestão e modelagem dos dados de crédito e comportamento de pagamento no Snowflake",
+  "Desenvolvimento e validação de modelo de score de crédito em AWS SageMaker",
+  "Pipeline de features e monitoramento de drift em AWS",
+  "Catálogo, linhagem e políticas de qualidade de dados no Snowflake",
+  "Painéis de acompanhamento de inadimplência e performance do modelo"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e ML em Snowflake e AWS",
+  "Modelo de risco de crédito validado com métricas de AUC e KS",
+  "Pipeline automatizado de treinamento e scoring em AWS",
+  "Catálogo de dados e regras de governança implantados no Snowflake",
+  "Relatório de desempenho e plano de monitoramento contínuo"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Construção do modelo e pipelines",
+   "semanas": 12
+  },
+  {
+   "fase": "Governança e validação",
+   "semanas": 8
+  },
+  {
+   "fase": "Implantação e monitoramento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos de crédito",
+  "Baixa adoção do modelo pelas áreas de negócio",
+  "Restrições de segurança e LGPD na AWS"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Risco)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía solução de risco de crédito instalada na Fintech Pagaí, com integração ativa ao Snowflake e à AWS. O custo de troca e o cronograma de 7 meses pesaram contra a nossa oferta.",
+ "licoes": "Mapear antecipadamente soluções já instaladas no cliente e quantificar o custo de transição frente à continuidade. Propor abordagem incremental sobre a solução existente para reduzir a barreira de troca.",
+ "retorno": "Prezados, informamos que a proposta para o modelo de risco de crédito não foi selecionada. A decisão considerou que já temos uma solução de risco instalada e integrada ao nosso ambiente Snowflake e AWS, o que reduz o esforço de transição. Agradecemos a dedicação da equipe e manteremos contato para iniciativas futuras de governança de dados. Atenciosamente, Renata Vasconcelos, Diretora de Risco."
+}

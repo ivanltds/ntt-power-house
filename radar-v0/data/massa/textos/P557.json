@@ -1,0 +1,50 @@
+{
+ "titulo": "Predição de churn e retenção para base de clientes PJ",
+ "problema": "A Fintech Pagaí, com carteira de 180 mil clientes PJ e R$ 2,4 bi em volume transacionado anual, vinha perdendo 3,1% da base ativa por trimestre sem conseguir antecipar quais contas migrariam para concorrentes. Os sinais de risco estavam dispersos entre o CRM Salesforce, o data lake na AWS e extratos transacionais, sem modelo preditivo que priorizasse a ação dos times de relacionamento.",
+ "objetivo": "Construir e operacionalizar um modelo de propensão a churn com 90 dias de antecedência, integrado ao CRM, para direcionar campanhas de retenção sobre os segmentos de maior valor e reduzir a perda de receita recorrente.",
+ "escopo": [
+  "Diagnóstico e engenharia de features sobre dados transacionais e cadastrais no Databricks, com pipelines em Python e armazenamento na AWS (S3 e Redshift)",
+  "Desenvolvimento de modelos de classificação de churn em Python (XGBoost e regressão logística) com explicabilidade via SHAP e monitoramento de drift",
+  "Integração dos scores ao Salesforce para acionar jornadas de retenção e filas de priorização para os gerentes de conta",
+  "Dashboards de Analytics & BI com coortes de churn, valor em risco e efetividade das ações de retenção",
+  "Plano de Change Management com treinamento de 120 usuários de CRM e relacionamento em três ondas regionais"
+ ],
+ "entregaveis": [
+  "Modelo de propensão a churn em produção com AUC de 0,87 e atualização diária dos scores",
+  "Score de risco e valor em risco embarcados no Salesforce para 180 mil contas PJ",
+  "Painéis de monitoramento de churn, coortes e ROI das campanhas de retenção",
+  "Playbook de retenção por segmento com gatilhos, ofertas e cadência de contato",
+  "Programa de capacitação e material de apoio para os times comerciais e de CRM"
+ ],
+ "fases": [
+  {
+   "fase": "Descoberta e diagnóstico de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Engenharia de dados e modelagem preditiva",
+   "semanas": 9
+  },
+  {
+   "fase": "Integração ao Salesforce e dashboards",
+   "semanas": 5
+  },
+  {
+   "fase": "Piloto, rollout e change management",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados, 1 consultor de CRM Salesforce e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e defasagem dos dados cadastrais de clientes PJ",
+  "Baixa adesão dos gerentes de conta ao uso dos scores no CRM",
+  "Drift do modelo após mudanças sazonais no comportamento transacional"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Experiência do Cliente)",
+  "tecnico": "Bruno Tavares (Lead Data Scientist)"
+ },
+ "resultados": "O modelo entrou em produção cobrindo 100% da base PJ e as campanhas orientadas por score reduziram o churn trimestral de 3,1% para 2,2%, preservando cerca de R$ 7,8 milhões em receita recorrente no primeiro ciclo.",
+ "licoes": "A integração com o Salesforce exigiu duas sprints extras por restrições de customização de objetos e governança de campos, elevando o esforço de CRM em cerca de 20%. Foi decisivo envolver os gerentes de conta desde a fase de descoberta, o que garantiu adoção de 85% dos scores no fluxo diário de atendimento.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Fintech Pagaí, que já conhecia nossa entrega em Data & Analytics e confiou na evolução do projeto anterior para o caso de churn e retenção."
+}

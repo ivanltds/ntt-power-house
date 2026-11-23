@@ -1,0 +1,50 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD em Plataforma Analítica Unificada",
+ "problema": "A Tríade Telecom operava com dados de 4,2 milhões de clientes distribuídos em 3 data marts isolados, sem catálogo corporativo nem classificação de dados pessoais. Isso gerava retrabalho de 18% nas áreas de BI e exposição a sanções da ANPD por tratamento de dados sensíveis sem base legal documentada.",
+ "objetivo": "Estruturar a governança de dados e adequar os fluxos analíticos à LGPD, criando catálogo único, políticas de acesso e trilhas de auditoria sobre Azure, Databricks e Snowflake.",
+ "escopo": [
+  "Catalogação e classificação de 320 tabelas e 1.100 campos com identificação de dados pessoais e sensíveis no Azure Purview",
+  "Implementação de políticas de mascaramento e controle de acesso baseado em papéis no Databricks e no Snowflake",
+  "Construção de trilhas de auditoria e linhagem de dados ponta a ponta entre as camadas de ingestão e consumo",
+  "Definição de 22 políticas de retenção, descarte e base legal alinhadas à LGPD",
+  "Programa de Change Management com treinamento de 140 usuários e rede de 12 data stewards"
+ ],
+ "entregaveis": [
+  "Catálogo corporativo de dados com 320 tabelas classificadas e glossário de negócio de 85 termos",
+  "Matriz de acessos e políticas de mascaramento implementadas em produção no Databricks e Snowflake",
+  "Relatório de linhagem e trilhas de auditoria para 100% das fontes críticas de clientes",
+  "Manual de políticas de retenção e descarte com 22 regras aprovadas pelo jurídico",
+  "Plano de Change Management com material de treinamento e 12 data stewards certificados"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e classificação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Implementação de políticas e controles técnicos",
+   "semanas": 8
+  },
+  {
+   "fase": "Trilhas de auditoria, linhagem e retenção",
+   "semanas": 4
+  },
+  {
+   "fase": "Change Management e sustentação",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança e LGPD e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas de negócio à classificação de dados",
+  "Atraso na validação jurídica das bases legais",
+  "Qualidade inconsistente dos metadados nas fontes legadas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Transformação Digital)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Redução de 62% no tempo de resposta a auditorias de dados e eliminação de R$ 1,8 milhão em risco potencial de multas por tratamento irregular de dados pessoais.",
+ "licoes": "A validação jurídica das bases legais levou 3 semanas além do previsto e exigiu duas rodadas extras de revisão com o compliance. Foi decisivo envolver os data stewards das áreas de negócio desde a fase de diagnóstico, o que acelerou a classificação das 320 tabelas.",
+ "diferencial": "Ganhamos pela experiência comprovada em projeto anterior de governança de dados na Tríade Telecom e por um case de referência semelhante em operadora de telecom com Databricks e Snowflake."
+}

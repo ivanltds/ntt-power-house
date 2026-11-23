@@ -1,0 +1,47 @@
+{
+ "titulo": "Previsão de demanda e reposição inteligente para rede de farmácias",
+ "problema": "A Farmácias Vida Plena opera 312 lojas e cerca de 4.800 SKUs ativos, com rupturas de estoque que chegam a 11% nas categorias de maior giro e excesso de cobertura em itens de baixa rotação. A reposição é feita hoje por planilhas e regras fixas de ponto de pedido, sem considerar sazonalidade, promoções e variações regionais de demanda.",
+ "objetivo": "Implantar um modelo de previsão de demanda por loja e SKU, integrado ao processo de reposição, para reduzir rupturas em 30% e o estoque em excesso em 15% em 12 meses.",
+ "escopo": [
+  "Construção de pipelines de ingestão e tratamento de dados históricos de vendas, estoque e cadastro de produtos em Databricks com PySpark e Python",
+  "Modelagem dimensional e camada analítica no Snowflake, consolidando 24 meses de histórico de 312 lojas",
+  "Desenvolvimento de modelos de Machine Learning de previsão de demanda por loja, SKU e horizonte semanal, com validação e monitoramento de acurácia (MAPE)",
+  "Definição de regras de reposição e sugestão de pedido a partir das previsões, integradas ao ERP do cliente",
+  "Dashboards de acompanhamento de acurácia, ruptura e cobertura de estoque para as áreas de suprimentos e operações"
+ ],
+ "entregaveis": [
+  "Pipeline de dados de vendas e estoque operando em Databricks com atualização diária",
+  "Modelo de previsão de demanda em produção, com MAPE alvo abaixo de 18% para itens de alto giro",
+  "Motor de sugestão de reposição parametrizado por loja e categoria",
+  "Camada analítica no Snowflake documentada e disponível para consumo pelas áreas de negócio",
+  "Painel de indicadores de demanda, ruptura e cobertura com treinamento das equipes do cliente"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento dos modelos de previsão",
+   "semanas": 6
+  },
+  {
+   "fase": "Motor de reposição e integração com o ERP",
+   "semanas": 4
+  },
+  {
+   "fase": "Homologação, treinamento e go-live",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e granularidade dos dados históricos de estoque por loja",
+  "Baixa adesão das equipes de suprimentos às sugestões automáticas de pedido",
+  "Prazo de integração com o ERP do cliente fora do controle da equipe"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Gerente de Suprimentos)",
+  "tecnico": "Carlos Menezes (Arquiteto de Dados)"
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Leitura e triagem inteligente de documentos com IA generativa para seguros",
+ "problema": "A Mútua Previdência Sul recebe cerca de 12 mil documentos por mês entre propostas, sinistros e apólices, e a triagem manual consome 3.200 horas/ano da equipe de retaguarda, com índice de erro de classificação de 8%. O processo atual em planilhas e caixas de e-mail atrasa a abertura de sinistros em até 5 dias úteis.",
+ "objetivo": "Automatizar a leitura, classificação e extração de dados de documentos com IA generativa, reduzindo o tempo de triagem em 60% e o erro de classificação para menos de 2% em 3 meses.",
+ "escopo": [
+  "Pipeline de ingestão de documentos em Python com OCR e pré-processamento de PDFs e imagens",
+  "Serviço de classificação e extração de campos com IA generativa na AWS (Amazon Bedrock) orquestrado por Lambda",
+  "Camada de validação humana e trilha de auditoria para documentos com baixa confiança",
+  "Integração com o sistema de gestão de sinistros via API REST, com filas SQS para desacoplamento",
+  "Dashboard de acompanhamento de volumes, acurácia e SLA de triagem em Amazon QuickSight"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da solução e matriz de riscos",
+  "Protótipo funcional de classificação para 5 tipos de documentos prioritários",
+  "Pipeline de triagem automatizada em ambiente AWS de homologação",
+  "Relatório de acurácia e testes com 2.000 documentos históricos",
+  "Manual de operação, playbook de exceções e treinamento de 8 horas para a equipe"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e definição de arquitetura",
+   "semanas": 3
+  },
+  {
+   "fase": "Desenvolvimento do protótipo de IA generativa",
+   "semanas": 4
+  },
+  {
+   "fase": "Integração, testes e validação com dados reais",
+   "semanas": 4
+  },
+  {
+   "fase": "Implantação assistida e treinamento",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 2 engenheiros de dados Python, 1 especialista em IA generativa AWS e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos documentos digitalizados",
+  "Restrições de privacidade e LGPD no envio de dados ao modelo",
+  "Baixa adesão da equipe de retaguarda ao novo fluxo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações de Sinistros)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 3 meses foi considerado longo demais pela Mútua Previdência Sul, que precisava de triagem automatizada antes do pico de renovação de apólices em 8 semanas. O cliente optou por um fornecedor com implantação faseada mais curta, mesmo com escopo reduzido.",
+ "licoes": "Para propostas de triagem documental em seguros, oferecer uma versão inicial em 6 a 8 semanas com escopo enxuto e evolução posterior. Ancorar o cronograma no calendário de negócio do cliente, como picos de renovação e sinistralidade, para evitar desalinhamento de expectativa.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe da NTT DATA na elaboração da proposta. Após análise interna, decidimos seguir com outro fornecedor porque o prazo de entrega de 3 meses não atende à nossa janela de renovação de apólices, que exige a triagem automatizada em menos de 8 semanas. Reconhecemos a qualidade técnica da proposta e esperamos retomar a conversa em projetos futuros. Atenciosamente, Renata Vasconcelos, Diretora de Operações de Sinistros, Mútua Previdência Sul."
+}

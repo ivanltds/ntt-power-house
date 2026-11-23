@@ -1,0 +1,47 @@
+{
+ "titulo": "Modernização de Aplicações com Containers em Multicloud",
+ "problema": "A FibraMax Internet enfrenta desafios para manter suas aplicações legadas, que demandam alta manutenção e não escalam para atender picos de 500 mil acessos simultâneos. A empresa busca reduzir custos operacionais em 25% e aumentar a agilidade na entrega de novos serviços.",
+ "objetivo": "Modernizar as aplicações críticas da FibraMax por meio da containerização e orquestração em nuvem, garantindo escalabilidade, resiliência e eficiência operacional.",
+ "escopo": [
+  "Avaliação e migração de 15 aplicações monolíticas para containers Docker em ambientes GCP, Azure e AWS",
+  "Implementação de cluster Kubernetes gerenciado (GKE, AKS e EKS) para orquestração dos containers",
+  "Configuração de pipeline CI/CD para automação de deploy e testes",
+  "Monitoramento e logging centralizado com ferramentas nativas das clouds",
+  "Sustentação contínua (AMS) com SLA de 99,9% e suporte 24x7"
+ ],
+ "entregaveis": [
+  "Relatório de avaliação e plano de migração das aplicações",
+  "Ambientes de containers configurados e operacionais nas três nuvens",
+  "Pipeline CI/CD implementado e documentado",
+  "Dashboards de monitoramento e alertas configurados",
+  "Documentação técnica e treinamento para equipe do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Avaliação e Planejamento",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Migração e Containerização",
+   "duracao_semanas": 20
+  },
+  {
+   "nome": "Automação e Monitoramento",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Sustentação e Otimização",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de nuvem, 2 engenheiros de DevOps, 2 engenheiros de software e 1 gerente de projeto",
+ "riscos": [
+  "Resistência à mudança por parte das equipes internas",
+  "Complexidade na integração entre as três nuvens",
+  "Atrasos na migração devido a dependências legadas"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Tecnologia)",
+  "tecnico": "Ana Silva (Arquiteta de Soluções Cloud)"
+ }
+}

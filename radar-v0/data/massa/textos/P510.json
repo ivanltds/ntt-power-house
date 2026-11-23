@@ -1,0 +1,47 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD para Base Assistencial Hospitalar",
+ "problema": "O Hospital Infantil Esperança possui 12 unidades de atendimento e cerca de 480 mil prontuários eletrônicos ativos, com dados sensíveis de saúde distribuídos em 7 sistemas distintos. A ausência de catálogo consolidado e de políticas formais de tratamento eleva o risco de exposição de dados de pacientes e de sanções da ANPD, além de gerar retrabalho em auditorias internas.",
+ "objetivo": "Estruturar a governança de dados e o programa de adequação à LGPD em 4 meses, com catálogo único de dados sensíveis, políticas de tratamento e capacitação das equipes assistenciais e administrativas.",
+ "escopo": [
+  "Mapeamento e catalogação de dados pessoais sensíveis em ambientes Databricks, com classificação por grau de criticidade e base legal",
+  "Implementação de rotinas em Python para varredura automatizada de dados sensíveis e detecção de acessos indevidos",
+  "Definição de políticas, papéis e matriz RACI de governança de dados alinhados à LGPD",
+  "Estruturação de trilhas de auditoria e relatórios de conformidade no Databricks para a área de segurança da informação",
+  "Programa de Change Management com capacitação de 320 colaboradores e rede de 18 multiplicadores internos"
+ ],
+ "entregaveis": [
+  "Catálogo de dados pessoais e sensíveis com 100% dos sistemas assistenciais mapeados",
+  "Política de Governança de Dados e privacidade aprovada pela diretoria",
+  "Painel de conformidade LGPD em Databricks com indicadores mensais",
+  "Scripts Python de varredura de dados sensíveis documentados e em operação",
+  "Plano de comunicação e capacitação executado com relatório de adesão"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e mapeamento de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Desenho de políticas e arquitetura de governança",
+   "semanas": 5
+  },
+  {
+   "fase": "Implementação técnica em Databricks e Python",
+   "semanas": 4
+  },
+  {
+   "fase": "Capacitação e encerramento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e LGPD e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas assistenciais às novas políticas de tratamento de dados",
+  "Atraso na liberação de acessos aos ambientes Databricks pelos times de TI do hospital",
+  "Escopo de dados sensíveis maior que o estimado durante o mapeamento inicial"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida Vasconcelos (Diretora de Tecnologia da Informação)",
+  "tecnico": "Felipe Andrade Monteiro (Arquiteto de Dados Sênior)"
+ }
+}

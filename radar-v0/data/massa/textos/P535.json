@@ -1,0 +1,49 @@
+{
+ "titulo": "Manutenção preditiva de ativos com Kafka e Machine Learning",
+ "problema": "A Companhia de Saneamento Rio Claro opera cerca de 1.200 ativos críticos (bombas, motores e válvulas) distribuídos em 34 unidades, com paradas não planejadas que consomem aproximadamente 18% das horas de manutenção e elevam o custo operacional em cerca de R$ 2,4 milhões por ano. O histórico de falhas está fragmentado em planilhas e sistemas legados, sem telemetria em tempo real que permita antecipar degradações.",
+ "objetivo": "Implantar uma plataforma de manutenção preditiva que ingira telemetria dos ativos em tempo real via Kafka e aplique modelos de Machine Learning para prever falhas com antecedência mínima de 72 horas, reduzindo paradas não planejadas em 25% ao longo do projeto.",
+ "escopo": [
+  "Ingestão de telemetria de sensores de vibração, temperatura e pressão de 1.200 ativos em tópicos Kafka com latência inferior a 5 segundos",
+  "Construção de pipeline de features e data lake para histórico de falhas e eventos de manutenção",
+  "Treinamento e validação de modelos de Machine Learning de classificação de risco e estimativa de vida útil remanescente por família de ativos",
+  "Integração dos alertas preditivos ao sistema de ordens de serviço do cliente via API, com priorização automática",
+  "Painel de monitoramento de saúde dos ativos e acompanhamento de indicadores de manutenção em tempo quase real"
+ ],
+ "entregaveis": [
+  "Pipeline Kafka de ingestão de telemetria em produção para as 34 unidades",
+  "Catálogo de features e base histórica tratada cobrindo 24 meses de eventos de manutenção",
+  "Modelos de Machine Learning treinados e validados para as 5 famílias de ativos prioritárias, com precisão mínima de 85%",
+  "Integração dos alertas preditivos ao sistema de ordens de serviço e painel de saúde dos ativos",
+  "Relatório de resultados parciais e plano de expansão para os demais ativos"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Ingestão Kafka e engenharia de features",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e validação de Machine Learning",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração, painéis e go-live assistido",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura irregular dos sensores em parte dos ativos",
+  "Baixa maturidade dos registros históricos de manutenção",
+  "Resistência operacional à adoção dos alertas preditivos"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Tavares (Gerente de Manutenção de Ativos)",
+  "tecnico": "Fernanda Queiroz (Líder Técnica de Data Science)"
+ },
+ "resultados": "Nas primeiras 10 semanas, o pipeline Kafka já opera em 12 unidades e os modelos preliminares atingiram 81% de precisão na previsão de falhas em bombas.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Companhia de Saneamento Rio Claro, somando o conhecimento acumulado em projetos anteriores à competência da área de AI & Automation da NTT DATA."
+}

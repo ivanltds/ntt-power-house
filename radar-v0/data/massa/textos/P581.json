@@ -1,0 +1,47 @@
+{
+ "titulo": "Modelo de risco de crédito com Snowflake e AWS para corretora",
+ "problema": "A Corretora Valor Alto analisa cerca de 12 mil propostas de crédito por mês de forma majoritariamente manual, com prazo médio de 48 horas e taxa de inadimplência de 7,3% na carteira de crédito estruturado. A ausência de um modelo analítico padronizado limita a expansão para novos produtos e gera perdas estimadas em R$ 4,2 milhões anuais.",
+ "objetivo": "Desenvolver e colocar em produção um modelo de risco de crédito em Snowflake e AWS que reduza o prazo de decisão para até 4 horas e eleve a precisão na identificação de tomadores de alto risco.",
+ "escopo": [
+  "Ingestão e modelagem dos dados históricos de crédito em Snowflake, com camadas raw, trusted e refined",
+  "Engenharia de atributos e treinamento de modelos de scoring de crédito em AWS SageMaker",
+  "Pipeline de MLOps para versionamento, monitoramento de drift e reprocessamento mensal dos modelos",
+  "Integração do scoring em API na AWS consumida pelo sistema de análise de propostas da corretora",
+  "Painel de acompanhamento de performance do modelo e indicadores de inadimplência em Snowflake"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e ML em Snowflake e AWS",
+  "Modelo de risco de crédito validado com métricas de AUC e KS documentadas",
+  "Pipeline de MLOps operacional com monitoramento de drift",
+  "API de scoring integrada ao fluxo de análise de propostas",
+  "Painel de indicadores de performance do modelo e da carteira"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento e validação do modelo",
+   "semanas": 12
+  },
+  {
+   "nome": "Industrialização e MLOps",
+   "semanas": 10
+  },
+  {
+   "nome": "Integração, testes e go-live",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de MLOps e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de crédito",
+  "Baixa adoção do scoring pelas áreas de análise da corretora",
+  "Mudança de regras regulatórias durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Crédito)",
+  "tecnico": "Felipe Andrade (Cientista de Dados Sênior)"
+ }
+}

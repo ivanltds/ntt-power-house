@@ -1,0 +1,48 @@
+{
+ "titulo": "Migração do ERP legado para SAP S/4HANA em nuvem híbrida AWS/Azure",
+ "problema": "O Operador Logístico Armazém Brasil opera 14 centros de distribuição e processa cerca de 380 mil pedidos por mês em um ERP legado com customizações que travam a expansão. A base SAP atual está fora de suporte e a integração com transportadoras e WMS consome 22 horas semanais de retrabalho manual.",
+ "objetivo": "Migrar o ERP para SAP S/4HANA em ambiente de nuvem AWS e Azure em 8 meses, reduzindo o custo de manutenção do legado em 30% e padronizando 85% dos processos logísticos.",
+ "escopo": [
+  "Assessment e blueprint técnico do SAP S/4HANA com mapa de customizações a serem eliminadas",
+  "Migração de banco de dados e aplicações SAP para infraestrutura AWS, com DR em Azure",
+  "Integração do S/4HANA com WMS, TMS e portais de transportadoras via APIs",
+  "Trilha de Change Management com treinamento de 420 usuários-chave e 60 gestores",
+  "Cutover assistido e hypercare de 6 semanas pós-go-live"
+ ],
+ "entregaveis": [
+  "Blueprint técnico e plano de migração aprovado em 6 semanas",
+  "Ambiente SAP S/4HANA provisionado em AWS com espelho de DR em Azure",
+  "Relatório de testes integrados com 95% dos cenários críticos aprovados",
+  "Plano de Change Management e material de treinamento para 480 colaboradores",
+  "Go-live documentado com checklist de cutover e relatório de hypercare"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e Blueprint",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Migração técnica e integrações",
+   "duracao_semanas": 14
+  },
+  {
+   "fase": "Testes integrados e Change Management",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Cutover e Hypercare",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP S/4HANA, 3 consultores funcionais de logística, 2 engenheiros de nuvem AWS/Azure e 1 especialista em Change Management",
+ "riscos": [
+  "Customizações legadas subestimadas no assessment",
+  "Janela de cutover curta frente ao volume de 380 mil pedidos/mês",
+  "Baixa adesão dos usuários ao novo processo no go-live"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de TI)",
+  "tecnico": "Paulo Menezes (Arquiteto SAP S/4HANA)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente após a diretoria financeira congelar o orçamento de transformação de ERP para o exercício seguinte."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Lakehouse Databricks para unificar dados de varejo omnichannel",
+ "problema": "A Moda Leve Store operava com dados de vendas, estoque e e-commerce dispersos em 3 sistemas distintos e mais de 40 planilhas manuais, o que gerava fechamentos mensais com 6 dias de atraso e divergências de até 12% nos relatórios de estoque entre lojas físicas e canal online. A ausência de uma camada única de dados impedia análises confiáveis de ruptura e giro por SKU em uma base de mais de 350 mil clientes.",
+ "objetivo": "Construir uma plataforma lakehouse no Databricks que unifique dados transacionais e digitais em uma única fonte de verdade, com camadas de governança e engenharia de dados em Python, reduzindo o tempo de fechamento e habilitando análises de estoque e comportamento de compra em near real-time.",
+ "escopo": [
+  "Ingestão incremental de dados de ERP, PDV e e-commerce em camadas bronze/silver/gold no Databricks com pipelines em Python",
+  "Migração para Nuvem dos 3 sistemas de origem, com 14 pipelines de CDC e cargas batch noturnas",
+  "Governança de Dados com Unity Catalog: catálogo, linhagem, classificação de PII de 350 mil clientes e políticas de acesso por perfil",
+  "Modelagem dimensional de vendas, estoque e clientes em Delta Lake, com 28 tabelas gold documentadas",
+  "Orquestração e monitoramento dos jobs em Python com alertas de SLA e testes de qualidade em 42 regras de negócio"
+ ],
+ "entregaveis": [
+  "Plataforma lakehouse Databricks em produção com 14 pipelines de ingestão ativos",
+  "Catálogo de dados no Unity Catalog com linhagem e 28 tabelas gold documentadas",
+  "Painéis de estoque e giro por SKU atualizados a cada 4 horas",
+  "Relatório executivo de vendas omnichannel com fechamento em D+1",
+  "Documentação técnica, runbooks operacionais e treinamento de 18 usuários-chave"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura",
+   "semanas": 6
+  },
+  {
+   "fase": "Migração para Nuvem e ingestão",
+   "semanas": 12
+  },
+  {
+   "fase": "Governança e modelagem gold",
+   "semanas": 12
+  },
+  {
+   "fase": "Estabilização, treinamento e go-live",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados legados do PDV com cadastros duplicados",
+  "Janelas de acesso restritas aos sistemas de origem durante a temporada de vendas",
+  "Baixa adoção dos painéis pelas áreas de negócio após o go-live"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Diretora de Tecnologia e Dados)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados NTT DATA)"
+ },
+ "resultados": "O fechamento mensal caiu de 6 para 1 dia útil e as divergências de estoque entre canais foram reduzidas de 12% para 2,1%. A operação passou a monitorar giro por SKU em 28 tabelas gold, eliminando 40 planilhas manuais e liberando cerca de 320 horas/ano da equipe de controladoria.",
+ "licoes": "A limpeza dos cadastros duplicados do PDV consumiu 3 semanas além do previsto na fase de ingestão, exigindo repactuação do cronograma. Foi decisivo envolver a Diretoria de Tecnologia e Dados nas revisões quinzenais, o que destravou acessos aos sistemas de origem e garantiu aderência dos painéis ao negócio.",
+ "diferencial": "Ganhamos pela relação de confiança construída com a Moda Leve Store em projetos anteriores de dados, que permitiu acesso direto aos patrocinadores executivos e acelerou a aprovação da arquitetura lakehouse."
+}

@@ -1,0 +1,47 @@
+{
+ "titulo": "Implantação de CRM Salesforce e Jornada do Cliente Omnicanal",
+ "problema": "O Crédito Fácil Brasil opera com 3 bases de clientes desconectadas e um índice de conversão de apenas 12% nas campanhas de crédito pessoal. O atendimento é fragmentado entre canais, com tempo médio de resposta de 48 horas e NPS de 31, comprometendo a retenção de uma carteira de 1,2 milhão de clientes ativos.",
+ "objetivo": "Unificar a visão do cliente em uma plataforma CRM Salesforce integrada por Azure e Kafka, elevando a conversão de campanhas para 20% e reduzindo o tempo de resposta para menos de 4 horas em 9 meses.",
+ "escopo": [
+  "Implantação do Salesforce Sales e Service Cloud com visão 360 do cliente",
+  "Integração de dados via Azure Data Factory e streaming em tempo real com Apache Kafka",
+  "Construção de pipeline de engenharia de dados para 1,2 milhão de clientes ativos",
+  "Desenho e implementação de jornadas omnicanal com automação de campanhas e próximo melhor passo",
+  "Programa de change management com treinamento de 350 usuários em 4 ondas"
+ ],
+ "entregaveis": [
+  "Plataforma Salesforce configurada com visão 360 e 6 jornadas críticas mapeadas",
+  "Pipeline de dados em Azure e Kafka operando com latência inferior a 5 minutos",
+  "Dashboard executivo de conversão, NPS e tempo de resposta",
+  "Plano de change management com 350 usuários treinados e 90% de adesão",
+  "Documentação técnica e runbook de operação e sustentação"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e Arquitetura",
+   "semanas": 8
+  },
+  {
+   "fase": "Engenharia de Dados e Integrações",
+   "semanas": 14
+  },
+  {
+   "fase": "Configuração Salesforce e Jornadas",
+   "semanas": 12
+  },
+  {
+   "fase": "Change Management e Go-live",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores Salesforce, 2 engenheiros de dados e 1 especialista em change management",
+ "riscos": [
+  "Qualidade e duplicidade dos dados legados das 3 bases atuais",
+  "Baixa adesão dos 350 usuários às novas jornadas",
+  "Atraso nas integrações em tempo real via Kafka com sistemas core"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Toledo (Diretora de Experiência do Cliente)",
+  "tecnico": "Rafael Menezes (Arquiteto de Soluções CRM)"
+ }
+}

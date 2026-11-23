@@ -1,0 +1,44 @@
+{
+ "titulo": "Otimização de Rotas e Frota com Machine Learning para Logística",
+ "problema": "A Cargas Rodo Sul opera uma frota de 320 veículos e enfrenta custos de combustível e manutenção que representam 38% do custo operacional, com rotas definidas manualmente por despachantes. O índice de ocupação média dos caminhões é de apenas 71%, gerando viagens com capacidade ociosa e atrasos recorrentes em 18% das entregas.",
+ "objetivo": "Reduzir em até 15% o custo por quilômetro rodado e elevar a taxa de ocupação da frota para 85% por meio de modelos de otimização de rotas e previsão de demanda baseados em Machine Learning.",
+ "escopo": [
+  "Modelagem de previsão de demanda por região e janela de entrega com Machine Learning em Python",
+  "Desenvolvimento de algoritmo de otimização de rotas multicritério considerando restrições de janela, capacidade e custo de combustível",
+  "Pipeline de dados em Python para ingestão de telemetria da frota, pedidos e condições de tráfego",
+  "Dashboard de Analytics & BI com indicadores de ocupação, custo por km e aderência ao plano de rotas",
+  "Motor de recomendação de alocação de frota por perfil de veículo e tipo de carga"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de demanda validado com MAPE inferior a 12% sobre dados históricos de 24 meses",
+  "Algoritmo de otimização de rotas implantado em ambiente de produção com API de consulta para despachantes",
+  "Painel de Analytics & BI com 12 indicadores operacionais e visão por filial",
+  "Relatório de ganhos com simulação de cenários e comparativo antes/depois em 3 rotas piloto",
+  "Documentação técnica e treinamento de 20 usuários-chave do cliente"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 3
+  },
+  {
+   "fase": "Desenvolvimento dos modelos de ML e otimização",
+   "semanas": 5
+  },
+  {
+   "fase": "Implantação, dashboards e treinamento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 cientista de dados sênior, 1 engenheiro de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e completude dos dados de telemetria da frota",
+  "Baixa adesão dos despachantes ao novo motor de rotas",
+  "Restrições operacionais não mapeadas em janelas de entrega"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Menezes (Diretor de Operações Logísticas)",
+  "tecnico": "Fernanda Aquino (Cientista de Dados Sênior)"
+ },
+ "diferencial": "Ganhamos pela relação de confiança construída com a Cargas Rodo Sul em avaliações técnicas anteriores e pela capacidade da NTT DATA de dar continuidade ao roadmap de analytics da área de Logística."
+}

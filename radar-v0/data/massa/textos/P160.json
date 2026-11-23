@@ -1,0 +1,48 @@
+{
+ "titulo": "Manutenção preditiva de ativos de distribuição com Azure, Databricks e SAP",
+ "problema": "A Gás Canalizado Litoral opera cerca de 4.200 km de rede e 38 estações de redução de pressão, com paradas não programadas que consumiram 11.400 horas de operação no último ano e geraram R$ 7,8 milhões em custos de contingência. Hoje a manutenção é majoritariamente corretiva e preventiva por calendário, com dados de sensores dispersos entre o SAP PM e planilhas locais, sem modelo analítico para antecipar falhas.",
+ "objetivo": "Implantar uma solução de manutenção preditiva que antecipe falhas em ativos críticos (compressores, válvulas e reguladores) com horizonte de 7 a 15 dias, reduzindo paradas não programadas em pelo menos 25% em 12 meses.",
+ "escopo": [
+  "Ingestão e orquestração dos dados de sensores IoT e histórico de manutenção do SAP PM no Azure Data Lake, com pipelines em Databricks",
+  "Feature engineering e treinamento de modelos de classificação e regressão em Python no Databricks para previsão de falha e RUL (vida útil remanescente)",
+  "Integração dos scores preditivos ao SAP PM para geração automática de ordens de serviço priorizadas",
+  "Dashboard de saúde de ativos e alertas operacionais no Azure, consumindo tabelas Delta do Databricks",
+  "Pipeline MLOps com versionamento, monitoramento de drift e retreino mensal dos modelos"
+ ],
+ "entregaveis": [
+  "Data lake estruturado com 18 meses de histórico de sensores e manutenção integrados",
+  "Modelos preditivos treinados e validados para 3 famílias de ativos críticos, com métricas de recall e MAE documentadas",
+  "Integração em produção entre scores preditivos e SAP PM, com 100% das ordens críticas priorizadas automaticamente",
+  "Dashboard de saúde de ativos e alertas para a central de operações",
+  "Documentação técnica, runbooks de MLOps e transferência de conhecimento para a equipe interna"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e validação com especialistas de manutenção",
+   "semanas": 10
+  },
+  {
+   "fase": "Integração com SAP PM e dashboards",
+   "semanas": 6
+  },
+  {
+   "fase": "Go-live assistido e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 consultor SAP PM",
+ "riscos": [
+  "Qualidade e lacunas nos dados históricos de sensores de algumas estações",
+  "Baixa adesão dos times de manutenção às recomendações do modelo",
+  "Janelas de indisponibilidade limitadas para deploy em ambiente SAP produtivo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Manutenção de Ativos)",
+  "tecnico": "Bruno Tavares (Lead Data Scientist)"
+ },
+ "diferencial": "Ganhamos pela continuidade do projeto anterior de analytics no cliente e pelo case de referência em manutenção preditiva em outra distribuidora de gás, com resultados comprovados de redução de paradas não programadas."
+}

@@ -1,0 +1,47 @@
+{
+ "titulo": "Migração de Data Warehouse para Nuvem com Databricks e GCP",
+ "problema": "A Financeira Rumo Certo opera hoje um data warehouse on-premises com cerca de 3,2 TB de dados históricos e 180 tabelas, sustentando relatórios regulatórios e de crédito que levam até 9 horas para serem processados. A janela de carga noturna está saturada e a operação enfrenta 4 incidentes críticos por mês por falta de escalabilidade e de governança de dados.",
+ "objetivo": "Migrar o data warehouse on-premises para uma arquitetura em nuvem com Databricks sobre GCP e Azure, reduzindo o tempo de processamento dos relatórios regulatórios em pelo menos 60% e eliminando a dependência de infraestrutura local em 6 meses.",
+ "escopo": [
+  "Assessment das 180 tabelas e definição da arquitetura-alvo lakehouse com Databricks sobre armazenamento em GCP (BigQuery e Cloud Storage)",
+  "Migração e reengenharia dos pipelines ETL/ELT, com orquestração em Databricks Workflows e paralelização das cargas",
+  "Implementação de camada de governança e catálogo de dados (Unity Catalog) com políticas de acesso por perfil de crédito e compliance",
+  "Integração dos ambientes de consumo em Azure (Azure Data Factory e Power BI) para relatórios regulatórios e de risco",
+  "Execução de testes de paridade de dados, tuning de performance e descomissionamento assistido do data warehouse on-premises"
+ ],
+ "entregaveis": [
+  "Relatório de assessment das 180 tabelas com mapa de migração e priorização por criticidade",
+  "Arquitetura lakehouse documentada em Databricks com desenho de redes e segurança em GCP e Azure",
+  "Pipelines ETL/ELT migrados e validados para 100% das tabelas críticas de crédito e regulação",
+  "Painéis de monitoramento de qualidade de dados e SLAs de carga em Databricks",
+  "Plano de cutover e descomissionamento do ambiente on-premises com checklist de rollback"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e arquitetura-alvo",
+   "semanas": 6
+  },
+  {
+   "nome": "Reengenharia e migração de pipelines",
+   "semanas": 10
+  },
+  {
+   "nome": "Governança, integração e testes de paridade",
+   "semanas": 6
+  },
+  {
+   "nome": "Cutover e descomissionamento assistido",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em Databricks e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e consistência dos dados legados nas 180 tabelas mapeadas",
+  "Janela de cutover curta para relatórios regulatórios sem interrupção",
+  "Dependência de acessos e liberações de rede entre GCP e Azure"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Vasconcelos (Diretora de Tecnologia e Dados)",
+  "tecnico": "Rafael Andrade (Arquiteto de Soluções Cloud & Infra)"
+ }
+}

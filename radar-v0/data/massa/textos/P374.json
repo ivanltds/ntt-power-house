@@ -1,0 +1,50 @@
+{
+ "titulo": "Otimização de rotas e frota com Machine Learning para operação logística",
+ "problema": "A Cargas Rodo Sul operava com cerca de 1.200 veículos e mais de 3.800 entregas diárias, com rotas definidas manualmente por 14 supervisores regionais. Isso gerava 18% de quilometragem ociosa e um custo anual estimado de R$ 9,4 milhões em combustível e horas extras não planejadas.",
+ "objetivo": "Reduzir a quilometragem ociosa e o custo por entrega por meio de otimização de rotas e alocação de frota baseada em modelos de Machine Learning, integrando dados operacionais em uma plataforma de analytics na GCP.",
+ "escopo": [
+  "Modelagem de rotas com algoritmos de otimização em Python executados em ambientes GCP (Vertex AI e Cloud Run)",
+  "Pipeline de ingestão e tratamento de dados de telemetria, pedidos e trânsito com Python e BigQuery",
+  "Modelos de Machine Learning para previsão de demanda por região e janelas de entrega",
+  "Dashboard de Analytics & BI para acompanhamento de KPIs de frota, ocupação e custo por entrega",
+  "Mecanismo de recomendação de alocação de veículos por filial com validação em campo junto aos supervisores"
+ ],
+ "entregaveis": [
+  "Modelo de otimização de rotas em produção, processando 3.800 entregas/dia",
+  "Dashboard gerencial com 22 indicadores de frota e custo operacional",
+  "Relatório de ganhos com comparativo antes/depois em 6 filiais",
+  "Documentação técnica e playbook de operação dos modelos na GCP",
+  "Treinamento de 45 usuários entre supervisores e analistas de logística"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e treinamento dos modelos de ML",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração, dashboards e piloto em 2 filiais",
+   "semanas": 6
+  },
+  {
+   "fase": "Rollout para as 6 filiais e estabilização",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados de telemetria de parte da frota",
+  "Resistência dos supervisores à mudança no processo manual de roteirização",
+  "Atraso na integração com o sistema de gestão de transportes do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Tavares (Diretor de Operações Logísticas)",
+  "tecnico": "Fernanda Ribeiro (Líder Técnica de Data Science)"
+ },
+ "resultados": "A operação entregue reduziu a quilometragem ociosa em 14% e gerou economia anualizada de R$ 1,3 milhão em combustível e horas extras. O custo por entrega caiu 9% nas seis filiais no primeiro trimestre após o rollout.",
+ "licoes": "A integração com o sistema de gestão de transportes do cliente atrasou duas semanas por falta de documentação de API, exigindo esforço extra de engenharia. Foi decisivo envolver os supervisores regionais desde o piloto, o que acelerou a adoção e ajustou os modelos à realidade operacional.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, que já apresentou redução de 7% na quilometragem simulada em duas filiais antes da assinatura do contrato."
+}

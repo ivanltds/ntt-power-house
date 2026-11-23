@@ -1,0 +1,47 @@
+{
+ "titulo": "Manutenção Preditiva de Ativos Industriais com ML e Dados em Nuvem",
+ "problema": "A Química Fênix opera 3 plantas com cerca de 1.200 ativos críticos (bombas, compressores e trocadores), dos quais 62% seguem manutenção corretiva ou preventiva por calendário, gerando 18 paradas não planejadas por ano e custo estimado de R$ 14 milhões em perda de produção. O histórico de sensores e ordens de manutenção está fragmentado entre SAP PM e planilhas locais, sem visão unificada nem modelos que antecipem falhas.",
+ "objetivo": "Implantar uma plataforma de manutenção preditiva que antecipe falhas em ativos críticos com pelo menos 72 horas de antecedência e reduza em 30% as paradas não planejadas nas plantas piloto em 9 meses.",
+ "escopo": [
+  "Ingestão e engenharia de dados de sensores IoT, SAP PM e histórico de manutenção em pipeline Databricks no Azure Data Lake",
+  "Desenvolvimento de modelos de Machine Learning para classificação de falhas e estimativa de vida útil (RUL) dos ativos críticos",
+  "Integração dos scores de risco ao SAP PM para abertura automática de notificações de manutenção",
+  "Dashboards operacionais no Power BI sobre Azure para gestão de alertas e indicadores de confiabilidade",
+  "Programa de Change Management para capacitar 45 mantenedores e 8 engenheiros de confiabilidade no novo processo"
+ ],
+ "entregaveis": [
+  "Data lake e pipeline de dados unificado com 24 meses de histórico tratado de 1.200 ativos",
+  "Dois modelos de ML em produção (classificação de falha e RUL) com acurácia mínima de 85% na planta piloto",
+  "Integração validada entre plataforma preditiva e SAP PM para notificações automáticas",
+  "Painéis de monitoramento e relatório mensal de ganhos de confiabilidade",
+  "Plano de adoção e treinamento executado com 53 profissionais certificados no novo processo"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Fundação de Dados",
+   "semanas": 10
+  },
+  {
+   "nome": "Modelagem e Validação de ML",
+   "semanas": 14
+  },
+  {
+   "nome": "Integração com SAP e Piloto",
+   "semanas": 10
+  },
+  {
+   "nome": "Rollout e Change Management",
+   "semanas": 5
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados, 1 consultor SAP PM e 1 especialista em change management",
+ "riscos": [
+  "Qualidade e cobertura insuficiente dos dados históricos de sensores",
+  "Baixa adesão dos mantenedores ao novo fluxo de alertas",
+  "Integração com SAP PM dependendo de janelas e APIs do time interno"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Manutenção Industrial)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de AI & Automation)"
+ }
+}

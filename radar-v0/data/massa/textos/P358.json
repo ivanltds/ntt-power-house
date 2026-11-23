@@ -1,0 +1,38 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD para Operações de Crédito",
+ "problema": "O Crédito Fácil Brasil, com 2,5 milhões de clientes ativos e R$ 8 bilhões em carteira de crédito, enfrenta desafios para garantir a conformidade com a LGPD e a qualidade dos dados usados na análise de risco. A falta de governança formal resulta em 35% dos registros de clientes com inconsistências, elevando o risco de multas e impactando a decisão de crédito.",
+ "objetivo": "Estabelecer um framework de governança de dados e adequação à LGPD, com processos, políticas e tecnologia, para assegurar a integridade e a privacidade dos dados dos clientes.",
+ "escopo": [
+  "Mapeamento e classificação de dados pessoais e sensíveis em 15 sistemas legados, utilizando Python para automatizar a descoberta.",
+  "Implementação de catálogo de dados e linhagem no Snowflake, integrando metadados de 8 fontes críticas.",
+  "Definição de políticas de acesso e mascaramento de dados no Snowflake, alinhadas aos princípios da LGPD.",
+  "Automação de relatórios de conformidade e auditoria com scripts Python, reduzindo o esforço manual em 60%.",
+  "Programa de change management com treinamentos para 200 colaboradores sobre novas práticas de governança."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de governança de dados e mapa de fluxo de dados pessoais.",
+  "Catálogo de dados implementado no Snowflake com 500 ativos de dados catalogados.",
+  "Políticas de segurança e privacidade publicadas e configuradas no Snowflake.",
+  "Dashboard de indicadores de conformidade e qualidade de dados.",
+  "Relatório final de avaliação de maturidade e plano de evolução."
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e Planejamento: 6 semanas",
+  "Fase 2 - Implementação de Catálogo e Políticas: 10 semanas",
+  "Fase 3 - Automação e Capacitação: 8 semanas",
+  "Fase 4 - Sustentação e Encerramento: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em segurança da informação e 1 gerente de projeto.",
+ "riscos": [
+  "Resistência dos times de negócio à mudança de processos.",
+  "Complexidade na integração com sistemas legados.",
+  "Atraso na obtenção de aprovações regulatórias internas."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Compliance)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou 25% acima do mercado, inviabilizando a contratação dentro do orçamento aprovado pelo cliente.",
+ "licoes": "Para próximas propostas em serviços financeiros, incluir análise de valor percebido e benchmarking de preços para ajustar a margem e evitar desvantagem competitiva.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de governança de dados e LGPD não foi selecionada. O motivo principal foi o valor apresentado, que ficou acima do mercado e do nosso orçamento disponível. Agradecemos o esforço da equipe e esperamos colaborar em oportunidades futuras. Atenciosamente, Mariana Costa - Diretora de Compliance."
+}

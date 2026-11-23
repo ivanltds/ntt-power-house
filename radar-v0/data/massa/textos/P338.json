@@ -1,0 +1,50 @@
+{
+ "titulo": "Painel de Indicadores ESG e Monitoramento de Emissões para Metalúrgica",
+ "problema": "A Metalúrgica Forja Forte acompanha hoje o consumo de energia e as emissões de CO2 de 3 unidades industriais em planilhas manuais, com consolidação mensal que leva até 12 dias e sem rastreabilidade por linha de produção. A ausência de indicadores confiáveis de ESG compromete relatórios para 2 clientes exportadores que exigem dados de pegada de carbono e expõe a empresa a riscos de compliance ambiental.",
+ "objetivo": "Implantar uma plataforma de analytics ESG na Azure que consolide dados de emissões e consumo de 3 plantas em um único painel em Power BI, reduzindo o ciclo de consolidação mensal de 12 para 2 dias úteis.",
+ "escopo": [
+  "Ingestão automatizada em Python dos dados de medidores de energia, gás natural e produção das 3 unidades para o Azure Data Lake Storage",
+  "Modelagem de dados ESG no Azure Synapse Analytics com cálculo de emissões Escopos 1 e 2 por linha de produção",
+  "Pipeline de orquestração e qualidade de dados em Python com validação de 15 regras de consistência",
+  "Painéis em Power BI com indicadores de intensidade de carbono, consumo por tonelada produzida e metas de redução",
+  "Governança de dados com catálogo de métricas ESG e controle de acesso por unidade industrial"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG na Azure aprovado",
+  "Pipeline de ingestão automatizada das 3 unidades em operação",
+  "Modelo analítico de emissões Escopos 1 e 2 validado com a área de meio ambiente",
+  "Dashboard em Power BI com 12 indicadores ESG e visão por planta e por linha",
+  "Treinamento de 10 usuários-chave e manual de operação da plataforma"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 4
+  },
+  {
+   "nome": "Ingestão e modelagem de dados",
+   "semanas": 7
+  },
+  {
+   "nome": "Construção dos painéis Power BI",
+   "semanas": 6
+  },
+  {
+   "nome": "Homologação e treinamento",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos de medidores legados",
+  "Baixa adesão das áreas industriais ao preenchimento de dados",
+  "Integração com sistemas de automação das plantas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Sustentabilidade)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor apresentado foi cerca de 18% superior ao de concorrentes com escopo equivalente. O cliente optou por um fornecedor com menor custo, mesmo reconhecendo a experiência da NTT DATA em projetos anteriores.",
+ "licoes": "Para propostas de continuidade em clientes já atendidos, comparar o preço com referenciais de mercado antes do envio e considerar escopo modular de menor entrada. Reaproveitar ativos e aceleradores já desenvolvidos no cliente ajuda a reduzir horas e aproximar o valor do praticado pela concorrência.",
+ "retorno": "Prezados, informamos que concluímos a avaliação das propostas para o projeto de indicadores ESG e emissões. A oferta da NTT DATA foi tecnicamente bem avaliada, porém o valor ficou acima do mercado, cerca de 18% superior à proposta concorrente selecionada. Agradecemos o empenho da equipe e esperamos manter a parceria em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Gerente de Sustentabilidade, Metalúrgica Forja Forte."
+}

@@ -1,0 +1,47 @@
+{
+ "titulo": "Migração SAP S/4HANA para rede de 82 lojas com Change Management",
+ "problema": "A Calçados Passo Firme opera 82 lojas e um e-commerce que respondem por R$ 610 milhões em vendas anuais, mas o ERP atual apresenta fechamentos contábeis de até 12 dias e limita a expansão do varejo omnichannel. O ambiente SAP legado, com customizações acumuladas em 14 anos, eleva o custo de manutenção em cerca de 28% do orçamento de TI e cria dependência de processos manuais no estoque e no fiscal.",
+ "objetivo": "Migrar o ERP para SAP S/4HANA em 10 meses, com infraestrutura em AWS e Azure, reduzindo o fechamento contábil para até 4 dias e preparando 350 usuários para a nova operação por meio de um programa estruturado de Change Management.",
+ "escopo": [
+  "Assessment e blueprint do SAP S/4HANA com limpeza de 1.200 customizações e definição do core financeiro e de varejo",
+  "Migração da base SAP para SAP S/4HANA em infraestrutura AWS, com ambiente de alta disponibilidade e DR em Azure",
+  "Integração do SAP S/4HANA com PDV das 82 lojas e com o e-commerce via APIs, incluindo estoque e fiscal",
+  "Plano de Change Management com treinamento de 350 usuários, rede de 24 multiplicadores e comunicação em 3 ondas",
+  "Hypercare de 8 semanas com suporte em modelo híbrido e transferência de conhecimento ao time interno"
+ ],
+ "entregaveis": [
+  "Documento de blueprint e matriz de conversão das customizações do SAP legado",
+  "Ambiente SAP S/4HANA produtivo em AWS com DR validado em Azure",
+  "Integrações de PDV e e-commerce homologadas e em produção",
+  "Programa de treinamento executado com 350 usuários capacitados e 24 multiplicadores formados",
+  "Relatório de encerramento do hypercare com indicadores de estabilidade e plano de sustentação"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e blueprint",
+   "semanas": 10
+  },
+  {
+   "nome": "Conversão e integrações",
+   "semanas": 18
+  },
+  {
+   "nome": "Testes integrados e treinamento",
+   "semanas": 8
+  },
+  {
+   "nome": "Go-live e hypercare",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP S/4HANA, 4 consultores funcionais SAP, 2 consultores de integração, 1 especialista em nuvem AWS/Azure e 1 consultor de Change Management",
+ "riscos": [
+  "Atraso na limpeza de customizações do SAP legado",
+  "Baixa adesão dos 350 usuários ao novo processo",
+  "Instabilidade nas integrações com PDV e e-commerce no go-live"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de TI)",
+  "tecnico": "Marcelo Tavares (Gerente de Projeto SAP S/4HANA)"
+ }
+}

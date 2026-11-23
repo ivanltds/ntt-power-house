@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma Lakehouse para Dados Financeiros com Snowflake",
+ "problema": "A Corretora Valor Alto processa 2,5 milhões de transações diárias e mantém dados críticos em um data warehouse legado que não suporta o volume e a variedade atuais. A falta de uma plataforma integrada de dados dificulta a análise em tempo real e a governança, impactando a tomada de decisão em um mercado competitivo.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse na nuvem utilizando Snowflake e Python, unificando dados de múltiplas fontes e estabelecendo práticas de governança para permitir análises avançadas e conformidade regulatória.",
+ "escopo": [
+  "Migração de dados históricos e incrementais do data warehouse legado para o Snowflake, incluindo 500 GB de dados e 50 pipelines.",
+  "Desenvolvimento de pipelines de ingestão e transformação de dados com Python e Snowflake Snowpark para processar 2,5 milhões de transações diárias.",
+  "Implementação de catálogo de dados e políticas de governança no Snowflake, cobrindo 200 tabelas e 50 usuários.",
+  "Integração do Snowflake com ferramentas de BI existentes e fontes de dados em tempo real via APIs.",
+  "Configuração de segurança e controle de acesso baseado em funções (RBAC) no Snowflake para atender às exigências do setor financeiro."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da plataforma lakehouse no Snowflake.",
+  "Ambiente Snowflake configurado com dados migrados e pipelines operacionais.",
+  "Catálogo de dados e políticas de governança implementados.",
+  "Relatórios de validação de dados e testes de performance.",
+  "Treinamento para 20 usuários-chave e documentação técnica."
+ ],
+ "fases": [
+  {
+   "nome": "Planejamento e Arquitetura",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Migração e Implementação",
+   "duracao_semanas": 14
+  },
+  {
+   "nome": "Governança e Integração",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Testes e Go-Live",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto.",
+ "riscos": [
+  "Complexidade na migração de dados legados com qualidade inconsistente.",
+  "Resistência dos usuários à mudança de processos e novas ferramentas.",
+  "Atrasos na integração com sistemas de terceiros para dados em tempo real."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior do que a necessidade imediata do cliente, que buscava uma solução mais enxuta e de rápida implementação. A Corretora Valor Alto optou por um fornecedor com abordagem mais focada em resultados de curto prazo.",
+ "licoes": "Para próximas oportunidades, é essencial validar melhor o escopo mínimo viável com o cliente e propor uma abordagem faseada, destacando ganhos rápidos e escalabilidade futura, evitando soluções abrangentes que possam parecer excessivas.",
+ "retorno": "Prezados, após análise detalhada, informamos que decidimos não prosseguir com a proposta da NTT DATA para a plataforma lakehouse. O escopo apresentado mostrou-se mais amplo do que nossa necessidade atual, e optamos por uma solução mais enxuta e ágil. Agradecemos o empenho da equipe e esperamos colaborar em futuras iniciativas. Atenciosamente, Mariana Costa - Diretora de Tecnologia, Corretora Valor Alto."
+}

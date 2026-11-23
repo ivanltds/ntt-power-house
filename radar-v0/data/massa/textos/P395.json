@@ -1,0 +1,38 @@
+{
+ "titulo": "Detecção de Fraude com Machine Learning para Cooperativa de Crédito",
+ "problema": "A Cooperativa Sicrédito Planalto, com 45 mil cooperados e R$ 1,2 bilhão em ativos, enfrenta um aumento de 18% nas tentativas de fraude em transações de crédito e PIX nos últimos 12 meses, resultando em perdas estimadas em R$ 3,5 milhões. O processo atual de análise é manual e reativo, com tempo médio de detecção de 48 horas, comprometendo a segurança e a experiência dos cooperados.",
+ "objetivo": "Implementar um modelo de detecção de fraude em tempo real utilizando Machine Learning e Python na plataforma Azure, reduzindo o tempo de detecção para menos de 5 minutos e diminuindo as perdas financeiras em 40%.",
+ "escopo": [
+  "Análise exploratória e engenharia de features em bases históricas de transações (últimos 24 meses) usando Python e Azure Data Lake.",
+  "Desenvolvimento de modelos de classificação (gradient boosting e redes neurais) para detecção de anomalias em transações de crédito e PIX.",
+  "Construção de pipeline de dados em Azure Data Factory e Azure Databricks para ingestão e processamento em tempo real.",
+  "Integração do modelo em ambiente de produção via API REST em Azure Kubernetes Service, com monitoramento contínuo de performance.",
+  "Documentação técnica e treinamento da equipe de risco do cliente para operação do sistema."
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e features relevantes para detecção de fraude.",
+  "Modelo de Machine Learning treinado e validado com métricas de AUC > 0,90 e precisão > 85%.",
+  "Pipeline de dados automatizado para ingestão e processamento em tempo real.",
+  "API de scoring de fraude integrada ao sistema de transações da cooperativa.",
+  "Manual de operação e sessão de treinamento para 10 analistas de risco."
+ ],
+ "fases": [
+  "Fase 1 - Descoberta e preparação de dados: 6 semanas",
+  "Fase 2 - Desenvolvimento e validação de modelos: 10 semanas",
+  "Fase 3 - Implantação e integração: 6 semanas",
+  "Fase 4 - Treinamento e go-live: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto.",
+ "riscos": [
+  "Qualidade e disponibilidade dos dados históricos de transações.",
+  "Resistência da equipe de risco em adotar o modelo automatizado.",
+  "Complexidade de integração com sistemas legados da cooperativa."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Riscos e Compliance)",
+  "tecnico": "Rafael Almeida (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era significativamente maior do que a necessidade imediata do cliente, incluindo etapas de integração e treinamento que a cooperativa considerou dispensáveis no momento. O cliente optou por uma solução mais enxuta e focada apenas no modelo preditivo.",
+ "licoes": "Para próximas oportunidades com clientes de médio porte, é crucial validar o escopo mínimo viável antes de propor uma solução completa, oferecendo opções modulares que possam ser expandidas conforme a maturidade do cliente.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de detecção de fraude não foi selecionada. O escopo apresentado mostrou-se mais amplo do que a nossa necessidade atual, que é focada apenas na construção do modelo preditivo, sem as etapas de integração e treinamento inclusas. Agradecemos o esforço da equipe da NTT DATA e esperamos colaborar em futuras iniciativas. Atenciosamente, Mariana Costa - Diretora de Riscos e Compliance."
+}

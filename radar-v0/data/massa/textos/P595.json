@@ -1,0 +1,46 @@
+{
+ "titulo": "Precificação Dinâmica com Machine Learning para Produtos de Previdência",
+ "problema": "A Mútua Previdência Sul gerencia uma carteira de 38 mil planos de previdência e enfrentava forte pressão competitiva: 62% das propostas comerciais eram reprovadas por preço acima do mercado, enquanto 11% das vendas fechadas apresentavam margem negativa. O processo de precificação era manual, baseado em planilhas e revisões trimestrais, levando até 9 dias para ajustar uma tarifa por faixa de risco.",
+ "objetivo": "Implantar um motor de precificação dinâmica baseado em Python e Machine Learning que ajuste preços por perfil de risco e condições de mercado em ciclos diários, elevando a competitividade das propostas sem comprometer a margem técnica.",
+ "escopo": [
+  "Construção de pipelines de dados em Python para ingestão diária de sinistralidade, cancelamentos e dados de concorrência de 14 fontes internas e externas",
+  "Desenvolvimento de modelos de Machine Learning de elasticidade-preço e propensão à contratação, com validação em backtesting sobre 24 meses de histórico",
+  "Motor de regras de precificação dinâmica com limites de margem mínima e alçadas de aprovação por faixa de prêmio",
+  "Dashboard de Analytics & BI para acompanhamento de conversão, margem e aderência de preço por produto e canal",
+  "Integração do motor ao sistema de cotação via API, com monitoramento de drift dos modelos e retreino mensal"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo de governança de variáveis de precificação",
+  "Três modelos de Machine Learning em produção (elasticidade, propensão e sinistralidade esperada) com relatório de performance",
+  "Motor de precificação dinâmica integrado ao sistema de cotação por API",
+  "Painel de Analytics & BI com 18 indicadores de conversão, margem e aderência de preço",
+  "Manual de operação, plano de retreino e capacitação de 22 usuários das áreas comercial e atuarial"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e backtesting",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração e piloto em 2 canais",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e defasagem dos dados históricos de sinistralidade",
+  "Baixa adesão dos corretores ao novo processo de cotação",
+  "Drift dos modelos após mudanças bruscas de mercado"
+ ],
+ "pessoas": {
+  "cliente": "Renata Valadares (Diretora de Produtos e Precificação)",
+  "tecnico": "Gustavo Meirelles (Líder Técnico de Data & Analytics)"
+ },
+ "resultados": "A conversão de propostas subiu de 38% para 51% em quatro meses após o go-live, e a margem negativa em vendas fechadas caiu de 11% para 3,2%, com ganho estimado de R$ 4,7 milhões em margem anualizada.",
+ "licoes": "A integração com o sistema legado de cotação consumiu 3 semanas além do previsto, por conta de APIs sem documentação atualizada. Foi decisivo envolver a área atuarial desde a primeira fase, o que validou as premissas dos modelos e acelerou a aprovação das alçadas de preço.",
+ "diferencial": "Ganhamos pela relação de continuidade com a Mútua Previdência Sul, construída em projetos anteriores de Data & Analytics que já conheciam os dados e os processos atuariais do cliente."
+}

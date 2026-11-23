@@ -1,0 +1,47 @@
+{
+ "titulo": "Predição de Churn e Retenção com Machine Learning e Salesforce para Serviços Financeiros",
+ "problema": "O Banco Meridiano registra 18% de churn anual na base de 1,2 milhão de clientes, com perda estimada de R$ 340 milhões em receita recorrente. A identificação de clientes propensos à saída ocorre de forma reativa, sem uso de dados comportamentais e transacionais integrados.",
+ "objetivo": "Construir um modelo de Machine Learning para prever churn com antecedência de 90 dias e integrar as predições ao Salesforce para acionar jornadas de retenção personalizadas.",
+ "escopo": [
+  "Análise exploratória e engenharia de features sobre dados transacionais e comportamentais de 1,2 milhão de clientes",
+  "Desenvolvimento e validação de modelos de Machine Learning para predição de churn com meta de AUC superior a 0,85",
+  "Integração das predições e scores ao Salesforce para priorização da carteira de retenção",
+  "Criação de painéis de monitoramento de performance dos modelos e indicadores de retenção",
+  "Definição de regras de acionamento e jornadas de retenção no Salesforce com gatilhos por score de risco"
+ ],
+ "entregaveis": [
+  "Relatório de análise exploratória e dicionário de features",
+  "Modelo de churn treinado e validado com métricas de performance (AUC, precision e recall)",
+  "Integração das predições ao Salesforce com documentação técnica",
+  "Painéis de monitoramento de modelo e KPIs de retenção",
+  "Manual de operação e transferência de conhecimento para a equipe do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Descoberta e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento e validação de modelos",
+   "semanas": 8
+  },
+  {
+   "nome": "Integração com Salesforce e jornadas de retenção",
+   "semanas": 7
+  },
+  {
+   "nome": "Homologação, go-live e transferência de conhecimento",
+   "semanas": 5
+  }
+ ],
+ "equipe": "1 gerente de projeto, 2 cientistas de dados, 1 engenheiro de dados e 1 consultor Salesforce",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de clientes",
+  "Baixa adesão das áreas de negócio às jornadas de retenção",
+  "Restrições de privacidade e LGPD no uso de dados comportamentais"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Inteligência de Clientes)",
+  "tecnico": "Felipe Andrade (Líder Técnico de Data Science)"
+ }
+}

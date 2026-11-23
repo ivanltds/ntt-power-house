@@ -1,0 +1,50 @@
+{
+ "titulo": "FinOps e otimização de custos multicloud para operação de varejo",
+ "problema": "O Magazine Estrela Azul opera 42 lojas físicas e um e-commerce que representa 38% da receita, com ambientes em AWS e Azure crescendo 27% ao ano em custo sem visibilidade por produto ou squad. A ausência de governança de FinOps impede identificar desperdícios estimados em R$ 1,8 milhão anuais em recursos ociosos e clusters Kubernetes superdimensionados.",
+ "objetivo": "Implantar uma disciplina de FinOps com visibilidade, alocação e otimização contínua dos custos de nuvem, reduzindo o gasto mensal em 22% em 3 meses sem afetar a performance das aplicações de varejo.",
+ "escopo": [
+  "Diagnóstico de custos e tagging em AWS e Azure, com mapa de alocação por produto, loja e squad",
+  "Redimensionamento de clusters Kubernetes (EKS e AKS) e políticas de rightsizing e desligamento de ambientes ociosos",
+  "Definição de guardrails de orçamento, alertas e chargeback por área de negócio",
+  "Dashboard de FinOps em Power BI com custo unitário por pedido, por loja e por transação",
+  "Plano de otimização com reservas, savings plans e recomendações priorizadas por impacto"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico com baseline de custos e 30 recomendações priorizadas",
+  "Modelo de tagging e dicionário de alocação de custos implantado em AWS e Azure",
+  "Dashboard de FinOps em Power BI publicado para 6 áreas consumidoras",
+  "Playbook de FinOps com rituais mensais, papéis e guardrails de orçamento",
+  "Relatório final com economia realizada e plano de continuidade de 12 meses"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e baseline de custos",
+   "semanas": 4
+  },
+  {
+   "fase": "Tagging, alocação e guardrails",
+   "semanas": 4
+  },
+  {
+   "fase": "Otimização de Kubernetes e recursos ociosos",
+   "semanas": 3
+  },
+  {
+   "fase": "Dashboard Power BI e handover do playbook",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de cloud, 1 especialista FinOps, 2 engenheiros de cloud (AWS e Azure) e 1 analista de BI",
+ "riscos": [
+  "Resistência das squads de produto à mudança de alocação de custos",
+  "Dados de billing incompletos ou inconsistentes entre AWS e Azure",
+  "Janelas de otimização conflitantes com picos de varejo (Black Friday)"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Infraestrutura e Operações)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções Cloud & Infra)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 18% acima do mercado, com concorrente apresentando escopo semelhante por valor inferior. O cliente valorizou a abordagem técnica, mas o orçamento aprovado para o trimestre não comportava o investimento proposto.",
+ "licoes": "Para propostas de FinOps em varejo, ancorar o preço no retorno rápido (economia estimada já no primeiro mês) e oferecer uma fase inicial de diagnóstico enxuta para reduzir a barreira de entrada. Revisar a margem em disputas com concorrentes de menor custo e preparar uma alternativa de escopo modular.",
+ "retorno": "Prezados, após a avaliação das propostas recebidas, informamos que decidimos não seguir com a NTT DATA neste projeto de FinOps. A proposta técnica foi bem avaliada, porém o valor apresentado ficou acima do orçamento e da referência de mercado que temos para este escopo. Agradecemos o empenho da equipe e manteremos contato para oportunidades futuras. Atenciosamente, Renata Vasconcelos, Gerente de Infraestrutura e Operações do Magazine Estrela Azul."
+}

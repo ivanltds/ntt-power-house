@@ -1,0 +1,47 @@
+{
+ "titulo": "Modernização de aplicações em containers com Azure e GCP",
+ "problema": "A Financeira Rumo Certo opera 14 aplicações críticas de crédito e cobrança em servidores legados, com janelas de manutenção de até 6 horas e custo de infraestrutura 22% acima do orçado. O ambiente híbrido atual gera indisponibilidade média de 4,5 horas por mês e dificulta a escalabilidade em picos de demanda, que crescem 18% ao ano.",
+ "objetivo": "Modernizar as aplicações críticas para containers em Azure e GCP, reduzindo indisponibilidade e custo de infraestrutura, com sustentação contínua sob modelo AMS ao longo de 8 meses.",
+ "escopo": [
+  "Avaliação e priorização de 14 aplicações legadas para conteinerização em Azure AKS e GCP GKE",
+  "Migração de 8 aplicações prioritárias para clusters Kubernetes gerenciados em Azure e GCP",
+  "Implementação de pipeline CI/CD e observabilidade integrada para os ambientes conteinerizados",
+  "Definição de padrões de segurança, backup e recuperação para cargas em containers nas duas nuvens",
+  "Operação de sustentação AMS com SLA de 99,9% e atendimento 24x7 para o ambiente modernizado"
+ ],
+ "entregaveis": [
+  "Relatório de assessment das 14 aplicações com mapa de priorização e ondas de migração",
+  "8 aplicações migradas e em produção em containers no Azure e no GCP",
+  "Pipeline CI/CD padronizado e dashboards de observabilidade implantados",
+  "Runbooks operacionais e plano de recuperação de desastres validado",
+  "Relatórios mensais de sustentação AMS com indicadores de SLA e incidentes"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e desenho da arquitetura alvo",
+   "semanas": 6
+  },
+  {
+   "nome": "Migração da primeira onda de 4 aplicações",
+   "semanas": 10
+  },
+  {
+   "nome": "Migração da segunda onda de 4 aplicações",
+   "semanas": 10
+  },
+  {
+   "nome": "Estabilização e transição para sustentação AMS",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de cloud, 3 engenheiros de plataforma, 2 engenheiros DevOps e 1 gerente de projeto",
+ "riscos": [
+  "Dependências entre aplicações legadas atrasarem as ondas de migração",
+  "Janelas de manutenção restritas impactarem os testes de cutover",
+  "Adoção incompleta dos novos padrões operacionais pelas equipes do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Beatriz Almeida (Gerente de TI)",
+  "tecnico": "Rafael Monteiro (Arquiteto de Cloud)"
+ }
+}

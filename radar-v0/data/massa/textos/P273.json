@@ -1,0 +1,37 @@
+{
+ "titulo": "Indicadores ESG e Monitoramento de Emissões com Power BI e Snowflake",
+ "problema": "A Plastipack não possuía uma visão consolidada de seus indicadores ESG e emissões de gases de efeito estufa, o que dificultava o atendimento a exigências de clientes e a identificação de oportunidades de redução de custos. Com um volume mensal de 1.200 toneladas de resinas processadas e 8 unidades fabris, a empresa precisava de uma solução que integrasse dados de diferentes fontes e permitisse o acompanhamento em tempo real.",
+ "objetivo": "Implementar uma plataforma de dados centralizada para consolidar e analisar indicadores ESG e emissões, garantindo transparência e suporte à tomada de decisão estratégica.",
+ "escopo": [
+  "Integração de fontes de dados de consumo de energia, água e matérias-primas com Snowflake",
+  "Modelagem dimensional e criação de cubos de dados para análise de emissões no Power BI",
+  "Desenvolvimento de dashboards interativos para monitoramento de KPIs ESG no Power BI",
+  "Implementação de pipeline de dados no Azure Data Factory para carga automatizada",
+  "Definição de políticas de governança de dados e catálogo de métricas ESG"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e governança",
+  "Dashboard executivo de indicadores ESG no Power BI",
+  "Relatório automatizado de emissões de escopo 1 e 2",
+  "Manual de uso e treinamento para equipe interna",
+  "Plano de change management e comunicação"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Governança: 4 semanas",
+  "Fase 2 - Implementação Técnica: 6 semanas",
+  "Fase 3 - Validação e Change Management: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos dados históricos de emissões",
+  "Resistência dos usuários à mudança de processos",
+  "Integração complexa com sistemas legados"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de Sustentabilidade)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "Redução de 15% no tempo de coleta e consolidação de dados ESG e economia estimada de R$ 350 mil anuais com identificação de oportunidades de eficiência energética.",
+ "licoes": "A integração com sistemas legados atrasou o cronograma em duas semanas, exigindo esforço adicional de mapeamento de dados. A prova de conceito realizada na fase de vendas foi decisiva para alinhar expectativas e garantir o engajamento das áreas de negócio.",
+ "diferencial": "Capacidade técnica comprovada na prova de conceito, que demonstrou domínio das ferramentas e rápida geração de valor."
+}

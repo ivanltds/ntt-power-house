@@ -1,0 +1,47 @@
+{
+ "titulo": "Streaming de dados em tempo real para operações de telecom",
+ "problema": "A NetVale Provedor processa hoje cerca de 180 milhões de eventos mensais de rede e consumo em lotes noturnos, com latência média de 6 a 8 horas para relatórios operacionais. Isso limita a detecção de falhas de rede e o monitoramento de consumo em quase tempo real, impactando a experiência de aproximadamente 420 mil assinantes.",
+ "objetivo": "Implantar uma plataforma de streaming de dados em tempo real na Azure com Kafka e Python, reduzindo a latência de eventos críticos para menos de 5 minutos e habilitando analytics operacional contínuo.",
+ "escopo": [
+  "Provisionamento e configuração de cluster Kafka gerenciado na Azure para ingestão de eventos de rede e consumo",
+  "Desenvolvimento de produtores e consumidores em Python para captura e normalização de streams",
+  "Construção de pipelines de engenharia de dados com camadas bronze, prata e ouro em armazenamento Azure",
+  "Modelagem de indicadores operacionais e dashboards de Analytics & BI atualizados em janelas de até 5 minutos",
+  "Configuração de monitoramento, alertas e políticas de retenção e segurança dos tópicos Kafka"
+ ],
+ "entregaveis": [
+  "Cluster Kafka em produção na Azure com capacidade para 250 mil eventos por minuto",
+  "Conjunto de jobs Python de ingestão e transformação documentados e versionados",
+  "Camada analítica com 12 indicadores operacionais atualizados em tempo quase real",
+  "Dashboards de Analytics & BI publicados para as áreas de operações e comercial",
+  "Runbook de operação, alertas e plano de contingência da plataforma de streaming"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura",
+   "semanas": 6
+  },
+  {
+   "nome": "Implementação da ingestão Kafka e pipelines Python",
+   "semanas": 14
+  },
+  {
+   "nome": "Analytics, dashboards e integração de indicadores",
+   "semanas": 12
+  },
+  {
+   "nome": "Homologação, go-live e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Volume de eventos acima do previsto nos horários de pico",
+  "Qualidade e padronização dos eventos emitidos pelos sistemas de origem",
+  "Dependência de liberações de acesso e rede pela equipe de infraestrutura do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Rede)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ }
+}

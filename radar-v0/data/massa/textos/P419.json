@@ -1,0 +1,50 @@
+{
+ "titulo": "Painéis executivos e plataforma de BI para análise de exames e operação",
+ "problema": "O Laboratório Diagnóstico Preciso processa cerca de 180 mil exames por mês em 12 unidades e não consegue consolidar indicadores de produção, faturamento e SLA em um único painel. Hoje, 60% dos relatórios executivos são montados manualmente em planilhas, com atraso de até 9 dias para a diretoria.",
+ "objetivo": "Implantar uma plataforma de dados e BI em Azure, Snowflake e Power BI para entregar painéis executivos confiáveis em até 1 dia útil, cobrindo produção de exames, faturamento e tempos de laudo.",
+ "escopo": [
+  "Ingestão de dados dos sistemas LIS, ERP e planilhas operacionais em Azure Data Factory e armazenamento em Azure Data Lake Storage",
+  "Modelagem dimensional e camadas analíticas no Snowflake, com 45 tabelas de fatos e dimensões",
+  "Construção de 8 painéis executivos em Power BI (produção por unidade, mix de exames, faturamento, SLA de laudo, glosa e ocupação)",
+  "Governança de dados com catálogo, dicionário de indicadores e políticas de acesso por perfil no Power BI",
+  "Automação de atualização diária dos painéis e alertas de desvio de SLA para a diretoria"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e definição dos 30 indicadores executivos prioritários",
+  "Pipeline de ingestão automatizado no Azure com 12 fontes conectadas",
+  "Modelo analítico no Snowflake validado com a área de negócio",
+  "8 painéis em Power BI publicados e homologados pela diretoria",
+  "Treinamento de 20 usuários-chave e manual de operação dos painéis"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 5
+  },
+  {
+   "nome": "Engenharia de dados e ingestão",
+   "semanas": 8
+  },
+  {
+   "nome": "Modelagem e painéis em Power BI",
+   "semanas": 6
+  },
+  {
+   "nome": "Homologação e treinamento",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos dados históricos do LIS",
+  "Indisponibilidade das áreas de negócio para validação dos indicadores",
+  "Mudanças de escopo nos painéis durante a homologação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Diretora de Operações)",
+  "tecnico": "Bruno Carvalho (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 22% acima do mercado, apesar da continuidade do projeto anterior no cliente e do escopo aderente. O concorrente apresentou valor inferior com prazo de 4 meses, e a diretoria priorizou o orçamento.",
+ "licoes": "Nas próximas propostas para clientes com continuidade, oferecer opção de escopo modular com fase inicial menor e comparar preço com o mercado antes do envio. Destacar o valor da continuidade e do conhecimento já existente como diferencial competitivo.",
+ "retorno": "Prezados, informamos que a proposta para os painéis executivos e BI não foi selecionada. A decisão foi tomada porque o valor apresentado ficou acima do mercado, e a diretoria optou por uma alternativa com menor investimento. Agradecemos o empenho da equipe e seguimos abertos a novas oportunidades. Atenciosamente, Renata Almeida (Diretora de Operações)."
+}

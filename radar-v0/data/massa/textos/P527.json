@@ -1,0 +1,50 @@
+{
+ "titulo": "Automação de back-office com RPA e Python para operações logísticas",
+ "problema": "A Entregas Expressas Já processa cerca de 18 mil documentos de transporte por mês, dos quais 62% ainda são tratados manualmente em planilhas e e-mails. Isso gera atrasos de até 48 horas na conciliação de fretes e um índice de erro de digitação de 7% nos registros de ocorrências.",
+ "objetivo": "Automatizar os processos de back-office de conciliação de fretes e tratamento de ocorrências com RPA e Python, reduzindo o esforço manual em 70% e o índice de erro para menos de 1% em 5 meses.",
+ "escopo": [
+  "Mapeamento e automação de 12 rotinas de back-office com RPA (extração de dados de portais de transportadoras e e-mails)",
+  "Desenvolvimento de robôs em Python para validação e enriquecimento de dados de fretes antes do lançamento no ERP",
+  "Integração dos robôs RPA com filas de trabalho e painel de monitoramento de execuções",
+  "Tratamento de exceções com esteira de aprovação humana para casos fora de regra",
+  "Sustentação / AMS dos robôs em produção, com SLA de correção de falhas em até 8 horas úteis"
+ ],
+ "entregaveis": [
+  "Documento de mapeamento de processos (AS-IS e TO-BE) das 12 rotinas priorizadas",
+  "Robôs RPA e scripts Python implantados e homologados em ambiente de produção",
+  "Painel de monitoramento com indicadores de execução, falhas e volume processado",
+  "Manual operacional e treinamento de 15 usuários-chave do cliente",
+  "Relatório mensal de sustentação / AMS com análise de causas de falhas"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e mapeamento de processos",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e testes dos robôs RPA e scripts Python",
+   "semanas": 10
+  },
+  {
+   "fase": "Homologação e go-live assistido",
+   "semanas": 4
+  },
+  {
+   "fase": "Estabilização e transição para AMS",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 analista de processos, 3 desenvolvedores RPA/Python e 1 especialista de AMS",
+ "riscos": [
+  "Instabilidade nos portais das transportadoras quebra os robôs de extração",
+  "Baixa adesão dos operadores ao novo fluxo de exceções",
+  "Qualidade dos dados legados no ERP exige retrabalho nas regras de validação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações)",
+  "tecnico": "Felipe Andrade (Líder Técnico de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente: 12 rotinas automatizadas e contrato de AMS de 12 meses, quando a Entregas Expressas Já buscava automatizar apenas 4 rotinas críticas em um piloto de curto prazo.",
+ "licoes": "Para propostas de automação em clientes com histórico de projeto anterior, apresentar primeiro uma opção de piloto enxuto com escopo reduzido e evolução por fases, deixando o AMS como etapa opcional.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe da NTT DATA na elaboração da proposta. Após análise interna, decidimos não seguir com o projeto neste momento, pois o escopo proposto, com 12 rotinas e sustentação de 12 meses, mostrou-se maior do que a nossa necessidade atual, que é validar a automação em apenas 4 rotinas críticas. Permanecemos abertos a conversar sobre um formato de piloto reduzido no futuro. Atenciosamente, Renata Vasconcelos, Gerente de Operações, Entregas Expressas Já."
+}

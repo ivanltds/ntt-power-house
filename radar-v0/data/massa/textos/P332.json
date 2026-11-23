@@ -1,0 +1,46 @@
+{
+ "titulo": "Sustentação AMS para ambientes SAP, ServiceNow, Azure e Kubernetes",
+ "problema": "A Autopeças Motriz, com faturamento anual de R$ 1,2 bilhão e 3.500 colaboradores, enfrenta dificuldades na sustentação de suas aplicações críticas, que incluem SAP ECC, ServiceNow, Azure e clusters Kubernetes. Atualmente, 65% dos incidentes de TI são resolvidos fora do SLA, impactando a produção e a satisfação dos clientes.",
+ "objetivo": "Garantir a continuidade operacional e a melhoria contínua dos serviços de TI, com redução do tempo de resolução de incidentes e aumento da disponibilidade das aplicações sustentadas.",
+ "escopo": [
+  "Sustentação de aplicações SAP ECC e SAP BW, com atendimento a incidentes e requisições de serviço",
+  "Administração e suporte de plataforma ServiceNow para ITSM e gestão de mudanças",
+  "Monitoramento e operação de ambientes Azure (IaaS/PaaS) e clusters Kubernetes",
+  "Gestão de mudanças e liberações (Change & Release Management) integrada ao ServiceNow",
+  "Relatórios mensais de desempenho (SLA, KPIs) e melhoria contínua"
+ ],
+ "entregaveis": [
+  "Relatório mensal de desempenho com indicadores de SLA e volumetria de chamados",
+  "Plano de melhoria contínua com ações corretivas e preventivas",
+  "Documentação técnica atualizada dos ambientes sustentados",
+  "Base de conhecimento consolidada para resolução de incidentes recorrentes",
+  "Relatório trimestral de análise de tendências e capacidade"
+ ],
+ "fases": [
+  {
+   "nome": "Transição e diagnóstico",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Estabilização e quick wins",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Operação plena e melhoria contínua",
+   "duracao_semanas": 42
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 3 analistas de sustentação SAP, 2 analistas de ServiceNow, 2 engenheiros de cloud Azure/Kubernetes e 1 analista de qualidade.",
+ "riscos": [
+  "Indisponibilidade de profissionais certificados em SAP e Kubernetes",
+  "Resistência à mudança por parte das equipes internas do cliente",
+  "Atraso na transferência de conhecimento devido à complexidade dos ambientes"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Gerente de TI)",
+  "tecnico": "Fernanda Lima (Gerente de Projetos Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 18% acima do mercado, segundo avaliação do cliente. Apesar da qualidade técnica e da continuidade do projeto anterior, o valor não foi competitivo.",
+ "licoes": "Para próximas propostas de AMS, incluir análise de benchmarking de preços e explorar modelos de custo mais enxutos, como automação de tarefas repetitivas e uso de centros de serviços compartilhados, para aumentar a competitividade.",
+ "retorno": "Prezados, informamos que a proposta para o serviço de sustentação de aplicações (AMS) não foi selecionada. O motivo principal foi o preço acima do mercado em relação aos concorrentes. Agradecemos o empenho da equipe da NTT DATA e esperamos manter a parceria em futuras oportunidades. Atenciosamente, Ricardo Almeida (Gerente de TI - Autopeças Motriz)"
+}

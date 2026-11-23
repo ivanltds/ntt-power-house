@@ -1,0 +1,38 @@
+{
+ "titulo": "Governança de Dados e Adequação LGPD com Snowflake, Databricks e Azure",
+ "problema": "O Banco Meridiano, com 2,3 milhões de clientes e 45 TB de dados em ambientes legados, enfrenta riscos de conformidade com a LGPD e falta de governança centralizada. A ausência de políticas de classificação e linhagem de dados expõe a instituição a multas que podem chegar a 2% do faturamento.",
+ "objetivo": "Implementar uma estrutura de governança de dados e adequação à LGPD em 4 meses, utilizando Snowflake, Databricks e Azure, para garantir conformidade regulatória e melhorar a qualidade dos dados.",
+ "escopo": [
+  "Definição de políticas de classificação e catálogo de dados no Snowflake",
+  "Implementação de linhagem e qualidade de dados com Databricks e Python",
+  "Configuração de controles de acesso e auditoria no Azure",
+  "Mapeamento de dados pessoais e bases legais para LGPD",
+  "Programa de change management para adoção das práticas de governança"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com 500 campos classificados",
+  "Relatório de linhagem de dados para 10 processos críticos",
+  "Políticas de acesso e auditoria documentadas",
+  "Plano de adequação à LGPD com 30 ações prioritárias",
+  "Workshops de capacitação para 100 colaboradores"
+ ],
+ "fases": [
+  "Fase 1: Diagnóstico e planejamento (4 semanas)",
+  "Fase 2: Implementação de catálogo e linhagem (6 semanas)",
+  "Fase 3: Controles de acesso e adequação LGPD (4 semanas)",
+  "Fase 4: Change management e encerramento (2 semanas)"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em LGPD e 1 gerente de projeto",
+ "riscos": [
+  "Resistência cultural à governança de dados",
+  "Complexidade na integração de fontes legadas",
+  "Mudanças regulatórias durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Compliance)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou 25% acima do mercado, apesar da continuidade do projeto anterior no cliente e da qualidade técnica da solução.",
+ "licoes": "Para próximas propostas em serviços financeiros, revisar a estratégia de precificação e considerar abertura para negociar escopo ou prazos, alinhando melhor o valor percebido pelo cliente.",
+ "retorno": "Prezados, após análise detalhada, decidimos não prosseguir com a proposta para o projeto de governança de dados e LGPD. O valor apresentado ficou acima do orçamento disponível e das propostas concorrentes. Agradecemos o esforço da equipe e esperamos colaborar em oportunidades futuras. Atenciosamente, Mariana Costa, Diretora de Compliance do Banco Meridiano."
+}

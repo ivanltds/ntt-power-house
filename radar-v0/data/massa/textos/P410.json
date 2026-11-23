@@ -1,0 +1,47 @@
+{
+ "titulo": "Predição de churn e retenção com Machine Learning e Salesforce",
+ "problema": "A Calçados Passo Firme, varejista com 180 lojas físicas e e-commerce, perde cerca de 22% da base de clientes ativos a cada ano, o que representa aproximadamente R$ 14 milhões em receita recorrente não realizada. Hoje a identificação de clientes em risco ocorre de forma reativa, sem uso de dados de compra e navegação para antecipar o churn.",
+ "objetivo": "Implantar um modelo preditivo de churn em Python e Machine Learning integrado ao Salesforce, permitindo à área de CRM acionar campanhas de retenção com 60 dias de antecedência sobre o risco de perda.",
+ "escopo": [
+  "Modelagem de churn em Python com Machine Learning a partir de dados de compra, frequência, ticket médio e interações do programa de fidelidade",
+  "Integração dos scores de propensão ao churn ao Salesforce CRM, com segmentação automática da base em faixas de risco",
+  "Construção de pipeline de dados para atualização semanal dos scores e monitoramento de performance do modelo (AUC, precision e recall)",
+  "Definição de jornadas de retenção no Salesforce com ofertas personalizadas para clientes de alto risco",
+  "Painel de acompanhamento de KPIs de retenção, taxa de reativação e receita preservada"
+ ],
+ "entregaveis": [
+  "Modelo de Machine Learning de churn treinado e validado, com AUC mínima de 0,78",
+  "Integração dos scores preditivos ao Salesforce CRM em ambiente produtivo",
+  "Documentação técnica do pipeline em Python e do processo de re-treinamento",
+  "Três jornadas de retenção configuradas no Salesforce para os segmentos de risco alto, médio e baixo",
+  "Painel de KPIs de retenção e relatório de resultados do primeiro ciclo de campanhas"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e validação do modelo de Machine Learning",
+   "semanas": 5
+  },
+  {
+   "fase": "Integração ao Salesforce e configuração das jornadas de CRM",
+   "semanas": 5
+  },
+  {
+   "fase": "Go-live, estabilização e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 especialista Salesforce CRM e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de compra e fidelidade",
+  "Baixa adesão da área de CRM às jornadas de retenção no Salesforce",
+  "Mudança de comportamento de compra durante o período de treinamento do modelo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Albuquerque (Gerente de CRM e Retenção)",
+  "tecnico": "Felipe Andrade (Arquiteto de Data & Analytics)"
+ }
+}

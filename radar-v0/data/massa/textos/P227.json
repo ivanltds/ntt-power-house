@@ -1,0 +1,50 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real com Machine Learning e Kafka no Setor Telecom",
+ "problema": "A Ondas Móvel registra 2,4 milhões de transações mensais e sofre com perdas de aproximadamente R$ 18 milhões/ano por fraudes em recarga e ativação de linhas. O processo atual é baseado em regras estáticas e análise manual, com tempo médio de 36 horas para identificar um caso suspeito.",
+ "objetivo": "Construir uma plataforma de detecção de fraude em tempo real com Machine Learning e Python sobre Kafka, hospedada no Azure, para reduzir o tempo de identificação para menos de 5 minutos e aumentar a taxa de detecção em 40%.",
+ "escopo": [
+  "Ingestão de eventos de recarga, ativação e portabilidade em tópicos Kafka com engenharia de dados em Python",
+  "Pipeline de features e treinamento de modelos de Machine Learning para scoring de risco em tempo real",
+  "Implantação do modelo como serviço no Azure com monitoramento de drift e retraining mensal",
+  "Painel analítico e alertas operacionais integrados ao time antifraude",
+  "Integração com sistemas legados de billing e CRM via APIs"
+ ],
+ "entregaveis": [
+  "Pipeline de dados em Kafka e Python documentado e em produção",
+  "Modelo de ML treinado com AUC superior a 0,85 e relatório de validação",
+  "Serviço de scoring em tempo real no Azure com SLA de 200 ms",
+  "Painel de monitoramento de fraudes com alertas automáticos",
+  "Manual operacional e treinamento do time antifraude"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e engenharia de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e treinamento de ML",
+   "semanas": 8
+  },
+  {
+   "fase": "Implantação no Azure e integrações",
+   "semanas": 6
+  },
+  {
+   "fase": "Homologação e treinamento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e disponibilidade dos dados históricos de fraude",
+  "Latência na integração com sistemas legados de billing",
+  "Baixa adoção do modelo pelo time antifraude"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Gerente de Prevenção a Fraudes)",
+  "tecnico": "Fernanda Costa (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 6 meses foi considerado longo demais pela Ondas Móvel, que precisava de uma solução em produção em até 3 meses para conter as perdas.",
+ "licoes": "Para o próximo edital de detecção de fraude em telecom, oferecer uma fase inicial de MVP em 8 a 10 semanas com modelo simplificado, demonstrando valor rápido antes da expansão completa.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de detecção de fraude não foi selecionada. O prazo de entrega de 6 meses foi o principal fator, pois precisamos de resultados em produção em até 3 meses. Agradecemos o esforço da equipe e mantemos o interesse em futuras oportunidades. Atenciosamente, Ricardo Almeida (Gerente de Prevenção a Fraudes)."
+}

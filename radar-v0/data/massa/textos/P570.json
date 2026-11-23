@@ -1,0 +1,47 @@
+{
+ "titulo": "Assistente virtual com IA generativa para atendimento ao cidadão",
+ "problema": "A Agência Estadual de Trânsito registra cerca de 1,2 milhão de atendimentos por ano nos canais digitais e telefônicos, com tempo médio de espera de 14 minutos e índice de resolução no primeiro contato de apenas 58%. Cerca de 40% das demandas são dúvidas repetitivas sobre emissão de documentos, prazos e agendamentos, sobrecarregando uma equipe de 180 atendentes.",
+ "objetivo": "Implantar um assistente virtual com IA generativa integrado ao ServiceNow para automatizar o atendimento de dúvidas recorrentes, elevando a resolução no primeiro contato para 80% e reduzindo o tempo médio de espera para 5 minutos em 7 meses.",
+ "escopo": [
+  "Desenvolvimento do assistente virtual em Python com modelos de IA generativa e base de conhecimento curada sobre serviços de trânsito",
+  "Integração do assistente ao ServiceNow para abertura, consulta e acompanhamento de solicitações",
+  "Construção de pipeline de ingestão e atualização da base de conhecimento com validação humana",
+  "Implementação de camada de segurança, anonimização de dados pessoais e trilhas de auditoria conforme a LGPD",
+  "Painel de métricas de atendimento com indicadores de resolução, escalonamento e satisfação"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção integrado ao ServiceNow, cobrindo 60% dos tipos de demanda mapeados",
+  "Base de conhecimento estruturada com no mínimo 500 pares de perguntas e respostas validados pela área de negócio",
+  "Documentação técnica e de operação do assistente, incluindo runbooks de atualização",
+  "Painel de indicadores com acompanhamento de resolução no primeiro contato e tempo médio de atendimento",
+  "Relatório de avaliação de qualidade das respostas com taxa de acerto mínima de 90% nos testes controlados"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da solução",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento do assistente e integração com ServiceNow",
+   "semanas": 12
+  },
+  {
+   "fase": "Piloto controlado e ajuste de qualidade das respostas",
+   "semanas": 6
+  },
+  {
+   "fase": "Go-live, estabilização e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 engenheiros de IA em Python, 1 especialista ServiceNow e 1 analista de negócios",
+ "riscos": [
+  "Qualidade e atualização da base de conhecimento insuficientes para respostas precisas",
+  "Baixa adesão dos atendentes e cidadãos ao novo canal durante o piloto",
+  "Restrições de integração e desempenho nas APIs do ServiceNow"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Atendimento ao Cidadão)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de IA)"
+ }
+}

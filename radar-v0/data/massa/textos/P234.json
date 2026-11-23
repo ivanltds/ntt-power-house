@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de Indicadores ESG e Emissões para Manufatura Automotiva",
+ "problema": "A Autopeças Motriz acompanhava emissões de CO2e e indicadores ESG em 14 planilhas descentralizadas mantidas por 6 áreas, com fechamento mensal de 18 dias e divergências de até 12% entre relatórios de sustentabilidade e a base financeira. A ausência de trilha de auditoria comprometia a publicação do relatório anual e a resposta a questionários de clientes montadoras.",
+ "objetivo": "Centralizar dados de emissões Escopos 1, 2 e 3 e indicadores ESG em uma plataforma analítica única, com fechamento mensal automatizado e relatórios auditáveis para 3 plantas industriais.",
+ "escopo": [
+  "Ingestão de dados de consumo de energia, combustíveis e logística das 3 plantas em Snowflake, com pipelines em Python para cálculo de CO2e conforme GHG Protocol",
+  "Camada de governança de dados no Azure com catálogo, linhagem e definição de 48 indicadores ESG e 22 métricas de emissões",
+  "Modelagem dimensional no Snowflake para consolidação mensal e histórico de 36 meses de emissões por planta, linha e centro de custo",
+  "Painéis Power BI para diretoria, sustentabilidade e controladoria, com drill-down por escopo, planta e período",
+  "Rotinas de validação e conciliação automática entre dados de sustentabilidade e base contábil, com alertas de desvio acima de 2%"
+ ],
+ "entregaveis": [
+  "Catálogo de dados ESG com 48 indicadores documentados e regras de cálculo rastreáveis",
+  "Pipeline automatizado de cálculo de emissões Escopos 1, 2 e 3 em produção",
+  "7 dashboards Power BI publicados para 3 perfis de usuários",
+  "Relatório mensal de fechamento ESG gerado em 1 dia útil, contra 18 dias anteriores",
+  "Documentação técnica e treinamento de 25 usuários-chave em 4 sessões"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e governança de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Engenharia de dados e cálculo de emissões em Snowflake e Python",
+   "semanas": 10
+  },
+  {
+   "fase": "Analytics e dashboards em Power BI",
+   "semanas": 6
+  },
+  {
+   "fase": "Homologação, treinamento e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados de consumo das 3 plantas",
+  "Mudanças nas regras de cálculo do GHG Protocol durante o projeto",
+  "Baixa adoção dos dashboards pela área de sustentabilidade"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Sustentabilidade)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ },
+ "resultados": "O fechamento mensal ESG caiu de 18 para 1 dia útil e as divergências entre relatórios caíram de 12% para menos de 1%, gerando economia estimada de R$ 380 mil por ano em esforço manual e auditoria.",
+ "licoes": "A integração com a base contábil legada consumiu 3 semanas além do previsto por falta de documentação das regras de alocação de custos. A definição antecipada dos 48 indicadores com a área de sustentabilidade na fase de diagnóstico foi decisiva para evitar retrabalho na modelagem.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Autopeças Motriz, iniciado em projeto anterior de Data & Analytics, o que acelerou o acesso às áreas e o entendimento das fontes de dados industriais."
+}

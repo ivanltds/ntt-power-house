@@ -1,0 +1,50 @@
+{
+ "titulo": "Predição de churn e retenção inteligente para operadora de telecom",
+ "problema": "A Conecta Brasil Telecom, com 2,4 milhões de clientes ativos no segmento móvel e banda larga, vinha perdendo em média 2,8% da base ao mês, o equivalente a cerca de 67 mil linhas canceladas mensalmente. As ações de retenção eram reativas e não segmentadas, com taxa de sucesso de apenas 18% nas ofertas de retenção.",
+ "objetivo": "Implantar um modelo de Machine Learning para prever churn com antecedência de 60 dias e orquestrar campanhas de retenção personalizadas via CRM, elevando a eficácia das ações de retenção.",
+ "escopo": [
+  "Construção de pipeline de dados no Databricks integrando CDRs, faturamento e atendimento para 2,4 milhões de clientes",
+  "Desenvolvimento de modelos de propensão a churn em Python com Machine Learning, com AUC superior a 0,85",
+  "Segmentação de clientes em faixas de risco e valor (RFM) para priorização de ofertas",
+  "Integração dos scores de churn ao Salesforce para disparo automatizado de campanhas de retenção",
+  "Painéis de Analytics & BI para acompanhamento de churn, aceite de ofertas e impacto financeiro"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de churn em produção, com re-treino mensal e monitoramento de drift",
+  "Documentação técnica do pipeline Databricks e do scoring em Python",
+  "Integração Salesforce com scores de churn e 12 jornadas de retenção configuradas",
+  "Dashboard executivo de churn e retenção em Analytics & BI",
+  "Programa de Change Management com treinamento de 45 usuários nas áreas de retenção e CRM"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Modelagem e validação do modelo de churn",
+   "semanas": 5
+  },
+  {
+   "fase": "Integração com Salesforce e jornadas de retenção",
+   "semanas": 4
+  },
+  {
+   "fase": "Go-live, treinamento e change management",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados, 1 consultor de CRM e 1 analista de change management",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de CDR e faturamento",
+  "Baixa adesão das áreas de retenção às novas jornadas no Salesforce",
+  "Janela curta de 4 meses para integração e go-live"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Customer Experience)",
+  "tecnico": "Felipe Andrade (Tech Lead de Data Science)"
+ },
+ "resultados": "O modelo elevou a taxa de sucesso das ações de retenção de 18% para 31% e reduziu o churn mensal de 2,8% para 2,1%, preservando cerca de R$ 14,6 milhões em receita anualizada.",
+ "licoes": "A integração com o Salesforce exigiu mais esforço que o previsto devido a customizações legadas, consumindo 2 semanas adicionais de cronograma. Foi decisivo envolver as áreas de retenção desde a fase de modelagem, o que garantiu aceite das jornadas e adoção rápida no go-live.",
+ "diferencial": "Ganhamos pela combinação de preço competitivo com um time sênior de Data & Analytics e entregas comprovadas em telecom."
+}

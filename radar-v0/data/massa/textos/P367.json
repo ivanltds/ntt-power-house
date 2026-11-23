@@ -1,0 +1,48 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD com Snowflake e Python",
+ "problema": "A Proteja Seguros, com 2,5 milhões de clientes e 1.200 colaboradores, enfrenta desafios para garantir a conformidade com a LGPD em seus 45 sistemas legados. A falta de governança de dados resulta em riscos de multas que podem chegar a 2% do faturamento anual, estimado em R$ 3,5 bilhões.",
+ "objetivo": "Implementar um framework de governança de dados e adequação à LGPD em 7 meses, utilizando Snowflake e Python para classificar, proteger e monitorar dados pessoais, reduzindo riscos regulatórios.",
+ "escopo": [
+  "Mapeamento e classificação de dados pessoais em 45 fontes, utilizando Snowflake como data warehouse central e Python para scripts de varredura e identificação de PII.",
+  "Implementação de políticas de acesso e mascaramento de dados no Snowflake, com controles baseados em roles e tags de sensibilidade.",
+  "Automação de processos de anonimização e pseudonimização com Python, integrados aos pipelines de dados.",
+  "Desenvolvimento de painéis de monitoramento de conformidade e relatórios de auditoria LGPD no Snowflake.",
+  "Programa de Change Management para capacitar 200 usuários-chave e garantir adoção das novas práticas de governança."
+ ],
+ "entregaveis": [
+  "Catálogo de dados pessoais classificados por nível de sensibilidade, cobrindo 100% das fontes mapeadas.",
+  "Políticas de governança e segurança da informação documentadas e aprovadas pelo DPO.",
+  "Relatório de adequação à LGPD com plano de remediação para gaps identificados.",
+  "Dashboard de monitoramento contínuo de conformidade e indicadores de risco.",
+  "Programa de treinamento e comunicação executado, com avaliação de eficácia."
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e Planejamento",
+   "duracao_semanas": 6
+  },
+  {
+   "fase": "Implementação Técnica",
+   "duracao_semanas": 14
+  },
+  {
+   "fase": "Change Management e Capacitação",
+   "duracao_semanas": 6
+  },
+  {
+   "fase": "Sustentação e Encerramento",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em segurança da informação e 1 analista de change management",
+ "riscos": [
+  "Resistência dos usuários às novas políticas de acesso e classificação de dados.",
+  "Complexidade na integração com sistemas legados e qualidade dos metadados.",
+  "Mudanças regulatórias durante o projeto que impactem o escopo.",
+  "Dependência de áreas-chave do cliente para validações e aprovações."
+ ],
+ "pessoas": {
+  "cliente": "Ana Beatriz Rocha (Diretora de Compliance e DPO)",
+  "tecnico": "Carlos Eduardo Lima (Arquiteto de Dados Sênior)"
+ }
+}

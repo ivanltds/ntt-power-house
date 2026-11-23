@@ -1,0 +1,44 @@
+{
+ "titulo": "Automação de back-office com RPA em SAP e ServiceNow",
+ "problema": "O Porto Seco Interior processa cerca de 4.200 documentos fiscais e operacionais por mês, dos quais 65% ainda dependem de digitação manual entre SAP e ServiceNow. Esse retrabalho gera fila média de 2,5 dias na validação de notas e um índice de erro de 7% nos lançamentos, impactando o fechamento contábil mensal.",
+ "objetivo": "Automatizar os processos de back-office de maior volume com RPA integrado a SAP e ServiceNow, reduzindo o esforço manual em 60% e o índice de erro para abaixo de 1,5% em 3 meses.",
+ "escopo": [
+  "Mapeamento e priorização de 8 processos de back-office com maior volume manual, incluindo validação de notas fiscais e abertura de chamados",
+  "Desenvolvimento de robôs RPA para lançamento e conferência de dados no SAP (módulos MM e FI)",
+  "Automação da triagem e do ciclo de vida de tickets no ServiceNow, com criação, classificação e encerramento automáticos",
+  "Integração dos robôs com as APIs de SAP e ServiceNow, incluindo tratamento de exceções e logs de auditoria",
+  "Painel de monitoramento de robôs com indicadores de execução, falhas e horas economizadas",
+  "Transferência de conhecimento e documentação técnica para a equipe de TI do cliente"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico com os 8 processos priorizados e estimativa de horas economizadas por processo",
+  "Biblioteca de robôs RPA publicada em ambiente de produção para SAP e ServiceNow",
+  "Documentação técnica e manual de operação dos robôs",
+  "Painel de monitoramento com KPIs de execução e falhas",
+  "Sessão de treinamento e handover para 6 analistas do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e priorização",
+   "semanas": 3
+  },
+  {
+   "nome": "Desenvolvimento e testes dos robôs",
+   "semanas": 6
+  },
+  {
+   "nome": "Implantação e estabilização em produção",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 2 desenvolvedores RPA e 1 analista de processos",
+ "riscos": [
+  "Acesso e permissões às APIs de SAP e ServiceNow podem atrasar a integração",
+  "Mudanças de processo no cliente durante o desenvolvimento podem gerar retrabalho",
+  "Baixa adesão dos usuários ao novo fluxo automatizado na fase de estabilização"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Gerente de Operações)",
+  "tecnico": "Felipe Barros (Arquiteto de Automação RPA)"
+ }
+}

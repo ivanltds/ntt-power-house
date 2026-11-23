@@ -1,0 +1,38 @@
+{
+ "titulo": "Plataforma de Dados Lakehouse para Análise Clínica e Operacional",
+ "problema": "A Rede de Clínicas Bem Viver possui 42 unidades e atende 380 mil pacientes por ano, mas os dados de prontuários, faturamento e estoque ficam dispersos em 7 sistemas distintos, gerando relatórios manuais que consomem 120 horas mensais da equipe de TI e atrasam a tomada de decisão em até 5 dias.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse em Snowflake e Python para centralizar e integrar os dados das clínicas, permitindo análises em tempo quase real e reduzindo o tempo de geração de relatórios estratégicos de 5 dias para menos de 4 horas.",
+ "escopo": [
+  "Ingestão de dados de 7 fontes (prontuário eletrônico, ERP financeiro, sistema de estoque, CRM, entre outros) usando Python e conectores nativos Snowflake.",
+  "Modelagem dimensional no Snowflake com camadas bronze, prata e ouro para dados clínicos, financeiros e operacionais.",
+  "Implementação de pipelines de dados orquestrados com Python (Airflow) para carga incremental diária e streaming de eventos críticos.",
+  "Criação de 15 data marts no Snowflake para as áreas de operações, finanças e qualidade assistencial.",
+  "Configuração de governança de dados com políticas de acesso, mascaramento de dados sensíveis (LGPD) e catálogo de metadados no Snowflake."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados lakehouse detalhando a integração das 7 fontes e o modelo dimensional no Snowflake.",
+  "Pipeline de ingestão automatizado em Python com 7 conectores validados e monitoramento de qualidade de dados.",
+  "Modelo dimensional implementado no Snowflake com 15 data marts e documentação de linhagem.",
+  "Painéis de visualização (Power BI) para 3 áreas-chave, integrados ao Snowflake.",
+  "Plano de governança de dados e treinamento para 20 usuários-chave da Rede de Clínicas Bem Viver."
+ ],
+ "fases": [
+  "Fase 1 - Descoberta e Arquitetura: 4 semanas",
+  "Fase 2 - Implementação de Pipelines e Modelagem: 10 semanas",
+  "Fase 3 - Data Marts e Visualização: 8 semanas",
+  "Fase 4 - Governança, Testes e Go-live: 6 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Snowflake e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos às fontes de dados legadas do cliente.",
+  "Qualidade dos dados de prontuários incompleta ou inconsistente.",
+  "Mudanças de escopo durante a implementação devido a necessidades não mapeadas."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia da Informação)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior do que a necessidade imediata do cliente, incluindo data marts e governança avançada que ele considerou dispensáveis no momento. A Rede de Clínicas Bem Viver optou por uma solução mais enxuta e focada apenas na ingestão e consolidação inicial dos dados.",
+ "licoes": "Para próximas propostas em clientes de saúde de médio porte, é essencial validar o escopo mínimo viável antes de incluir camadas adicionais de governança e data marts, oferecendo uma abordagem faseada e modular que permita ao cliente evoluir conforme a maturidade dos dados.",
+ "retorno": "Prezados, após análise detalhada, informamos que decidimos não seguir com a proposta da NTT DATA para a plataforma lakehouse. O escopo apresentado mostrou-se mais amplo do que nossa necessidade atual, especialmente nas fases de governança e data marts, o que impactaria nosso orçamento e prazo. Agradecemos o empenho da equipe e esperamos manter o contato para oportunidades futuras mais alinhadas ao nosso momento. Atenciosamente, Mariana Costa (Diretora de TI - Rede de Clínicas Bem Viver)"
+}

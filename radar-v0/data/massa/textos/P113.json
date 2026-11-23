@@ -1,0 +1,49 @@
+{
+ "titulo": "Previsão de Demanda e Reposição de Ativos com Analytics Avançado",
+ "problema": "A Companhia de Saneamento Rio Claro opera com cerca de 1.200 pontos de medição e enfrenta desabastecimento em 18% das ordens de reposição de materiais críticos, gerando paralisações de equipes de campo e multas regulatórias. A previsão de demanda atual é feita em planilhas, com acurácia média de 62%, sem integração entre consumo, estoque e cronograma de manutenção.",
+ "objetivo": "Elevar a acurácia da previsão de demanda de materiais e insumos para 85% em 6 meses, integrando dados de SAP, consumo em campo e histórico de manutenção para automatizar a reposição de estoque.",
+ "escopo": [
+  "Extração e modelagem de dados de consumo e estoque a partir do SAP (MM/PM) para o Snowflake",
+  "Construção de pipelines de engenharia de dados no Databricks com processamento em camadas bronze, prata e ouro",
+  "Desenvolvimento de modelos de previsão de demanda por material, regional e sazonalidade em Databricks ML",
+  "Integração do motor de previsão ao SAP para geração automática de propostas de reposição",
+  "Programa de Change Management com treinamento de 60 usuários das áreas de Suprimentos e Operações"
+ ],
+ "entregaveis": [
+  "Data lake Snowflake com 5 anos de histórico de consumo integrado ao SAP",
+  "Pipeline Databricks de atualização diária de previsões de demanda",
+  "Modelo de ML de previsão por família de materiais com acurácia mínima de 85%",
+  "Dashboard de acompanhamento de acurácia e ruptura de estoque",
+  "Plano de Change Management com 4 workshops e material de treinamento"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Fundação de Dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Engenharia de Dados e Modelagem",
+   "semanas": 8
+  },
+  {
+   "nome": "Modelos de ML e Integração com SAP",
+   "semanas": 8
+  },
+  {
+   "nome": "Rollout e Change Management",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de change management e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos do SAP",
+  "Baixa adesão das áreas de Suprimentos ao novo processo",
+  "Restrições de janela para integração em produção no SAP"
+ ],
+ "pessoas": {
+  "cliente": "Marcela Andrade (Gerente de Suprimentos)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados)"
+ },
+ "resultados": "Nas primeiras 10 semanas, a acurácia da previsão piloto subiu de 62% para 74% em 3 famílias de materiais críticos.",
+ "diferencial": "Preço competitivo combinado com equipe sênior de Data & Analytics e metodologia de Change Management já validada em projetos de utilities."
+}

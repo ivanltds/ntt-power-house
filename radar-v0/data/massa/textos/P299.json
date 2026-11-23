@@ -1,0 +1,49 @@
+{
+ "titulo": "Painel de Indicadores ESG e Emissões para Corretora de Serviços Financeiros",
+ "problema": "A Corretora Valor Alto precisa consolidar indicadores ESG e dados de emissões de 38 carteiras e 12 fundos para atender às exigências de relatórios regulatórios e à demanda de 65% dos seus investidores institucionais por transparência socioambiental. Hoje, a apuração é feita em planilhas manuais, com 3 analistas dedicando cerca de 120 horas mensais e risco elevado de inconsistências nos números reportados.",
+ "objetivo": "Implantar uma solução analítica de indicadores ESG e emissões, integrando fontes de dados e automatizando a apuração e a publicação de relatórios confiáveis para a gestão e para os clientes institucionais.",
+ "escopo": [
+  "Integração de fontes de dados ESG e de emissões em Azure Data Lake e pipelines em Python",
+  "Modelagem semântica e painéis de indicadores ESG no Power BI",
+  "Catálogo de dados e definição de regras de qualidade e linhagem para governança de dados",
+  "Automação dos cálculos de emissões e consolidação por carteira, fundo e período",
+  "Publicação de relatórios gerenciais e regulatórios com trilha de auditoria"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG e emissões em Azure",
+  "Pipelines de ingestão e tratamento em Python operacionalizados",
+  "Painéis ESG no Power BI validados com a área de sustentabilidade",
+  "Catálogo de dados e regras de governança dos indicadores ESG",
+  "Relatório final de resultados e plano de evolução"
+ ],
+ "fases": [
+  {
+   "nome": "Descoberta e arquitetura de dados",
+   "semanas": 3
+  },
+  {
+   "nome": "Integração e tratamento de fontes",
+   "semanas": 5
+  },
+  {
+   "nome": "Modelagem e painéis no Power BI",
+   "semanas": 5
+  },
+  {
+   "nome": "Governança e go-live",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e cobertura dos dados de emissões das carteiras",
+  "Mudanças nas exigências regulatórias durante o projeto",
+  "Dependência de áreas do cliente para validação dos indicadores"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Diretora de Sustentabilidade e Relacionamento Institucional)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Nas primeiras fases, já foram integradas 26 das 38 carteiras e reduzido o esforço manual de apuração em cerca de 40%.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito com dados reais de emissões, que validou a integração em Azure e os painéis em Power BI antes do início do projeto."
+}

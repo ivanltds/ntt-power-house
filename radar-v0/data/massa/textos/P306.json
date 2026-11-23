@@ -1,0 +1,48 @@
+{
+ "titulo": "Redução de Perdas Não Técnicas com Analytics Avançado em Databricks e Azure",
+ "problema": "A Geradora Ventos do Nordeste opera 14 usinas eólicas com 1,2 GW de capacidade instalada e enfrenta perdas não técnicas estimadas em 3,8% da energia distribuída, o equivalente a R$ 9,4 milhões por ano. A detecção atual de fraude e irregularidades é manual, cobre apenas 12% dos medidores por ciclo e leva até 45 dias para gerar ação em campo.",
+ "objetivo": "Implantar uma plataforma analítica no Azure e Databricks com modelos de Machine Learning para identificar padrões de perda não técnica e priorizar inspeções, reduzindo o índice de perdas em até 1,5 ponto percentual em 6 meses.",
+ "escopo": [
+  "Ingestão e tratamento de dados de medição, faturamento e inspeções no Azure Data Lake e Databricks, com pipelines em Delta Lake",
+  "Desenvolvimento de modelos de Machine Learning para detecção de anomalias e scoring de risco de fraude por unidade consumidora",
+  "Construção de dashboards no Power BI para acompanhamento de perdas por alimentador, município e classe de consumo",
+  "Integração do scoring de risco ao processo de priorização de inspeções em campo, com API de consulta",
+  "Governança de dados e monitoramento de drift dos modelos em Azure Machine Learning"
+ ],
+ "entregaveis": [
+  "Pipeline de dados de medição e faturamento operando em Databricks com 98% de completude",
+  "Modelo de scoring de risco de perda não técnica com AUC superior a 0,80 em validação",
+  "Dashboard executivo no Power BI com 12 indicadores de perdas e ranking de unidades suspeitas",
+  "Relatório de priorização de inspeções com lista mensal de 5.000 unidades de maior risco",
+  "Documentação técnica e transferência de conhecimento para a equipe de dados do cliente"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Engenharia de dados e pipelines no Databricks",
+   "semanas": 8
+  },
+  {
+   "fase": "Modelagem de Machine Learning e dashboards Power BI",
+   "semanas": 8
+  },
+  {
+   "fase": "Piloto de priorização de inspeções e handover",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e atraso na liberação dos dados históricos de medição",
+  "Resistência das áreas de campo à mudança no processo de inspeção",
+  "Prazo curto de 6 meses para treinar e validar modelos com sazonalidade limitada"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações Comerciais)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte orçamentário no programa de eficiência operacional do segundo semestre."
+}

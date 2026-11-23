@@ -1,0 +1,44 @@
+{
+ "titulo": "FinOps e otimização de custos multicloud para cooperativa de crédito",
+ "problema": "A Cooperativa Sicrédito Planalto opera cargas em AWS, Azure e GCP após uma migração para nuvem concluída no ano anterior, com gasto mensal de aproximadamente R$ 1,8 milhão e cerca de 37% alocado em recursos sem tag de dono ou centro de custo. A ausência de governança FinOps impede rateio por cooperado e por produto, e a diretoria financeira exige redução de 20% no custo unitário de transação até o fechamento do exercício.",
+ "objetivo": "Implantar um modelo de FinOps multicloud com visibilidade de custos por produto e centro de custo, metas de eficiência acordadas e um ciclo mensal de otimização, visando reduzir 20% do gasto recorrente em nuvem em 3 meses.",
+ "escopo": [
+  "Diagnóstico de maturidade FinOps e inventário de recursos AWS, Azure e GCP, incluindo análise de direitos de uso, instâncias ociosas e volumes de armazenamento",
+  "Definição de taxonomia de tags, centros de custo e modelo de rateio por produto e cooperado, aplicada às três nuvens",
+  "Configuração de painéis de custo e orçamentos com alertas em AWS Cost Explorer e Budgets, Azure Cost Management e GCP Cloud Billing",
+  "Execução de ondas de otimização: rightsizing, políticas de ciclo de vida de armazenamento, savings plans e committed use discounts",
+  "Implantação de ritual mensal de revisão de custos com backlog priorizado de ações e indicadores de custo unitário"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico FinOps com mapa de gastos por conta, serviço e criticidade nas três nuvens",
+  "Catálogo de tags e plano de rateio por produto e centro de custo aprovado pela controladoria",
+  "Painéis de custo unificados e 12 orçamentos com alertas automáticos configurados",
+  "Plano de otimização com 25 a 40 ações priorizadas por economia estimada e esforço",
+  "Relatório final com economia realizada, indicadores de custo unitário e modelo operacional FinOps documentado"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e visibilidade de custos",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Taxonomia, rateio e painéis de governança",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Ondas de otimização e contratação de compromissos",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 consultor sênior de FinOps, 2 engenheiros de cloud (AWS, Azure e GCP) e 1 analista de dados financeiros",
+ "riscos": [
+  "Qualidade insuficiente das tags históricas, exigindo esforço extra de reconciliação",
+  "Resistência das áreas de produto à mudança no modelo de rateio de custos",
+  "Janela curta de 3 meses para capturar economias de compromissos de longo prazo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Tecnologia e Operações)",
+  "tecnico": "Paulo Menezes (Consultor Sênior de FinOps)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte no orçamento de projetos de tecnologia para o semestre, com priorização da renovação do core bancário."
+}

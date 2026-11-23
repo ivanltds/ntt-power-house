@@ -1,0 +1,47 @@
+{
+ "titulo": "Pipeline de streaming em tempo real para rede e faturamento",
+ "problema": "A TeleNorte Conecta processa cerca de 2,3 bilhões de eventos de rede e bilhetagem por mês, mas a integração entre sistemas ocorre em lotes noturnos, gerando latência de até 8 horas na visão de consumo e na detecção de falhas. Isso atrasa a cobrança de serviços digitais e limita a identificação proativa de incidentes que afetam 1,4 milhão de assinantes.",
+ "objetivo": "Implantar uma plataforma de dados em tempo real no Azure com ingestão via Kafka e processamento com Databricks, reduzindo a latência de disponibilização de eventos de rede e faturamento para menos de 5 minutos.",
+ "escopo": [
+  "Ingestão contínua de eventos de rede e bilhetagem com Apache Kafka no Azure Event Hubs, com tópicos particionados por domínio e retenção de 7 dias.",
+  "Processamento de streams com Databricks Structured Streaming e pipelines em Python para enriquecimento, deduplicação e agregação de consumo por assinante.",
+  "Camada analítica em Delta Lake no Azure Data Lake Storage, com tabelas silver e gold e atualização incremental em micro-lotes de 1 minuto.",
+  "Orquestração e monitoramento de jobs no Azure Data Factory e Databricks Workflows, com alertas de lag de consumo e falhas de checkpoint.",
+  "Governança de dados com Unity Catalog, incluindo linhagem, controle de acesso por domínio e catálogo de eventos em tempo real."
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming em Azure e Kafka aprovada em workshop técnico com as áreas de rede e faturamento.",
+  "Pipelines de ingestão e processamento em Databricks e Python operando 24x7 em ambiente de produção.",
+  "Tabelas Delta Lake silver e gold com dados de consumo e eventos de rede disponíveis em até 5 minutos.",
+  "Painéis de monitoramento de lag, throughput e qualidade de dados com alertas configurados no Azure Monitor.",
+  "Documentação de runbooks, playbooks de operação e transferência de conhecimento para a equipe interna de dados."
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura de streaming",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Construção dos pipelines de ingestão e processamento",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Integração, qualidade de dados e monitoramento",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Homologação, go-live e transferência de conhecimento",
+   "duracao_semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em streaming e 1 gerente de projeto",
+ "riscos": [
+  "Volume de eventos acima do previsto pode exigir reparticionamento dos tópicos Kafka.",
+  "Dependência de liberação de acessos e conectividade com sistemas legados de bilhetagem.",
+  "Qualidade inconsistente dos eventos de origem pode gerar retrabalho nas regras de deduplicação."
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia e Dados)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ }
+}

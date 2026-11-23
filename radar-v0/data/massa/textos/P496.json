@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração do Data Warehouse para Snowflake na Nuvem AWS",
+ "problema": "A Agência Estadual de Trânsito mantinha um data warehouse on-premises com 14 TB de dados históricos de condutores, veículos e infrações, com janelas de carga noturna que ultrapassavam 7 horas e indisponibilidade recorrente para relatórios de fiscalização. O ambiente legado não suportava o crescimento de 22% ao ano no volume de dados de arrecadação e demandava custos fixos de infraestrutura de R$ 1,8 milhão por ano.",
+ "objetivo": "Migrar o data warehouse legado para Snowflake na AWS em 6 meses, preservando a integridade histórica e reduzindo o tempo de carga e o custo operacional do ambiente analítico.",
+ "escopo": [
+  "Avaliação e inventário do data warehouse legado, com mapeamento de 180 tabelas e 320 processos ETL",
+  "Modelagem dimensional no Snowflake com separação de camadas raw, staging e consumo",
+  "Migração dos dados históricos para o Snowflake via AWS S3 e Snowpipe, com validação de reconciliação",
+  "Reimplementação dos pipelines de carga em Snowflake e orquestração integrada ao ambiente AWS",
+  "Configuração de governança de acesso, mascaramento de dados pessoais e monitoramento de custos na AWS"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura-alvo e plano de migração com cronograma por onda",
+  "Data warehouse no Snowflake com 14 TB migrados e reconciliados",
+  "320 pipelines de carga reimplementados e validados em produção",
+  "Painéis de monitoramento de performance e custo na AWS",
+  "Relatório de encerramento com plano de sustentação e transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura-alvo",
+   "semanas": 6
+  },
+  {
+   "nome": "Migração dos dados históricos",
+   "semanas": 10
+  },
+  {
+   "nome": "Reimplementação dos pipelines e validação",
+   "semanas": 6
+  },
+  {
+   "nome": "Go-live e estabilização",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em nuvem AWS e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e consistência dos dados históricos no legado",
+  "Janelas de indisponibilidade limitadas para cutover",
+  "Dependência de acessos e liberações de rede do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Tavares (Diretor de Tecnologia da Informação)",
+  "tecnico": "Fernanda Queiroz (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "O tempo de carga noturna caiu de 7 para 1,5 horas, redução de 78%, e o custo anual de infraestrutura analítica foi reduzido em R$ 720 mil.",
+ "licoes": "A limpeza dos dados históricos consumiu duas semanas além do previsto, exigindo esforço extra de engenharia. A validação por ondas com reconciliação automatizada foi decisiva para o cutover sem retrabalho.",
+ "diferencial": "Ganhamos pela combinação de preço competitivo com experiência comprovada em migrações Snowflake na AWS para o setor público."
+}

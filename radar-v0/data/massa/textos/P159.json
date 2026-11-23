@@ -1,0 +1,50 @@
+{
+ "titulo": "Painel ESG e Inventário de Emissões com Power BI e Snowflake",
+ "problema": "O Banco Horizonte Sul precisa consolidar indicadores ESG e dados de emissões de 3 carteiras de crédito (corporativa, agro e varejo) que hoje são reportados em 12 planilhas manuais, com atraso médio de 18 dias e risco de inconsistência no reporte regulatório. A área de sustentabilidade também não consegue rastrear a evolução mensal das emissões financiadas por setor.",
+ "objetivo": "Implantar uma solução de Analytics & BI sobre Snowflake e Power BI que centralize os indicadores ESG e o inventário de emissões, reduzindo o ciclo de reporte de 18 para 5 dias úteis.",
+ "escopo": [
+  "Modelagem dimensional no Snowflake para indicadores ESG e emissões financiadas por setor e carteira",
+  "Pipeline de ingestão e tratamento de dados de 12 fontes internas e planilhas de fornecedores no Snowflake",
+  "Dashboards executivos e operacionais em Power BI com 45 indicadores ESG e drill-down por carteira",
+  "Camada semântica e regras de cálculo de emissões (Escopos 1, 2 e 3 financiados) versionadas no Snowflake",
+  "Documentação técnica e treinamento de 15 usuários-chave em Power BI"
+ ],
+ "entregaveis": [
+  "Modelo de dados ESG no Snowflake com dicionário de 45 indicadores",
+  "7 dashboards em Power BI (visão executiva, emissões por setor e carteira, metas e alertas)",
+  "Pipeline automatizado de carga diária das 12 fontes mapeadas",
+  "Relatório de validação dos cálculos de emissões contra a base atual",
+  "Treinamento e guia de uso para 15 usuários-chave"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e modelagem",
+   "semanas": 4
+  },
+  {
+   "fase": "Implementação Snowflake e pipelines",
+   "semanas": 6
+  },
+  {
+   "fase": "Dashboards Power BI e validação",
+   "semanas": 4
+  },
+  {
+   "fase": "Treinamento e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização dos dados de emissões das planilhas de fornecedores",
+  "Dependência de aprovação do time de compliance para os critérios de cálculo",
+  "Prazo curto de 4 meses para integração de 12 fontes"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Gerente de Sustentabilidade e Reporte ESG)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor apresentado foi cerca de 22% superior ao da concorrente vencedora, sem que houvesse diferenciação suficiente percebida pelo cliente.",
+ "licoes": "Para propostas de continuidade com escopo de BI e ESG, apresentar desde o início uma opção de escopo modular com faixa de preço mais competitiva e comparativo claro de valor frente ao mercado.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe da NTT DATA na elaboração da proposta para o projeto de indicadores ESG e emissões. Após avaliação interna, decidimos seguir com outro fornecedor, pois o valor apresentado ficou acima do mercado para o escopo proposto. Reforçamos que a qualidade técnica foi reconhecida e esperamos manter a parceria em iniciativas futuras. Atenciosamente, Marina Toledo, Gerente de Sustentabilidade e Reporte ESG do Banco Horizonte Sul."
+}

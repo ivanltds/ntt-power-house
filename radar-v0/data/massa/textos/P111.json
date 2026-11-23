@@ -1,0 +1,50 @@
+{
+ "titulo": "Predição de churn e retenção para varejo eletro com AWS e Databricks",
+ "problema": "A Eletro Mais, rede de varejo com 180 lojas e 2,3 milhões de clientes ativos no CRM, vinha perdendo clientes de alto valor sem conseguir agir a tempo: a taxa de churn anual no segmento de crédito próprio chegava a 21% e as campanhas de retenção eram disparadas 45 dias após o último sinal de queda de compra. O time de CRM não tinha visão preditiva, apenas relatórios históricos, e o esforço de reativação consumia R$ 1,2 milhão por ano com retorno abaixo de 8%.",
+ "objetivo": "Implantar um modelo de propensão a churn com dados de compra, crédito e atendimento, integrado ao CRM, para antecipar a saída de clientes de alto valor e priorizar ações de retenção nas 180 lojas.",
+ "escopo": [
+  "Construção do data lake no AWS S3 com ingestão de dados transacionais do ERP, CRM e bureau de crédito via AWS Glue",
+  "Engenharia de features e pipelines de modelo no Databricks com Delta Lake, incluindo histórico de 36 meses de compras",
+  "Treinamento e validação de modelos de propensão a churn com explicabilidade das principais variáveis por cliente",
+  "Criação de scores de risco e segmentação de clientes de alto valor no Databricks, atualizados semanalmente",
+  "Integração dos scores ao CRM para disparo de jornadas de retenção e painéis de acompanhamento em Analytics & BI"
+ ],
+ "entregaveis": [
+  "Data lake estruturado no AWS S3 com 12 fontes integradas e catálogo de dados",
+  "Pipeline de features e modelo de churn no Databricks com AUC acima de 0,80 em validação",
+  "Score de propensão a churn por cliente, atualizado semanalmente para 2,3 milhões de registros",
+  "Jornadas de retenção configuradas no CRM para os 3 segmentos de maior risco",
+  "Painel executivo de Analytics & BI com taxa de churn, cobertura de contato e retorno das ações"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Engenharia de dados e features no Databricks",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem preditiva e validação",
+   "semanas": 4
+  },
+  {
+   "fase": "Integração ao CRM e implantação",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 consultor de CRM e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos do ERP",
+  "Baixa adesão das lojas às jornadas de retenção",
+  "Janela curta de 4 meses para modelagem e integração"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de CRM e Retenção)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ },
+ "resultados": "O modelo passou a antecipar o churn em até 60 dias e as ações de retenção elevaram a taxa de recuperação de clientes de alto valor em 18%, com redução de R$ 740 mil no custo anual de reativação.",
+ "licoes": "A integração com o CRM exigiu duas semanas adicionais por causa de campos inconsistentes no cadastro de clientes das lojas. Foi decisiva a validação antecipada do modelo com a equipe de CRM, que ajustou as regras de priorização antes da implantação.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito, que já entregou modelo com AUC de 0,83 sobre dados reais do cliente em três semanas."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "FinOps e Otimização de Custos Multicloud em GCP, Azure e Kubernetes",
+ "problema": "A Conecta Brasil Telecom opera mais de 480 workloads distribuídos entre GCP e Azure, com gasto mensal de nuvem de aproximadamente R$ 3,8 milhões e crescimento de 22% nos últimos 12 meses. Cerca de 35% dos ambientes Kubernetes rodam com recursos superdimensionados e não há visibilidade consolidada de custos por unidade de negócio.",
+ "objetivo": "Reduzir o custo total de nuvem em 18% em 4 meses, implantando uma prática de FinOps com visibilidade, alocação e otimização contínua sobre GCP, Azure e clusters Kubernetes.",
+ "escopo": [
+  "Diagnóstico de custos e tagging em GCP e Azure, cobrindo 480 workloads e 6 contas de billing",
+  "Implantação de dashboards de FinOps e alocação de custos por unidade de negócio com Analytics & BI",
+  "Rightsizing e autoscaling dos clusters Kubernetes, com metas de redução de 30% em nodes ociosos",
+  "Políticas de orçamento, alertas e governança de custos nos dois provedores",
+  "Plano de migração para Nuvem de 40 workloads legados para instâncias otimizadas"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de custos com mapa de oportunidades priorizadas por economia",
+  "Painéis de FinOps em Analytics & BI com visão por centro de custo e por cluster",
+  "Plano de rightsizing e autoscaling aplicado a 100% dos clusters Kubernetes",
+  "Catálogo de políticas de orçamento e alertas configurados em GCP e Azure",
+  "Relatório final com economia realizada e roadmap de otimização contínua"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e visibilidade de custos",
+   "semanas": 5
+  },
+  {
+   "fase": "Governança e alocação por unidade de negócio",
+   "semanas": 4
+  },
+  {
+   "fase": "Otimização de Kubernetes e rightsizing",
+   "semanas": 5
+  },
+  {
+   "fase": "Consolidação e roadmap de melhoria contínua",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de nuvem, 2 engenheiros FinOps, 1 especialista Kubernetes e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade das tags de alocação de custos nas contas existentes",
+  "Resistência das áreas de negócio à mudança de instâncias e autoscaling",
+  "Janelas de manutenção restritas para ajustes nos clusters Kubernetes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Infraestrutura e Cloud)",
+  "tecnico": "Diego Marchetti (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade do cliente, incluindo migração de 40 workloads legados e frentes de Analytics & BI que a Conecta Brasil Telecom não pretendia contratar neste momento. O concorrente venceu com uma abordagem mais enxuta, focada apenas no diagnóstico e nas recomendações de FinOps.",
+ "licoes": "Segmentar a proposta em fases contratáveis separadamente, começando por um diagnóstico enxuto de 6 a 8 semanas, para não elevar o escopo acima da necessidade imediata do cliente. Validar com o cliente, antes da submissão, quais frentes ele quer contratar agora e quais ficam para um segundo momento.",
+ "retorno": "Prezado Diego, agradecemos o empenho da NTT DATA na elaboração da proposta de FinOps. Após avaliação interna, decidimos seguir com outro fornecedor, pois o escopo apresentado incluía frentes de migração e Analytics & BI que vão além da nossa necessidade atual. Seguimos abertos a conversar em um próximo ciclo, focado apenas em diagnóstico e recomendações de custos. Atenciosamente, Renata Vasconcelos, Gerente de Infraestrutura e Cloud da Conecta Brasil Telecom."
+}

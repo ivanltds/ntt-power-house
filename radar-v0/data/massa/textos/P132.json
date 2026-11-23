@@ -1,0 +1,50 @@
+{
+ "titulo": "Programa de FinOps e otimização de custos multicloud AWS e GCP",
+ "problema": "O Banco Aurora operava uma infraestrutura híbrida com gasto mensal de nuvem de aproximadamente R$ 4,2 milhões, distribuído entre AWS (62%) e GCP (38%), sem visibilidade por centro de custo e com 27% do parque de instâncias superprovisionado. A ausência de governança de custos impedia decisões de capacity planning e comprometia a meta de reduzir despesas de TI em 15% no exercício.",
+ "objetivo": "Implantar uma disciplina de FinOps nas frentes de AWS e GCP, com visibilidade de custos por produto e squad, e executar um plano de otimização que reduza o gasto recorrente de nuvem em pelo menos 18% em quatro meses.",
+ "escopo": [
+  "Diagnóstico de custos e rateio por centro de custo e squad nas contas AWS e GCP, com tagging padronizado e dashboards em ferramenta de Analytics & BI",
+  "Rightsizing de 640 instâncias EC2 e Compute Engine e migração de cargas elegíveis para instâncias Spot e Savings Plans/Committed Use Discounts",
+  "Definição de políticas de FinOps, orçamentos e alertas de anomalia de gasto integrados às contas AWS e GCP",
+  "Migração para Nuvem de 14 workloads on-premises remanescentes para AWS, com descomissionamento de servidores físicos",
+  "Painel executivo mensal de custos unitários (custo por transação) e relatório de economia realizada por frente"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de custos com mapa de calor por conta, serviço e squad",
+  "Catálogo de tagging e dashboards de FinOps em BI com visão AWS e GCP",
+  "Plano de otimização priorizado com 38 iniciativas e economia estimada por iniciativa",
+  "14 workloads migrados para AWS e 9 servidores físicos descomissionados",
+  "Playbook de FinOps e painel executivo de custo unitário por transação"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e visibilidade de custos",
+   "semanas": 5
+  },
+  {
+   "fase": "Plano de otimização e políticas de FinOps",
+   "semanas": 3
+  },
+  {
+   "fase": "Execução de rightsizing e migração de workloads",
+   "semanas": 6
+  },
+  {
+   "fase": "Painel executivo e transferência de conhecimento",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de cloud, 2 engenheiros de FinOps, 1 engenheiro de dados de BI e 1 gerente de projeto",
+ "riscos": [
+  "Resistência das squads à alteração de sizing e desligamento de recursos",
+  "Janelas de mudança restritas em períodos de fechamento contábil",
+  "Dados de billing incompletos por tagging inconsistente em contas legadas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Infraestrutura e Operações de TI)",
+  "tecnico": "Felipe Andrade (Arquiteto de Cloud Sênior)"
+ },
+ "resultados": "Redução de 21% no gasto mensal de nuvem, equivalente a R$ 880 mil por mês, e queda de 27% para 6% no parque de instâncias superprovisionadas. O custo por transação caiu 14% no período, com visibilidade de 100% das contas AWS e GCP por centro de custo.",
+ "licoes": "A migração dos 14 workloads atrasou duas semanas porque três aplicações legadas dependiam de integrações não documentadas com sistemas on-premises. Foi decisivo envolver as squads de produto desde o diagnóstico, o que acelerou a adoção das políticas de rightsizing e evitou retrabalho na execução.",
+ "diferencial": "Ganhamos pela relação consolidada com o Banco Aurora e pela capacidade de dar continuidade ao roadmap de nuvem já em andamento, sem curva de aprendizado sobre o ambiente do cliente."
+}

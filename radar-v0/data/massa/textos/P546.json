@@ -1,0 +1,48 @@
+{
+ "titulo": "Modelo de risco de crédito com Python e AWS para fintech de serviços financeiros",
+ "problema": "A Fintech Pagaí, atuante em serviços financeiros, precisa elevar a assertividade da concessão de crédito em um cenário de 1,2 milhão de propostas de crédito avaliadas por ano e inadimplência de 7,8% na carteira de empréstimos pessoais. O modelo atual, baseado em regras manuais, leva até 36 horas para decisão e não incorpora dados transacionais recentes.",
+ "objetivo": "Desenvolver e implantar um modelo de risco de crédito em Python na AWS, com decisão automatizada em até 30 segundos, integrado ao processo de aprovação da fintech.",
+ "escopo": [
+  "Análise exploratória e engenharia de atributos sobre 24 meses de histórico de crédito e transações em Python",
+  "Desenvolvimento e validação de modelos de machine learning (gradient boosting e regressão logística) em Python, com métricas de KS e AUC",
+  "Implantação do modelo em produção na AWS (SageMaker e Lambda) com endpoint de scoring em tempo real",
+  "Pipeline de monitoramento de performance e deriva do modelo na AWS (CloudWatch e S3)",
+  "Documentação técnica e de governança do modelo, incluindo explicabilidade das variáveis mais relevantes"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e atributos candidatos",
+  "Modelo de risco de crédito validado com KS mínimo de 0,42 e AUC de 0,78 em base de teste",
+  "Endpoint de scoring em produção na AWS com latência média inferior a 30 segundos",
+  "Dashboard de monitoramento de performance e deriva do modelo",
+  "Documentação de governança e plano de retreinamento trimestral"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Modelagem e validação",
+   "semanas": 7
+  },
+  {
+   "fase": "Implantação em produção na AWS",
+   "semanas": 6
+  },
+  {
+   "fase": "Monitoramento e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 cientista de dados sênior, 1 engenheiro de machine learning, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura insuficiente dos dados históricos de crédito",
+  "Restrições de latência na integração com o sistema de decisão legado",
+  "Baixa adesão das áreas de crédito e compliance ao novo modelo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Head de Crédito)",
+  "tecnico": "Bruno Tavares (Cientista de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de reestruturação interna do time de crédito e corte no orçamento de projetos de analytics para o semestre."
+}

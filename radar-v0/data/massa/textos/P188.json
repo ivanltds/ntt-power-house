@@ -1,0 +1,49 @@
+{
+ "titulo": "Modelo de risco de crédito com Machine Learning para o varejo",
+ "problema": "A Moda Leve Store, rede de varejo com 180 lojas físicas e faturamento anual de R$ 1,2 bilhão, enfrenta inadimplência de 8,4% na carteira de crediário próprio, que responde por 32% das vendas. A análise de crédito atual é baseada em regras fixas e planilhas, levando até 48 horas para aprovação e gerando perda estimada de R$ 14 milhões ao ano.",
+ "objetivo": "Construir um modelo de risco de crédito baseado em Machine Learning para decisão em tempo real no crediário, reduzindo a inadimplência e o tempo de aprovação.",
+ "escopo": [
+  "Modelagem preditiva de propensão à inadimplência em Python com Machine Learning, usando histórico de 3 anos de vendas e pagamentos",
+  "Pipeline de dados no Snowflake integrando cadastro, crediário e transações de 180 lojas",
+  "Implantação dos modelos em AWS com inferência em tempo real via API para o ponto de venda",
+  "Painéis de monitoramento de performance do modelo (KS, AUC, PSI) e governança de dados",
+  "Definição de políticas de crédito e limites por score com o time de risco do cliente"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo no Snowflake e AWS",
+  "Modelo de score de crédito treinado e validado com AUC mínima de 0,78",
+  "API de scoring em produção integrada ao sistema de crediário",
+  "Painel de monitoramento de drift e performance do modelo",
+  "Relatório de governança de dados com catálogo das 45 variáveis utilizadas"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e governança de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e validação do modelo",
+   "semanas": 10
+  },
+  {
+   "fase": "Implantação em AWS e integração com o PDV",
+   "semanas": 6
+  },
+  {
+   "fase": "Monitoramento, ajuste e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de crediário",
+  "Baixa adesão das equipes de loja ao novo score",
+  "Latência da API de scoring no ponto de venda"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Crédito e Cobrança)",
+  "tecnico": "Felipe Andrade (Líder Técnico de Data Science)"
+ },
+ "resultados": "Na fase de diagnóstico, 92% das variáveis críticas de crédito já foram mapeadas e catalogadas no Snowflake.",
+ "diferencial": "Ganhamos pela relação de continuidade com a Moda Leve Store, onde já entregamos o data lake no Snowflake, o que acelera a integração e reduz riscos de execução."
+}

@@ -1,0 +1,38 @@
+{
+ "titulo": "Modernização do modelo de risco de crédito com Machine Learning na AWS e Snowflake",
+ "problema": "O Banco Horizonte Sul processa manualmente 12 mil propostas de crédito por mês, com tempo médio de análise de 48 horas e taxa de inadimplência de 8,5% na carteira de pessoas físicas. O modelo atual, baseado em regras fixas, não captura padrões complexos e limita a expansão para novos segmentos.",
+ "objetivo": "Desenvolver um modelo de risco de crédito baseado em Machine Learning, utilizando AWS, Python e Snowflake, para reduzir o tempo de decisão para até 2 horas e diminuir a inadimplência em 15% em seis meses.",
+ "escopo": [
+  "Análise exploratória dos dados históricos de crédito armazenados no Snowflake, com 5 anos de registros e 2 milhões de operações.",
+  "Desenvolvimento de features e treinamento de modelos de classificação (gradient boosting e regressão logística) em Python, utilizando instâncias AWS SageMaker.",
+  "Implementação de pipeline de MLOps para monitoramento e retreinamento automático do modelo, com versionamento no Snowflake e orquestração via AWS Step Functions.",
+  "Criação de API para integração do modelo com o sistema de decisão de crédito existente, garantindo latência inferior a 500 ms por consulta.",
+  "Documentação técnica e transferência de conhecimento para a equipe de risco do banco, incluindo workshops práticos."
+ ],
+ "entregaveis": [
+  "Relatório de análise exploratória e engenharia de features com as principais variáveis preditoras.",
+  "Modelo de risco de crédito treinado e validado, com métricas de AUC acima de 0,85 e KS acima de 40.",
+  "Pipeline de MLOps implantado na AWS, com monitoramento de drift e retreinamento automatizado.",
+  "API de scoring de crédito documentada e integrada ao ambiente de homologação do banco.",
+  "Manual de operação e sessão de treinamento para 15 analistas de risco."
+ ],
+ "fases": [
+  "Fase 1 – Descoberta e preparação de dados: 6 semanas",
+  "Fase 2 – Desenvolvimento e validação do modelo: 10 semanas",
+  "Fase 3 – Implementação de MLOps e API: 6 semanas",
+  "Fase 4 – Homologação e transferência de conhecimento: 4 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 1 engenheiro de MLOps.",
+ "riscos": [
+  "Qualidade dos dados históricos insuficiente para treinamento robusto.",
+  "Resistência da área de risco à adoção de modelo caixa-preta.",
+  "Prazo curto para integração com sistemas legados do banco."
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Risco de Crédito)",
+  "tecnico": "Fernanda Lima (Líder Técnica de Data Science)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de risco de crédito instalada no banco, com contrato de manutenção ativo e integração consolidada, o que reduziu o custo de switching e acelerou a decisão do cliente.",
+ "licoes": "Para próximas oportunidades em clientes com fornecedor incumbente, é essencial mapear antecipadamente a penetração da solução concorrente e quantificar o custo total de propriedade da migração, além de propor um piloto de baixo risco para reduzir a percepção de troca.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de modelo de risco de crédito não foi selecionada. A decisão foi fundamentada na existência de uma solução já implantada e em produção por outro fornecedor, o que minimiza riscos e prazos de integração. Agradecemos o empenho da equipe da NTT DATA e manteremos o contato para futuras oportunidades. Atenciosamente, Ricardo Almeida, Diretor de Risco de Crédito do Banco Horizonte Sul."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Sustentação AMS de aplicações críticas em Azure e Kubernetes",
+ "problema": "A Distribuidora Luz do Cerrado, com cerca de 2,3 milhões de unidades consumidoras e faturamento anual de R$ 4,1 bilhões, operava 38 aplicações críticas de faturamento, arrecadação e atendimento em ambientes heterogêneos, com 27% dos incidentes resolvidos fora do SLA e indisponibilidade média de 6,2 horas por mês. A ausência de um modelo único de sustentação elevava o custo de manutenção em R$ 1,8 milhão/ano e aumentava o risco regulatório junto à ANEEL.",
+ "objetivo": "Assumir a sustentação de 38 aplicações críticas em modelo AMS sobre Azure e Kubernetes, elevando o cumprimento de SLA e reduzindo o volume de incidentes recorrentes em 16 meses de operação.",
+ "escopo": [
+  "Sustentação corretiva e evolutiva de 38 aplicações em Azure, com gestão de releases e pipelines CI/CD",
+  "Operação de clusters Kubernetes (AKS) com monitoramento, escalabilidade e gestão de capacidade",
+  "Gestão de incidentes, problemas e mudanças em modelo ITIL, com plantão 24x7 para aplicações de faturamento",
+  "Observabilidade integrada em Azure Monitor e Application Insights, com dashboards de SLA e error budget",
+  "Execução de 2 janelas mensais de manutenção e atualização de versões e patches de segurança"
+ ],
+ "entregaveis": [
+  "Catálogo das 38 aplicações com criticidade, SLA e mapa de dependências atualizado",
+  "Runbooks operacionais e base de conhecimento com 100% dos incidentes críticos documentados",
+  "Relatórios mensais de SLA, MTTR e volumetria de chamados com plano de ação",
+  "Plano de capacidade e otimização de custos Azure com meta de redução de 15% no gasto mensal",
+  "Backlog evolutivo priorizado com 120 melhorias entregues ao longo do contrato"
+ ],
+ "fases": [
+  {
+   "fase": "Transição e diagnóstico",
+   "semanas": 6
+  },
+  {
+   "fase": "Estabilização e implantação do modelo AMS",
+   "semanas": 8
+  },
+  {
+   "fase": "Operação em regime com melhorias contínuas",
+   "semanas": 44
+  },
+  {
+   "fase": "Encerramento e transferência de conhecimento",
+   "semanas": 10
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções Azure, 4 analistas de sustentação sênior, 2 engenheiros Kubernetes e 1 analista de observabilidade",
+ "riscos": [
+  "Dependência de conhecimento tácito de fornecedores anteriores na transição",
+  "Picos de chamados em fechamento de faturamento e leitura de medidores",
+  "Instabilidade de integrações legadas com sistemas de arrecadação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de TI Corporativa)",
+  "tecnico": "Marcelo Tavares (Gerente de Serviços AMS)"
+ },
+ "resultados": "O cumprimento de SLA passou de 73% para 98,5% em 12 meses, com redução do MTTR de 9,4 para 2,7 horas. A otimização de ambientes Azure gerou economia de R$ 2,4 milhões no período do contrato.",
+ "licoes": "A migração de conhecimento dos fornecedores anteriores atrasou 4 semanas a fase de transição e exigiu 30% mais horas de shadowing que o previsto. Foi decisivo para o sucesso a implantação de observabilidade em Azure Monitor antes do go-live, que antecipou a identificação de falhas recorrentes.",
+ "diferencial": "Ganhamos pelo case de referência em sustentação AMS de utilities sobre Azure e Kubernetes, com histórico comprovado de elevação de SLA acima de 98% em ambiente regulado."
+}

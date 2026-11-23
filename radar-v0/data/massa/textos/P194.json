@@ -1,0 +1,45 @@
+{
+ "titulo": "Otimização de rotas e frota com analytics e machine learning",
+ "problema": "As Farmácias Vida Plena operam 48 lojas e 12 veículos próprios de distribuição, com rotas definidas manualmente pela equipe de logística. O custo de combustível e horas extras de motoristas cresceu 18% nos últimos 12 meses, e a taxa de entregas fora da janela acordada chega a 23% em dias de pico.",
+ "objetivo": "Reduzir o custo logístico por entrega em 15% e elevar a aderência às janelas de entrega para acima de 90% por meio de roteirização otimizada e painéis de acompanhamento da frota.",
+ "escopo": [
+  "Modelo de otimização de rotas em Python (heurística de savings e VRP) considerando capacidade por veículo, janelas de entrega e restrições de turno",
+  "Pipeline de ingestão e tratamento de dados de pedidos, posições de frota e histórico de entregas em Python",
+  "Painéis de KPIs logísticos no Power BI (custo por entrega, ocupação da frota, aderência à janela, km por rota)",
+  "Simulador de cenários de frota em Python para avaliar impacto de veículos adicionais e mudanças de turno",
+  "Documentação técnica e transferência de conhecimento para a equipe de logística do cliente"
+ ],
+ "entregaveis": [
+  "Modelo de roteirização em Python validado em 3 rotas-piloto",
+  "Dashboard gerencial de logística em Power BI com 12 KPIs",
+  "Relatório de diagnóstico com baseline de custo e aderência atual",
+  "Simulador de cenários de frota parametrizável",
+  "Manual de operação e sessão de treinamento de 8 horas para 6 analistas do cliente"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento do modelo de otimização em Python",
+   "semanas": 5
+  },
+  {
+   "fase": "Painéis Power BI e simulador de cenários",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 cientista de dados sênior, 1 engenheiro de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e granularidade dos dados históricos de entregas",
+  "Resistência dos motoristas à mudança de rotas definidas manualmente",
+  "Integração limitada com o sistema de gestão de pedidos atual"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Gerente de Logística)",
+  "tecnico": "Bruno Carvalho (Cientista de Dados Sênior)"
+ },
+ "resultados": "Nas 3 rotas-piloto, a quilometragem média por entrega caiu 11% em relação à baseline.",
+ "diferencial": "Ganhamos pelo case de referência em roteirização para uma rede de distribuição de médio porte, com redução comprovada de 14% no custo por entrega."
+}

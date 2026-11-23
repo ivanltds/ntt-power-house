@@ -1,0 +1,50 @@
+{
+ "titulo": "Modelo preditivo de gestão de saúde populacional para carteira de seguros auto",
+ "problema": "A Escudo Auto Seguros, com cerca de 1,2 milhão de segurados ativos e 780 mil vidas expostas em assistência veicular e saúde ocupacional, não conseguia priorizar ações preventivas porque os indicadores de sinistralidade estavam dispersos em 14 planilhas e dois sistemas legados. O custo médio por sinistro de saúde havia crescido 18% em 24 meses, pressionando a margem técnica do ramo auto.",
+ "objetivo": "Construir um modelo de propensão a eventos de saúde e uma camada analítica que permita à seguradora identificar grupos de risco, direcionar programas preventivos e reduzir a sinistralidade da carteira em até 12 meses.",
+ "escopo": [
+  "Modelagem de propensão a eventos de saúde com Machine Learning em Python, a partir de 36 meses de histórico de sinistros, beneficiários e utilização",
+  "Pipeline de dados em Azure Data Factory e Azure Databricks, com governança em Azure Purview e armazenamento em Azure Data Lake Storage Gen2",
+  "Painéis de acompanhamento de sinistralidade e indicadores populacionais em Power BI para 4 diretorias e 12 regionais",
+  "Segmentação da carteira em 6 clusters de risco e definição de regras de elegibilidade para programas preventivos",
+  "Rotinas de monitoramento de drift e reavaliação mensal dos modelos em Python, integradas ao ambiente Azure"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de propensão a eventos de saúde com AUC de 0,81 na base de validação",
+  "Dashboard executivo em Power BI com 28 indicadores de sinistralidade e saúde populacional",
+  "Documentação técnica do pipeline Azure e do ciclo de vida dos modelos",
+  "Relatório de segmentação da carteira em 6 clusters com recomendações de ação preventiva",
+  "Manual de operação e transferência de conhecimento para a equipe de dados do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento e validação de modelos",
+   "semanas": 10
+  },
+  {
+   "nome": "Construção dos painéis e integração",
+   "semanas": 8
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de sinistros",
+  "Baixa adesão das áreas de negócio às recomendações do modelo",
+  "Restrições de privacidade e anonimização de dados de beneficiários"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Sinistros e Saúde)",
+  "tecnico": "Marcelo Tavares (Líder Técnico de Data Science)"
+ },
+ "resultados": "O modelo identificou 23% da carteira como alto risco, permitindo antecipar ações preventivas que reduziram em 9% o custo médio de sinistros de saúde no primeiro ciclo de acompanhamento. A área de sinistros passou a priorizar 100% dos casos críticos com base em score, gerando economia estimada de R$ 4,3 milhões em 12 meses.",
+ "licoes": "A limpeza dos dados legados consumiu 3 semanas além do previsto, pois dois sistemas não possuíam chave única de beneficiário. Foi decisivo envolver a Diretoria de Sinistros desde a primeira sprint, o que acelerou a homologação das regras de negócio e a adoção dos painéis.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, que atingiu AUC de 0,79 em apenas 3 semanas com dados reais do cliente."
+}

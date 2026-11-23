@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de Indicadores ESG e Emissões para Serviços Financeiros",
+ "problema": "A Financeira Rumo Certo reporta hoje seus indicadores ESG em 14 planilhas mantidas por 5 áreas, com fechamento mensal que consome 9 dias úteis e divergências de até 12% nos números de emissões entre relatórios internos e o reporte ao regulador. A ausência de uma base única de dados de emissões (Escopos 1, 2 e 3) expõe a companhia a ressalvas em auditorias e a riscos de reputação junto a investidores.",
+ "objetivo": "Centralizar e governar os dados de indicadores ESG e emissões em uma plataforma analítica única, reduzindo o ciclo de fechamento mensal para até 3 dias úteis e garantindo rastreabilidade dos números reportados.",
+ "escopo": [
+  "Ingestão no Snowflake de 11 fontes de dados (ERP, planilhas de facilities, frotas, energia e RH) com pipelines orquestrados no Azure Data Factory",
+  "Modelagem dimensional de emissões por Escopo 1, 2 e 3 e de indicadores sociais e de governança no Snowflake",
+  "Camada semântica e 6 dashboards no Power BI para reporte mensal, auditoria e comitê de sustentabilidade",
+  "Governança de Dados: catálogo, dicionário de dados, linhagem e definição de 40 indicadores com owners por área",
+  "Política de qualidade de dados no Azure com 25 regras de validação e alertas automáticos de divergência"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo dimensional de ESG aprovado",
+  "Pipelines de ingestão das 11 fontes em produção no Snowflake",
+  "6 dashboards Power BI publicados com controle de acesso por área",
+  "Catálogo de dados e dicionário dos 40 indicadores ESG com linhagem documentada",
+  "Relatório de qualidade de dados com as 25 regras ativas e plano de correção"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Ingestão e modelagem no Snowflake",
+   "semanas": 7
+  },
+  {
+   "fase": "Dashboards Power BI e camada semântica",
+   "semanas": 5
+  },
+  {
+   "fase": "Governança, qualidade e rollout",
+   "semanas": 5
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização das planilhas de origem de facilities e frotas",
+  "Indefinição de owners dos indicadores durante a fase de governança",
+  "Dependência de aprovação do reporte regulatório dentro da janela de 5 meses"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Gerente de Sustentabilidade e Reporte)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade do cliente: a Financeira Rumo Certo buscava apenas consolidar os indicadores de emissões para o próximo ciclo de reporte, e não implantar uma plataforma completa de governança de dados ESG. O volume de entregáveis e o prazo de 5 meses foram percebidos como esforço excessivo frente à urgência do reporte.",
+ "licoes": "Nas próximas propostas para clientes com continuidade de projeto anterior, dimensionar o escopo a partir da dor imediata do ciclo de reporte e oferecer a evolução de governança como fase opcional. Validar com o patrocinador, antes de enviar a proposta, qual o escopo mínimo aceitável.",
+ "retorno": "Prezados, após avaliação interna, decidimos não avançar com a proposta enviada. Reconhecemos a qualidade técnica do material, mas o escopo proposto ficou acima do que precisamos neste momento: nosso foco é consolidar os indicadores de emissões para o próximo ciclo de reporte, sem implantar toda a estrutura de governança de dados agora. Agradecemos o empenho da equipe e manteremos contato para iniciativas futuras. Atenciosamente, Marina Toledo, Gerente de Sustentabilidade e Reporte."
+}

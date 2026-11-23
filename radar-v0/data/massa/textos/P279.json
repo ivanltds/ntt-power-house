@@ -1,0 +1,37 @@
+{
+ "titulo": "Painéis executivos e BI para 1.200 lojas com Snowflake, Azure, Power BI e SAP",
+ "problema": "A Casa & Construção Prime, com 1.200 lojas e faturamento anual de R$ 6,5 bilhões, enfrenta dificuldade para consolidar indicadores de vendas, estoque e margem em tempo hábil. Os relatórios atuais levam até 5 dias para serem produzidos, comprometendo a agilidade na tomada de decisão executiva.",
+ "objetivo": "Implementar uma plataforma de dados moderna com Snowflake, Azure, Power BI e SAP para fornecer painéis executivos em tempo real e automação de relatórios, reduzindo o tempo de análise em 80%.",
+ "escopo": [
+  "Integração de dados do SAP ERP com Snowflake via Azure Data Factory para ingestão de 2 TB de dados históricos e transacionais.",
+  "Modelagem dimensional no Snowflake para as áreas de vendas, estoque e financeiro, com 15 fatos e 20 dimensões.",
+  "Desenvolvimento de 10 dashboards executivos no Power BI, incluindo visões por loja, regional e produto.",
+  "Implementação de pipeline de dados em Azure Databricks para processamento de 500 milhões de registros diários.",
+  "Configuração de governança de dados e segurança no Azure Purview e Snowflake RBAC."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e integração com SAP.",
+  "Data warehouse no Snowflake com 12 meses de dados históricos carregados.",
+  "10 dashboards executivos no Power BI validados pelos usuários-chave.",
+  "Pipeline automatizado de ingestão e transformação de dados no Azure.",
+  "Manual de governança e treinamento para 50 usuários."
+ ],
+ "fases": [
+  "Fase 1: Descoberta e Arquitetura - 4 semanas",
+  "Fase 2: Implementação de Engenharia de Dados - 6 semanas",
+  "Fase 3: Desenvolvimento de Analytics & BI - 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos ao SAP pelo cliente.",
+  "Qualidade dos dados de estoque inconsistentes entre lojas.",
+  "Baixa adoção dos dashboards pelos executivos devido à complexidade."
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de TI na Casa & Construção Prime)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados na NTT DATA)"
+ },
+ "resultados": "A proposta foi perdida porque a NTT DATA não comprovou experiência anterior no tema específico de painéis executivos e BI para o setor de varejo de construção. O cliente optou por um concorrente com cases demonstrados nesse segmento.",
+ "licoes": "Para próximas oportunidades de BI no varejo, incluir cases detalhados e referências de projetos similares, mesmo que de outros clientes, para evidenciar a experiência no tema.",
+ "retorno": "Prezados, informamos que a proposta da NTT DATA para o projeto de painéis executivos e BI não foi selecionada. O motivo principal foi a falta de experiência comprovada no tema específico de BI para o setor de varejo de construção, conforme exigido em nosso edital. Agradecemos o empenho da equipe. Atenciosamente, Ricardo Almeida - Diretor de TI, Casa & Construção Prime."
+}

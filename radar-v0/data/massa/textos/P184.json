@@ -1,0 +1,37 @@
+{
+ "titulo": "Leitura e triagem inteligente de documentos com IA generativa para cooperativa de crédito",
+ "problema": "A Cooperativa Sicrédito Planalto recebia cerca de 12 mil documentos por mês (contratos, comprovantes e propostas de crédito) em formatos variados, e a triagem manual consumia 15 dias úteis em média, atrasando a análise de crédito e gerando retrabalho em 22% dos casos.",
+ "objetivo": "Automatizar a leitura, classificação e extração de dados de documentos com IA generativa, reduzindo o tempo de triagem e aumentando a precisão na análise de crédito.",
+ "escopo": [
+  "Desenvolvimento de pipeline em Python para ingestão e pré-processamento de documentos (PDF, imagens e e-mails) na AWS.",
+  "Implementação de modelo de IA generativa para classificação e extração de entidades (valores, datas, partes) dos documentos.",
+  "Integração com o sistema de gestão de crédito da cooperativa via APIs na AWS.",
+  "Criação de painel de monitoramento de acurácia e volume processado.",
+  "Treinamento e transferência de conhecimento para a equipe interna de TI."
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão e processamento automatizado de documentos em produção.",
+  "Modelo de IA generativa ajustado ao domínio financeiro cooperativo, com acurácia mínima de 95% na extração de campos críticos.",
+  "API de integração com o sistema de crédito, documentada e testada.",
+  "Dashboard de acompanhamento de métricas de desempenho e qualidade.",
+  "Manual técnico e sessão de treinamento para a equipe do cliente."
+ ],
+ "fases": [
+  "Fase 1 – Discovery e preparação de dados: 4 semanas",
+  "Fase 2 – Desenvolvimento do modelo e pipeline: 5 semanas",
+  "Fase 3 – Integração e testes: 3 semanas"
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos documentos de entrada",
+  "Integração com sistema legado da cooperativa",
+  "Aderência da equipe interna às novas ferramentas"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de Operações de Crédito)",
+  "tecnico": "Rafael Almeida (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "Redução de 70% no tempo de triagem de documentos, que passou de 15 para 4,5 dias úteis, e economia estimada de R$ 1,2 milhão por ano com retrabalho e custos operacionais.",
+ "licoes": "A fase de preparação de dados atrasou duas semanas devido à baixa qualidade de digitalização de alguns documentos, exigindo esforço extra de limpeza. A validação contínua com os usuários-chave da cooperativa foi decisiva para ajustar o modelo e garantir a aderência ao fluxo real.",
+ "diferencial": "Oferecemos uma solução de IA generativa com preço competitivo, entregue no prazo de 3 meses e com foco em resultados rápidos e transferência de conhecimento."
+}

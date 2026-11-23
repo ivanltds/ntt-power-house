@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração do ERP legado para SAP S/4HANA em ambiente multicloud",
+ "problema": "A Entregas Expressas Já opera com um ERP legado que sustenta 1.200 usuários e processa cerca de 480 mil pedidos por mês, com indisponibilidades recorrentes em fechamentos fiscais e custo de manutenção 32% acima do benchmark do setor. A base está defasada e sem suporte estendido, o que limita a expansão para novas praças logísticas prevista para os próximos 18 meses.",
+ "objetivo": "Migrar a plataforma ERP para SAP S/4HANA em 15 meses, com infraestrutura distribuída entre Azure e AWS, reduzindo o custo de manutenção e elevando a disponibilidade dos processos críticos de logística e faturamento.",
+ "escopo": [
+  "Assessment e blueprint de conversão do ERP legado para SAP S/4HANA, incluindo mapeamento de 240 processos de negócio",
+  "Migração de banco de dados e cargas de trabalho SAP para Azure, com integrações de transportadoras e parceiros logísticos hospedadas em AWS",
+  "Implementação de módulos SAP de logística, estoque e faturamento com 14 interfaces de integração",
+  "Cutover assistido em duas ondas, com janela de 72 horas e rollback planejado",
+  "Sustentação hipercare por 8 semanas após o go-live, com monitoração de performance em ambiente multicloud"
+ ],
+ "entregaveis": [
+  "Documento de blueprint funcional e técnico aprovado",
+  "Ambientes de desenvolvimento, qualidade e produção provisionados em Azure e AWS",
+  "Migração concluída de 1,2 TB de dados históricos e cadastros mestres",
+  "Go-live da primeira onda com 1.200 usuários treinados",
+  "Relatório de hipercare com plano de melhorias e transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e blueprint",
+   "semanas": 12
+  },
+  {
+   "fase": "Build e integrações",
+   "semanas": 28
+  },
+  {
+   "fase": "Testes integrados e treinamento",
+   "semanas": 14
+  },
+  {
+   "fase": "Cutover, go-live e hipercare",
+   "semanas": 12
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP S/4HANA, 2 consultores funcionais de logística, 1 consultor de integrações cloud e 1 especialista em infraestrutura Azure/AWS",
+ "riscos": [
+  "Complexidade das 14 integrações com transportadoras e parceiros",
+  "Indisponibilidade de especialistas SAP no mercado durante o build",
+  "Janela de cutover curta para 480 mil pedidos/mês"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Diretora de TI)",
+  "tecnico": "Rafael Menezes (Arquiteto SAP S/4HANA)"
+ },
+ "resultados": "A proposta foi perdida porque a NTT DATA não apresentou cases comprovados de migração para SAP S/4HANA em ambiente multicloud no setor de logística, e o cliente exigia experiência demonstrada nesse tema específico.",
+ "licoes": "Para propostas de migração SAP S/4HANA, incluir sempre cases documentados e referências verificáveis de projetos semelhantes, além de certificações da equipe no tema.",
+ "retorno": "Prezados, após concluirmos a análise das propostas recebidas, comunicamos que a proposta da NTT DATA Brasil não foi selecionada para o projeto de migração para SAP S/4HANA. O principal motivo foi a ausência de experiência comprovada no tema, requisito essencial para nossa decisão. Agradecemos o empenho da equipe e permanecemos abertos a futuras oportunidades. Atenciosamente, Marina Toledo, Diretora de TI, Entregas Expressas Já."
+}

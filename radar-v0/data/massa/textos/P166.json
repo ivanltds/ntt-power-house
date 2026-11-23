@@ -1,0 +1,48 @@
+{
+ "titulo": "Modernização de aplicações em containers com Kafka, GCP, AWS e Kubernetes",
+ "problema": "A NetVale Provedor opera 38 sistemas de atendimento, billing e aprovisionamento de rede em servidores legados, com janelas de manutenção mensais de 6 horas e picos de indisponibilidade que afetam cerca de 420 mil assinantes. O crescimento de 22% no tráfego de dados nos últimos 12 meses tornou o modelo atual insustentável em custo e escalabilidade.",
+ "objetivo": "Modernizar as aplicações críticas do provedor migrando-as para containers em nuvem, com mensageria Kafka e orquestração Kubernetes, reduzindo o custo de infraestrutura e elevando a disponibilidade dos serviços.",
+ "escopo": [
+  "Containerização de 22 aplicações prioritárias de billing e atendimento, com padronização de imagens e pipelines CI/CD",
+  "Implantação de cluster Kubernetes gerenciado no GCP com extensão para cargas no AWS",
+  "Migração dos fluxos de eventos de aprovisionamento para Apache Kafka, com 14 tópicos e retenção de 7 dias",
+  "Migração para Nuvem das cargas legadas em ondas, incluindo banco de dados e integrações via API",
+  "Observabilidade integrada com métricas de disponibilidade, latência e consumo por aplicação"
+ ],
+ "entregaveis": [
+  "Inventário técnico e plano de migração em ondas das 22 aplicações",
+  "Cluster Kubernetes operacional no GCP com 3 ambientes (dev, homologação e produção)",
+  "Plataforma Kafka com 14 tópicos e políticas de retenção configuradas",
+  "22 aplicações containerizadas e migradas para nuvem, com pipelines CI/CD ativos",
+  "Relatório de ganhos com comparativo de custo e disponibilidade antes e depois"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da arquitetura alvo",
+   "semanas": 4
+  },
+  {
+   "fase": "Implantação de Kubernetes, Kafka e pipelines CI/CD",
+   "semanas": 6
+  },
+  {
+   "fase": "Migração das aplicações em ondas para GCP e AWS",
+   "semanas": 8
+  },
+  {
+   "fase": "Estabilização, observabilidade e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 1 especialista em Kubernetes, 1 engenheiro de dados e mensageria, 2 engenheiros de migração e 1 gerente de projeto",
+ "riscos": [
+  "Dependências de integrações legadas com sistemas de terceiros",
+  "Janelas de manutenção restritas para corte das aplicações",
+  "Curva de aprendizado da equipe do cliente em Kubernetes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Cloud)"
+ },
+ "diferencial": "Ganhamos pela relação de continuidade com a NetVale Provedor, com histórico de entregas anteriores e conhecimento acumulado da infraestrutura do cliente."
+}

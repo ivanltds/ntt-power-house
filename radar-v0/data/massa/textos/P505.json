@@ -1,0 +1,50 @@
+{
+ "titulo": "Modernização de aplicações com containers e integração via Kafka em multi-cloud",
+ "problema": "O Consórcio União Nacional opera 38 aplicações críticas de consórcio e cobrança em ambientes legados, com janelas de manutenção de até 9 horas mensais e custo de infraestrutura 27% acima do benchmark do setor. A ausência de padronização entre GCP, Azure e AWS gera 14 incidentes críticos por trimestre e dificulta a sustentação contínua.",
+ "objetivo": "Modernizar o parque de aplicações para containers com integração orientada a eventos via Kafka, reduzindo indisponibilidade e padronizando a operação multi-cloud em 12 meses.",
+ "escopo": [
+  "Containerização de 38 aplicações prioritárias com migração progressiva para GKE (GCP), AKS (Azure) e EKS (AWS)",
+  "Implantação de malha de eventos com Kafka para integração entre sistemas de consórcio, cobrança e cadastro",
+  "Pipeline CI/CD padronizado multi-cloud com observabilidade centralizada e políticas de segurança unificadas",
+  "Modelo de sustentação / AMS 24x7 com SLA de 99,9% e gestão de incidentes integrada às três nuvens",
+  "Plano de continuidade e disaster recovery cross-cloud com RTO de 4 horas e RPO de 15 minutos"
+ ],
+ "entregaveis": [
+  "Relatório de assessment e roadmap de containerização das 38 aplicações",
+  "Ambiente Kubernetes multi-cloud operacional com Kafka em produção para 12 aplicações piloto",
+  "Pipeline CI/CD e dashboards de observabilidade implantados nas três nuvens",
+  "Catálogo de serviços e runbooks de sustentação / AMS com SLA contratado",
+  "Relatório final de migração com métricas de redução de custo e indisponibilidade"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e arquitetura alvo",
+   "semanas": 10
+  },
+  {
+   "fase": "Piloto de containerização e Kafka em GCP",
+   "semanas": 14
+  },
+  {
+   "fase": "Ondas de migração para Azure e AWS",
+   "semanas": 20
+  },
+  {
+   "fase": "Estabilização e transição para AMS 24x7",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 1 especialista Kafka, 3 engenheiros DevOps, 2 engenheiros de sustentação e 1 gerente de projeto",
+ "riscos": [
+  "Dependência de janelas de mudança rígidas do cliente",
+  "Complexidade de governança entre três provedores cloud",
+  "Curva de aprendizado das equipes internas em containers e Kafka"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Paulo Menezes (Arquiteto Cloud Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor total de R$ 4,8 milhões para 12 meses foi 22% superior ao da concorrente vencedora, sem que o diferencial técnico compensasse a diferença.",
+ "licoes": "Incluir desde o início uma opção de escopo modular com faixa de preço competitiva e benchmark de mercado, evitando apresentar apenas a proposta completa de maior valor.",
+ "retorno": "Prezados, informamos que optamos por não seguir com a proposta da NTT DATA Brasil para o projeto de modernização com containers. A decisão foi tomada após análise comparativa e o preço apresentado ficou acima do mercado frente às demais propostas recebidas. Agradecemos o empenho da equipe na elaboração do material. Permanecemos abertos a futuras oportunidades. Atenciosamente, Renata Vasconcelos, Diretora de Tecnologia do Consórcio União Nacional."
+}

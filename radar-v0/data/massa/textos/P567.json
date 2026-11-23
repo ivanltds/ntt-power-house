@@ -1,0 +1,44 @@
+{
+ "titulo": "Streaming de dados em tempo real para operação logística",
+ "problema": "A Transportadora Rota Livre opera com cerca de 1.200 veículos e mais de 3.500 entregas diárias, mas os dados de rastreamento chegam à gestão com até 6 horas de atraso, consolidados em planilhas manuais. Isso impede a reação rápida a desvios de rota e a medição confiável do nível de serviço (OTIF atual de 82%).",
+ "objetivo": "Implantar uma plataforma de streaming em Python e Azure para disponibilizar eventos operacionais em tempo real e alimentar indicadores logísticos atualizados a cada minuto.",
+ "escopo": [
+  "Ingestão de eventos de telemetria e status de entregas via Azure Event Hubs",
+  "Processamento de streams em tempo real com Python (Apache Spark Structured Streaming)",
+  "Camada analítica em Azure Synapse Analytics para indicadores de OTIF e ocupação de frota",
+  "Painéis de monitoramento operacional atualizados a cada 60 segundos",
+  "Pipeline de qualidade de dados com alertas de eventos fora de SLA"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming documentada e validada",
+  "Pipeline de ingestão e processamento em tempo real em produção",
+  "Modelo analítico de indicadores logísticos no Synapse",
+  "Dashboard operacional com latência inferior a 2 minutos",
+  "Relatório de qualidade de dados e plano de evolução"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura",
+   "semanas": 6
+  },
+  {
+   "fase": "Construção dos pipelines de streaming",
+   "semanas": 10
+  },
+  {
+   "fase": "Camada analítica e dashboards",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos eventos de telemetria da frota",
+  "Latência de integração com sistemas legados (TMS)",
+  "Baixa adoção dos dashboards pelas áreas operacionais"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Andrade (Diretor de Operações)",
+  "tecnico": "Fernanda Lopes (Arquiteta de Dados)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte no orçamento de tecnologia para o exercício e priorização de um projeto de renovação de frota."
+}

@@ -1,0 +1,35 @@
+{
+ "titulo": "Sustentação AMS para plataforma ServiceNow, Kubernetes e Azure na manufatura",
+ "problema": "A Plastipack opera 3 plantas com 12 linhas de extrusão e produção média de 480 toneladas/mês de embalagens plásticas, com cerca de 640 usuários ativos na plataforma de serviços. O ambiente ServiceNow sobre Kubernetes no Azure apresenta chamados recorrentes sem SLA formal, gerando indisponibilidade média de 9 horas/mês e risco de paradas não planejadas na cadeia produtiva.",
+ "objetivo": "Assumir a sustentação das aplicações ServiceNow, Kubernetes e Azure com SLA de 99,5% de disponibilidade e resolução de 90% dos incidentes em até 8 horas úteis, ao longo de 27 meses.",
+ "escopo": [
+  "Gestão de incidentes, requisições e problemas na plataforma ServiceNow, com fila dedicada e cumprimento de SLA por severidade",
+  "Administração e monitoramento dos clusters Kubernetes no Azure, incluindo atualizações de versão, capacity planning e gestão de namespaces",
+  "Sustentação da infraestrutura Azure (máquinas virtuais, AKS, bancos gerenciados e backup), com patching mensal e revisão de custos",
+  "Manutenção evolutiva de baixa complexidade em workflows e integrações ServiceNow, limitada a 120 horas/mês",
+  "Relatórios mensais de indicadores (disponibilidade, MTTR, volume de chamados) e condução de reuniões de revisão de serviço"
+ ],
+ "entregaveis": [
+  "Catálogo de serviços e matriz de SLA por severidade com prazos de atendimento definidos",
+  "Relatório mensal de desempenho com disponibilidade, MTTR e volume de chamados por categoria",
+  "Plano de continuidade e recuperação de desastre para os ambientes Kubernetes e Azure",
+  "Backlog de melhorias contínuas priorizado trimestralmente com o cliente",
+  "Base de conhecimento atualizada com no mínimo 40 artigos técnicos no primeiro ano"
+ ],
+ "fases": [
+  "Transição e diagnóstico do ambiente atual: 8 semanas",
+  "Estabilização e implantação do modelo de SLA: 10 semanas",
+  "Operação em regime de sustentação AMS: 78 semanas",
+  "Melhoria contínua e encerramento contratual: 12 semanas"
+ ],
+ "equipe": "1 gerente de serviço, 1 arquiteto de soluções, 2 analistas de sustentação ServiceNow, 2 engenheiros de plataforma Kubernetes/Azure e 1 analista de suporte N1",
+ "riscos": [
+  "Indisponibilidade de acessos e documentação incompleta do ambiente legado na transição",
+  "Dependência de janelas de mudança restritas nas 3 plantas industriais",
+  "Volatilidade de demanda por chamados acima da capacidade contratada"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Gerente de TI Industrial)",
+  "tecnico": "Felipe Barros (Gerente de Serviço AMS)"
+ }
+}

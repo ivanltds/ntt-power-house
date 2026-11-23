@@ -1,0 +1,38 @@
+{
+ "titulo": "Predição de churn e retenção de pacientes com Salesforce e AWS",
+ "problema": "O Hospital São Lucas do Vale enfrenta uma taxa de evasão de pacientes de 22% ao ano, o que representa uma perda estimada de R$ 8 milhões em receita recorrente. A instituição não consegue identificar proativamente os pacientes com risco de churn, nem personalizar ações de retenção com base em dados históricos de atendimentos e interações.",
+ "objetivo": "Desenvolver um modelo preditivo de churn integrado ao Salesforce para priorizar ações de retenção, visando reduzir a evasão em 15% em 12 meses.",
+ "escopo": [
+  "Coleta e integração de dados históricos de pacientes (atendimentos, exames, interações) usando AWS Glue e Amazon S3",
+  "Desenvolvimento de modelo de machine learning para predição de churn com SageMaker, utilizando variáveis clínicas e comportamentais",
+  "Implementação de painéis de risco no Salesforce CRM para equipes de relacionamento",
+  "Automação de campanhas de retenção personalizadas via Salesforce Marketing Cloud",
+  "Definição de métricas de acompanhamento e governança do modelo em produção"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de churn treinado e validado, com acurácia mínima de 80%",
+  "Pipeline de dados automatizado na AWS para atualização diária dos scores",
+  "Dashboard no Salesforce com lista priorizada de pacientes em risco",
+  "Fluxos de campanhas de retenção configurados no Marketing Cloud",
+  "Documentação técnica e treinamento para equipe interna"
+ ],
+ "fases": [
+  "Fase 1: Discovery e preparação de dados (4 semanas)",
+  "Fase 2: Desenvolvimento do modelo e validação (6 semanas)",
+  "Fase 3: Integração com Salesforce e automação de campanhas (4 semanas)",
+  "Fase 4: Testes, treinamento e go-live (2 semanas)"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 consultor de CRM Salesforce",
+ "riscos": [
+  "Qualidade dos dados históricos insuficiente para treinar o modelo",
+  "Resistência das equipes médicas em adotar as recomendações do modelo",
+  "Integração complexa entre AWS e Salesforce dentro do prazo"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Operações)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 25% acima do mercado, inviabilizando a aprovação orçamentária do cliente.",
+ "licoes": "Para próximas oportunidades com escopo semelhante, devemos realizar benchmarking de preços com concorrentes e considerar alternativas de escopo modular para adequar o investimento ao orçamento do cliente.",
+ "retorno": "Prezados, após análise criteriosa, decidimos não avançar com a proposta para o projeto de predição de churn. O valor apresentado ficou acima do nosso orçamento e das alternativas disponíveis no mercado. Agradecemos o esforço da equipe e esperamos colaborar em futuras iniciativas. Atenciosamente, Mariana Costa, Diretora de Operações do Hospital São Lucas do Vale."
+}

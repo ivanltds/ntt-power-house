@@ -1,0 +1,49 @@
+{
+ "titulo": "Automação de Back-office com RPA e Sustentação AMS em Logística",
+ "problema": "O Operador Logístico Armazém Brasil processa cerca de 48 mil documentos fiscais e romaneios por mês, sendo 62% ainda tratados manualmente em planilhas e e-mails. Esse volume gera um backlog médio de 3 dias úteis na conciliação de fretes e um índice de erro de digitação de 4,7% nos lançamentos no SAP.",
+ "objetivo": "Automatizar os processos de back-office de conciliação de fretes, cadastro de fornecedores e tratativa de ocorrências com RPA integrado ao SAP e ao ServiceNow, reduzindo o esforço manual em 55% em 5 meses.",
+ "escopo": [
+  "Desenvolvimento de 14 robôs RPA para conciliação de fretes e romaneios, com orquestração em Python para validação e tratamento de exceções",
+  "Integração dos robôs ao SAP (módulos MM e FI) para lançamento automático de notas e baixa de títulos",
+  "Automação da abertura e triagem de chamados de ocorrências no ServiceNow, com classificação por regras em Python",
+  "Painel de monitoramento de execuções e SLA dos robôs, com alertas no ServiceNow",
+  "Sustentação AMS dos robôs em produção, com correções e melhorias em regime de 5x8 e SLA de 4 horas para incidentes críticos"
+ ],
+ "entregaveis": [
+  "Blueprint técnico dos 14 processos e matriz de automação priorizada",
+  "10 robôs RPA em produção até a semana 14, cobrindo conciliação de fretes e cadastro de fornecedores",
+  "Integração SAP-ServiceNow validada com 99,5% de sucesso nas transações de teste",
+  "Relatório mensal de AMS com volumetria de execuções, taxa de exceção e horas economizadas",
+  "Documentação operacional e treinamento de 12 usuários-chave do cliente"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e blueprint técnico",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e testes dos robôs prioritários",
+   "semanas": 9
+  },
+  {
+   "fase": "Go-live assistido e estabilização",
+   "semanas": 5
+  },
+  {
+   "fase": "Transição para sustentação AMS",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA/Python e 2 analistas de sustentação AMS",
+ "riscos": [
+  "Instabilidade nas interfaces do SAP durante picos de fechamento mensal",
+  "Mudanças de regra fiscal que exijam retrabalho nos robôs",
+  "Baixa adesão dos usuários-chave ao novo fluxo de tratativa de ocorrências"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Back-office)",
+  "tecnico": "Felipe Andrade (Arquiteto de Automação AI & Automation)"
+ },
+ "resultados": "Os 6 robôs já em produção processaram 21 mil documentos em 9 semanas, com redução de 38% no esforço manual de conciliação de fretes.",
+ "diferencial": "Ganhamos pela entrega anterior de automação de back-office em um operador logístico de porte semelhante, com 40% de redução de esforço manual comprovada em 6 meses."
+}

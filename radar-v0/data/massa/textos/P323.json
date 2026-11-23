@@ -1,0 +1,45 @@
+{
+ "titulo": "Precificação Dinâmica com Databricks e Machine Learning no setor de Seguros",
+ "problema": "A Saúde Garantida Seguros, com carteira de 420 mil apólices e R$ 1,8 bilhão em prêmios anuais, ainda define preços com tabelas estáticas revisadas apenas duas vezes por ano, o que gera perda de competitividade em 18% das cotações e prêmios subavaliados em segmentos de maior sinistralidade. A defasagem entre a sinistralidade observada e a tarifa praticada chega a 90 dias em produtos de saúde e odontológico.",
+ "objetivo": "Implantar um motor de precificação dinâmica baseado em Databricks e Machine Learning para recalcular prêmios com granularidade por perfil de risco, atualizando os modelos a cada ciclo semanal e reduzindo a defasagem tarifária.",
+ "escopo": [
+  "Modelagem de features de risco (sinistralidade, faixa etária, região, histórico de utilização) em camada Delta Lake no Databricks",
+  "Desenvolvimento e treinamento de modelos de Machine Learning de propensão a sinistro e elasticidade de preço por produto",
+  "Pipeline de scoring em lote e near real-time no Databricks para atualização semanal das tarifas",
+  "Painéis de Analytics & BI para monitoramento de prêmio médio, taxa de conversão e loss ratio por segmento",
+  "Governança de modelos com versionamento, monitoramento de drift e trilha de auditoria no Databricks"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e desenho do motor de precificação",
+  "Três modelos de Machine Learning treinados e validados com métricas de AUC e Gini",
+  "Pipeline de scoring automatizado rodando em ambiente de produção no Databricks",
+  "Dashboard de Analytics & BI com 12 indicadores de precificação e conversão",
+  "Relatório de governança de modelos e plano de monitoramento de drift"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e engenharia de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento de modelos de Machine Learning",
+   "semanas": 5
+  },
+  {
+   "nome": "Integração, scoring e painéis de Analytics & BI",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura histórica dos dados de sinistralidade no Databricks",
+  "Resistência das áreas de subscrição à adoção de tarifas dinâmicas",
+  "Prazo de 3 meses pressionado pela validação regulatória dos modelos"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Produtos e Precificação)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Primeira versão do modelo de propensão a sinistro já em validação, com ganho preliminar de 7% na aderência entre prêmio e risco observado.",
+ "diferencial": "Ganhamos por termos um case de referência parecido em seguros, com modelo de precificação dinâmica entregue em Databricks e Machine Learning, além da continuidade do projeto anterior no cliente."
+}

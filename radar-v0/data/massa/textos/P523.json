@@ -1,0 +1,47 @@
+{
+ "titulo": "Predição de churn e retenção para carteira de seguros com ML e CRM",
+ "problema": "A Proteja Seguros enfrenta taxa de cancelamento de 18% ao ano na carteira de seguros de vida e auto, com perda de aproximadamente R$ 42 milhões em prêmios. O time de retenção atua de forma reativa, sem priorização analítica dos segurados com maior propensão ao churn.",
+ "objetivo": "Construir um modelo de predição de churn com Machine Learning sobre Databricks e integrar os scores ao Salesforce, permitindo ações proativas de retenção e redução de 15% no cancelamento em 12 meses.",
+ "escopo": [
+  "Construção de pipeline de dados no Databricks com engenharia de features a partir de bases de apólices, sinistros e pagamentos em Python",
+  "Treinamento e validação de modelos de Machine Learning para score de propensão ao churn por segmento de produto",
+  "Integração dos scores e alertas de retenção ao Salesforce para uso pelos times comerciais",
+  "Dashboards de analytics e BI no Databricks para monitoramento de churn, retenção e efetividade das ações",
+  "Plano de change management com treinamento das equipes de retenção e comunicação dos novos rituais de acompanhamento"
+ ],
+ "entregaveis": [
+  "Modelo de churn validado com AUC superior a 0,80 e documentação de features",
+  "Pipeline de dados automatizado no Databricks em produção",
+  "Integração dos scores de churn no Salesforce com filas de priorização",
+  "Painel executivo de analytics e BI com KPIs de retenção",
+  "Plano de change management e capacitação de 60 usuários das áreas comercial e retenção"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Modelagem de Machine Learning",
+   "semanas": 6
+  },
+  {
+   "nome": "Integração Salesforce e dashboards",
+   "semanas": 6
+  },
+  {
+   "nome": "Change management e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados, 1 consultor Salesforce e 1 especialista em change management",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de apólices e sinistros",
+  "Baixa adoção dos scores pelas equipes comerciais",
+  "Prazo curto para integração e homologação no Salesforce"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Retenção e Carteira)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Leitura e triagem de documentos com IA generativa para operações financeiras",
+ "problema": "A Fintech Pagaí processava cerca de 180 mil documentos por mês (contratos, comprovantes e cartas de cobrança) com 22 analistas em triagem manual, gerando prazo médio de 3,5 dias úteis e 9% de retrabalho por classificação incorreta. O volume crescia 12% ao trimestre e a operação não escalava sem novas contratações.",
+ "objetivo": "Automatizar a leitura, extração de campos e triagem de documentos com IA generativa na AWS, reduzindo o esforço manual e o tempo de resposta da operação.",
+ "escopo": [
+  "Pipeline de ingestão de documentos em Python executado em AWS Lambda e Amazon S3, com processamento de PDFs e imagens",
+  "Uso de IA generativa (Amazon Bedrock) para extração de campos e classificação por tipo de documento, com prompts versionados",
+  "Camada de validação e roteamento de casos de baixa confiança para revisão humana",
+  "Integração com a fila de análise da operação via API e registro de trilha de auditoria no Amazon CloudWatch",
+  "Painel de acompanhamento de acurácia, volume processado e fila de exceções em Amazon QuickSight"
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão e leitura de documentos em produção na AWS",
+  "Modelo de extração e triagem com acurácia validada acima de 92% em amostra de 5.000 documentos",
+  "Fluxo de revisão humana para casos de baixa confiança, integrado à operação",
+  "Painel de indicadores de acurácia, volume e tempo de triagem",
+  "Documentação técnica e treinamento de 2 turmas para o time de operações"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da solução",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento do pipeline e prompts de IA generativa",
+   "semanas": 8
+  },
+  {
+   "fase": "Piloto com 5.000 documentos e ajuste de acurácia",
+   "semanas": 5
+  },
+  {
+   "fase": "Go-live, treinamento e estabilização",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de soluções, 2 engenheiros de dados, 1 especialista em IA generativa e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos documentos enviados pelos clientes",
+  "Baixa confiança do modelo em novos tipos de documento",
+  "Dependência de aprovação de acessos e ambientes AWS pelo cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A triagem manual caiu 68% e o prazo médio de resposta passou de 3,5 dias para 1 dia útil, com economia estimada de R$ 1,4 milhão por ano em esforço operacional.",
+ "licoes": "A integração com o legado de gestão documental consumiu 3 semanas além do previsto por falta de documentação de API. Foi decisivo validar os prompts com os analistas de operação desde o piloto, o que elevou a acurácia de 81% para 93%.",
+ "diferencial": "Ganhamos pela experiência comprovada em um case de referência de leitura e triagem de documentos com IA generativa em serviços financeiros, com equipe local e metodologia de validação junto à operação."
+}

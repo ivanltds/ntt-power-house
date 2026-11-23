@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma Lakehouse para Análise de Dados Financeiros",
+ "problema": "O Banco Atlântida Digital, com 2,5 milhões de clientes ativos e processamento diário de 1,2 TB de transações, enfrentava lentidão nas consultas analíticas (tempo médio de 8 horas para relatórios regulatórios) e falta de governança sobre os dados armazenados em silos departamentais. A migração para nuvem era urgente para reduzir custos de infraestrutura em 30% até o final do ano.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse na nuvem, utilizando Python e Snowflake, para centralizar e governar os dados financeiros, reduzindo o tempo de consulta para menos de 1 hora e garantindo conformidade regulatória.",
+ "escopo": [
+  "Migração de 15 bases de dados legadas para o Snowflake, com pipelines de ingestão em Python",
+  "Implementação de catálogo de dados e políticas de governança no Snowflake",
+  "Desenvolvimento de 20 pipelines de engenharia de dados para integração de fontes transacionais e de risco",
+  "Configuração de camada semântica e modelos de dados dimensionais para relatórios regulatórios",
+  "Automação de testes de qualidade de dados e monitoramento de performance"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura lakehouse e plano de migração",
+  "Ambiente Snowflake configurado com 15 bases migradas e validadas",
+  "Catálogo de dados com 200 ativos catalogados e políticas de acesso definidas",
+  "20 pipelines de dados em produção com orquestração e monitoramento",
+  "Relatórios regulatórios automatizados com tempo de execução inferior a 1 hora"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Arquitetura",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Migração e Governança",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Engenharia e Pipelines",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Otimização e Entrega",
+   "duracao_semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Resistência à mudança por parte das áreas de negócio",
+  "Complexidade na integração de fontes legadas com o Snowflake",
+  "Atraso na obtenção de aprovações regulatórias para migração"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Dados)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Redução de 65% no tempo de consulta analítica (de 8 horas para 2,8 horas) e economia de R$ 1,2 milhão anual em custos de infraestrutura. A plataforma agora suporta 500 usuários simultâneos com tempo de resposta inferior a 5 segundos para consultas interativas.",
+ "licoes": "A migração de uma base legada com documentação incompleta atrasou o cronograma em 2 semanas, exigindo esforço extra de engenharia reversa. Por outro lado, o envolvimento precoce da área de compliance foi decisivo para agilizar as aprovações regulatórias e evitar retrabalho.",
+ "diferencial": "Ganhamos pela experiência comprovada em projeto similar no setor financeiro, com arquitetura lakehouse em Snowflake e governança integrada, além da capacidade de mobilizar equipe especializada em Python e Snowflake rapidamente."
+}

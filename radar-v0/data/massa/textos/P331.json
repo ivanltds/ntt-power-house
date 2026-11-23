@@ -1,0 +1,50 @@
+{
+ "titulo": "Previsão de safra e agricultura de precisão com ML e Power BI",
+ "problema": "A Grãos do Cerrado Trading gerencia cerca de 180 mil hectares de soja e milho em três estados e não conseguia estimar produtividade com antecedência confiável, errando as previsões de safra em até 22%. Isso gerava compras emergenciais de insumos, custos logísticos extras de aproximadamente R$ 4,2 milhões por ciclo e dificuldade para fechar contratos de venda futura com segurança.",
+ "objetivo": "Construir modelos de previsão de safra e um painel de agricultura de precisão que permitam antecipar a produtividade por talhão com 25 dias de antecedência e apoiar decisões de compra, alocação de máquinas e comercialização.",
+ "escopo": [
+  "Modelos de Machine Learning em Python para previsão de produtividade por talhão, integrando séries históricas de produtividade, dados climáticos e NDVI",
+  "Pipeline de ingestão e tratamento de dados em AWS (S3, Glue e Athena) com dados de sensores de máquinas, imagens de satélite e estações meteorológicas",
+  "Feature engineering e validação cruzada por safra e por região produtora, com métricas MAPE e MAE reportadas por cultura",
+  "Dashboard em Power BI com previsão por talhão, comparação safra atual versus histórico e alertas de anomalia de desenvolvimento",
+  "Documentação técnica, notebooks de reprodutibilidade e capacitação do time de agronomia para uso dos painéis"
+ ],
+ "entregaveis": [
+  "Modelo de previsão de produtividade de soja e milho por talhão, com MAPE de 9,4% em validação out-of-sample",
+  "Pipeline de dados em AWS operacional e documentado, com atualização diária de dados climáticos e de satélite",
+  "Dashboard Power BI de previsão de safra e agricultura de precisão com 6 visões analíticas",
+  "Relatório de backtesting comparando três safras históricas e recomendações de uso do modelo",
+  "Treinamento de 18 horas para 24 analistas e agrônomos do cliente"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Desenvolvimento e validação dos modelos de ML",
+   "semanas": 10
+  },
+  {
+   "fase": "Painéis Power BI e pipeline em produção na AWS",
+   "semanas": 9
+  },
+  {
+   "fase": "Backtesting, capacitação e encerramento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados, 2 engenheiros de dados e 1 especialista de BI",
+ "riscos": [
+  "Qualidade e cobertura irregular de dados históricos de talhões mais antigos",
+  "Dependência de terceiros para disponibilização tempestiva de imagens de satélite",
+  "Baixa adoção dos painéis pela equipe de campo sem acompanhamento pós-entrega"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações Agrícolas)",
+  "tecnico": "Felipe Andrade (Líder Técnico de Data Science)"
+ },
+ "resultados": "A previsão de safra passou a ser feita com 25 dias de antecedência e o erro médio caiu de 22% para 9,4% na safra seguinte. A redução de compras emergenciais de insumos e de fretes gerou economia estimada de R$ 3,8 milhões no primeiro ciclo após a entrega.",
+ "licoes": "A integração dos dados de sensores de máquinas exigiu duas semanas adicionais por inconsistências de calibração entre frotas, ampliando o esforço de engenharia de dados. A definição precoce das métricas de acurácia junto à área de agronomia foi decisiva para alinhar expectativas e acelerar a validação dos modelos.",
+ "diferencial": "Ganhamos pela combinação de preço competitivo com um plano de validação por safra que deu previsibilidade de custo e de prazo ao cliente."
+}

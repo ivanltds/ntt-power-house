@@ -1,0 +1,37 @@
+{
+ "titulo": "Governança de Dados e Adequação à LGPD para Cooperativa de Crédito",
+ "problema": "A Cooperativa Sicrédito Planalto, com 45 agências e 320 mil cooperados, enfrenta desafios para garantir a conformidade com a LGPD e estabelecer uma governança de dados eficaz. Atualmente, 70% dos dados críticos estão dispersos em planilhas e sistemas legados, sem catalogação ou políticas de acesso definidas, expondo a cooperativa a riscos de vazamento e sanções regulatórias.",
+ "objetivo": "Implementar um framework de governança de dados e adequação à LGPD, utilizando Python e Snowflake, para assegurar a classificação, proteção e uso ético dos dados dos cooperados em 4 meses.",
+ "escopo": [
+  "Mapeamento e classificação de dados pessoais e sensíveis em 15 sistemas corporativos, com uso de Python para extração e análise.",
+  "Definição de políticas de acesso e mascaramento de dados no Snowflake, incluindo roles e row-level security.",
+  "Implementação de catálogo de dados e linhagem no Snowflake, integrado a ferramentas de metadados.",
+  "Automação de relatórios de conformidade e auditoria com Python, incluindo dashboards de monitoramento.",
+  "Capacitação de 30 colaboradores-chave em governança de dados e LGPD."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de governança de dados e políticas de segurança no Snowflake.",
+  "Catálogo de dados com 500 ativos mapeados e classificados.",
+  "Conjunto de scripts Python para auditoria automatizada e relatórios de conformidade.",
+  "Plano de resposta a incidentes e adequação à LGPD.",
+  "Relatório final de implementação e capacitação realizada."
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e Planejamento: 4 semanas",
+  "Fase 2 - Implementação de Políticas e Catálogo: 8 semanas",
+  "Fase 3 - Automação e Capacitação: 4 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados e 1 especialista em LGPD.",
+ "riscos": [
+  "Resistência à mudança por parte das áreas de negócio.",
+  "Complexidade na integração com sistemas legados.",
+  "Prazo curto para capacitação e absorção cultural."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque a NTT DATA não apresentou cases ou certificações específicas em governança de dados e LGPD para o setor financeiro cooperativo, o que gerou insegurança no cliente quanto à nossa capacidade técnica.",
+ "licoes": "Para próximas oportunidades, devemos incluir cases comprovados e certificações dos profissionais, além de parcerias com especialistas em LGPD para fortalecer a proposta.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a proposta da NTT DATA não foi selecionada. O motivo principal foi a ausência de experiência comprovada em projetos de governança de dados e LGPD no setor financeiro, conforme exigido em nosso edital. Agradecemos o esforço da equipe. Atenciosamente, Mariana Costa - Diretora de Tecnologia"
+}

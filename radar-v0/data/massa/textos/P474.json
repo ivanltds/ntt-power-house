@@ -1,0 +1,46 @@
+{
+ "titulo": "Automação de Back-Office com RPA sobre SAP para Operação Logística",
+ "problema": "O Porto Seco Interior processa cerca de 4.200 documentos fiscais e 1.800 manifestos de carga por mês, dos quais aproximadamente 65% ainda dependem de digitação manual em SAP. Esse volume gera filas de até 3 dias na conferência de documentos e um índice de retrabalho de 12% nos lançamentos.",
+ "objetivo": "Automatizar os processos de back-office de conferência documental e lançamento no SAP com RPA e scripts Python, reduzindo o esforço manual em 70% e o retrabalho para menos de 4% em 3 meses.",
+ "escopo": [
+  "Mapeamento e priorização de 8 processos de back-office com maior volume manual, incluindo conferência de CT-e e lançamento de notas no SAP",
+  "Desenvolvimento de 12 robôs RPA para captura, validação e entrada de dados no SAP GUI e transações customizadas",
+  "Construção de scripts Python para tratamento e validação de arquivos XML e planilhas antes da execução dos robôs",
+  "Integração dos robôs ao orquestrador RPA com logs, tratamento de exceções e trilha de auditoria",
+  "Sustentação / AMS dos robôs em produção, com monitoramento diário e SLA de correção de 4 horas úteis"
+ ],
+ "entregaveis": [
+  "Catálogo de processos automatizáveis com estimativa de esforço e ROI por processo",
+  "12 robôs RPA em produção, integrados ao SAP e ao orquestrador",
+  "Biblioteca de scripts Python para parsing e validação documental",
+  "Painel de monitoramento de execuções, falhas e horas economizadas",
+  "Runbook de operação e plano de sustentação / AMS com SLA definido"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e priorização de processos",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e testes dos robôs RPA e scripts Python",
+   "semanas": 6
+  },
+  {
+   "fase": "Go-live assistido e estabilização",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA e 1 analista Python",
+ "riscos": [
+  "Instabilidade nas transações SAP GUI durante as execuções dos robôs",
+  "Mudanças de layout nos documentos fiscais quebrarem os scripts Python",
+  "Baixa adesão dos times de back-office na transição para o modelo automatizado"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações Logísticas)",
+  "tecnico": "Felipe Andrade (Arquiteto de Automação RPA)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 28% acima do mercado: o cliente recebeu uma oferta concorrente com escopo semelhante por valor inferior. O prazo de 3 meses e a continuidade do projeto anterior não foram suficientes para compensar a diferença de preço.",
+ "licoes": "Para propostas de continuidade em automação, apresentar desde o início uma composição de custos enxuta e comparar o valor com o mercado antes do envio. Considerar modelos de escopo faseado para reduzir o ticket inicial e manter competitividade.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que decidimos seguir com outro fornecedor para o projeto de automação de back-office. O principal motivo foi o valor apresentado, que ficou acima do mercado para o escopo proposto. Agradecemos o empenho da equipe e esperamos manter a parceria em oportunidades futuras. Atenciosamente, Renata Vasconcelos, Gerente de Operações Logísticas."
+}

@@ -1,0 +1,38 @@
+{
+ "titulo": "Streaming de Dados em Tempo Real para Operações de Telecom",
+ "problema": "A NetVale Provedor processa 2,5 TB de dados de rede por dia, mas os relatórios operacionais são gerados com atraso de até 6 horas, impactando a detecção de falhas e a experiência de 1,2 milhão de clientes. A empresa precisa reduzir o tempo de resposta a incidentes e aumentar a eficiência operacional.",
+ "objetivo": "Implementar uma plataforma de streaming de dados em tempo real na AWS e Azure, utilizando Python, para ingestão, processamento e análise de eventos de rede, permitindo monitoramento proativo e redução do tempo de detecção de anomalias para menos de 5 minutos.",
+ "escopo": [
+  "Ingestão de dados em tempo real de fontes de rede usando AWS Kinesis e Azure Event Hubs",
+  "Processamento de streams com Python (Apache Kafka e AWS Lambda) para transformação e enriquecimento",
+  "Armazenamento de dados em camadas (data lake) na AWS S3 e Azure Data Lake Storage",
+  "Implementação de pipelines de dados orquestrados com AWS Step Functions e Azure Data Factory",
+  "Dashboards em tempo real com Amazon QuickSight e Power BI para monitoramento de KPIs operacionais"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de streaming e integração multicloud",
+  "Pipeline de ingestão e processamento em tempo real implantado e testado",
+  "Data lake configurado com políticas de governança e segurança",
+  "Dashboards operacionais em tempo real com alertas automatizados",
+  "Documentação técnica e transferência de conhecimento para a equipe do cliente"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 4 semanas",
+  "Fase 2 - Implementação de Ingestão e Processamento: 10 semanas",
+  "Fase 3 - Armazenamento e Governança: 8 semanas",
+  "Fase 4 - Dashboards e Entrega: 10 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em streaming e 1 gerente de projeto",
+ "riscos": [
+  "Complexidade na integração entre AWS e Azure",
+  "Volume de dados subestimado durante picos de tráfego",
+  "Resistência à mudança por parte das equipes operacionais"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Operações)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque a NTT DATA não apresentou cases ou certificações específicas em streaming de dados em tempo real para telecom, apesar da continuidade de projeto anterior. O cliente optou por um concorrente com experiência comprovada no tema.",
+ "licoes": "Para próximas oportunidades de streaming, incluir cases detalhados e certificações técnicas da equipe, mesmo em clientes com relacionamento prévio, para evidenciar expertise no assunto.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de streaming de dados em tempo real não foi selecionada. A decisão foi baseada na necessidade de comprovar experiência específica no tema, o que não foi evidenciado na proposta apresentada. Agradecemos o esforço da equipe e permanecemos abertos para futuras colaborações. Atenciosamente, Ricardo Almeida - Diretor de Operações, NetVale Provedor."
+}

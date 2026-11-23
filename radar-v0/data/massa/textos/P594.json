@@ -1,0 +1,48 @@
+{
+ "titulo": "Migração SAP S/4HANA para AWS com gestão de mudança",
+ "problema": "A Companhia de Saneamento Rio Claro opera o ERP em versão legada, com custos de manutenção 38% acima do benchmark do setor e fechamentos contábeis que levam até 12 dias úteis. Além disso, 240 usuários em 14 unidades operacionais dependem de processos manuais e integrações ponto a ponto que limitam a expansão do saneamento em 6 municípios atendidos.",
+ "objetivo": "Migrar o ambiente SAP para S/4HANA em AWS com go-live em 16 meses, reduzindo o custo de manutenção do ERP em 25% e o ciclo de fechamento contábil para até 5 dias úteis.",
+ "escopo": [
+  "Assessment e blueprint SAP S/4HANA com conversão de base ECC para o modelo de dados simplificado em AWS",
+  "Provisionamento de infraestrutura AWS (EC2, RDS, S3 e Backup) com arquitetura de alta disponibilidade para cargas SAP HANA",
+  "Migração técnica de módulos FI, CO, MM, PM e IS-U com 18 interfaces críticas reconstruídas em APIs",
+  "Plano de Change Management com treinamento de 240 usuários em 14 unidades e rede de 20 multiplicadores internos",
+  "Hipercare de 8 semanas pós go-live com SLA de resposta de 2 horas para incidentes críticos"
+ ],
+ "entregaveis": [
+  "Blueprint SAP S/4HANA aprovado com mapa de 18 interfaces e plano de conversão de dados",
+  "Ambiente AWS produtivo e de homologação com testes de performance e DR validados",
+  "Migração concluída dos 5 módulos com 3 ciclos completos de testes integrados",
+  "Programa de Change Management executado com 240 usuários treinados e 20 multiplicadores certificados",
+  "Relatório de hipercare com 8 semanas de sustentação e transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e Blueprint",
+   "semanas": 12
+  },
+  {
+   "nome": "Preparação da infraestrutura AWS e conversão",
+   "semanas": 20
+  },
+  {
+   "nome": "Migração, testes e Change Management",
+   "semanas": 24
+  },
+  {
+   "nome": "Go-live e hipercare",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP S/4HANA, 2 consultores funcionais SAP, 2 engenheiros de nuvem AWS e 1 especialista em Change Management",
+ "riscos": [
+  "Atraso na limpeza e conversão de dados mestres de IS-U",
+  "Baixa adesão dos 240 usuários ao novo processo no go-live",
+  "Indisponibilidade de janelas de parada para cutover em período de faturamento"
+ ],
+ "pessoas": {
+  "cliente": "Helena Vasconcelos (Diretora de Tecnologia e Operações)",
+  "tecnico": "Rafael Menezes (Arquiteto SAP S/4HANA na NTT DATA)"
+ },
+ "diferencial": "Ganhamos pela continuidade do projeto anterior no cliente e pelo case de referência de migração SAP S/4HANA para AWS em concessionária de saneamento de porte semelhante."
+}

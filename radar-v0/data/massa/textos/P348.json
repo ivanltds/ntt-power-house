@@ -1,0 +1,38 @@
+{
+ "titulo": "Plataforma Lakehouse para Dados de Saúde com Kafka e Databricks",
+ "problema": "A Operadora Saúde Total gerencia 1,2 milhão de beneficiários e recebe diariamente 4 TB de dados de sinistros, autorizações e prontuários eletrônicos. Os dados estão dispersos em 12 sistemas legados, com relatórios gerenciais que levam até 48 horas para serem consolidados, impactando a tomada de decisão e a detecção de fraudes.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse para centralizar e governar os dados de saúde, permitindo análises em tempo quase real e reduzindo o tempo de relatórios para menos de 2 horas.",
+ "escopo": [
+  "Ingestão de dados em tempo real de 8 fontes críticas (sinistros, autorizações, prontuários) usando Apache Kafka",
+  "Construção de pipeline de dados com Python e Databricks para transformação e enriquecimento",
+  "Implementação de camadas bronze, prata e ouro no lakehouse Databricks",
+  "Definição e implementação de políticas de governança de dados (catálogo, linhagem, qualidade) com ferramentas Databricks",
+  "Migração de 12 relatórios legados para dashboards analíticos na plataforma"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da plataforma lakehouse",
+  "Pipeline de ingestão Kafka configurado para 8 fontes",
+  "Camada de dados governada com catálogo e políticas de acesso",
+  "Conjunto de 12 dashboards analíticos migrados",
+  "Treinamento para 20 usuários-chave e documentação técnica"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 6 semanas",
+  "Fase 2 - Implementação da Ingestão e Lakehouse: 20 semanas",
+  "Fase 3 - Governança e Migração de Relatórios: 10 semanas",
+  "Fase 4 - Testes e Go-live: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Complexidade na integração com sistemas legados",
+  "Resistência à mudança por parte das áreas usuárias",
+  "Atraso na obtenção de acessos e dados das fontes"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia da Informação)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 10 meses foi considerado muito longo pela Operadora Saúde Total, que necessitava de uma solução em menor tempo para atender às demandas regulatórias.",
+ "licoes": "Para próximas propostas em saúde, priorizar escopo faseado com quick wins e explorar aceleradores para reduzir o prazo total, alinhando expectativas com o cliente desde o início.",
+ "retorno": "Prezados, após análise detalhada, decidimos não avançar com a proposta da NTT DATA para a plataforma lakehouse. O prazo de 10 meses foi um fator decisivo, pois precisamos de uma solução mais ágil para atender às exigências regulatórias. Agradecemos o esforço da equipe. Atenciosamente, Mariana Costa - Diretora de TI"
+}

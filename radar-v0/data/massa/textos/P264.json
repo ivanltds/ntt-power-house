@@ -1,0 +1,38 @@
+{
+ "titulo": "Migração para SAP S/4HANA na Cooperativa Agro Vale Verde",
+ "problema": "A Cooperativa Agro Vale Verde, com 12 mil associados e faturamento anual de R$ 3,5 bilhões, opera em um ERP legado que não suporta o crescimento e a integração necessária entre as áreas. A migração para o SAP S/4HANA é urgente para evitar paradas e melhorar a eficiência operacional.",
+ "objetivo": "Migrar os processos de ERP para o SAP S/4HANA em 10 meses, garantindo a continuidade das operações e a integração com as plataformas AWS e Azure.",
+ "escopo": [
+  "Análise e mapeamento dos processos atuais em SAP ECC para migração ao S/4HANA",
+  "Configuração do SAP S/4HANA em ambiente AWS para produção e Azure para disaster recovery",
+  "Migração de dados mestres e transacionais, com limpeza e enriquecimento",
+  "Integração do S/4HANA com sistemas satélites via APIs e middleware",
+  "Testes integrados e suporte à entrada em produção"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura técnica e plano de migração",
+  "Ambiente SAP S/4HANA configurado e testado em AWS e Azure",
+  "Relatório de migração de dados com 99% de acurácia",
+  "Plano de cutover e execução assistida",
+  "Treinamento para 200 usuários-chave"
+ ],
+ "fases": [
+  "Fase 1: Planejamento e Design - 8 semanas",
+  "Fase 2: Implementação e Configuração - 20 semanas",
+  "Fase 3: Testes e Homologação - 8 semanas",
+  "Fase 4: Go-live e Suporte - 4 semanas"
+ ],
+ "equipe": "1 arquiteto SAP, 2 consultores funcionais SAP, 1 engenheiro de dados, 1 especialista em cloud (AWS/Azure) e 1 gerente de projeto",
+ "riscos": [
+  "Complexidade na migração de dados legados",
+  "Resistência à mudança por parte dos usuários",
+  "Atrasos na integração com sistemas satélites"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de TI)",
+  "tecnico": "Fernanda Oliveira (Gerente de Projetos SAP)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado. A concorrência apresentou valor 15% menor para escopo similar.",
+ "licoes": "Para próximas propostas, revisar a precificação com base em benchmarking e considerar opções de escopo faseado para adequar ao orçamento do cliente.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a proposta da NTT DATA não foi selecionada devido ao valor acima do mercado. Agradecemos o esforço e a qualidade técnica apresentada. Permanecemos abertos a futuras oportunidades. Atenciosamente, Carlos Mendes - Diretor de TI"
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Predição de churn e retenção com analytics avançado na base pré-paga",
+ "problema": "A Conecta Brasil Telecom perdia cerca de 2,3% da base pré-paga por mês, o equivalente a 180 mil linhas, sem conseguir identificar os clientes com maior propensão ao cancelamento. Os modelos de retenção eram reativos e baseados em regras fixas, com campanhas de retenção acertando apenas 11% dos casos abordados.",
+ "objetivo": "Implantar um modelo preditivo de churn na AWS e no Databricks para priorizar ações de retenção e aumentar a eficácia das campanhas de CRM sobre a base pré-paga.",
+ "escopo": [
+  "Ingestão de dados de recarga, uso, atendimento e CRM em data lake na AWS (S3 e Glue)",
+  "Construção de pipeline de features e treinamento de modelos de churn no Databricks (MLflow)",
+  "Score de propensão ao churn atualizado diariamente e integrado ao CRM para acionamento de campanhas",
+  "Dashboards de monitoramento de churn e efetividade de retenção em Analytics & BI",
+  "Definição de réguas de retenção e testes A/B com times de CRM"
+ ],
+ "entregaveis": [
+  "Data lake e pipeline de features documentados na AWS",
+  "Modelo de churn em produção com AUC acima de 0,82",
+  "Score diário de propensão integrado ao CRM para 180 mil clientes elegíveis",
+  "Painéis de BI com indicadores de churn, retenção e ROI das campanhas",
+  "Playbook de réguas de retenção e relatório de testes A/B"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Engenharia de dados e features",
+   "semanas": 5
+  },
+  {
+   "fase": "Modelagem e integração com CRM",
+   "semanas": 5
+  },
+  {
+   "fase": "Piloto de campanhas e handover",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados de recarga entre sistemas legados",
+  "Baixa adesão das áreas de CRM às novas réguas de retenção",
+  "Latência na integração diária do score com o CRM"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Retenção e CRM)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "O modelo elevou a taxa de acerto das campanhas de retenção de 11% para 29% e reduziu o churn mensal da base pré-paga em 0,7 ponto percentual, preservando cerca de R$ 4,2 milhões em receita anualizada.",
+ "licoes": "A integração do score com o CRM atrasou duas semanas por restrições de janela do sistema legado, exigindo replanejamento do piloto. Foi decisivo envolver o time de CRM desde a fase de features, o que garantiu réguas de retenção aderentes à operação e aceleração do piloto.",
+ "diferencial": "Ganhamos pela entrega de um case de referência em predição de churn no setor de telecom, somada à continuidade do relacionamento já iniciado com a Conecta Brasil Telecom em projetos anteriores de Data & Analytics."
+}

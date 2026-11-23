@@ -1,0 +1,47 @@
+{
+ "titulo": "Predição de churn e retenção para carteira de seguros com Salesforce e AWS",
+ "problema": "A Seguradora Amparo opera com cerca de 1,2 milhão de apólices ativas e enfrenta taxa de cancelamento de 18% ao ano nos ramos de auto e residencial, concentrada nos primeiros 12 meses de contrato. A base de dados de sinistros, renovações e interações de atendimento está fragmentada entre o CRM e sistemas legados, impedindo ações de retenção proativas e causando perda estimada de R$ 45 milhões em prêmios anuais.",
+ "objetivo": "Construir um modelo de predição de churn e uma esteira de retenção integrada ao Salesforce e à AWS, elevando a efetividade das ações de retenção em 25% e reduzindo o cancelamento em 4 pontos percentuais em 12 meses.",
+ "escopo": [
+  "Diagnóstico e integração das bases de apólices, sinistros e atendimento no AWS (S3, Glue e Redshift)",
+  "Desenvolvimento de modelo de propensão a churn com features de comportamento de pagamento, sinistralidade e interações, em SageMaker",
+  "Definição de segmentos de risco e regras de próxima melhor ação no Salesforce Sales/Service Cloud",
+  "Painéis de monitoramento de churn e retenção em Amazon QuickSight para as áreas Comercial e Atuária",
+  "Implantação de rotina de re-treino mensal do modelo e governança de dados com Data Catalog na AWS"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e arquitetura de integração AWS",
+  "Modelo de churn treinado e validado, com AUC mínima de 0,78 e matriz de explicabilidade",
+  "Configuração de segmentos e jornadas de retenção no Salesforce",
+  "Dashboards de monitoramento de indicadores de churn e retenção",
+  "Documentação de governança, playbook de re-treino e transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e integração de dados",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Modelagem de churn e validação",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Integração com Salesforce e dashboards",
+   "duracao_semanas": 3
+  },
+  {
+   "nome": "Homologação e transferência de conhecimento",
+   "duracao_semanas": 1
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 consultor de CRM Salesforce",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de sinistros e renovações",
+  "Baixa adesão das áreas Comercial e Atendimento às ações de retenção",
+  "Restrições de privacidade e LGPD no uso de dados de clientes para modelagem"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Canais e Retenção)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ }
+}

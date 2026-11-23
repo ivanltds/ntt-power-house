@@ -1,0 +1,50 @@
+{
+ "titulo": "Otimização de rotas e frota com Machine Learning para transportadora de carga",
+ "problema": "A transportadora operava com cerca de 1.200 veículos e mais de 180 mil entregas mensais, mas a definição de rotas era manual e baseada em planilhas, gerando 18% de quilometragem ociosa e atrasos em 12% das entregas. O planejamento diário consumia até 4 horas da equipe de operações e não considerava variáveis como trânsito, janelas de entrega e restrições de carga.",
+ "objetivo": "Reduzir custos logísticos e elevar o nível de serviço por meio de um motor de otimização de rotas e alocação de frota baseado em dados históricos e variáveis operacionais em tempo quase real.",
+ "escopo": [
+  "Construção de pipeline de dados no GCP (BigQuery e Cloud Storage) para consolidar telemetria, pedidos e restrições operacionais",
+  "Desenvolvimento de modelos de Machine Learning em Python para previsão de tempo de viagem e demanda por região",
+  "Implementação de algoritmo de otimização de rotas e alocação de frota com restrições de capacidade, janelas de entrega e jornada de motoristas",
+  "Integração do motor de otimização ao sistema de gestão de transportes via APIs e painéis de acompanhamento",
+  "Painéis de Analytics & BI para monitoramento de KPIs de custo por entrega, ocupação e aderência ao plano de rotas"
+ ],
+ "entregaveis": [
+  "Modelo de previsão de tempo de viagem com erro médio absoluto abaixo de 9 minutos",
+  "Motor de otimização de rotas em produção cobrindo 100% das rotas urbanas",
+  "Painéis de BI com 15 indicadores operacionais e financeiros",
+  "Documentação técnica e runbooks de operação no GCP",
+  "Treinamento de 40 usuários das áreas de operações e planejamento"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Modelagem preditiva e otimização",
+   "semanas": 10
+  },
+  {
+   "nome": "Integração e piloto em 3 filiais",
+   "semanas": 8
+  },
+  {
+   "nome": "Rollout e sustentação assistida",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados, 1 especialista em otimização e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura dos dados de telemetria da frota",
+  "Baixa adesão dos planejadores às rotas sugeridas",
+  "Restrições de integração com o sistema de gestão de transportes legado"
+ ],
+ "pessoas": {
+  "cliente": "Marcela Andrade (Diretora de Operações)",
+  "tecnico": "Rafael Nogueira (Líder Técnico de Data Science)"
+ },
+ "resultados": "A solução reduziu a quilometragem ociosa em 14% e o custo médio por entrega em 11%, gerando economia estimada de R$ 3,2 milhões no primeiro ano. O tempo de planejamento diário caiu de 4 horas para 40 minutos.",
+ "licoes": "A integração com o sistema legado de gestão de transportes exigiu duas semanas adicionais e esforço extra de engenharia de integração. Foi decisivo envolver os planejadores das filiais desde o piloto, o que acelerou a adoção das rotas sugeridas.",
+ "diferencial": "Ganhamos pela experiência comprovada em um case de referência de otimização de rotas e frota em logística, com metodologia replicável e equipe sênior em Machine Learning e GCP."
+}

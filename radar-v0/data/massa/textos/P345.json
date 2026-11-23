@@ -1,0 +1,47 @@
+{
+ "titulo": "Implantação de CRM Salesforce e Jornada Omnicanal para Operadora de Telecom",
+ "problema": "A Conecta Brasil Telecom atende 4,2 milhões de clientes com uma base de CRM legada que não integra os canais digitais e o call center, gerando tempo médio de resolução de 9 minutos e churn mensal de 2,8%. A ausência de uma visão unificada da jornada impede ações de retenção proativas e reduz a eficácia das campanhas de upsell em 35%.",
+ "objetivo": "Implantar uma plataforma de CRM Salesforce integrada em tempo real aos sistemas operacionais e de faturamento, com jornada do cliente unificada e dados governados no Azure, em 12 meses.",
+ "escopo": [
+  "Configuração do Salesforce Service Cloud e Marketing Cloud para atendimento e campanhas omnicanal",
+  "Integração em tempo real via Kafka entre CRM, sistemas de billing e canais digitais",
+  "Construção de pipeline de engenharia de dados no Azure (Data Lake e Databricks) para visão 360 do cliente",
+  "Migração e deduplicação de 4,2 milhões de registros de clientes da base legada",
+  "Definição de modelo de governança de dados e indicadores de jornada no Power BI"
+ ],
+ "entregaveis": [
+  "Blueprint de jornada do cliente e arquitetura de integração validados",
+  "Ambiente Salesforce configurado com 12 jornadas prioritárias em produção",
+  "Pipeline de dados no Azure operando com latência inferior a 5 minutos",
+  "Plano de Change Management com treinamento de 350 usuários em 3 ondas",
+  "Dashboard executivo de jornada e churn com 18 indicadores monitorados"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Desenho",
+   "semanas": 12
+  },
+  {
+   "nome": "Construção e Integração",
+   "semanas": 24
+  },
+  {
+   "nome": "Piloto e Homologação",
+   "semanas": 10
+  },
+  {
+   "nome": "Rollout e Estabilização",
+   "semanas": 14
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções CRM, 2 consultores Salesforce, 2 engenheiros de dados, 1 especialista em change management e 1 analista de BI",
+ "riscos": [
+  "Baixa adoção pelos 350 usuários do atendimento e vendas",
+  "Complexidade de integração com sistemas legados de billing",
+  "Qualidade e duplicidade dos dados migrados da base atual"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Experiência do Cliente)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções CRM)"
+ }
+}

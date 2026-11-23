@@ -1,0 +1,38 @@
+{
+ "titulo": "Plataforma de Dados Lakehouse para Análise de Saúde Populacional",
+ "problema": "A Operadora Saúde Total gerencia 2,3 milhões de beneficiários e enfrenta dificuldades para consolidar dados de sinistros, autorizações e prontuários eletrônicos espalhados em 12 sistemas legados. O tempo médio para gerar relatórios analíticos é de 5 dias, impactando a agilidade na tomada de decisão e a personalização de programas de saúde.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse na AWS com ingestão em tempo real via Kafka, unificando fontes de dados e reduzindo o tempo de acesso analítico para menos de 1 hora.",
+ "escopo": [
+  "Migração de 12 fontes de dados legadas para um data lake na AWS S3, com catalogação no AWS Glue.",
+  "Implementação de pipeline de ingestão em tempo real utilizando Apache Kafka para eventos de sinistros e autorizações.",
+  "Construção de camada de armazenamento lakehouse com Delta Lake no AWS EMR, integrando dados estruturados e não estruturados.",
+  "Desenvolvimento de 15 dashboards analíticos no Amazon QuickSight para monitoramento de indicadores de saúde.",
+  "Configuração de governança de dados com AWS Lake Formation e controle de acesso baseado em políticas de segurança."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados lakehouse na AWS, incluindo diagramas de fluxo e definição de zonas (raw, trusted, refined).",
+  "Pipeline de ingestão Kafka operacional, com 12 conectores configurados e monitoramento via Amazon CloudWatch.",
+  "Catálogo de dados unificado com 200 tabelas mapeadas e metadados no AWS Glue Data Catalog.",
+  "Conjunto de 15 dashboards no QuickSight, validados pelas áreas de negócio, com tempos de resposta inferiores a 5 segundos.",
+  "Relatório de testes de performance e segurança, incluindo simulações de carga com 1 TB de dados."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 4 semanas",
+  "Fase 2 - Implementação de Ingestão e Lakehouse: 10 semanas",
+  "Fase 3 - Desenvolvimento Analítico e Governança: 8 semanas",
+  "Fase 4 - Testes, Treinamento e Go-live: 6 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Kafka e 1 gerente de projeto",
+ "riscos": [
+  "Complexidade na integração de sistemas legados com formatos de dados heterogêneos.",
+  "Latência na ingestão de eventos Kafka devido a picos de volume de sinistros.",
+  "Resistência dos usuários na adoção de novos dashboards e processos analíticos."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia da Informação)",
+  "tecnico": "Ricardo Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou 25% acima da média de mercado para projetos similares, segundo benchmarking do cliente. A concorrência ofereceu um valor 18% menor com escopo equivalente.",
+ "licoes": "Para próximas propostas em saúde, incluir análise de valor percebido e flexibilizar o modelo de precificação, oferecendo opções modulares para reduzir o investimento inicial. Realizar benchmarking competitivo antes de finalizar a proposta.",
+ "retorno": "Prezado Ricardo, após análise das propostas recebidas, informamos que a Operadora Saúde Total decidiu não seguir com a NTT DATA para o projeto de plataforma de dados lakehouse. O motivo principal foi o preço apresentado, que ficou acima do orçamento aprovado e da média de mercado. Agradecemos o empenho da equipe e esperamos manter a parceria em oportunidades futuras. Atenciosamente, Mariana Costa (Diretora de Tecnologia da Informação)."
+}

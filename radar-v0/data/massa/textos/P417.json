@@ -1,0 +1,48 @@
+{
+ "titulo": "Leitura e triagem inteligente de documentos com IA generativa para sinistros",
+ "problema": "A Escudo Auto Seguros recebe cerca de 48 mil documentos por mês entre boletins de ocorrência, laudos e orçamentos, e a triagem manual consome 6 dias úteis em média por processo. Cerca de 22% dos casos exigem reanálise por erros de classificação, elevando o custo operacional da área de sinistros em 18%.",
+ "objetivo": "Automatizar a leitura, classificação e triagem de documentos de sinistros com IA generativa, reduzindo o tempo médio de triagem para até 1 dia útil e a taxa de reanálise para menos de 8%.",
+ "escopo": [
+  "Pipeline de ingestão e OCR de documentos em Python, executado em AWS Lambda e Amazon S3",
+  "Serviço de classificação e extração de campos com IA generativa via Amazon Bedrock",
+  "Motor de regras de triagem e roteamento automático para as filas de analistas",
+  "Painel de acompanhamento de acurácia e volume processado em Amazon CloudWatch e QuickSight",
+  "Integração via API com o sistema de gestão de sinistros existente do cliente"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da solução em AWS com definição dos modelos generativos",
+  "Pipeline de ingestão e OCR implantado em ambiente de homologação",
+  "Modelo de classificação e extração validado com acurácia mínima de 92% em base de 3 mil documentos",
+  "Motor de triagem e integração com o sistema de sinistros em produção assistida",
+  "Relatório de resultados e plano de evolução pós-projeto"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento do pipeline e modelo",
+   "semanas": 8
+  },
+  {
+   "nome": "Integração e testes assistidos",
+   "semanas": 6
+  },
+  {
+   "nome": "Go-live assistido e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de soluções AWS, 2 engenheiros de IA, 1 engenheiro de dados Python e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização irregular dos documentos digitalizados",
+  "Baixa adesão dos analistas de sinistros ao novo fluxo de triagem",
+  "Restrições de privacidade e LGPD no envio de documentos a serviços generativos"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Sinistros)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "O cliente cancelou a oportunidade por redefinição de prioridades no orçamento de transformação digital para o próximo ciclo, postergando a iniciativa de IA generativa em sinistros."
+}

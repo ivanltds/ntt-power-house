@@ -1,0 +1,38 @@
+{
+ "titulo": "Lakehouse de Dados para Operadora de Telecom com AWS, Snowflake e Azure",
+ "problema": "A Ondas Móvel operava com mais de 40 fontes de dados dispersas entre sistemas de billing, rede e atendimento, gerando relatórios de churn com atraso de até 5 dias e 18% de divergência entre áreas. O time de analytics consumia 60% do tempo em extração e tratamento manual, sem camada única de governança sobre 12 milhões de linhas de CDR diárias.",
+ "objetivo": "Construir uma plataforma lakehouse unificada em AWS, Snowflake e Azure, com engenharia e governança de dados, reduzindo o tempo de disponibilização de dados analíticos e garantindo rastreabilidade ponta a ponta.",
+ "escopo": [
+  "Ingestão em lote e incremental de 40 fontes (billing, CRM, OSS, rede) na camada de armazenamento AWS S3 com orquestração automatizada",
+  "Construção de camadas bronze, silver e gold no Snowflake, com 85 modelos dbt e SLAs de atualização de até 2 horas",
+  "Integração de pipelines híbridos com Azure Data Factory para fontes corporativas e aplicações legadas",
+  "Catálogo de dados e linhagem no Snowflake Horizon, com 300 termos de negócio e classificação de 100% dos campos sensíveis (LGPD)",
+  "Definição de políticas de governança, papéis de acesso e painéis de qualidade de dados com 25 regras automatizadas"
+ ],
+ "entregaveis": [
+  "Plataforma lakehouse em produção com 40 fontes integradas e 85 modelos de dados documentados",
+  "Catálogo de dados corporativo com 300 termos de negócio e linhagem completa das tabelas gold",
+  "Políticas de governança e matriz de acessos aprovadas pelo comitê de dados do cliente",
+  "Painel de qualidade de dados com 25 regras e alertas automáticos de desvio",
+  "Documentação técnica e transferência de conhecimento para 8 profissionais do cliente"
+ ],
+ "fases": [
+  "Fase 1 – Discovery e arquitetura: 6 semanas",
+  "Fase 2 – Ingestão e camada bronze/silver: 14 semanas",
+  "Fase 3 – Camada gold, governança e catálogo: 12 semanas",
+  "Fase 4 – Estabilização, hipercare e handover: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos às fontes legadas pelo time de infraestrutura do cliente",
+  "Qualidade inconsistente dos dados de rede, exigindo regras adicionais de tratamento",
+  "Mudança de escopo em requisitos de governança durante a fase de catálogo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vilaça (Diretora de Data & Analytics)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A plataforma reduziu o tempo de disponibilização de dados analíticos em 72% e eliminou 18% de divergência entre áreas, gerando economia estimada de R$ 2,4 milhões por ano em horas de retrabalho.",
+ "licoes": "A dependência de aprovações de acesso às fontes legadas atrasou a Fase 2 em 3 semanas e exigiu replanejamento. Foi decisivo envolver o comitê de dados do cliente desde o discovery, o que acelerou as decisões de governança e a adoção pelas áreas de negócio.",
+ "diferencial": "Ganhamos pela entrega anterior de lakehouse em outra operadora de telecom, que serviu de referência comprovada de arquitetura e governança para o contexto da Ondas Móvel."
+}

@@ -1,0 +1,35 @@
+{
+ "titulo": "Leitura e triagem inteligente de documentos clínicos com IA generativa",
+ "problema": "O Hospital São Lucas do Vale processa cerca de 12.000 documentos clínicos por mês (laudos, prescrições e guias de convênio), dos quais 65% ainda são triados manualmente, gerando atrasos de até 48 horas na liberação de procedimentos e um custo operacional de R$ 180 mil/ano. A fragmentação entre sistemas legados e planilhas agrava erros de classificação, com índice de retrabalho de 18%.",
+ "objetivo": "Automatizar a leitura, extração de dados e triagem de documentos clínicos com IA generativa, reduzindo o tempo de processamento em 70% e elevando a acurácia de classificação para acima de 95% em 3 meses.",
+ "escopo": [
+  "Desenvolvimento de pipeline de OCR e extração de entidades em Python para documentos clínicos digitalizados",
+  "Implementação de modelo de IA generativa para sumarização e classificação de laudos e prescrições",
+  "Orquestração de fluxo de triagem e roteamento automático com RPA integrado aos sistemas do hospital",
+  "Implantação de serviços AWS (Lambda, S3, Textract) para processamento escalável e armazenamento seguro",
+  "Dashboard de monitoramento de acurácia e fila de documentos para validação humana"
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão e OCR validado com 1.000 documentos reais",
+  "Modelo de IA generativa treinado e calibrado para triagem de 5 tipos documentais",
+  "Fluxo RPA de roteamento automático para 3 áreas clínicas",
+  "Dashboard de métricas de acurácia e tempo de ciclo",
+  "Relatório de testes A/B comparando triagem manual versus automatizada"
+ ],
+ "fases": [
+  "Fase 1 – Discovery e preparação de dados: 4 semanas",
+  "Fase 2 – Desenvolvimento do pipeline e modelo de IA: 6 semanas",
+  "Fase 3 – Integração com RPA e piloto controlado: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 2 engenheiros de dados, 1 especialista em RPA e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos documentos digitalizados impacta acurácia do OCR",
+  "Resistência da equipe médica à validação de triagem automatizada",
+  "Integração com sistemas legados do hospital pode atrasar o cronograma"
+ ],
+ "pessoas": {
+  "cliente": "Dra. Helena Vasconcelos (Diretora de Operações Clínicas)",
+  "tecnico": "Rafael Menezes (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "O cliente cancelou a oportunidade devido a restrições orçamentárias decorrentes de um corte de 30% no investimento em tecnologia para o segundo semestre."
+}

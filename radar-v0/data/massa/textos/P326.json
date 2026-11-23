@@ -1,0 +1,47 @@
+{
+ "titulo": "Painéis executivos e BI para gestão industrial com Power BI, Azure e SAP",
+ "problema": "A Química Fênix acompanha indicadores de produção e vendas em planilhas manuais de 12 áreas, com atraso de até 5 dias úteis na consolidação mensal. A ausência de uma visão única sobre 3 plantas industriais e 480 SKUs ativos dificulta decisões de capacidade e margem pela diretoria.",
+ "objetivo": "Implantar uma camada analítica corporativa em Azure com dashboards executivos em Power BI integrados ao SAP, reduzindo o ciclo de consolidação de 5 dias para 1 dia útil.",
+ "escopo": [
+  "Extração e integração de dados de produção, vendas e custos do SAP para o Azure Data Lake",
+  "Modelagem dimensional e camada semântica no Power BI para 8 indicadores executivos prioritários",
+  "Construção de 3 painéis executivos (produção, comercial e margem) com atualização diária",
+  "Definição de catálogo de indicadores e regras de negócio com as áreas de controladoria e PCP",
+  "Configuração de governança, segurança por perfil e monitoramento de atualizações no Azure"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura analítica e catálogo de indicadores validado",
+  "Pipeline de ingestão SAP–Azure em produção para as 3 plantas",
+  "3 painéis executivos em Power BI publicados e homologados",
+  "Manual de governança de dados e matriz de acessos por perfil",
+  "Treinamento de 40 usuários-chave e sessão de transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura",
+   "semanas": 4
+  },
+  {
+   "fase": "Integração de dados SAP–Azure",
+   "semanas": 8
+  },
+  {
+   "fase": "Construção dos painéis em Power BI",
+   "semanas": 8
+  },
+  {
+   "fase": "Homologação, treinamento e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados e 2 analistas de BI",
+ "riscos": [
+  "Qualidade e padronização dos dados mestres no SAP",
+  "Dependência de janelas de extração com a equipe de TI do cliente",
+  "Mudanças de escopo nos indicadores durante a homologação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Controladoria)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ }
+}

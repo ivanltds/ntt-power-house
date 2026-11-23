@@ -1,0 +1,50 @@
+{
+ "titulo": "Automação de Back-Office com RPA para Operações Financeiras",
+ "problema": "O Banco Atlântida Digital processa cerca de 42 mil transações manuais de back-office por mês, concentradas em conciliação SAP e conferência de cadastros, com índice de retrabalho de 11% e SLA médio de 36 horas. A operação envolve 28 analistas dedicados a tarefas repetitivas, gerando custo elevado e risco de erros em fechamentos contábeis.",
+ "objetivo": "Automatizar os processos de back-office prioritários com RPA em Python integrado ao SAP, reduzindo o esforço manual em 60% e o tempo de ciclo dos processos automatizados para até 8 horas em 6 meses.",
+ "escopo": [
+  "Mapeamento e priorização de 12 processos de back-office com maior volume manual, incluindo conciliação SAP e conferência cadastral",
+  "Desenvolvimento de 8 robôs de automação em Python com integração às transações SAP via APIs e scripts de interface",
+  "Orquestração e agendamento das automações com monitoramento de execuções, logs e tratamento de exceções",
+  "Painel de indicadores de automação com métricas de volume processado, taxa de sucesso e horas economizadas",
+  "Transferência de conhecimento e documentação técnica dos robôs para a equipe de operações do banco"
+ ],
+ "entregaveis": [
+  "Catálogo de processos automatizáveis com análise de viabilidade e estimativa de ROI",
+  "8 robôs de RPA em produção integrados ao SAP com testes homologados",
+  "Manual de operação, runbook de exceções e documentação técnica em Python",
+  "Painel de indicadores de desempenho das automações",
+  "Treinamento de 15 analistas e 3 superusuários para sustentação das automações"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e priorização de processos",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e testes dos robôs",
+   "semanas": 12
+  },
+  {
+   "fase": "Homologação e go-live assistido",
+   "semanas": 4
+  },
+  {
+   "fase": "Estabilização e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA Python e 1 especialista SAP",
+ "riscos": [
+  "Baixa aderência dos analistas de back-office à mudança de rotina",
+  "Instabilidade em interfaces SAP durante janelas de atualização",
+  "Volume de exceções acima do previsto nos processos conciliatórios"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações)",
+  "tecnico": "Felipe Andrade (Arquiteto de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 22% acima do mercado, mesmo com o histórico de continuidade de projeto no cliente. O comitê de compras priorizou a alternativa de menor custo total no prazo de 6 meses.",
+ "licoes": "Para propostas de continuidade em RPA, ancorar o preço em benchmark de mercado e apresentar composição de custos por robô, evitando que o histórico no cliente seja ofuscado por um valor percebido como alto.",
+ "retorno": "Prezados, informamos que concluímos a avaliação das propostas para o projeto de automação de back-office com RPA. A proposta da NTT DATA Brasil foi tecnicamente bem avaliada, porém o valor ficou acima do mercado e da faixa orçamentária aprovada para este ciclo. Agradecemos o empenho da equipe e seguimos abertos a novas oportunidades. Atenciosamente, Renata Vasconcelos, Diretora de Operações do Banco Atlântida Digital."
+}

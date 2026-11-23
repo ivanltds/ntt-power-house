@@ -1,0 +1,44 @@
+{
+ "titulo": "Predição de churn e retenção para base de 1,2 milhão de assinantes",
+ "problema": "A Tríade Telecom perde cerca de 2,4% da base móvel pós-paga por mês, o equivalente a aproximadamente 28 mil linhas, com custo de aquisição de R$ 180 por cliente. A retenção hoje é reativa, sem modelo preditivo que identifique assinantes com risco de cancelamento nas próximas janelas de renovação.",
+ "objetivo": "Construir um modelo de Machine Learning em Python que estime a probabilidade de churn por assinante com antecedência de 60 dias, priorizando as ações de retenção da equipe de CRM.",
+ "escopo": [
+  "Análise exploratória e engenharia de features sobre 18 meses de histórico de uso, recarga, reclamações e atendimento",
+  "Desenvolvimento de modelos de classificação em Python (scikit-learn e XGBoost) com validação temporal e meta de AUC acima de 0,78",
+  "Segmentação da base em faixas de risco e construção de matriz de propensão com regras de acionamento para retenção",
+  "Painel de monitoramento de performance do modelo e deriva de dados, com reavaliação mensal",
+  "Documentação técnica e transferência de conhecimento para o time de Data & Analytics da Tríade Telecom"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e dicionário de features do modelo de churn",
+  "Modelo de propensão a churn em Python versionado, com AUC e lift reportados por segmento",
+  "Lista mensal de assinantes priorizados por risco e valor esperado para a operação de retenção",
+  "Painel de acompanhamento de métricas do modelo e das taxas de retenção pós-acionamento",
+  "Workshop de handover e documentação de reprodutibilidade do pipeline"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Modelagem e validação",
+   "semanas": 5
+  },
+  {
+   "fase": "Operacionalização e handover",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 cientista de dados sênior, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados de uso entre sistemas legados",
+  "Baixa adesão da área de retenção às listas priorizadas",
+  "Prazo de 3 meses curto para validação em produção"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Gerente de Customer Experience)",
+  "tecnico": "Rafael Nogueira (Cientista de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte de orçamento no programa de transformação digital do semestre."
+}

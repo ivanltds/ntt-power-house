@@ -1,0 +1,47 @@
+{
+ "titulo": "Plataforma de Indicadores ESG e Emissões para Distribuidora de Energia",
+ "problema": "A Distribuidora Luz do Cerrado consolida mensalmente dados de emissões de 42 unidades operacionais em planilhas manuais, gerando atrasos de até 12 dias na divulgação de indicadores ESG e retrabalho em cerca de 30% dos registros. A ausência de uma camada única de governança impede a rastreabilidade dos cálculos de emissões Escopo 1 e 2 exigidos por órgãos reguladores e investidores.",
+ "objetivo": "Implantar uma plataforma de analytics e governança de dados ESG em Azure e Snowflake para automatizar o cálculo de emissões e a publicação de indicadores confiáveis em até 4 meses.",
+ "escopo": [
+  "Ingestão automatizada em Azure Data Factory dos dados de consumo de combustível e energia de 42 unidades, com validação em Python",
+  "Modelagem dimensional no Snowflake para emissões Escopo 1 e 2 e indicadores ESG corporativos",
+  "Pipeline em Python para cálculo de fatores de emissão e reconciliação mensal com tolerância de 0,5%",
+  "Camada semântica e dashboards de Analytics & BI para 5 painéis executivos de ESG",
+  "Governança de Dados com catálogo, linhagem e dicionário de dados dos indicadores ESG"
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão e validação de dados operacionais em produção",
+  "Modelo de dados ESG no Snowflake documentado e homologado",
+  "Cinco dashboards executivos publicados com atualização mensal automatizada",
+  "Catálogo de dados e linhagem dos 28 indicadores ESG prioritários",
+  "Relatório de reconciliação dos cálculos de emissões validado pela área de Sustentabilidade"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da arquitetura",
+   "semanas": 4
+  },
+  {
+   "nome": "Construção da ingestão e modelagem no Snowflake",
+   "semanas": 6
+  },
+  {
+   "nome": "Cálculos de emissões e dashboards de Analytics & BI",
+   "semanas": 4
+  },
+  {
+   "nome": "Governança de Dados, homologação e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade inconsistente dos dados operacionais das 42 unidades",
+  "Mudanças nos critérios regulatórios de cálculo de emissões durante o projeto",
+  "Baixa adoção dos painéis pelas áreas de Sustentabilidade e Operações"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Sustentabilidade e ESG)",
+  "tecnico": "Marcio Tavares (Arquiteto de Dados Sênior)"
+ }
+}

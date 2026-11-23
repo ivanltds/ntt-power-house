@@ -1,0 +1,46 @@
+{
+ "titulo": "Automação de Back-office com RPA para Processos de Faturamento e Atendimento",
+ "problema": "A Companhia de Saneamento Rio Claro processa cerca de 48 mil faturas por mês e mantém 62% das rotinas de back-office ainda manuais, com retrabalho estimado em 18% nos lançamentos no SAP e prazo médio de 5 dias úteis para tratativa de solicitações no ServiceNow. O volume de 120 mil interações anuais com clientes sobrecarrega as equipes e eleva o custo operacional em R$ 2,4 milhões por ano.",
+ "objetivo": "Automatizar os processos de back-office de faturamento e atendimento com RPA integrado a Python, ServiceNow e SAP, reduzindo o esforço manual em 40% e o prazo de tratativa para até 2 dias úteis em 2 meses.",
+ "escopo": [
+  "Mapeamento e automação de 12 rotinas de back-office com RPA, incluindo lançamentos e conciliações no SAP",
+  "Desenvolvimento de robôs em Python para extração, validação e tratamento de dados de faturamento",
+  "Integração dos fluxos automatizados ao ServiceNow para abertura, atualização e encerramento de tickets",
+  "Orquestração e monitoramento dos robôs com painéis de exceções e reprocessamento automático",
+  "Sustentação AMS dos robôs em produção, com SLA de correção de incidentes em até 8 horas úteis"
+ ],
+ "entregaveis": [
+  "Catálogo de 12 processos automatizados com documentação técnica e operacional",
+  "Robôs RPA e scripts Python implantados em ambiente de produção",
+  "Integrações ServiceNow e SAP homologadas com testes de ponta a ponta",
+  "Painel de monitoramento de execuções, exceções e indicadores de economia",
+  "Plano de sustentação AMS com SLA, runbook e treinamento das equipes"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho de processos",
+   "semanas": 2
+  },
+  {
+   "fase": "Desenvolvimento e integração dos robôs",
+   "semanas": 4
+  },
+  {
+   "fase": "Homologação e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de automação, 2 desenvolvedores RPA/Python, 1 especialista ServiceNow/SAP e 1 gerente de projeto",
+ "riscos": [
+  "Instabilidade das interfaces SAP durante as execuções dos robôs",
+  "Baixa adesão das áreas de negócio à mudança de processo",
+  "Dependência de acessos e credenciais para os ambientes legados"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Tavares (Gerente de Operações de Back-office)",
+  "tecnico": "Fernanda Lopes (Arquiteta de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente: incluímos 12 processos e sustentação AMS completa, enquanto a Rio Claro buscava automatizar apenas 4 rotinas de faturamento em um piloto.",
+ "licoes": "Nas próximas propostas para clientes com continuidade de projeto anterior, iniciar com um piloto enxuto de escopo e apresentar a expansão em fases, alinhando o dimensionamento ao apetite real do cliente antes de incluir AMS.",
+ "retorno": "Prezados, agradecemos a proposta enviada para automação de back-office com RPA. Após análise interna, decidimos não avançar com o escopo completo apresentado, pois ele excede a nossa necessidade atual; seguiremos com um piloto menor de 4 rotinas de faturamento. Ficamos à disposição para reavaliar uma proposta enxuta no futuro. Atenciosamente, Marcelo Tavares, Gerente de Operações de Back-office, Companhia de Saneamento Rio Claro."
+}

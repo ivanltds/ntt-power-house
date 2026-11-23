@@ -1,0 +1,38 @@
+{
+ "titulo": "Otimização de Rotas e Frota com Analytics e Machine Learning na Nuvem",
+ "problema": "A Eletro Mais, rede varejista com 45 lojas e frota de 120 veículos, enfrentava custos logísticos 18% acima do benchmark do setor e atrasos em 25% das entregas. A falta de visibilidade sobre rotas e ocupação dos veículos impedia reduções de custo e melhoria no nível de serviço.",
+ "objetivo": "Reduzir em 15% o custo logístico e diminuir para menos de 10% o índice de atrasos por meio da otimização de rotas com machine learning e painéis analíticos no Power BI.",
+ "escopo": [
+  "Modelagem de dados de entregas, localização e frota no BigQuery (GCP)",
+  "Desenvolvimento de modelo de otimização de rotas com Machine Learning no Vertex AI",
+  "Integração dos resultados a dashboards interativos no Power BI para gestão logística",
+  "Automação de pipelines de dados com Cloud Composer e Dataflow",
+  "Análise de ocupação e sugestão de consolidção de cargas"
+ ],
+ "entregaveis": [
+  "Modelo de machine learning para previsão de demanda e otimização de rotas",
+  "Painéis de acompanhamento de KPIs logísticos no Power BI",
+  "Pipeline de dados automatizado para ingestão e tratamento de dados de frota",
+  "Relatório de redução de custos e melhoria de nível de serviço",
+  "Documentação técnica e transferência de conhecimento"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e preparação de dados: 4 semanas",
+  "Fase 2 - Desenvolvimento do modelo de otimização: 6 semanas",
+  "Fase 3 - Implantação e dashboards: 4 semanas",
+  "Fase 4 - Go-live e ajustes finais: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos de rotas e entregas",
+  "Resistência dos motoristas à mudança de rotas",
+  "Integração com sistemas legados de logística"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Logística)",
+  "tecnico": "Fernanda Lima (Gerente de Projetos Sênior)"
+ },
+ "resultados": "Redução de 12% no custo logístico e diminuição do índice de atrasos para 8%, gerando economia estimada de R$ 1,2 milhão no primeiro ano.",
+ "licoes": "A integração com o sistema legado de rastreamento atrasou duas semanas e exigiu esforço adicional de desenvolvimento. A prova de conceito realizada na fase de vendas foi decisiva para alinhar expectativas e garantir o engajamento da equipe do cliente.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito, que comprovou a eficácia do modelo de otimização com dados reais do cliente."
+}

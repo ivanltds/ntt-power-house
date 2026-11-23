@@ -1,0 +1,48 @@
+{
+ "titulo": "Migração do Data Warehouse para Nuvem Multiplataforma no Varejo",
+ "problema": "O Atacadão Popular Sul opera hoje com um data warehouse on-premises que processa cerca de 4,2 TB/dia e leva mais de 9 horas para consolidar o fechamento diário de vendas de 87 lojas. A base cresce 18% ao ano e a janela de carga já compromete relatórios de estoque e abastecimento nas manhãs.",
+ "objetivo": "Migrar o data warehouse para uma arquitetura em nuvem com GCP, Databricks, Snowflake e Azure, reduzindo o tempo de carga diária para até 90 minutos e ampliando a capacidade analítica do varejo.",
+ "escopo": [
+  "Assessment e desenho da arquitetura alvo em GCP e Azure, com definição do lakehouse em Databricks e do data warehouse no Snowflake",
+  "Migração de 340 pipelines e 1.800 tabelas do ambiente on-premises para a nuvem, com reengenharia dos processos críticos",
+  "Implementação de ingestão CDC para 12 sistemas de origem (ERP, PDV e WMS) usando Databricks e serviços gerenciados GCP",
+  "Configuração de governança, catálogo de dados e controle de custos nas plataformas Azure e GCP",
+  "Testes de reconciliação, paralelo assistido de 4 semanas e descomissionamento do ambiente legado"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura alvo multi-cloud aprovado",
+  "340 pipelines migrados e validados em produção",
+  "Painéis de reconciliação com aderência mínima de 99,5% entre origem e destino",
+  "Catálogo de dados e políticas de governança publicados",
+  "Relatório de descomissionamento do data warehouse on-premises"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e arquitetura",
+   "semanas": 6
+  },
+  {
+   "fase": "Migração e reengenharia de pipelines",
+   "semanas": 14
+  },
+  {
+   "fase": "Paralelo assistido e validação",
+   "semanas": 6
+  },
+  {
+   "fase": "Descomissionamento e sustentação",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em nuvem e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados legados de PDV",
+  "Janela de paralelo insuficiente para validação completa",
+  "Dependência de times internos para liberação de acessos e redes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Bittencourt (Gerente de BI e Dados)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "diferencial": "Ganhamos pela experiência comprovada em migração de data warehouse para nuvem em rede varejista de porte semelhante, com redução de 78% no tempo de carga diária."
+}

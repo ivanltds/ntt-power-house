@@ -1,0 +1,47 @@
+{
+ "titulo": "Programa de Governança de Dados e Conformidade LGPD para Corretora",
+ "problema": "A Corretora Valor Alto opera com cerca de 1,2 milhão de clientes ativos e um volume mensal de 480 mil transações, mas seus dados estão distribuídos em 14 sistemas legados sem catálogo unificado. O mapeamento de dados pessoais é parcial, com 37% dos campos sensíveis sem classificação, o que eleva o risco de sanções da ANPD e de incidentes de vazamento.",
+ "objetivo": "Implantar um framework de governança de dados e conformidade com a LGPD sobre Azure e Snowflake, com catálogo, classificação e políticas de acesso rastreáveis, em 7 meses.",
+ "escopo": [
+  "Catalogação e classificação de dados pessoais em 14 fontes, com pipelines em Python e Databricks para carga contínua no Snowflake",
+  "Definição de políticas de acesso e mascaramento no Azure, com RBAC e trilhas de auditoria para 100% dos dados sensíveis",
+  "Implantação de data lineage e dicionário de dados para 320 tabelas críticas, com validações automatizadas",
+  "Estruturação do comitê de governança e do processo de atendimento a titulares, integrado ao fluxo de 480 mil transações mensais",
+  "Programa de change management com treinamento de 180 colaboradores em 6 trilhas de capacitação"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com 320 tabelas classificadas e 100% dos campos sensíveis mapeados",
+  "Política de governança e privacidade aprovada, com matriz de acessos por perfil",
+  "Painel de conformidade LGPD no Azure com 12 indicadores de monitoramento contínuo",
+  "Relatório de lineage das 14 fontes integradas ao Snowflake",
+  "Plano de change management com 6 trilhas e métricas de adoção por área"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho do framework",
+   "semanas": 6
+  },
+  {
+   "nome": "Catalogação e classificação de dados",
+   "semanas": 10
+  },
+  {
+   "nome": "Políticas de acesso, lineage e painéis",
+   "semanas": 8
+  },
+  {
+   "nome": "Change management e sustentação",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e LGPD, 1 analista de change management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos metadados nas 14 fontes legadas",
+  "Resistência das áreas de negócio à mudança de processos",
+  "Atraso na aprovação jurídica das políticas de privacidade"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Risco e Compliance)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real para Rede de Varejo de Materiais de Construção",
+ "problema": "A Casa & Construção Prime, com 48 lojas e cerca de 2,3 milhões de transações/mês no PDV e e-commerce, sofre perdas estimadas em 1,4% do faturamento com fraudes em cartões, devoluções indevidas e uso de cupons. As regras atuais rodam em lote noturno, o que impede o bloqueio no ponto de venda e gera retrabalho manual de 6 analistas.",
+ "objetivo": "Implantar um motor de detecção de fraude em tempo real sobre o fluxo transacional, com modelos de ML e alertas em segundos, reduzindo a perda por fraude e o esforço de análise manual.",
+ "escopo": [
+  "Ingestão em streaming de transações de PDV e e-commerce via Kafka, com schema padronizado e latência-alvo abaixo de 2 segundos",
+  "Pipeline de engenharia de dados em Python para features de risco (velocidade de compras, devoluções, cupons, dispositivo)",
+  "Modelos supervisionados de scoring de fraude em Python, com retreino mensal e explicabilidade das decisões",
+  "Serviço de decisão em tempo real integrado ao PDV e ao checkout, com fila de revisão para casos de score intermediário",
+  "Painel de monitoramento de fraudes, falsos positivos e deriva de modelo para o time de prevenção"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência do motor de fraude em streaming com Kafka e Python",
+  "Pipeline de features em produção, com documentação e testes automatizados",
+  "Modelos de scoring treinados e validados sobre 24 meses de histórico transacional",
+  "Serviço de decisão em tempo real integrado a 2 canais (PDV e e-commerce)",
+  "Dashboard operacional de fraude e relatório de desempenho dos modelos"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 5
+  },
+  {
+   "nome": "Engenharia de dados e streaming",
+   "semanas": 8
+  },
+  {
+   "nome": "Modelagem e integração do scoring",
+   "semanas": 11
+  },
+  {
+   "nome": "Piloto em 8 lojas e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e atraso na liberação do histórico transacional",
+  "Latência do PDV acima do suportado pelo serviço de decisão",
+  "Volume de falsos positivos gerando sobrecarga na equipe de prevenção"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Prevenção a Fraudes)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de AI & Automation)"
+ },
+ "resultados": "A proposta foi perdida porque o cliente congelou o orçamento de novos projetos de tecnologia para o segundo semestre, priorizando a troca do ERP. Não houve decisão por concorrente; o projeto ficou suspenso sem nova data.",
+ "licoes": "Em contas com projeto anterior de dados, validar o ciclo orçamentário e a concorrência de iniciativas de TI antes de investir em proposta detalhada; manter a proposta em versão enxuta pronta para retomada.",
+ "retorno": "Prezados, após análise do comitê de investimentos, informamos que não seguiremos com a proposta de detecção de fraude neste momento. O orçamento de tecnologia foi congelado para priorizar a substituição do ERP, e não há previsão de retomada neste ano. Agradecemos o trabalho da equipe e manteremos contato caso o cenário mude. Atenciosamente, Renata Vasconcelos, Gerente de Prevenção a Fraudes, Casa & Construção Prime."
+}

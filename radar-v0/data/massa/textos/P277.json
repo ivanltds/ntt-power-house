@@ -1,0 +1,50 @@
+{
+ "titulo": "Redução de Perdas Não Técnicas com Analytics Avançado em Utilities",
+ "problema": "A Distribuidora Luz do Cerrado opera com perdas não técnicas estimadas em 8,4% da energia distribuída, o que representa cerca de R$ 42 milhões anuais em receita não faturada. A detecção atual de fraudes e ligações irregulares é manual e cobre apenas 12% dos medidores por ciclo, com tempo médio de 45 dias entre a suspeita e a inspeção em campo.",
+ "objetivo": "Reduzir as perdas não técnicas em até 25% em 12 meses por meio de um modelo de priorização de inspeções baseado em Machine Learning sobre dados de consumo, cadastro e histórico de ocorrências.",
+ "escopo": [
+  "Construção de pipeline de ingestão e tratamento de dados de medidores, cadastro e inspeções no Databricks sobre Azure Data Lake",
+  "Modelagem de features de consumo e detecção de anomalias com Machine Learning para priorização de inspeções",
+  "Integração dos scores de suspeita ao processo de fiscalização e à ordem de serviço de campo",
+  "Painéis de acompanhamento de perdas e efetividade das inspeções em Power BI sobre Azure Synapse",
+  "Documentação técnica e transferência de conhecimento para a equipe de Engenharia de Dados do cliente"
+ ],
+ "entregaveis": [
+  "Pipeline de dados de medidores e inspeções operacional no Databricks",
+  "Modelo de Machine Learning de priorização de inspeções com AUC mínima de 0,78",
+  "Ranking semanal de 5.000 medidores prioritários para fiscalização",
+  "Painel de indicadores de perdas não técnicas e efetividade das inspeções",
+  "Documentação técnica e sessão de transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "nome": "Engenharia de dados e modelagem",
+   "semanas": 8
+  },
+  {
+   "nome": "Validação do modelo e integração operacional",
+   "semanas": 5
+  },
+  {
+   "nome": "Painéis, documentação e transferência",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura incompletas dos dados históricos de inspeção",
+  "Baixa adesão da área de fiscalização ao ranking de priorização",
+  "Restrições de acesso e governança dos dados de medidores no Azure"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações Comerciais)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 18% acima do mercado, apesar da continuidade do projeto anterior no cliente e da aderência técnica da solução. O concorrente vencedor apresentou escopo semelhante com valor inferior, sem ganho percebido de diferenciação pela diretoria.",
+ "licoes": "Para propostas de continuidade em Utilities, ancorar o preço em benchmark de mercado e quantificar o retorno em receita recuperada logo na abertura da proposta. Revisar o dimensionamento da equipe para evitar sobrecarga de horas não percebida pelo cliente como valor.",
+ "retorno": "Prezados, informamos que concluímos a avaliação das propostas para o projeto de redução de perdas não técnicas. A proposta da NTT DATA foi tecnicamente bem avaliada, porém o valor apresentado ficou cerca de 18% acima do praticado pelo mercado, o que foi determinante para a decisão. Agradecemos o empenho da equipe e esperamos contar com vocês em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Gerente de Operações Comerciais."
+}

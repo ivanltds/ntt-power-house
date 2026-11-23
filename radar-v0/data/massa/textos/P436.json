@@ -1,0 +1,37 @@
+{
+ "titulo": "Automação de Back-office com RPA e Integração SAP/ServiceNow para Utilities",
+ "problema": "A Companhia de Saneamento Rio Claro enfrenta um volume crescente de processos manuais no back-office, com cerca de 12.000 faturas processadas mensalmente e um índice de erro de 8% nas transações de SAP. Além disso, o tempo médio de resolução de chamados no ServiceNow é de 48 horas, impactando a satisfação dos clientes e a eficiência operacional.",
+ "objetivo": "Automatizar processos de back-office utilizando RPA integrado ao SAP e ServiceNow, reduzindo erros e tempo de ciclo, com sustentação e gestão de mudança para garantir a adoção.",
+ "escopo": [
+  "Mapeamento e automação de 15 processos de back-office com RPA (UiPath) integrado ao SAP e ServiceNow",
+  "Desenvolvimento de scripts Python para extração e tratamento de dados de SAP",
+  "Integração de robôs RPA com ServiceNow para abertura e atualização automática de chamados",
+  "Implementação de sustentação (AMS) para as automações, com SLA de 4 horas para incidentes críticos",
+  "Programa de Change Management com treinamentos e comunicação para 200 usuários impactados"
+ ],
+ "entregaveis": [
+  "Documento de mapeamento e priorização de 15 processos automatizáveis",
+  "Robôs RPA desenvolvidos e implantados para os 15 processos, com testes de aceitação",
+  "Integração validada entre RPA, SAP e ServiceNow, com relatórios de performance",
+  "Plano de sustentação com procedimentos de monitoramento e correção",
+  "Relatório final de resultados e plano de comunicação e treinamento executado"
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e Priorização: 4 semanas",
+  "Fase 2 - Desenvolvimento e Testes: 8 semanas",
+  "Fase 3 - Implantação e Estabilização: 4 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 2 analistas de automação (RPA), 1 desenvolvedor Python, 1 consultor SAP e 1 especialista em Change Management",
+ "riscos": [
+  "Resistência dos usuários à mudança nos processos automatizados",
+  "Complexidade de integração entre sistemas legados (SAP) e RPA",
+  "Atrasos na disponibilização de ambientes e acessos pelo cliente"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Eduardo Lima (Gerente de TI)",
+  "tecnico": "Mariana Costa (Arquiteta de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de RPA instalada e em operação na Companhia de Saneamento Rio Claro, o que reduziu o custo e o tempo de implantação percebidos pelo cliente. Além disso, o concorrente ofereceu condições comerciais mais competitivas por já ter contrato de sustentação vigente.",
+ "licoes": "Para próximas oportunidades em clientes com soluções instaladas, é crucial investigar profundamente o ambiente tecnológico existente e considerar parcerias ou aquisições para oferecer uma proposta mais competitiva em custo e prazo. Também é importante destacar diferenciais em Change Management e sustentação para agregar valor além da tecnologia.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de automação de back-office com RPA foi analisada e, infelizmente, não foi selecionada. A decisão foi baseada no fato de já possuirmos uma solução de RPA implantada e em operação, o que tornaria a migração para uma nova plataforma custosa e demorada. Agradecemos o empenho da equipe da NTT DATA e esperamos colaborar em futuras oportunidades. Atenciosamente, Carlos Eduardo Lima, Gerente de TI."
+}

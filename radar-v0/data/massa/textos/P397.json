@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração SAP S/4HANA para Nuvem Híbrida AWS e Azure com Change Management",
+ "problema": "A Metalúrgica Forja Forte opera o ERP em servidores on-premises com custo de manutenção de R$ 2,4 milhões/ano e janelas de indisponibilidade que afetam 3 turnos de produção. O parque de 180 usuários convive com versões customizadas do ERP há 9 anos, gerando 27% de retrabalho em fechamentos contábeis.",
+ "objetivo": "Migrar o ambiente SAP para S/4HANA em infraestrutura híbrida AWS e Azure em 11 meses, reduzindo 30% do custo de infraestrutura e preparando 180 usuários para o novo modelo operacional.",
+ "escopo": [
+  "Assessment técnico do ambiente SAP atual e desenho da arquitetura de destino em AWS (produção) e Azure (DR e analytics)",
+  "Migração de banco de dados e aplicações SAP para S/4HANA com conversão de 27 processos customizados",
+  "Implementação de pipeline de deploy e monitoramento em AWS com replicação de contingência no Azure",
+  "Programa de Change Management com 12 workshops, treinamento de 180 usuários e rede de 15 multiplicadores internos",
+  "Execução de testes integrados, cutover em janela de fim de semana e suporte hipercare por 8 semanas"
+ ],
+ "entregaveis": [
+  "Relatório de assessment e blueprint de arquitetura híbrida AWS/Azure aprovado",
+  "Ambiente S/4HANA produtivo migrado com 27 customizações convertidas",
+  "Plano de Change Management com materiais de treinamento e 15 multiplicadores certificados",
+  "Runbook de cutover e plano de contingência validado em teste de DR no Azure",
+  "Relatório de estabilização pós-go-live com métricas de performance e custo"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e blueprint",
+   "semanas": 8
+  },
+  {
+   "fase": "Preparação de infraestrutura AWS/Azure e conversão",
+   "semanas": 18
+  },
+  {
+   "fase": "Testes integrados e Change Management",
+   "semanas": 14
+  },
+  {
+   "fase": "Cutover, go-live e hipercare",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP S/4HANA, 2 consultores funcionais, 2 engenheiros de nuvem AWS/Azure e 1 especialista em Change Management",
+ "riscos": [
+  "Customizações legadas com documentação incompleta podem atrasar a conversão",
+  "Baixa adesão dos 180 usuários ao novo modelo operacional",
+  "Janela de cutover limitada pelo calendário de produção da metalúrgica"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Gerente de TI Corporativa)",
+  "tecnico": "Fernanda Costa (Arquiteta SAP S/4HANA)"
+ },
+ "resultados": "A proposta foi perdida porque o cliente congelou o orçamento de transformação de TI para o exercício seguinte, adiando a migração para SAP S/4HANA por tempo indeterminado. Não houve desistência do projeto, apenas suspensão da decisão de investimento.",
+ "licoes": "Mapear antecipadamente o ciclo orçamentário do cliente e condicionar a proposta a uma aprovação de capex já reservada. Incluir cláusula de validade comercial curta e plano de retomada para quando o orçamento for descongelado.",
+ "retorno": "Prezados, informamos que a diretoria decidiu congelar o orçamento de projetos de TI para o próximo ciclo, o que inviabiliza a contratação da migração para SAP S/4HANA neste momento. A proposta técnica foi bem avaliada, mas a prioridade financeira foi redirecionada para investimentos em produção. Retomaremos a conversa quando houver liberação orçamentária. Atenciosamente, Ricardo Almeida, Gerente de TI Corporativa da Metalúrgica Forja Forte."
+}

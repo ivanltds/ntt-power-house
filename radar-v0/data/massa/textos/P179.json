@@ -1,0 +1,50 @@
+{
+ "titulo": "Automação de back-office com RPA em SAP e ServiceNow",
+ "problema": "A Seguradora Amparo processa cerca de 38 mil sinistros e 12 mil emissões de apólices por mês, com 62% das tarefas de back-office ainda manuais em SAP e ServiceNow. O volume gera fila média de 3,2 dias úteis na liquidação de sinistros simples e um índice de retrabalho de 9% por erro de digitação.",
+ "objetivo": "Automatizar os processos de back-office de sinistros e emissão de apólices com RPA integrado a SAP e ServiceNow, reduzindo o tempo de ciclo em 40% e o retrabalho para menos de 3% em 4 meses.",
+ "escopo": [
+  "Mapeamento e priorização de 18 processos de back-office executados em SAP (FI, MM e módulo de sinistros)",
+  "Desenvolvimento de 25 robôs RPA para triagem, digitação e conferência de dados entre SAP e ServiceNow",
+  "Integração dos robôs ao ServiceNow via API e triggers de fluxo de trabalho, com tratamento de exceções",
+  "Painel de monitoramento de robôs com indicadores de execução, falhas e SLA",
+  "Serviço de sustentação/AMS dos robôs em regime 8x5, com correções e melhorias contínuas"
+ ],
+ "entregaveis": [
+  "Catálogo de processos automatizáveis com estimativa de esforço e ROI por processo",
+  "25 robôs RPA em produção integrados a SAP e ServiceNow",
+  "Documentação técnica e runbook operacional dos robôs",
+  "Painel de monitoramento com 12 indicadores de desempenho",
+  "Plano de sustentação/AMS com SLA de correção em até 8 horas úteis"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e priorização",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e testes dos robôs",
+   "semanas": 8
+  },
+  {
+   "fase": "Go-live e estabilização",
+   "semanas": 3
+  },
+  {
+   "fase": "Transição para sustentação/AMS",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de automação, 3 desenvolvedores RPA, 1 especialista SAP, 1 especialista ServiceNow e 1 gerente de projeto",
+ "riscos": [
+  "Instabilidade das APIs do ServiceNow durante a janela de implantação",
+  "Mudanças de processo em SAP não previstas no escopo",
+  "Baixa adesão das áreas de negócio na validação dos robôs"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações de Back-office)",
+  "tecnico": "Paulo Menezes (Arquiteto de Automação RPA)"
+ },
+ "resultados": "A proposta foi perdida porque a NTT DATA não comprovou experiência anterior em automação de back-office com RPA no setor de seguros, apesar da continuidade de projeto anterior no cliente. O concorrente apresentou três cases verificáveis no mesmo segmento.",
+ "licoes": "Manter um portfólio atualizado de cases com métricas de RPA em seguros e anexá-lo à proposta desde a primeira versão. Na próxima oportunidade, incluir visita de referência a um cliente com automação semelhante antes da apresentação comercial.",
+ "retorno": "Prezado Paulo, agradecemos a dedicação da NTT DATA na elaboração da proposta de automação de back-office com RPA. Após avaliação do comitê, decidimos seguir com outro fornecedor que apresentou experiência comprovada em projetos de RPA no setor de seguros, requisito eliminatório desta concorrência. Reforçamos que a parceria nos serviços de sustentação/AMS permanece ativa e contamos com a NTT DATA nas próximas frentes. Atenciosamente, Renata Vasconcelos, Diretora de Operações de Back-office."
+}

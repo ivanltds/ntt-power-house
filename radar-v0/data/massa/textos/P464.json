@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de previsão de safra e agricultura de precisão com AWS e Python",
+ "problema": "A Grãos do Cerrado Trading acompanha 320 mil hectares de soja e milho em 4 estados, mas a previsão de safra é feita em planilhas com defasagem de 15 dias e erro médio de 18% sobre a produção real. Isso gera decisões de compra e hedge tomadas com informação desatualizada e exposição de até R$ 40 milhões por safra.",
+ "objetivo": "Construir uma plataforma de previsão de safra e agricultura de precisão em AWS, com modelos em Python, reduzindo o erro de previsão para até 8% e atualizando os indicadores diariamente para as áreas de originação e trading.",
+ "escopo": [
+  "Ingestão de dados climáticos, imagens de satélite NDVI e histórico de produtividade de talhões em data lake na AWS (S3 e Glue)",
+  "Pipeline de tratamento e feature engineering em Python para 320 mil hectares, com atualização diária via AWS Lambda e Step Functions",
+  "Modelos de previsão de safra em Python (scikit-learn e XGBoost) por cultura, talhão e região, com validação em safras anteriores",
+  "Painel de Analytics & BI para acompanhamento de previsão versus realizado, mapa de vigor e alertas de estresse hídrico",
+  "Integração dos resultados de previsão ao processo de originação e hedge por meio de API e exportação automatizada"
+ ],
+ "entregaveis": [
+  "Data lake estruturado na AWS com dados climáticos, de satélite e históricos consolidados",
+  "Pipeline diário automatizado de ingestão e tratamento em Python",
+  "Modelo de previsão de safra validado com erro médio alvo de até 8%",
+  "Painel de Analytics & BI com visão por fazenda, cultura e talhão",
+  "Documentação técnica, treinamento e manual de operação dos modelos"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Construção do data lake e pipelines de ingestão",
+   "semanas": 8
+  },
+  {
+   "fase": "Desenvolvimento e validação dos modelos de previsão",
+   "semanas": 10
+  },
+  {
+   "fase": "Painéis, integração e treinamento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura irregular dos dados históricos de talhões",
+  "Baixa adesão das equipes de campo ao registro diário de informações",
+  "Dependência de terceiros para fornecimento de imagens de satélite"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Originação e Inteligência de Mercado)",
+  "tecnico": "Diego Furtado (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida por preço acima do mercado: o valor total ficou cerca de 22% superior ao da concorrente vencedora, mesmo com escopo técnico equivalente e continuidade do projeto anterior no cliente. O cliente priorizou o menor investimento no momento.",
+ "licoes": "Em propostas para clientes com continuidade de projeto, apresentar desde o início um comparativo de valor por fase e uma opção de escopo modular, para não perder competitividade apenas pelo valor total.",
+ "retorno": "Prezados, informamos que optamos por seguir com outra proposta para o projeto de previsão de safra e agricultura de precisão. O fator determinante foi o valor apresentado, cerca de 22% acima das demais ofertas recebidas, acima do orçamento aprovado para esta fase. Agradecemos o empenho da equipe e o histórico de trabalho conjunto. Permanecemos abertos a conversar sobre escopos menores no futuro. Atenciosamente, Renata Vasconcelos, Gerente de Originação e Inteligência de Mercado, Grãos do Cerrado Trading."
+}

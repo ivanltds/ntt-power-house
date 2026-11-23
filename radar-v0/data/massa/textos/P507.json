@@ -1,0 +1,46 @@
+{
+ "titulo": "Automação de Back-Office com RPA e SAP para Corretora de Serviços Financeiros",
+ "problema": "A Corretora Valor Alto processa cerca de 18 mil operações de back-office por mês, das quais 62% ainda dependem de conferência manual entre planilhas e o SAP. Esse volume gera um índice de retrabalho de 9% e atrasos médios de 2 dias úteis na conciliação de posições.",
+ "objetivo": "Automatizar as rotinas de conciliação e lançamento no SAP com RPA em 2 meses, reduzindo o retrabalho manual em pelo menos 70% e liberando a equipe para atividades de análise.",
+ "escopo": [
+  "Mapeamento e priorização de 12 processos de back-office candidatos à automação com RPA",
+  "Desenvolvimento de robôs RPA para conciliação de posições e lançamento de operações no SAP",
+  "Integração dos robôs RPA às transações SAP existentes, com tratamento de exceções e logs de auditoria",
+  "Estrutura de sustentação / AMS para monitoramento diário dos robôs e correção de falhas",
+  "Plano de Change Management com treinamento de 35 usuários e comunicação das mudanças operacionais"
+ ],
+ "entregaveis": [
+  "Catálogo de processos automatizáveis com estimativa de esforço e ganho por processo",
+  "Robôs RPA em produção para os 5 processos prioritários, integrados ao SAP",
+  "Runbook de operação e sustentação / AMS com SLAs de atendimento",
+  "Plano de Change Management executado, com materiais de treinamento e registro de adesão",
+  "Relatório de resultados com métricas de retrabalho e tempo de ciclo antes e depois"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e priorização",
+   "duracao_semanas": 2
+  },
+  {
+   "nome": "Desenvolvimento dos robôs RPA e integração SAP",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Sustentação / AMS e Change Management",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 2 desenvolvedores RPA, 1 especialista SAP e 1 analista de Change Management",
+ "riscos": [
+  "Instabilidade nas transações SAP durante as janelas de conciliação",
+  "Baixa adesão dos usuários de back-office às novas rotinas",
+  "Dependência de acessos e credenciais SAP liberados pelo cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações)",
+  "tecnico": "Marcos Tavares (Arquiteto de Automação RPA)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 28% acima do mercado, apesar da continuidade do projeto anterior no cliente e do escopo aderente à necessidade. O concorrente apresentou valor inferior com prazo equivalente de 2 meses.",
+ "licoes": "Nas próximas propostas para este cliente, detalhar o custo por processo automatizado e ancorar o preço em benchmarks de mercado para evitar percepção de sobrepreço.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a Corretora Valor Alto decidiu não seguir com a proposta da NTT DATA Brasil para a automação de back-office com RPA. O valor apresentado ficou acima do mercado, o que foi determinante para a decisão, mesmo considerando a continuidade do projeto anterior. Agradecemos o empenho da equipe e permanecemos abertos a novas oportunidades. Atenciosamente, Renata Vasconcelos, Diretora de Operações."
+}

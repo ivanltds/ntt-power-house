@@ -1,0 +1,46 @@
+{
+ "titulo": "Assistente virtual com IA generativa para atendimento no ServiceNow",
+ "problema": "O Banco Cidadela registra cerca de 1,2 milhão de atendimentos por mês em canais digitais, com 38% dos chamados de baixa complexidade resolvidos apenas por transbordo humano e tempo médio de primeira resposta de 9 minutos. A operação sofre com filas em horário de pico e custo por atendimento 22% acima da meta para 2025.",
+ "objetivo": "Implantar um assistente virtual com IA generativa integrado ao ServiceNow para resolver automaticamente chamados de baixa complexidade e reduzir o tempo de primeira resposta e o volume de transbordo humano.",
+ "escopo": [
+  "Desenho da jornada de atendimento e definição dos 12 principais casos de uso de autoatendimento no ServiceNow",
+  "Implementação do assistente virtual com IA generativa integrado ao ServiceNow, com respostas baseadas em base de conhecimento curada",
+  "Integração do assistente aos canais digitais do banco via APIs do ServiceNow e orquestração de fluxos de automação de processos",
+  "Configuração de guardrails, revisão humana e trilha de auditoria das respostas geradas pela IA generativa",
+  "Painéis de acompanhamento de contenção de chamados, tempo de primeira resposta e satisfação do cliente no ServiceNow"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção nos canais digitais, cobrindo os 12 casos de uso priorizados",
+  "Documento de arquitetura da solução com IA generativa e ServiceNow",
+  "Base de conhecimento curada e validada para uso do assistente",
+  "Fluxos de automação de processos publicados no ServiceNow",
+  "Painel gerencial com indicadores de contenção, tempo de resposta e satisfação"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da solução",
+   "semanas": 6
+  },
+  {
+   "fase": "Construção do assistente e integrações com ServiceNow",
+   "semanas": 10
+  },
+  {
+   "fase": "Piloto controlado e ajuste de guardrails",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 consultores de IA generativa e 1 especialista ServiceNow",
+ "riscos": [
+  "Baixa qualidade da base de conhecimento comprometer a precisão das respostas",
+  "Restrições de segurança e privacidade atrasarem a aprovação para uso de IA generativa",
+  "Adesão limitada dos clientes ao autoatendimento reduzir o retorno esperado"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Diretora de Experiência do Cliente)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 5 meses foi considerado longo demais pelo Banco Cidadela, que precisava do assistente em produção antes do pico de atendimento do próximo semestre. O concorrente apresentou cronograma de 3 meses, mesmo com escopo reduzido.",
+ "licoes": "Para propostas de IA generativa em atendimento, oferecer uma primeira onda em produção em até 8 a 10 semanas, com escopo enxuto e expansão faseada. Negociar o cronograma com o cliente antes de fechar a proposta, ancorando o prazo em entregas parciais de valor.",
+ "retorno": "Prezados, informamos que a proposta para o assistente virtual com IA generativa no ServiceNow não foi selecionada. O cronograma de 5 meses apresentado ficou acima do prazo que precisamos para entrar em produção antes do próximo pico de atendimento, e optamos por uma alternativa com entrega mais rápida. Agradecemos o esforço da equipe e permanecemos abertos a conversas futuras. Atenciosamente, Renata Almeida, Diretora de Experiência do Cliente, Banco Cidadela."
+}

@@ -1,0 +1,49 @@
+{
+ "titulo": "Migração do Data Warehouse para Nuvem com Arquitetura Multi-Cloud",
+ "problema": "O Banco Horizonte Sul opera um data warehouse on-premises com 42 TB de dados históricos e janelas de carga noturna que chegam a 7 horas, atrasando relatórios regulatórios e de risco de crédito. Cerca de 380 usuários analíticos enfrentam latência média de 12 minutos nas consultas mais pesadas, e o custo de manutenção da infraestrutura local cresceu 23% no último ano.",
+ "objetivo": "Migrar o data warehouse para uma arquitetura em nuvem baseada em Snowflake, com processamento distribuído em Azure, AWS e GCP, reduzindo a janela de carga para menos de 90 minutos e ampliando a escalabilidade analítica do banco.",
+ "escopo": [
+  "Assessment e desenho da arquitetura-alvo em Snowflake, com definição de camadas raw, curated e consumption e estratégia de segurança e governança de dados",
+  "Migração de 42 TB de dados históricos e de 1.240 objetos (tabelas, views e procedures) para o Snowflake, com validação de paridade de dados",
+  "Implementação de pipelines de ingestão e transformação orquestrados em Azure Data Factory e serviços gerenciados em AWS e GCP para fontes externas",
+  "Otimização de performance e custos no Snowflake, incluindo warehouse sizing, clustering e políticas de retenção e Time Travel",
+  "Migração de 210 relatórios e dashboards para as novas camadas, com testes de regressão e homologação junto às áreas de negócio"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura-alvo e plano de migração detalhado por onda",
+  "Ambiente Snowflake produtivo com 42 TB migrados e validados",
+  "Catálogo com 1.240 objetos migrados e mapeamento de linhagem de dados",
+  "Conjunto de pipelines de ingestão automatizados com monitoramento e alertas",
+  "Relatório de homologação dos 210 relatórios migrados e plano de descomissionamento do ambiente local"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e arquitetura-alvo",
+   "duracao_semanas": 5
+  },
+  {
+   "nome": "Migração de dados e objetos",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Pipelines e otimização de performance",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Homologação e descomissionamento",
+   "duracao_semanas": 5
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista Snowflake, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos e redes entre Azure, AWS e GCP",
+  "Divergências de dados em regras de negócio legadas durante a validação",
+  "Indisponibilidade de especialistas do cliente para homologação dos relatórios"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Felipe Andrade Moreira (Arquiteto de Soluções Cloud & Infra)"
+ },
+ "resultados": "Até o momento, 18 TB dos 42 TB já foram migrados e validados, com a janela de carga reduzida de 7 horas para 3 horas e 20 minutos no ambiente piloto.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência em migração de data warehouse para Snowflake em instituição financeira de porte similar, com redução comprovada de 65% no tempo de carga."
+}

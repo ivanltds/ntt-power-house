@@ -1,0 +1,44 @@
+{
+ "titulo": "Previsão de Demanda e Reposição Inteligente para a Cadeia de Suprimentos",
+ "problema": "A Química Fênix, indústria manufatureira com cerca de 1.200 SKUs ativos e 3 centros de distribuição, enfrenta erro médio de previsão de demanda de 32%, gerando excesso de estoque em 18% dos itens e rupturas recorrentes nos produtos de maior giro. A reposição é feita hoje em planilhas, com lead time médio de 21 dias e sem visão unificada entre produção, compras e logística.",
+ "objetivo": "Elevar a acurácia da previsão de demanda para 85% nos itens classe A e automatizar a recomendação de reposição por SKU e centro de distribuição.",
+ "escopo": [
+  "Construção de pipeline de engenharia de dados com Python e ingestão no Snowflake, integrando histórico de vendas, estoques e ordens de produção",
+  "Desenvolvimento de modelos de Machine Learning de previsão de demanda por SKU/CD em Databricks, com validação cruzada temporal",
+  "Implementação de motor de recomendação de reposição e pontos de pedido por item",
+  "Camada analítica de acompanhamento de acurácia, rupturas e nível de estoque no Snowflake",
+  "Plano de Change Management com treinamento de 60 usuários de planejamento e compras e novos ritos de S&OP"
+ ],
+ "entregaveis": [
+  "Pipeline de dados unificado no Snowflake com 24 meses de histórico tratado",
+  "Modelos de previsão de demanda por SKU/CD em Databricks com acurácia-alvo de 85% na classe A",
+  "Motor de recomendação de reposição e pontos de pedido automatizados",
+  "Dashboard de acurácia, rupturas e cobertura de estoque",
+  "Plano de Change Management e capacitação de 60 usuários"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e engenharia de dados",
+   "semanas": 8
+  },
+  {
+   "fase": "Modelagem de previsão e reposição",
+   "semanas": 12
+  },
+  {
+   "fase": "Implantação, treinamento e S&OP",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados, 1 especialista em change management e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e granularidade insuficiente do histórico de vendas e estoques",
+  "Baixa adesão dos planejadores às recomendações automáticas de reposição",
+  "Dependência de integrações com sistemas legados de produção e ERP"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Planejamento e S&OP)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente após reestruturação do orçamento de transformação digital, que priorizou projetos de curto prazo."
+}

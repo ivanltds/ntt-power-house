@@ -1,0 +1,47 @@
+{
+ "titulo": "Predição de churn e retenção para o programa de fidelidade",
+ "problema": "A Livrarias Página Viva tem cerca de 480 mil clientes cadastrados no programa de fidelidade e observa taxa de churn anual de 27% na base ativa, com perda estimada de R$ 6,2 milhões em receita recorrente nos últimos 12 meses. A identificação de clientes em risco é hoje reativa, feita por relatórios manuais que levam até 10 dias para chegar aos times de CRM e loja.",
+ "objetivo": "Construir um modelo preditivo de churn com antecedência de 60 dias e mecanismos de acionamento de retenção integrados ao CRM, elevando a retenção da base ativa em 5 pontos percentuais em 12 meses.",
+ "escopo": [
+  "Diagnóstico e integração de dados transacionais de lojas e e-commerce ao Salesforce, com ingestão em AWS (S3 e Glue)",
+  "Engenharia de atributos e treinamento de modelos de propensão a churn em Python, com validação cruzada e explicabilidade das variáveis",
+  "Publicação de scores de churn e segmentos de risco no Salesforce para uso pelos times de CRM e lojas",
+  "Dashboards de Analytics & BI em AWS QuickSight com indicadores de churn, coorte e efetividade das ações de retenção",
+  "Definição de playbooks de retenção por faixa de risco e rotina de monitoramento de performance do modelo (MLOps básico)"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e mapa de integração Salesforce–AWS",
+  "Modelo de propensão a churn em produção com AUC mínima de 0,78 e documentação das variáveis",
+  "Scores e segmentos de risco disponíveis no Salesforce para 480 mil clientes",
+  "Painéis de Analytics & BI com 12 indicadores de churn e retenção",
+  "Playbook de retenção e plano de monitoramento mensal do modelo"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e validação do modelo",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração ao Salesforce e dashboards",
+   "semanas": 6
+  },
+  {
+   "fase": "Piloto de retenção e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 2 cientistas de dados, 1 engenheiro de dados, 1 consultor Salesforce e 1 analista de BI",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de compras e cadastro",
+  "Baixa adesão dos times de loja aos playbooks de retenção",
+  "Limitações de API e governança de dados no Salesforce"
+ ],
+ "pessoas": {
+  "cliente": "Marina Cordeiro (Gerente de CRM e Fidelidade)",
+  "tecnico": "Rafael Tavares (Líder Técnico de Data Science)"
+ }
+}
