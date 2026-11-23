@@ -440,6 +440,8 @@ function renderCard(x) {
         ${d.valor ? `<span title="Preço da proposta">${icon('money', { size: 15 })}${brl(d.valor)}</span>` : d.valor === undefined ? `<span title="O preço e a margem da proposta não aparecem para o seu perfil. Resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos.">${icon('lock', { size: 15 })}preço e margem restritos</span>` : ''}
       </div>
       <p class="why">${esc(x.justificativa)}</p>
+      ${x.contatos?.length ? `<p class="contato">${icon('users', { size: 15 })}<span>Quem pode te contar como foi: ${x.contatos.map((c) => `<b>${esc(c.nome)}</b> <small>${esc([c.papel, c.area, c.segmento && `setor ${c.segmento}`].filter(Boolean).join(' · '))}</small>`).join('; ')}</span>
+        <button type="button" class="link-btn" data-contato="${esc(x.contatos[0].nome)}" title="Copia uma mensagem pronta para mandar no Teams ou por e-mail">${icon('copy', { size: 13 })}Copiar mensagem</button></p>` : ''}
       ${x.resumo ? `<p class="resumo">${esc(x.resumo)}</p>` : ''}
       <div class="reuse">
         <button type="button" class="btn sm" data-reuse="abrir">${icon('folder', { size: 15 })}Abrir projeto</button>
@@ -507,6 +509,13 @@ function bindAnswer(container, r) {
       await evento('feedback_motivo', { motivo: b.dataset.motivo });
       $('.fb-why', card).classList.add('hidden');
       toast('Obrigado! Vamos usar isso para ajustar a busca.');
+    }));
+    // R19-05: mensagem pronta para falar com quem conduziu o projeto parecido (conta como uso de qualidade nas métricas).
+    $$('[data-contato]', card).forEach((b) => (b.onclick = async () => {
+      const foco = state.foco;
+      await copyText(`Oi, ${b.dataset.contato}! Vi no Radar o projeto "${x.titulo}" (${x.cliente}). Estou ${foco ? `montando a proposta para ${foco.cliente}` : 'preparando uma proposta parecida'} e queria entender como foi: por que ganhamos, o que pesou no preço e o que doeu entre vender e entregar. Podemos conversar 15 minutos?`);
+      evento('reaproveitar', { acao: 'contato' });
+      toast('Mensagem copiada: cole no Teams ou no e-mail');
     }));
     $$('[data-tec]', card).forEach((b) => (b.onclick = () => { openTab('projetos'); document.dispatchEvent(new CustomEvent('radar:filtrar', { detail: { tecnologias: [b.dataset.tec] } })); }));
     $$('[data-reuse]', card).forEach((b) => (b.onclick = async () => {
@@ -638,7 +647,7 @@ async function loadConversations() {
   conversas = await api(`/api/conversas?${params}`);
   const item = (c) => `
       <li data-id="${c.id}" class="${c.favorita ? 'fav' : ''}" title="${c.turnos} pergunta${c.turnos > 1 ? 's' : ''} · ${new Date(c.atualizadaEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}">
-        <a href="#" class="open">${esc(c.titulo)}</a>
+        <a href="#" class="open">${c.projetoId ? `<span class="conv-proj" title="Conversa aberta na ficha do projeto ${esc(c.projetoId)}">${esc(c.projetoId)}</span>` : ''}${esc(c.titulo)}</a>
         <button class="icon-btn sm star${c.favorita ? ' on' : ''}" data-fav="${c.favorita ? 0 : 1}" title="${c.favorita ? 'Remover dos favoritos' : 'Favoritar'}" aria-pressed="${c.favorita}">${icon('star', { size: 15 })}</button>
         <button class="icon-btn sm mais" title="Mais opções" aria-label="Mais opções da conversa ${esc(c.titulo)}" aria-haspopup="menu">${icon('more', { size: 15 })}</button>
       </li>`;
@@ -804,6 +813,9 @@ async function openConversation(id) {
 
 function setupConversations() {
   $('#new-conv').onclick = newConversation;
+  // CR-077: a conversa da ficha do projeto abre aqui em tela cheia; perguntas feitas na ficha atualizam a lista.
+  document.addEventListener('radar:abrir-conversa', (e) => openConversation(e.detail.id));
+  document.addEventListener('radar:conversas-mudaram', () => loadConversations());
   $('#fav-conv').onclick = () => state.conv && toggleFavorite(state.conv.id, !state.conv.favorita);
   const layout = $('.chat-layout');
   $('#toggle-convs').onclick = () => layout.classList.toggle('no-side');

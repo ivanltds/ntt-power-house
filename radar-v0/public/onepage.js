@@ -98,7 +98,11 @@ export async function openOnePage(id, { aoGerar } = {}) {
         <button type="button" class="btn primary" data-gerar>${icon('download', { size: 16 })}${c.ehCase ? `Baixar ${st.formato === 'pptx' ? 'PowerPoint' : 'PDF'}` : 'Gerar mesmo assim como referência interna'}</button>
       </div>`;
     $$('[data-close]', body).forEach((b) => (b.onclick = () => dlg.close()));
+    // Cada campo cresce até mostrar o texto todo.
+    const ajustar = (t) => { t.style.height = 'auto'; t.style.height = `${t.scrollHeight + 4}px`; };
+    requestAnimationFrame(() => $$('[data-ed]', body).forEach(ajustar));
     $$('[data-ed]', body).forEach((t) => (t.oninput = () => {
+      ajustar(t);
       st.edicoes[t.dataset.ed] = t.value;
       t.closest('.op-bloco').classList.toggle('vazio', !t.value.trim());
     }));

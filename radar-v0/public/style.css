@@ -2190,3 +2190,27 @@ span.tec-tag { cursor: default; }
 .deck-resumo li.on { color: var(--ink); }
 .deck-resumo li > svg { margin-top: 3px; flex: none; }
 .deck-resumo li.on > svg { color: var(--ok); }
+
+/* ---------- V0.0.3: conversa dentro da ficha do projeto (CR-077) ---------- */
+.pd-conv #pd-conv-body { display: grid; gap: 10px; }
+.cf-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.cf-top-acoes { margin-left: auto; display: inline-flex; gap: 12px; }
+.cf-turnos { display: grid; gap: 10px; max-height: 460px; overflow: auto; padding-right: 4px; }
+.cf-turno { display: grid; gap: 4px; }
+.cf-q { justify-self: end; max-width: 85%; margin: 0; background: var(--brand-soft); color: var(--ink); border-radius: 12px 12px 2px 12px; padding: 6px 10px; font-size: 13.5px; display: inline-flex; gap: 6px; align-items: flex-start; }
+.cf-q svg { margin-top: 3px; flex: none; color: var(--brand); }
+.cf-a { background: var(--bg); border-radius: 12px 12px 12px 2px; padding: 8px 12px; font-size: 13.5px; min-width: 0; }
+.cf-a .answer { margin: 0; }
+.cf-res { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 4px; }
+.cf-res li { display: grid; }
+.cf-res small { color: var(--muted); font-size: 12px; }
+.cf-atalhos { margin: 0; }
+.cf-anexos { margin: 0; font-size: 12.5px; color: var(--muted); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.cf-form { display: flex; align-items: flex-end; gap: 8px; border: 1px solid var(--line-strong); border-radius: 12px; padding: 6px 8px; background: var(--panel); }
+.cf-form textarea { flex: 1; border: 0; resize: none; font: inherit; font-size: 14px; background: transparent; color: var(--ink); padding: 6px 4px; outline: none; min-height: 34px; }
+.cf-clip { cursor: pointer; }
+.conv-proj { display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--brand); background: var(--brand-soft); border-radius: 4px; padding: 0 5px; margin-right: 6px; vertical-align: 1px; }
+.rcard .contato { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 6px 0; font-size: 13px; color: var(--ink-2); }
+.rcard .contato > svg { color: var(--brand); }
+.rcard .contato small, .pd-contato small { color: var(--muted); font-size: 12px; }
+.pd-contato { margin: 0 0 6px; display: grid; gap: 2px; }

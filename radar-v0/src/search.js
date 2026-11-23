@@ -359,9 +359,16 @@ export class RadarEngine {
       return finish({ entidades: entities, resposta: `Não encontrei o ${codigo} entre os projetos que o seu perfil pode ver. Se quiser, me diga o tema e eu busco projetos parecidos que você pode ver.`, sugestoes: [], semEvidencia: true, resultados: [], candidatosAvaliados: candidates.length });
     }
     const sugestoes = results.length ? [] : sugerirBuscas(candidates, entities);
-    const resposta = results.length && semantic && analysis.resposta
+    let resposta = results.length && semantic && analysis.resposta
       ? onlyCitedResults(analysis.resposta, results) || this.llm.compose({ query, results, complementares, lowEvidence })
       : results.length ? this.llm.compose({ query, results, complementares, lowEvidence }) : semResultado(query, sugestoes);
+    // R19-05: "quem já fez algo parecido?" / "com quem posso falar?" — a resposta termina com os contatos.
+    if (results.length && /\b(quem|falar com|conversar com|contato|referencia interna)\b/.test(normalize(original))) {
+      const pessoas = results.filter((r) => r.contatos.length).map((r) => `${r.contatos[0].nome} (${r.cliente}, ${r.segmento} · [${r.projeto_id}])`);
+      if (pessoas.length) resposta = `${resposta}
+
+Com quem falar: ${[...new Set(pessoas)].join('; ')}. Pergunte como ganharam, o que pesou no preço e o que doeu entre vender e entregar.`;
+    }
     return finish({
       entidades: entities,
       resposta,
@@ -712,6 +719,13 @@ export class RadarEngine {
     };
   }
 
+  // R19-05 "com quem falar": o responsável pelo projeto, com área e setor (o valor está em atravessar setores).
+  // Só nome e papel: nenhum outro dado pessoal sai daqui.
+  contatos(projetoId) {
+    const p = this.repo.project(projetoId);
+    return p?.dono ? [{ nome: p.dono, papel: 'Responsável pelo projeto', area: p.area ?? null, segmento: p.segmento ?? null }] : [];
+  }
+
   // Fatos por projeto com resolução de conflito pela hierarquia de confiança (UC03.8).
   projectFacts(projetoId, where) {
     const rows = this.collection.get({ where: { $and: [{ projeto_id: projetoId }, where] } }).metadatas;
@@ -760,6 +774,8 @@ export class RadarEngine {
       servicos: meta.servicos,
       status: meta.status_proposta,
       score: Math.round(c.score * 1000) / 1000,
+      // R19-05: quem pode contar como foi (responsável pelo projeto, da área e do setor dele).
+      contatos: this.contatos(meta.projeto_id),
       fatores: c.factors.map((f) => ({ fator: f.label, peso: Math.round(f.weight * 100) / 100, valor: Math.round(f.value * 100) / 100, matches: f.matches ?? [] })),
       resumo: section(body, 'Objetivo'),
       justificativa: c.semantic?.justificativa
