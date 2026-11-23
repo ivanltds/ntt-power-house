@@ -1,0 +1,38 @@
+{
+ "titulo": "Painel de Indicadores ESG e Emissões com Power BI e Azure",
+ "problema": "A Têxtil Fio de Ouro, com 3 unidades industriais e produção anual de 12 mil toneladas de tecidos, precisa atender às exigências de relatórios ESG de seus 5 maiores clientes varejistas, que representam 60% da receita. Atualmente, os dados de emissões e consumo são coletados manualmente em planilhas, resultando em atrasos de até 30 dias na consolidação e riscos de inconsistência.",
+ "objetivo": "Implantar uma solução de analytics e governança de dados para automatizar a coleta, o cálculo e a divulgação de indicadores ESG e emissões, garantindo confiabilidade e agilidade na prestação de contas.",
+ "escopo": [
+  "Integração de fontes de dados de consumo de energia, água e resíduos das 3 unidades industriais usando Azure Data Factory e Azure SQL Database.",
+  "Modelagem e cálculo de emissões de escopo 1 e 2 conforme metodologia GHG Protocol, com armazenamento em Azure Synapse Analytics.",
+  "Desenvolvimento de dashboards interativos no Power BI para acompanhamento de KPIs ESG e emissões por unidade e por cliente.",
+  "Implementação de catálogo de dados e políticas de governança no Azure Purview para rastreabilidade dos indicadores.",
+  "Capacitação de 15 usuários-chave e elaboração de plano de change management para adoção das ferramentas."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e integração no Azure.",
+  "Pipeline de ETL automatizado para coleta de dados de emissões e consumo.",
+  "Dashboard executivo no Power BI com 20 indicadores ESG e emissões.",
+  "Catálogo de dados corporativo com metadados e linhagem dos indicadores.",
+  "Relatório de capacitação e plano de comunicação para gestão da mudança."
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e Arquitetura: 4 semanas",
+  "Fase 2 - Implementação de Pipelines e Governança: 8 semanas",
+  "Fase 3 - Desenvolvimento de Dashboards e Validação: 6 semanas",
+  "Fase 4 - Treinamento e Rollout: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos dados históricos de emissões.",
+  "Resistência das áreas operacionais à mudança de processo.",
+  "Integração complexa com sistemas legados das unidades industriais."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de Sustentabilidade)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 5 meses foi considerado longo demais pela Têxtil Fio de Ouro, que precisava de resultados em até 3 meses para atender a uma auditoria de cliente.",
+ "licoes": "Para próximas propostas com prazo crítico, priorizar um escopo faseado com entregas rápidas (quick wins) e apresentar um cronograma enxuto, destacando a aceleração via metodologia ágil.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de indicadores ESG e emissões não foi selecionada. O prazo de entrega de 5 meses foi o principal motivo, pois precisamos de uma solução em menor tempo. Agradecemos o esforço da equipe. Atenciosamente, Mariana Costa (Gerente de Sustentabilidade - Têxtil Fio de Ouro)."
+}

@@ -5,14 +5,31 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-function cosine(a, b) {
-  let dot = 0, na = 0, nb = 0;
-  for (let i = 0; i < a.length; i++) {
-    dot += a[i] * b[i];
-    na += a[i] * a[i];
-    nb += b[i] * b[i];
-  }
-  return dot / ((Math.sqrt(na) * Math.sqrt(nb)) || 1);
+// Vetores guardados esparsos (só as posições diferentes de zero): o embedder por hashing gera ~100 valores
+// em 1.024, então cada trecho ocupa ~1 KB em vez de ~9 KB. Permite uma base de milhares de trechos no servidor pequeno.
+// No arquivo, cada vetor vai em base64 (bytes de Uint16 e Float32): ler milhões de números em JSON reservava
+// ~100 MB de memória só para a leitura; strings base64 são lidas sem esse pico.
+const deB64 = (s, Tipo) => { const b = Buffer.from(s, 'base64'); return new Tipo(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength)); };
+const paraB64 = (arr) => Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength).toString('base64');
+export function esparso(v) {
+  if (v && typeof v.i === 'string') { const val = deB64(v.v, Float32Array); return { i: deB64(v.i, Uint16Array), v: val, n: v.n ?? normaDe(val) }; }
+  if (v && v.i && v.v) return { i: Uint16Array.from(v.i), v: Float32Array.from(v.v), n: v.n ?? normaDe(v.v) };
+  const idx = [];
+  const val = [];
+  for (let k = 0; k < v.length; k++) if (v[k] !== 0) { idx.push(k); val.push(v[k]); }
+  return { i: Uint16Array.from(idx), v: Float32Array.from(val), n: normaDe(val) };
+}
+function normaDe(vals) {
+  let n = 0;
+  for (const x of vals) n += x * x;
+  return Math.sqrt(n);
+}
+
+// Cosseno entre a consulta (densa) e um trecho (esparso).
+function cosine(q, r, nq) {
+  let dot = 0;
+  for (let k = 0; k < r.i.length; k++) dot += q[r.i[k]] * r.v[k];
+  return dot / ((nq * r.n) || 1);
 }
 
 // Filtro de metadados no estilo Chroma: { campo: valor }, { campo: { $eq|$ne|$in|$nin|$gte|$lte: v } },
@@ -43,7 +60,7 @@ class Collection {
   constructor(name, data = {}) {
     this.name = name;
     this.metadata = data.metadata ?? {};
-    this.records = data.records ?? [];
+    this.records = (data.records ?? []).map((r) => ({ ...r, embedding: esparso(r.embedding) }));
   }
 
   count() {
@@ -52,7 +69,7 @@ class Collection {
 
   add({ ids, embeddings, documents, metadatas }) {
     ids.forEach((id, i) => {
-      const record = { id, embedding: embeddings[i], document: documents[i], metadata: metadatas[i] ?? {} };
+      const record = { id, embedding: esparso(embeddings[i]), document: documents[i], metadata: metadatas[i] ?? {} };
       const existing = this.records.findIndex((r) => r.id === id);
       if (existing >= 0) this.records[existing] = record;
       else this.records.push(record);
@@ -69,8 +86,9 @@ class Collection {
     const allowed = this.records.filter((r) => matchesWhere(r.metadata, where));
     const out = { ids: [], distances: [], documents: [], metadatas: [] };
     for (const q of queryEmbeddings) {
+      const nq = normaDe(q);
       const ranked = allowed
-        .map((r) => ({ r, sim: cosine(q, r.embedding) }))
+        .map((r) => ({ r, sim: cosine(q, r.embedding, nq) }))
         .sort((a, b) => b.sim - a.sim)
         .slice(0, nResults);
       out.ids.push(ranked.map((x) => x.r.id));
@@ -84,7 +102,7 @@ class Collection {
   toJSON() {
     return {
       metadata: this.metadata,
-      records: this.records.map((r) => ({ ...r, embedding: r.embedding.map((v) => Math.round(v * 1e5) / 1e5) })),
+      records: this.records.map((r) => ({ ...r, embedding: { i: paraB64(r.embedding.i), v: paraB64(r.embedding.v), n: r.embedding.n } })),
     };
   }
 }
@@ -119,6 +137,6 @@ export class LocalVectorStore {
   persist() {
     fs.mkdirSync(path.dirname(this.filePath), { recursive: true });
     const collections = Object.fromEntries([...this.collections].map(([n, c]) => [n, c.toJSON()]));
-    fs.writeFileSync(this.filePath, JSON.stringify({ version: 1, collections }));
+    fs.writeFileSync(this.filePath, JSON.stringify({ version: 3, collections }));
   }
 }

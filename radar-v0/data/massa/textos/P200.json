@@ -1,0 +1,44 @@
+{
+ "titulo": "FinOps e Otimização de Custos Multicloud com Analytics para Varejo",
+ "problema": "A Casa & Construção Prime opera 120 lojas físicas e um e-commerce que representa 35% da receita, com infraestrutura em AWS e Azure consumindo R$ 480 mil/mês. O cliente não tem visibilidade dos custos por produto e equipe, e 28% dos clusters Kubernetes estão superprovisionados.",
+ "objetivo": "Reduzir em 22% o gasto mensal com nuvem em 5 meses, por meio de práticas FinOps, otimização de recursos Kubernetes e dashboards de custos no Power BI.",
+ "escopo": [
+  "Diagnóstico de custos AWS e Azure com tagging e alocação por centro de custo",
+  "Otimização de clusters Kubernetes (rightsizing, HPA e desligamento de nós ociosos)",
+  "Implementação de políticas de FinOps e alertas de anomalias de gastos",
+  "Dashboard de custos e KPIs no Power BI para gestores de TI e negócio",
+  "Automação de relatórios de chargeback e showback por área"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico com 15 recomendações de economia quick-win",
+  "Plano de otimização de Kubernetes com meta de redução de 30% nos nós",
+  "Painel Power BI com visão de custos por serviço, loja e produto",
+  "Política de governança FinOps documentada e aprovada",
+  "Relatório final com economia realizada e roadmap de continuidade"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e baseline de custos",
+   "semanas": 6
+  },
+  {
+   "fase": "Otimização de Kubernetes e recursos",
+   "semanas": 8
+  },
+  {
+   "fase": "Implementação de FinOps e Power BI",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de nuvem, 1 especialista FinOps, 1 engenheiro Kubernetes e 1 analista de BI",
+ "riscos": [
+  "Resistência das equipes de produto à mudança de cultura FinOps",
+  "Complexidade de alocação de custos compartilhados entre AWS e Azure",
+  "Prazo curto para implementar automação de chargeback"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de TI)",
+  "tecnico": "Rafael Almeida (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente devido a uma reestruturação interna que congelou investimentos em projetos de TI por tempo indeterminado."
+}

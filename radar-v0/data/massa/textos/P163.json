@@ -1,0 +1,38 @@
+{
+ "titulo": "Redução de Perdas Não Técnicas com Machine Learning e Databricks",
+ "problema": "A Geradora Ventos do Nordeste enfrenta perdas não técnicas estimadas em 8,5% da energia distribuída, o que representa cerca de R$ 12 milhões anuais. A detecção manual de fraudes e ligações clandestinas cobre apenas 30% dos casos suspeitos, deixando um passivo significativo de recuperação de receita.",
+ "objetivo": "Desenvolver modelos de machine learning para identificar e priorizar casos de perdas não técnicas, integrados em uma plataforma Databricks, visando reduzir as perdas em 2 pontos percentuais em 12 meses.",
+ "escopo": [
+  "Análise exploratória e engenharia de features em Databricks para 2,5 milhões de unidades consumidoras.",
+  "Desenvolvimento de modelos de classificação (gradient boosting e redes neurais) para detecção de anomalias de consumo.",
+  "Implementação de pipeline de ML em Databricks para treinamento e inferência em lote diário.",
+  "Criação de dashboards de priorização de inspeções com scores de risco e explicações via SHAP.",
+  "Integração dos resultados com o sistema de gestão de inspeções existente via API."
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e qualidade com recomendações de melhorias.",
+  "Modelo preditivo de perdas não técnicas com AUC superior a 0,85 e matriz de confusão calibrada.",
+  "Pipeline de ML automatizado em Databricks com orquestração de tarefas e monitoramento de drift.",
+  "Dashboard de priorização de inspeções com lista diária dos 500 casos de maior risco.",
+  "Documentação técnica e treinamento para a equipe de ciência de dados do cliente."
+ ],
+ "fases": [
+  "Fase 1 – Diagnóstico e preparação de dados: 6 semanas",
+  "Fase 2 – Desenvolvimento e validação de modelos: 10 semanas",
+  "Fase 3 – Implantação do pipeline e dashboards: 8 semanas",
+  "Fase 4 – Treinamento e go-live assistido: 4 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 especialista em Databricks.",
+ "riscos": [
+  "Qualidade dos dados de consumo e cadastro incompleta ou inconsistente.",
+  "Resistência das equipes de campo à priorização baseada em modelo.",
+  "Prazo de 7 meses pode ser insuficiente para ciclo completo de ML e implantação."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de Operações Comerciais)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 7 meses foi considerado longo demais pela Geradora Ventos do Nordeste, que precisava de resultados em menos de 5 meses para cumplir metas regulatórias.",
+ "licoes": "Para próximas oportunidades com urgência por resultados, oferecer uma abordagem faseada com quick wins em 3 meses, mesmo que o escopo completo demande mais tempo.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de redução de perdas não técnicas não foi selecionada. O principal motivo foi o prazo de entrega de 7 meses, que excede nossa janela de 5 meses para atender às metas regulatórias. Agradecemos o esforço da equipe da NTT DATA. Atenciosamente, Mariana Costa – Gerente de Operações Comerciais."
+}

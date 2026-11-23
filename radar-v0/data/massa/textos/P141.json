@@ -1,0 +1,47 @@
+{
+ "titulo": "Assistente virtual com IA generativa para atendimento no varejo",
+ "problema": "O Atacadão Popular Sul atende hoje cerca de 180 mil interações por mês entre lojas físicas e canais digitais, com 62% dos contatos concentrados em dúvidas repetitivas sobre preços, estoque e políticas de troca. O tempo médio de primeira resposta no WhatsApp é de 11 minutos e a taxa de abandono chega a 24% nos horários de pico, pressionando o custo por atendimento.",
+ "objetivo": "Implantar um assistente virtual com IA generativa integrado ao Salesforce para resolver de forma autônoma ao menos 55% dos atendimentos de nível 1 em 5 meses, reduzindo o tempo de primeira resposta para menos de 1 minuto.",
+ "escopo": [
+  "Integração do assistente virtual ao Salesforce Service Cloud para consumo de histórico de casos e dados de clientes",
+  "Desenvolvimento dos serviços de orquestração e das rotas de IA generativa em Python, com camada de RAG sobre a base de políticas comerciais",
+  "Configuração de fluxos de escalonamento humano no Salesforce com contexto da conversa e classificação de intenção",
+  "Implementação de guardrails, logs de auditoria e painéis de acurácia e contenção no Salesforce",
+  "Execução de testes A/B com 2 mil conversas reais e ajuste de prompts e limiares de confiança"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção para os canais WhatsApp e chat do site",
+  "Documento de arquitetura da solução com integração Salesforce e serviços Python",
+  "Base de conhecimento estruturada para RAG com 350 artigos revisados",
+  "Painel de KPIs de atendimento com taxa de contenção, CSAT e tempo de primeira resposta",
+  "Relatório de testes A/B e plano de evolução para a fase seguinte"
+ ],
+ "fases": [
+  {
+   "nome": "Descoberta e desenho da solução",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento e integração Salesforce/Python",
+   "semanas": 8
+  },
+  {
+   "nome": "Testes A/B e ajuste de modelos",
+   "semanas": 5
+  },
+  {
+   "nome": "Go-live assistido e transferência de conhecimento",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 engenheiros Python, 1 consultor Salesforce e 1 especialista em experiência do cliente",
+ "riscos": [
+  "Baixa qualidade ou desatualização da base de conhecimento para RAG",
+  "Resistência das equipes de atendimento à mudança de processo",
+  "Latência ou limites de API do Salesforce em picos de 180 mil interações/mês"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Atendimento e Canais Digitais)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de IA)"
+ }
+}

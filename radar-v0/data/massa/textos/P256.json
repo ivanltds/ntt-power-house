@@ -1,0 +1,47 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD em Plataforma Analítica Unificada",
+ "problema": "O Banco Cidadela opera com 4 fontes analíticas distintas (Databricks, Snowflake e Azure Synapse) sem catálogo corporativo único, o que gera cerca de 1.200 ativos de dados sem classificação de sensibilidade e 38% dos relatórios regulatórios sem linhagem documentada. O passivo de mapeamento de dados pessoais expõe o banco a riscos de autuação pela ANPD e a retrabalho estimado em 2.400 horas/ano em auditorias internas.",
+ "objetivo": "Implantar um framework de governança de dados e conformidade LGPD sobre Databricks, Snowflake e Azure, com catálogo, classificação de dados pessoais e linhagem ponta a ponta, reduzindo o esforço de auditoria em 60%.",
+ "escopo": [
+  "Implantação de catálogo corporativo de dados no Azure Purview integrado às camadas Databricks e Snowflake",
+  "Classificação automática de dados pessoais e sensíveis (LGPD art. 5º) em 1.200 ativos via políticas de tagging no Databricks Unity Catalog",
+  "Mapeamento de linhagem de dados ponta a ponta entre ingestão Azure Data Factory, Databricks e consumo em Snowflake",
+  "Definição de 15 políticas de acesso baseadas em finalidade de tratamento e papéis (RBAC/ABAC) no Azure e Snowflake",
+  "Estruturação de processo de atendimento a titulares e registro de operações de tratamento (ROPA) com trilhas de auditoria"
+ ],
+ "entregaveis": [
+  "Catálogo de dados corporativo populado com 1.200 ativos classificados e 100% dos domínios críticos mapeados",
+  "Matriz de classificação LGPD com 15 políticas de acesso implementadas e testadas",
+  "Relatório de linhagem de dados dos 12 relatórios regulatórios prioritários",
+  "ROPA completo e fluxo de atendimento a titulares documentado e operacionalizado",
+  "Plano de sustentação de governança com papéis, ritos mensais e KPIs de qualidade de dados"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho do framework",
+   "semanas": 4
+  },
+  {
+   "nome": "Implantação do catálogo e classificação LGPD",
+   "semanas": 6
+  },
+  {
+   "nome": "Linhagem, políticas de acesso e ROPA",
+   "semanas": 4
+  },
+  {
+   "nome": "Sustentação, treinamento e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade/LGPD e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas de negócio à classificação de dados",
+  "Qualidade insuficiente dos metadados nas fontes legadas",
+  "Mudanças regulatórias da ANPD durante a implantação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Villaça (Diretora de Dados e Analytics)",
+  "tecnico": "Paulo Menezes (Arquiteto de Governança de Dados)"
+ }
+}

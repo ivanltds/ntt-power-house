@@ -1,0 +1,44 @@
+{
+ "titulo": "FinOps e otimização de custos multicloud GCP e Azure",
+ "problema": "O Banco Aurora opera hoje cerca de 680 workloads distribuídos entre GCP e Azure, com gasto mensal de nuvem na ordem de R$ 4,2 milhões e variação de até 18% mês a mês sem justificativa clara. A ausência de visibilidade por centro de custo e de políticas formais de governança impede identificar desperdícios e priorizar ações de otimização.",
+ "objetivo": "Reduzir em 22% o custo mensal de nuvem em 3 meses, estabelecendo práticas de FinOps, visibilidade de custos por unidade de negócio e governança contínua sobre GCP e Azure.",
+ "escopo": [
+  "Diagnóstico de custos e uso nas contas GCP e Azure, com taggeamento por centro de custo e unidade de negócio",
+  "Implantação de dashboards de FinOps e alertas de anomalia de gasto sobre billing exportado de GCP e Azure",
+  "Revisão de rightsizing de VMs, discos ociosos e snapshots órfãos nas duas nuvens, com plano de ação priorizado",
+  "Definição de políticas de governança de custos, orçamentos e guardrails nativos de GCP e Azure",
+  "Execução assistida de um primeiro ciclo de otimização, com meta de economia de 22% e rotina mensal de revisão"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de custos com mapa de desperdícios e oportunidades priorizadas por impacto",
+  "Painéis de FinOps e conjunto de alertas de anomalia operando para GCP e Azure",
+  "Plano de rightsizing e limpeza com lista de recursos a redimensionar ou desativar",
+  "Política de governança de custos e orçamentos aprovada pelas áreas de TI e Finanças",
+  "Relatório final com economia realizada, linha de base e rotina mensal de FinOps implantada"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e linha de base de custos",
+   "semanas": 4
+  },
+  {
+   "nome": "Instrumentação, dashboards e alertas",
+   "semanas": 4
+  },
+  {
+   "nome": "Otimização assistida e governança",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de nuvem, 2 engenheiros de cloud (GCP e Azure), 1 analista de FinOps e 1 gerente de projeto",
+ "riscos": [
+  "Dados de billing incompletos ou sem taggeamento, atrasando o diagnóstico",
+  "Resistência das áreas de aplicação a redimensionamentos e desligamentos",
+  "Economia abaixo da meta de 22% por dependências de janelas de mudança"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Infraestrutura de TI)",
+  "tecnico": "Paulo Menezes (Arquiteto de Soluções Cloud)"
+ },
+ "diferencial": "Ganhamos por termos entregado um case de referência de FinOps multicloud em instituição financeira com meta de redução de custos superada, além da continuidade do projeto anterior de migração para nuvem no Banco Aurora."
+}

@@ -1,0 +1,36 @@
+{
+ "titulo": "Manutenção Preditiva de Ativos com Machine Learning e Databricks",
+ "problema": "A Energia Paulista Distribuição opera uma frota de 12.500 transformadores e 3.200 km de linhas de distribuição, com uma taxa de falhas não programadas que gera 18.000 horas de interrupção por ano e um custo de manutenção corretiva de R$ 45 milhões anuais. Atualmente, a manutenção é predominantemente reativa ou baseada em calendário, sem uso analítico dos dados de sensores e histórico de falhas.",
+ "objetivo": "Implementar um modelo de manutenção preditiva baseado em Machine Learning para prever falhas em transformadores e linhas, reduzindo em 25% as interrupções não programadas e em 20% os custos de manutenção corretiva no prazo de 5 meses.",
+ "escopo": [
+  "Integração de dados de sensores IoT (temperatura, vibração, corrente) e histórico de manutenção do SAP com o Databricks na Azure.",
+  "Desenvolvimento de pipeline de engenharia de dados para ingestão, limpeza e feature engineering de dados de ativos.",
+  "Construção e treinamento de modelos de Machine Learning para classificação de risco de falha e estimativa de vida útil remanescente.",
+  "Implementação de dashboards e alertas no Azure para priorização de inspeções e manutenções.",
+  "Documentação técnica e transferência de conhecimento para a equipe de TI e operações do cliente."
+ ],
+ "entregaveis": [
+  "Pipeline de dados integrado e automatizado no Databricks, com 15 fontes de dados conectadas.",
+  "Modelo de Machine Learning validado com acurácia mínima de 85% na previsão de falhas em até 30 dias.",
+  "Painel de monitoramento de saúde dos ativos com alertas em tempo real no Azure.",
+  "Relatório de resultados com análise de impacto financeiro e operacional.",
+  "Workshop de capacitação e guia de operação e manutenção da solução."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Planejamento: 4 semanas",
+  "Fase 2 - Engenharia de Dados e Integração: 8 semanas",
+  "Fase 3 - Modelagem e Validação: 6 semanas",
+  "Fase 4 - Implantação e Transferência: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e disponibilidade dos dados de sensores e do SAP.",
+  "Resistência à mudança por parte das equipes de manutenção de campo.",
+  "Atraso na integração com sistemas legados devido a restrições de segurança."
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Gerente de Manutenção de Ativos)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "diferencial": "Preço competitivo com escopo enxuto e foco em resultados rápidos, sem custos adicionais de licenciamento."
+}

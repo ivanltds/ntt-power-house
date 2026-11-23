@@ -1,0 +1,47 @@
+{
+ "titulo": "Modernização de Aplicações com Containers em Multicloud para o Varejo",
+ "problema": "A Casa & Construção Prime opera 148 lojas físicas e um e-commerce que responde por 27% da receita, mas mantém 62 aplicações em servidores on-premises com janelas de manutenção de até 9 horas e indisponibilidade média de 4,2 horas por mês. O parque legado limita a escalabilidade em picos sazonais, quando o volume de pedidos cresce 3,5 vezes, e eleva o custo de infraestrutura em 18% ao ano.",
+ "objetivo": "Modernizar as aplicações críticas de varejo com conteinerização e orquestração em ambiente multicloud (GCP, Azure e AWS), reduzindo indisponibilidade e tempo de deploy, com integração de eventos via Kafka.",
+ "escopo": [
+  "Avaliação e priorização de 62 aplicações, selecionando 24 para conteinerização na primeira onda",
+  "Conteinerização das aplicações prioritárias com orquestração em GCP (GKE) e Azure (AKS), incluindo imagens e pipelines CI/CD",
+  "Implantação de malha de integração orientada a eventos com Apache Kafka para pedidos, estoque e pagamentos",
+  "Definição de landing zone e governança multicloud, com workloads complementares em AWS para analytics e DR",
+  "Migração para nuvem das cargas conteinerizadas, com cutover assistido e descomissionamento do legado"
+ ],
+ "entregaveis": [
+  "Relatório de assessment das 62 aplicações com matriz de priorização e roadmap de 6 meses",
+  "24 aplicações conteinerizadas e em produção em GCP e Azure, com pipelines CI/CD automatizados",
+  "Cluster Kafka em produção com 3 tópicos principais integrando pedidos, estoque e pagamentos",
+  "Landing zone multicloud documentada com políticas de segurança, custos e DR em AWS",
+  "Plano de cutover e descomissionamento do legado, com runbooks e transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e desenho da arquitetura-alvo",
+   "semanas": 6
+  },
+  {
+   "fase": "Landing zone multicloud e implantação do Kafka",
+   "semanas": 6
+  },
+  {
+   "fase": "Conteinerização e migração da primeira onda de 12 aplicações",
+   "semanas": 8
+  },
+  {
+   "fase": "Migração da segunda onda de 12 aplicações e descomissionamento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 1 especialista em containers e Kubernetes, 1 engenheiro de integração Kafka, 2 engenheiros de cloud e 1 gerente de projeto",
+ "riscos": [
+  "Dependências entre aplicações legadas atrasam a conteinerização",
+  "Janelas de cutover restritas impactam o e-commerce em picos sazonais",
+  "Custos multicloud acima do previsto sem governança de FinOps"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Paulo Menezes (Arquiteto de Soluções Cloud)"
+ }
+}

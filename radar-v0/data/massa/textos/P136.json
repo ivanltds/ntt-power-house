@@ -1,0 +1,47 @@
+{
+ "titulo": "Assistente virtual com IA generativa integrado ao atendimento via ServiceNow e Salesforce",
+ "problema": "O NetVale Provedor registra cerca de 180 mil atendimentos por mês, dos quais 62% são demandas repetitivas de suporte técnico e faturamento. O tempo médio de primeira resposta é de 9 minutos no chat e a taxa de resolução no primeiro contato é de apenas 48%, pressionando um time de 140 atendentes.",
+ "objetivo": "Implantar um assistente virtual com IA generativa que resolva automaticamente as demandas de maior volume, reduzindo o tempo de primeira resposta para até 1 minuto e elevando a resolução no primeiro contato para 70% em 5 meses.",
+ "escopo": [
+  "Assistente virtual em IA Generativa integrado ao ServiceNow para triagem e resolução de chamados de suporte técnico",
+  "Integração com Salesforce para consulta de dados contratuais e de faturamento do cliente durante o atendimento",
+  "Automação de Processos para roteamento inteligente e escalonamento de chamados ao time humano",
+  "Base de conhecimento vetorizada com políticas de resposta e guardrails de conformidade e privacidade",
+  "Painel de acompanhamento de métricas de atendimento com indicadores de acurácia e contenção"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção nos canais de chat, com cobertura de 15 fluxos de atendimento",
+  "Integrações ServiceNow e Salesforce homologadas e documentadas",
+  "Conjunto de 40 intenções automatizadas com guardrails de IA generativa validados",
+  "Relatório de linha de base e painel de KPIs de atendimento",
+  "Treinamento e manual de operação para 140 atendentes e 12 supervisores"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho de solução",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento e integrações",
+   "semanas": 10
+  },
+  {
+   "nome": "Piloto controlado e ajuste de modelos",
+   "semanas": 4
+  },
+  {
+   "nome": "Rollout e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 engenheiros de IA generativa, 1 especialista ServiceNow, 1 especialista Salesforce e 1 analista de automação de processos",
+ "riscos": [
+  "Baixa qualidade das bases de conhecimento legadas impactando a acurácia das respostas",
+  "Resistência operacional dos atendentes à mudança de fluxo de trabalho",
+  "Atraso nas integrações com sistemas legados de faturamento do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Atendimento e Experiência do Cliente)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de IA)"
+ }
+}

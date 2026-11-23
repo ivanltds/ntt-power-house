@@ -1,0 +1,47 @@
+{
+ "titulo": "Painéis Executivos e BI para Controle de Produção e Custos",
+ "problema": "A Plastipack enfrenta dificuldades para consolidar dados de produção e custos devido à dispersão em planilhas e sistemas legados, resultando em atrasos de até 5 dias na geração de relatórios gerenciais. A falta de uma visão unificada impede a identificação rápida de desvios e a tomada de decisão assertiva sobre a rentabilidade por linha de produto.",
+ "objetivo": "Implementar uma solução de BI com painéis executivos no Power BI, integrando dados de produção e custos, para reduzir o tempo de análise em 70% e permitir decisões baseadas em dados em tempo quase real.",
+ "escopo": [
+  "Desenvolvimento de pipelines de engenharia de dados no Azure Data Factory para ingestão de dados de ERP e MES",
+  "Modelagem dimensional no Azure Synapse Analytics para suportar análises de produção e custos",
+  "Criação de painéis executivos no Power BI com indicadores de OEE, custo por tonelada e margem por produto",
+  "Implementação de segurança e governança de dados no Azure, com definição de papéis e políticas de acesso",
+  "Capacitação de usuários-chave para uso dos painéis e administração da plataforma"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e BI aprovado",
+  "Pipeline de ingestão e transformação de dados operacional no Azure",
+  "Modelo semântico e 5 painéis executivos no Power BI validados",
+  "Manual de governança e segurança de dados",
+  "Treinamento realizado para 15 usuários-chave"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Arquitetura",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Engenharia de Dados e Integração",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Desenvolvimento de Painéis e Validação",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Capacitação e Go-live",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados de origem comprometida",
+  "Baixo engajamento dos usuários-chave na validação",
+  "Mudanças nos requisitos durante o desenvolvimento"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Gerente de TI)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados)"
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "titulo": "FinOps e otimização de custos multicloud para varejo",
+ "problema": "A Moda Leve Store opera 120 lojas físicas e um e-commerce com pico de 50 mil pedidos/dia, mas enfrenta custos de nuvem 35% acima do orçamento previsto para 2024, com 40% dos workloads em Kubernetes superdimensionados e falta de visibilidade por unidade de negócio.",
+ "objetivo": "Reduzir em 28% o gasto mensal com GCP e Azure em 3 meses, estabelecendo governança FinOps e dashboards de custos por produto e canal no Power BI.",
+ "escopo": [
+  "Análise de custos e rightsizing de clusters Kubernetes no GCP e Azure",
+  "Implementação de políticas de tagging e chargeback no Power BI",
+  "Migração de 15 workloads legados para instâncias spot e committed use discounts",
+  "Automação de desligamento de ambientes não produtivos via Kubernetes CronJobs",
+  "Capacitação de 20 pessoas em Change Management para cultura FinOps"
+ ],
+ "entregaveis": [
+  "Relatório de baseline de custos e mapa de oportunidades com economia estimada",
+  "Dashboard Power BI com visão de custos por squad, produto e canal",
+  "Playbook de FinOps com 10 práticas de otimização contínua",
+  "Plano de migração e execução de 15 workloads para instâncias otimizadas",
+  "Workshop de encerramento e plano de sustentação de 6 meses"
+ ],
+ "fases": [
+  "Diagnóstico e baseline de custos (3 semanas)",
+  "Quick wins e rightsizing de Kubernetes (4 semanas)",
+  "Governança e dashboards Power BI (3 semanas)",
+  "Capacitação e sustentação (2 semanas)"
+ ],
+ "equipe": "1 arquiteto de nuvem, 2 engenheiros de cloud, 1 analista de FinOps, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Resistência das squads de produto à mudança de instâncias",
+  "Dados de custo fragmentados entre GCP e Azure",
+  "Janela curta para migração de workloads críticos"
+ ],
+ "pessoas": {
+  "cliente": "Carla Menezes (Gerente de TI)",
+  "tecnico": "Rafael Souza (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "Redução de 12% no custo mensal de nuvem nas primeiras 6 semanas, com economia de R$ 45 mil.",
+ "diferencial": "Experiência comprovada em projeto similar de FinOps para rede varejista com 200 lojas, entregando 30% de economia em 4 meses."
+}

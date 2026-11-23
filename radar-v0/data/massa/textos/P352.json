@@ -1,0 +1,46 @@
+{
+ "titulo": "Modelo de ML para redução de perdas não técnicas em distribuidora de gás canalizado",
+ "problema": "A Gás Canalizado Litoral operava com perdas não técnicas estimadas em 6,8% do volume faturado, equivalentes a cerca de R$ 14 milhões por ano, sem conseguir priorizar inspeções por risco. A detecção dependia de denúncias e varreduras manuais em 42 mil unidades consumidoras, com taxa de acerto de apenas 23% nas inspeções.",
+ "objetivo": "Reduzir as perdas não técnicas por meio de um modelo de priorização de inspeções baseado em dados de consumo, cadastro e histórico de irregularidades, com painéis de acompanhamento para a operação.",
+ "escopo": [
+  "Construção de pipeline de dados no Azure Data Lake e Azure Data Factory integrando medições, cadastro e histórico de inspeções",
+  "Modelo de machine learning de propensão à irregularidade por unidade consumidora, com explicabilidade das variáveis",
+  "Ranking semanal de inspeção com nota de risco e segmentação por rota e região",
+  "Painéis no Power BI para acompanhamento de acurácia do modelo, produtividade das equipes e perdas recuperadas",
+  "Rotina de monitoramento de deriva do modelo e retreinamento periódico no Azure Machine Learning"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário das variáveis do modelo",
+  "Modelo de propensão à irregularidade validado com métricas de lift e precisão",
+  "Painéis de Power BI de operação de inspeção e de resultados de perdas",
+  "Manual de uso do ranking e playbook de inspeção por prioridade",
+  "Relatório de resultados com baseline, ganhos e recomendações de continuidade"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e validação do modelo",
+   "semanas": 8
+  },
+  {
+   "fase": "Painéis, integração operacional e treinamento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 1 cientista de dados sênior, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura dos dados de medição em parte da base",
+  "Baixa adesão das equipes de campo ao ranking priorizado",
+  "Prazo curto para retreinar e estabilizar o modelo em produção"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações Comerciais)",
+  "tecnico": "Paulo Menezes (Cientista de Dados Sênior)"
+ },
+ "resultados": "O modelo elevou a taxa de acerto das inspeções de 23% para 51% e apoiou a recuperação de R$ 9,3 milhões em perdas não técnicas no primeiro ano de operação.",
+ "licoes": "A integração com o sistema legado de medição consumiu três semanas além do previsto por inconsistências de cadastro. Foi decisivo envolver as equipes de campo desde a fase de modelagem, o que ajustou as variáveis ao processo real de inspeção.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência semelhante em outra distribuidora, com resultados comprovados de redução de perdas e cronograma compatível com o prazo de cinco meses."
+}

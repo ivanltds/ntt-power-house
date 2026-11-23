@@ -1,0 +1,48 @@
+{
+ "titulo": "Implantação de CRM Salesforce e Jornada do Cliente Omnicanal",
+ "problema": "A Rede de Clínicas Bem Viver atende cerca de 180 mil pacientes/ano em 42 unidades e não possui visão unificada do histórico de atendimentos, agendamentos e relacionamento. Cerca de 35% das oportunidades de retorno e exames periódicos se perdem por falta de acompanhamento estruturado, e o tempo médio de resposta a solicitações pelo canal digital ultrapassa 24 horas.",
+ "objetivo": "Implantar o Salesforce como plataforma única de CRM e orquestrar a jornada do paciente em canais digitais e presenciais, elevando a taxa de retorno e a conversão de agendamentos com dados integrados em tempo real.",
+ "escopo": [
+  "Configuração do Salesforce Sales/Service Cloud com modelo de dados de pacientes, unidades e convênios",
+  "Integração do Salesforce com sistemas de agendamento e prontuário via APIs e barramento Kafka para eventos em tempo real",
+  "Construção de camada de dados e integrações no Azure (Data Factory, API Management) para consolidação da visão 360 do paciente",
+  "Desenho e automação da jornada do cliente com régua de relacionamento, lembretes de retorno e NPS pós-atendimento",
+  "Dashboards e indicadores de conversão, retenção e tempo de resposta no Power BI sobre dados do Azure e Salesforce"
+ ],
+ "entregaveis": [
+  "Blueprint da jornada do paciente e matriz de canais aprovados",
+  "Salesforce configurado e integrado aos sistemas de agendamento e prontuário",
+  "Pipeline de eventos Kafka e integrações Azure em produção",
+  "Réguas de relacionamento e automações de retorno ativas em 42 unidades",
+  "Painéis de indicadores de conversão, retenção e SLA de atendimento"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e desenho da jornada",
+   "semanas": 8
+  },
+  {
+   "fase": "Configuração do Salesforce e integrações Azure/Kafka",
+   "semanas": 18
+  },
+  {
+   "fase": "Piloto em 6 unidades e ajustes",
+   "semanas": 10
+  },
+  {
+   "fase": "Rollout para as 42 unidades e estabilização",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores Salesforce, 2 engenheiros de integração (Azure/Kafka) e 1 analista de negócios de saúde",
+ "riscos": [
+  "Qualidade e duplicidade dos dados de pacientes legados",
+  "Dependência de fornecedores dos sistemas de prontuário para APIs",
+  "Baixa adesão das equipes das unidades ao novo processo de relacionamento"
+ ],
+ "pessoas": {
+  "cliente": "Marina Duarte (Diretora de Experiência do Paciente)",
+  "tecnico": "Rafael Menezes (Arquiteto de Soluções Digital & CRM)"
+ },
+ "diferencial": "Continuidade do projeto anterior no cliente e case de referência em rede de clínicas com CRM Salesforce integrado via Azure e Kafka, com ganhos comprovados de retenção de pacientes."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Assistente virtual com IA generativa para atendimento de seguros auto",
+ "problema": "A Escudo Auto Seguros recebe cerca de 480 mil ligações e chats por ano, com 62% dos contatos concentrados em dúvidas repetitivas de apólice, sinistro e boleto. O tempo médio de espera chega a 9 minutos nos picos e o índice de abandono alcança 18%, pressionando o custo por atendimento e o NPS do segmento auto.",
+ "objetivo": "Implantar um assistente virtual com IA generativa no Azure para resolver de forma autônoma as dúvidas de maior volume do atendimento auto, reduzindo o tempo de espera e o volume de chamadas escaladas para atendentes humanos.",
+ "escopo": [
+  "Desenho da arquitetura do assistente em Azure, com Azure OpenAI Service, Azure AI Search e integração às bases de apólice e sinistro",
+  "Construção de pipeline de ingestão e indexação de 1.200 documentos de produtos, condições gerais e scripts de atendimento",
+  "Desenvolvimento do assistente conversacional com IA Generativa para os 25 intents de maior volume, com groundedness e citação de fontes",
+  "Integração via API aos canais de chat e WhatsApp, com handoff para atendente humano e registro de transcrições",
+  "Definição de guardrails, testes de aderência regulatória e painel de acompanhamento de acurácia e contenção"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura e plano de segurança do assistente em Azure",
+  "Base de conhecimento indexada e validada com os 1.200 documentos de produtos e atendimento",
+  "Assistente virtual em produção para os 25 intents prioritários nos canais chat e WhatsApp",
+  "Relatório de testes com meta de acurácia mínima de 90% nas respostas e taxa de handoff abaixo de 30%",
+  "Painel de métricas e manual de operação e evolução do assistente"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura",
+   "semanas": 3
+  },
+  {
+   "nome": "Ingestão e base de conhecimento",
+   "semanas": 3
+  },
+  {
+   "nome": "Desenvolvimento e integração do assistente",
+   "semanas": 4
+  },
+  {
+   "nome": "Testes, go-live e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 1 engenheiro de IA generativa, 1 desenvolvedor full-stack, 1 especialista de negócios em seguros e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade ou dispersão dos documentos de apólice e sinistro para a base de conhecimento",
+  "Restrições regulatórias e de privacidade na exposição de dados de segurados",
+  "Dependência de integrações com sistemas legados de sinistro do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Atendimento e Canais)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou acima do mercado: o valor de R$ 1,85 milhão para 12 semanas foi 28% superior ao da concorrente vencedora. O cliente reconheceu a qualidade técnica da abordagem, mas priorizou o orçamento disponível para o ciclo.",
+ "licoes": "Nas próximas propostas de IA generativa para seguros, apresentar desde o início uma opção de escopo modular com faixa de preço menor e comparativo de valor por intent entregue, evitando chegar à negociação com um único valor acima da referência de mercado.",
+ "retorno": "Prezados, após a análise das propostas recebidas, informamos que a Escudo Auto Seguros decidiu não seguir com a proposta da NTT DATA para o assistente virtual com IA generativa. A avaliação técnica foi positiva, porém o valor apresentado ficou acima do orçamento e da referência de mercado para o escopo e o prazo propostos. Agradecemos o empenho da equipe e permanecemos abertos a novas conversas em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Atendimento e Canais."
+}

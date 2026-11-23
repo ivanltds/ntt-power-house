@@ -1,0 +1,38 @@
+{
+ "titulo": "Migração SAP S/4HANA com Change Management para Cooperativa Agro Vale Verde",
+ "problema": "A Cooperativa Agro Vale Verde, com 3.200 cooperados e faturamento anual de R$ 2,1 bilhões, opera em SAP ECC 6.0 há 12 anos, sem suporte estendido a partir de 2027. A migração para S/4HANA é urgente para evitar riscos de continuidade e custos de manutenção elevados, estimados em R$ 4,5 milhões/ano.",
+ "objetivo": "Migrar os processos financeiros, suprimentos e produção para SAP S/4HANA em 12 meses, com gestão de mudança para 450 usuários, garantindo aderência e minimizando impactos operacionais.",
+ "escopo": [
+  "Assessment AS-IS dos processos em SAP ECC e blueprint TO-BE em S/4HANA, com workshops presenciais e remotos.",
+  "Migração de dados mestres e transacionais para S/4HANA, utilizando ferramentas SAP Migration Cockpit e validação em ambiente Azure.",
+  "Integração S/4HANA com plataformas AWS para análise de dados e relatórios gerenciais, via APIs.",
+  "Gestão de mudança: plano de comunicação, treinamento de 450 usuários e suporte pós-go-live por 8 semanas.",
+  "Preparação para go-live e hypercare, com 4 semanas de suporte intensivo e ajustes finos."
+ ],
+ "entregaveis": [
+  "Documento de blueprint TO-BE validado e assinado pelos stakeholders.",
+  "Relatório de migração de dados com 100% dos registros críticos carregados e conciliados.",
+  "Plano de gestão de mudança executado, com 95% dos usuários treinados e avaliados.",
+  "Sistema S/4HANA em produção, com go-live e hypercare concluídos.",
+  "Relatório de encerramento com lições aprendidas e métricas de estabilização."
+ ],
+ "fases": [
+  "Fase 1 - Assessment e Blueprint: 16 semanas",
+  "Fase 2 - Migração e Integração: 24 semanas",
+  "Fase 3 - Testes e Treinamento: 12 semanas",
+  "Fase 4 - Go-live e Hypercare: 8 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP S/4HANA, 2 consultores funcionais SAP, 1 especialista em migração de dados, 1 consultor de change management e 1 analista de integração Azure/AWS",
+ "riscos": [
+  "Resistência dos usuários à mudança de processos, impactando a adoção.",
+  "Complexidade na migração de dados legados com qualidade inconsistente.",
+  "Atrasos na integração entre S/4HANA e plataformas cloud (Azure/AWS)."
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de TI)",
+  "tecnico": "Fernanda Oliveira (Gerente de Projetos SAP)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução SAP S/4HANA instalada na cooperativa, com contrato de manutenção ativo e equipe local treinada, reduzindo custos e riscos percebidos.",
+ "licoes": "Para próximas oportunidades, mapear antecipadamente a existência de soluções instaladas e propor abordagem de transição ou complemento, destacando o valor do Change Management para maximizar a adoção.",
+ "retorno": "Prezados, informamos que a proposta para migração SAP S/4HANA não foi selecionada. A decisão foi baseada na existência de uma solução SAP já instalada em nosso ambiente, com contrato de suporte vigente e equipe interna capacitada, o que reduz custos e riscos. Agradecemos o empenho da equipe NTT DATA. Atenciosamente, Carlos Mendes - Diretor de TI, Cooperativa Agro Vale Verde."
+}

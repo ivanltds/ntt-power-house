@@ -1,0 +1,48 @@
+{
+ "titulo": "Atendimento omnicanal e service desk em Azure e ServiceNow para laboratório de diagnósticos",
+ "problema": "O Laboratório Diagnóstico Preciso atende cerca de 45 mil pacientes por mês em 12 unidades de coleta e recebe aproximadamente 120 mil contatos anuais por telefone, WhatsApp e e-mail, sem histórico unificado. O service desk interno opera com 3 ferramentas desconectadas, SLA médio de primeira resposta de 9 horas e 22% dos tickets reabertos por falta de contexto do atendimento anterior.",
+ "objetivo": "Unificar os canais de atendimento ao paciente e o service desk interno em uma plataforma omnicanal integrada, elevando a resolução no primeiro contato e reduzindo o tempo de primeira resposta.",
+ "escopo": [
+  "Implantação do CRM omnicanal em Azure, integrando telefonia, WhatsApp e e-mail em uma fila única de atendimento ao paciente",
+  "Configuração do ServiceNow para o service desk interno, com catálogo de serviços, SLA e fluxos de aprovação para as 12 unidades",
+  "Integração entre CRM e ServiceNow via APIs em Azure, com histórico 360º do paciente e do ticket",
+  "Painéis de indicadores de atendimento (volume, SLA, reabertura e CSAT) em Power BI sobre dados do Azure",
+  "Migração e saneamento da base histórica de contatos e tickets das 3 ferramentas atuais para as novas plataformas"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura omnicanal e de integração CRM–ServiceNow aprovado",
+  "CRM omnicanal configurado e em operação nas 12 unidades de coleta",
+  "ServiceNow com catálogo de serviços, SLA e fluxos de aprovação publicados",
+  "Integração CRM–ServiceNow em produção com histórico 360º do paciente",
+  "Painéis de indicadores de atendimento e relatório de go-live com métricas de aceite"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da solução",
+   "semanas": 6
+  },
+  {
+   "nome": "Configuração do CRM omnicanal e do ServiceNow",
+   "semanas": 12
+  },
+  {
+   "nome": "Integrações e migração de dados",
+   "semanas": 8
+  },
+  {
+   "nome": "Testes, treinamento e go-live assistido",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores de CRM, 2 consultores de ServiceNow e 1 analista de integração",
+ "riscos": [
+  "Baixa adoção pelas equipes das 12 unidades durante a transição de canais",
+  "Atraso na liberação de APIs e acessos aos sistemas legados do laboratório",
+  "Qualidade e duplicidade dos dados históricos de contatos e tickets a migrar"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Experiência do Paciente)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte no orçamento de transformação digital do laboratório para o exercício, com priorização de investimentos em equipamentos de diagnóstico."
+}

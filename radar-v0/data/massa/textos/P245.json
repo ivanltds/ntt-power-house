@@ -1,0 +1,36 @@
+{
+ "titulo": "Plataforma de Gestão de Saúde Populacional com Machine Learning e Analytics",
+ "problema": "O Laboratório Diagnóstico Preciso atende 2,3 milhões de beneficiários em 12 estados, mas não consegue identificar proativamente pacientes crônicos de alto custo. Atualmente, 18% dos beneficiários concentram 62% dos sinistros, e a ausência de modelos preditivos impede ações de medicina preventiva e gestão de risco.",
+ "objetivo": "Desenvolver uma plataforma de gestão de saúde populacional que utilize Machine Learning para estratificação de risco e análise preditiva, integrada ao Azure e com visualização no Power BI, permitindo intervenções precoces e redução de custos assistenciais.",
+ "escopo": [
+  "Construção de pipeline de dados no Azure Data Factory para ingestão de dados clínicos, demográficos e de sinistros de 2,3 milhões de beneficiários.",
+  "Desenvolvimento de modelos de Machine Learning para predição de risco de doenças crônicas (diabetes, hipertensão) e identificação de pacientes de alto custo.",
+  "Implementação de dashboards interativos no Power BI para gestores de saúde e equipes de medicina preventiva.",
+  "Integração dos resultados analíticos com o sistema de gestão de beneficiários existente via APIs.",
+  "Definição de arquitetura de dados escalável no Azure, incluindo governança e segurança (LGPD)."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo de governança no Azure.",
+  "Modelos preditivos treinados e validados com acurácia mínima de 85% para risco de crônicos.",
+  "Dashboards no Power BI para monitoramento de indicadores populacionais e estratificação de risco.",
+  "Relatório de resultados com análise de impacto financeiro e clínico esperado.",
+  "Manual de operação e transferência de conhecimento para equipe do cliente."
+ ],
+ "fases": [
+  "Fase 1 – Discovery e Arquitetura: 8 semanas",
+  "Fase 2 – Engenharia de Dados e Modelagem: 16 semanas",
+  "Fase 3 – Desenvolvimento de Modelos de ML e Dashboards: 12 semanas",
+  "Fase 4 – Homologação e Go-live: 4 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 especialista em BI",
+ "riscos": [
+  "Qualidade e integridade dos dados históricos de sinistros e clínicos.",
+  "Resistência das equipes médicas à adoção de modelos preditivos.",
+  "Prazo curto para integração com sistemas legados do cliente."
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Tecnologia da Informação)",
+  "tecnico": "Fernanda Costa (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente devido a uma reestruturação interna que suspendeu investimentos em novos projetos de analytics por tempo indeterminado."
+}

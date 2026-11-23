@@ -1,0 +1,36 @@
+{
+ "titulo": "Estruturação de Indicadores ESG e Emissões com Power BI, Snowflake e Azure",
+ "problema": "A Cimentos Rocha Firme enfrenta dificuldades para consolidar dados de emissões de CO2 e outros indicadores ESG devido à dispersão em planilhas e sistemas legados. Atualmente, o processo manual consome cerca de 120 horas mensais da equipe de sustentabilidade e atrasa a divulgação de relatórios em até 30 dias.",
+ "objetivo": "Implementar uma plataforma centralizada de dados ESG na Snowflake, com pipelines no Azure e dashboards em Power BI, para automatizar a coleta, cálculo e reporte de emissões, garantindo confiabilidade e agilidade na tomada de decisão.",
+ "escopo": [
+  "Integração de fontes de dados de emissões (estações de monitoramento, notas fiscais de combustível e sensores IoT) com Azure Data Factory para ingestão na Snowflake.",
+  "Modelagem dimensional no Snowflake para indicadores ESG, incluindo escopos 1, 2 e 3 de emissões.",
+  "Implementação de regras de governança de dados (qualidade, linhagem e catálogo) utilizando Azure Purview e políticas na Snowflake.",
+  "Desenvolvimento de dashboards interativos no Power BI para acompanhamento de metas de redução de emissões e relatórios regulatórios.",
+  "Automação de cálculos de emissões com base em fatores atualizados e integração com o sistema de gestão ambiental existente."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados ESG e governança.",
+  "Pipeline de ingestão e transformação de dados no Azure e Snowflake.",
+  "Modelo dimensional de indicadores ESG no Snowflake.",
+  "Conjunto de dashboards no Power BI para emissões e outros KPIs ESG.",
+  "Relatório de qualidade de dados e catálogo de metadados."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 3 semanas",
+  "Fase 2 - Implementação de Pipelines e Modelagem: 5 semanas",
+  "Fase 3 - Dashboards e Governança: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na integração de fontes de dados legadas.",
+  "Qualidade dos dados de emissões provenientes de sensores.",
+  "Resistência à mudança por parte das áreas envolvidas."
+ ],
+ "pessoas": {
+  "cliente": "Ana Beatriz Rocha (Gerente de Sustentabilidade)",
+  "tecnico": "Carlos Eduardo Lima (Arquiteto de Dados)"
+ },
+ "resultados": "Já foram integradas 3 fontes de dados críticas, representando 40% do volume total de emissões.",
+ "diferencial": "Nosso relacionamento de longo prazo com a Cimentos Rocha Firme, incluindo a entrega bem-sucedida de projetos anteriores de dados, garantiu agilidade na compreensão do contexto e continuidade das soluções."
+}

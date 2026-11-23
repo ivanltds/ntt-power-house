@@ -1,0 +1,48 @@
+{
+ "titulo": "Gestão de Saúde Populacional com Machine Learning e Analytics para Previdência Municipal",
+ "problema": "O Instituto de Previdência Municipal acompanha hoje cerca de 18 mil beneficiários entre servidores ativos, aposentados e pensionistas, mas não consegue identificar de forma preditiva os grupos de maior risco de sinistralidade e agravamento de doenças crônicas. Os relatórios atuais são manuais, com defasagem de até 45 dias, o que impede ações preventivas e eleva o custo assistencial em cerca de 12% ao ano.",
+ "objetivo": "Implantar uma plataforma de gestão de saúde populacional baseada em Machine Learning e analytics que permita identificar riscos de saúde por segmento e orientar programas de prevenção, reduzindo a defasagem de informação para no máximo 2 dias.",
+ "escopo": [
+  "Modelos de Machine Learning em Python para estratificação de risco de saúde dos beneficiários, com acurácia mínima de 80% na validação",
+  "Pipeline de dados em Azure (Data Factory e Synapse) para ingestão e tratamento de bases assistenciais e previdenciárias",
+  "Dashboards analíticos em Power BI para acompanhamento de indicadores de sinistralidade e adesão a programas preventivos",
+  "Motor de segmentação populacional por faixa de risco, com atualização diária e trilha de auditoria",
+  "Documentação técnica e transferência de conhecimento para a equipe do Instituto"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de estratificação de risco validado e em produção no Azure",
+  "Painéis em Power BI com 12 indicadores-chave de saúde populacional",
+  "Relatório de segmentação dos 18 mil beneficiários em faixas de risco",
+  "Pipeline de dados documentado e monitorado no Azure",
+  "Workshop de capacitação e manual de operação entregues à equipe técnica"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento dos modelos de Machine Learning",
+   "semanas": 10
+  },
+  {
+   "fase": "Construção dos dashboards e integração em Azure",
+   "semanas": 10
+  },
+  {
+   "fase": "Homologação, go-live e transferência de conhecimento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e integração das bases assistenciais legadas",
+  "Baixa adesão das áreas de saúde ao uso dos painéis",
+  "Restrições de governança e privacidade no tratamento de dados sensíveis"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida Vasconcelos (Diretora de Benefícios)",
+  "tecnico": "Paulo Henrique Sampaio (Arquiteto de Dados Sênior)"
+ },
+ "diferencial": "Preço competitivo aliado à continuidade do projeto anterior no cliente, o que reduz riscos de integração e acelera a entrega em 8 meses."
+}

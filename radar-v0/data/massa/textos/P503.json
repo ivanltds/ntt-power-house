@@ -1,0 +1,38 @@
+{
+ "titulo": "Atendimento Omnicanal e Service Desk com ServiceNow, Azure e Salesforce",
+ "problema": "O Hospital Infantil Esperança enfrenta uma média de 1.200 chamados mensais de atendimento, com tempo médio de resposta de 48 horas e índice de resolução no primeiro contato de apenas 55%. A fragmentação entre canais (telefone, e-mail, WhatsApp e presencial) e a falta de integração entre os sistemas de CRM e service desk agravam a experiência do paciente e sobrecarregam a equipe.",
+ "objetivo": "Implantar uma plataforma de atendimento omnicanal integrada e automatizar o service desk, reduzindo o tempo de resposta para menos de 12 horas e elevando a resolução no primeiro contato para 80% em 9 meses.",
+ "escopo": [
+  "Implementação do ServiceNow como plataforma central de service desk, com ITSM e catálogo de serviços para áreas clínicas e administrativas.",
+  "Integração do ServiceNow com o Salesforce para unificação do histórico do paciente e atendimento omnicanal (telefone, e-mail, chat e WhatsApp).",
+  "Migração e hospedagem dos componentes de integração e automação no Azure, utilizando serviços de nuvem para escalabilidade e alta disponibilidade.",
+  "Automação de processos de triagem e roteamento inteligente de chamados com base em regras de negócio e IA, utilizando recursos do ServiceNow e Azure.",
+  "Desenvolvimento de dashboards e relatórios gerenciais no ServiceNow para monitoramento de SLAs e indicadores de desempenho."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de integração entre ServiceNow, Salesforce e Azure.",
+  "Configuração e customização do ServiceNow para atendimento omnicanal e service desk.",
+  "Integração via APIs entre Salesforce e ServiceNow para visão unificada do paciente.",
+  "Conjunto de automações de triagem e roteamento implementadas no ServiceNow.",
+  "Dashboards de KPIs e relatórios de SLA no ServiceNow, com treinamento para a equipe do hospital."
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e Design (6 semanas): levantamento de requisitos, definição de arquitetura e plano de integração.",
+  "Fase 2 - Implementação ServiceNow e Integração Salesforce (14 semanas): configuração do service desk, catálogo de serviços e integração com Salesforce.",
+  "Fase 3 - Automação e Nuvem Azure (10 semanas): desenvolvimento de automações e migração de componentes para Azure.",
+  "Fase 4 - Testes, Treinamento e Go-live (6 semanas): testes integrados, treinamento de usuários e entrada em produção."
+ ],
+ "equipe": "1 arquiteto de soluções, 2 consultores ServiceNow, 1 consultor Salesforce, 1 engenheiro Azure, 1 analista de automação e 1 gerente de projeto.",
+ "riscos": [
+  "Resistência à mudança por parte das equipes assistenciais e administrativas.",
+  "Complexidade na integração entre ServiceNow e Salesforce devido a requisitos de segurança de dados de saúde.",
+  "Atrasos na disponibilização de ambientes Azure pelo cliente."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Operações)",
+  "tecnico": "Rafael Almeida (Arquiteto de Soluções)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com a decisora, Mariana Costa, era fraco e não foi construído ao longo do processo. A concorrente tinha um relacionamento prévio consolidado com a diretoria, o que foi decisivo para a escolha.",
+ "licoes": "Para próximas oportunidades, é essencial mapear e engajar os decisores desde o início, promovendo reuniões executivas e demonstrando valor estratégico antes da apresentação formal da proposta.",
+ "retorno": "Prezado Rafael, após análise cuidadosa, decidimos não avançar com a proposta da NTT DATA para o projeto de atendimento omnicanal e service desk. A escolha foi baseada na confiança e no relacionamento já estabelecido com outro fornecedor. Agradecemos o esforço da equipe e esperamos manter o contato para futuras oportunidades. Atenciosamente, Mariana Costa, Diretora de Operações do Hospital Infantil Esperança."
+}

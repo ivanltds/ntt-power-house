@@ -1,0 +1,36 @@
+{
+ "titulo": "Plataforma Lakehouse para Análise de Dados Clínicos e Operacionais",
+ "problema": "O Laboratório Diagnóstico Preciso enfrenta dificuldades para consolidar dados de 12 unidades de coleta e 3 laboratórios centrais, que geram cerca de 500 mil exames por mês. A falta de uma visão unificada atrasa a análise de resultados e a tomada de decisão, impactando a eficiência operacional e a experiência do paciente.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse nas nuvens Azure e AWS, utilizando Databricks e Snowflake, para centralizar e analisar dados clínicos e operacionais, reduzindo o tempo de geração de laudos e melhorando a gestão de demandas.",
+ "escopo": [
+  "Ingestão de dados de sistemas LIS e ERP para um data lake no Azure Data Lake Storage e AWS S3, com pipelines em Databricks.",
+  "Implementação de camadas bronze, silver e gold no Databricks, com governança via Unity Catalog.",
+  "Integração do Databricks com o Snowflake para data warehouse e análises avançadas.",
+  "Desenvolvimento de modelos de dados para as áreas clínica, financeira e operacional.",
+  "Criação de dashboards e relatórios para acompanhamento de indicadores de exames e produtividade."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da plataforma lakehouse.",
+  "Pipelines de ingestão e transformação de dados implementados.",
+  "Modelo de dados dimensional para as áreas de negócio.",
+  "Ambiente de análise no Snowflake com dados integrados.",
+  "Treinamento para equipes de TI e negócio do cliente."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 6 semanas",
+  "Fase 2 - Implementação da Ingestão e Lakehouse: 12 semanas",
+  "Fase 3 - Integração com Snowflake e Modelagem: 10 semanas",
+  "Fase 4 - Dashboards e Entrega: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Snowflake e 1 gerente de projeto",
+ "riscos": [
+  "Complexidade na integração de fontes de dados legadas.",
+  "Necessidade de anonimização de dados sensíveis de pacientes.",
+  "Prazo apertado para entrega de todas as fases."
+ ],
+ "pessoas": {
+  "cliente": "Ana Beatriz Costa (Diretora de TI)",
+  "tecnico": "Carlos Eduardo Lima (Arquiteto de Dados)"
+ },
+ "resultados": "O cliente cancelou a oportunidade devido a uma reestruturação interna que resultou na suspensão temporária de investimentos em tecnologia."
+}

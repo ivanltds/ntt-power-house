@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração multicloud de data warehouse para AWS, GCP e Azure",
+ "problema": "O Banco Cidadela mantinha um data warehouse on-premises com 180 TB de dados históricos e janelas de carga noturna que chegavam a 7 horas, atrasando relatórios regulatórios do Banco Central. A operação sustentava 420 usuários analíticos e 65 pipelines críticos, com custo de infraestrutura física de R$ 3,2 milhões ao ano e risco crescente de obsolescência de hardware.",
+ "objetivo": "Migrar o data warehouse do Banco Cidadela para uma arquitetura multicloud em AWS, GCP e Azure em 4 meses, reduzindo a janela de carga para menos de 90 minutos e eliminando a dependência de infraestrutura física.",
+ "escopo": [
+  "Avaliação e desenho da arquitetura-alvo multicloud, definindo cargas analíticas em AWS (Redshift), GCP (BigQuery) e Azure (Synapse)",
+  "Migração de 180 TB de dados históricos com validação de integridade e reconciliação de 100% dos registros",
+  "Reengenharia de 65 pipelines de ETL com orquestração em nuvem e processamento incremental",
+  "Implementação de camada de governança de dados e catálogo unificado entre as três nuvens",
+  "Execução de testes de performance, paralelismo e cutover com janela de rollback de 48 horas"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura-alvo multicloud aprovado pelo comitê de tecnologia do banco",
+  "180 TB migrados e reconciliados, com relatório de validação por domínio de dados",
+  "65 pipelines reengenhados em produção nas plataformas AWS, GCP e Azure",
+  "Catálogo de dados e políticas de governança implantados",
+  "Relatório de testes de performance e plano de cutover concluído"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura-alvo",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Migração e reengenharia de pipelines",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Governança e testes integrados",
+   "duracao_semanas": 3
+  },
+  {
+   "nome": "Cutover e estabilização",
+   "duracao_semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em cloud e 1 gerente de projeto",
+ "riscos": [
+  "Indisponibilidade de janela de cutover por conflito com fechamento contábil",
+  "Divergências de reconciliação em bases legadas com dados duplicados",
+  "Dependência de acessos e credenciais das três nuvens concedidos pelo cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Eduardo Prado (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "A janela de carga caiu de 7 horas para 78 minutos, liberando os relatórios regulatórios às 6h, e o custo anual de infraestrutura foi reduzido em 34%, com economia de R$ 1,1 milhão no primeiro ano.",
+ "licoes": "A falta de padronização dos metadados legados exigiu duas semanas adicionais de mapeamento manual, elevando o esforço da fase de migração. A prova de conceito realizada na fase comercial foi decisiva para validar a arquitetura multicloud e antecipar os ajustes de performance antes do cutover.",
+ "diferencial": "Ganhamos pela capacidade técnica comprovada na prova de conceito, que demonstrou em ambiente real a migração de 20 TB e a execução de pipelines nas três nuvens em menos de 48 horas."
+}

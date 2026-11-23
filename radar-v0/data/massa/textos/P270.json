@@ -1,0 +1,38 @@
+{
+ "titulo": "FinOps multi-cloud: governança e otimização de custos em AWS, Azure e GCP",
+ "problema": "A Ondas Móvel, com 8,2 milhões de linhas ativas, enfrentava custos de nuvem crescendo 28% ao ano sem visibilidade por produto ou centro de custo. A ausência de governança e de métricas de eficiência impedia decisões proativas, ameaçando a margem operacional.",
+ "objetivo": "Implementar um modelo FinOps multi-cloud para reduzir em 22% o gasto mensal com nuvem em 4 meses, estabelecendo governança, visibilidade e otimização contínua.",
+ "escopo": [
+  "Assessment de custos e maturidade FinOps nas contas AWS, Azure e GCP, com mapa de alocação por tag e centro de custo.",
+  "Implementação de dashboards de custo e eficiência em AWS Cost Explorer, Azure Cost Management e GCP Billing, integrados a ferramenta de BI.",
+  "Definição de políticas de governança: orçamentos, alertas, rightsizing e ciclo de vida de recursos em três nuvens.",
+  "Otimização de 120 recursos ociosos ou superdimensionados, incluindo instâncias e volumes.",
+  "Capacitação de 25 pessoas em práticas FinOps e entrega de playbook operacional."
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico FinOps com baseline de custos e recomendações priorizadas por impacto.",
+  "Painel executivo unificado de custos multi-cloud, com visão por BU e tendência mensal.",
+  "Catálogo de políticas e procedimentos FinOps, incluindo modelo de tags e revisões mensais.",
+  "Plano de otimização com 120 ações executadas e economia mensurada.",
+  "Programa de capacitação concluído com 25 profissionais certificados em FinOps Fundamentals."
+ ],
+ "fases": [
+  "Diagnóstico e baseline (4 semanas)",
+  "Implementação de visibilidade e governança (5 semanas)",
+  "Otimização de recursos e custos (4 semanas)",
+  "Capacitação e sustentação (3 semanas)"
+ ],
+ "equipe": "1 arquiteto de nuvem sênior, 1 especialista FinOps, 2 engenheiros de cloud e 1 gerente de projeto",
+ "riscos": [
+  "Resistência das equipes de produto à mudança de cultura de custos",
+  "Qualidade dos dados de tagging nas três nuvens",
+  "Dependência de janelas de manutenção para ações de rightsizing"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Paulo Mendes (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "Redução de 24% no gasto mensal com nuvem, equivalente a R$ 1,8 milhão/ano em economias recorrentes. Visibilidade de 100% dos custos por centro de custo e aumento de 35% na aderência às políticas de governança.",
+ "licoes": "A fase de diagnóstico atrasou duas semanas devido à inconsistência de tags nas contas Azure, exigindo esforço extra de limpeza de dados. A prova de conceito realizada no início foi decisiva para engajar as áreas de negócio e acelerar a adoção das práticas FinOps.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito multi-cloud, com resultados tangíveis de economia já na fase inicial."
+}

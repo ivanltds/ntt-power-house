@@ -1,0 +1,38 @@
+{
+ "titulo": "Precificação Dinâmica com Machine Learning para Provedor de Internet",
+ "problema": "A FibraMax Internet, provedor de banda larga com 320 mil assinantes, enfrenta margens pressionadas por concorrência agressiva e não consegue ajustar preços em tempo real conforme demanda regional e perfil de uso. Atualmente, a definição de preços é manual e revisada apenas trimestralmente, resultando em perda estimada de 8% de receita em regiões de alta demanda.",
+ "objetivo": "Desenvolver um modelo de precificação dinâmica baseado em Machine Learning para recomendar preços personalizados por região e perfil de cliente, aumentando a receita em até 12% em 5 meses.",
+ "escopo": [
+  "Análise exploratória de dados históricos de vendas, demanda e concorrência usando Python e BigQuery no GCP",
+  "Desenvolvimento de modelos de regressão e séries temporais com Machine Learning para previsão de demanda e elasticidade-preço",
+  "Implementação de pipeline de dados em Python para ingestão e tratamento de dados no GCP (Cloud Storage e Dataflow)",
+  "Criação de dashboard interativo no Looker Studio para visualização de recomendações de preços em tempo real",
+  "Integração dos modelos com o sistema de CRM do cliente via API REST"
+ ],
+ "entregaveis": [
+  "Relatório de análise exploratória com insights sobre elasticidade-preço por segmento",
+  "Modelo preditivo de demanda e precificação dinâmica validado com métricas de erro (MAPE < 10%)",
+  "Pipeline automatizado de atualização de dados e re-treinamento do modelo",
+  "Dashboard de monitoramento de preços e receita com alertas de desvios",
+  "Documentação técnica e sessão de transferência de conhecimento para equipe interna"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e preparação de dados: 4 semanas",
+  "Fase 2 - Desenvolvimento e validação de modelos: 8 semanas",
+  "Fase 3 - Integração e implantação: 6 semanas",
+  "Fase 4 - Treinamento e go-live: 2 semanas"
+ ],
+ "equipe": "1 cientista de dados sênior, 1 engenheiro de dados, 1 especialista em ML e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e disponibilidade dos dados históricos de vendas e concorrência",
+  "Resistência da equipe comercial em adotar preços dinâmicos",
+  "Prazo curto para integração com sistemas legados do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Oliveira (Diretora de Marketing e Vendas)",
+  "tecnico": "Rafael Santos (Arquiteto de Soluções de Data & Analytics)"
+ },
+ "resultados": "A proposta foi perdida porque a FibraMax Internet exigia experiência comprovada em projetos de precificação dinâmica no setor de telecom, e a NTT DATA não apresentou cases ou referências específicas nesse tema.",
+ "licoes": "Para próximas oportunidades de precificação dinâmica, incluir cases detalhados e métricas de sucesso de projetos anteriores no setor de telecom, além de parcerias com especialistas renomados no tema.",
+ "retorno": "Prezados, agradecemos o envio da proposta para o projeto de precificação dinâmica. Após análise, decidimos não seguir com a NTT DATA devido à falta de experiência comprovada em projetos similares no setor de telecom. Essa foi uma exigência crítica da nossa diretoria para mitigar riscos. Atenciosamente, Mariana Oliveira - Diretora de Marketing e Vendas"
+}

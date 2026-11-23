@@ -1,0 +1,50 @@
+{
+ "titulo": "Precificação Dinâmica de Planos com Machine Learning e Databricks",
+ "problema": "A FibraMax Internet, com 480 mil assinantes residenciais e PMEs em 7 estados, praticava precificação estática por região, o que gerava perda de margem em campanhas promocionais e baixa conversão de upgrades. Cerca de 62% das ofertas eram definidas manualmente, levando até 9 dias para reagir a mudanças de demanda e concorrência.",
+ "objetivo": "Implantar um motor de precificação dinâmica baseado em Machine Learning na plataforma Databricks para ajustar preços e ofertas em ciclos diários, elevando margem e conversão.",
+ "escopo": [
+  "Construção de pipeline de dados no Databricks integrando CRM, billing e churn histórico de 36 meses",
+  "Desenvolvimento de modelos de Machine Learning de elasticidade-preço e propensão a upgrade por segmento",
+  "Motor de recomendação de preço com regras de negócio e guardrails de margem mínima",
+  "Painéis de Analytics & BI para acompanhamento de conversão, ARPU e margem por oferta",
+  "Testes A/B e monitoramento de drift dos modelos em produção"
+ ],
+ "entregaveis": [
+  "Pipeline de dados unificado no Databricks com 42 tabelas catalogadas",
+  "3 modelos de Machine Learning validados (elasticidade, propensão e churn)",
+  "API de precificação dinâmica integrada ao CRM",
+  "Dashboard executivo de Analytics & BI com 18 indicadores",
+  "Relatório de testes A/B e playbook de operação do motor"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Modelagem e treinamento de Machine Learning",
+   "semanas": 7
+  },
+  {
+   "fase": "Integração, testes A/B e dashboards",
+   "semanas": 6
+  },
+  {
+   "fase": "Go-live e estabilização",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de billing",
+  "Baixa adesão das áreas comercial e pricing às recomendações",
+  "Latência na integração da API com o CRM legado"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Pricing e Receita)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "O motor entrou em produção cobrindo 100% das ofertas residenciais, elevando a margem por assinante em 4,8% e a conversão de upgrades em 21% no primeiro trimestre pós-go-live, com ganho estimado de R$ 3,2 milhões em receita incremental.",
+ "licoes": "A integração com o CRM legado consumiu 3 semanas além do previsto, exigindo ajustes no cronograma da fase de testes. Foi decisivo envolver a área de Pricing desde o discovery, o que acelerou a validação dos guardrails de margem e a adoção das recomendações.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a FibraMax, já conhecedores de seus dados e processos, o que reduziu o risco de execução e encurtou o time-to-value."
+}

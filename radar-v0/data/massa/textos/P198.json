@@ -1,0 +1,50 @@
+{
+ "titulo": "Otimização de rotas e frota com Machine Learning para operação logística de varejo",
+ "problema": "A Magazine Estrela Azul opera uma frota de 180 veículos próprios e terceirizados, com custo logístico que representa 9,2% da receita líquida e índice de ocupação média de apenas 63% nas entregas de última milha. O planejamento de rotas é feito manualmente em planilhas, gerando 14% de entregas fora da janela prometida e cerca de R$ 1,8 milhão/ano em custos evitáveis de combustível e horas extras.",
+ "objetivo": "Reduzir em até 18% o custo por entrega e elevar a ocupação da frota para 78% em 4 meses, por meio de um motor de otimização de rotas baseado em Machine Learning e Python integrado aos sistemas de TMS e WMS do cliente.",
+ "escopo": [
+  "Diagnóstico de dados históricos de rotas, entregas e telemetria da frota, com tratamento e feature engineering em Python",
+  "Desenvolvimento de modelos de Machine Learning para previsão de demanda por região e janela de entrega",
+  "Construção de motor de otimização de rotas com restrições de capacidade, janelas de tempo e custo por veículo",
+  "Integração do motor de otimização às bases do TMS e WMS via APIs em Python",
+  "Painel de acompanhamento de KPIs de frota (ocupação, custo/km, aderência à janela) com validação em operação assistida"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e mapa de oportunidades de otimização",
+  "Modelos de previsão de demanda e ocupação treinados e validados em Python",
+  "Motor de otimização de rotas implantado em ambiente de homologação",
+  "Integração com TMS e WMS homologada e documentada",
+  "Painel de KPIs e plano de rollout para as 12 regionais prioritárias"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Modelagem e treinamento dos modelos de ML",
+   "semanas": 5
+  },
+  {
+   "fase": "Desenvolvimento e integração do motor de rotas",
+   "semanas": 5
+  },
+  {
+   "fase": "Piloto assistido e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 1 engenheiro de integração",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de telemetria da frota",
+  "Baixa aderência operacional dos motoristas ao novo roteiro sugerido",
+  "Prazo curto de 4 meses para integração com TMS e WMS legados"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Logística e Operações)",
+  "tecnico": "Felipe Andrade (Lead Data Scientist)"
+ },
+ "resultados": "A proposta foi perdida porque o valor apresentado ficou cerca de 22% acima do benchmark de mercado para projetos de otimização de rotas com Machine Learning. O cliente optou por um concorrente com escopo semelhante e preço inferior, mantendo a continuidade do projeto anterior com a NTT DATA apenas na fase de diagnóstico.",
+ "licoes": "Para propostas de continuidade em clientes já atendidos, ancorar o preço em benchmark de mercado e modularizar o escopo em pacotes menores reduz o risco de perda por percepção de valor. Incluir uma opção de escopo faseado com preço de entrada mais competitivo teria aumentado a chance de retenção.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que a Magazine Estrela Azul decidiu não prosseguir com a proposta da NTT DATA para o projeto de otimização de rotas e frota. O motivo principal foi o valor apresentado, que ficou acima do orçamento e do benchmark que levantamos com outros fornecedores. Agradecemos o empenho da equipe no diagnóstico e permanecemos abertos a novas conversas em projetos futuros. Atenciosamente, Renata Vasconcelos, Diretora de Logística e Operações."
+}

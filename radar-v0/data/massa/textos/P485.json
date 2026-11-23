@@ -1,0 +1,43 @@
+{
+ "titulo": "Otimização de Rotas e Frota com Analytics Avançado para Rede de Farmácias",
+ "problema": "A rede Farmácias Vida Plena opera hoje com 320 veículos de distribuição para abastecer 540 lojas em 7 estados, mas o planejamento de rotas é feito manualmente por 12 supervisores regionais, gerando cerca de 18% de quilometragem ociosa e um índice de ruptura de estoque de 9,4% nas lojas de interior. A frota tem consumo médio mensal de R$ 2,3 milhões em combustível, sem visibilidade consolidada sobre custo por entrega ou aderência ao plano de rota.",
+ "objetivo": "Reduzir em até 15% o custo logístico por entrega e elevar a aderência ao plano de rotas para 90% em 4 meses, por meio de modelos preditivos e painéis analíticos que apoiem a decisão diária das operações de distribuição.",
+ "escopo": [
+  "Ingestão e tratamento no GCP (BigQuery e Cloud Storage) dos dados de telemetria veicular, pedidos de loja e tabelas de rota dos últimos 24 meses",
+  "Desenvolvimento de modelos de otimização e previsão de demanda em Python, com uso de scikit-learn e OR-Tools, para geração de rotas sugeridas por região",
+  "Construção de dashboards em Power BI para acompanhamento de custo por entrega, aderência ao plano, ocupação de frota e consumo de combustível",
+  "Implementação de pipeline de Data Science / ML para atualização diária das previsões de demanda por loja e por SKU",
+  "Definição de indicadores e rotina de governança de dados com os supervisores regionais, incluindo alertas automáticos de desvio de rota"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados no GCP e dicionário de indicadores logísticos",
+  "Modelo preditivo de demanda por loja/SKU em Python com acurácia mínima de 85% validada em backtest",
+  "Motor de sugestão de rotas integrado ao processo dos 12 supervisores regionais",
+  "Conjunto de 6 dashboards em Power BI publicados e homologados pela área de logística",
+  "Relatório final de ganhos com comparativo antes/depois de custo por entrega e aderência ao plano"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e fundação de dados",
+   "semanas": 5
+  },
+  {
+   "nome": "Modelagem de demanda e otimização de rotas",
+   "semanas": 7
+  },
+  {
+   "nome": "Dashboards, pilotos e treinamento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e cobertura dos dados de telemetria veicular de parte da frota terceirizada",
+  "Baixa adesão dos supervisores regionais às rotas sugeridas no período de piloto",
+  "Restrições de conectividade nas lojas de interior que atrasam a atualização diária dos dados"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Menezes (Gerente de Logística e Distribuição)",
+  "tecnico": "Fernanda Okabe (Tech Lead de AI & Automation)"
+ }
+}

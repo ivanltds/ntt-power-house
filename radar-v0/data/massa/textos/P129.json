@@ -1,0 +1,49 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real com Machine Learning e Kafka",
+ "problema": "O Banco Ponte Firme processa 2,5 milhões de transações diárias e sofre com fraudes que representam 0,8% do volume, gerando perdas anuais de R$ 45 milhões. O atual sistema de regras fixas detecta apenas 60% dos casos, com alto índice de falsos positivos (35%), sobrecarregando a equipe de análise manual.",
+ "objetivo": "Implantar um modelo de machine learning em tempo real para detecção de fraude, integrado via Kafka e Azure, visando reduzir perdas em 30% e diminuir falsos positivos para menos de 15% em 4 meses.",
+ "escopo": [
+  "Desenvolvimento de modelos de ML (Python, scikit-learn, XGBoost) para classificação de transações fraudulentas",
+  "Integração do modelo com stream de transações via Apache Kafka para inferência em tempo real",
+  "Deploy e orquestração do modelo em Azure Machine Learning com monitoramento contínuo",
+  "Criação de pipeline de features e retreinamento automatizado com dados históricos",
+  "Dashboard de acompanhamento de métricas de fraude e performance do modelo"
+ ],
+ "entregaveis": [
+  "Modelo de ML treinado e validado com AUC-ROC superior a 0,95",
+  "API de scoring em tempo real integrada ao Kafka",
+  "Pipeline de MLOps para retreinamento semanal automático",
+  "Documentação técnica e manual de operação",
+  "Relatório de resultados com comparação baseline vs. modelo implantado"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento e validação do modelo",
+   "semanas": 6
+  },
+  {
+   "nome": "Integração e deploy em produção",
+   "semanas": 4
+  },
+  {
+   "nome": "Monitoramento e ajustes finais",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 1 engenheiro de ML",
+ "riscos": [
+  "Qualidade dos dados históricos insuficiente para treinamento",
+  "Latência na integração Kafka-Azure impactando tempo real",
+  "Resistência da equipe de negócio à adoção do modelo"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Prevenção a Fraudes)",
+  "tecnico": "Ana Beatriz Rocha (Líder Técnica de Data Science)"
+ },
+ "resultados": "Modelo piloto já reduziu falsos positivos em 20% nos testes iniciais, com 92% de precisão na detecção.",
+ "diferencial": "Relacionamento de longo prazo com o Banco Ponte Firme e equipe especializada em AI & Automation, garantindo continuidade e alinhamento estratégico."
+}

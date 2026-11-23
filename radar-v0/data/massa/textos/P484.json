@@ -1,0 +1,48 @@
+{
+ "titulo": "Automação de back-office com RPA e ServiceNow em sustentação AMS",
+ "problema": "O Banco Ponte Firme opera hoje cerca de 140 mil transações mensais de back-office em processos manuais de conciliação, cadastro e tratamento de exceções, com índice de retrabalho de 18% e SLA de resolução de 48 horas. A operação é sustentada por uma equipe de 35 analistas distribuídos em três turnos, o que eleva o custo por transação e limita a escalabilidade em picos de fechamento.",
+ "objetivo": "Automatizar os fluxos de back-office prioritários com RPA orquestrado por ServiceNow, reduzindo o esforço manual e o retrabalho, e assumir a sustentação contínua dos robôs em modelo AMS.",
+ "escopo": [
+  "Mapeamento e priorização de 12 processos de back-office candidatos à automação com RPA",
+  "Desenvolvimento de robôs em Python e RPA para conciliação, cadastro e tratamento de exceções",
+  "Integração dos robôs ao ServiceNow para abertura, triagem e fechamento automático de tickets",
+  "Configuração de monitoramento, logs e alertas de falha dos robôs na esteira de sustentação",
+  "Transição para o modelo de Sustentação / AMS com catálogo de incidentes e SLAs definidos"
+ ],
+ "entregaveis": [
+  "Blueprint de automação com 12 processos priorizados e análise de viabilidade",
+  "Robôs RPA em produção para os 5 processos de maior volume",
+  "Integração ServiceNow publicada com fluxos de ticket automatizados",
+  "Painel de monitoramento de robôs com indicadores de execução e falha",
+  "Documentação de runbook e catálogo de serviços para a sustentação AMS"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e blueprint de automação",
+   "duracao_semanas": 3
+  },
+  {
+   "nome": "Desenvolvimento e testes dos robôs RPA",
+   "duracao_semanas": 5
+  },
+  {
+   "nome": "Integração ServiceNow e go-live assistido",
+   "duracao_semanas": 3
+  },
+  {
+   "nome": "Transição para sustentação AMS",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA/Python e 2 analistas de sustentação ServiceNow",
+ "riscos": [
+  "Instabilidade das aplicações legadas durante a execução dos robôs",
+  "Baixa adesão das áreas de negócio à mudança de processo",
+  "Dependência de acessos e credenciais para integração com o ServiceNow"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Back-office)",
+  "tecnico": "Paulo Mendonça (Arquiteto de Automação)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte no orçamento de tecnologia para o ciclo, com a automação de back-office repriorizada para o ano seguinte."
+}

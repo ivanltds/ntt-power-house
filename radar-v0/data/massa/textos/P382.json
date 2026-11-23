@@ -1,0 +1,38 @@
+{
+ "titulo": "Migração SAP S/4HANA para Operador Logístico com Change Management e Azure",
+ "problema": "O Operador Logístico Armazém Brasil, com 12 centros de distribuição e 3.500 colaboradores, enfrenta limitações do ERP legado para acompanhar o crescimento de 18% ao ano. A migração para SAP S/4HANA é necessária para reduzir custos operacionais e melhorar a visibilidade logística, mas exige gestão de mudança complexa.",
+ "objetivo": "Migrar os processos logísticos para SAP S/4HANA em 17 meses, utilizando infraestrutura Azure, com gestão de mudança para minimizar impactos nas operações.",
+ "escopo": [
+  "Assessment e blueprint de migração para SAP S/4HANA, incluindo análise de processos logísticos",
+  "Migração de dados e customizações para ambiente SAP S/4HANA em Azure",
+  "Implementação de infraestrutura Azure para SAP S/4HANA, com alta disponibilidade e disaster recovery",
+  "Programa de Change Management: treinamento de 500 usuários-chave, comunicação e gestão de resistências",
+  "Suporte pós-go-live por 3 meses, com otimização de performance"
+ ],
+ "entregaveis": [
+  "Documento de blueprint e roadmap de migração aprovado",
+  "Ambiente SAP S/4HANA migrado e testado em Azure",
+  "Plano de Change Management executado, com treinamentos realizados e indicadores de adoção",
+  "Relatório de go-live e estabilização",
+  "Documentação técnica e de processos atualizada"
+ ],
+ "fases": [
+  "Fase 1 - Assessment e Planejamento: 12 semanas",
+  "Fase 2 - Migração e Customização: 30 semanas",
+  "Fase 3 - Testes e Treinamento: 16 semanas",
+  "Fase 4 - Go-live e Suporte: 10 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP, 2 consultores funcionais SAP, 1 engenheiro de nuvem Azure, 1 especialista em Change Management e 1 analista de dados",
+ "riscos": [
+  "Resistência dos usuários às mudanças de processo",
+  "Complexidade na migração de dados legados",
+  "Indisponibilidade de ambientes Azure durante testes"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de TI)",
+  "tecnico": "Fernanda Lima (Gerente de Projetos Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior do que a necessidade imediata do cliente, incluindo módulos e serviços adicionais não prioritários. O cliente optou por uma abordagem mais enxuta e focada.",
+ "licoes": "Para próximas propostas, realizar um discovery mais aprofundado para alinhar o escopo exato às necessidades do cliente, evitando incluir serviços não solicitados que aumentam o custo e complexidade.",
+ "retorno": "Prezados, informamos que decidimos não prosseguir com a proposta da NTT DATA para a migração SAP S/4HANA. O escopo apresentado mostrou-se mais amplo do que o necessário para nosso momento atual, com módulos e serviços adicionais que não são prioritários. Agradecemos o esforço da equipe. Atenciosamente, Carlos Mendes - Diretor de TI"
+}

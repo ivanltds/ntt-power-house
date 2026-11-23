@@ -11,7 +11,7 @@ import { pathToFileURL } from 'node:url';
 import { readCorpus } from './corpus.js';
 import { chunkText, tokenize } from './text.js';
 import { HashingEmbedder } from './embedder.js';
-import { LocalVectorStore } from './vectorstore.js';
+import { LocalVectorStore, esparso } from './vectorstore.js';
 import { Repo } from './db/repo.js';
 import { analyzeText } from './analysis.js';
 import { SEGMENTS, TECHNOLOGIES, SERVICES } from './lexicon.js';
@@ -93,7 +93,10 @@ export function documentFrequency(texts) {
   return df;
 }
 
-export function seed(repo) {
+// somenteNovos: importa só os projetos do corpus que ainda não estão no banco (carga da massa em produção,
+// sem apagar projetos, documentos e uploads criados pelos usuários).
+export function seed(repo, { somenteNovos = false } = {}) {
+  const antes = new Set(repo.all('SELECT id FROM projeto').map((r) => r.id));
   const users = JSON.parse(fs.readFileSync(path.join(SEED_DIR, 'usuarios.json'), 'utf8'));
   const opps = JSON.parse(fs.readFileSync(path.join(SEED_DIR, 'oportunidades.json'), 'utf8'));
   const docs = readCorpus(CORPUS_DIR);
@@ -108,6 +111,7 @@ export function seed(repo) {
     const byProject = new Map();
     for (const d of docs) byProject.set(d.meta.projeto_id, [...(byProject.get(d.meta.projeto_id) ?? []), d]);
     for (const [projetoId, list] of byProject) {
+      if (somenteNovos && repo.project(projetoId)) continue;
       const main = list.find((d) => d.meta.tipo_documental === 'proposta_comercial') ?? list[0];
       const m = main.meta;
       const objetivo = main.body.match(/##\s*\d*\.?\s*Objetivo[^\n]*\n([\s\S]*?)(?=\n##\s|$)/i)?.[1]?.trim() ?? null;
@@ -129,8 +133,10 @@ export function seed(repo) {
       }
     }
   });
-  return { projetos: new Set(docs.map((d) => d.meta.projeto_id)).size, documentos: docs.length };
+  const novos = somenteNovos ? [...byProjectIds(docs)].filter((id) => !antes.has(id)) : null;
+  return { projetos: new Set(docs.map((d) => d.meta.projeto_id)).size, documentos: docs.length, novos: novos?.length ?? null };
 }
+const byProjectIds = (docs) => new Set(docs.map((d) => d.meta.projeto_id));
 
 const cosine = (a, b) => a.reduce((s, v, i) => s + v * b[i], 0);
 const normalizeVec = (v) => {
@@ -144,7 +150,8 @@ export function documentVectors(embedder, docs) {
   const docVectors = new Map();
   const groups = new Map();
   for (const { meta, body } of docs) {
-    const v = embedder.embedOne(`${meta.cliente}. ${meta.titulo}. ${meta.segmento}.\n${body.slice(0, 6000)}`);
+    // Float32 (metade da memória de um array comum): com centenas de projetos, isso pesa no servidor pequeno.
+    const v = Float32Array.from(embedder.embedOne(`${meta.cliente}. ${meta.titulo}. ${meta.segmento}.\n${body.slice(0, 6000)}`));
     docVectors.set(meta.id, { projeto_id: meta.projeto_id, vector: v });
     const g = groups.get(meta.projeto_id) ?? { meta, vectors: [] };
     g.vectors.push(v);
@@ -180,7 +187,8 @@ export function buildIndex(repo, storePath = STORE_PATH) {
   const col = store.getOrCreateCollection({ name: COLLECTION, metadata: { embedder: embedder.toJSON(), ingested_at: new Date().toISOString() } });
   col.add({
     ids: chunks.map((c) => c.id),
-    embeddings: embedder.embed(chunks.map((c) => c.embedText)),
+    // Cada vetor vira esparso assim que é calculado: sem o pico de todos os vetores densos na memória ao reindexar.
+    embeddings: chunks.map((c) => esparso(embedder.embedOne(c.embedText))),
     documents: chunks.map((c) => c.text),
     metadatas: chunks.map((c) => c.metadata),
   });
@@ -190,11 +198,11 @@ export function buildIndex(repo, storePath = STORE_PATH) {
   return { documents: docs.length, chunks: chunks.length, projects: new Set(docs.map((d) => d.meta.projeto_id)).size };
 }
 
-export function ingest({ reset = false, dbPath = DB_PATH, storePath = STORE_PATH } = {}) {
+export function ingest({ reset = false, adicionar = false, dbPath = DB_PATH, storePath = STORE_PATH } = {}) {
   if (reset) for (const f of [dbPath, `${dbPath}-wal`, `${dbPath}-shm`]) fs.rmSync(f, { force: true });
   const repo = new Repo(dbPath);
   try {
-    const seeded = repo.isEmpty() ? seed(repo) : null;
+    const seeded = repo.isEmpty() ? seed(repo) : adicionar ? seed(repo, { somenteNovos: true }) : null;
     return { ...buildIndex(repo, storePath), seeded };
   } finally {
     repo.close();
@@ -203,8 +211,9 @@ export function ingest({ reset = false, dbPath = DB_PATH, storePath = STORE_PATH
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const t0 = Date.now();
-  const r = ingest({ reset: process.argv.includes('--reset') });
-  if (r.seeded) console.log(`Massa piloto importada no banco: ${r.seeded.projetos} projetos, ${r.seeded.documentos} documentos`);
+  // --adicionar: acrescenta ao banco os projetos novos do corpus (ex.: a massa de testes) e reindexa, sem apagar nada.
+  const r = ingest({ reset: process.argv.includes('--reset'), adicionar: process.argv.includes('--adicionar') });
+  if (r.seeded) console.log(`Corpus importado no banco: ${r.seeded.novos ?? r.seeded.projetos} projetos${r.seeded.novos != null ? ' novos' : ''} (corpus com ${r.seeded.projetos} projetos e ${r.seeded.documentos} documentos)`);
   console.log(`Indexação concluída: ${r.projects} projetos, ${r.documents} documentos, ${r.chunks} trechos em ${Date.now() - t0} ms`);
   console.log(`Banco: ${path.relative(ROOT, DB_PATH)} · Base vetorial: ${path.relative(ROOT, STORE_PATH)}`);
 }

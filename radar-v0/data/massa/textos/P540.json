@@ -1,0 +1,37 @@
+{
+ "titulo": "Automação de Back-office com RPA para Operações Logísticas",
+ "problema": "O Porto Seco Interior enfrenta um volume crescente de processos manuais no back-office, com cerca de 15.000 transações mensais de notas fiscais e documentos aduaneiros, gerando atrasos e erros. A equipe administrativa gasta em média 120 horas/mês em tarefas repetitivas, impactando a eficiência operacional.",
+ "objetivo": "Automatizar processos de back-office utilizando RPA integrado ao SAP e scripts Python, reduzindo em 40% o tempo de processamento e minimizando erros manuais.",
+ "escopo": [
+  "Mapeamento e priorização de 5 processos de back-office críticos (faturamento, conciliação, emissão de documentos)",
+  "Desenvolvimento de robôs RPA para automatizar a entrada de dados no SAP e validação de informações",
+  "Integração de scripts Python para extração e tratamento de dados de sistemas legados",
+  "Implementação de painel de monitoramento dos robôs com indicadores de desempenho",
+  "Testes e homologação com usuários-chave, incluindo treinamento"
+ ],
+ "entregaveis": [
+  "Documento de análise de processos (AS-IS e TO-BE) com 5 processos detalhados",
+  "Robôs RPA desenvolvidos e configurados para os 5 processos",
+  "Scripts Python para integração de dados",
+  "Painel de monitoramento com métricas de execução",
+  "Relatório de testes e plano de implantação"
+ ],
+ "fases": [
+  "Fase 1: Diagnóstico e mapeamento de processos (4 semanas)",
+  "Fase 2: Desenvolvimento de robôs e scripts (6 semanas)",
+  "Fase 3: Testes e homologação (2 semanas)"
+ ],
+ "equipe": "1 gerente de projeto, 2 analistas de automação (RPA) e 1 desenvolvedor Python",
+ "riscos": [
+  "Resistência à mudança por parte da equipe operacional",
+  "Complexidade na integração com sistemas legados",
+  "Atrasos na validação dos processos pelos usuários-chave"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Gerente de Operações)",
+  "tecnico": "Fernanda Lima (Consultora Sênior de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 3 meses foi considerado muito longo pela diretoria do cliente, que esperava uma implementação mais rápida para atender à demanda sazonal do setor logístico.",
+ "licoes": "Para próximas propostas em logística, considerar prazos mais agressivos ou dividir o escopo em entregas incrementais para alinhar expectativas de agilidade.",
+ "retorno": "Prezados, após análise interna, decidimos não prosseguir com a proposta para automação de back-office. O prazo de 3 meses foi considerado extenso para nossas necessidades sazonais, e optamos por uma solução mais ágil. Agradecemos o esforço da equipe. Atenciosamente, Carlos Mendes."
+}

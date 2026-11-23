@@ -1,0 +1,47 @@
+{
+ "titulo": "Previsão de Safra e Agricultura de Precisão com Analytics na Coopera",
+ "problema": "A Cooperativa Agro Vale Verde reúne 1.200 produtores associados e processa cerca de 480 mil toneladas de grãos por safra, mas as estimativas de produtividade ainda são feitas em planilhas manuais, com erro médio de 12% e atraso de até 20 dias na consolidação. Isso compromete o planejamento de recebimento, a alocação de silos e a negociação de contratos futuros.",
+ "objetivo": "Implantar um modelo de previsão de safra e uma camada de analytics de agricultura de precisão em 6 meses, elevando a acurácia das estimativas para pelo menos 92% e reduzindo o ciclo de consolidação de dados de 20 para 2 dias.",
+ "escopo": [
+  "Ingestão na AWS de dados de clima, imagens de satélite NDVI e telemetria de 85 máquinas em pipeline orquestrado",
+  "Modelos de Data Science / ML para previsão de produtividade por talhão e por cultura (soja, milho e algodão)",
+  "Dashboards em Power BI para acompanhamento de safra, mapas de produtividade e alertas de anomalia por fazenda",
+  "Camada analítica AWS com data lake em S3, catálogo no Glue e consultas no Athena para os cientistas de dados",
+  "Integração dos indicadores de agricultura de precisão ao processo de recebimento e classificação de grãos da cooperativa"
+ ],
+ "entregaveis": [
+  "Modelo de previsão de safra validado em backtest com MAPE inferior a 8% para as três culturas",
+  "Data lake AWS estruturado com dados históricos de 5 safras e telemetria de campo",
+  "Conjunto de 6 dashboards em Power BI publicados para diretoria, unidades e produtores",
+  "Relatório mensal de acurácia e recomendações de manejo por talhão",
+  "Documentação técnica e transferência de conhecimento para a equipe de TI da cooperativa"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Construção do data lake AWS e pipelines de ingestão",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e validação dos modelos de Data Science / ML",
+   "semanas": 8
+  },
+  {
+   "fase": "Dashboards Power BI, homologação e go-live",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura irregular dos dados históricos de talhão",
+  "Baixa adesão dos produtores ao envio de telemetria e imagens",
+  "Atraso na liberação de acessos e integrações pela TI da cooperativa"
+ ],
+ "pessoas": {
+  "cliente": "Helena Marques (Diretora de Operações Agrícolas)",
+  "tecnico": "Rafael Tavares (Arquiteto de Dados Sênior)"
+ }
+}

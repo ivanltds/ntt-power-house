@@ -1,0 +1,50 @@
+{
+ "titulo": "Modernização do modelo de risco de crédito com Snowflake e ML na nuvem AWS",
+ "problema": "O Banco Cidadela opera com um modelo de risco de crédito baseado em planilhas e rotinas batch noturnas, o que gera atraso de até 36 horas na atualização do score de 2,4 milhões de clientes PF e PJ. A taxa de inadimplência acima de 90 dias cresceu para 5,8% na carteira de crédito pessoal, e a área de riscos não consegue testar novas variáveis com a agilidade exigida pelo regulador.",
+ "objetivo": "Construir um novo modelo de risco de crédito em Machine Learning sobre Snowflake e AWS, com governança de dados e gestão de mudança, reduzindo o ciclo de atualização do score para menos de 4 horas e elevando o poder discriminatório do modelo (Gini) em pelo menos 8 pontos percentuais.",
+ "escopo": [
+  "Ingestão e modelagem de dados de crédito no Snowflake, integrando fontes de cadastro, bureau e transações via pipelines em Python na AWS",
+  "Desenvolvimento e validação de modelos de Machine Learning de propensão à inadimplência com Python (scikit-learn e XGBoost), incluindo explicabilidade",
+  "Implantação de esteira MLOps na AWS para treino, versionamento e monitoramento de deriva dos modelos",
+  "Estruturação de governança de dados: catálogo, linhagem, políticas de qualidade e dicionário de variáveis de crédito",
+  "Plano de change management para as áreas de riscos, crédito e compliance, com treinamentos e comunicação da nova esteira decisória"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e solução analítica em Snowflake e AWS",
+  "Modelo de risco de crédito em produção com relatório de validação e métricas (Gini, KS e PSI)",
+  "Pipeline MLOps operacional com monitoramento de deriva e reprodutibilidade de experimentos",
+  "Catálogo de dados e políticas de governança implantados para o domínio de crédito",
+  "Plano de change management executado, com 6 turmas de treinamento e material de apoio"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento e validação dos modelos de ML",
+   "semanas": 10
+  },
+  {
+   "nome": "Implantação em produção e MLOps",
+   "semanas": 8
+  },
+  {
+   "nome": "Governança e change management",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão das fontes de dados de bureau podem atrasar a modelagem",
+  "Baixa adesão das áreas de crédito ao novo processo decisório",
+  "Restrições de compliance e LGPD na utilização de variáveis transacionais"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Riscos de Crédito)",
+  "tecnico": "Paulo Mendonça (Arquiteto de Soluções de AI & Automation)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 22% acima do mercado, apesar da continuidade do projeto anterior no cliente e da aderência técnica da solução. O concorrente vencedor apresentou escopo equivalente com valor inferior.",
+ "licoes": "Nas próximas propostas para o mesmo cliente, detalhar o custo-benefício da continuidade e oferecer opções de escopo modular para aproximar o valor do benchmark de mercado.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe da NTT DATA na elaboração da proposta para o modelo de risco de crédito. Após análise do comitê, decidimos seguir com outro fornecedor, pois o valor apresentado ficou acima do orçamento aprovado e da referência de mercado. Reconhecemos a qualidade técnica da proposta e esperamos manter a parceria em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Riscos de Crédito do Banco Cidadela."
+}

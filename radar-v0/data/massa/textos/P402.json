@@ -1,0 +1,48 @@
+{
+ "titulo": "Atendimento omnicanal e service desk com IA para rede estadual de saúde",
+ "problema": "A Secretaria Estadual de Saúde do Planalto opera hoje com 14 canais de atendimento fragmentados (telefone, e-mail, WhatsApp e balcões presenciais), o que gera tempo médio de resposta de 38 horas e índice de resolução no primeiro contato de apenas 47%. O service desk registra cerca de 92 mil chamados por ano, com 22% de retrabalho e baixa visibilidade gerencial sobre a jornada do cidadão.",
+ "objetivo": "Unificar o atendimento ao cidadão e o service desk interno em uma plataforma omnicanal com IA generativa, elevando a resolução no primeiro contato para 70% e reduzindo o tempo médio de resposta para 8 horas em 7 meses.",
+ "escopo": [
+  "Implantação de CRM Salesforce como camada única de atendimento omnicanal, integrando 14 canais em uma fila unificada",
+  "Configuração do ServiceNow para gestão de incidentes, requisições e SLA do service desk interno",
+  "Assistente virtual com IA Generativa em Azure OpenAI para triagem, classificação e respostas assistidas aos atendentes",
+  "Automação de processos de abertura, escalonamento e encerramento de chamados com integração via APIs Azure",
+  "Painéis gerenciais de jornada do cidadão e indicadores de SLA no Salesforce e Power BI sobre Azure"
+ ],
+ "entregaveis": [
+  "Plataforma omnicanal Salesforce em produção com os 14 canais integrados",
+  "Service desk ServiceNow configurado com catálogo de serviços e políticas de SLA",
+  "Assistente de IA generativa em operação com base de conhecimento curada e taxa de acerto mínima de 85%",
+  "15 processos de atendimento automatizados e documentados",
+  "Plano de Change Management com treinamento de 420 atendentes e plano de comunicação por onda"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da solução omnicanal",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Implementação Salesforce e ServiceNow",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "IA generativa, automações e integrações Azure",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Go-live assistido, treinamento e estabilização",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 2 arquitetos de solução, 3 consultores Salesforce, 2 consultores ServiceNow, 2 engenheiros de IA/Azure, 1 especialista em change management e 2 analistas de AMS",
+ "riscos": [
+  "Baixa adesão dos 420 atendentes ao novo modelo de trabalho",
+  "Qualidade insuficiente da base de conhecimento para a IA generativa",
+  "Dependência de integrações com sistemas legados da Secretaria",
+  "Restrições de contratação pública que impactem o cronograma"
+ ],
+ "pessoas": {
+  "cliente": "Marina Albuquerque (Diretora de Atenção e Atendimento ao Cidadão)",
+  "tecnico": "Rafael Tavares (Arquiteto de Solução Digital & CRM)"
+ }
+}

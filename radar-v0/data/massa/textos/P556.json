@@ -1,0 +1,47 @@
+{
+ "titulo": "Automação de Back-Office com RPA e ServiceNow para Operações de Seguros",
+ "problema": "A Seguradora Vértice processa cerca de 48 mil sinistros e 12 mil emissões de apólices por mês, com 62% das atividades de back-office ainda manuais em planilhas e sistemas legados. Isso gera um índice de retrabalho de 18% e um tempo médio de 4,5 dias para conclusão de processos de sinistro simples.",
+ "objetivo": "Automatizar os principais fluxos de back-office de sinistros e emissão de apólices com RPA e Python, integrados ao ServiceNow, reduzindo o tempo de ciclo em 40% e o retrabalho para menos de 7% em 6 meses.",
+ "escopo": [
+  "Mapeamento e priorização de 15 processos de back-office candidatos à automação em RPA",
+  "Desenvolvimento de robôs RPA em Python para triagem de sinistros, conferência documental e lançamentos em sistemas legados",
+  "Integração dos robôs ao ServiceNow para orquestração de filas, trilhas de auditoria e gestão de exceções",
+  "Painel de monitoramento de robôs com indicadores de execução, falhas e SLA no ServiceNow",
+  "Sustentação contínua dos robôs em modelo AMS com correções e melhorias evolutivas"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico com 15 processos mapeados e matriz de priorização por ROI",
+  "8 robôs RPA em produção cobrindo triagem de sinistros, conferência documental e lançamentos",
+  "Integração ServiceNow concluída com 3 fluxos orquestrados e trilha de auditoria completa",
+  "Dashboard de monitoramento de automações com 10 indicadores operacionais",
+  "Runbook de operação e plano de sustentação AMS com SLA de 4 horas para incidentes críticos"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e priorização",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e testes de robôs RPA",
+   "duracao_semanas": 10
+  },
+  {
+   "fase": "Integração ServiceNow e go-live",
+   "duracao_semanas": 6
+  },
+  {
+   "fase": "Estabilização e transição para AMS",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de automação, 2 desenvolvedores RPA, 1 especialista ServiceNow, 1 analista de processos e 1 gerente de projeto",
+ "riscos": [
+  "Instabilidade das interfaces dos sistemas legados durante as execuções dos robôs",
+  "Baixa adesão das áreas de negócio à mudança de processo",
+  "Atraso na liberação de acessos e credenciais pela TI do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Diretora de Operações de Back-Office)",
+  "tecnico": "Felipe Andrade (Líder Técnico de AI & Automation)"
+ }
+}

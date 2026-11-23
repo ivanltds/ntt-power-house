@@ -1,0 +1,50 @@
+{
+ "titulo": "Implantação de CRM e Jornada do Cliente Omnicanal",
+ "problema": "A Calçados Passo Firme, com 320 lojas físicas e faturamento anual de R$ 1,8 bilhão, não tinha visão unificada do cliente: dados de vendas, pós-venda e e-commerce viviam em silos distintos, e o CRM legado limitava campanhas a lotes semanais com taxa de resposta de apenas 2%. A jornada de compra era interrompida entre canais, com 41% dos carrinhos abandonados no e-commerce e sem histórico acessível ao vendedor de loja.",
+ "objetivo": "Unificar o cadastro e o histórico de 4,2 milhões de clientes em uma plataforma de CRM integrada, permitindo jornadas omnicanais personalizadas e atendimento com visão 360º em todos os canais.",
+ "escopo": [
+  "Implementação do Salesforce Sales Cloud e Marketing Cloud com modelo de dados unificado de cliente",
+  "Integração em tempo real via Apache Kafka entre ERP, e-commerce, PDV das 320 lojas e o CRM",
+  "Pipeline de Engenharia de Dados no Azure (Data Lake e Data Factory) para ingestão e tratamento de 12 milhões de eventos mensais",
+  "Motor de segmentação e orquestração de jornadas com APIs Salesforce expostas no Azure API Management",
+  "Migração e deduplicação da base legada de 4,2 milhões de clientes com regras de qualidade de dados"
+ ],
+ "entregaveis": [
+  "Modelo de dados unificado de cliente e documentação de arquitetura no Azure",
+  "Integrações Kafka em produção para 6 sistemas de origem",
+  "70 jornadas de cliente configuradas no Marketing Cloud",
+  "Painel de KPIs de CRM e jornada em Power BI para 120 usuários",
+  "Plano de governança de dados e treinamento de 90 usuários-chave"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "duracao_semanas": 10
+  },
+  {
+   "fase": "Integrações Kafka e pipeline no Azure",
+   "duracao_semanas": 14
+  },
+  {
+   "fase": "Configuração de CRM e jornadas no Salesforce",
+   "duracao_semanas": 12
+  },
+  {
+   "fase": "Rollout, treinamento e estabilização",
+   "duracao_semanas": 8
+  }
+ ],
+ "equipe": "1 arquiteto de soluções, 1 engenheiro de dados sênior, 2 engenheiros de dados, 1 especialista Salesforce, 1 consultor de CRM e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados legados com 18% de cadastros duplicados",
+  "Latência das integrações Kafka com o PDV das lojas",
+  "Baixa adesão dos vendedores de loja ao novo CRM"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Marketing e CRM)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "A taxa de resposta das campanhas subiu de 2% para 11% e o abandono de carrinho caiu 23%, gerando R$ 14,6 milhões em receita incremental no primeiro semestre após o go-live.",
+ "licoes": "A deduplicação da base legada consumiu 5 semanas além do previsto por falta de um dicionário de dados atualizado do ERP. Foi decisivo envolver a área de marketing do cliente em sprints quinzenais de validação das jornadas, o que reduziu retrabalho na configuração do Salesforce.",
+ "diferencial": "Ganhamos por apresentar um case de referência de CRM omnicanal em varejo de moda com integração Kafka e Azure já em produção, demonstrando resultado mensurável em prazo similar."
+}

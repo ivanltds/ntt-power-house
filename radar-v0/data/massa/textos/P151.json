@@ -1,0 +1,49 @@
+{
+ "titulo": "Painéis executivos e BI para gestão industrial com Power BI, Azure e Snowflake",
+ "problema": "A Têxtil Fio de Ouro opera 3 plantas têxteis e cerca de 1.200 colaboradores, com indicadores de produção, custos e vendas consolidados manualmente em planilhas por 14 analistas, gerando atraso de até 12 dias na visão executiva e divergências de até 8% entre áreas. O SAP concentra transações de produção e financeiro, mas a falta de uma camada analítica integrada impede decisões rápidas sobre margem por linha de produto e eficiência de máquina.",
+ "objetivo": "Implantar uma plataforma de dados e painéis executivos que consolide informações de SAP e fontes industriais em uma única visão analítica, reduzindo o ciclo de apuração de indicadores de 12 para 2 dias úteis.",
+ "escopo": [
+  "Construção de pipelines de ingestão e transformação no Azure Data Factory e Azure Databricks, integrando SAP ECC e dados de chão de fábrica",
+  "Modelagem dimensional e camada semântica no Snowflake para indicadores de produção, custos, qualidade e vendas",
+  "Desenvolvimento de 8 painéis executivos e operacionais no Power BI com governança de métricas e segurança por unidade de negócio",
+  "Implementação de catálogo de dados e políticas de qualidade no Azure Purview para 45 tabelas críticas",
+  "Configuração de atualização incremental e monitoramento de cargas com alertas no Azure Monitor"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário de 120 indicadores corporativos",
+  "12 pipelines de dados produtivos no Azure com SLA de atualização diária até 6h",
+  "Camada analítica no Snowflake com 6 data marts de produção, custos, qualidade, vendas, compras e pessoas",
+  "8 painéis no Power BI publicados e homologados pelas áreas de negócio",
+  "Plano de sustentação e treinamento de 40 usuários-chave em Power BI e catálogo de dados"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Engenharia de dados e integração SAP",
+   "semanas": 8
+  },
+  {
+   "nome": "Modelagem no Snowflake e painéis Power BI",
+   "semanas": 8
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI, 1 analista de negócios e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados mestres do SAP",
+  "Disponibilidade limitada das equipes de negócio para homologação",
+  "Dependência de acesso e performance das APIs do SAP para extração"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Controladoria e TI)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Já foram entregues 4 pipelines de dados e o primeiro painel executivo de produção, reduzindo a apuração semanal de indicadores de 5 para 2 dias.",
+ "diferencial": "Ganhamos pela experiência comprovada em projeto semelhante de BI industrial com SAP e Snowflake em outra manufatura, com arquitetura reutilizável e cronograma de 6 meses validado."
+}

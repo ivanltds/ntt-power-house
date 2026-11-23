@@ -1,0 +1,50 @@
+{
+ "titulo": "Modernização de Aplicações Financeiras com Containers em Nuvem Híbrida",
+ "problema": "O Banco Meridiano opera 42 aplicações críticas de crédito e pagamentos em servidores on-premises com idade média de 9 anos, gerando 3,2 horas de indisponibilidade não planejada por mês e custo de manutenção 38% acima do benchmark do setor. A instituição precisa reduzir o time-to-market de novos produtos financeiros, hoje em 7 meses, e não possui padronização de ambientes entre desenvolvimento e produção.",
+ "objetivo": "Migrar e modernizar as aplicações prioritárias do banco para uma arquitetura de containers em AWS e GCP, com orquestração via Kubernetes e integração de eventos com Kafka, em 10 meses.",
+ "escopo": [
+  "Assessment e priorização de 42 aplicações, com ondas de migração para AWS e GCP",
+  "Conteinerização das aplicações prioritárias e padronização de imagens com Kubernetes (EKS e GKE)",
+  "Implantação de malha de eventos com Kafka para integração assíncrona entre serviços de crédito e pagamentos",
+  "Pipeline CI/CD com GitOps, observabilidade e políticas de segurança para os clusters Kubernetes",
+  "Plano de cutover, rollback e operação assistida durante a transição dos ambientes on-premises"
+ ],
+ "entregaveis": [
+  "Relatório de assessment com mapa de dependências das 42 aplicações e plano de ondas",
+  "12 aplicações prioritárias migradas e rodando em containers Kubernetes em AWS e GCP",
+  "Plataforma de eventos Kafka operacional com tópicos, schemas e monitoramento",
+  "Pipeline CI/CD padronizado e dashboards de observabilidade para todos os clusters",
+  "Runbooks de operação, plano de cutover e transferência de conhecimento para o time do banco"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e desenho da arquitetura-alvo",
+   "semanas": 8
+  },
+  {
+   "fase": "Fundação de plataforma: Kubernetes, CI/CD e Kafka",
+   "semanas": 10
+  },
+  {
+   "fase": "Migração das ondas 1 e 2 de aplicações",
+   "semanas": 16
+  },
+  {
+   "fase": "Onda 3, cutover e operação assistida",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções cloud, 2 engenheiros de plataforma Kubernetes, 2 engenheiros de migração e 1 especialista em Kafka",
+ "riscos": [
+  "Dependências legadas não mapeadas atrasarem as ondas de migração",
+  "Janelas de mudança restritas no ambiente financeiro reduzirem a velocidade de cutover",
+  "Diferenças de configuração entre AWS e GCP exigirem retrabalho na padronização Kubernetes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Paulo Menezes (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "A proposta foi perdida porque o cliente congelou o orçamento de transformação digital para o segundo semestre, adiando a modernização de aplicações por prazo indeterminado. Não houve decisão por concorrente; o projeto foi suspenso internamente.",
+ "licoes": "Incluir no plano comercial uma cláusula de fases opcionais e um piloto de menor escopo reduziria o impacto de congelamentos de orçamento. Para a próxima proposta, validar antes o ciclo orçamentário do cliente e ancorar o valor em economia de manutenção mensurável.",
+ "retorno": "Prezados, informamos que o projeto de modernização de aplicações com containers foi suspenso por decisão do comitê de investimentos, que congelou o orçamento de transformação digital para os próximos ciclos. A avaliação técnica da NTT DATA foi muito bem recebida, mas não há previsão de retomada neste momento. Agradecemos o empenho da equipe e manteremos contato caso o cenário mude. Atenciosamente, Renata Vasconcelos, Diretora de Tecnologia do Banco Meridiano."
+}

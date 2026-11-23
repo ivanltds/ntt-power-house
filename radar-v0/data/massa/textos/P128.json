@@ -1,0 +1,51 @@
+{
+ "titulo": "Atendimento omnicanal e service desk com IA para o Instituto de Previdência Municipal",
+ "problema": "O Instituto de Previdência Municipal atendia cerca de 38 mil servidores e beneficiários por meio de 6 canais desconectados (telefone, e-mail, WhatsApp, balcão, formulário web e ofícios), gerando fila média de 4,2 dias úteis e 27% de retrabalho na abertura de tickets manuais. A ausência de base única de dados impedia o acompanhamento de SLAs e a prestação de contas trimestral exigida pelo conselho previdenciário.",
+ "objetivo": "Unificar o atendimento em uma plataforma omnicanal integrada ao service desk, automatizando a abertura e a triagem de solicitações com IA Generativa para reduzir o tempo de resposta e ampliar a transparência dos SLAs.",
+ "escopo": [
+  "Implantação de CRM em Salesforce como camada de atendimento omnicanal, unificando os 6 canais em uma fila única de atendimento",
+  "Configuração do ServiceNow ITSM para gestão de tickets, catálogo de serviços, SLA e base de conhecimento para 120 usuários internos",
+  "Integração entre Salesforce e ServiceNow via APIs para sincronização de casos, histórico do beneficiário e encerramento automático de tickets",
+  "Assistente de IA Generativa sobre a base de conhecimento para sugestão de respostas e classificação automática de solicitações por assunto e urgência",
+  "Automação de processos de abertura, escalonamento e acompanhamento de tickets, com painéis de SLA e relatórios mensais para o conselho",
+  "Treinamento de 45 atendentes e 8 gestores e elaboração de manual de operação e governança dos canais"
+ ],
+ "entregaveis": [
+  "Plataforma Salesforce em produção com os 6 canais integrados e fila única de atendimento",
+  "ServiceNow configurado com catálogo de 32 serviços, políticas de SLA e base de conhecimento com 180 artigos",
+  "Assistente de IA Generativa operacional com acurácia mínima de 85% na classificação de solicitações",
+  "Integrações Salesforce-ServiceNow em produção com testes de carga para 1.200 atendimentos/dia",
+  "Painéis gerenciais de SLA, volume e reincidência e relatório de encerramento com indicadores dos 10 meses"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da solução omnicanal",
+   "semanas": 8
+  },
+  {
+   "nome": "Configuração de Salesforce e ServiceNow e integrações",
+   "semanas": 14
+  },
+  {
+   "nome": "IA Generativa, automações e treinamento",
+   "semanas": 10
+  },
+  {
+   "nome": "Go-live assistido, estabilização e transferência de conhecimento",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores Salesforce, 2 consultores ServiceNow, 1 especialista em IA Generativa e 2 analistas de negócio",
+ "riscos": [
+  "Baixa adesão dos atendentes à nova fila única nos primeiros 60 dias",
+  "Qualidade insuficiente da base de conhecimento para a IA Generativa",
+  "Dependência de integrações com sistemas legados de folha e previdência do Instituto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Atendimento e Benefícios)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "O tempo médio de resposta caiu de 4,2 para 1,3 dia útil (redução de 69%) e o retrabalho na abertura de tickets passou de 27% para 9%, com cerca de R$ 640 mil economizados em 12 meses pela redução de horas de atendimento manual.",
+ "licoes": "A limpeza da base de conhecimento consumiu 3 semanas além do previsto, pois parte dos 180 artigos precisou ser reescrita antes de alimentar a IA Generativa. Ter envolvido os atendentes do Instituto em testes semanais desde a fase de desenho foi decisivo para a adesão à fila única no go-live.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência de atendimento omnicanal em órgão público previdenciário com ServiceNow, Salesforce e IA Generativa, demonstrando experiência comprovada em integração de canais e SLAs regulatórios."
+}

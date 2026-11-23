@@ -1,0 +1,49 @@
+{
+ "titulo": "Modelo de risco de crédito com Machine Learning para o agronegócio",
+ "problema": "A Agropecuária Terra Boa analisa hoje cerca de 1.200 propostas de crédito rural por safra em planilhas manuais, com prazo médio de 9 dias para decisão e índice de inadimplência de 7,8% na carteira. A ausência de um modelo estatístico impede priorizar produtores por risco e precificar corretamente as operações.",
+ "objetivo": "Construir e colocar em produção um modelo de risco de crédito baseado em Machine Learning em Python, com score de probabilidade de inadimplência por produtor, integrado ao processo de análise da área financeira.",
+ "escopo": [
+  "Análise exploratória e engenharia de atributos sobre 5 anos de histórico de crédito, produção e cadastro de produtores",
+  "Desenvolvimento de modelos de classificação em Python (scikit-learn e XGBoost) com validação cruzada e explicabilidade via SHAP",
+  "Definição de faixas de score e política de alçadas de aprovação junto à área de crédito",
+  "Implantação do modelo em pipeline Python com monitoramento mensal de performance (AUC, KS e PSI)",
+  "Trilha de Change Management: treinamento de 40 analistas e manual de uso do score no fluxo de decisão"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e dicionário de atributos do modelo",
+  "Modelo de risco de crédito documentado, com AUC mínima de 0,78 em base de teste",
+  "Nota técnica de política de crédito com faixas de score e alçadas",
+  "Pipeline Python em produção com rotina de reavaliação e monitoramento de drift",
+  "Programa de treinamento aplicado a 40 analistas e material de apoio"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Modelagem e validação",
+   "semanas": 6
+  },
+  {
+   "nome": "Implantação e monitoramento",
+   "semanas": 4
+  },
+  {
+   "nome": "Change Management e encerramento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 cientista de dados sênior, 1 engenheiro de dados, 1 especialista em change management e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura incompletas do histórico de crédito",
+  "Baixa adesão dos analistas ao novo score",
+  "Drift do modelo após mudanças no perfil da safra"
+ ],
+ "pessoas": {
+  "cliente": "Helena Vasconcelos (Gerente de Crédito Rural)",
+  "tecnico": "Rafael Menezes (Cientista de Dados Sênior)"
+ },
+ "resultados": "O modelo piloto já alcançou AUC de 0,81 na base de validação, superando a meta contratada de 0,78.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, em que o protótipo em Python superou o método manual de análise em 22 pontos percentuais de precisão."
+}

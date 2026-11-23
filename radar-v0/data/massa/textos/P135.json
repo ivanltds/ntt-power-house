@@ -1,0 +1,49 @@
+{
+ "titulo": "Detecção de Fraude em Tempo Real com Databricks e Azure",
+ "problema": "O Banco Aurora, do setor de Serviços Financeiros, enfrenta um volume crescente de transações suspeitas, com cerca de 2,4 milhões de transações diárias e uma taxa de falsos positivos de 38% no motor de regras atual. O processo de análise manual leva em média 26 horas para conclusão, impactando a experiência do cliente e gerando perdas estimadas em R$ 18 milhões anuais.",
+ "objetivo": "Implantar um modelo de detecção de fraude baseado em machine learning na plataforma Databricks sobre Azure, reduzindo falsos positivos e o tempo de resposta a transações suspeitas.",
+ "escopo": [
+  "Ingestão e tratamento de dados transacionais no Azure Data Lake Storage com pipelines no Databricks",
+  "Desenvolvimento de modelos de ML para scoring de fraude em tempo quase real utilizando MLflow no Databricks",
+  "Implementação de feature store e monitoramento de drift de modelos na plataforma Databricks",
+  "Integração do scoring com os sistemas de autorização do banco via APIs no Azure API Management",
+  "Dashboards de acompanhamento de métricas de fraude e alertas no Azure Monitor"
+ ],
+ "entregaveis": [
+  "Pipeline de dados transacionais consolidado no Databricks com latência inferior a 5 minutos",
+  "Modelo de detecção de fraude treinado e validado com AUC superior a 0,92",
+  "API de scoring integrada ao ambiente de autorização do banco",
+  "Painel de monitoramento de modelos e métricas de fraude no Azure",
+  "Documentação técnica e plano de retreinamento contínuo dos modelos"
+ ],
+ "fases": [
+  {
+   "fase": "Descoberta e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e treinamento de modelos",
+   "semanas": 10
+  },
+  {
+   "fase": "Integração e testes em ambiente controlado",
+   "semanas": 8
+  },
+  {
+   "fase": "Go-live e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de transações",
+  "Latência na integração com sistemas legados de autorização",
+  "Mudança no comportamento de fraude durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Prevenção a Fraudes)",
+  "tecnico": "Fernanda Costa (Líder Técnica de Data Science)"
+ },
+ "resultados": "Nas primeiras fases, o modelo piloto já reduziu os falsos positivos em 22% em relação ao motor de regras atual.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito, com modelo funcional sobre Databricks e Azure apresentado em apenas três semanas."
+}

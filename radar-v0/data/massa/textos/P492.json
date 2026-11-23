@@ -1,0 +1,50 @@
+{
+ "titulo": "Predição de churn e retenção com Databricks e Machine Learning para operadora de telecom",
+ "problema": "A TeleNorte Conecta, operadora de telecom com 2,3 milhões de clientes residenciais e empresariais, vinha perdendo cerca de 1,8% da base por mês (aproximadamente 41 mil clientes), com impacto estimado de R$ 12 milhões mensais em receita recorrente. O CRM não conseguia priorizar ações de retenção: as campanhas eram disparadas em massa, com taxa de resposta inferior a 4%, e o time de relacionamento não tinha visibilidade do risco de cancelamento por cliente.",
+ "objetivo": "Construir um modelo de predição de churn por cliente, integrado ao CRM, para orientar ações de retenção segmentadas e reduzir a perda mensal de base em pelo menos 20% em 4 meses.",
+ "escopo": [
+  "Ingestão e tratamento de dados de consumo, faturamento, reclamações e interações do CRM em Databricks, com pipelines em Python para 18 fontes e histórico de 24 meses.",
+  "Engenharia de atributos e treinamento de modelos de Machine Learning de classificação de churn (gradient boosting e regressão logística) com validação temporal e explicabilidade por variável.",
+  "Publicação de scores de propensão ao churn e propensão de aceite de oferta diretamente no CRM, com atualização diária e regras de priorização para o time de retenção.",
+  "Painéis de acompanhamento em Databricks para monitorar performance do modelo (AUC, precision@10%) e efetividade das campanhas de retenção.",
+  "Definição de playbooks de retenção por faixa de risco e documentação de governança do modelo para uso contínuo pela área de CRM."
+ ],
+ "entregaveis": [
+  "Modelo de churn em produção com AUC de 0,86 e lista diária de clientes priorizados por risco e valor.",
+  "Integração do score de churn ao CRM, com atualização automática e fila de trabalho para 120 agentes de retenção.",
+  "Dashboard de monitoramento de modelo e campanhas com 12 indicadores de performance e retenção.",
+  "Playbooks de retenção segmentados em 4 faixas de risco, com ofertas e canais recomendados.",
+  "Documentação técnica e de governança, incluindo dicionário de dados e rotina de retreinamento mensal."
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "nome": "Modelagem e validação de Machine Learning",
+   "semanas": 6
+  },
+  {
+   "nome": "Integração ao CRM e piloto de retenção",
+   "semanas": 4
+  },
+  {
+   "nome": "Rollout, monitoramento e transferência de conhecimento",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 consultor de CRM e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos do CRM, exigindo tratamento adicional.",
+  "Baixa adesão dos agentes de retenção às novas filas priorizadas.",
+  "Mudanças de oferta comercial durante o projeto afetando as regras de retenção."
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de CRM e Retenção)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A perda mensal de base caiu de 1,8% para 1,3% nos três meses após o rollout, com taxa de resposta das campanhas de retenção subindo de 4% para 11%. A receita retida adicional foi estimada em R$ 6,4 milhões no trimestre.",
+ "licoes": "A limpeza dos cadastros duplicados no CRM consumiu duas semanas além do previsto e exigiu reforço da equipe de engenharia de dados. Foi decisivo envolver os agentes de retenção desde a fase de modelagem, o que garantiu aderência às filas priorizadas já no piloto.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, que entregou em duas semanas um modelo com AUC de 0,84 sobre dados reais do cliente."
+}

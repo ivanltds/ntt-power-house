@@ -1,0 +1,50 @@
+{
+ "titulo": "Automação de Back-Office com RPA para Cooperativa Sicrédito Planalto",
+ "problema": "A Cooperativa Sicrédito Planalto enfrenta um volume crescente de processos manuais no back-office, com cerca de 12.000 transações mensais processadas manualmente, gerando atrasos e erros. Além disso, a integração com o SAP é limitada, resultando em retrabalho e custos operacionais elevados.",
+ "objetivo": "O objetivo é automatizar processos de back-office utilizando RPA com Python e SAP, reduzindo o tempo de processamento em 40% e minimizando erros manuais.",
+ "escopo": [
+  "Mapeamento de 5 processos críticos de back-office para automação",
+  "Desenvolvimento de robôs em Python para integração com SAP",
+  "Implementação de automação para conciliação de dados e emissão de relatórios",
+  "Testes e validação dos fluxos automatizados",
+  "Treinamento da equipe do cliente para operação dos robôs"
+ ],
+ "entregaveis": [
+  "Documento de mapeamento de processos (AS-IS e TO-BE)",
+  "Robôs desenvolvidos e documentados para 5 processos",
+  "Relatório de testes de aceitação",
+  "Manual de operação e treinamento",
+  "Relatório de resultados com métricas de desempenho"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Mapeamento",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento de Robôs",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Testes e Homologação",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Go-Live e Suporte",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 2 desenvolvedores Python e 1 especialista SAP",
+ "riscos": [
+  "Resistência à mudança por parte da equipe do cliente",
+  "Complexidade na integração com sistemas legados",
+  "Atrasos na disponibilização de ambientes de teste"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Eduardo Silva (Gerente de Operações)",
+  "tecnico": "Fernanda Lima (Arquiteta de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior do que a necessidade imediata do cliente, que buscava uma solução mais enxuta e com menor investimento inicial.",
+ "licoes": "Para próximas oportunidades, é essencial validar melhor o escopo mínimo viável com o cliente e oferecer uma abordagem faseada, priorizando quick wins para reduzir a percepção de risco e custo.",
+ "retorno": "Prezados, após análise interna, decidimos não prosseguir com a proposta apresentada. O escopo proposto mostrou-se mais abrangente do que nossa necessidade atual, o que impactaria nosso orçamento e prazo. Agradecemos o esforço da equipe e esperamos manter contato para futuras oportunidades. Atenciosamente, Carlos Eduardo Silva."
+}

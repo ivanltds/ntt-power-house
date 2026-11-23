@@ -1,0 +1,49 @@
+{
+ "titulo": "Atendimento omnicanal e service desk com Salesforce e Azure",
+ "problema": "A Operadora Sinal Forte atende cerca de 2,3 milhões de clientes e recebe 480 mil chamados por mês, distribuídos entre telefone, WhatsApp e e-mail, sem visão única do histórico. O tempo médio de primeira resposta chega a 9 minutos e 34% dos atendimentos exigem retrabalho por falta de integração entre as filas.",
+ "objetivo": "Unificar os canais de atendimento em uma plataforma omnicanal baseada em Salesforce e Azure, com automação de processos e sustentação contínua, elevando o nível de serviço e reduzindo o tempo de resposta.",
+ "escopo": [
+  "Implantação do Salesforce Service Cloud como camada de CRM omnicanal para 620 agentes",
+  "Integração via Azure Logic Apps e Azure Functions entre CRM, billing e sistemas de rede",
+  "Automação de triagem, roteamento e SLA de chamados com regras de negócio no Salesforce",
+  "Painéis de atendimento e service desk em Azure Synapse e Power BI",
+  "Serviço de sustentação/AMS com SLA de 4 horas para incidentes críticos"
+ ],
+ "entregaveis": [
+  "Blueprint de arquitetura omnicanal validado com as áreas de negócio",
+  "Configuração do Salesforce Service Cloud para 3 canais e 12 filas de atendimento",
+  "Integrações Azure publicadas e monitoradas para 5 sistemas legados",
+  "Relatórios gerenciais de SLA e produtividade com 18 indicadores",
+  "Runbook de sustentação/AMS e transição para operação assistida"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho",
+   "semanas": 6
+  },
+  {
+   "nome": "Configuração do CRM e integrações",
+   "semanas": 12
+  },
+  {
+   "nome": "Automação e painéis",
+   "semanas": 8
+  },
+  {
+   "nome": "Go-live e estabilização",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 consultores Salesforce, 2 engenheiros Azure e 2 analistas de AMS",
+ "riscos": [
+  "Atraso na liberação de APIs dos sistemas legados",
+  "Baixa adesão dos agentes ao novo fluxo de atendimento",
+  "Volume de chamados acima do previsto durante o go-live"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Atendimento)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções Digital & CRM)"
+ },
+ "resultados": "Nas duas primeiras filas migradas, o tempo médio de primeira resposta caiu 27%, de 9 para 6,5 minutos, com 210 agentes já operando na nova plataforma.",
+ "diferencial": "Ganhamos pelo case de referência em operadora de telecom com atendimento omnicanal em Salesforce e Azure e pela continuidade do time que já sustenta o ambiente do cliente."
+}

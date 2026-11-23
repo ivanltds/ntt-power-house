@@ -1,0 +1,49 @@
+{
+ "titulo": "Painéis executivos e BI para gestão industrial com Power BI e Azure",
+ "problema": "A Metalúrgica Forja Forte acompanha indicadores de produção, qualidade e custo em planilhas manuais consolidadas por três analistas, com fechamento mensal de até 12 dias e divergências entre as áreas. A liderança não tem visão única em tempo real sobre OEE e refugo, hoje em torno de 4,2% na linha de forjaria.",
+ "objetivo": "Implantar uma plataforma de dados em Azure e painéis executivos em Power BI que unifiquem indicadores de produção, qualidade e custo, reduzindo o ciclo de fechamento e apoiando decisões diárias da diretoria industrial.",
+ "escopo": [
+  "Ingestão e orquestração de dados de ERP, MES e apontamentos de produção em Azure Data Lake e Azure Data Factory",
+  "Modelagem dimensional em camadas bronze, prata e ouro no Azure Synapse para indicadores de OEE, refugo e custo por ordem",
+  "Construção de painéis executivos e operacionais em Power BI com drill-down por planta, linha e turno",
+  "Implementação de governança de dados, catálogo e controle de acesso por perfil no Azure",
+  "Automação de atualização incremental dos painéis em Power BI com monitoramento de falhas de carga"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário de indicadores validado com as áreas de produção e qualidade",
+  "Pipelines de ingestão e transformação em Azure operando com atualização diária automatizada",
+  "Cinco painéis em Power BI: visão executiva, OEE, qualidade e refugo, custos industriais e produtividade por turno",
+  "Relatório de homologação com testes de reconciliação dos números contra o fechamento manual",
+  "Treinamento de 20 usuários-chave e material de apoio para uso dos painéis executivos"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Engenharia de dados e pipelines em Azure",
+   "semanas": 8
+  },
+  {
+   "nome": "Construção dos painéis em Power BI",
+   "semanas": 6
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade dos apontamentos de produção no MES",
+  "Dependência de acessos e credenciais de sistemas legados",
+  "Mudanças de escopo nos indicadores durante a construção dos painéis"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Gerente de TI Industrial)",
+  "tecnico": "Fernanda Souza (Arquiteta de Dados)"
+ },
+ "resultados": "Já foram entregues os pipelines de ingestão de duas das quatro fontes e o painel executivo piloto, com fechamento de indicadores 40% mais rápido na primeira validação.",
+ "diferencial": "Ganhamos pela experiência comprovada em projeto semelhante de BI industrial com Azure e Power BI em outra metalúrgica de porte equivalente, além da continuidade da equipe que já atua no cliente."
+}

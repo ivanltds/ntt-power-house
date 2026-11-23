@@ -1,0 +1,37 @@
+{
+ "titulo": "Painéis executivos e BI para gestão comercial e operacional",
+ "problema": "A Cimentos Rocha Firme, com 12 unidades industriais e faturamento anual de R$ 2,8 bilhões, enfrentava dispersão de dados entre SAP e planilhas manuais, levando até 5 dias para consolidar indicadores de produção e vendas. A diretoria não tinha visão em tempo real para decisões sobre mix de produtos e alocação de carga.",
+ "objetivo": "Implementar uma plataforma de analytics integrada para fornecer painéis executivos em tempo quase real, unificando dados de SAP, Snowflake, Azure e Power BI para suportar decisões estratégicas.",
+ "escopo": [
+  "Integração dos dados do SAP ECC com o Snowflake via Azure Data Factory para ingestão batch e incremental",
+  "Modelagem dimensional no Snowflake para as áreas comercial, produção e logística",
+  "Construção de 8 painéis executivos no Power BI com indicadores de vendas, margem, OEE e entregas",
+  "Configuração de governança de dados no Azure Purview e catálogo de métricas",
+  "Treinamento de 40 usuários-chave e documentação técnica das pipelines"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e fluxos de integração",
+  "Pipeline de ingestão automatizada SAP para Snowflake com 15 tabelas principais",
+  "Modelo dimensional e camada semântica no Snowflake",
+  "Conjunto de 8 dashboards no Power BI validados pela diretoria",
+  "Manual de operação e sessão de treinamento para 40 usuários"
+ ],
+ "fases": [
+  "Fase 1 – Diagnóstico e arquitetura: 3 semanas",
+  "Fase 2 – Implementação de pipelines e modelagem: 6 semanas",
+  "Fase 3 – Desenvolvimento dos dashboards e validação: 3 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos ao SAP pelo time de TI do cliente",
+  "Qualidade dos dados de produção com inconsistências históricas",
+  "Baixa adoção dos painéis por usuários acostumados a relatórios manuais"
+ ],
+ "pessoas": {
+  "cliente": "Fernanda Almeida (Gerente de Controladoria)",
+  "tecnico": "Ricardo Mendes (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Redução do tempo de consolidação de indicadores de 5 dias para 4 horas (92% mais rápido) e identificação de R$ 3,2 milhões em oportunidades de redução de custo logístico no primeiro trimestre após go-live.",
+ "licoes": "A dependência de acessos ao SAP atrasou em 2 semanas a fase de integração, exigindo replanejamento. A realização de workshops semanais com a diretoria foi decisiva para alinhar as expectativas e garantir a adoção dos painéis.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Cimentos Rocha Firme, que já conhecia nossa capacidade de entregar resultados em projetos anteriores de dados."
+}

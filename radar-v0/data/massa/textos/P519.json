@@ -1,0 +1,49 @@
+{
+ "titulo": "Sustentação AMS de atendimento omnicanal com Salesforce, IA Generativa e ServiceNow",
+ "problema": "O Hospital Infantil Esperança opera com cerca de 180 mil atendimentos ambulatoriais por ano e enfrenta filas de espera de até 35 minutos no canal telefônico, além de 22% de chamados abertos sem registro unificado. A ausência de uma visão omnicanal entre CRM, IA e service desk gera retrabalho para 40 atendentes e perda de histórico do paciente entre canais.",
+ "objetivo": "Assumir a sustentação (AMS) da plataforma de atendimento omnicanal e do service desk, garantindo SLA de 98% de disponibilidade e resolução de 85% dos chamados de primeiro nível em até 4 horas úteis, com evolução contínua apoiada em IA Generativa.",
+ "escopo": [
+  "Sustentação corretiva e evolutiva do Salesforce Service Cloud para os canais telefone, chat e WhatsApp",
+  "Operação do service desk em ServiceNow com gestão de incidentes, requisições e catálogo de serviços de TI",
+  "Ajustes e monitoramento dos modelos de IA Generativa para resumo automático de atendimentos e sugestão de respostas",
+  "Gestão de integrações entre Salesforce, ServiceNow e sistemas de prontuário, com monitoramento de filas e APIs",
+  "Relatórios mensais de indicadores de atendimento, SLA e volumetria por canal",
+  ""
+ ],
+ "entregaveis": [
+  "Catálogo de serviços e fluxos de atendimento sustentados em ServiceNow, com 100% dos chamados classificados",
+  "Rotina de sustentação com plantão 8x5 e SLA contratado de 98% de disponibilidade",
+  "Painel mensal de KPIs de atendimento omnicanal (volume, tempo de resposta e satisfação)",
+  "Backlog evolutivo trimestral com melhorias em IA Generativa e Salesforce priorizadas com o cliente",
+  "Documentação técnica atualizada e plano de continuidade de serviços"
+ ],
+ "fases": [
+  {
+   "nome": "Transição e diagnóstico",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Estabilização da sustentação",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Evolução omnicanal com IA Generativa",
+   "duracao_semanas": 14
+  },
+  {
+   "nome": "Operação assistida e melhoria contínua",
+   "duracao_semanas": 8
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 analistas de sustentação Salesforce, 1 especialista em IA Generativa e 2 analistas de service desk ServiceNow",
+ "riscos": [
+  "Dependência de terceiros nas integrações com prontuário",
+  "Volumetria de chamados acima do previsto no plantão",
+  "Baixa adoção dos resumos gerados por IA pelos atendentes"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Diretora de Tecnologia e Inovação)",
+  "tecnico": "Carlos Menezes (Gerente de Projetos NTT DATA)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte orçamentário e readequação do plano de investimentos em TI para o exercício."
+}

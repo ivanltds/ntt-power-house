@@ -1,0 +1,48 @@
+{
+ "titulo": "Otimização de rotas e frota com Machine Learning para transporte de grãos",
+ "problema": "A cooperativa opera 320 caminhões próprios e de terceiros na safra, com rotas definidas manualmente por 6 despachantes e consumo médio 12% acima do benchmark do setor. O custo logístico representa 18% do valor da saca entregue, pressionando a margem dos 2.400 cooperados.",
+ "objetivo": "Reduzir em até 10% o custo por tonelada transportada por meio de roteirização inteligente e previsão de demanda de carga, apoiando a decisão diária do despacho.",
+ "escopo": [
+  "Modelo de Machine Learning em Python para previsão de volume de carga por origem e destino, com horizonte de 7 dias",
+  "Motor de otimização de rotas e alocação de frota integrado ao ERP da cooperativa via APIs",
+  "Painel de Analytics & BI com indicadores de custo por tonelada, ocupação e aderência de rotas",
+  "Rotina de retreinamento do modelo com dados históricos de 3 safras e telemetria da frota",
+  "Documentação técnica e capacitação dos 6 despachantes no novo processo de planejamento"
+ ],
+ "entregaveis": [
+  "Modelo preditivo de demanda validado com erro médio abaixo de 8%",
+  "Protótipo funcional de roteirização com comparativo contra as rotas atuais",
+  "Dashboard de Analytics & BI em ambiente de homologação",
+  "Relatório de ganhos simulados por rota e por filial",
+  "Plano de implantação e treinamento dos usuários-chave"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento do modelo e motor de rotas",
+   "semanas": 7
+  },
+  {
+   "fase": "Painel de BI e validação com usuários",
+   "semanas": 3
+  },
+  {
+   "fase": "Piloto assistido e transferência de conhecimento",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados de telemetria da frota",
+  "Baixa adesão dos despachantes ao novo processo",
+  "Integração com o ERP da cooperativa fora do prazo"
+ ],
+ "pessoas": {
+  "cliente": "Eduardo Bianchini (Diretor de Logística)",
+  "tecnico": "Marina Tavares (Tech Lead de AI & Automation)"
+ },
+ "resultados": "A cooperativa cancelou a oportunidade por restrição orçamentária decorrente da queda de preço da soja no trimestre e priorizou a renovação da frota."
+}

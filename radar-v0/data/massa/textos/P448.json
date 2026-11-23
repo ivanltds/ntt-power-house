@@ -1,0 +1,48 @@
+{
+ "titulo": "Previsão de Demanda e Reposição Automatizada para Rede Varejista",
+ "problema": "A Eletro Mais opera 78 lojas e cerca de 4.200 SKUs ativos, com ruptura média de 11,3% nas categorias de maior giro e excesso de estoque em 18% dos itens de baixa rotação. A reposição é feita hoje por planilhas e regras manuais, gerando 23 mil ajustes de pedido por mês e perda estimada de R$ 6,8 milhões anuais em vendas não realizadas.",
+ "objetivo": "Implantar um motor de previsão de demanda e reposição automatizada, integrado ao ERP e ao WMS, para reduzir ruptura e excesso de estoque com previsões por loja e SKU em horizonte semanal.",
+ "escopo": [
+  "Construção de pipeline de engenharia de dados no Databricks para ingestão de histórico de vendas, estoque, promoções e sazonalidade de 36 meses",
+  "Modelagem de camadas analíticas no Snowflake com dados de 78 lojas e 4.200 SKUs, incluindo calendário promocional e rupturas censuradas",
+  "Desenvolvimento e treinamento de modelos de Machine Learning para previsão de demanda semanal por loja e SKU, com meta de MAPE abaixo de 22%",
+  "Motor de sugestão de reposição e ponto de pedido com regras de estoque de segurança, lead time de fornecedor e restrições de lote mínimo",
+  "Integração das sugestões com o ERP para geração automática de pedidos de compra e painéis de acompanhamento para 120 usuários das áreas de compras e lojas"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelo de governança no Snowflake e Databricks",
+  "Pipeline de dados em produção com atualização diária e 99% de completude das fontes críticas",
+  "Modelos de previsão de demanda treinados e validados para as 10 categorias prioritárias",
+  "Motor de reposição automatizada integrado ao ERP em 3 lojas piloto antes do rollout para as 78 lojas",
+  "Painéis de acurácia, ruptura e cobertura de estoque e material de treinamento para 120 usuários"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados",
+   "semanas": 5
+  },
+  {
+   "nome": "Engenharia de dados e camadas no Snowflake",
+   "semanas": 7
+  },
+  {
+   "nome": "Modelagem de previsão e motor de reposição com Machine Learning",
+   "semanas": 8
+  },
+  {
+   "nome": "Piloto em 3 lojas, rollout e treinamento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 especialista de negócio em varejo e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão do histórico de vendas e estoque entre lojas e ERP",
+  "Baixa adesão dos compradores às sugestões automáticas de reposição",
+  "Atraso na liberação de acessos e integrações com o ERP e o WMS do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Planejamento e Compras)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados)"
+ },
+ "diferencial": "Ganhamos pela continuidade do projeto anterior de Data & Analytics na Eletro Mais e pelo case de referência em previsão de demanda e reposição para uma rede varejista de porte semelhante, com redução comprovada de ruptura em 9 meses."
+}

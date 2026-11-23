@@ -1,0 +1,50 @@
+{
+ "titulo": "Sustentação AMS de aplicações críticas em Azure, Kubernetes, SAP e ServiceNow",
+ "problema": "A Geradora Ventos do Nordeste opera 14 parques eólicos com 1,2 GW de capacidade instalada e enfrenta indisponibilidades recorrentes em aplicações de faturamento e manutenção, com tempo médio de resolução de incidentes críticos de 9 horas. O contrato anterior de AMS não cobre a esteira Kubernetes em Azure nem a integração com SAP, gerando 23% dos chamados sem resolução no SLA.",
+ "objetivo": "Garantir a sustentação contínua das aplicações críticas do cliente em Azure, Kubernetes, SAP e ServiceNow, elevando o cumprimento de SLA para 95% e reduzindo o MTTR de incidentes críticos para até 4 horas ao longo de 15 meses.",
+ "escopo": [
+  "Sustentação de aplicações corporativas em SAP (módulos de manutenção e faturamento) com gestão de incidentes e requisições via ServiceNow",
+  "Monitoramento e operação de cargas em Azure e clusters Kubernetes, incluindo gestão de capacidade e patches de segurança",
+  "Atendimento N1, N2 e N3 com plantão 24x7 para incidentes críticos de geração e comercialização de energia",
+  "Gestão de mudanças e liberações integrada ao ServiceNow, com janelas de deploy alinhadas ao calendário operacional dos parques",
+  "Relatórios mensais de indicadores de SLA, MTTR e volumetria de chamados por aplicação e por tecnologia"
+ ],
+ "entregaveis": [
+  "Catálogo de serviços AMS com SLAs acordados por aplicação e criticidade, publicado no ServiceNow",
+  "Runbooks operacionais para Azure, Kubernetes e SAP, revisados e validados no primeiro trimestre",
+  "Painel mensal de indicadores de sustentação com volumetria, SLA e MTTR por torre de tecnologia",
+  "Plano de melhoria contínua com metas trimestrais de redução de incidentes recorrentes",
+  "Relatório de encerramento do contrato com histórico de atendimentos e recomendações de evolução"
+ ],
+ "fases": [
+  {
+   "fase": "Transição e estabilização",
+   "semanas": 8
+  },
+  {
+   "fase": "Operação assistida com dupla cobertura",
+   "semanas": 12
+  },
+  {
+   "fase": "Operação plena com metas de SLA",
+   "semanas": 38
+  },
+  {
+   "fase": "Avaliação de resultados e encerramento",
+   "semanas": 7
+  }
+ ],
+ "equipe": "1 gerente de serviços, 1 arquiteto de soluções Azure/Kubernetes, 2 analistas SAP sêniores, 2 analistas de sustentação plenos e 1 especialista ServiceNow.",
+ "riscos": [
+  "Dependência de conhecimento tácito da equipe anterior na transição",
+  "Indisponibilidade de janelas de manutenção durante picos de geração",
+  "Volatilidade de custos de infraestrutura Azure fora do escopo contratado"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Gerente de TI Corporativa)",
+  "tecnico": "Rafael Nogueira (Gerente de Serviços AMS)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 18% acima do mercado, com valor mensal superior ao praticado por concorrentes para escopo equivalente de AMS. O cliente priorizou a redução de custo recorrente mesmo diante da continuidade do projeto anterior.",
+ "licoes": "Nas próximas propostas de AMS com continuidade no cliente, detalhar o custo por torre de tecnologia e ancorar o preço em benchmark de mercado antes da submissão. Avaliar modelos de escopo escalonado para reduzir o valor mensal inicial.",
+ "retorno": "Prezados, após concluir a avaliação das propostas recebidas, informamos que a Geradora Ventos do Nordeste decidiu não seguir com a NTT DATA para o contrato de sustentação de aplicações. A decisão foi motivada exclusivamente pelo preço apresentado, que ficou acima do mercado e do orçamento aprovado para o ciclo de 15 meses. Agradecemos o empenho da equipe e o histórico de parceria no projeto anterior, e permanecemos abertos a novas conversas em iniciativas futuras. Atenciosamente, Marina Toledo, Gerente de TI Corporativa."
+}

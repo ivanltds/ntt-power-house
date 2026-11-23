@@ -1,0 +1,36 @@
+{
+ "titulo": "Precificação Dinâmica com Machine Learning para o Varejo",
+ "problema": "A Eletro Mais enfrenta margens pressionadas pela concorrência e pela volatilidade de custos, com mais de 10 mil SKUs e variações de demanda que tornam a precificação manual lenta e imprecisa. Atualmente, apenas 30% dos preços são revisados semanalmente, resultando em perdas estimadas de 5% na receita.",
+ "objetivo": "Implementar um modelo de precificação dinâmica baseado em Machine Learning e Python para ajustar preços em tempo quase real, aumentando a margem bruta em pelo menos 3% em 3 meses.",
+ "escopo": [
+  "Desenvolvimento de modelos de regressão e séries temporais em Python para previsão de demanda e elasticidade-preço por SKU.",
+  "Integração de dados de custos, concorrência e vendas históricas em pipeline de Machine Learning.",
+  "Implementação de motor de precificação com regras de negócio e limites de variação.",
+  "Dashboard de monitoramento de margem e aderência às políticas de preço.",
+  "Treinamento e transferência de conhecimento para a equipe de pricing do cliente."
+ ],
+ "entregaveis": [
+  "Modelo preditivo de demanda e elasticidade validado com MAPE inferior a 15%.",
+  "Motor de precificação dinâmica integrado ao ERP do cliente.",
+  "Relatórios semanais de performance e recomendações de ajuste.",
+  "Documentação técnica e playbook de operação.",
+  "Workshop de capacitação para 15 analistas de pricing."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e preparação de dados: 4 semanas",
+  "Fase 2 - Desenvolvimento e validação de modelos: 6 semanas",
+  "Fase 3 - Implantação e go-live: 2 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 2 cientistas de dados e 1 engenheiro de dados",
+ "riscos": [
+  "Qualidade dos dados históricos de vendas e custos",
+  "Resistência à adoção pelas equipes comerciais",
+  "Latência na integração com sistemas legados"
+ ],
+ "pessoas": {
+  "cliente": "Carla Mendes (Gerente de Pricing)",
+  "tecnico": "Rafael Oliveira (Cientista de Dados Sênior)"
+ },
+ "resultados": "Modelo piloto já reduziu em 8% o erro de previsão de demanda para as 500 principais SKUs.",
+ "diferencial": "Nosso relacionamento de longo prazo e a continuidade do projeto anterior de analytics no cliente nos permitiram acelerar o discovery e garantir aderência às necessidades do negócio."
+}

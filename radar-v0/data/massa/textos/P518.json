@@ -1,0 +1,47 @@
+{
+ "titulo": "Automação de back-office com RPA e integração SAP/ServiceNow",
+ "problema": "A Cooperativa Sicrédito Planalto processa cerca de 48 mil transações mensais de back-office, das quais 62% ainda dependem de conferência manual em planilhas e lançamentos duplicados entre SAP e ServiceNow. O time de retaguarda, com 35 analistas, consome aproximadamente 1.900 horas por mês em tarefas repetitivas de conciliação e abertura de chamados, elevando o índice de retrabalho a 14%.",
+ "objetivo": "Automatizar os fluxos de back-office de conciliação e abertura de chamados com RPA integrado a SAP, ServiceNow e Python, reduzindo em 40% o esforço manual em 3 meses e liberando o time para atividades analíticas.",
+ "escopo": [
+  "Mapeamento e priorização de 12 processos de back-office candidatos à automação, com matriz de esforço e retorno",
+  "Desenvolvimento de robôs RPA em Python para conciliação financeira e lançamentos no SAP, com tratamento de exceções",
+  "Integração dos robôs ao ServiceNow para abertura, atualização e encerramento automático de chamados",
+  "Painel de monitoramento de execuções, SLAs e taxa de sucesso dos robôs, com alertas de falha",
+  "Sustentação AMS dos robôs em produção, com correções e melhorias em regime de até 24 horas úteis"
+ ],
+ "entregaveis": [
+  "Documento de priorização com os 12 processos mapeados e os 6 selecionados para automação",
+  "6 robôs RPA em produção, integrados ao SAP e ao ServiceNow, com taxa de sucesso acima de 95%",
+  "Painel de monitoramento de execuções e SLAs dos robôs",
+  "Manual técnico e de operação dos robôs, com plano de contingência manual",
+  "Relatório mensal de AMS com indicadores de execução, falhas e horas economizadas"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e priorização",
+   "semanas": 3
+  },
+  {
+   "nome": "Desenvolvimento dos robôs e integrações",
+   "semanas": 5
+  },
+  {
+   "nome": "Homologação e go-live",
+   "semanas": 3
+  },
+  {
+   "nome": "Estabilização e transição para AMS",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA/Python e 1 analista de sustentação AMS",
+ "riscos": [
+  "Instabilidade nas interfaces do SAP durante as janelas de execução dos robôs",
+  "Mudanças de processo no cliente durante o desenvolvimento, exigindo retrabalho",
+  "Baixa adesão dos analistas de back-office à operação assistida dos robôs"
+ ],
+ "pessoas": {
+  "cliente": "Marina Vasconcelos (Gerente de Operações de Back-office)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Automação RPA)"
+ }
+}

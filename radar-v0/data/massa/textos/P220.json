@@ -1,0 +1,47 @@
+{
+ "titulo": "Leitura e triagem inteligente de documentos com IA generativa em seguros",
+ "problema": "A Seguradora Amparo recebe cerca de 1,2 milhão de documentos por ano, entre avisos de sinistro, laudos e apólices, e realiza a triagem de forma manual em 14 filas operacionais. O processo gera prazo médio de 3,5 dias úteis para classificação inicial e índice de retrabalho de 18% por erros de tipificação.",
+ "objetivo": "Automatizar a leitura, classificação e triagem de documentos com IA generativa, RPA e Python, reduzindo o prazo de triagem para até 1 dia útil e o retrabalho para menos de 5% em 6 meses.",
+ "escopo": [
+  "Pipeline em Python para extração e normalização de texto de documentos digitalizados e nativos digitais, com OCR e validação de qualidade",
+  "Modelo de IA generativa para classificação e triagem por tipo de documento, com extração de campos-chave (número de apólice, sinistro, data e valores)",
+  "Bots de RPA para roteamento automático dos documentos triados às 14 filas operacionais e integração com o sistema de gestão de sinistros",
+  "Painel de monitoramento de acurácia, volume processado e fila de exceções, com retreinamento assistido e trilha de auditoria",
+  "Definição de regras de negócio e limiares de confiança para encaminhamento manual e tratamento de documentos fora do padrão"
+ ],
+ "entregaveis": [
+  "Especificação funcional e mapa das 14 filas de triagem com regras de negócio",
+  "Pipeline de leitura e extração em Python implantado em ambiente de homologação",
+  "Modelo de classificação e triagem com acurácia mínima de 92% no conjunto de validação",
+  "Bots de RPA integrados ao sistema de sinistros e em produção assistida",
+  "Painel de monitoramento e documentação de operação e transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho de solução",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento do pipeline e modelo de IA",
+   "semanas": 10
+  },
+  {
+   "nome": "Integração de RPA e testes assistidos",
+   "semanas": 6
+  },
+  {
+   "nome": "Go-live assistido e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de IA, 2 cientistas de dados, 2 desenvolvedores Python e 1 especialista em RPA",
+ "riscos": [
+  "Qualidade e padronização dos documentos digitalizados comprometerem a acurácia do modelo",
+  "Baixa adesão das equipes operacionais às novas filas e fluxos de exceção",
+  "Integração com o sistema de gestão de sinistros apresentar restrições de API"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Sinistros)",
+  "tecnico": "Bruno Tavares (Arquiteto de IA)"
+ }
+}

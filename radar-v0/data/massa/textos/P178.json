@@ -1,0 +1,49 @@
+{
+ "titulo": "Redução de Perdas Não Técnicas de Energia com Analytics Avançado e Machine Learning",
+ "problema": "A Companhia de Saneamento Rio Claro opera com perdas não técnicas de energia estimadas em 8,4% do volume faturado, o que representa cerca de R$ 12 milhões anuais em energia não faturada. A identificação de fraudes e irregularidades hoje é manual e reativa, com apenas 32% dos casos suspeitos priorizados corretamente pela equipe de campo.",
+ "objetivo": "Reduzir as perdas não técnicas de energia em 30% em 12 meses por meio de modelos de Machine Learning que priorizem inspeções e automatizem a detecção de anomalias de consumo.",
+ "escopo": [
+  "Ingestão e tratamento de dados de medição, faturamento e cadastro em Databricks sobre Azure Data Lake",
+  "Desenvolvimento de modelos de Machine Learning para detecção de anomalias e scoring de suspeita de fraude",
+  "Construção de painéis de monitoramento de perdas e produtividade de inspeções em Power BI",
+  "Integração dos scores ao processo de inspeção de campo com API de consulta em Azure",
+  "Governança de dados e monitoramento de deriva dos modelos com pipelines Databricks"
+ ],
+ "entregaveis": [
+  "Pipeline de dados de medição e faturamento em produção no Databricks",
+  "Modelo de scoring de suspeita de fraude validado com AUC acima de 0,82",
+  "Dashboard executivo e operacional de perdas em Power BI",
+  "Relatório de resultados das primeiras 4 ondas de inspeção priorizada",
+  "Documentação técnica e plano de sustentação dos modelos"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento e validação dos modelos de ML",
+   "semanas": 10
+  },
+  {
+   "fase": "Painéis Power BI e integração ao processo de campo",
+   "semanas": 8
+  },
+  {
+   "fase": "Piloto de inspeção e ajuste fino",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados sênior, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura dos dados de medição históricos",
+  "Baixa adesão da equipe de campo ao novo roteiro de inspeções",
+  "Atraso na liberação de acessos e ambientes Azure"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações Comerciais)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "Nas duas primeiras ondas de inspeção priorizada, a taxa de acerto dos casos indicados pelo modelo chegou a 61%, contra 32% do processo anterior.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Companhia de Saneamento Rio Claro, onde já operamos a plataforma de dados que agora sustenta os modelos de redução de perdas."
+}

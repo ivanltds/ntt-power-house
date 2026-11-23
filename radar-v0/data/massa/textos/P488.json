@@ -1,0 +1,50 @@
+{
+ "titulo": "Otimização de rotas e frota com analytics e machine learning para rede varejista",
+ "problema": "A rede possui 48 lojas e uma frota de 120 veículos que hoje opera com rotas definidas manualmente, gerando 18% de quilometragem ociosa e atrasos em 22% das entregas. O custo logístico cresceu 14% no último ano, pressionando a margem do varejo.",
+ "objetivo": "Reduzir em até 15% o custo logístico e elevar para 95% o cumprimento dos prazos de entrega por meio de otimização de rotas baseada em dados e modelos preditivos.",
+ "escopo": [
+  "Diagnóstico da operação logística e consolidação de dados de frota, pedidos e trânsito em ambiente GCP",
+  "Construção de dashboards operacionais e gerenciais em Power BI para acompanhamento de rotas e custos",
+  "Desenvolvimento de modelos de Machine Learning para previsão de demanda por loja e otimização de rotas",
+  "Integração dos modelos a um motor de sugestão de rotas diárias para os 120 veículos",
+  "Definição de KPIs e rotina de monitoramento com a área de logística"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico logístico com baseline de custos e prazos",
+  "Painéis Power BI de custo por rota, ocupação de frota e cumprimento de prazos",
+  "Modelos de previsão de demanda e otimização de rotas validados em ambiente GCP",
+  "Motor de sugestão de rotas em operação assistida por 4 semanas",
+  "Playbook de operação e treinamento das equipes de logística"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem analítica e dashboards Power BI",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento de modelos de ML em GCP",
+   "semanas": 6
+  },
+  {
+   "fase": "Implantação assistida e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 1 especialista em machine learning e 1 analista de BI",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de frota e pedidos",
+  "Baixa adesão dos motoristas e supervisores às rotas sugeridas",
+  "Prazo curto de 5 meses para treinar e validar modelos preditivos"
+ ],
+ "pessoas": {
+  "cliente": "Marcelo Tavares (Diretor de Logística)",
+  "tecnico": "Fernanda Queiroz (Especialista em AI & Automation)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor apresentado superou em cerca de 30% as propostas concorrentes para o mesmo escopo. O cliente optou por um fornecedor com custo menor, apesar de reconhecer a experiência da NTT DATA em projetos anteriores.",
+ "licoes": "Para propostas de continuidade com escopo de analytics e ML, apresentar desde o início uma versão enxuta do escopo e comparativo de valor por fase, evitando que o pacote completo fique acima do mercado.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe na elaboração da proposta de otimização de rotas e frota. Após análise comparativa, decidimos seguir com outro fornecedor, pois o investimento apresentado ficou acima do orçamento e da referência de mercado que temos para este escopo. Reforço que a parceria nos projetos anteriores foi muito positiva e esperamos retomar a conversa em iniciativas futuras. Atenciosamente, Marcelo Tavares, Diretor de Logística, Rede Supermercados Bom Lar."
+}

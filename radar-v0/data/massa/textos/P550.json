@@ -1,0 +1,38 @@
+{
+ "titulo": "Migração do Data Warehouse para Nuvem com Databricks e Multicloud",
+ "problema": "A Financeira Rumo Certo processa 2,5 TB de dados financeiros diariamente em um data warehouse legado, com custos de manutenção 30% acima do orçado e tempo de indisponibilidade de 8 horas/mês. A empresa precisa migrar para a nuvem para reduzir custos e aumentar a agilidade analítica.",
+ "objetivo": "Migrar o data warehouse on-premises para uma arquitetura em nuvem utilizando Databricks nos provedores GCP e AWS, garantindo escalabilidade, redução de custos operacionais e disponibilidade dos dados.",
+ "escopo": [
+  "Avaliação e desenho da arquitetura alvo no Databricks sobre GCP e AWS, incluindo definição de camadas (raw, trusted, refined) e políticas de governança.",
+  "Migração de 120 tabelas e 45 pipelines ETL do ambiente legado para o Databricks, com reengenharia para processamento distribuído.",
+  "Implementação de ingestão incremental e streaming com Delta Lake para dados transacionais e de eventos.",
+  "Configuração de clusters elásticos e políticas de auto-scaling para otimização de custos em GCP e AWS.",
+  "Estabelecimento de práticas de segurança e conformidade (LGPD) com controle de acesso baseado em funções e criptografia em repouso e em trânsito."
+ ],
+ "entregaveis": [
+  "Documento de arquitetura alvo detalhado, com diagramas e justificativa de escolhas tecnológicas.",
+  "Ambiente Databricks provisionado e configurado em GCP e AWS, com workspaces e clusters operacionais.",
+  "Pipeline de migração executado para 120 tabelas, com validação de dados e relatório de reconciliação.",
+  "Conjunto de 45 pipelines ETL reengenhados e documentados, prontos para operação.",
+  "Plano de corte e runbook para descomissionamento do data warehouse legado, incluindo testes de carga e performance."
+ ],
+ "fases": [
+  "Fase 1 - Descoberta e Arquitetura: 8 semanas",
+  "Fase 2 - Migração Piloto e Validação: 12 semanas",
+  "Fase 3 - Migração em Larga Escala: 16 semanas",
+  "Fase 4 - Corte e Encerramento: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em nuvem e 1 gerente de projeto",
+ "riscos": [
+  "Resistência à mudança por parte das equipes de TI do cliente.",
+  "Complexidade na integração entre ambientes GCP e AWS.",
+  "Atrasos na obtenção de aprovações de segurança e conformidade."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com a decisora Mariana Costa era fraco; não houve engajamento suficiente para apresentar o valor estratégico da solução e construir confiança ao longo do processo.",
+ "licoes": "Para próximas propostas, é essencial mapear e engajar os decisores desde o início, promovendo reuniões executivas e demonstrando valor por meio de provas de conceito direcionadas às suas prioridades.",
+ "retorno": "Prezados, agradecemos o envio da proposta para migração do data warehouse. Informamos que decidimos não seguir com a NTT DATA devido à falta de alinhamento com nossa cultura e expectativas de relacionamento próximo. Agradecemos a atenção e desejamos sucesso. Atenciosamente, Mariana Costa (Diretora de Tecnologia - Financeira Rumo Certo)"
+}

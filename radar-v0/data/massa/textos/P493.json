@@ -1,0 +1,50 @@
+{
+ "titulo": "Previsão de Demanda e Reposição de Ativos com Snowflake e Databricks",
+ "problema": "A Companhia de Saneamento Rio Claro gerencia cerca de 1,2 milhão de hidrômetros e mais de 3.500 km de rede, mas a reposição de materiais e a alocação de equipes de campo eram planejadas em planilhas manuais, com erros de até 18% entre a demanda prevista e a real. Isso gerava estoques excessivos em alguns almoxarifados e rupturas frequentes em itens críticos, elevando o custo de manutenção corretiva.",
+ "objetivo": "Implantar uma solução de previsão de demanda e reposição baseada em Machine Learning para os itens de manutenção de rede e hidrômetros, reduzindo o erro de previsão e otimizando os níveis de estoque nos almoxarifados regionais.",
+ "escopo": [
+  "Construção de pipelines de engenharia de dados no Snowflake para consolidar histórico de consumo, ordens de serviço e estoques de 5 almoxarifados regionais",
+  "Desenvolvimento de modelos de previsão de demanda em Python e Machine Learning executados no Databricks, com granularidade semanal por item e regional",
+  "Criação de camada analítica e features de sazonalidade, clima e criticidade de ativos no Snowflake",
+  "Modelo de reposição com cálculo de ponto de pedido e estoque de segurança por item e prazo de entrega de fornecedores",
+  "Painéis de acompanhamento de acurácia e aderência das previsões integrados ao ambiente Databricks"
+ ],
+ "entregaveis": [
+  "Pipeline de dados no Snowflake com 24 meses de histórico tratado de consumo e estoques",
+  "Modelos de previsão de demanda treinados e versionados no Databricks para as 350 classes de materiais mais críticas",
+  "Motor de reposição com ponto de pedido e estoque de segurança automatizados",
+  "Relatório de acurácia por família de itens com backtesting de 12 semanas",
+  "Painel de monitoramento de previsões e alertas de ruptura iminente"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e Engenharia de Dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e Experimentação de ML",
+   "semanas": 8
+  },
+  {
+   "fase": "Motor de Reposição e Validação",
+   "semanas": 5
+  },
+  {
+   "fase": "Go-live e Transferência de Conhecimento",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura irregular do histórico de ordens de serviço em sistemas legados",
+  "Baixa adesão dos gestores de almoxarifado às recomendações do motor de reposição",
+  "Mudanças de calendário de manutenção e sazonalidade de consumo não capturadas nos modelos"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Planejamento e Logística)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "O erro médio de previsão caiu de 18% para 7% nas 350 classes críticas, e a redução de estoque imobilizado nos almoxarifados alcançou R$ 2,4 milhões no primeiro ciclo de reposição.",
+ "licoes": "A integração dos dados de ordens de serviço de duas bases legadas consumiu 3 semanas além do previsto, exigindo regras de deduplicação não mapeadas no diagnóstico. Foi decisivo envolver os gestores de almoxarifado desde a fase de modelagem, o que validou as premissas do motor de reposição antes do go-live.",
+ "diferencial": "Ganhamos pela relação de continuidade com a Companhia de Saneamento Rio Claro, já conhecedores de seus sistemas e processos de manutenção de rede, o que reduziu o risco de integração e acelerou a entrega."
+}

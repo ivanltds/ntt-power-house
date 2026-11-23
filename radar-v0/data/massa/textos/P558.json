@@ -1,0 +1,38 @@
+{
+ "titulo": "Precificação Dinâmica com Machine Learning para Seguros",
+ "problema": "A Seguradora Amparo enfrenta dificuldades para ajustar preços de apólices em tempo real, resultando em perda de competitividade: 30% das cotações são perdidas para concorrentes com preços mais aderentes ao risco. Além disso, a análise manual de sinistralidade consome 15 dias por ciclo, atrasando decisões de precificação.",
+ "objetivo": "Implementar um modelo de precificação dinâmica baseado em Machine Learning para reduzir o tempo de ajuste de preços de 15 dias para menos de 1 hora, aumentando a taxa de conversão de cotações em 20%.",
+ "escopo": [
+  "Desenvolvimento de modelos de ML para precificação em tempo real usando Python e Databricks",
+  "Integração de fontes de dados de sinistros, perfil de clientes e concorrência no GCP",
+  "Criação de dashboards de acompanhamento de performance de precificação com Analytics & BI",
+  "Implementação de pipeline de MLOps para monitoramento e retreinamento automático dos modelos",
+  "Capacitação da equipe do cliente para operar e manter os modelos em produção"
+ ],
+ "entregaveis": [
+  "Modelo de precificação dinâmica validado com ganho mínimo de 15% na taxa de conversão",
+  "Documentação técnica completa dos modelos e pipelines",
+  "Dashboard executivo para monitoramento de KPIs de precificação",
+  "Relatório de A/B testing comparando abordagem tradicional vs. dinâmica",
+  "Workshop de transferência de conhecimento para 10 analistas do cliente"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e preparação de dados: 4 semanas",
+  "Fase 2 - Desenvolvimento e treinamento de modelos: 8 semanas",
+  "Fase 3 - Integração e testes em ambiente controlado: 6 semanas",
+  "Fase 4 - Deploy e acompanhamento em produção: 10 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados históricos de sinistros pode limitar acurácia dos modelos",
+  "Resistência da área comercial à adoção de preços dinâmicos",
+  "Integração com sistemas legados de precificação pode atrasar o cronograma"
+ ],
+ "pessoas": {
+  "cliente": "Carla Menezes (Diretora de Produtos e Precificação)",
+  "tecnico": "Rafael Duarte (Líder Técnico de Data Science)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com a decisora, Carla Menezes, era fraco: não houve reuniões presenciais suficientes para construir confiança e entender suas prioridades. O concorrente tinha um relacionamento de longo prazo com a diretoria, o que pesou na decisão.",
+ "licoes": "Para próximas oportunidades, mapear e engajar decisores-chave desde o início, promovendo workshops executivos e visitas presenciais para fortalecer o relacionamento antes da apresentação formal da proposta.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de precificação dinâmica não foi selecionada. A decisão foi baseada na necessidade de maior alinhamento estratégico com nosso decisor, que optou por um parceiro com relacionamento prévio mais consolidado. Agradecemos o esforço da equipe da NTT DATA. Atenciosamente, Carla Menezes, Diretora de Produtos e Precificação."
+}

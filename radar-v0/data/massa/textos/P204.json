@@ -1,0 +1,49 @@
+{
+ "titulo": "Streaming de dados em tempo real para operação logística com Databricks e Kafka",
+ "problema": "O Operador Logístico Armazém Brasil acompanha a movimentação de 1,2 milhão de volumes por mês em 9 centros de distribuição, mas os relatórios de estoque e expedição chegam com até 6 horas de atraso, gerando rupturas e retrabalho de separação em cerca de 8% dos pedidos. A operação também não consegue reagir a desvios de rota e atrasos de doca em tempo hábil, o que pressiona o SLA contratado com os embarcadores.",
+ "objetivo": "Implantar uma plataforma de dados em tempo real com ingestão via Kafka e processamento no Databricks, reduzindo a latência de visibilidade operacional de horas para menos de 5 minutos e habilitando painéis de acompanhamento contínuo da cadeia logística.",
+ "escopo": [
+  "Ingestão de eventos de WMS, TMS e rastreadores de frota em tópicos Kafka, com 14 fluxos e volume estimado de 2.500 eventos por segundo no pico",
+  "Construção de pipelines de streaming no Databricks (Delta Live Tables) em camadas bronze, prata e ouro, com regras de deduplicação e tratamento de eventos fora de ordem",
+  "Modelagem de indicadores operacionais em near real time: ocupação de doca, acuracidade de estoque, tempo de ciclo de separação e aderência de janelas de entrega",
+  "Integração dos dados tratados ao Databricks SQL e ao conector de BI corporativo, com 6 dashboards operacionais e alertas automáticos por limiar",
+  "Implementação de monitoramento de pipelines, contratos de dados e política de retenção e qualidade sobre os tópicos Kafka e tabelas Delta"
+ ],
+ "entregaveis": [
+  "Ambiente Databricks provisionado com 3 workspaces (dev, homologação e produção) e governança via Unity Catalog",
+  "14 pipelines de streaming Kafka–Databricks em produção, com SLA de latência inferior a 5 minutos",
+  "6 dashboards operacionais de acompanhamento de doca, estoque e entregas, publicados para 120 usuários",
+  "Catálogo de dados com 85 campos críticos documentados e regras de qualidade automatizadas",
+  "Runbook operacional, plano de sustentação e treinamento de 20 analistas e engenheiros do cliente"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura de streaming",
+   "semanas": 6
+  },
+  {
+   "fase": "Construção dos pipelines Kafka–Databricks e camadas bronze/prata",
+   "semanas": 12
+  },
+  {
+   "fase": "Camada ouro, dashboards e alertas operacionais",
+   "semanas": 8
+  },
+  {
+   "fase": "Homologação, go-live e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Latência e indisponibilidade dos sistemas de origem (WMS e TMS) comprometendo a ingestão contínua",
+  "Qualidade e padronização dos eventos de rastreamento de frota enviados por operadores terceiros",
+  "Capacidade do cluster Databricks durante picos sazonais de volume logístico"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações Logísticas)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "Os 5 primeiros fluxos Kafka já estão em produção, reduzindo a latência de visibilidade de estoque de 6 horas para 12 minutos em 3 centros de distribuição.",
+ "diferencial": "Ganhamos pela relação de continuidade construída com o cliente em projetos anteriores de engenharia de dados, o que permitiu reaproveitar arquitetura, padrões de governança e conhecimento do domínio logístico."
+}

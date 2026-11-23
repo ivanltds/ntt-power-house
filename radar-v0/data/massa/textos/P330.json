@@ -1,0 +1,38 @@
+{
+ "titulo": "Streaming de dados em tempo real para operações de rede e atendimento",
+ "problema": "A TeleNorte Conecta processava dados de rede e atendimento em lotes diários, com latência de até 24 horas, dificultando a detecção de falhas e a personalização de ofertas. Com 4,2 milhões de clientes e picos de 1,8 TB/dia, a empresa precisava de visibilidade em tempo real para reduzir churn e melhorar a experiência.",
+ "objetivo": "Implementar uma plataforma de streaming de dados em tempo real na Azure com Databricks para ingestão, processamento e análise contínua de eventos de rede e atendimento, permitindo reação imediata a incidentes e ofertas personalizadas.",
+ "escopo": [
+  "Ingestão de eventos de rede e atendimento via Azure Event Hubs e Kafka, com processamento em streaming no Databricks (Structured Streaming).",
+  "Construção de pipelines de dados em tempo real com Delta Lake na Azure, garantindo confiabilidade e escalabilidade para 1,8 TB/dia.",
+  "Integração com Azure Data Lake Storage Gen2 para armazenamento de dados brutos e curados, com governança via Unity Catalog.",
+  "Implementação de dashboards em tempo real no Power BI conectados ao Databricks SQL para monitoramento de KPIs operacionais.",
+  "Automação de alertas de anomalias de rede e atendimento usando Azure Functions e Logic Apps, integrados aos pipelines de streaming."
+ ],
+ "entregaveis": [
+  "Plataforma de streaming operacional com latência inferior a 5 segundos para eventos críticos de rede.",
+  "Pipeline de dados em tempo real com 99,9% de disponibilidade e processamento de 1,8 TB/dia.",
+  "Dashboards em tempo real para 5 áreas de negócio (Operações, Atendimento, Marketing, Engenharia e Diretoria).",
+  "Documentação técnica e manuais de operação para sustentação da plataforma.",
+  "Treinamento para 25 usuários-chave e 10 desenvolvedores internos sobre a arquitetura e uso das ferramentas."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e arquitetura: 4 semanas",
+  "Fase 2 - Implementação de pipelines de streaming: 12 semanas",
+  "Fase 3 - Integração de analytics e dashboards: 8 semanas",
+  "Fase 4 - Testes, treinamento e go-live: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Volume de dados acima do previsto durante picos de tráfego",
+  "Integração com sistemas legados de rede com protocolos proprietários",
+  "Resistência à mudança por parte das equipes operacionais"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia da Informação)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Redução de 35% no tempo médio de detecção de incidentes de rede (de 45 para 29 minutos) e aumento de 12% na conversão de ofertas personalizadas, gerando receita incremental estimada em R$ 8,5 milhões no primeiro ano.",
+ "licoes": "A integração com sistemas legados de rede atrasou o cronograma em 3 semanas devido à complexidade dos protocolos, exigindo esforço adicional de engenharia. A realização de workshops semanais com as áreas de negócio foi decisiva para alinhar expectativas e garantir a adoção rápida das soluções de streaming.",
+ "diferencial": "Ganhamos o projeto por apresentar um case de referência muito similar em uma operadora de telecom, com resultados comprovados em streaming de dados em tempo real e arquitetura Azure/Databricks."
+}

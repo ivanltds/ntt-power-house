@@ -1,0 +1,50 @@
+{
+ "titulo": "Leitura e triagem inteligente de documentos financeiros com IA generativa",
+ "problema": "O Banco Atlântida Digital recebe cerca de 180 mil documentos por mês entre contratos, comprovantes e propostas de crédito, e 62% ainda passam por triagem manual. O processo leva em média 3,5 dias úteis por lote e gera 8% de retrabalho por classificação incorreta.",
+ "objetivo": "Automatizar a leitura, classificação e triagem de documentos com IA generativa em Python, reduzindo o tempo médio de triagem para menos de 1 dia útil e o retrabalho para abaixo de 2%.",
+ "escopo": [
+  "Pipeline em Python para ingestão de PDFs e imagens e extração de texto com OCR",
+  "Modelo de IA generativa para classificação documental em 14 tipos e extração de campos-chave",
+  "Motor de triagem com regras de negócio e roteamento automático para as filas de análise",
+  "Painel de acompanhamento com métricas de acurácia, volume e tempo de triagem",
+  "Camada de revisão humana com feedback para re-treino e ajuste de prompts"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da solução de leitura e triagem",
+  "Pipeline de ingestão e extração validado em lote piloto de 5 mil documentos",
+  "Modelo de classificação com acurácia mínima de 95% no conjunto de validação",
+  "Motor de triagem integrado a 2 filas operacionais do banco",
+  "Relatório de resultados do piloto e plano de escalonamento"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e desenho da solução",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento do pipeline e do modelo",
+   "semanas": 8
+  },
+  {
+   "nome": "Piloto controlado e ajustes",
+   "semanas": 6
+  },
+  {
+   "nome": "Implantação e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 2 engenheiros de IA em Python, 1 especialista em automação de processos e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade irregular dos documentos digitalizados impacta a acurácia do modelo",
+  "Baixa adesão das áreas operacionais ao novo fluxo de triagem",
+  "Restrições de privacidade atrasam o acesso aos dados para treinamento"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações Digitais)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A proposta foi perdida porque o prazo de entrega de 5 meses foi considerado longo demais pelo cliente, que precisava do piloto em produção em até 3 meses. O concorrente vencedor apresentou cronograma mais curto, mesmo com escopo reduzido.",
+ "licoes": "Para oportunidades com urgência declarada, oferecer uma primeira entrega em 8 a 10 semanas com escopo fatiado e evolução posterior. Validar o prazo percebido pelo cliente já na fase de qualificação.",
+ "retorno": "Prezados, após a avaliação das propostas recebidas, informamos que a proposta da NTT DATA Brasil não foi selecionada. O cronograma de 5 meses ficou acima do prazo que precisamos para colocar a triagem automatizada em produção, e optamos por uma alternativa com entrega mais rápida. Agradecemos o esforço da equipe e permanecemos abertos a novas conversas. Atenciosamente, Renata Vasconcelos, Diretora de Operações Digitais, Banco Atlântida Digital."
+}

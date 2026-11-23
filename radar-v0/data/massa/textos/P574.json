@@ -1,0 +1,38 @@
+{
+ "titulo": "Plataforma Lakehouse para Dados de Banda Larga",
+ "problema": "A FibraMax Internet, provedor de banda larga com 1,2 milhão de assinantes, enfrenta dificuldades para consolidar dados de consumo e qualidade de rede, que hoje estão dispersos em sistemas legados e planilhas. A falta de uma visão unificada impede análises em tempo real e atrasa a detecção de falhas, impactando a satisfação do cliente e elevando o churn em 8% ao ano.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse na AWS e Azure, integrada com Snowflake e Kafka, para centralizar e governar os dados de rede e consumo, permitindo análises avançadas e redução do tempo de resposta a incidentes.",
+ "escopo": [
+  "Ingestão de dados de rede e consumo via Kafka em tempo real",
+  "Construção de data lake na AWS S3 com processamento no Azure Databricks",
+  "Modelagem dimensional e carga no Snowflake para análises de negócio",
+  "Implementação de catálogo de dados e políticas de governança (Data Catalog, Lineage e Quality)",
+  "Integração com ferramentas de BI e treinamento para equipe interna"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência da plataforma lakehouse",
+  "Pipeline de ingestão de dados em tempo real com Kafka",
+  "Camada analítica no Snowflake com 20 tabelas de negócio modeladas",
+  "Catálogo de dados com 500 ativos catalogados e políticas de acesso",
+  "Workshop de capacitação para 15 analistas da FibraMax"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 6 semanas",
+  "Fase 2 - Implementação da Ingestão e Data Lake: 12 semanas",
+  "Fase 3 - Modelagem e Carga no Snowflake: 10 semanas",
+  "Fase 4 - Governança e Capacitação: 8 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Complexidade na integração de fontes legadas heterogêneas",
+  "Resistência cultural à adoção de governança de dados",
+  "Atraso na disponibilização de acessos e credenciais de nuvem"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Tecnologia)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era significativamente maior do que a necessidade imediata da FibraMax, que buscava uma solução mais enxuta e de rápida implementação para um escopo inicial focado em ingestão e relatórios operacionais.",
+ "licoes": "Para o próximo projeto no setor de telecom, é essencial dimensionar o escopo com base na maturidade de dados do cliente, oferecendo uma abordagem faseada e modular que permita valor rápido e expansão gradual.",
+ "retorno": "Prezados, após análise interna, decidimos não prosseguir com a proposta para a plataforma lakehouse. O escopo apresentado mostrou-se mais amplo do que a nossa necessidade atual, que é focada em uma solução inicial de menor complexidade. Agradecemos o esforço da equipe e esperamos colaborar em oportunidades futuras. Atenciosamente, Mariana Costa."
+}

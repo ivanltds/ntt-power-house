@@ -1,0 +1,49 @@
+{
+ "titulo": "Streaming de Dados em Tempo Real para Operações Logísticas",
+ "problema": "O Operador Logístico Armazém Brasil enfrenta latência de até 4 horas na consolidação de dados de suas 12 filiais, o que impacta a tomada de decisão sobre estoque e rotas. A operação movimenta 50 mil pedidos/dia e precisa de visibilidade em tempo real para reduzir custos e melhorar o nível de serviço.",
+ "objetivo": "Implementar uma plataforma de streaming de dados em tempo real na AWS com Databricks e Python, permitindo a ingestão e processamento contínuo de eventos logísticos para análises instantâneas e acionamento rápido.",
+ "escopo": [
+  "Ingestão de eventos em tempo real via AWS Kinesis e AWS Lambda para captura de dados de sensores e sistemas legados",
+  "Processamento de streams com Databricks Structured Streaming e Python para cálculos de métricas operacionais",
+  "Armazenamento em camada Delta Lake no AWS S3 para garantir consistência e histórico",
+  "Orquestração de pipelines com Apache Airflow (MWAA) para integração com fontes batch",
+  "Monitoramento e alertas com Amazon CloudWatch e Databricks SQL para dashboards em tempo real"
+ ],
+ "entregaveis": [
+  "Pipeline de streaming de dados de pedidos e estoque em tempo real",
+  "Dashboard operacional com latência inferior a 5 minutos",
+  "Documentação técnica de arquitetura e runbooks de operação",
+  "Testes de carga e validação de desempenho com 10 mil eventos/segundo",
+  "Treinamento para equipe de TI do cliente em Databricks e AWS"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e Arquitetura",
+   "semanas": 6
+  },
+  {
+   "nome": "Implementação de Pipeline de Streaming",
+   "semanas": 14
+  },
+  {
+   "nome": "Integração e Testes",
+   "semanas": 8
+  },
+  {
+   "nome": "Go-live e Hypercare",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em streaming e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na integração com sistemas legados devido a protocolos proprietários",
+  "Volume de dados acima do previsto impactando custos de processamento",
+  "Resistência à mudança por parte das equipes operacionais"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de TI)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "Já foram processados 2 milhões de eventos em tempo real nos testes iniciais, com latência média de 3 segundos.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com o cliente, que já conhece nossa qualidade de entrega em projetos anteriores de engenharia de dados."
+}

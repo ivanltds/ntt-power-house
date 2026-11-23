@@ -1,0 +1,36 @@
+{
+ "titulo": "Sustentação AMS para Ecossistema SAP, Azure e Kubernetes",
+ "problema": "A Têxtil Fio de Ouro enfrenta desafios na sustentação de suas aplicações críticas, com um parque de 45 sistemas SAP e 30 clusters Kubernetes, além de 80% da infraestrutura em Azure. O cliente precisa garantir a continuidade operacional e reduzir o tempo de resolução de incidentes, que atualmente afeta 12% dos pedidos de produção.",
+ "objetivo": "Prover serviços de sustentação (AMS) para o ambiente SAP, Azure e Kubernetes, assegurando a disponibilidade das aplicações e a melhoria contínua dos níveis de serviço em um contrato de 18 meses.",
+ "escopo": [
+  "Sustentação de aplicações SAP (EHP8) com gestão de incidentes e problemas via ServiceNow.",
+  "Monitoramento e administração de clusters Kubernetes no Azure (AKS) para 30 aplicações.",
+  "Gestão de infraestrutura Azure (VMs, redes, backup) com foco em disponibilidade de 99,9%.",
+  "Atendimento a chamados de segundo e terceiro níveis, com SLA de 4 horas para incidentes críticos.",
+  "Relatórios mensais de desempenho e melhoria contínua baseados em ITIL v4."
+ ],
+ "entregaveis": [
+  "Relatório mensal de níveis de serviço (SLA) com indicadores de disponibilidade e tempo de resolução.",
+  "Documentação atualizada de procedimentos operacionais para SAP, Azure e Kubernetes.",
+  "Plano de melhoria contínua com ações corretivas para desvios de SLA.",
+  "Base de conhecimento no ServiceNow com pelo menos 50 artigos técnicos.",
+  "Relatório final de encerramento do contrato com análise de resultados e lições aprendidas."
+ ],
+ "fases": [
+  "Transição e diagnóstico inicial (8 semanas)",
+  "Estabilização e operação assistida (12 semanas)",
+  "Operação plena com melhoria contínua (40 semanas)",
+  "Avaliação final e encerramento (12 semanas)"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 3 analistas de sustentação SAP, 2 engenheiros de cloud Azure/Kubernetes e 1 analista de ServiceNow.",
+ "riscos": [
+  "Indisponibilidade de ambientes Azure durante janelas de manutenção.",
+  "Dependência de fornecedores terceiros para resolução de incidentes SAP.",
+  "Rotatividade da equipe técnica alocada no contrato."
+ ],
+ "pessoas": {
+  "cliente": "Fernanda Lopes (Gerente de TI)",
+  "tecnico": "Ricardo Menezes (Gerente de Projetos Sênior)"
+ },
+ "resultados": "O cliente cancelou a oportunidade devido a uma reestruturação interna que resultou na internalização das atividades de sustentação de aplicações."
+}

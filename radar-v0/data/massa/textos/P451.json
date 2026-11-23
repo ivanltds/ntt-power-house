@@ -1,0 +1,47 @@
+{
+ "titulo": "Detecção de Fraude em Transações de Varejo com Machine Learning no Azure",
+ "problema": "A Livrarias Página Viva opera 68 lojas físicas e um e-commerce que processa cerca de 1,2 milhão de transações por mês, com 4,5% delas questionadas por estorno ou chargeback. O time de prevenção a fraudes atua hoje de forma manual em planilhas, com tempo médio de 36 horas para identificar um caso suspeito e perda estimada de R$ 1,8 milhão nos últimos 12 meses.",
+ "objetivo": "Implantar um modelo de detecção de fraude em tempo quase real sobre as transações do e-commerce e das lojas, reduzindo o tempo de identificação de casos suspeitos e o volume de perdas por fraude.",
+ "escopo": [
+  "Modelagem de Machine Learning para scoring de risco transacional por cartão, dispositivo e histórico de compra, treinada em Python sobre o Azure Machine Learning",
+  "Pipeline de Engenharia de Dados no Azure Data Factory e Azure Databricks para ingestão de transações do ERP, gateway de pagamento e antifraude atual, com latência de até 5 minutos",
+  "Feature store e camada analítica no Azure Synapse Analytics com histórico de 24 meses de transações",
+  "API de scoring em contêiner no Azure Kubernetes Service para consulta em até 300 ms por transação no checkout",
+  "Painel de monitoramento de fraude e deriva de modelo no Power BI, integrado ao Azure Monitor"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e ML com desenho do fluxo transacional ponta a ponta",
+  "Pipeline de ingestão e engenharia de dados operando com 1,2 milhão de transações mensais",
+  "Modelo de detecção de fraude em produção com meta de recall mínimo de 85% para casos confirmados",
+  "API de scoring integrada ao checkout do e-commerce e ao PDV das lojas",
+  "Painel de acompanhamento de fraudes, falsos positivos e deriva de modelo para o time de prevenção"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da arquitetura",
+   "semanas": 4
+  },
+  {
+   "nome": "Engenharia de dados e feature store",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento e validação do modelo de ML",
+   "semanas": 8
+  },
+  {
+   "nome": "Integração, go-live e transferência de conhecimento",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 engenheiro de MLOps",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de transações do ERP e do gateway",
+  "Volume de falsos positivos acima do tolerado pela operação de atendimento",
+  "Baixa adesão do time de prevenção às novas rotinas de análise"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Prevenção a Fraudes)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de AI & Automation)"
+ }
+}

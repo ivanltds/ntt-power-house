@@ -1,0 +1,49 @@
+{
+ "titulo": "Modernização de aplicações em containers com Kafka, Azure e Kubernetes",
+ "problema": "A rede de Farmácias Vida Plena opera 320 lojas e processa cerca de 4,5 milhões de transações de venda por mês, com picos de 180 pedidos por minuto em datas sazonais. O parque de aplicações de gestão de estoque e fidelidade roda em servidores on-premises com janelas de manutenção de até 6 horas, limitando a escalabilidade e elevando o custo de infraestrutura em 22% ao ano.",
+ "objetivo": "Migrar e modernizar as aplicações críticas de estoque e fidelidade para uma arquitetura de containers em Azure com orquestração Kubernetes e integração orientada a eventos via Kafka, reduzindo indisponibilidade e ganhando elasticidade para os picos sazonais.",
+ "escopo": [
+  "Conteinerização das aplicações de estoque e fidelidade com empacotamento em imagens e padronização de pipelines CI/CD",
+  "Provisionamento e configuração de cluster Kubernetes no Azure (AKS) com políticas de autoescalonamento por demanda",
+  "Implantação de barramento de eventos com Kafka para integração entre estoque, fidelidade e frente de caixa, suportando 180 eventos por minuto em pico",
+  "Migração de 14 workloads on-premises para nuvem Azure com plano de cutover por ondas e rollback definido",
+  "Sustentação contínua em modelo AMS com monitoramento, gestão de incidentes e SLO de disponibilidade de 99,9%"
+ ],
+ "entregaveis": [
+  "Cluster Kubernetes em Azure operacional com 14 workloads migrados e validados em produção",
+  "Pipeline CI/CD padronizado para build e deploy de containers das aplicações de estoque e fidelidade",
+  "Topologia Kafka implantada com tópicos de integração documentados e testes de carga executados",
+  "Plano de cutover por ondas com relatório de validação e rollback por aplicação",
+  "Relatórios mensais de AMS com indicadores de disponibilidade, incidentes e capacidade do cluster"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e desenho da arquitetura alvo",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Conteinerização e pipeline CI/CD",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Migração por ondas para Azure e Kafka",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Estabilização e transição para AMS",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 2 engenheiros DevOps/Kubernetes, 1 engenheiro de dados para Kafka, 2 desenvolvedores de aplicações e 1 gerente de projeto",
+ "riscos": [
+  "Dependência de janelas de loja para cutover das aplicações de estoque",
+  "Latência na integração Kafka com sistemas legados de frente de caixa",
+  "Capacidade limitada da equipe do cliente para validação funcional"
+ ],
+ "pessoas": {
+  "cliente": "Renata Almeida (Gerente de TI do Varejo)",
+  "tecnico": "Bruno Carvalho (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "Até o momento, 6 das 14 workloads já operam em containers no Azure, com redução de 35% no tempo médio de deploy.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, em que o cluster Kubernetes e a integração Kafka sustentaram o pico simulado de 180 eventos por minuto sem degradação."
+}

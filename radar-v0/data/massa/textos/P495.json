@@ -1,0 +1,49 @@
+{
+ "titulo": "Automação de back-office com RPA integrada a SAP e ServiceNow",
+ "problema": "O Banco Meridiano processa cerca de 42 mil transações de back-office por mês, das quais 68% ainda dependem de conferência manual em planilhas e filas de e-mail. Esse volume gera um SLA médio de 36 horas para conciliação e um índice de retrabalho de 11%, pressionando custos operacionais e a experiência de clientes PJ.",
+ "objetivo": "Automatizar os fluxos de conciliação e tratativa de exceções do back-office com RPA integrado a SAP e ServiceNow, reduzindo o tempo de ciclo e liberando a equipe para atividades analíticas.",
+ "escopo": [
+  "Mapeamento e priorização de 12 processos de back-office candidatos a RPA, com análise de esforço e retorno",
+  "Desenvolvimento de robôs em RPA com scripts Python para tratamento de dados e validações de conciliação",
+  "Integração dos robôs ao SAP para leitura e lançamento de dados financeiros e ao ServiceNow para abertura e atualização de tickets",
+  "Implantação de orquestração e monitoramento das automações com painéis de desempenho e alertas de falha",
+  "Sustentação AMS dos robôs em produção, incluindo correções, melhorias e gestão de filas de execução"
+ ],
+ "entregaveis": [
+  "Catálogo de processos automatizáveis com priorização e business case aprovado",
+  "10 robôs em produção cobrindo conciliação, cadastro e tratativa de exceções",
+  "Integrações SAP e ServiceNow homologadas e documentadas",
+  "Painel de monitoramento de automações com indicadores de execução e falhas",
+  "Runbook de sustentação AMS e plano de transferência de conhecimento"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e priorização",
+   "semanas": 4
+  },
+  {
+   "nome": "Desenvolvimento e integração dos robôs",
+   "semanas": 8
+  },
+  {
+   "nome": "Homologação e go-live",
+   "semanas": 3
+  },
+  {
+   "nome": "Estabilização e transição para AMS",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA/Python e 1 analista de sustentação AMS",
+ "riscos": [
+  "Instabilidade nas interfaces do SAP durante as janelas de execução dos robôs",
+  "Volume de exceções acima do previsto no processo de conciliação",
+  "Baixa adoção dos novos fluxos pelas equipes de back-office"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Back-office)",
+  "tecnico": "Felipe Andrade (Arquiteto de Automação RPA)"
+ },
+ "resultados": "Nas duas primeiras fases, 6 robôs já estão em produção e reduziram em 31% o tempo médio de conciliação dos processos automatizados.",
+ "diferencial": "Nosso modelo de entrega acelerado, com squads dedicadas e sprints de duas semanas, permite colocar as primeiras automações em produção em apenas 6 semanas, cumprindo o prazo total de 4 meses."
+}

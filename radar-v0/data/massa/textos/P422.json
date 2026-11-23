@@ -1,0 +1,50 @@
+{
+ "titulo": "Otimização de Rotas e Frota com Machine Learning e Power BI",
+ "problema": "O Operador Logístico Armazém Brasil opera com 320 veículos próprios e 1.450 rotas mensais, das quais cerca de 22% apresentam desvio de custo em relação ao planejado. A alocação de frota é feita manualmente em planilhas, gerando ociosidade média de 18% da capacidade e atrasos em 9% das entregas.",
+ "objetivo": "Reduzir o custo logístico por entrega em 12% e elevar a ocupação da frota para 85% em 5 meses, por meio de modelos de otimização de rotas e painéis de gestão em Power BI.",
+ "escopo": [
+  "Modelagem de rotas com Machine Learning em Python, considerando janelas de entrega, restrições de capacidade e trânsito",
+  "Construção de pipeline de dados em Python para ingestão de 1.450 rotas/mês e telemetria dos 320 veículos",
+  "Dashboard executivo em Power BI com KPIs de ocupação, custo por entrega e aderência ao planejado",
+  "Motor de recomendação de alocação de frota com reotimização diária",
+  "Workshops de transferência de conhecimento para a equipe de operações"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico da operação atual com baseline de custos e ocupação",
+  "Modelo de otimização de rotas validado em ambiente de homologação",
+  "Painéis Power BI publicados (3 visões: operação, custo e frota)",
+  "Documentação técnica e manual de operação dos modelos",
+  "Plano de rollout e capacitação de 15 usuários-chave"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Desenvolvimento dos modelos de ML e otimização",
+   "semanas": 9
+  },
+  {
+   "fase": "Construção dos painéis Power BI e integração",
+   "semanas": 4
+  },
+  {
+   "fase": "Homologação, rollout e treinamento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 cientistas de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e cobertura dos dados de telemetria da frota",
+  "Baixa adesão dos operadores ao novo processo de alocação",
+  "Restrições de trânsito e janelas de entrega não mapeadas"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Menezes (Diretor de Operações Logísticas)",
+  "tecnico": "Fernanda Aguiar (Líder Técnica de Data Science)"
+ },
+ "resultados": "A proposta foi perdida porque o valor apresentado ficou cerca de 25% acima do mercado, segundo a avaliação do cliente. O concorrente vencedor apresentou escopo semelhante com preço inferior.",
+ "licoes": "Nas próximas propostas para logística, ancorar o preço em benchmark de mercado e oferecer escopo faseado com opção de menor investimento inicial. Reforçar o diferencial de continuidade do projeto anterior para justificar valor, não apenas preço.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que decidimos não seguir com a NTT DATA neste projeto. O motivo principal foi o valor apresentado, que ficou acima do mercado frente ao escopo proposto. Agradecemos o empenho da equipe e esperamos manter a parceria em iniciativas futuras. Atenciosamente, Ricardo Menezes (Diretor de Operações Logísticas)."
+}

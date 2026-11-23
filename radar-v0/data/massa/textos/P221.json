@@ -1,0 +1,49 @@
+{
+ "titulo": "FinOps e otimização de custos multicloud em Azure e AWS",
+ "problema": "A Casa & Construção Prime opera 38 lojas e um e-commerce que responde por 22% da receita, com workloads em Azure e AWS que cresceram 41% em custo nos últimos 12 meses sem ganho proporcional de capacidade. A ausência de visibilidade por centro de custo e de políticas de governança impede identificar desperdícios em clusters Kubernetes e recursos ociosos.",
+ "objetivo": "Reduzir em até 25% o custo mensal de nuvem em 2 meses, implantando governança FinOps, visibilidade por unidade de negócio e otimização de workloads em Kubernetes, Azure e AWS.",
+ "escopo": [
+  "Diagnóstico de custos e rateio por centro de custo nas assinaturas Azure e contas AWS, com classificação de 100% dos recursos",
+  "Otimização de clusters Kubernetes (ajuste de requests/limits, rightsizing de nodes e políticas de HPA)",
+  "Aplicação de reservas e savings plans e eliminação de recursos ociosos em Azure e AWS",
+  "Implantação de painéis FinOps em Power BI com custo por loja, por serviço e por squad",
+  "Definição de rituais e políticas de governança de nuvem com alertas de anomalia de gasto"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico com mapa de desperdícios e potencial de economia quantificado",
+  "Clusters Kubernetes rightsized com relatório de antes e depois de consumo",
+  "Plano de compra de reservas e savings plans com projeção de retorno em 12 meses",
+  "Dashboard Power BI de FinOps com visão por centro de custo e alertas de desvio",
+  "Playbook de governança FinOps e capacitação do time de infraestrutura do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e baseline de custos",
+   "semanas": 2
+  },
+  {
+   "nome": "Otimização de Kubernetes e recursos ociosos",
+   "semanas": 3
+  },
+  {
+   "nome": "Reservas, savings plans e painéis Power BI",
+   "semanas": 2
+  },
+  {
+   "nome": "Governança, capacitação e handover",
+   "semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de cloud, 1 especialista FinOps, 1 engenheiro Kubernetes e 1 analista de BI, com 1 gerente de projeto em regime parcial.",
+ "riscos": [
+  "Resistência das squads de produto à alteração de requests/limits em produção",
+  "Janelas de mudança restritas no pico de vendas do varejo",
+  "Qualidade dos dados de tags e centros de custo incompletos"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Infraestrutura e Operações)",
+  "tecnico": "Felipe Andrade (Especialista FinOps)"
+ },
+ "resultados": "Nas três primeiras semanas já foram identificados R$ 187 mil/mês em desperdícios, com 12% de redução de custo já aplicada em recursos ociosos.",
+ "diferencial": "Ganhamos pela continuidade do projeto anterior de Analytics & BI no cliente e pelo case de referência de FinOps em rede varejista com redução comprovada de 27% em 90 dias."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Predição de churn e retenção com Data Science para carteira de seguros auto",
+ "problema": "A Escudo Auto Seguros tem 1,2 milhão de apólices ativas e enfrenta taxa de cancelamento de 18% ao ano na renovação, com perda estimada de R$ 240 milhões em prêmios. A base de dados de sinistros e interações está fragmentada entre sistemas, dificultando ações proativas de retenção sobre os 210 mil clientes com maior risco de churn.",
+ "objetivo": "Construir um modelo preditivo de churn integrado à operação de retenção, permitindo priorizar clientes de maior risco e reduzir em até 5 pontos percentuais a taxa de cancelamento em 12 meses.",
+ "escopo": [
+  "Diagnóstico e integração das bases de apólices, sinistros e atendimento no Databricks, com pipeline de dados em camadas bronze, prata e ouro",
+  "Desenvolvimento de modelo de propensão a churn no Databricks (MLflow) com features comportamentais e de sinistralidade",
+  "Publicação dos scores de risco e réguas de retenção no Salesforce, integrados ao CRM de atendimento",
+  "Definição de gatilhos de ação e segmentação de ofertas de renovação no Salesforce para os 210 mil clientes de maior risco",
+  "Painel de acompanhamento de churn, retenção e ROI das ações em Databricks SQL"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e arquitetura de integração no Databricks",
+  "Modelo de churn treinado e validado com AUC mínima de 0,80 e documentação de features",
+  "Scores de propensão a churn disponibilizados no Salesforce para a base ativa",
+  "Réguas de retenção configuradas no Salesforce com 3 segmentos de risco",
+  "Dashboard de monitoramento de churn e efetividade das ações de retenção"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e integração de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Modelagem preditiva e validação",
+   "semanas": 6
+  },
+  {
+   "fase": "Integração com Salesforce e réguas de retenção",
+   "semanas": 4
+  },
+  {
+   "fase": "Homologação e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de sinistros e cancelamentos",
+  "Baixa adoção das réguas de retenção pelos times comerciais",
+  "Restrições de LGPD no uso de dados comportamentais para scoring"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Sinistros e Retenção)",
+  "tecnico": "Paulo Mendonça (Líder Técnico de Data Science)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com a decisora era fraco: não houve acesso direto à diretoria nos estágios iniciais e o patrocinador ficou restrito à área técnica. O concorrente tinha relação prévia com a decisora, o que pesou mais do que a continuidade do projeto anterior no cliente.",
+ "licoes": "Mapear e engajar o decisor econômico desde a primeira reunião, com ao menos duas interações presenciais antes da apresentação da proposta. Aproveitar a continuidade de projetos anteriores para obter patrocínio executivo formal no início da oportunidade.",
+ "retorno": "Prezado Paulo, agradecemos a dedicação da NTT DATA na elaboração da proposta de predição de churn e retenção. Após análise interna, decidimos seguir com outro fornecedor, principalmente porque a condução da negociação ficou concentrada na área técnica e não tivemos o envolvimento esperado da nossa diretoria no processo. Reconhecemos a qualidade técnica do material e esperamos retomar a conversa em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Sinistros e Retenção da Escudo Auto Seguros."
+}

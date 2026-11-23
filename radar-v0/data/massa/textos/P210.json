@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração SAP S/4HANA com Change Management em nuvem híbrida",
+ "problema": "A Distribuidora Luz do Cerrado opera o ERP SAP ECC em ambiente on-premises, com 14 anos de customizações e mais de 320 transações críticas mapeadas, o que eleva o custo de manutenção em cerca de 38% do orçamento de TI. A distribuidora atende 1,2 milhão de unidades consumidoras em 87 municípios e precisa modernizar a plataforma até o ciclo tarifário de 2026, mas enfrenta baixa maturidade interna para conduzir a mudança organizacional.",
+ "objetivo": "Migrar os processos financeiros, de faturamento e de suprimentos para o SAP S/4HANA em 9 meses, com infraestrutura AWS e Azure, e conduzir o Change Management para garantir adesão de 850 usuários.",
+ "escopo": [
+  "Assessment técnico do ambiente SAP ECC e desenho da arquitetura de migração para SAP S/4HANA em AWS e Azure",
+  "Migração do módulo financeiro e do faturamento de energia, incluindo conversão de dados e 320 transações customizadas",
+  "Integração do SAP S/4HANA com os sistemas de medição e arrecadação por meio de APIs em AWS",
+  "Plano de Change Management com treinamento de 850 usuários, comunicação e gestão de resistência",
+  "Testes integrados, cutover e suporte hipercare por 8 semanas após o go-live em Azure"
+ ],
+ "entregaveis": [
+  "Relatório de assessment com mapa de 320 transações e plano de migração em 9 meses",
+  "Blueprint de arquitetura SAP S/4HANA em nuvem híbrida AWS e Azure",
+  "Ambiente SAP S/4HANA migrado com dados financeiros e de faturamento validados",
+  "Programa de Change Management com 24 workshops e 850 usuários treinados",
+  "Plano de cutover e relatório de estabilização pós go-live"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e blueprint",
+   "semanas": 8
+  },
+  {
+   "fase": "Migração e integrações",
+   "semanas": 16
+  },
+  {
+   "fase": "Testes e Change Management",
+   "semanas": 8
+  },
+  {
+   "fase": "Cutover e hipercare",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto SAP S/4HANA, 1 especialista em Change Management, 3 consultores funcionais SAP e 1 engenheiro de nuvem AWS/Azure",
+ "riscos": [
+  "Janela de cutover coincidindo com fechamento tarifário",
+  "Baixa adesão dos 850 usuários ao novo processo",
+  "Dependência de integrações com sistemas legados de medição"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vilela (Diretora de TI)",
+  "tecnico": "Marcos Andrade (Gerente de Projetos Enterprise Apps)"
+ },
+ "resultados": "A proposta foi perdida porque o cliente congelou o orçamento de transformação digital para 2025, priorizando investimentos em distribuição e atendimento emergencial. O projeto de migração para SAP S/4HANA foi postergado por decisão do comitê executivo, sem previsão de retomada.",
+ "licoes": "Incluir cláusula de fases modulares e opção de início reduzido para propostas de migração SAP, permitindo ao cliente avançar mesmo com restrição orçamentária. Manter contato trimestral com o patrocinador para reativar a oportunidade quando o orçamento for liberado.",
+ "retorno": "Prezado Marcos, após análise do comitê executivo, informamos que a proposta de migração para SAP S/4HANA não seguirá adiante neste momento. O orçamento de transformação digital para 2025 foi congelado e os recursos serão direcionados à expansão da rede de distribuição. Agradecemos o esforço da equipe da NTT DATA e retomaremos a conversa quando houver previsão orçamentária. Atenciosamente, Renata Vilela, Diretora de TI da Distribuidora Luz do Cerrado."
+}

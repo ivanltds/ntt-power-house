@@ -1,0 +1,50 @@
+{
+ "titulo": "Manutenção Preditiva de Ativos com Machine Learning para Operadora Telecom",
+ "problema": "A Ondas Móvel, operadora de telecom com 8 milhões de clientes, enfrentava falhas não planejadas em sua rede que geravam perdas anuais de R$ 12 milhões e afetavam a experiência do cliente. A manutenção era reativa, com tempo médio de reparo de 8 horas e disponibilidade de rede de 97,5%.",
+ "objetivo": "Implantar uma solução de manutenção preditiva baseada em machine learning para prever falhas em ativos críticos, reduzindo o tempo de inatividade e os custos de manutenção corretiva.",
+ "escopo": [
+  "Coleta e ingestão de dados de sensores de ativos em tempo real usando Apache Kafka",
+  "Desenvolvimento de pipelines de engenharia de dados em Python para limpeza e transformação",
+  "Implementação de modelos de machine learning no Databricks para previsão de falhas",
+  "Integração dos modelos preditivos com sistemas de manutenção existentes",
+  "Capacitação das equipes de operações em change management para adoção da solução"
+ ],
+ "entregaveis": [
+  "Plataforma de dados unificada com ingestão em tempo real via Kafka",
+  "Modelos preditivos treinados e validados com acurácia superior a 85%",
+  "Dashboard de monitoramento de saúde dos ativos para equipes de operações",
+  "Relatório de resultados com indicadores de redução de falhas e custos",
+  "Programa de treinamento e gestão da mudança para 50 colaboradores"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Planejamento",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Desenvolvimento de Pipelines e Modelos",
+   "duracao_semanas": 16
+  },
+  {
+   "nome": "Integração e Testes",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Implantação e Change Management",
+   "duracao_semanas": 8
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados de sensores históricos",
+  "Resistência das equipes de manutenção à nova abordagem",
+  "Integração com sistemas legados de manutenção"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Operações de Rede)",
+  "tecnico": "Ana Silva (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "Redução de 30% nas falhas não planejadas e economia de R$ 4,5 milhões em custos de manutenção no primeiro ano.",
+ "licoes": "A integração com sistemas legados atrasou o cronograma em 3 semanas devido à complexidade das APIs. O engajamento precoce das equipes de operações foi decisivo para a adoção rápida dos modelos preditivos.",
+ "diferencial": "Preço competitivo aliado à expertise comprovada em projetos de dados para telecom."
+}

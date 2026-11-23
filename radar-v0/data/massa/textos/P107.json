@@ -1,0 +1,48 @@
+{
+ "titulo": "Modelo de risco de crédito com governança de dados em Snowflake e AWS",
+ "problema": "A NetVale Provedor tem 180 mil clientes ativos e sofre com inadimplência de 9,2% na base de assinantes, concentrada em planos residenciais de baixo ticket. A análise de crédito hoje é manual e baseada em planilhas, com 4 dias de prazo médio para decisão de habilitação e sem rastreabilidade sobre os dados usados.",
+ "objetivo": "Implantar um modelo de risco de crédito automatizado sobre base governada em Snowflake e AWS, reduzindo o prazo de decisão para até 1 dia e a inadimplência em 2 pontos percentuais em 8 meses.",
+ "escopo": [
+  "Diagnóstico e catalogação das fontes de dados de cadastro, pagamento e uso em Snowflake, com definição de 120 atributos candidatos ao modelo",
+  "Implementação de camada de governança de dados com data lineage, política de qualidade e dicionário de negócio para as tabelas críticas de crédito",
+  "Construção de pipelines de ingestão e tratamento na AWS para alimentar o feature store do modelo de risco",
+  "Desenvolvimento e validação do modelo de risco de crédito com backtesting sobre 24 meses de histórico",
+  "Publicação de painéis de monitoramento de performance do modelo e de indicadores de inadimplência por segmento"
+ ],
+ "entregaveis": [
+  "Catálogo de dados e dicionário de negócio das fontes de crédito aprovado pelo cliente",
+  "Políticas de governança e qualidade de dados implantadas em Snowflake",
+  "Pipeline de ingestão e feature store operacional na AWS",
+  "Modelo de risco de crédito documentado com relatório de backtesting e métricas de AUC",
+  "Painéis de monitoramento e manual de operação do modelo entregues"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e governança de dados",
+   "semanas": 8
+  },
+  {
+   "nome": "Engenharia de dados e feature store",
+   "semanas": 10
+  },
+  {
+   "nome": "Desenvolvimento e validação do modelo",
+   "semanas": 10
+  },
+  {
+   "nome": "Monitoramento e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade insuficiente do histórico de pagamentos para treinar o modelo",
+  "Baixa adesão das áreas de crédito e cobrança às novas políticas de governança",
+  "Atraso na liberação de acessos às fontes legadas na AWS"
+ ],
+ "pessoas": {
+  "cliente": "Renata Coelho (Gerente de Crédito e Cobrança)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito, com modelo preliminar e lineage de dados validados sobre amostra real da base da NetVale em duas semanas."
+}

@@ -1,0 +1,48 @@
+{
+ "titulo": "Painéis executivos e plataforma de BI para gestão sucroenergética",
+ "problema": "A Usina Canaviais do Oeste acompanha safra, moagem e custos de produção em 14 planilhas distintas, com fechamento gerencial que leva até 12 dias após o corte mensal. A diretoria não tem visão consolidada de indicadores como ATR, produtividade por talhão e custo por tonelada, o que atrasa decisões de alocação de área e de compra de insumos.",
+ "objetivo": "Implantar uma plataforma de dados e painéis executivos que consolide informações de SAP, lavoura e logística em uma única camada analítica, reduzindo o ciclo de fechamento gerencial para até 3 dias.",
+ "escopo": [
+  "Extração e ingestão de dados do SAP (FI, CO, MM e PM) para o Azure Data Lake via pipelines de Engenharia de Dados",
+  "Modelagem dimensional no Snowflake com camadas raw, tratada e analítica para indicadores de moagem, ATR e custo por tonelada",
+  "Construção de 6 painéis executivos em Power BI cobrindo safra, produtividade agrícola, custos, logística e manutenção",
+  "Implementação de governança de dados e catálogo no Azure, com definição de 40 indicadores corporativos e seus responsáveis",
+  "Configuração de atualização automatizada diária e alertas de desvio sobre metas de ATR e custo operacional"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário com 40 indicadores corporativos",
+  "Pipelines de ingestão SAP para Azure operando em carga diária automatizada",
+  "Modelo dimensional no Snowflake validado com a área de controladoria",
+  "6 painéis executivos em Power BI publicados e homologados pela diretoria",
+  "Treinamento de 20 usuários-chave e manual de operação da plataforma"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Engenharia de dados e ingestão SAP/Azure/Snowflake",
+   "semanas": 6
+  },
+  {
+   "fase": "Construção dos painéis em Power BI",
+   "semanas": 4
+  },
+  {
+   "fase": "Homologação, treinamento e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos cadastros mestres no SAP",
+  "Baixa disponibilidade das áreas de lavoura e controladoria para validação",
+  "Restrições de conectividade no ambiente Azure do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Helena Vasconcelos (Gerente de Controladoria)",
+  "tecnico": "Rafael Andrade (Arquiteto de Dados)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte no orçamento de tecnologia para o ciclo, com priorização de investimentos em infraestrutura de campo."
+}

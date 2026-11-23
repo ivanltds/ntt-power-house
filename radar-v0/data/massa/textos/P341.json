@@ -1,0 +1,44 @@
+{
+ "titulo": "Predição de churn e retenção com Machine Learning para base pré-paga",
+ "problema": "A Operadora Sinal Forte enfrenta churn mensal de 3,8% na base pré-paga, o que representa cerca de 420 mil linhas perdidas por ano e impacto estimado de R$ 28 milhões em receita. O time de retenção atua de forma reativa, sem modelo preditivo para priorizar os clientes com maior propensão ao cancelamento.",
+ "objetivo": "Construir um modelo de Machine Learning em AWS para prever churn com pelo menos 60 dias de antecedência e apoiar campanhas de retenção segmentadas por propensão.",
+ "escopo": [
+  "Análise exploratória e engenharia de features sobre dados de recarga, uso de voz/dados e reclamações em Python",
+  "Desenvolvimento e validação de modelos de classificação de churn com Machine Learning, comparando pelo menos 3 algoritmos",
+  "Implantação do pipeline de treino e scoring em AWS (SageMaker e S3) com execução mensal automatizada",
+  "Definição de faixas de propensão e integração do scoring ao processo de retenção do cliente",
+  "Painel de monitoramento de performance do modelo (AUC, lift) e das taxas de retenção por faixa"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e dicionário de features",
+  "Modelo de churn treinado e validado com AUC mínima de 0,75",
+  "Pipeline de scoring em AWS documentado e automatizado",
+  "Lista mensal de clientes priorizados por propensão ao churn",
+  "Painel de acompanhamento de KPIs de retenção e performance do modelo"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Modelagem e validação",
+   "semanas": 5
+  },
+  {
+   "nome": "Implantação em AWS e integração",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 cientista de dados sênior, 1 engenheiro de ML e 1 analista de dados",
+ "riscos": [
+  "Qualidade e cobertura histórica dos dados de recarga e reclamações",
+  "Baixa adesão das áreas de retenção ao scoring gerado",
+  "Restrições de tempo para implantação e validação em produção em 12 semanas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Retenção)",
+  "tecnico": "Bruno Tavares (Cientista de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente devido à reestruturação do orçamento de transformação digital do ano, que suspendeu novos projetos de Data & Analytics."
+}

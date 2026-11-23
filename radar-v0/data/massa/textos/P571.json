@@ -1,0 +1,47 @@
+{
+ "titulo": "Lakehouse Snowflake no Azure com Governança de Dados para Consolidação Analítica",
+ "problema": "O Banco Cidadela mantém hoje 14 bases analíticas dispersas em dois data centers e três provedores de nuvem, o que gera 38% de retrabalho na reconciliação de indicadores e atraso médio de 5 dias úteis na entrega de relatórios regulatórios. A ausência de um catálogo único e de políticas formais de linhagem impede que as áreas de Crédito e Risco auditem a origem dos números com agilidade.",
+ "objetivo": "Implantar uma plataforma lakehouse em Azure com camada analítica em Snowflake e governança de dados corporativa, unificando as fontes de Crédito, Risco e Varejo e reduzindo o ciclo de entrega de relatórios regulatórios de 5 para 1 dia útil em 6 meses.",
+ "escopo": [
+  "Migração das 14 bases analíticas para arquitetura lakehouse no Azure Data Lake Storage Gen2 com ingestão incremental via Azure Data Factory",
+  "Modelagem dimensional e implementação de camadas Bronze, Silver e Gold no Snowflake, com 220 objetos mapeados e políticas de clustering por domínio",
+  "Implantação de catálogo de dados, linhagem e dicionário corporativo com integração ao Snowflake e às fontes Azure",
+  "Definição e operacionalização de políticas de qualidade de dados (12 regras críticas) e papéis de acesso por domínio de negócio",
+  "Habilitação de 45 usuários das áreas de Crédito, Risco e Controladoria em autoatendimento analítico no Snowflake"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência do lakehouse Azure + Snowflake aprovado pelo comitê de arquitetura do cliente",
+  "14 pipelines de ingestão em produção no Azure Data Factory com monitoramento e alertas",
+  "Modelo dimensional Gold com 220 objetos e 18 painéis de indicadores de Crédito, Risco e Varejo publicados",
+  "Catálogo de dados corporativo com linhagem ponta a ponta e dicionário de 340 campos críticos",
+  "Relatório de encerramento com métricas de qualidade de dados, plano de sustentação e trilha de capacitação dos 45 usuários"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de referência",
+   "duracao_semanas": 5
+  },
+  {
+   "nome": "Construção da ingestão e camadas Bronze/Silver no Azure",
+   "duracao_semanas": 9
+  },
+  {
+   "nome": "Modelagem Gold no Snowflake e governança de dados",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Homologação, capacitação e go-live assistido",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 1 especialista em governança de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade das fontes legadas abaixo do esperado, exigindo esforço extra de saneamento",
+  "Restrições de segurança e compliance do setor financeiro atrasando aprovações de acesso",
+  "Baixa adesão das áreas de negócio ao autoatendimento no Snowflake após o go-live"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Dados Sênior)"
+ }
+}

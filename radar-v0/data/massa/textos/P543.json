@@ -1,0 +1,49 @@
+{
+ "titulo": "Precificação dinâmica com Databricks e GCP para rede de varejo de moda",
+ "problema": "A Moda Leve Store opera 78 lojas físicas e um e-commerce que representa 22% da receita, mas pratica preços definidos manualmente por regional, com defasagem média de 9 dias frente à concorrência. Isso gera perda estimada de 4,5 pontos de margem em coleções sazonais e remanescentes de estoque acima de 18% ao fim de cada ciclo.",
+ "objetivo": "Implantar um motor de precificação dinâmica baseado em demanda, elasticidade e estoque, integrado aos canais de venda, para elevar a margem bruta em 2,8 pontos e reduzir remanescentes em 25% no ciclo de 6 meses.",
+ "escopo": [
+  "Ingestão de dados transacionais de vendas, estoque e concorrência no Databricks sobre GCP (BigQuery e Cloud Storage)",
+  "Construção de modelos de elasticidade-preço e previsão de demanda em Data Science / ML no Databricks",
+  "Camada de Analytics & BI com dashboards de margem, giro e aderência de preço no Looker",
+  "Motor de regras de precificação com aprovação humana e simulação de cenários por categoria e regional",
+  "Integração via APIs com o ERP e o e-commerce para atualização diária de preços em até 4 ciclos por dia"
+ ],
+ "entregaveis": [
+  "Pipeline de dados unificado no Databricks com 42 fontes mapeadas e atualização horária",
+  "Modelo de elasticidade-preço validado para as 12 categorias principais, com MAPE abaixo de 12%",
+  "Painéis de Analytics & BI de margem e giro por loja, categoria e regional",
+  "Motor de precificação dinâmica em produção em 30 lojas piloto",
+  "Playbook de governança de preços e treinamento para 15 analistas do cliente"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e fundação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem de elasticidade e previsão",
+   "semanas": 8
+  },
+  {
+   "fase": "Piloto em 30 lojas e ajuste de regras",
+   "semanas": 6
+  },
+  {
+   "fase": "Rollout para 78 lojas e e-commerce",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e atraso na entrega dos dados históricos de concorrência",
+  "Resistência dos gerentes regionais à autonomia do motor de preços",
+  "Latência de integração com o ERP legado"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Planejamento Comercial)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "No piloto de 30 lojas, a margem bruta subiu 1,9 ponto e o giro de remanescentes melhorou 14% em 8 semanas.",
+ "diferencial": "Ganhamos por apresentar um case de referência de precificação dinâmica em rede varejista de moda com resultados comprovados em Databricks e GCP, além da continuidade do projeto anterior de Data & Analytics no cliente."
+}

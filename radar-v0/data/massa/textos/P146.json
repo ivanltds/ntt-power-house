@@ -1,0 +1,47 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD para Operadora de Seguros",
+ "problema": "A Proteja Seguros opera com 4,2 milhões de apólices ativas e dados de clientes distribuídos em 12 sistemas legados, sem catálogo único de dados nem classificação de informações pessoais sensíveis. O atual processo de atendimento a titulares da LGPD leva em média 18 dias úteis, expondo a companhia a sanções da ANPD e a riscos reputacionais em um setor com 38% de crescimento em reclamações de privacidade.",
+ "objetivo": "Implantar uma estrutura de governança de dados e adequação à LGPD em 7 meses, com catálogo centralizado, classificação automatizada de dados pessoais e processo de atendimento a titulares em até 5 dias úteis.",
+ "escopo": [
+  "Catalogação e classificação de dados pessoais dos 12 sistemas de origem em Azure Purview, com linhagem integrada ao Databricks",
+  "Implementação de políticas de mascaramento e controle de acesso a dados sensíveis no Snowflake, com segregação por perfil de negócio",
+  "Construção de pipelines no Databricks para inventário automatizado de bases com dados pessoais e registro de operações de tratamento (ROPA)",
+  "Definição de papéis e comitê de governança de dados, com 24 indicadores de qualidade e conformidade monitorados em dashboards no Azure",
+  "Programa de Change Management com treinamento em LGPD para 480 colaboradores das áreas de sinistros, subscrição e atendimento"
+ ],
+ "entregaveis": [
+  "Catálogo de dados corporativo com 100% dos sistemas críticos mapeados e classificação de dados pessoais concluída",
+  "Matriz de políticas de acesso e mascaramento implantada no Snowflake para 8 perfis de usuário",
+  "Fluxo automatizado de atendimento a titulares de dados com SLA de 5 dias úteis",
+  "Relatório de gap analysis LGPD com plano de ação priorizado em 32 controles",
+  "Kit de Change Management com trilhas de treinamento, materiais de comunicação e pesquisa de adesão aplicada a 480 colaboradores"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e gap analysis LGPD",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenho da arquitetura de governança e catálogo de dados",
+   "semanas": 8
+  },
+  {
+   "fase": "Implementação em Azure, Databricks e Snowflake",
+   "semanas": 10
+  },
+  {
+   "fase": "Change Management, treinamento e go-live",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e LGPD, 1 consultor de change management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas de negócio ao novo processo de classificação de dados",
+  "Qualidade e completidão insuficientes dos metadados dos 12 sistemas legados",
+  "Atraso na validação jurídica dos controles LGPD pelo comitê de privacidade do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Privacidade)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ }
+}

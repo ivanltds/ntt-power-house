@@ -1,0 +1,50 @@
+{
+ "titulo": "Predição de churn e retenção de segurados com ML na AWS",
+ "problema": "A Proteja Seguros enfrenta taxa de churn de 18% ao ano na carteira de seguros de vida individual, com perda estimada de R$ 42 milhões em prêmios anuais. A base de 1,2 milhão de segurados não tem modelo preditivo para identificar risco de cancelamento com antecedência.",
+ "objetivo": "Construir modelo de predição de churn em AWS com Machine Learning para antecipar cancelamentos em até 90 dias e direcionar ações de retenção via CRM.",
+ "escopo": [
+  "Modelagem preditiva de churn com Machine Learning em Amazon SageMaker, usando histórico de 36 meses de apólices e sinistros",
+  "Pipeline de dados em AWS (S3, Glue, Redshift) para consolidar fontes de seguros, cobrança e atendimento",
+  "Painel de Analytics & BI com indicadores de risco de churn por segmento, canal e produto",
+  "Integração dos scores de propensão ao churn com o CRM para acionar jornadas de retenção",
+  "Definição de políticas de retenção e testes A/B com ofertas personalizadas"
+ ],
+ "entregaveis": [
+  "Modelo de churn treinado e validado com AUC superior a 0,80",
+  "Pipeline de dados automatizado em AWS",
+  "Dashboard de risco de churn com visões por segmento e canal",
+  "Integração dos scores com o CRM em produção",
+  "Relatório de resultados e plano de evolução do modelo"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento do modelo de ML",
+   "semanas": 10
+  },
+  {
+   "fase": "Integração com CRM e BI",
+   "semanas": 8
+  },
+  {
+   "fase": "Piloto de retenção e ajustes",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 1 cientista de dados sênior, 1 engenheiro de dados e 1 analista de CRM",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de apólices",
+  "Baixa adesão das áreas comerciais às ações de retenção",
+  "Prazo apertado para integração com o CRM legado"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Felipe Andrade (Arquiteto de Data & Analytics)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor apresentado de R$ 2,8 milhões superou em cerca de 30% a referência de concorrentes para escopo semelhante.",
+ "licoes": "Para propostas de continuidade em clientes existentes, comparar preço com benchmarks de mercado e modular o escopo para oferecer uma opção de entrada competitiva.",
+ "retorno": "Prezados, após avaliação das propostas recebidas, decidimos não seguir com a NTT DATA neste projeto. O valor apresentado ficou acima do mercado e inviabilizou a aprovação no comitê de investimentos. Agradecemos o esforço da equipe e manteremos a parceria nas demais frentes. Atenciosamente, Renata Vasconcelos, Diretora de Dados e Analytics da Proteja Seguros."
+}

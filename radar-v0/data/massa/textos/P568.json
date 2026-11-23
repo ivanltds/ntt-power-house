@@ -1,0 +1,38 @@
+{
+ "titulo": "Manutenção Preditiva de Ativos Industriais com Azure e Databricks",
+ "problema": "A Química Fênix enfrenta paradas não planejadas que geram perdas anuais de R$ 8,5 milhões, com 120 horas/mês de inatividade e 15% da produção comprometida. A falta de monitoramento contínuo e análise preditiva impede ações proativas, resultando em manutenções corretivas caras e riscos de segurança.",
+ "objetivo": "Implementar uma solução de manutenção preditiva baseada em dados de sensores, utilizando Azure e Databricks, para reduzir em 30% as paradas não planejadas e diminuir em 20% os custos de manutenção em 12 meses.",
+ "escopo": [
+  "Ingestão de dados de 500 sensores industriais via Azure IoT Hub e armazenamento no Azure Data Lake Storage Gen2",
+  "Processamento e limpeza de dados com Databricks (PySpark) para criação de features e séries temporais",
+  "Desenvolvimento de modelos de machine learning para previsão de falhas usando Databricks ML e Azure Machine Learning",
+  "Integração dos alertas preditivos ao sistema de manutenção existente (SAP PM) via APIs",
+  "Dashboard de monitoramento em tempo real no Power BI com indicadores de saúde dos ativos"
+ ],
+ "entregaveis": [
+  "Pipeline de dados automatizado no Azure Data Factory para ingestão de dados dos sensores",
+  "Modelo preditivo treinado e validado com acurácia mínima de 85% para previsão de falhas em 30 dias",
+  "Documentação técnica da arquitetura e dos processos de engenharia de dados",
+  "Dashboard interativo no Power BI com visualização de alertas e tendências",
+  "Relatório de resultados com análise de impacto e recomendações de melhoria contínua"
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Planejamento: 4 semanas",
+  "Fase 2 - Engenharia de Dados e Ingestão: 8 semanas",
+  "Fase 3 - Modelagem Preditiva e Validação: 8 semanas",
+  "Fase 4 - Implantação e Treinamento: 6 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados dos sensores (ruídos e falhas de leitura)",
+  "Resistência dos operadores à mudança de processo",
+  "Integração com sistemas legados (SAP PM) complexa"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Mendes (Diretor de Operações)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o relacionamento com o decisor era fraco; não houve interação suficiente com o Diretor de Operações para entender suas prioridades e expectativas, resultando em uma proposta genérica e sem alinhamento estratégico.",
+ "licoes": "A lição aprendida é a importância de mapear e engajar os decisores desde o início, realizando reuniões individuais para capturar suas dores e necessidades, e assim personalizar a proposta com argumentos direcionados ao negócio.",
+ "retorno": "Prezados, após análise criteriosa, decidimos não prosseguir com a proposta para manutenção preditiva. O relacionamento com nosso diretor de operações não foi suficientemente próximo para alinhar a solução às nossas prioridades estratégicas. Agradecemos o esforço da equipe. Atenciosamente, Carlos Mendes - Diretor de Operações"
+}

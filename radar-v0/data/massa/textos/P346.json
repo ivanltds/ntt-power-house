@@ -1,0 +1,50 @@
+{
+ "titulo": "Pipeline de dados em tempo real com streaming para analytics operacional",
+ "problema": "A Distribuidora Luz do Cerrado, atuando no setor de utilities/energia, enfrentava dificuldades para consolidar dados operacionais de medição e consumo que chegavam em volumes elevados e com latência indesejada, impactando a análise de faturamento e a detecção de anomalias. A base de dados histórica e os processos batch existentes não suportavam a necessidade de visibilidade em tempo quase real sobre cerca de 1,2 milhão de pontos de medição.",
+ "objetivo": "Implantar uma arquitetura de streaming de dados na AWS com Databricks para disponibilizar dados operacionais em tempo real às áreas de Analytics & BI e Engenharia de Dados, reduzindo a latência de análise e ampliando a confiabilidade das informações.",
+ "escopo": [
+  "Ingestão de eventos de medição em streaming na AWS utilizando serviços gerenciados de mensageria e processamento",
+  "Construção de pipelines de Engenharia de Dados no Databricks com processamento incremental e Delta Lake",
+  "Camada de Analytics & BI com tabelas otimizadas para consultas analíticas e dashboards operacionais",
+  "Orquestração, monitoramento e alertas de falha nos pipelines de streaming",
+  "Governança de dados com controle de qualidade, lineage e catálogo sobre os ativos no Databricks"
+ ],
+ "entregaveis": [
+  "Arquitetura de referência de streaming documentada e validada na AWS",
+  "Pipelines de ingestão e transformação em produção no Databricks",
+  "Dashboards de Analytics & BI com indicadores operacionais em tempo quase real",
+  "Painel de monitoramento e alertas dos jobs de streaming",
+  "Documentação técnica, runbooks e transferência de conhecimento para o time do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura",
+   "semanas": 6
+  },
+  {
+   "nome": "Construção dos pipelines de streaming",
+   "semanas": 12
+  },
+  {
+   "nome": "Analytics & BI e governança",
+   "semanas": 8
+  },
+  {
+   "nome": "Estabilização e go-live",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Analytics & BI e 1 gerente de projeto",
+ "riscos": [
+  "Volume e picos de eventos acima do previsto comprometendo a latência",
+  "Qualidade e padronização dos dados de origem",
+  "Dependência de integrações com sistemas legados do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Marina Cordeiro (Gerente de Tecnologia da Informação)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados)"
+ },
+ "resultados": "A solução entregue reduziu a latência de disponibilização dos dados operacionais em 78% e gerou economia estimada de R$ 1,4 milhão ao ano com detecção precoce de anomalias e otimização de processos de leitura.",
+ "licoes": "A integração com sistemas legados de medição exigiu esforço adicional e atrasou em 3 semanas a fase de construção. Foi decisiva a validação antecipada da arquitetura de streaming por meio da prova de conceito, que alinhou expectativas e reduziu retrabalho.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada na prova de conceito, comprovando o processamento em streaming na AWS com Databricks em cenário real do cliente."
+}

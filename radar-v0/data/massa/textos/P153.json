@@ -1,0 +1,47 @@
+{
+ "titulo": "Otimização de rotas e frota com Machine Learning para rede de lojas",
+ "problema": "A Moda Leve Store opera 48 lojas próprias e um centro de distribuição, com frota terceirizada de 22 veículos e cerca de 1.800 entregas por mês. O planejamento de rotas é feito manualmente em planilhas, gerando 14% de ocupação ociosa média por viagem e atrasos em 9% das entregas nas regiões metropolitanas.",
+ "objetivo": "Reduzir o custo logístico por entrega em 12% e elevar a pontualidade para 96% em 4 meses, por meio de otimização de rotas e alocação de frota baseada em Machine Learning na GCP.",
+ "escopo": [
+  "Modelagem preditiva de demanda de entregas por loja e região em Python, treinada com Machine Learning sobre o histórico de 24 meses",
+  "Motor de otimização de rotas e alocação de frota em Python executado em serviços GCP (Cloud Run e BigQuery)",
+  "Pipeline de ingestão e tratamento de dados de pedidos, estoque e telemetria dos veículos no BigQuery",
+  "Painel operacional de acompanhamento de rotas, ocupação e pontualidade em ambiente GCP",
+  "Trilha de Change Management para 35 usuários das áreas de logística e operações de loja"
+ ],
+ "entregaveis": [
+  "Modelo de previsão de demanda de entregas validado com MAPE inferior a 10%",
+  "Motor de otimização de rotas em produção cobrindo as 48 lojas",
+  "Pipeline de dados no BigQuery documentado e monitorado",
+  "Painel operacional de rotas e ocupação entregue aos times de logística",
+  "Plano de Change Management com treinamentos e materiais de adoção para 35 usuários"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento dos modelos de ML e otimização",
+   "semanas": 6
+  },
+  {
+   "fase": "Integração e piloto em 12 lojas",
+   "semanas": 4
+  },
+  {
+   "fase": "Rollout para as 48 lojas e Change Management",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de entregas",
+  "Baixa adesão dos operadores de logística às novas rotas",
+  "Integração limitada com sistemas da transportadora terceirizada"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações e Logística)",
+  "tecnico": "Bruno Tavares (Líder Técnico de AI & Automation)"
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "titulo": "Precificação Dinâmica com Machine Learning em Databricks e GCP",
+ "problema": "A Moda Leve Store opera 320 lojas físicas e um e-commerce que responde por 18% da receita, mas pratica preços definidos manualmente por regional, com revisões semanais que demoram até 6 dias para chegar ao PDV. Isso gera perda estimada de 4,2 pontos de margem em categorias sazonais e cerca de 12% de estoque encalhado no fim de cada coleção.",
+ "objetivo": "Implantar um motor de precificação dinâmica baseado em Machine Learning na Databricks sobre GCP, capaz de recalcular preços diariamente por SKU e loja, integrado ao e-commerce e ao sistema de PDV, aumentando a margem das categorias sazonais.",
+ "escopo": [
+  "Construção de data lakehouse no Databricks sobre GCP (BigQuery e Cloud Storage) com ingestão diária de dados de vendas, estoque, concorrência e clima",
+  "Desenvolvimento de modelos de elasticidade-preço e otimização de receita em Python e MLflow, com retreino semanal",
+  "Pipeline de features e scoring em Databricks Workflows para gerar recomendações de preço por SKU e loja em até 4 horas",
+  "API de publicação de preços em Python integrada ao e-commerce e ao sistema de PDV das 320 lojas",
+  "Dashboards de Analytics & BI em Databricks SQL para acompanhamento de margem, aderência às recomendações e elasticidade por categoria"
+ ],
+ "entregaveis": [
+  "Data lakehouse de precificação operacional com 18 meses de histórico tratado",
+  "Modelo de elasticidade-preço validado em 3 categorias piloto (vestuário, calçados e acessórios)",
+  "Motor de recomendação de preços em produção com scoring diário",
+  "API de preços integrada ao e-commerce e ao PDV com SLA de 99,5%",
+  "Painel executivo de Analytics & BI com KPIs de margem e aderência"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e diagnóstico de dados",
+   "semanas": 5
+  },
+  {
+   "fase": "Construção do lakehouse e engenharia de features",
+   "semanas": 7
+  },
+  {
+   "fase": "Modelagem de elasticidade e otimização de preços",
+   "semanas": 6
+  },
+  {
+   "fase": "Integração, piloto em 60 lojas e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura dos dados históricos de preço e estoque por loja",
+  "Baixa aderência dos gerentes regionais às recomendações automáticas",
+  "Latência na integração com o sistema de PDV legado das 320 lojas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Pricing e Receita)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "diferencial": "Ganhamos pela continuidade do projeto anterior de Analytics & BI na Moda Leve Store e pelo case de referência de precificação dinâmica já entregue em outro grande varejista de moda."
+}

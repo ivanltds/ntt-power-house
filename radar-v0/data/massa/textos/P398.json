@@ -1,0 +1,50 @@
+{
+ "titulo": "Modernização de Aplicações com Containers em Nuvem Híbrida para Corretora",
+ "problema": "A Corretora Valor Alto opera 42 aplicações críticas de backoffice e mesa de operações, das quais 27 ainda rodam em servidores on-premises com janelas de manutenção que geram até 6 horas de indisponibilidade por mês. O crescimento de 38% no volume de ordens nos últimos 12 meses expôs limitações de escalabilidade e elevou o custo de infraestrutura em 22%, pressionando a margem operacional.",
+ "objetivo": "Modernizar o portfólio de aplicações da corretora migrando as cargas prioritárias para containers em Azure e AWS em 9 meses, com sustentação contínua sob contrato AMS.",
+ "escopo": [
+  "Avaliação e priorização de 42 aplicações, com containerização das 15 cargas prioritárias em Azure Kubernetes Service e Amazon EKS",
+  "Migração para Nuvem das aplicações de mesa de operações e backoffice, incluindo bancos de dados e integrações via APIs",
+  "Implantação de pipeline CI/CD e observabilidade unificada para os ambientes Azure e AWS",
+  "Definição de arquitetura híbrida com conectividade segura entre datacenter remanescente e as duas nuvens",
+  "Transição para Sustentação / AMS com SLA 24x7 e catálogo de serviços para as cargas migradas"
+ ],
+ "entregaveis": [
+  "Relatório de assessment das 42 aplicações com matriz de priorização e roadmap de containerização",
+  "15 aplicações containerizadas e em produção em Azure e AWS",
+  "Pipeline CI/CD implantado com cobertura de 100% das cargas migradas",
+  "Runbook operacional e dashboard de observabilidade unificado",
+  "Contrato de AMS ativado com SLA 24x7 e 3 meses de hipercare embutidos"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e arquitetura-alvo",
+   "semanas": 8
+  },
+  {
+   "fase": "Containerização e migração das cargas prioritárias",
+   "semanas": 18
+  },
+  {
+   "fase": "Migração das cargas remanescentes e CI/CD",
+   "semanas": 10
+  },
+  {
+   "fase": "Transição para AMS e hipercare",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 1 tech lead de containers, 4 engenheiros de cloud (2 Azure e 2 AWS), 2 engenheiros DevOps e 1 gerente de projeto",
+ "riscos": [
+  "Dependência de janelas de mercado para cutover das aplicações de mesa",
+  "Aplicações legadas com acoplamento forte ao datacenter dificultando containerização",
+  "Dupla operação Azure/AWS elevando complexidade de governança e custos"
+ ],
+ "pessoas": {
+  "cliente": "Renata Coelho (Diretora de Tecnologia)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor total de R$ 4,8 milhões para 9 meses superou em cerca de 28% a melhor oferta concorrente. A corretora priorizou o menor custo mesmo com escopo e SLA equivalentes.",
+ "licoes": "Para clientes de Serviços Financeiros com continuidade de projeto anterior, apresentar desde o início um cenário de escopo faseado com opção enxuta de entrada e comparativo de custo por aplicação migrada. Ancorar o preço em benchmark de mercado antes da submissão para reduzir a diferença percebida.",
+ "retorno": "Prezados, após concluirmos a análise das propostas recebidas, informamos que a NTT DATA não foi selecionada para o projeto de modernização de aplicações com containers. A decisão foi baseada no preço apresentado, que ficou acima do mercado frente às demais ofertas com escopo equivalente. Agradecemos o empenho da equipe e o nível de detalhe técnico da proposta. Permanecemos abertos a novas oportunidades futuras. Atenciosamente, Renata Coelho, Diretora de Tecnologia, Corretora Valor Alto."
+}

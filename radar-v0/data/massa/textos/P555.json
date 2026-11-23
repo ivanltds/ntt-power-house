@@ -1,0 +1,50 @@
+{
+ "titulo": "Programa de Governança de Dados e Adequação LGPD para Operações de Previdência",
+ "problema": "A Mútua Previdência Sul opera com 1,2 milhão de participantes e 340 mil contratos ativos, mas os dados estão dispersos em 14 sistemas legados, sem catálogo único nem linhagem documentada. O passivo de LGPD inclui 62 processos de tratamento não mapeados e 8 bases com dados sensíveis sem base legal registrada, expondo a companhia a multas de até 2% do faturamento.",
+ "objetivo": "Implantar uma estrutura de governança de dados com catálogo, linhagem e controles de LGPD sobre as bases de previdência, em 6 meses, reduzindo o passivo de conformidade em 80%.",
+ "escopo": [
+  "Mapeamento e catalogação de 62 processos de tratamento de dados em Databricks, com linhagem automatizada em Python",
+  "Implementação de camada semântica e políticas de acesso no Snowflake para 340 mil contratos",
+  "Definição de bases legais e plano de adequação LGPD para 8 bases com dados sensíveis",
+  "Automação de relatórios de conformidade e auditoria em Python, integrados ao Databricks",
+  "Programa de Change Management com 12 workshops para 180 usuários-chave das áreas de previdência"
+ ],
+ "entregaveis": [
+  "Catálogo de dados corporativo com 62 processos de tratamento documentados e linhagem em Databricks",
+  "Matriz de bases legais e plano de adequação LGPD aprovado pelo jurídico e DPO",
+  "Políticas de acesso e mascaramento implementadas no Snowflake para 8 bases sensíveis",
+  "Dashboard de conformidade e auditoria com 15 indicadores de governança",
+  "Plano de Change Management com trilhas de capacitação e 12 workshops realizados"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho de governança",
+   "semanas": 6
+  },
+  {
+   "fase": "Catalogação e linhagem em Databricks",
+   "semanas": 8
+  },
+  {
+   "fase": "Adequação LGPD e políticas no Snowflake",
+   "semanas": 6
+  },
+  {
+   "fase": "Change Management e sustentação",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em LGPD e 1 consultor de Change Management",
+ "riscos": [
+  "Baixa adesão das áreas de negócio ao programa de Change Management",
+  "Atraso na liberação de acessos aos 14 sistemas legados",
+  "Escopo de LGPD crescer além das 8 bases mapeadas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Compliance)",
+  "tecnico": "Paulo Menezes (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 28% acima do mercado, segundo a comparação feita pelo cliente com dois concorrentes. O escopo técnico foi bem avaliado, mas o valor total de R$ 1,85 milhão não coube no orçamento aprovado de R$ 1,4 milhão.",
+ "licoes": "Para propostas de governança de dados em seguros, apresentar desde o início uma versão enxuta do escopo, com fases opcionais e faixa de preço, para competir com o benchmark de mercado.",
+ "retorno": "Prezados, após a análise das três propostas recebidas, comunicamos que a Mútua Previdência Sul decidiu não seguir com a NTT DATA neste projeto. A avaliação técnica foi positiva, mas o valor proposto ficou cerca de 28% acima do orçamento aprovado e das demais ofertas. Agradecemos o empenho da equipe e manteremos a NTT DATA no radar para iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Dados e Compliance."
+}

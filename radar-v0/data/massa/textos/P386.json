@@ -1,0 +1,50 @@
+{
+ "titulo": "Leitura e triagem de documentos com IA generativa para sinistros",
+ "problema": "A Seguradora Amparo recebia cerca de 42 mil documentos por mês entre avisos de sinistro, laudos e boletins de ocorrência, com triagem 100% manual e prazo médio de 3,5 dias úteis por processo. O volume crescia 18% ao ano e 27% dos documentos chegavam com dados incompletos, gerando retrabalho e atraso no pagamento de indenizações.",
+ "objetivo": "Automatizar a leitura, classificação e triagem de documentos de sinistro com IA generativa e RPA, reduzindo o tempo de triagem para menos de 1 dia útil e liberando a equipe para análise de casos complexos.",
+ "escopo": [
+  "Extração e classificação de documentos (PDF, imagens e e-mails) com modelos de IA generativa no Azure OpenAI, incluindo OCR e resumo automático por processo",
+  "Orquestração de fluxos de triagem e roteamento de pendências com RPA integrado às esteiras de sinistros existentes",
+  "Camada de validação humana com fila de exceções, limites de confiança e trilha de auditoria para 100% das decisões automatizadas",
+  "Painel de acompanhamento no Azure com indicadores de volume, acurácia de extração e tempo de triagem por tipo de documento",
+  "Integração via APIs com o sistema de gestão de sinistros e o repositório documental do cliente, com monitoramento e alertas operacionais"
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão e leitura documental com IA generativa em produção, cobrindo 6 tipos de documentos",
+  "Robôs RPA de triagem e roteamento implantados para 100% dos novos avisos de sinistro",
+  "Fila de exceções com interface de validação humana e relatório de acurácia por tipo de documento",
+  "Painel de indicadores operacionais no Azure com atualização diária",
+  "Documentação técnica, manuais operacionais e treinamento de 15 analistas da seguradora"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da solução",
+   "duracao_semanas": 3
+  },
+  {
+   "nome": "Desenvolvimento do pipeline de IA generativa e OCR",
+   "duracao_semanas": 4
+  },
+  {
+   "nome": "Implementação dos fluxos RPA e integrações",
+   "duracao_semanas": 3
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de soluções de IA, 1 cientista de dados, 2 desenvolvedores RPA, 1 engenheiro de integração Azure e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e legibilidade de documentos digitalizados enviados por segurados",
+  "Baixa adoção da fila de exceções pelos analistas de sinistro",
+  "Atraso nas integrações com o sistema legado de gestão de sinistros"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Operações de Sinistros)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "O tempo médio de triagem caiu de 3,5 dias úteis para 7 horas, com 68% dos documentos classificados sem intervenção humana. A operação passou a absorver o volume de 42 mil documentos mensais com a mesma equipe, gerando economia estimada de R$ 1,9 milhão por ano.",
+ "licoes": "A integração com o sistema legado de sinistros consumiu duas semanas além do previsto, exigindo ajustes no middleware da seguradora. Foi decisivo envolver os analistas de sinistros desde a fase de desenho da fila de exceções, o que elevou a adesão e reduziu correções após o go-live.",
+ "diferencial": "Ganhamos pela relação de continuidade com a Seguradora Amparo, que já conhecia nossos padrões de entrega em automação e confiou na evolução para IA generativa sem nova disputa competitiva."
+}

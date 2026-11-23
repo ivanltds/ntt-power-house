@@ -1,0 +1,37 @@
+{
+ "titulo": "Modernização de aplicações legadas com containers e integração via Kafka",
+ "problema": "O Tribunal Regional de Contas do Sul opera 35 aplicações legadas em datacenter próprio, com janelas de manutenção de 8 horas e custo anual de R$ 12 milhões em infraestrutura. A integração entre sistemas é feita por arquivos batch noturnos, gerando atrasos de até 12 horas na consolidação de dados para auditoria.",
+ "objetivo": "Modernizar 15 aplicações críticas para containers em Kubernetes, com migração para nuvem AWS e Azure, e implementar barramento de eventos com Kafka para integração em tempo real, em 6 meses.",
+ "escopo": [
+  "Containerização de 15 aplicações Java e .NET com Docker e orquestração em Kubernetes (EKS na AWS e AKS no Azure)",
+  "Implementação de cluster Kafka gerenciado (Amazon MSK) para ingestão e distribuição de eventos entre aplicações",
+  "Migração de 8 aplicações para AWS e 7 para Azure, com definição de landing zones e políticas de segurança",
+  "Configuração de pipeline CI/CD com GitOps para deploy automatizado nos dois provedores cloud",
+  "Sustentação AMS 24x7 para as aplicações modernizadas, com SLA de 99,9% de disponibilidade"
+ ],
+ "entregaveis": [
+  "15 aplicações containerizadas e em produção nos ambientes AWS e Azure",
+  "Cluster Kafka operacional com 12 tópicos e throughput de 5.000 mensagens/segundo",
+  "Documentação de arquitetura de referência e runbooks de operação",
+  "Pipeline CI/CD implantado com 20 deploys semanais automatizados",
+  "Relatório mensal de sustentação com indicadores de disponibilidade e incidentes"
+ ],
+ "fases": [
+  "Fase 1 - Assessment e desenho de arquitetura: 6 semanas",
+  "Fase 2 - Containerização e migração para cloud: 10 semanas",
+  "Fase 3 - Implementação de Kafka e integração: 6 semanas",
+  "Fase 4 - Estabilização e transição para AMS: 2 semanas"
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 2 engenheiros DevOps, 1 especialista em Kafka, 2 desenvolvedores full-stack e 1 gerente de projeto",
+ "riscos": [
+  "Dependência de janelas de manutenção do Tribunal para cutover das aplicações",
+  "Latência na aprovação de acessos e políticas de segurança pelos órgãos de controle",
+  "Complexidade na integração de aplicações legadas com o barramento Kafka"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Tecnologia da Informação)",
+  "tecnico": "Fernanda Lima (Arquiteta de Soluções Cloud)"
+ },
+ "resultados": "Até o momento, 6 aplicações já foram migradas para containers e estão operando em produção, com redução de 30% no tempo de deploy.",
+ "diferencial": "Ganhamos por apresentar case de referência em modernização de aplicações com containers e Kafka para outro Tribunal de Contas, com resultados comprovados de redução de custos e agilidade."
+}

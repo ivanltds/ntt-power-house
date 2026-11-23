@@ -1,0 +1,803 @@
+{
+ "em": "2026-11-23T21:49:26.491Z",
+ "soma": {
+  "tema": {
+   "n": 25,
+   "ms": 3098,
+   "acerto3": 25,
+   "precisao3": 23.333333333333332
+  },
+  "tema_setor": {
+   "n": 20,
+   "ms": 2745,
+   "acerto3": 17,
+   "precisao3": 13.666666666666668
+  },
+  "quem": {
+   "n": 5,
+   "ms": 738,
+   "acerto3": 5,
+   "precisao3": 4.666666666666666,
+   "pessoa": 5
+  },
+  "motivo": {
+   "n": 5,
+   "ms": 24,
+   "acerto3": 0,
+   "precisao3": 0,
+   "motivo": 0
+  },
+  "contagem": {
+   "n": 5,
+   "ms": 234
+  }
+ },
+ "linhas": [
+  {
+   "id": "T-fraude",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 177,
+   "top3": [
+    "P303",
+    "P365",
+    "P383"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-churn",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 95,
+   "top3": [
+    "P228",
+    "P101",
+    "P239"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-demanda",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 72,
+   "top3": [
+    "P493",
+    "P162",
+    "P002"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "T-preditiva",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 64,
+   "top3": [
+    "P105",
+    "P110",
+    "P225"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-lakehouse",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 75,
+   "top3": [
+    "P001",
+    "P346",
+    "P131"
+   ],
+   "acerto3": true,
+   "precisao3": 0.3333333333333333
+  },
+  {
+   "id": "T-migracao_dw",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 67,
+   "top3": [
+    "P266",
+    "P496",
+    "P150"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-bi_executivo",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 66,
+   "top3": [
+    "P433",
+    "P206",
+    "P164"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-genai_atendimento",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 161,
+   "top3": [
+    "P477",
+    "P294",
+    "P251"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-genai_documentos",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 177,
+   "top3": [
+    "P386",
+    "P184",
+    "P439"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-rpa_backoffice",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 156,
+   "top3": [
+    "P495",
+    "P288",
+    "P169"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-lgpd",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 180,
+   "top3": [
+    "P104",
+    "P241",
+    "P536"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-credito",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 117,
+   "top3": [
+    "P308",
+    "P183",
+    "P593"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "T-precificacao",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 122,
+   "top3": [
+    "P315",
+    "P181",
+    "P289"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-crm",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 143,
+   "top3": [
+    "P416",
+    "P258",
+    "P109"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-sap_s4",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 125,
+   "top3": [
+    "P429",
+    "P219",
+    "P233"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-ams",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 158,
+   "top3": [
+    "P165",
+    "P252",
+    "P420"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-kubernetes",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 136,
+   "top3": [
+    "P166",
+    "P217",
+    "P586"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-streaming",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 143,
+   "top3": [
+    "P115",
+    "P186",
+    "P565"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-roteirizacao",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 114,
+   "top3": [
+    "P584",
+    "P374",
+    "P116"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-safra",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 148,
+   "top3": [
+    "P368",
+    "P331",
+    "P280"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-saude_populacional",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 117,
+   "top3": [
+    "P487",
+    "P350",
+    "P253"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-perdas_energia",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 109,
+   "top3": [
+    "P001",
+    "P449",
+    "P352"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "T-atendimento_omni",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 111,
+   "top3": [
+    "P128",
+    "P384",
+    "P243"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-esg",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 136,
+   "top3": [
+    "P234",
+    "P456",
+    "P122"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "T-finops",
+   "tipo": "tema",
+   "tipoResposta": "semelhantes",
+   "ms": 129,
+   "top3": [
+    "P132",
+    "P465",
+    "P134"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-fraude-Serviços Financeiros",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 146,
+   "top3": [
+    "P383",
+    "P135",
+    "P553"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-lgpd-Serviços Financeiros",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 156,
+   "top3": [
+    "P005",
+    "P371",
+    "P494"
+   ],
+   "acerto3": false,
+   "precisao3": 0
+  },
+  {
+   "id": "TS-safra-Agronegócio",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 115,
+   "top3": [
+    "P368",
+    "P331",
+    "P280"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-streaming-Telecom",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 154,
+   "top3": [
+    "P115",
+    "P008",
+    "P186"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "TS-esg-Manufatura",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 116,
+   "top3": [
+    "P456",
+    "P234",
+    "P526"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-genai_documentos-Seguros",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 129,
+   "top3": [
+    "P386",
+    "P439",
+    "P006"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "TS-lakehouse-Saúde",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 163,
+   "top3": [
+    "P131",
+    "P348",
+    "P001"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "TS-finops-Varejo",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 147,
+   "top3": [
+    "P134",
+    "P455",
+    "P428"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-rpa_backoffice-Logística",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 137,
+   "top3": [
+    "P288",
+    "P137",
+    "P528"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-perdas_energia-Utilities / Energia",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 135,
+   "top3": [
+    "P001",
+    "P449",
+    "P352"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "TS-precificacao-Varejo",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 130,
+   "top3": [
+    "P315",
+    "P274",
+    "P257"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-credito-Serviços Financeiros",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 115,
+   "top3": [
+    "P308",
+    "P183",
+    "P593"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "TS-lakehouse-Serviços Financeiros",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 159,
+   "top3": [
+    "P346",
+    "P131",
+    "P470"
+   ],
+   "acerto3": true,
+   "precisao3": 0.3333333333333333
+  },
+  {
+   "id": "TS-churn-Telecom",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 147,
+   "top3": [
+    "P101",
+    "P239",
+    "P426"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-esg-Serviços Financeiros",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 153,
+   "top3": [
+    "P122",
+    "P234",
+    "P456"
+   ],
+   "acerto3": false,
+   "precisao3": 0
+  },
+  {
+   "id": "TS-migracao_dw-Serviços Financeiros",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 136,
+   "top3": [
+    "P496",
+    "P266",
+    "P005"
+   ],
+   "acerto3": false,
+   "precisao3": 0
+  },
+  {
+   "id": "TS-bi_executivo-Manufatura",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 124,
+   "top3": [
+    "P206",
+    "P164",
+    "P151"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-saude_populacional-Saúde",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 108,
+   "top3": [
+    "P487",
+    "P350",
+    "P103"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666
+  },
+  {
+   "id": "TS-bi_executivo-Saúde",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 130,
+   "top3": [
+    "P433",
+    "P552",
+    "P392"
+   ],
+   "acerto3": true,
+   "precisao3": 1
+  },
+  {
+   "id": "TS-churn-Varejo",
+   "tipo": "tema_setor",
+   "tipoResposta": "semelhantes",
+   "ms": 145,
+   "top3": [
+    "P154",
+    "P228",
+    "P101"
+   ],
+   "acerto3": true,
+   "precisao3": 0.3333333333333333
+  },
+  {
+   "id": "Q-fraude",
+   "tipo": "quem",
+   "tipoResposta": "semelhantes",
+   "ms": 186,
+   "top3": [
+    "P303",
+    "P366",
+    "P292"
+   ],
+   "acerto3": true,
+   "precisao3": 1,
+   "pessoa": true
+  },
+  {
+   "id": "Q-churn",
+   "tipo": "quem",
+   "tipoResposta": "semelhantes",
+   "ms": 149,
+   "top3": [
+    "P228",
+    "P523",
+    "P341"
+   ],
+   "acerto3": true,
+   "precisao3": 1,
+   "pessoa": true
+  },
+  {
+   "id": "Q-demanda",
+   "tipo": "quem",
+   "tipoResposta": "semelhantes",
+   "ms": 123,
+   "top3": [
+    "P493",
+    "P002",
+    "P572"
+   ],
+   "acerto3": true,
+   "precisao3": 0.6666666666666666,
+   "pessoa": true
+  },
+  {
+   "id": "Q-lakehouse",
+   "tipo": "quem",
+   "tipoResposta": "semelhantes",
+   "ms": 142,
+   "top3": [
+    "P131",
+    "P406",
+    "P389"
+   ],
+   "acerto3": true,
+   "precisao3": 1,
+   "pessoa": true
+  },
+  {
+   "id": "Q-migracao_dw",
+   "tipo": "quem",
+   "tipoResposta": "semelhantes",
+   "ms": 138,
+   "top3": [
+    "P496",
+    "P266",
+    "P150"
+   ],
+   "acerto3": true,
+   "precisao3": 1,
+   "pessoa": true
+  },
+  {
+   "id": "M-fraude",
+   "tipo": "motivo",
+   "tipoResposta": "ajuda",
+   "ms": 21,
+   "top3": [],
+   "acerto3": false,
+   "precisao3": 0,
+   "motivo": false
+  },
+  {
+   "id": "M-churn",
+   "tipo": "motivo",
+   "tipoResposta": "ajuda",
+   "ms": 1,
+   "top3": [],
+   "acerto3": false,
+   "precisao3": 0,
+   "motivo": false
+  },
+  {
+   "id": "M-lakehouse",
+   "tipo": "motivo",
+   "tipoResposta": "ajuda",
+   "ms": 1,
+   "top3": [],
+   "acerto3": false,
+   "precisao3": 0,
+   "motivo": false
+  },
+  {
+   "id": "M-migracao_dw",
+   "tipo": "motivo",
+   "tipoResposta": "ajuda",
+   "ms": 0,
+   "top3": [],
+   "acerto3": false,
+   "precisao3": 0,
+   "motivo": false
+  },
+  {
+   "id": "M-bi_executivo",
+   "tipo": "motivo",
+   "tipoResposta": "ajuda",
+   "ms": 1,
+   "top3": [],
+   "acerto3": false,
+   "precisao3": 0,
+   "motivo": false
+  },
+  {
+   "id": "C-Serviços Financeiros",
+   "tipo": "contagem",
+   "tipoResposta": "contagem",
+   "ms": 191,
+   "top3": [],
+   "total": 511,
+   "esperadoMassa": 103
+  },
+  {
+   "id": "C-Varejo",
+   "tipo": "contagem",
+   "tipoResposta": "listagem",
+   "ms": 23,
+   "top3": [
+    "P141",
+    "P375",
+    "P501"
+   ],
+   "total": 74,
+   "esperadoMassa": 72
+  },
+  {
+   "id": "C-Telecom",
+   "tipo": "contagem",
+   "tipoResposta": "listagem",
+   "ms": 7,
+   "top3": [
+    "P401",
+    "P307",
+    "P232"
+   ],
+   "total": 69,
+   "esperadoMassa": 68
+  },
+  {
+   "id": "C-Seguros",
+   "tipo": "contagem",
+   "tipoResposta": "listagem",
+   "ms": 6,
+   "top3": [
+    "P144",
+    "P321",
+    "P450"
+   ],
+   "total": 46,
+   "esperadoMassa": 45
+  },
+  {
+   "id": "C-Utilities / Energia",
+   "tipo": "contagem",
+   "tipoResposta": "listagem",
+   "ms": 7,
+   "top3": [
+    "P298",
+    "P238",
+    "P189"
+   ],
+   "total": 47,
+   "esperadoMassa": 44
+  }
+ ]
+}

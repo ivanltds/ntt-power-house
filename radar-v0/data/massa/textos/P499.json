@@ -1,0 +1,50 @@
+{
+ "titulo": "Modernização de aplicações legadas com containers em Kubernetes na Ondas Móvel",
+ "problema": "A Ondas Móvel operava cerca de 140 aplicações de billing, atendimento e provisão em servidores virtuais monolíticos, com janelas de deploy de até 6 horas e indisponibilidade média de 4,2 horas por mês. O custo de infraestrutura crescia 18% ao ano e a baixa elasticidade limitava o lançamento de novas ofertas para 12 milhões de linhas ativas.",
+ "objetivo": "Migrar e modernizar as aplicações críticas para containers gerenciados em Kubernetes na AWS e no GCP, reduzindo indisponibilidade e tempo de deploy, com continuidade da jornada de nuvem iniciada em projeto anterior.",
+ "escopo": [
+  "Avaliação e priorização de 140 aplicações, com containerização das 60 de maior criticidade em imagens Docker e manifests Kubernetes.",
+  "Provisionamento de clusters Kubernetes gerenciados (EKS na AWS e GKE no GCP) com malha de serviços, políticas de autoescalonamento e observabilidade centralizada.",
+  "Implantação de pipeline CI/CD com deploy blue-green e canário para as aplicações migradas, integrado ao repositório corporativo.",
+  "Migração de bancos e filas associados para serviços gerenciados na AWS e no GCP, com plano de cutover por ondas e rollback testado.",
+  "Definição de guardrails de segurança, gestão de custos por namespace e runbooks de operação para o time de plataforma do cliente."
+ ],
+ "entregaveis": [
+  "Catálogo das 140 aplicações com matriz de priorização e plano de ondas de migração.",
+  "60 aplicações containerizadas em produção nos clusters Kubernetes da AWS e do GCP.",
+  "Pipeline CI/CD padronizado com deploy automatizado e testes de fumaça por release.",
+  "Dashboards de observabilidade e relatórios de custo por aplicação e por namespace.",
+  "Runbooks operacionais e treinamento de 35 profissionais do cliente em Kubernetes e práticas DevOps."
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da plataforma",
+   "semanas": 10
+  },
+  {
+   "nome": "Piloto com 8 aplicações e pipeline CI/CD",
+   "semanas": 12
+  },
+  {
+   "nome": "Migração em ondas das 52 aplicações restantes",
+   "semanas": 22
+  },
+  {
+   "nome": "Estabilização, otimização de custos e transferência de conhecimento",
+   "semanas": 8
+  }
+ ],
+ "equipe": "1 arquiteto de soluções cloud, 1 especialista em Kubernetes, 4 engenheiros DevOps, 2 engenheiros de aplicação e 1 gerente de projeto.",
+ "riscos": [
+  "Dependências legadas sem suporte a containers atrasam ondas de migração.",
+  "Janelas de cutover conflitam com picos de tráfego de billing e recarga.",
+  "Custos de nuvem acima do previsto por falta de governança de namespaces."
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia da Ondas Móvel)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções Cloud na NTT DATA)"
+ },
+ "resultados": "Redução de 72% na indisponibilidade média mensal, de 4,2 para 1,2 horas, e queda de 23% no custo mensal de infraestrutura, economia de R$ 1,8 milhão no primeiro ano.",
+ "licoes": "A migração de duas aplicações de billing com dependências de fornecedor não documentadas atrasou a terceira onda em 3 semanas e exigiu esforço extra de engenharia. Foi decisivo manter o piloto com 8 aplicações e rollback testado antes de escalar, o que permitiu cutovers sem incidentes críticos.",
+ "diferencial": "Ganhamos pela entrega anterior de modernização de plataforma no próprio cliente, com arquitetura Kubernetes comprovada e equipe já ambientada ao ambiente de telecom."
+}

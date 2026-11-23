@@ -1,0 +1,48 @@
+{
+ "titulo": "Assistente virtual com IA generativa para o atendimento ao cliente no varejo",
+ "problema": "A Eletro Mais registra cerca de 480 mil atendimentos por ano nos canais digitais, com 62% dos contatos concentrados em dúvidas repetitivas de pedido, troca e garantia. O tempo médio de primeira resposta é de 9 minutos e o índice de resolução no primeiro contato é de apenas 54%, elevando o custo por atendimento e a insatisfação nas pesquisas de pós-venda.",
+ "objetivo": "Implantar um assistente virtual com IA generativa integrado aos sistemas de atendimento e CRM, reduzindo o tempo de primeira resposta para menos de 1 minuto e elevando a resolução no primeiro contato para 75% em 7 meses.",
+ "escopo": [
+  "Assistente virtual em Python sobre Azure OpenAI, com orquestração de intenções e respostas fundamentadas na base de conhecimento de produtos, pedidos e políticas de troca da Eletro Mais",
+  "Integração do assistente ao Salesforce Service Cloud para consulta de histórico do cliente, abertura e atualização de casos em tempo real",
+  "Automação de fluxos de triagem, escalonamento para atendentes humanos e pesquisas de satisfação no ServiceNow, com SLAs configurados por tipo de solicitação",
+  "Pipeline de ingestão e atualização contínua da base de conhecimento em Azure, com curadoria humana e monitoramento de qualidade das respostas",
+  "Painel de métricas de atendimento e acurácia do assistente, com alertas de desvio e trilha de auditoria das interações"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção nos canais web e WhatsApp, cobrindo 80% dos motivos de contato mapeados",
+  "Integrações Salesforce e ServiceNow homologadas, com 12 fluxos de automação de triagem e escalonamento",
+  "Base de conhecimento estruturada e processo de atualização contínua documentado",
+  "Painel de indicadores de atendimento, acurácia e satisfação com relatórios semanais",
+  "Documentação técnica, manuais operacionais e treinamento de 40 atendentes e 6 supervisores"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da solução",
+   "semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento do assistente e integrações",
+   "semanas": 12
+  },
+  {
+   "nome": "Piloto controlado e ajuste de acurácia",
+   "semanas": 6
+  },
+  {
+   "nome": "Go-live, treinamento e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 engenheiros de automação, 1 especialista Salesforce, 1 especialista ServiceNow e 1 analista de qualidade de IA",
+ "riscos": [
+  "Baixa qualidade ou desatualização da base de conhecimento reduz a acurácia das respostas",
+  "Resistência dos atendentes à mudança no fluxo de triagem e escalonamento",
+  "Latência ou indisponibilidade das integrações com Salesforce e ServiceNow"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Experiência do Cliente)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de IA)"
+ },
+ "diferencial": "Preço competitivo aliado à continuidade do projeto anterior na Eletro Mais, que permite reaproveitar integrações e acelerar a entrega do assistente em 7 meses."
+}

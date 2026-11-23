@@ -1,0 +1,38 @@
+{
+ "titulo": "Plataforma de Dados Lakehouse para Análise de Saúde Populacional",
+ "problema": "A Operadora Saúde Total, com 1,2 milhão de beneficiários, enfrentava lentidão na análise de sinistros e dados fragmentados em 15 sistemas legados, resultando em relatórios que levavam até 5 dias para serem gerados. A área de saúde populacional não conseguia identificar tendências de risco em tempo hábil, impactando a gestão de custos assistenciais.",
+ "objetivo": "Implementar uma plataforma de dados lakehouse na nuvem para centralizar e analisar dados de saúde, reduzindo o tempo de geração de relatórios para menos de 2 horas e permitindo insights em tempo quase real.",
+ "escopo": [
+  "Migração de dados de 15 fontes legadas para o Snowflake, com pipelines de ingestão em Python.",
+  "Implementação de streaming de eventos de sinistros com Kafka para análises em tempo real.",
+  "Construção de camadas de dados (bronze, prata e ouro) no Snowflake para governança e qualidade.",
+  "Desenvolvimento de 20 dashboards analíticos para as áreas de saúde populacional e financeira.",
+  "Integração com ferramentas de BI existentes e capacitação de 30 usuários-chave."
+ ],
+ "entregaveis": [
+  "Plataforma lakehouse operacional no Snowflake com dados de 1,2 milhão de beneficiários.",
+  "Pipeline de ingestão em tempo real via Kafka para eventos de sinistros.",
+  "Documentação técnica e manuais de operação da plataforma.",
+  "20 dashboards de análise de saúde populacional e custos assistenciais.",
+  "Treinamento e certificação de 30 usuários na nova plataforma."
+ ],
+ "fases": [
+  "Fase 1 - Discovery e Arquitetura: 6 semanas",
+  "Fase 2 - Implementação de Pipelines e Migração: 16 semanas",
+  "Fase 3 - Modelagem e Dashboards: 10 semanas",
+  "Fase 4 - Testes, Treinamento e Go-Live: 4 semanas"
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Snowflake, 1 especialista em Kafka e 1 gerente de projeto.",
+ "riscos": [
+  "Atraso na integração com sistemas legados devido a documentação incompleta.",
+  "Resistência dos usuários à mudança de ferramentas analíticas.",
+  "Volume de dados subestimado impactando performance do Snowflake."
+ ],
+ "pessoas": {
+  "cliente": "Carla Menezes (Diretora de Dados e Analytics)",
+  "tecnico": "Rafael Oliveira (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Redução de 85% no tempo de geração de relatórios (de 5 dias para 2 horas) e economia de R$ 3,2 milhões anuais em custos operacionais e de infraestrutura.",
+ "licoes": "A integração com um sistema legado específico atrasou 3 semanas devido à falta de documentação, exigindo esforço extra de engenharia reversa. A realização de workshops semanais com as áreas de negócio foi decisiva para alinhar expectativas e garantir a adoção da plataforma.",
+ "diferencial": "Ganhamos por apresentar um case de referência em lakehouse para o setor de saúde com resultados comprovados em redução de custos e tempo de análise."
+}

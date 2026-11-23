@@ -1,0 +1,49 @@
+{
+ "titulo": "Migração de Data Warehouse para Nuvem MultiCloud para Agência Estadual de Trânsito",
+ "problema": "A Agência Estadual de Trânsito processa diariamente 2,5 milhões de transações de veículos e condutores, mas seu data warehouse on-premises apresenta lentidão e custos de manutenção crescentes. O ambiente atual suporta apenas 30% da demanda analítica prevista para os próximos dois anos, limitando a emissão de relatórios de fiscalização e a integração com sistemas de mobilidade urbana.",
+ "objetivo": "Migrar o data warehouse legado para uma arquitetura multicloud (GCP, Databricks, AWS e Azure) em 10 meses, garantindo escalabilidade, redução de custos operacionais e disponibilidade de dados em tempo quase real para 15 áreas de negócio.",
+ "escopo": [
+  "Avaliação e desenho da arquitetura multicloud com GCP (BigQuery) e Databricks para processamento analítico",
+  "Migração de 120 TB de dados históricos e 450 tabelas para ambientes AWS (S3, Redshift) e Azure (Synapse)",
+  "Implementação de pipelines de ingestão e orquestração com Databricks e serviços gerenciados GCP/AWS/Azure",
+  "Configuração de camada de governança e segurança de dados nos quatro provedores, incluindo criptografia e controle de acesso",
+  "Execução de testes de performance e validação de cargas analíticas com usuários-chave da Agência"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência multicloud aprovado",
+  "Ambiente de data warehouse migrado e operacional em GCP e Databricks",
+  "Relatório de migração de 450 tabelas e 120 TB de dados com validação de integridade",
+  "Painéis de monitoramento de custos e performance nos quatro provedores",
+  "Plano de cutover e descomissionamento do ambiente legado"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Arquitetura",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Migração de Dados e Pipelines",
+   "duracao_semanas": 16
+  },
+  {
+   "nome": "Validação e Otimização",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Cutover e Estabilização",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em segurança de nuvem e 1 analista de negócios",
+ "riscos": [
+  "Atraso na liberação de acessos e credenciais nos provedores de nuvem",
+  "Inconsistências nos dados legados que impactam a migração",
+  "Resistência de usuários-chave à mudança de ferramentas analíticas"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Eduardo Menezes (Diretor de Tecnologia da Informação)",
+  "tecnico": "Fernanda Lima (Arquiteta de Dados Sênior)"
+ },
+ "resultados": "Já migramos 40% das tabelas (180 de 450) e reduzimos o tempo de consulta analítica em 25% no ambiente de testes.",
+ "diferencial": "Ganhamos pela experiência comprovada em projeto similar de migração multicloud para uma autarquia estadual de transporte, com arquitetura de referência validada e equipe certificada nos quatro provedores."
+}

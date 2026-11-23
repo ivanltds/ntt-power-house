@@ -1,0 +1,38 @@
+{
+ "titulo": "FinOps e Otimização de Custos Multicloud para Varejo",
+ "problema": "O Atacadão Popular Sul opera com ambientes em AWS, Azure e GCP, com gasto mensal de nuvem de R$ 1,8 milhão e crescimento de 22% ao ano. A falta de visibilidade e governança impede a identificação de desperdícios, estimados em 30% do total.",
+ "objetivo": "Implementar práticas de FinOps para reduzir em 25% os custos de nuvem em 12 meses, com visibilidade e controle por meio de painéis em Power BI e governança multicloud.",
+ "escopo": [
+  "Avaliação de maturidade FinOps e análise de custos nas três nuvens (AWS, Azure, GCP)",
+  "Implementação de dashboards de custos e KPIs em Power BI com dados de billing das clouds",
+  "Definição de políticas de governança, tags e alçadas de aprovação de gastos",
+  "Otimização de recursos: rightsizing, desligamento de instâncias ociosas e compra de reservas",
+  "Capacitação de equipe do cliente em práticas FinOps e operação dos painéis"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico FinOps com mapa de desperdícios e oportunidades de economia",
+  "Painéis Power BI para monitoramento de custos por centro de custo e por cloud",
+  "Plano de otimização com ações priorizadas e metas de redução",
+  "Política de governança de custos e guia de tags",
+  "Workshop de encerramento e transferência de conhecimento"
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e Assessment: 3 semanas",
+  "Fase 2 - Implementação de Dashboards e Governança: 4 semanas",
+  "Fase 3 - Otimização e Quick Wins: 3 semanas",
+  "Fase 4 - Capacitação e Encerramento: 2 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto cloud, 1 especialista FinOps e 1 analista de dados",
+ "riscos": [
+  "Resistência cultural à mudança de processos de controle de gastos",
+  "Qualidade e integração dos dados de billing entre as três nuvens",
+  "Dependência de acessos e permissões nos ambientes do cliente"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Gerente de TI)",
+  "tecnico": "Rafael Almeida (Especialista FinOps)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou 18% acima do mercado, apesar da qualidade técnica e da continuidade do projeto anterior. O cliente optou por um concorrente com proposta financeira mais agressiva.",
+ "licoes": "Para próximas propostas de FinOps, incluir desde o início uma análise de valor percebido e explorar modelos de precificação baseados em ganhos compartilhados (gain-sharing) para tornar a proposta mais competitiva.",
+ "retorno": "Prezados, após análise das propostas recebidas, informamos que decidimos não seguir com a NTT DATA para o projeto de FinOps. O motivo principal foi o preço apresentado, que ficou acima do mercado. Agradecemos o esforço da equipe e esperamos manter a parceria em futuras oportunidades. Atenciosamente, Mariana Costa (Gerente de TI - Atacadão Popular Sul)."
+}

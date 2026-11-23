@@ -1,0 +1,46 @@
+{
+ "titulo": "FinOps e otimização de custos multicloud para operadora de telecom",
+ "problema": "A Tríade Telecom opera 38 clusters Kubernetes distribuídos entre AWS e Azure, com gasto mensal de nuvem de R$ 4,2 milhões e variação de até 22% entre meses, sem visibilidade por produto ou centro de custo. Cerca de 31% das instâncias não têm owner definido e o time financeiro recebe a fatura sem conseguir atribuí-la às squads.",
+ "objetivo": "Reduzir em 18% o custo mensal de nuvem em 3 meses, implantando governança FinOps com visibilidade por squad e rightsizing contínuo das cargas em Kubernetes.",
+ "escopo": [
+  "Assessment de custos AWS e Azure com taggeamento e alocação por centro de custo",
+  "Rightsizing e ajuste de requests/limits dos clusters Kubernetes",
+  "Dashboards de FinOps em Power BI com custo por produto, squad e tendência mensal",
+  "Definição de guardrails de orçamento e alertas de anomalia nas duas nuvens",
+  "Plano de Change Management com squads de engenharia e financeiro para cultura de custo"
+ ],
+ "entregaveis": [
+  "Relatório de baseline de custos com mapa de 38 clusters e instâncias sem owner",
+  "Catálogo de tags e política de alocação de custos publicada",
+  "Painéis Power BI de custo por squad, produto e forecast mensal",
+  "Backlog priorizado de 25 a 40 ações de otimização com economia estimada",
+  "Plano de comunicação e treinamento FinOps para 6 squads"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e baseline de custos",
+   "semanas": 4
+  },
+  {
+   "nome": "Governança, tags e dashboards Power BI",
+   "semanas": 4
+  },
+  {
+   "nome": "Otimização de Kubernetes e AWS/Azure",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de cloud, 1 especialista FinOps, 1 engenheiro Kubernetes, 1 analista de dados Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Resistência das squads à mudança de alocação de custos",
+  "Dados de billing incompletos ou inconsistentes entre AWS e Azure",
+  "Janela curta de 3 meses para maturar a cultura FinOps"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Bruno Tavares (Arquiteto de Cloud Sênior)"
+ },
+ "resultados": "O cliente congelou o orçamento de transformação para o semestre e decidiu postergar a iniciativa de FinOps, priorizando investimentos em expansão de rede 5G.",
+ "licoes": "Ancorar a proposta em economia projetada em reais e oferecer um piloto de 4 semanas com escopo reduzido, para reduzir a barreira orçamentária em ciclos de contenção.",
+ "retorno": "Prezados, informamos que a diretoria optou por não seguir com a proposta de FinOps neste momento. O orçamento de transformação foi congelado para o semestre e as prioridades foram redirecionadas para a expansão da rede 5G. Agradecemos o esforço da equipe e retomaremos a conversa no próximo ciclo de planejamento. Atenciosamente, Renata Vasconcelos, Diretora de Tecnologia, Tríade Telecom."
+}

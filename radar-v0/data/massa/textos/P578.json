@@ -1,0 +1,50 @@
+{
+ "titulo": "Assistente Virtual com IA Generativa para Atendimento no Banco Meridiano",
+ "problema": "O Banco Meridiano registra cerca de 480 mil atendimentos mensais em canais digitais, com 62% das demandas concentradas em dúvidas repetitivas de saldo, limites e renegociação. O tempo médio de primeira resposta é de 9 minutos e o índice de transferência para humano chega a 41%, elevando o custo por atendimento e reduzindo o NPS para 38 pontos.",
+ "objetivo": "Implantar um assistente virtual com IA generativa integrado ao ServiceNow para resolver automaticamente consultas de baixa complexidade, reduzindo o tempo de primeira resposta e a taxa de transferência para atendentes humanos.",
+ "escopo": [
+  "Configuração do assistente virtual no ServiceNow com integração ao Azure OpenAI para respostas em linguagem natural",
+  "Desenvolvimento de fluxos de automação de processos em Python para consultas de saldo, limites e renegociação",
+  "Orquestração de intenções e fallback humano no ServiceNow, com registro de cada interação no histórico do cliente",
+  "Camada de segurança e conformidade no Azure, incluindo mascaramento de dados sensíveis e trilha de auditoria",
+  "Painel de acompanhamento com métricas de resolução automática, tempo de resposta e satisfação do cliente"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção para 12 intenções de atendimento prioritárias",
+  "Documentação de arquitetura e integrações entre ServiceNow, Azure e Python",
+  "Conjunto de prompts e guardrails de IA generativa validados pelo time de compliance do banco",
+  "Relatório de testes com taxa de acerto mínimo de 85% nas intenções mapeadas",
+  "Painel de métricas e manual de operação para o time de atendimento"
+ ],
+ "fases": [
+  {
+   "nome": "Descoberta e desenho de intenções",
+   "duracao_semanas": 3
+  },
+  {
+   "nome": "Desenvolvimento e integrações",
+   "duracao_semanas": 5
+  },
+  {
+   "nome": "Testes, ajustes de prompts e homologação",
+   "duracao_semanas": 3
+  },
+  {
+   "nome": "Go-live assistido e transferência de conhecimento",
+   "duracao_semanas": 1
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções, 2 desenvolvedores ServiceNow, 1 engenheiro de IA generativa e 1 analista de automação Python",
+ "riscos": [
+  "Baixa qualidade dos dados históricos de atendimento para treinar intenções",
+  "Restrições de compliance para uso de IA generativa com dados financeiros",
+  "Resistência do time de atendimento à mudança de fluxo operacional"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Canais Digitais)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de AI & Automation)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente, incluindo 12 intenções e integrações adicionais em um prazo de 3 meses. O Banco Meridiano optou por um fornecedor com escopo mais enxuto e focado em um piloto inicial.",
+ "licoes": "Para o próximo projeto de assistente virtual com IA generativa, propor um piloto com 3 a 5 intenções e expandir por fases, alinhando o escopo ao apetite real do cliente antes de detalhar integrações.",
+ "retorno": "Prezados, informamos que a proposta para o assistente virtual com IA generativa não foi selecionada. A decisão considerou que o escopo apresentado era mais amplo do que a necessidade atual do banco, que busca iniciar com um piloto reduzido. Agradecemos o empenho da equipe e manteremos a NTT DATA no radar para iniciativas futuras. Atenciosamente, Renata Vasconcelos, Gerente de Canais Digitais do Banco Meridiano."
+}

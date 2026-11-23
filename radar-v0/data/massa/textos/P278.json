@@ -1,0 +1,50 @@
+{
+ "titulo": "Previsão de safra e agricultura de precisão com Machine Learning e Python",
+ "problema": "A Agropecuária Terra Boa gerencia 42 mil hectares de soja, milho e algodão e vinha estimando a produtividade por talhão com planilhas manuais e dados climáticos desencontrados, com erro médio de 18% nas projeções de safra. Isso gerava compras de insumos desalinhadas e perdas estimadas em R$ 3,2 milhões na última safra por decisões tardias de manejo e colheita.",
+ "objetivo": "Implantar um modelo de previsão de safra por talhão e um painel de agricultura de precisão que reduza o erro de projeção de produtividade e apoie decisões de manejo, irrigação e colheita com dados integrados de campo, clima e sensores.",
+ "escopo": [
+  "Integração de dados históricos de produtividade, laudos de solo, imagens de satélite e estações meteorológicas em um data lake em Python",
+  "Desenvolvimento de modelos de Machine Learning para previsão de produtividade por talhão com validação em safras anteriores",
+  "Construção de painéis de agricultura de precisão com indicadores por talhão, mapa de variabilidade e alertas de estresse hídrico",
+  "Pipeline de re-treinamento periódico dos modelos em Python com monitoramento de acurácia e deriva de dados",
+  "Capacitação da equipe agronômica no uso dos painéis e na leitura dos intervalos de confiança das previsões"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário de variáveis agronômicas",
+  "Modelo de previsão de safra por talhão treinado e validado, com relatório de acurácia por cultura",
+  "Painéis de agricultura de precisão publicados para 180 talhões e 3 culturas",
+  "Rotina automatizada de re-treinamento e monitoramento de modelos",
+  "Plano de capacitação e manual de uso entregues à equipe de agronomia"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e integração de dados",
+   "semanas": 8
+  },
+  {
+   "nome": "Modelagem de Machine Learning",
+   "semanas": 12
+  },
+  {
+   "nome": "Painéis e agricultura de precisão",
+   "semanas": 8
+  },
+  {
+   "nome": "Homologação, treinamento e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 cientistas de dados, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e lacunas nos dados históricos de produtividade por talhão",
+  "Baixa conectividade de campo para envio de dados de sensores",
+  "Adoção limitada dos painéis pelos agrônomos na rotina de campo"
+ ],
+ "pessoas": {
+  "cliente": "Helena Vasconcelos (Diretora de Operações Agrícolas)",
+  "tecnico": "Rafael Menezes (Cientista de Dados Sênior)"
+ },
+ "resultados": "O erro médio de previsão de produtividade caiu de 18% para 6,5% nas três culturas monitoradas, e a economia estimada em insumos e redução de perdas chegou a R$ 4,1 milhões na safra seguinte.",
+ "licoes": "A limpeza e o alinhamento dos históricos de produtividade por talhão consumiram 3 semanas a mais que o previsto, exigindo esforço adicional de engenharia de dados. Foi decisivo envolver os agrônomos desde a fase de modelagem, o que acelerou a validação das variáveis e a adoção dos painéis no campo.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência muito parecido no agronegócio, com resultados comprovados de redução de erro de previsão de safra usando Machine Learning e Python."
+}

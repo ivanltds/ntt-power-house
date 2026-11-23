@@ -1,0 +1,50 @@
+{
+ "titulo": "Previsão de demanda e reposição de estoque com ML para rede de moda",
+ "problema": "A Moda Leve Store, rede de varejo de vestuário com 48 lojas e 2 centros de distribuição, operava com previsão de demanda baseada em planilhas e médias históricas simples, gerando ruptura média de 14% nos itens de maior giro e excesso de estoque em 22% das SKUs sazonais. A reposição era feita por intuição dos gerentes regionais, sem considerar clima, calendário promocional e desempenho por loja.",
+ "objetivo": "Implantar um modelo de previsão de demanda por SKU e loja, com recomendações de reposição automatizadas, para reduzir rupturas e capital imobilizado em estoque.",
+ "escopo": [
+  "Construção de pipelines de ingestão e tratamento de dados de vendas, estoque, clima e calendário promocional no Databricks, com camadas bronze, silver e gold",
+  "Desenvolvimento de modelos de previsão de demanda em Python (séries temporais e gradient boosting) por SKU, loja e horizonte de 1 a 8 semanas",
+  "Motor de recomendação de reposição com regras de ponto de pedido, lote econômico e restrições de capacidade logística",
+  "Integração dos resultados ao ERP e ao painel de compras via APIs e tabelas Delta no Databricks",
+  "Monitoramento de acurácia (MAPE e WAPE) e rotina de retreino mensal dos modelos em Python"
+ ],
+ "entregaveis": [
+  "Pipeline de dados de demanda consolidado no Databricks com 100% das lojas e CDs integrados",
+  "Modelo de previsão de demanda por SKU e loja com acurácia WAPE de 18% no horizonte de 4 semanas",
+  "Motor de reposição com sugestões diárias de pedido por loja e CD",
+  "Painel de acompanhamento de acurácia, ruptura e cobertura de estoque",
+  "Documentação técnica e treinamento das equipes de Compras e Planejamento"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e validação de previsão",
+   "semanas": 10
+  },
+  {
+   "fase": "Motor de reposição e integração com ERP",
+   "semanas": 8
+  },
+  {
+   "fase": "Go-live, treinamento e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e inconsistência dos dados históricos de estoque por loja",
+  "Baixa adesão dos gerentes regionais às sugestões automáticas de reposição",
+  "Sazonalidade atípica no período de validação reduzindo a acurácia do modelo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Planejamento e Compras)",
+  "tecnico": "Felipe Andrade (Tech Lead de Data Science)"
+ },
+ "resultados": "A rede reduziu a ruptura de 14% para 6,5% nos itens de maior giro e diminuiu o capital imobilizado em estoque em R$ 3,2 milhões no primeiro ciclo de reposição assistida.",
+ "licoes": "A integração com o ERP do cliente atrasou duas semanas por falta de documentação das APIs legadas. Foi decisivo envolver os gerentes regionais desde a fase de modelagem, o que acelerou a adoção das sugestões de reposição no go-live.",
+ "diferencial": "Ganhamos por apresentar um case de referência de previsão de demanda em varejo de moda com resultados comprovados em rede de porte semelhante e por já termos entregue projeto anterior de engenharia de dados na Moda Leve Store."
+}

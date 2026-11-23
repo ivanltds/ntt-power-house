@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração de Data Warehouse para Nuvem com Snowflake e GCP",
+ "problema": "A Conecta Brasil Telecom processa cerca de 4,5 TB de dados de billing, CDR e atendimento em um data warehouse on-premises com janelas de carga noturnas que ultrapassam 6 horas, atrasando relatórios regulatórios da ANATEL. A base cresce 30% ao ano e a infraestrutura atual não suporta a demanda de analytics de rede e churn dos 12 milhões de assinantes.",
+ "objetivo": "Migrar o data warehouse on-premises para Snowflake no GCP em 7 meses, reduzindo a janela de carga para menos de 1 hora e habilitando analytics escalável para as áreas de rede, comercial e regulatório.",
+ "escopo": [
+  "Assessment e mapeamento de 320 tabelas e 85 processos ETL do ambiente legado para o modelo Snowflake",
+  "Implementação da plataforma Snowflake no GCP com pipelines de ingestão via Dataflow e Pub/Sub para dados de CDR e billing",
+  "Migração e refatoração de 85 jobs ETL em esquema de paralelismo controlado por ondas de negócio",
+  "Camada semântica e governança de dados com RBAC, mascaramento de PII e catálogo no GCP",
+  "Testes de reconciliação de 100% dos indicadores regulatórios e cutover com rollback em 48 horas"
+ ],
+ "entregaveis": [
+  "Relatório de assessment com inventário das 320 tabelas e plano de migração por onda",
+  "Ambiente Snowflake no GCP provisionado com pipelines de ingestão operacionais",
+  "85 jobs ETL migrados e validados com reconciliação de dados acima de 99,9%",
+  "Dashboards regulatórios ANATEL e de churn homologados pelas áreas de negócio",
+  "Runbook de operação, plano de cutover e transferência de conhecimento para o time interno"
+ ],
+ "fases": [
+  {
+   "fase": "Assessment e desenho da arquitetura",
+   "semanas": 6
+  },
+  {
+   "fase": "Provisionamento do Snowflake no GCP e pipelines de ingestão",
+   "semanas": 8
+  },
+  {
+   "fase": "Migração e refatoração dos ETLs por ondas",
+   "semanas": 10
+  },
+  {
+   "fase": "Testes, cutover e hypercare",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista Snowflake, 1 especialista GCP e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e consistência dos dados legados de CDR e billing",
+  "Indisponibilidade de especialistas do cliente para validação das regras de negócio",
+  "Janela de cutover restrita por compromissos regulatórios da ANATEL"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de TI e Dados)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente: incluímos migração completa de 85 ETLs e governança ampla, enquanto a Conecta Brasil Telecom buscava apenas mover o data warehouse principal com um piloto reduzido. O cliente optou por um fornecedor com escopo enxuto e prazo menor.",
+ "licoes": "Nas próximas propostas para migração de data warehouse, apresentar uma abordagem faseada com piloto de escopo reduzido e precificação modular, validando com o cliente o apetite real antes de propor a migração completa.",
+ "retorno": "Prezados, após a avaliação das propostas recebidas, informamos que a Conecta Brasil Telecom decidiu não seguir com a proposta da NTT DATA para a migração do data warehouse. A decisão foi motivada pelo escopo proposto, que excedeu a necessidade atual da nossa área de dados, tanto em número de ETLs quanto em frentes de governança. Agradecemos o empenho da equipe e permanecemos abertos a conversas futuras em um formato mais enxuto. Atenciosamente, Renata Vasconcelos, Diretora de TI e Dados."
+}

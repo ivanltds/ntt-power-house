@@ -1,0 +1,46 @@
+{
+ "titulo": "Predição de churn e retenção de clientes com Machine Learning e Salesforce",
+ "problema": "O Banco Horizonte Sul enfrenta uma taxa de churn de 18% ao ano na base de varejo, com perda estimada de R$ 42 milhões em receita recorrente. A identificação de clientes em risco ocorre hoje de forma reativa, apenas quando o cliente já reduziu o uso dos produtos, e o CRM não integra sinais preditivos à jornada de retenção.",
+ "objetivo": "Construir um modelo preditivo de churn em Python com Machine Learning e integrá-lo ao Salesforce para acionar campanhas de retenção proativas, reduzindo a perda de clientes em 15% no primeiro ano.",
+ "escopo": [
+  "Modelagem preditiva de churn em Python com Machine Learning sobre dados transacionais e de engajamento dos últimos 36 meses",
+  "Integração dos scores de propensão ao churn ao Salesforce, via API, para segmentação e acionamento de campanhas de retenção",
+  "Definição de gatilhos e réguas de retenção no CRM Salesforce por faixa de risco (alto, médio e baixo)",
+  "Painéis de monitoramento de performance do modelo e de efetividade das ações de retenção",
+  "Pipeline de re-treinamento periódico do modelo com governança de features e versionamento"
+ ],
+ "entregaveis": [
+  "Modelo de propensão ao churn documentado, com AUC mínima de 0,80 em validação",
+  "Integração dos scores preditivos ao Salesforce em ambiente produtivo",
+  "Réguas de retenção configuradas no CRM para 3 faixas de risco",
+  "Dashboard de acompanhamento de churn e efetividade das campanhas",
+  "Relatório final com recomendações de evolução do modelo e plano de re-treinamento"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e validação do modelo de ML",
+   "semanas": 4
+  },
+  {
+   "fase": "Integração ao Salesforce e réguas de retenção",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 cientista de dados sênior, 1 engenheiro de dados, 1 consultor de CRM Salesforce e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos dados históricos de engajamento entre sistemas",
+  "Baixa adoção das réguas de retenção pelas equipes comerciais",
+  "Restrições de LGPD no uso de atributos sensíveis no modelo"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de CRM e Retenção)",
+  "tecnico": "Felipe Andrade (Líder Técnico de Data & Analytics)"
+ },
+ "resultados": "A proposta foi perdida porque o escopo apresentado era maior que a necessidade imediata do cliente: incluía pipeline de re-treinamento, governança de features e painéis adicionais além do modelo preditivo e da integração ao Salesforce. O Banco Horizonte Sul optou por uma abordagem mais enxuta nesta primeira fase.",
+ "licoes": "Para propostas de continuidade, dimensionar o escopo ao mínimo viável que entrega o resultado do tema e apresentar módulos opcionais separados, evitando inflar a fase inicial.",
+ "retorno": "Prezados, agradecemos a dedicação da equipe da NTT DATA na elaboração da proposta de predição de churn e retenção. Após avaliação interna, decidimos não avançar com o escopo apresentado, pois ele excede a necessidade imediata desta primeira fase do projeto. Seguimos interessados na parceria e gostaríamos de reavaliar uma versão mais enxuta focada no modelo preditivo e na integração ao Salesforce. Permanecemos à disposição para conversar. Atenciosamente, Renata Vasconcelos, Diretora de CRM e Retenção, Banco Horizonte Sul."
+}

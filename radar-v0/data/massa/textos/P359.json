@@ -1,0 +1,47 @@
+{
+ "titulo": "Lakehouse de Dados Clínicos para Analytics e Governança em Saúde Diagnóstica",
+ "problema": "O Laboratório Diagnóstico Preciso realiza cerca de 4,2 milhões de exames por ano em 37 unidades e mantém dados clínicos, operacionais e financeiros dispersos em sistemas legados e planilhas, o que atrasa a consolidação de indicadores em até 9 dias. A ausência de uma camada analítica governada dificulta a rastreabilidade do dado do paciente e limita a criação de painéis confiáveis para as áreas médica e comercial.",
+ "objetivo": "Construir uma plataforma de dados lakehouse na nuvem, integrada em tempo quase real, que consolide exames, faturamento e operação em uma base única governada, reduzindo o tempo de disponibilização de indicadores de 9 dias para menos de 1 dia.",
+ "escopo": [
+  "Ingestão contínua de eventos de exames e faturamento via Kafka, com tópicos segregados por domínio e retenção de 30 dias",
+  "Desenvolvimento de pipelines em Python para tratamento, deduplicação e carga incremental no Snowflake",
+  "Modelagem dimensional no Snowflake em camadas bronze, silver e gold, cobrindo 4,2 milhões de exames anuais",
+  "Implementação de catálogo, linhagem e políticas de acesso a dados sensíveis de saúde, com mascaramento de dados pessoais",
+  "Migração de 3 bases legadas on-premises para a nuvem, com janela de corte e validação de reconciliação de 100% dos registros"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de referência do lakehouse aprovado pelo cliente",
+  "120 pipelines de ingestão e transformação em produção, monitorados com alertas de SLA",
+  "Modelo dimensional no Snowflake com 14 tabelas gold publicadas para consumo analítico",
+  "Catálogo de dados com 250 ativos catalogados e linhagem documentada",
+  "Plano de migração concluído com 3 bases legadas desativadas e relatório de reconciliação"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura",
+   "semanas": 8
+  },
+  {
+   "nome": "Ingestão e pipelines com Kafka e Python",
+   "semanas": 16
+  },
+  {
+   "nome": "Modelagem e governança no Snowflake",
+   "semanas": 14
+  },
+  {
+   "nome": "Migração para nuvem e estabilização",
+   "semanas": 10
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade dos dados legados pode exigir esforço extra de tratamento",
+  "Restrições de conformidade LGPD podem atrasar liberação de acessos",
+  "Janela de corte da migração pode impactar a operação do laboratório"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia e Dados)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ }
+}

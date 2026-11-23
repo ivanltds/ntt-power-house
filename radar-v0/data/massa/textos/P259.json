@@ -1,0 +1,51 @@
+{
+ "titulo": "Painéis executivos e BI para gestão hospitalar com Power BI e Azure",
+ "problema": "A Rede Hospitalar Santa Clara opera 4 unidades com cerca de 1.200 leitos e não dispõe de uma visão consolidada de indicadores assistenciais, financeiros e operacionais: os relatórios são extraídos manualmente de 6 sistemas distintos, com atraso de até 10 dias e retrabalho de aproximadamente 30 horas semanais da equipe de controladoria. A ausência de dados confiáveis em tempo hábil limita a tomada de decisão da diretoria e a gestão de custos por unidade.",
+ "objetivo": "Implantar uma plataforma de dados em Azure com painéis executivos em Power BI, entregando indicadores consolidados das 4 unidades em até 24 horas de atualização e uma única fonte de verdade para a diretoria.",
+ "escopo": [
+  "Ingestão e integração de dados dos 6 sistemas de origem (ERP, HIS, faturamento e folha) em camada de dados no Azure Data Lake Storage",
+  "Modelagem dimensional em Azure Synapse Analytics com camada semântica única para indicadores assistenciais, financeiros e operacionais",
+  "Construção de 8 painéis executivos em Power BI, incluindo ocupação de leitos, glosas, custo por atendimento e produtividade por unidade",
+  "Definição de catálogo de indicadores e governança de dados com métricas versionadas e dicionário de dados",
+  "Plano de Change Management com treinamento de 60 usuários-chave e comunicação às 4 unidades",
+  "Configuração de atualização automática e monitoramento dos pipelines no Azure Data Factory"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e catálogo com 45 indicadores priorizados",
+  "Pipeline de ingestão automatizado cobrindo as 6 fontes com atualização diária",
+  "Modelo semântico e 8 painéis executivos em Power BI validados pela diretoria",
+  "Dicionário de dados e manual de governança dos indicadores",
+  "Programa de treinamento executado para 60 usuários-chave com material de apoio e avaliação de adesão"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Engenharia de dados e pipelines em Azure",
+   "duracao_semanas": 5
+  },
+  {
+   "fase": "Construção dos painéis em Power BI",
+   "duracao_semanas": 3
+  },
+  {
+   "fase": "Change Management, treinamento e go-live",
+   "duracao_semanas": 1
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em Power BI, 1 analista de change management e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização dos dados nas 6 fontes de origem",
+  "Indisponibilidade das áreas-chave do cliente para validação dos indicadores",
+  "Resistência dos usuários à mudança de processo de reporte manual para os painéis"
+ ],
+ "pessoas": {
+  "cliente": "Marina Duarte (Diretora de Controladoria e Finanças)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou acima do mercado: o valor total apresentado superou em cerca de 25% a melhor oferta concorrente, sem que o cliente percebesse diferenciais suficientes que justificassem o prêmio.",
+ "licoes": "Nas próximas propostas de BI para o setor de saúde, apresentar opções de escopo modular com faixas de preço e quantificar o retorno esperado (horas de retrabalho eliminadas e ganho de prazo na decisão) para ancorar o valor antes da comparação com concorrentes.",
+ "retorno": "Prezados, agradecemos o tempo e a dedicação da equipe na elaboração da proposta de painéis executivos e BI. Após análise comparativa das propostas recebidas, decidimos seguir com outro fornecedor, pois o valor apresentado ficou acima do praticado no mercado para o escopo proposto. Reforçamos que a qualidade técnica e a condução das reuniões foram muito bem avaliadas e esperamos retomar a conversa em iniciativas futuras. Atenciosamente, Marina Duarte, Diretora de Controladoria e Finanças da Rede Hospitalar Santa Clara."
+}

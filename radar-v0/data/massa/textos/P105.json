@@ -1,0 +1,50 @@
+{
+ "titulo": "Manutenção Preditiva de Ativos Industriais com IA no Agronegócio",
+ "problema": "A cooperativa operava 3 unidades de recebimento e secagem de grãos com 180 equipamentos críticos (motores, elevadores e secadores) sob manutenção corretiva, gerando R$ 2,4 milhões/ano em paradas não planejadas e 12% de perda de produtividade no pico da safra. A ausência de monitoramento contínuo impedia antecipar falhas e priorizar ordens de serviço.",
+ "objetivo": "Implantar uma solução de manutenção preditiva baseada em dados de sensores IoT para antecipar falhas em ativos críticos, reduzindo paradas não planejadas e direcionando a manutenção antes do pico da safra.",
+ "escopo": [
+  "Ingestão em tempo real de dados de sensores (vibração, temperatura e corrente) via Azure Event Hubs e Apache Kafka",
+  "Pipeline de Engenharia de Dados em Python no Azure Data Lake e Azure Databricks para tratamento e feature engineering",
+  "Modelos de ML em Python (classificação de falha e regressão de vida útil remanescente) treinados e versionados no Azure Machine Learning",
+  "Painéis de alerta e priorização de ordens de serviço no Power BI integrados ao sistema de manutenção existente",
+  "Monitoramento de deriva de modelo e alarmes automáticos para a equipe de manutenção"
+ ],
+ "entregaveis": [
+  "Pipeline de dados em streaming operando com latência inferior a 60 segundos para 180 ativos",
+  "Modelos preditivos com recall mínimo de 85% para falhas críticas em validação",
+  "Dashboard de saúde de ativos e fila priorizada de manutenção",
+  "Documentação técnica, playbooks de operação e treinamento de 15 usuários",
+  "Relatório de resultados e plano de evolução pós-entrega"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e preparação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Engenharia de dados e streaming",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem e validação de ML",
+   "semanas": 8
+  },
+  {
+   "fase": "Implantação, treinamento e entrega",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura dos sensores IoT em parte dos ativos",
+  "Janela curta antes do pico da safra",
+  "Baixa adesão da equipe de manutenção aos alertas"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Menezes (Gerente de Manutenção Industrial)",
+  "tecnico": "Fernanda Oliveira (Líder Técnica de Data Science)"
+ },
+ "resultados": "Redução de 28% nas paradas não planejadas nos ativos monitorados e economia estimada de R$ 1,1 milhão no primeiro ano.",
+ "licoes": "A integração com o sistema legado de manutenção consumiu 3 semanas a mais que o previsto, exigindo ajustes de escopo no cronograma. Foi decisivo envolver os supervisores de manutenção desde a fase de diagnóstico, o que acelerou a adoção dos alertas.",
+ "diferencial": "Entregamos em 24 semanas com equipe enxuta e foco em valor rápido, combinando engenharia de dados e ML em Azure para respeitar a janela da safra."
+}

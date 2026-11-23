@@ -1,0 +1,48 @@
+{
+ "titulo": "Programa de Governança de Dados e Conformidade LGPD em Azure e Databricks",
+ "problema": "O Banco Cidadela mantém dados de 2,4 milhões de clientes distribuídos em 14 sistemas transacionais, sem catálogo corporativo e com políticas de acesso heterogêneas. A ausência de linhagem e classificação de dados expõe o banco a riscos de multas de até 2% do faturamento sob a LGPD e a atrasos no atendimento de solicitações de titulares.",
+ "objetivo": "Implantar um framework de governança de dados com catálogo, classificação e linhagem automatizados em Azure e Databricks, garantindo rastreabilidade e conformidade LGPD para os dados de clientes do banco.",
+ "escopo": [
+  "Implantação de catálogo de dados corporativo em Azure Purview com varredura inicial de 14 fontes",
+  "Classificação automática de dados pessoais e sensíveis nos lakehouses Databricks",
+  "Mapeamento de linhagem de dados ponta a ponta nos pipelines Databricks e Azure Data Factory",
+  "Definição de políticas de acesso baseadas em papéis integradas ao Azure Active Directory",
+  "Estruturação de processo de atendimento a titulares e registro de operações de tratamento (ROPA)"
+ ],
+ "entregaveis": [
+  "Catálogo de dados corporativo com 1.200 ativos catalogados e classificados",
+  "Matriz de classificação de dados pessoais e sensíveis aprovada pelo DPO",
+  "Relatórios de linhagem de dados para 25 pipelines críticos",
+  "Políticas de acesso e segregação de funções documentadas e implementadas",
+  "Plano de adequação LGPD com cronograma de 90 dias pós-projeto"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho do framework",
+   "semanas": 4
+  },
+  {
+   "nome": "Implantação do catálogo e classificação em Azure",
+   "semanas": 5
+  },
+  {
+   "nome": "Linhagem e políticas de acesso em Databricks",
+   "semanas": 5
+  },
+  {
+   "nome": "Processos LGPD e transferência de conhecimento",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização insuficiente dos metadados nas 14 fontes",
+  "Baixa adesão das áreas de negócio à classificação de dados",
+  "Mudanças regulatórias da LGPD durante a execução"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Data & Compliance)",
+  "tecnico": "Felipe Andrade (Arquiteto de Governança de Dados)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente após reestruturação do orçamento de tecnologia para 2025, que priorizou projetos de core bancário em detrimento da iniciativa de governança de dados."
+}

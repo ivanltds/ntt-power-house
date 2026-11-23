@@ -1,0 +1,48 @@
+{
+ "titulo": "Motor de Precificação Dinâmica de Apólices com Dados em Tempo Real",
+ "problema": "A Proteja Seguros mantém hoje 38 tabelas tarifárias estáticas revisadas apenas duas vezes ao ano, o que gera perda estimada de 4,2 pontos de margem em segmentos de auto e residencial e uma taxa de conversão de propostas 12% abaixo da média do mercado. A ausência de dados de sinistralidade e comportamento em tempo quase real impede ajustes de prêmio por perfil e região.",
+ "objetivo": "Construir um motor de precificação dinâmica que atualize prêmios com base em sinistralidade, perfil e região, reduzindo o ciclo de revisão tarifária de 180 para 7 dias e elevando a conversão de propostas em 8%.",
+ "escopo": [
+  "Ingestão de dados de sinistros, propostas e comportamento em GCP (Cloud Storage e Pub/Sub) com pipelines em Python",
+  "Camada analítica e modelos de precificação no Databricks, com Delta Lake e feature store para scoring em lote e quase real",
+  "Integração do motor de prêmio dinâmico às APIs de cotação existentes, com fallback para a tabela tarifária vigente",
+  "Dashboards de acompanhamento de margem, conversão e sinistralidade por segmento em Analytics & BI",
+  "Governança de dados, versionamento de modelos e trilha de auditoria das decisões de precificação"
+ ],
+ "entregaveis": [
+  "Pipeline de ingestão e tratamento de dados de sinistros e propostas em GCP operando com SLA de 99,5%",
+  "Modelos de precificação dinâmica validados em backtest sobre 24 meses de histórico de sinistralidade",
+  "API de cálculo de prêmio dinâmico integrada ao ambiente de cotação em homologação",
+  "Painel de Analytics & BI com indicadores de margem, conversão e elasticidade de prêmio por segmento",
+  "Documentação técnica, runbook operacional e treinamento de 3 squads do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da arquitetura de dados",
+   "semanas": 4
+  },
+  {
+   "nome": "Construção dos pipelines em GCP e Databricks",
+   "semanas": 8
+  },
+  {
+   "nome": "Desenvolvimento e backtest dos modelos de precificação",
+   "semanas": 8
+  },
+  {
+   "nome": "Integração, dashboards e go-live assistido",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e defasagem dos dados históricos de sinistralidade",
+  "Restrições regulatórias na alteração de prêmios por perfil",
+  "Baixa adoção das novas faixas de prêmio pelas áreas comercial e de subscrição"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Pricing e Produtos)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "diferencial": "Ganhamos pela continuidade do relacionamento com a Proteja Seguros, com equipe já conhecedora dos ambientes GCP e Databricks do cliente, o que reduz o risco de ramp-up e acelera a entrega em 6 meses."
+}

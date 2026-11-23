@@ -1,0 +1,50 @@
+{
+ "titulo": "Previsão de Demanda e Reposição Inteligente para Distribuidora de Energia",
+ "problema": "A Distribuidora Luz do Cerrado enfrenta dificuldades para prever a demanda de energia e planejar a reposição de materiais, resultando em excesso de estoque em 25% e faltas frequentes que afetam 15% das ordens de serviço. O processo atual é manual e baseado em planilhas, sem integração entre as áreas de operações e suprimentos.",
+ "objetivo": "Implementar um modelo de machine learning para previsão de demanda e otimização de reposição, integrado ao SAP e Snowflake, visando reduzir em 20% o excesso de estoque e em 30% as faltas de materiais.",
+ "escopo": [
+  "Desenvolvimento de modelos de previsão de demanda utilizando Python e Machine Learning no Snowflake",
+  "Integração dos dados históricos de consumo do SAP com o Snowflake para criação de data lake",
+  "Automação do processo de reposição com base nas previsões, gerando ordens de compra no SAP",
+  "Implementação de dashboards de acompanhamento e alertas para a equipe de suprimentos",
+  "Capacitação e change management para adoção das novas práticas pelas áreas envolvidas"
+ ],
+ "entregaveis": [
+  "Modelo de previsão de demanda validado com acurácia mínima de 85%",
+  "Pipeline de dados integrado SAP-Snowflake em produção",
+  "Sistema de reposição automática com regras de negócio definidas",
+  "Dashboards interativos para monitoramento de estoque e previsões",
+  "Plano de comunicação e treinamento executado para 50 usuários-chave"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e Preparação de Dados",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Desenvolvimento de Modelos e Integração",
+   "duracao_semanas": 10
+  },
+  {
+   "nome": "Implementação e Testes",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Rollout e Change Management",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados e 1 especialista em change management",
+ "riscos": [
+  "Qualidade dos dados históricos do SAP",
+  "Resistência à mudança pelas equipes operacionais",
+  "Prazo apertado para integração com sistemas legados"
+ ],
+ "pessoas": {
+  "cliente": "Carlos Eduardo Silva (Gerente de Suprimentos)",
+  "tecnico": "Ana Beatriz Rocha (Arquiteta de Dados)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 25% acima do mercado, segundo avaliação do cliente. Apesar da qualidade técnica da solução, o orçamento não foi competitivo.",
+ "licoes": "Para próximas propostas em utilities, é crucial realizar um benchmarking de preços mais detalhado e considerar opções de escopo modular para ajustar o custo ao orçamento do cliente.",
+ "retorno": "Prezados, informamos que a proposta para o projeto de previsão de demanda e reposição não foi selecionada. O motivo principal foi o valor apresentado, que ficou acima do mercado. Agradecemos o empenho da equipe. Atenciosamente, Carlos Eduardo Silva."
+}

@@ -1,0 +1,50 @@
+{
+ "titulo": "Governança de dados e conformidade LGPD em seguradora com Snowflake",
+ "problema": "A Proteja Seguros mantinha dados de 1,2 milhão de segurados distribuídos em 14 sistemas legados, sem catálogo único e com controles de acesso heterogêneos. A ausência de rastreabilidade sobre dados pessoais expunha a companhia a riscos de sanção da ANPD e a retrabalho em auditorias internas que consumiam cerca de 320 horas por trimestre.",
+ "objetivo": "Implantar uma estrutura de governança de dados e adequação à LGPD sobre base Snowflake, com classificação de dados pessoais, políticas de acesso e processo contínuo de change management.",
+ "escopo": [
+  "Mapeamento e classificação de dados pessoais em 14 fontes, com scripts Python de extração e profiling automatizado",
+  "Implantação de catálogo e linhagem de dados no Snowflake, cobrindo 100% das tabelas com dados sensíveis",
+  "Definição de 22 políticas de acesso, mascaramento e retenção alinhadas à LGPD",
+  "Automação em Python de rotinas de varredura de dados pessoais e geração de evidências para auditoria",
+  "Programa de change management com 6 workshops e capacitação de 85 usuários-chave"
+ ],
+ "entregaveis": [
+  "Catálogo de dados com 100% das tabelas críticas classificadas por sensibilidade",
+  "Matriz de políticas de acesso e mascaramento publicada e aplicada no Snowflake",
+  "Relatório de lacunas LGPD com plano de remediação priorizado em 3 ondas",
+  "Conjunto de rotinas Python de varredura e monitoramento contínuo de dados pessoais",
+  "Kit de capacitação e 6 sessões de treinamento realizadas com registro de presença"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e classificação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Implementação de catálogo e políticas no Snowflake",
+   "semanas": 8
+  },
+  {
+   "fase": "Automação de varreduras e evidências em Python",
+   "semanas": 4
+  },
+  {
+   "fase": "Change management e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em privacidade e 1 gerente de projeto",
+ "riscos": [
+  "Baixa adesão das áreas de negócio ao novo processo de classificação",
+  "Qualidade inconsistente dos metadados nas 14 fontes legadas",
+  "Mudanças regulatórias da ANPD durante a execução"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Compliance)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A seguradora passou a rastrear 100% dos dados pessoais em escopo e reduziu o esforço de auditoria em 62%, com economia estimada de R$ 480 mil por ano em horas de conformidade.",
+ "licoes": "A integração com dois sistemas legados sem documentação atrasou a fase de classificação em duas semanas e exigiu esforço adicional de engenharia reversa. O envolvimento antecipado da área de compliance da Proteja Seguros foi decisivo para validar as políticas de acesso ainda na fase de desenho.",
+ "diferencial": "Entregamos o programa completo de governança e LGPD em 5 meses, prazo 30% inferior à referência de mercado, aproveitando o conhecimento acumulado em projeto anterior na Proteja Seguros."
+}

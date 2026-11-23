@@ -1,0 +1,38 @@
+{
+ "titulo": "Governança de dados e conformidade LGPD para hospital infantil",
+ "problema": "O Hospital Infantil Esperança, com 12 mil prontuários eletrônicos ativos e 350 mil atendimentos anuais, enfrentava riscos de conformidade com a LGPD devido à falta de governança sobre dados sensíveis de pacientes. A ausência de políticas de classificação e controle de acesso expunha a instituição a multas que poderiam chegar a 2% do faturamento anual, estimado em R$ 180 milhões.",
+ "objetivo": "Implantar um framework de governança de dados e adequação à LGPD, garantindo a segurança, privacidade e uso ético das informações de pacientes em 6 meses.",
+ "escopo": [
+  "Diagnóstico de maturidade em governança de dados e mapeamento de fluxos de dados sensíveis utilizando Python para análise automatizada.",
+  "Definição de políticas de classificação, retenção e anonimização de dados, com implementação de catálogo de dados no Azure Purview.",
+  "Implementação de controles de acesso baseados em papéis (RBAC) e mascaramento de dados no Databricks e Snowflake.",
+  "Estruturação de processo de resposta a incidentes e gestão de consentimento, com automação via Python e Azure Logic Apps.",
+  "Programa de change management para capacitar 250 colaboradores sobre as novas práticas de privacidade e governança."
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de maturidade em LGPD com plano de ação priorizado.",
+  "Política corporativa de governança de dados e privacidade aprovada pela diretoria.",
+  "Catálogo de dados com 200 ativos mapeados e classificados no Azure Purview.",
+  "Dashboard de monitoramento de conformidade e indicadores de incidentes no Power BI.",
+  "Programa de treinamento em LGPD entregue para 250 colaboradores, com certificação interna."
+ ],
+ "fases": [
+  "Fase 1 - Diagnóstico e planejamento: 6 semanas",
+  "Fase 2 - Definição de políticas e arquitetura de governança: 8 semanas",
+  "Fase 3 - Implementação técnica e automação: 10 semanas",
+  "Fase 4 - Change management e entrega final: 2 semanas"
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em segurança da informação e 1 analista de change management",
+ "riscos": [
+  "Resistência dos colaboradores às novas políticas de acesso e classificação de dados.",
+  "Complexidade na integração de fontes legadas de prontuários eletrônicos.",
+  "Prazo curto para capacitação de 250 colaboradores em 6 meses."
+ ],
+ "pessoas": {
+  "cliente": "Dra. Helena Ribeiro (Diretora de Tecnologia da Informação)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Redução de 85% no tempo de resposta a incidentes de dados e economia estimada de R$ 1,2 milhão em possíveis multas e retrabalhos. A conformidade LGPD passou de 45% para 92% nos controles auditados.",
+ "licoes": "A integração com sistemas legados de prontuário consumiu 30% mais tempo que o previsto, exigindo horas extras de engenharia. O envolvimento precoce da diretoria clínica foi decisivo para engajar as equipes médicas e validar as políticas de acesso.",
+ "diferencial": "Ganhamos pela experiência comprovada em projeto similar de governança de dados em rede hospitalar, com resultados de conformidade acima de 90% em 6 meses."
+}

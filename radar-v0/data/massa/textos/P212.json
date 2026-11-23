@@ -1,0 +1,50 @@
+{
+ "titulo": "Governança de Dados e Conformidade LGPD para Banco Horizonte Sul",
+ "problema": "O Banco Horizonte Sul, com 2,5 milhões de clientes e 120 agências, enfrentava riscos de multas da LGPD, que podem chegar a 2% do faturamento (R$ 180 milhões) por incidentes de dados. Além disso, a falta de governança dificultava a identificação de dados sensíveis e o cumprimento de prazos regulatórios.",
+ "objetivo": "Implementar um framework de governança de dados e adequação à LGPD, garantindo a proteção de dados pessoais e a conformidade regulatória em 5 meses.",
+ "escopo": [
+  "Mapeamento e classificação de dados pessoais em 15 sistemas críticos usando Python para automatizar a descoberta.",
+  "Implementação de catálogo de dados e políticas de acesso no Azure Purview.",
+  "Desenvolvimento de pipelines de anonimização e mascaramento de dados com Python e Azure Data Factory.",
+  "Treinamento e change management para 300 colaboradores sobre LGPD e boas práticas de governança.",
+  "Definição de processos de resposta a incidentes e relatórios de conformidade."
+ ],
+ "entregaveis": [
+  "Relatório de mapeamento de dados pessoais e classificação de risco.",
+  "Catálogo de dados implementado no Azure Purview com 500 ativos catalogados.",
+  "Políticas de segurança e acesso a dados documentadas e aprovadas.",
+  "Programa de treinamento em LGPD com 300 participantes e certificação interna.",
+  "Plano de resposta a incidentes e dashboard de conformidade."
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e Planejamento",
+   "duracao_semanas": 4
+  },
+  {
+   "fase": "Implementação de Governança e Catálogo",
+   "duracao_semanas": 8
+  },
+  {
+   "fase": "Anonimização e Change Management",
+   "duracao_semanas": 6
+  },
+  {
+   "fase": "Validação e Entrega",
+   "duracao_semanas": 2
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 especialista em segurança da informação, 1 consultor de change management e 1 gerente de projeto",
+ "riscos": [
+  "Resistência dos colaboradores às mudanças de processos.",
+  "Complexidade na integração de fontes de dados legadas.",
+  "Prazos apertados para cumprimento de requisitos regulatórios."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Compliance)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados)"
+ },
+ "resultados": "Redução de 40% no tempo de resposta a incidentes de dados e economia estimada de R$ 2,5 milhões em multas evitadas. O banco agora conta com 100% dos dados pessoais mapeados e classificados.",
+ "licoes": "A integração com sistemas legados atrasou o cronograma em 2 semanas, exigindo esforço extra de engenharia. Por outro lado, o envolvimento precoce da área de compliance do cliente foi decisivo para a rápida aprovação das políticas.",
+ "diferencial": "Ganhamos pela continuidade do relacionamento com o Banco Horizonte Sul, que já conhecia nossa abordagem em projetos anteriores de dados."
+}

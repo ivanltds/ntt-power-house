@@ -1,0 +1,50 @@
+{
+ "titulo": "Automação de back-office com RPA em processos SAP para transportadora",
+ "problema": "A Transportadora Rota Livre processa cerca de 12 mil documentos fiscais e 3.500 ordens de coleta por mês, com 40% das atividades de back-office ainda manuais em planilhas e no SAP. O retrabalho consome aproximadamente 1.800 horas por trimestre e gera erros de digitação em 6% dos lançamentos, impactando prazos de faturamento.",
+ "objetivo": "Automatizar rotinas de back-office com RPA integrado ao SAP e scripts Python, reduzindo o esforço manual em 55% e os erros de lançamento para menos de 1% em cinco meses.",
+ "escopo": [
+  "Mapeamento e priorização de 10 processos de back-office (faturamento, coletas, conciliação e cadastro) com base no SAP",
+  "Desenvolvimento de 8 robôs RPA para lançamentos e conferências no SAP, com validação de dados",
+  "Automações em Python para extração, tratamento e conciliação de arquivos e relatórios operacionais",
+  "Orquestração, agendamento e monitoramento dos robôs com trilhas de auditoria e tratamento de exceções",
+  "Sustentação / AMS dos robôs em produção, com SLA de correção e evolução contínua"
+ ],
+ "entregaveis": [
+  "Catálogo de processos automatizáveis com estimativa de ganho em horas por processo",
+  "8 robôs RPA em produção integrados ao SAP e validados em homologação",
+  "Biblioteca de scripts Python para tratamento e conciliação de dados",
+  "Painel de monitoramento de execuções, falhas e indicadores de economia",
+  "Documentação técnica, manuais operacionais e plano de sustentação / AMS"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e priorização",
+   "semanas": 4
+  },
+  {
+   "fase": "Desenvolvimento e testes dos robôs",
+   "semanas": 10
+  },
+  {
+   "fase": "Go-live assistido e estabilização",
+   "semanas": 4
+  },
+  {
+   "fase": "Transição para sustentação / AMS",
+   "semanas": 2
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA/Python e 1 analista de sustentação",
+ "riscos": [
+  "Baixa aderência dos usuários às novas rotinas automatizadas",
+  "Mudanças de layout ou regras no SAP durante o projeto",
+  "Indisponibilidade de ambientes SAP para testes"
+ ],
+ "pessoas": {
+  "cliente": "Marina Toledo (Gerente de Operações)",
+  "tecnico": "Rafael Nogueira (Arquiteto de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque a NTT DATA não apresentou casos comprovados de automação de back-office com RPA no setor de logística. O cliente considerou o risco alto diante da falta de experiência demonstrada no tema.",
+ "licoes": "Para propostas de RPA em logística, incluir sempre pelo menos dois cases com métricas de processos SAP automatizados. Preparar previamente referências e provas de conceito setoriais antes da apresentação comercial.",
+ "retorno": "Prezados, após a avaliação das propostas recebidas, informamos que decidimos não seguir com a NTT DATA para o projeto de automação de back-office. O principal motivo foi a ausência de experiências comprovadas no tema e em projetos semelhantes no setor de logística, o que aumentaria o risco para o nosso cronograma de cinco meses. Agradecemos o empenho da equipe e permanecemos abertos a futuras oportunidades. Atenciosamente, Marina Toledo, Gerente de Operações, Transportadora Rota Livre."
+}

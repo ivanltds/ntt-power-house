@@ -1,0 +1,50 @@
+{
+ "titulo": "Modelo de risco de crédito com ML em AWS e Snowflake",
+ "problema": "O Banco Atlântida Digital processa 1,2 milhão de propostas de crédito por mês, das quais 38% são analisadas manualmente, gerando prazo médio de decisão de 4,5 dias e inadimplência de 7,8% na carteira de crédito pessoal. O modelo atual, baseado em regras estáticas, não captura o comportamento transacional recente dos clientes digitais.",
+ "objetivo": "Desenvolver um modelo de risco de crédito baseado em machine learning, integrado à base Snowflake e operado em AWS, para reduzir o prazo de decisão para até 1 dia e diminuir a inadimplência em 1,5 ponto percentual em 12 meses.",
+ "escopo": [
+  "Diagnóstico e preparação de features a partir de dados transacionais e cadastrais no Snowflake",
+  "Desenvolvimento e treinamento de modelos de Machine Learning de score de crédito na AWS (SageMaker)",
+  "Pipeline de MLOps para versionamento, monitoramento de drift e retreinamento mensal do modelo",
+  "Camada de explicabilidade do score (SHAP) para atendimento às exigências regulatórias de crédito responsável",
+  "Integração do score ao motor de decisão de crédito via API, com testes A/B em produção"
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico de dados e dicionário de features do modelo",
+  "Modelo campeão de score de crédito com métricas de KS, AUC e Gini documentadas",
+  "Pipeline de MLOps em AWS com monitoramento de performance e drift",
+  "Documento de explicabilidade e conformidade regulatória do modelo",
+  "Relatório de testes A/B e plano de rollout para 100% das propostas"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "nome": "Desenvolvimento e validação dos modelos",
+   "semanas": 7
+  },
+  {
+   "nome": "MLOps, explicabilidade e integração via API",
+   "semanas": 6
+  },
+  {
+   "nome": "Testes A/B e rollout assistido",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 cientista de dados sênior, 1 engenheiro de machine learning, 1 engenheiro de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e cobertura dos dados históricos de crédito no Snowflake",
+  "Restrições regulatórias para uso de variáveis sensíveis no modelo",
+  "Baixa adesão das áreas de crédito ao novo score no rollout"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Crédito)",
+  "tecnico": "Felipe Andrade (Lead Data Scientist)"
+ },
+ "resultados": "A proposta foi perdida porque o preço apresentado ficou cerca de 22% acima do mercado. O cliente optou por um concorrente com escopo semelhante e valor inferior, mesmo reconhecendo a continuidade do nosso trabalho anterior.",
+ "licoes": "Para propostas de continuidade em modelos de risco, ancorar o preço em benchmark de mercado e oferecer opção de escopo modular. Isso evita perda por percepção de sobrepreço quando já existe relacionamento com o cliente.",
+ "retorno": "Prezados, após concluirmos a análise das propostas recebidas para o projeto de modelo de risco de crédito, informamos que a decisão foi pela não contratação da NTT DATA. O valor apresentado ficou aproximadamente 22% acima do praticado pelo mercado para escopo equivalente, o que foi determinante na escolha. Agradecemos a dedicação da equipe e a parceria nos projetos anteriores. Permanecemos abertos a novas conversas em iniciativas futuras. Atenciosamente, Renata Vasconcelos, Diretora de Crédito do Banco Atlântida Digital."
+}

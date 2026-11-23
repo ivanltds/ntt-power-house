@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de Detecção de Fraude em Tempo Real com Machine Learning",
+ "problema": "O Banco Cidadela registrou R$ 48 milhões em perdas por fraude em transações de cartão nos últimos 12 meses, com taxa de falsos positivos de 32% nos bloqueios preventivos, gerando atrito com clientes e custo operacional elevado. A base de 2,3 milhões de clientes ativos processa cerca de 9 milhões de transações mensais, hoje analisadas por regras estáticas que não acompanham novos padrões de fraude.",
+ "objetivo": "Construir um modelo de detecção de fraude em tempo real baseado em machine learning na plataforma Databricks sobre Azure, reduzindo falsos positivos em pelo menos 40% e aumentando a detecção de fraudes confirmadas em 25% em seis meses.",
+ "escopo": [
+  "Ingestão e tratamento de dados transacionais e cadastrais em Databricks sobre Azure, com pipelines em Python para features de comportamento de uso",
+  "Desenvolvimento e treinamento de modelos de classificação de fraude em Python (scikit-learn e MLflow) com validação temporal e explicabilidade",
+  "Implementação de scoring em tempo real com latência alvo inferior a 300 ms por transação, integrado ao motor de decisão antifraude",
+  "Painéis de monitoramento de drift, performance do modelo e fila de alertas para o time de prevenção a fraudes",
+  "Documentação técnica e transferência de conhecimento para as equipes de dados e riscos do banco"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura da solução de detecção de fraude em Databricks/Azure",
+  "Pipeline de dados e engenharia de features em produção no Databricks",
+  "Modelo de ML campeão validado com relatório de métricas (AUC, precisão, recall e taxa de falsos positivos)",
+  "API de scoring em tempo real integrada ao motor antifraude com testes de carga",
+  "Dashboard de monitoramento contínuo e manual de operação do modelo"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da arquitetura",
+   "semanas": 4
+  },
+  {
+   "fase": "Engenharia de dados e features no Databricks",
+   "semanas": 6
+  },
+  {
+   "fase": "Modelagem, validação e integração do scoring em tempo real",
+   "semanas": 9
+  },
+  {
+   "fase": "Monitoramento, documentação e transferência de conhecimento",
+   "semanas": 5
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de fraude rotulados",
+  "Latência da integração com o motor antifraude legado do banco",
+  "Baixa adesão do time de prevenção a fraudes ao novo fluxo de alertas"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Prevenção a Fraudes)",
+  "tecnico": "Bruno Tavares (Arquiteto de Soluções de AI & Automation)"
+ },
+ "resultados": "A proposta foi perdida porque o banco exigia experiência comprovada em detecção de fraude em tempo real no setor financeiro e a NTT DATA não apresentou cases concretos nesse tema durante a concorrência. O concorrente vencedor demonstrou histórico de projetos similares em bancos de porte equivalente.",
+ "licoes": "Manter um portfólio interno de cases e referências verificáveis em detecção de fraude no setor financeiro e envolver especialistas do tema nas reuniões de apresentação. Na próxima proposta semelhante, incluir provas de resultado (métricas de projetos anteriores) já na primeira rodada.",
+ "retorno": "Prezados, agradecemos o empenho da equipe da NTT DATA na elaboração da proposta para a plataforma de detecção de fraude. Após análise do comitê de tecnologia e riscos, decidimos seguir com outro fornecedor, pois o edital exigia experiência comprovada em projetos de detecção de fraude em tempo real no setor financeiro, requisito não atendido pelas referências apresentadas. Reforçamos que a qualidade técnica da proposta foi reconhecida e permanecemos abertos a novas conversas em outros temas. Atenciosamente, Renata Vasconcelos, Diretora de Prevenção a Fraudes do Banco Cidadela."
+}

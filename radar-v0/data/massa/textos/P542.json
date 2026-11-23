@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração de Data Warehouse para Nuvem Multi-Cloud no Varejo Calçadista",
+ "problema": "A Calçados Passo Firme opera um data warehouse on-premises que processa cerca de 2,4 TB de dados de vendas, estoque e e-commerce de 380 lojas físicas, com janelas de carga noturna que chegam a 6 horas e relatórios gerenciais disponíveis apenas às 10h. O crescimento de 28% ao ano no volume de dados e a necessidade de analytics em near real-time para o time comercial pressionam a infraestrutura atual, que se aproxima do limite de capacidade.",
+ "objetivo": "Migrar o data warehouse on-premises para uma arquitetura em nuvem escalável e resiliente, reduzindo a janela de carga para menos de 2 horas e viabilizando relatórios analíticos antes das 8h.",
+ "escopo": [
+  "Avaliação e desenho de arquitetura multi-cloud comparando AWS, Azure e GCP quanto a custo, latência e serviços de data warehouse",
+  "Migração dos 2,4 TB de dados históricos e 140 pipelines ETL para ambiente cloud-native",
+  "Implementação de camada de ingestão e orquestração com reprocessamento idempotente e monitoramento de qualidade de dados",
+  "Plano de change management com treinamento de 45 usuários das áreas comercial, financeira e supply chain",
+  "Definição de política de FinOps e governança de custos para o ambiente cloud em AWS, Azure e GCP"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura-alvo e business case comparativo entre AWS, Azure e GCP",
+  "Data warehouse migrado e validado com paridade de 100% dos indicadores críticos",
+  "140 pipelines ETL reescritos e homologados em produção",
+  "Programa de treinamento executado para 45 usuários com material de apoio",
+  "Dashboard de FinOps com projeção de custo mensal e alertas de desvio"
+ ],
+ "fases": [
+  {
+   "nome": "Discovery e arquitetura-alvo",
+   "semanas": 8
+  },
+  {
+   "nome": "Migração de dados e pipelines",
+   "semanas": 16
+  },
+  {
+   "nome": "Homologação e go-live",
+   "semanas": 10
+  },
+  {
+   "nome": "Estabilização e change management",
+   "semanas": 10
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em change management e 1 gerente de projeto",
+ "riscos": [
+  "Janela de corte para migração dos dados históricos impactar a operação das lojas",
+  "Complexidade de paridade entre múltiplas nuvens elevar o esforço de homologação",
+  "Baixa adesão dos usuários ao novo modelo de relatórios no go-live"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de TI)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Cloud)"
+ },
+ "resultados": "A proposta foi perdida porque o preço ficou cerca de 22% acima do mercado, apesar da continuidade do projeto anterior no cliente e da aderência técnica da solução multi-cloud. O concorrente vencedor apresentou valor inferior com escopo semelhante.",
+ "licoes": "Para propostas com continuidade no cliente, ancorar o preço em benchmark de mercado antes da submissão e modularizar o escopo em pacotes para reduzir o valor total percebido. Revisar a margem em serviços de migração multi-cloud, onde a concorrência tem sido mais agressiva.",
+ "retorno": "Prezado Marcelo, após análise do comitê de compras, informamos que a proposta da NTT DATA não foi selecionada para o projeto de migração do nosso data warehouse. O fator determinante foi o valor apresentado, aproximadamente 22% acima das demais propostas recebidas com escopo equivalente. Agradecemos o empenho da equipe e o histórico de parceria nos projetos anteriores. Permanecemos abertos a novas oportunidades em que possamos alinhar melhor as expectativas comerciais. Atenciosamente, Renata Vasconcelos, Diretora de TI, Calçados Passo Firme."
+}

@@ -1,0 +1,48 @@
+{
+ "titulo": "Manutenção preditiva de ativos com streaming e ML para operação agropecuária",
+ "problema": "A Agropecuária Terra Boa opera 42 unidades produtivas com cerca de 380 ativos críticos (bombas, tratores, ordenhadeiras e sistemas de climatização) monitorados de forma reativa, o que gera em média 9 horas de parada não planejada por mês e custo estimado de R$ 1,2 milhão por ano. Os dados de sensores chegam em planilhas e sistemas isolados, sem padronização ou histórico confiável para apoiar decisões de manutenção.",
+ "objetivo": "Implantar uma plataforma de manutenção preditiva que ingira telemetria em tempo real e aplique modelos de Machine Learning para antecipar falhas em ativos críticos, reduzindo paradas não planejadas em pelo menos 25% em 7 meses.",
+ "escopo": [
+  "Construção de pipeline de ingestão de telemetria em Python e Kafka, com capacidade para 5 mil eventos por segundo e janelas de até 30 segundos de latência",
+  "Padronização e modelagem de dados históricos de sensores e ordens de serviço em camadas bronze, prata e ouro",
+  "Desenvolvimento de modelos de Machine Learning de detecção de anomalias e previsão de falha para 6 classes de ativos, com meta de acurácia mínima de 85%",
+  "Integração dos alertas preditivos ao processo de manutenção por meio de API e painel de acompanhamento de saúde dos ativos",
+  "Definição de rotinas de retreinamento e monitoramento de deriva dos modelos em produção"
+ ],
+ "entregaveis": [
+  "Pipeline de streaming em Kafka e Python em operação para 100% dos ativos críticos priorizados",
+  "Catálogo de dados e dicionário de variáveis dos sensores das 42 unidades produtivas",
+  "Seis modelos de Machine Learning validados com relatório de desempenho e limiares de alerta",
+  "Painel de saúde de ativos e API de alertas integrada ao fluxo de manutenção",
+  "Plano de operação, retreinamento e governança dos modelos para os 12 meses seguintes"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e engenharia de dados",
+   "semanas": 8
+  },
+  {
+   "fase": "Desenvolvimento e validação dos modelos de ML",
+   "semanas": 10
+  },
+  {
+   "fase": "Integração, piloto em 3 unidades e treinamento",
+   "semanas": 7
+  },
+  {
+   "fase": "Go-live e estabilização",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 especialista de integração",
+ "riscos": [
+  "Qualidade e cobertura insuficiente da telemetria histórica dos sensores",
+  "Baixa adesão das equipes de campo aos alertas preditivos",
+  "Atraso na liberação de acesso aos sistemas de manutenção e ordens de serviço"
+ ],
+ "pessoas": {
+  "cliente": "Ricardo Almeida (Diretor de Operações)",
+  "tecnico": "Fernanda Costa (Engenheira de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente em razão de corte no orçamento de transformação digital para o exercício."
+}

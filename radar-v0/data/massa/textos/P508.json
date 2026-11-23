@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração do Data Warehouse para Snowflake no Azure com Engenharia de Dados",
+ "problema": "A Escudo Auto Seguros processava 4,2 TB de dados de apólices e sinistros em um data warehouse on-premises com janelas de carga noturnas de 7 horas, o que atrasava a apuração de sinistralidade e limitava a análise a relatórios diários. Com 1,8 milhão de apólices ativas e 320 usuários de BI, a infraestrutura local não suportava o crescimento de 35% ao ano no volume de dados de telemetria de veículos.",
+ "objetivo": "Migrar o data warehouse da Escudo Auto Seguros para Snowflake no Azure em 8 meses, reduzindo a latência das cargas e habilitando análises quase em tempo real para as áreas de subscrição e sinistros.",
+ "escopo": [
+  "Assessment e mapeamento de 240 objetos do data warehouse legado, incluindo 95 procedures e 60 cubos de relatórios",
+  "Modelagem dimensional no Snowflake com camadas raw, trusted e refined e definição de warehouses virtuais por domínio de negócio",
+  "Construção de pipelines de ingestão e transformação no Azure Data Factory e dbt para 38 fontes de dados de apólices, sinistros e telemetria",
+  "Migração e reescrita de 180 rotinas ETL e validação de paridade de dados com reconciliação financeira de sinistralidade",
+  "Implementação de governança de dados, controle de acesso por perfil e monitoramento de custos de consumo no Snowflake"
+ ],
+ "entregaveis": [
+  "Documento de assessment com inventário dos 240 objetos legados e plano de migração por onda",
+  "Ambiente Snowflake no Azure provisionado com camadas raw, trusted e refined e políticas de acesso",
+  "38 pipelines de ingestão e transformação em produção no Azure Data Factory e dbt",
+  "180 rotinas ETL migradas com relatório de paridade e reconciliação de sinistralidade aprovado pela área financeira",
+  "Painéis de monitoramento de custos e desempenho do Snowflake e runbook operacional de sustentação"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e desenho da arquitetura alvo",
+   "semanas": 6
+  },
+  {
+   "nome": "Provisionamento do Snowflake no Azure e construção dos pipelines",
+   "semanas": 12
+  },
+  {
+   "nome": "Migração das rotinas ETL por ondas e validação de paridade",
+   "semanas": 10
+  },
+  {
+   "nome": "Estabilização, governança e transferência de conhecimento",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em Snowflake, 1 analista de governança de dados e 1 gerente de projeto",
+ "riscos": [
+  "Divergência de dados entre o legado e o Snowflake durante a reconciliação de sinistralidade",
+  "Dependência de janelas de acesso restritas aos sistemas de origem para extração de dados",
+  "Consumo do Snowflake acima do previsto por consultas mal otimizadas de usuários de BI"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A janela de carga noturna caiu de 7 horas para 1h20, e o custo mensal de infraestrutura de dados foi reduzido em 28%, cerca de R$ 41 mil por mês. O time de subscrição passou a acessar análises de sinistralidade com atualização de 15 minutos, contra o ciclo diário anterior.",
+ "licoes": "A reescrita de 22 rotinas ETL com regras de negócio não documentadas atrasou a terceira onda em 3 semanas e exigiu esforço extra de engenharia reversa junto às áreas de negócio. Foi decisivo validar a paridade de dados por domínio de negócio a cada onda, com aceite formal da área financeira antes de avançar.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência de migração de data warehouse para Snowflake no Azure em outra seguradora de porte semelhante, com cronograma e métricas de redução de custo comprovados."
+}

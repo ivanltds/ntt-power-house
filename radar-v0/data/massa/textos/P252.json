@@ -1,0 +1,50 @@
+{
+ "titulo": "Sustentação AMS de aplicações críticas em Kubernetes com ServiceNow",
+ "problema": "A Metalúrgica Forja Forte operava 38 aplicações industriais e corporativas com janelas de manutenção corretiva mensais que consumiam cerca de 1.100 horas/ano da equipe interna de TI. Incidentes recorrentes em ambientes Kubernetes geravam paradas não planejadas de até 6 horas por mês em sistemas de apontamento de produção.",
+ "objetivo": "Assumir a sustentação contínua das aplicações críticas em modelo AMS, com gestão de incidentes e mudanças via ServiceNow, reduzindo indisponibilidade e liberando o time interno para iniciativas de transformação.",
+ "escopo": [
+  "Sustentação corretiva e evolutiva de 38 aplicações, com SLA de resposta em até 1 hora para incidentes críticos",
+  "Operação e administração de clusters Kubernetes em produção, incluindo monitoramento, escalabilidade e gestão de releases",
+  "Configuração e gestão de fluxos de incidentes, requisições e mudanças no ServiceNow, com catálogo de serviços e dashboards de SLA",
+  "Gestão de problemas e análise de causa raiz para incidentes recorrentes em ambientes conteinerizados",
+  "Relatórios mensais de desempenho, capacidade e conformidade com os SLAs acordados"
+ ],
+ "entregaveis": [
+  "Catálogo de 38 aplicações sustentadas com criticidade, SLA e responsáveis definidos",
+  "Dashboards de SLA e volumetria no ServiceNow atualizados mensalmente",
+  "Plano de capacidade e saúde dos clusters Kubernetes revisado a cada trimestre",
+  "Relatórios de causa raiz para 100% dos incidentes críticos",
+  "Backlog de melhorias contínuas com no mínimo 12 itens entregues por ciclo trimestral"
+ ],
+ "fases": [
+  {
+   "fase": "Transição e estabilização",
+   "semanas": 16
+  },
+  {
+   "fase": "Operação assistida com SLAs plenos",
+   "semanas": 20
+  },
+  {
+   "fase": "Sustentação evolutiva e otimização de custos",
+   "semanas": 60
+  },
+  {
+   "fase": "Melhoria contínua e renovação contratual",
+   "semanas": 30
+  }
+ ],
+ "equipe": "1 gerente de serviços, 1 arquiteto de soluções, 4 analistas de sustentação, 2 engenheiros Kubernetes e 1 especialista ServiceNow",
+ "riscos": [
+  "Dependência de conhecimento tácito da equipe interna durante a transição",
+  "Incidentes críticos fora do horário coberto pelo SLA",
+  "Mudanças de versão do Kubernetes sem janela adequada de homologação"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de TI Industrial)",
+  "tecnico": "Paulo Menezes (Arquiteto de Sustentação AMS)"
+ },
+ "resultados": "Redução de 42% nas horas de parada não planejada em aplicações de apontamento de produção e economia estimada de R$ 1,8 milhão/ano em custos de sustentação e horas extras.",
+ "licoes": "A migração inicial dos fluxos para o ServiceNow atrasou 3 semanas por divergências no modelo de criticidade das aplicações. Foi decisivo manter um engenheiro Kubernetes dedicado à estabilização dos clusters nos primeiros 90 dias, o que evitou reincidência de incidentes críticos.",
+ "diferencial": "Ganhamos pela capacidade técnica demonstrada em prova de conceito de operação Kubernetes com integração nativa ao ServiceNow, validada em ambiente real do cliente."
+}

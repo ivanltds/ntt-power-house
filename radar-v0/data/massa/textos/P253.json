@@ -1,0 +1,48 @@
+{
+ "titulo": "Plataforma de gestão de saúde populacional com analytics e ML",
+ "problema": "A Operadora Saúde Total acompanha 1,2 milhão de beneficiários em 14 estados, mas 68% das ações de medicina preventiva são disparadas por planilhas manuais, com atraso médio de 21 dias na identificação de grupos de risco. O custo assistencial cresceu 17% no último ano, e a sinistralidade de crônicos chegou a 82%, sem visão consolidada por coorte.",
+ "objetivo": "Implantar uma plataforma de gestão de saúde populacional que consolide dados assistenciais e permita priorização preditiva de grupos de risco, apoiando a redução da sinistralidade e a ampliação de programas preventivos.",
+ "escopo": [
+  "Construção de camada analítica no Azure (Data Lake e Synapse) integrando beneficiários, sinistros, autorizações e exames de 5 sistemas de origem",
+  "Modelos em Power BI para acompanhamento de coortes, sinistralidade e adesão a programas preventivos por unidade e linha de cuidado",
+  "Modelos de Machine Learning para estratificação de risco de crônicos e propensão de internação, com reavaliação mensal",
+  "Pipeline de indicadores de saúde populacional com atualização diária e trilha de qualidade de dados",
+  "Capacitação de 40 usuários das áreas de saúde e atuária no uso dos dashboards e na leitura dos scores de risco"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário de indicadores de saúde populacional",
+  "Data lake integrado com 5 fontes e rotinas de qualidade de dados monitoradas",
+  "Conjunto de 6 dashboards em Power BI para gestão de coortes e sinistralidade",
+  "Modelos de Machine Learning de estratificação de risco validados com área médica",
+  "Relatório de avaliação de resultados e plano de evolução dos modelos"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e arquitetura de dados",
+   "semanas": 8
+  },
+  {
+   "fase": "Integração de fontes e camada analítica no Azure",
+   "semanas": 12
+  },
+  {
+   "fase": "Modelos de ML e dashboards em Power BI",
+   "semanas": 14
+  },
+  {
+   "fase": "Validação, capacitação e go-live",
+   "semanas": 10
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 cientista de dados, 1 especialista em Power BI e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e padronização dos dados assistenciais das 5 fontes de origem",
+  "Baixa adoção dos scores de risco pelas equipes médicas",
+  "Restrições de privacidade e anonimização de dados de saúde (LGPD)"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Saúde Populacional)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente após revisão do orçamento de transformação digital para o exercício, que priorizou projetos regulatórios."
+}

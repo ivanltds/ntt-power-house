@@ -1,0 +1,38 @@
+{
+ "titulo": "Automação de Back-Office com RPA e Integração SAP/ServiceNow",
+ "problema": "A Fintech Pagaí processa 1,2 milhão de transações mensais e enfrenta um back-office com 45% dos processos manuais, gerando custo operacional de R$ 2,8 milhões/ano e erros em 8% das conciliações. A falta de automação integrada ao SAP e ao ServiceNow atrasa fechamentos contábeis em até 5 dias úteis.",
+ "objetivo": "Automatizar processos de back-office com RPA integrado ao SAP e ServiceNow, reduzindo em 60% o esforço manual e eliminando 90% dos erros de conciliação em 5 meses.",
+ "escopo": [
+  "Mapeamento e priorização de 12 processos de back-office candidatos a RPA, com análise de viabilidade técnica e ROI.",
+  "Desenvolvimento de 20 robôs RPA para conciliação financeira, cadastro de fornecedores e emissão de relatórios gerenciais.",
+  "Integração dos robôs com SAP (módulos FI e MM) via APIs e gravação de transações GUI.",
+  "Configuração de orquestração e monitoramento dos robôs no ServiceNow, com alertas e dashboards de performance.",
+  "Gestão de mudança (Change Management) com treinamento de 80 usuários e criação de centro de excelência em RPA."
+ ],
+ "entregaveis": [
+  "Relatório de diagnóstico e priorização de processos com mapa de automação.",
+  "20 robôs RPA em produção, documentados e com testes de aceitação assinados.",
+  "Integrações SAP e ServiceNow homologadas e monitoradas via dashboard.",
+  "Plano de Change Management executado, incluindo 6 workshops e material de treinamento.",
+  "Sustentação AMS por 3 meses pós go-live, com SLA de 4 horas para incidentes críticos."
+ ],
+ "fases": [
+  "Fase 1 – Diagnóstico e Design (6 semanas): mapeamento de processos e arquitetura de automação.",
+  "Fase 2 – Desenvolvimento e Integração (10 semanas): construção dos robôs e integrações SAP/ServiceNow.",
+  "Fase 3 – Testes e Homologação (4 semanas): testes integrados e ajustes finais.",
+  "Fase 4 – Go-live e Sustentação (2 semanas): entrada em produção e início do AMS."
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de automação, 3 desenvolvedores RPA, 1 especialista SAP e 1 analista de change management.",
+ "riscos": [
+  "Resistência dos usuários à automação de processos manuais.",
+  "Complexidade de integração com versão legada do SAP.",
+  "Indisponibilidade de ambientes de teste para homologação."
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de Operações)",
+  "tecnico": "Rafael Almeida (Arquiteto de Automação)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de RPA instalada na Fintech Pagaí, com contrato de licenciamento vigente e equipe treinada, reduzindo o custo de troca e o tempo de implantação.",
+ "licoes": "Mapear antecipadamente o parque tecnológico do cliente e o grau de satisfação com fornecedores incumbentes; nesse caso, poderia ter sido proposta uma abordagem de complementação ou migração gradual para reduzir a percepção de risco.",
+ "retorno": "Prezados, após análise interna, decidimos não avançar com a proposta da NTT DATA para o projeto de automação de back-office. Optamos por renovar com nosso fornecedor atual de RPA, que já possui solução instalada e equipe treinada, o que reduz riscos e custos de transição. Agradecemos o esforço da equipe e esperamos manter a parceria em futuras oportunidades. Atenciosamente, Mariana Costa – Diretora de Operações, Fintech Pagaí."
+}

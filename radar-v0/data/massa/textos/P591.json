@@ -1,0 +1,50 @@
+{
+ "titulo": "Migração de Data Warehouse para Nuvem com Databricks e Snowflake",
+ "problema": "O Banco Aurora enfrentava limitações de escalabilidade e altos custos com seu data warehouse on-premise, que processava 2,5 TB de dados diários e apresentava tempo de resposta médio de 8 horas para relatórios críticos. A necessidade de maior agilidade analítica e redução de custos operacionais motivou a migração para a nuvem.",
+ "objetivo": "Migrar o data warehouse do Banco Aurora para uma arquitetura cloud-native utilizando Databricks, Snowflake e GCP, garantindo escalabilidade, redução de custos e maior velocidade nas análises.",
+ "escopo": [
+  "Avaliação e planejamento da migração do data warehouse legado para Databricks e Snowflake na GCP",
+  "Implementação de pipelines de ingestão e transformação de dados com Databricks e integração com Snowflake",
+  "Migração de 150 tabelas e 300 processos ETL para a nova arquitetura",
+  "Configuração de governança de dados e segurança na plataforma GCP",
+  "Otimização de performance e custos com Snowflake e Databricks"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura alvo e plano de migração detalhado",
+  "Ambiente Databricks e Snowflake configurado na GCP com pipelines de dados operacionais",
+  "Migração completa das 150 tabelas e 300 processos ETL",
+  "Relatório de otimização de custos e performance",
+  "Treinamento e transferência de conhecimento para a equipe do cliente"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e Planejamento",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Implementação da Arquitetura e Pipelines",
+   "duracao_semanas": 12
+  },
+  {
+   "nome": "Migração de Dados e Processos",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Otimização e Go-Live",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados e 1 gerente de projeto",
+ "riscos": [
+  "Complexidade na migração de processos ETL legados",
+  "Resistência à mudança por parte das equipes internas",
+  "Atrasos na obtenção de acessos e credenciais na GCP"
+ ],
+ "pessoas": {
+  "cliente": "Mariana Costa (Diretora de TI)",
+  "tecnico": "Rafael Almeida (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "Redução de 40% nos custos de infraestrutura e diminuição do tempo de resposta dos relatórios de 8 horas para 45 minutos, gerando economia anual estimada em R$ 2,5 milhões.",
+ "licoes": "A integração entre Databricks e Snowflake exigiu mais tempo do que o planejado devido a ajustes finos de compatibilidade, impactando o cronograma em duas semanas. A realização de workshops semanais com as equipes do cliente foi decisiva para alinhar expectativas e acelerar a adoção.",
+ "diferencial": "Experiência comprovada em migrações semelhantes para o setor financeiro, com case de referência em banco de grande porte que resultou em 35% de redução de custos."
+}

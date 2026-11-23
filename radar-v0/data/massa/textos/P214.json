@@ -1,0 +1,47 @@
+{
+ "titulo": "Previsão de Safra e Agricultura de Precisão com Machine Learning e Analytics",
+ "problema": "O Frigorífico Campo Nobre acompanha hoje cerca de 1.200 produtores parceiros em 85 mil hectares e depende de estimativas manuais de safra, com erro médio de 18% na projeção de volume de grãos. Isso gera compras emergenciais de matéria-prima, variação de até 12% no custo de aquisição e baixa visibilidade sobre a produtividade por talhão.",
+ "objetivo": "Implantar modelos de Machine Learning para previsão de safra e um ambiente de agricultura de precisão com dados climáticos, de solo e de imagens, reduzindo o erro de projeção para menos de 8% em 6 meses.",
+ "escopo": [
+  "Construção de pipelines de ingestão de dados climáticos, de solo e de produtividade histórica em Python e AWS (S3, Glue e Lambda)",
+  "Desenvolvimento de modelos de Machine Learning de previsão de safra por talhão e cultura, com validação cruzada e monitoramento de acurácia",
+  "Integração de índices de vegetação (NDVI) provenientes de imagens de satélite ao repositório analítico na AWS",
+  "Criação de dashboards no Power BI com previsão por produtor, talhão e safra, além de alertas de desvio de produtividade",
+  "Definição de rotina de retreinamento mensal dos modelos e documentação dos indicadores de agricultura de precisão"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e modelagem analítica na AWS",
+  "Modelos de Machine Learning de previsão de safra com erro médio inferior a 8% no conjunto de validação",
+  "Pipeline automatizado de ingestão e tratamento de dados climáticos, de solo e de imagens",
+  "Painéis no Power BI para 1.200 produtores e 85 mil hectares, com visão por talhão e cultura",
+  "Manual de operação, retreinamento e governança dos modelos analíticos"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e arquitetura de dados",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Construção dos pipelines e engenharia de dados na AWS",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Desenvolvimento e validação dos modelos de Machine Learning",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Dashboards em Power BI, treinamento e go-live",
+   "duracao_semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 2 engenheiros de dados, 2 cientistas de dados e 1 analista de BI",
+ "riscos": [
+  "Qualidade e cobertura insuficiente dos dados históricos de produtividade por talhão",
+  "Atraso no acesso às imagens de satélite e às bases dos produtores parceiros",
+  "Baixa adoção dos dashboards pelas equipes de campo e de compras"
+ ],
+ "pessoas": {
+  "cliente": "Helena Vasconcelos (Gerente de Suprimentos Agrícolas)",
+  "tecnico": "Rafael Menezes (Arquiteto de Dados Sênior)"
+ }
+}

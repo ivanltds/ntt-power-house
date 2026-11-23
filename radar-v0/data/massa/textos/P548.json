@@ -1,0 +1,48 @@
+{
+ "titulo": "Assistente virtual com IA generativa para atendimento ao paciente pediátrico",
+ "problema": "O Hospital Infantil Esperança registra cerca de 18 mil atendimentos por mês, dos quais 62% passam pelo call center para agendamento, remarcação e dúvidas sobre preparo de exames. O tempo médio de espera na linha chega a 9 minutos e a taxa de abandono é de 21%, sobrecarregando 34 atendentes e gerando insatisfação das famílias.",
+ "objetivo": "Implantar um assistente virtual com IA generativa integrado ao atendimento, automatizando agendamentos, remarcações e orientações pré-exame, com meta de resolver 55% das interações sem intervenção humana em 7 meses.",
+ "escopo": [
+  "Assistente conversacional em Python com LLM orquestrado no Azure OpenAI Service, com guardrails clínicos e trilha de auditoria",
+  "Integração com ServiceNow para abertura, atualização e roteamento de tickets de atendimento e incidentes",
+  "Fluxos de automação de processos no ServiceNow para agendamento, remarcação e confirmação de consultas pediátricas",
+  "Camada de dados e busca semântica no Azure (Azure AI Search e Azure SQL) sobre base de preparo de exames e FAQ institucional",
+  "Painel de acompanhamento no ServiceNow com métricas de contenção, CSAT e transferências para atendimento humano"
+ ],
+ "entregaveis": [
+  "Assistente virtual em produção nos canais web e WhatsApp, com no mínimo 40 intenções mapeadas",
+  "Integração ServiceNow–Azure publicada com 12 automações de processos de atendimento",
+  "Base de conhecimento curada e pipeline de atualização semântica no Azure AI Search",
+  "Relatório de testes de aceitação com taxa de acerto superior a 90% nos cenários validados",
+  "Treinamento de 34 atendentes e documentação técnica de operação e evolução"
+ ],
+ "fases": [
+  {
+   "fase": "Discovery e desenho de experiência",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenvolvimento do assistente e integrações ServiceNow/Azure",
+   "semanas": 12
+  },
+  {
+   "fase": "Piloto controlado e ajuste de modelos",
+   "semanas": 6
+  },
+  {
+   "fase": "Go-live e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções de IA, 2 engenheiros Python, 1 especialista ServiceNow e 1 analista de UX conversacional",
+ "riscos": [
+  "Baixa aderência das famílias ao canal digital",
+  "Restrições de privacidade e LGPD no tratamento de dados de menores",
+  "Latência das integrações ServiceNow–Azure fora do SLA"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Experiência do Paciente)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções de IA)"
+ },
+ "resultados": "A oportunidade foi cancelada pelo cliente após reestruturação do comitê de investimentos do hospital, que suspendeu os aportes em inovação digital para o exercício."
+}

@@ -1,0 +1,49 @@
+{
+ "titulo": "Predição de Churn e Retenção para Laboratório de Diagnósticos",
+ "problema": "O Laboratório Diagnóstico Preciso enfrenta uma taxa de churn de 18% ao ano em sua base de 42 mil pacientes ativos, com perda estimada de R$ 6,3 milhões em receita recorrente. A maior parte das evasões só é identificada quando o paciente já migrou para concorrentes, sem mecanismo preditivo para ação proativa.",
+ "objetivo": "Implantar um modelo preditivo de churn e uma esteira de retenção integrada ao CRM, reduzindo a taxa de evasão em 5 pontos percentuais nos próximos 12 meses.",
+ "escopo": [
+  "Modelagem de propensão a churn no Databricks com features de frequência de exames, sinistralidade e histórico de contato",
+  "Pipeline de dados no Databricks para ingestão de dados de LIS, faturamento e interações de atendimento",
+  "Integração dos scores de churn com o Salesforce para acionamento automático de jornadas de retenção",
+  "Painéis de monitoramento de acurácia do modelo e taxas de conversão das ações de retenção",
+  "Definição de regras de negócio e playbooks de retenção por faixa de risco e segmento de paciente"
+ ],
+ "entregaveis": [
+  "Modelo de propensão a churn validado com AUC acima de 0,80",
+  "Pipeline de dados no Databricks em produção com atualização diária dos scores",
+  "Integração Salesforce-Databricks com 3 jornadas de retenção ativas",
+  "Dashboard executivo de retenção com 12 indicadores-chave",
+  "Documentação técnica e transferência de conhecimento para o time interno"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e preparação de dados",
+   "semanas": 5
+  },
+  {
+   "nome": "Desenvolvimento e validação do modelo",
+   "semanas": 7
+  },
+  {
+   "nome": "Integração com Salesforce e jornadas de retenção",
+   "semanas": 6
+  },
+  {
+   "nome": "Go-live assistido e estabilização",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de dados, 1 cientista de dados sênior, 1 engenheiro de dados e 1 especialista Salesforce",
+ "riscos": [
+  "Qualidade e completude dos dados históricos de LIS e faturamento",
+  "Baixa adesão das equipes de atendimento às jornadas de retenção",
+  "Mudanças de escopo durante a integração com Salesforce"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Experiência do Paciente)",
+  "tecnico": "Felipe Andrade (Data Science Lead)"
+ },
+ "resultados": "O modelo piloto já alcançou AUC de 0,83 e identificou 2.100 pacientes com alto risco de churn no primeiro ciclo de scoring.",
+ "diferencial": "Ganhamos pela entrega anterior de governança de dados no Databricks para o cliente e pelo case de referência em predição de churn em rede de saúde com redução de 6 pontos percentuais em 10 meses."
+}

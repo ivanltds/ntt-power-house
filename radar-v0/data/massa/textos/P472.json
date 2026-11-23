@@ -1,0 +1,47 @@
+{
+ "titulo": "Migração do Data Warehouse do Banco Atlântida Digital para AWS e Databricks",
+ "problema": "O Banco Atlântida Digital mantém um data warehouse on-premises com 45 TB de dados históricos e cerca de 1.200 rotinas noturnas de ETL, cuja janela de carga já ultrapassa 8 horas e compromete a abertura do dia. A operação sofre com custos fixos de infraestrutura e com a dificuldade de escalar o processamento analítico para as áreas de crédito, fraudes e cobrança, que respondem por 70% das consultas.",
+ "objetivo": "Migrar o data warehouse on-premises para uma arquitetura em nuvem na AWS com processamento Databricks em até 6 meses, reduzindo a janela de carga para menos de 2 horas e liberando a infraestrutura local.",
+ "escopo": [
+  "Assessment e mapeamento dos 45 TB de dados e das 1.200 rotinas de ETL para o plano de migração",
+  "Implantação do data lake na AWS com Amazon S3, AWS Glue e orquestração de pipelines",
+  "Construção do lakehouse em Databricks com Delta Lake e camadas bronze, prata e ouro",
+  "Reprocessamento e validação de cargas históricas com reconciliação de dados entre origem e destino",
+  "Configuração de governança, catálogo de dados e controle de acessos na AWS e no Databricks"
+ ],
+ "entregaveis": [
+  "Relatório de assessment com inventário de fontes, volumes e plano de ondas de migração",
+  "Ambiente AWS provisionado com data lake, catálogo e políticas de segurança",
+  "Pipelines de ETL migrados e executados no Databricks com documentação técnica",
+  "Relatório de reconciliação de dados com 100% das tabelas críticas validadas",
+  "Plano de cutover e desativação gradual do data warehouse on-premises"
+ ],
+ "fases": [
+  {
+   "nome": "Assessment e planejamento",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Fundação AWS e governança",
+   "duracao_semanas": 6
+  },
+  {
+   "nome": "Migração dos pipelines para Databricks",
+   "duracao_semanas": 8
+  },
+  {
+   "nome": "Validação, cutover e estabilização",
+   "duracao_semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 3 engenheiros de dados, 1 especialista em nuvem AWS e 1 gerente de projeto",
+ "riscos": [
+  "Atraso na liberação de acessos e credenciais pelas áreas de segurança do cliente",
+  "Divergências de dados nas reconciliações que exijam reprocessamento de cargas",
+  "Dependência de janelas noturnas limitadas para testes paralelos com o ambiente on-premises"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Analytics)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ }
+}

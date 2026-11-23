@@ -1,0 +1,47 @@
+{
+ "titulo": "Modernização de aplicações com containers em ambiente multicloud",
+ "problema": "A Conecta Brasil Telecom opera 38 aplicações legadas de atendimento e billing em servidores físicos com janelas de manutenção de até 6 horas e taxa de indisponibilidade mensal de 1,8%, impactando cerca de 2,4 milhões de clientes. O parque atual limita a elasticidade para picos de tráfego e eleva o custo de sustentação em 22% ao ano.",
+ "objetivo": "Modernizar as aplicações críticas em containers com orquestração padronizada, reduzindo indisponibilidade e tempo de deploy, e estabelecer modelo de sustentação AMS em Azure, AWS e GCP ao longo de 8 meses.",
+ "escopo": [
+  "Avaliação e refatoração de 38 aplicações legadas para containers, com definição de padrão de imagens e pipelines CI/CD",
+  "Implantação de clusters Kubernetes gerenciados em Azure (AKS), AWS (EKS) e GCP (GKE), com política de distribuição de cargas por criticidade",
+  "Migração para Nuvem das cargas prioritárias com cutover planejado e rollback documentado",
+  "Sustentação / AMS com SLA de 99,9%, plantão 24x7 e gestão de incidentes em ambiente multicloud",
+  "Change Management com treinamento de 180 profissionais e plano de comunicação para as áreas de operações e engenharia"
+ ],
+ "entregaveis": [
+  "Inventário técnico e plano de modernização das 38 aplicações com priorização por criticidade",
+  "Ambientes Kubernetes padronizados em Azure, AWS e GCP com pipelines CI/CD operacionais",
+  "Migração concluída das 12 aplicações prioritárias com testes de carga e aceite formal",
+  "Catálogo de serviços AMS com SLA, indicadores e runbooks de operação",
+  "Plano de Change Management executado com trilhas de capacitação e relatório de adesão"
+ ],
+ "fases": [
+  {
+   "nome": "Diagnóstico e desenho da arquitetura multicloud",
+   "semanas": 6
+  },
+  {
+   "nome": "Piloto de containers e pipelines CI/CD",
+   "semanas": 8
+  },
+  {
+   "nome": "Migração das aplicações prioritárias",
+   "semanas": 14
+  },
+  {
+   "nome": "Estabilização, AMS e Change Management",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções cloud, 4 engenheiros de plataforma/DevOps, 2 engenheiros de migração e 1 especialista em change management",
+ "riscos": [
+  "Dependências entre aplicações legadas atrasam a migração",
+  "Restrições de segurança e compliance em ambiente multicloud",
+  "Baixa adesão das equipes do cliente ao novo modelo operacional"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Tecnologia)",
+  "tecnico": "Marcelo Tavares (Arquiteto de Soluções Cloud)"
+ }
+}

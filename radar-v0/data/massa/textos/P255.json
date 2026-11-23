@@ -1,0 +1,50 @@
+{
+ "titulo": "Plataforma de Indicadores ESG e Monitoramento de Emissões",
+ "problema": "A Gás Canalizada Litoral acompanha hoje 42 indicadores ESG em planilhas manuais, com consolidação mensal que leva 15 dias e alto risco de inconsistência nos dados de emissões. A empresa precisa reportar emissões de Escopo 1 e 2 para 3 distribuidoras parceiras e para o regulador, com corte trimestral e trilha de auditoria.",
+ "objetivo": "Implantar uma plataforma de dados e BI que consolide automaticamente os indicadores ESG e as emissões, reduzindo o ciclo de fechamento de 15 para 3 dias úteis e garantindo rastreabilidade para auditoria.",
+ "escopo": [
+  "Pipeline de ingestão em Python para coleta de dados operacionais, de combustível e de sensores de emissões",
+  "Camada analítica no Snowflake com modelagem dimensional de indicadores ESG e fatores de emissão versionados",
+  "Orquestração e governança no Azure Data Factory e Microsoft Purview, com linhagem de dados e controle de acesso",
+  "Dashboards de Analytics & BI para acompanhamento mensal de Escopo 1 e 2 e dos 42 indicadores ESG",
+  "Motor de cálculo de emissões em Python com validação automatizada e trilha de auditoria por registro"
+ ],
+ "entregaveis": [
+  "Documento de arquitetura de dados e dicionário dos 42 indicadores ESG",
+  "Pipeline de ingestão e camada analítica no Snowflake em produção",
+  "Painéis de BI com visão executiva, operacional e de auditoria de emissões",
+  "Motor de cálculo de emissões validado contra o relatório do último trimestre",
+  "Manual de operação, treinamento de 12 usuários e plano de sustentação"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da arquitetura",
+   "semanas": 5
+  },
+  {
+   "fase": "Construção dos pipelines e camada analítica",
+   "semanas": 11
+  },
+  {
+   "fase": "Dashboards, motor de emissões e validação",
+   "semanas": 6
+  },
+  {
+   "fase": "Homologação, treinamento e go-live",
+   "semanas": 4
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 2 engenheiros de dados, 1 analista de BI e 1 gerente de projeto",
+ "riscos": [
+  "Baixa qualidade e padronização dos dados históricos de emissões",
+  "Dependência de áreas operacionais para envio de dados de combustível",
+  "Mudanças nos critérios de reporte do regulador durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Gerente de Sustentabilidade e Compliance)",
+  "tecnico": "Bruno Tavares (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução de indicadores ESG instalada na Gás Canalizada Litoral, com contrato ativo e integrações prontas. O cliente optou por expandir a plataforma existente em vez de migrar para uma nova arquitetura.",
+ "licoes": "Mapear desde o início as ferramentas já instaladas no cliente e o grau de satisfação com os fornecedores atuais. Quando houver solução incumbente, posicionar a proposta como evolução complementar ou demonstrar ganho claro de custo-benefício na migração.",
+ "retorno": "Prezados, informamos que a diretoria optou por não avançar com a proposta de plataforma de indicadores ESG. A decisão considera que já temos uma solução de ESG em operação, contratada no ano passado, e que ampliá-la neste momento é o caminho de menor risco e custo para o ciclo de reporte de 2025. Agradecemos o esforço da equipe da NTT DATA na elaboração da proposta e manteremos o contato para iniciativas futuras de dados. Atenciosamente, Renata Vasconcelos, Gerente de Sustentabilidade e Compliance."
+}

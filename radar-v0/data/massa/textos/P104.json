@@ -1,0 +1,50 @@
+{
+ "titulo": "Programa de Governança de Dados e Adequação à LGPD em Base Analítica",
+ "problema": "A Ondas Móvel operava com dados de 12,4 milhões de clientes espalhados em silos de CRM, faturamento e rede, sem catálogo único nem classificação de dados pessoais. A ausência de políticas formais de retenção e mascaramento expunha a operadora a riscos de sanção da ANPD e a retrabalho em auditorias internas, que consumiam cerca de 1.800 horas por ano.",
+ "objetivo": "Implantar um framework de governança de dados com classificação de dados pessoais, catálogo corporativo e controles de acesso e retenção, garantindo conformidade com a LGPD nas bases analíticas da operadora.",
+ "escopo": [
+  "Diagnóstico e classificação de dados pessoais em 34 tabelas críticas de faturamento, CRM e rede, com mapeamento de bases legais e finalidades",
+  "Construção de catálogo de dados e linhagem no Azure Purview integrado ao Databricks e ao Snowflake",
+  "Implementação de políticas de mascaramento, pseudonimização e controle de acesso baseado em papéis via Python e Azure Key Vault",
+  "Definição e automação de regras de retenção e descarte seguro de dados em pipelines Databricks e rotinas Python",
+  "Painel de conformidade LGPD com indicadores de atendimento a titulares e trilhas de auditoria em Snowflake"
+ ],
+ "entregaveis": [
+  "Catálogo de dados corporativo com 34 tabelas classificadas e 100% dos campos sensíveis mapeados",
+  "Matriz de bases legais e finalidades por processo de negócio, validada pelo jurídico do cliente",
+  "Políticas de acesso e mascaramento implantadas em produção no Databricks e Snowflake",
+  "Conjunto de 18 regras automatizadas de retenção e descarte com evidências de execução",
+  "Dashboard de conformidade LGPD com trilhas de auditoria e relatório executivo de aderência"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e classificação de dados",
+   "semanas": 6
+  },
+  {
+   "fase": "Desenho do framework e catálogo",
+   "semanas": 8
+  },
+  {
+   "fase": "Implementação de controles e automações",
+   "semanas": 12
+  },
+  {
+   "fase": "Homologação, treinamento e sustentação assistida",
+   "semanas": 6
+  }
+ ],
+ "equipe": "1 arquiteto de dados, 1 especialista em privacidade e LGPD, 2 engenheiros de dados e 1 gerente de projeto",
+ "riscos": [
+  "Qualidade e dispersão dos metadados nas fontes legadas de CRM e faturamento",
+  "Baixa adesão das áreas de negócio à classificação e às novas políticas de acesso",
+  "Mudanças regulatórias ou reinterpretação de bases legais durante o projeto"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Dados e Privacidade)",
+  "tecnico": "Felipe Andrade (Arquiteto de Dados Sênior)"
+ },
+ "resultados": "O programa reduziu em 72% o tempo gasto em auditorias internas de dados pessoais, liberando cerca de 1.300 horas anuais, e evitou exposição estimada em R$ 4,2 milhões em eventuais sanções e remediações emergenciais.",
+ "licoes": "A fase de classificação atrasou duas semanas porque os metadados das fontes legadas de faturamento estavam incompletos e exigiram engenharia reversa. Foi decisivo envolver o jurídico do cliente desde a primeira fase, o que acelerou a validação das bases legais e evitou retrabalho no desenho das políticas.",
+ "diferencial": "Ganhamos pela apresentação de um case de referência semelhante em operadora de telecom, com framework de governança já validado em ambiente Azure, Databricks e Snowflake."
+}

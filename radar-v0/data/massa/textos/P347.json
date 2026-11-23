@@ -1,0 +1,50 @@
+{
+ "titulo": "Implantação de CRM Salesforce e Redesenho da Jornada do Cliente",
+ "problema": "A Corretora Valor Alto opera com 3 bases de clientes fragmentadas em planilhas e sistemas legados, atendendo cerca de 48 mil clientes ativos com tempo médio de resposta de 36 horas. A ausência de uma visão única do cliente reduz a conversão de cross-sell para 11% e gera retrabalho em 27% dos atendimentos.",
+ "objetivo": "Implantar uma plataforma CRM em Salesforce integrada ao Azure para unificar o cadastro de clientes e redesenhar a jornada de relacionamento, elevando a conversão de cross-sell e reduzindo o tempo de resposta no atendimento.",
+ "escopo": [
+  "Desenho da jornada do cliente e mapeamento de 6 pontos de contato prioritários na plataforma Salesforce",
+  "Configuração do Salesforce Sales e Service Cloud para 120 usuários em 4 squads comerciais",
+  "Integração do Salesforce com os sistemas legados da corretora via APIs hospedadas no Azure",
+  "Migração e deduplicação de 48 mil registros de clientes para o Salesforce",
+  "Programa de Change Management com treinamentos, comunicação e rede de multiplicadores"
+ ],
+ "entregaveis": [
+  "Blueprint da jornada do cliente e matriz de pontos de dor priorizados",
+  "Ambiente Salesforce configurado e integrado ao Azure em produção",
+  "Base de clientes unificada e deduplicada com taxa de qualidade acima de 95%",
+  "Plano de Change Management executado com 120 usuários treinados",
+  "Relatório de KPIs de adoção e conversão de cross-sell pós-go-live"
+ ],
+ "fases": [
+  {
+   "fase": "Diagnóstico e desenho da jornada",
+   "semanas": 6
+  },
+  {
+   "fase": "Configuração Salesforce e integrações Azure",
+   "semanas": 10
+  },
+  {
+   "fase": "Migração de dados e testes integrados",
+   "semanas": 5
+  },
+  {
+   "fase": "Go-live e Change Management",
+   "semanas": 3
+  }
+ ],
+ "equipe": "1 gerente de projeto, 1 arquiteto de soluções CRM, 2 consultores Salesforce, 1 engenheiro de integração Azure e 1 especialista em Change Management",
+ "riscos": [
+  "Baixa adesão dos 120 usuários comerciais ao novo CRM",
+  "Qualidade e duplicidade dos dados legados de 48 mil clientes",
+  "Atraso nas APIs de integração com sistemas legados da corretora"
+ ],
+ "pessoas": {
+  "cliente": "Renata Vasconcelos (Diretora de Operações e Canais)",
+  "tecnico": "Felipe Andrade (Arquiteto de Soluções CRM)"
+ },
+ "resultados": "A proposta foi perdida porque o concorrente já possuía uma solução CRM instalada e em operação na Corretora Valor Alto, o que reduziu o esforço de implantação percebido e o custo total apresentado. Mesmo com a continuidade do nosso projeto anterior no cliente, a vantagem de incumbência do concorrente prevaleceu na decisão.",
+ "licoes": "Em contas onde já temos histórico, mapear antecipadamente fornecedores incumbentes e quantificar o custo real de troca para o cliente. Preparar uma proposta de continuidade com diferenciais mensuráveis frente à solução já instalada pelo concorrente.",
+ "retorno": "Prezados, informamos que a Corretora Valor Alto decidiu não avançar com a proposta de implantação de CRM e jornada do cliente. A decisão foi tomada porque já temos uma solução CRM instalada e em operação, e o comitê optou por manter a continuidade desse fornecedor. Agradecemos o empenho da equipe da NTT DATA no projeto anterior e permanecemos abertos a novas conversas em outras frentes. Atenciosamente, Renata Vasconcelos, Diretora de Operações e Canais."
+}
