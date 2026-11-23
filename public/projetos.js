@@ -4,6 +4,7 @@ import { enviarParaProjeto } from './upload.js';
 import { cartoesDeEnvio, meusEnvios, formatosOrdenados, abrirRevisao } from './revisao.js';
 import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText, iconeSegmento } from './common.js';
 import { icon } from './icons.js';
+import { openOnePage, openApresentacao } from './onepage.js';
 import { ELISTS, elist, bindEntityLists, readEntityLists } from './entidades.js';
 import { ensureTerms, handleTermsError, maskNote, policyLine } from './aviso.js';
 
@@ -652,6 +653,8 @@ async function openDocumentForm(id) {
 const MODELOS_UI = {
   apresentacao: { icon: 'layout', nome: 'Apresentação para o cliente', desc: 'Slides 16:9 para apresentar ou enviar ao cliente.', formatos: { pptx: 'PowerPoint', pdf: 'PDF' } },
   resumo: { icon: 'file', nome: 'Resumo executivo', desc: 'Documento A4 de 1 a 2 páginas para decisores.', formatos: { docx: 'Word', pdf: 'PDF' } },
+  // CR-075: abre a prévia da one page (blocos editáveis, cliente anônimo por padrão).
+  onepage: { icon: 'star', nome: 'One page de case', desc: 'Uma página com contexto, desafio, solução e resultados, sem expor o cliente.', formatos: { pptx: 'PowerPoint', pdf: 'PDF' } },
 };
 
 async function openExportDialog(p) {
@@ -688,7 +691,7 @@ async function openExportDialog(p) {
     $$('[data-close]', form).forEach((b) => (b.onclick = () => dlg.close()));
     // Guarda título e destinatário digitados ao trocar de modelo ou formato.
     const keep = () => { st.titulo = form.titulo.value; st.para = form.para.value; };
-    $$('input[name=modelo]', form).forEach((r) => (r.onchange = () => { keep(); st.modelo = r.value; render(); }));
+    $$('input[name=modelo]', form).forEach((r) => (r.onchange = () => { keep(); if (r.value === 'onepage') { dlg.close(); openOnePage(p.id); return; } st.modelo = r.value; render(); }));
     $$('input[name=formato]', form).forEach((r) => (r.onchange = () => { keep(); st.formato = r.value; render(); }));
     $('[data-todas]', form).onclick = () => $$('input[name=secao]:not(:disabled)', form).forEach((c) => (c.checked = true));
     $('[data-nenhuma]', form).onclick = () => $$('input[name=secao]', form).forEach((c) => (c.checked = false));

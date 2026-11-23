@@ -16,7 +16,7 @@ import { UploadService, MAX_UPLOAD_BYTES } from './uploads.js';
 import { createProject, updateProject, suggestProject } from './projects.js';
 import { documentForEdit, updateDocument } from './documents.js';
 import { can, capabilities, PROIBIDO } from './permissions.js';
-import { proposalExportOptions, exportProposal } from './export/index.js';
+import { proposalExportOptions, exportProposal, onePagePreview, exportOnePage, casesParaApresentacao, exportApresentacao } from './export/index.js';
 import { MODELOS, SECOES } from './export/modelo.js';
 import { TIPOS_DOCUMENTAIS } from './analysis.js';
 import { STATUS_PROPOSTA, CONFIDENCIALIDADES } from './db/repo.js';
@@ -182,6 +182,41 @@ async function exportFile(req, res) {
     'X-Content-Type-Options': 'nosniff',
   });
   res.end(r.buffer);
+}
+
+// Entrega um arquivo gerado (one page, apresentação de cases); nada fica guardado no servidor.
+function sendFile(res, r) {
+  const ascii = r.nome.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w .-]/g, '_');
+  res.writeHead(200, {
+    'Content-Type': r.mime,
+    'Content-Length': r.buffer.length,
+    'Content-Disposition': `attachment; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(r.nome)}`,
+    'X-Content-Type-Options': 'nosniff',
+  });
+  res.end(r.buffer);
+}
+
+// CR-075: one page de case (PPTX ou PDF de 1 página). R1P5: fica na auditoria (quem, qual projeto, se citou o cliente).
+async function exportOnePageFile(req, res) {
+  const { id, userId, ...pedido } = await readJson(req, 50_000);
+  const user = engine.user(userId);
+  const r = exportOnePage(engine, String(id ?? ''), user, pedido);
+  if (r.naoEncontrado) return send(res, 404, { erro: 'Projeto não encontrado ou sem permissão.' });
+  if (r.erro) return send(res, 400, { erro: r.erro, naoCase: r.naoCase ?? false });
+  engine.repo.logActivity({ acao: 'exportar', entidade: 'projeto', entidade_id: id, campo: `One page · ${String(pedido.formato).toUpperCase()}`, depois: [r.citado ? 'cliente citado' : 'cliente anônimo', r.interno ? 'uso interno' : null].filter(Boolean).join(', '), usuario_id: user.id });
+  audit.logEvent({ tipo: 'onepage', projeto_id: id, formato: pedido.formato, citado: r.citado, interno: r.interno, usuario: user.id });
+  return sendFile(res, r);
+}
+
+// CR-076: apresentação de cases (capa, consolidado, uma one page por case ganho, aprendizados e fontes).
+async function exportApresentacaoFile(req, res) {
+  const { userId, ...pedido } = await readJson(req, 50_000);
+  const user = engine.user(userId);
+  const r = exportApresentacao(engine, user, pedido);
+  if (r.erro) return send(res, 400, { erro: r.erro });
+  for (const id of r.ids) engine.repo.logActivity({ acao: 'exportar', entidade: 'projeto', entidade_id: id, campo: `Apresentação de cases · ${String(pedido.formato).toUpperCase()}`, depois: String(pedido.tema ?? '').slice(0, 80), usuario_id: user.id });
+  audit.logEvent({ tipo: 'apresentacao_cases', projetos: r.ids, fora: r.fora, formato: pedido.formato, slides: r.slides, aprendizados: Boolean(pedido.aprendizados), usuario: user.id });
+  return sendFile(res, r);
 }
 
 function allowedDocs(user) {
@@ -522,6 +557,21 @@ const routes = {
     return r.erro ? [400, r] : r;
   },
 
+  // CR-075: prévia da one page (blocos, fontes e avisos). ?citar=1 pede o nome do cliente (só vale se permitido).
+  'GET /api/onepage': (req, url) => {
+    const p = url.searchParams;
+    const r = onePagePreview(engine, p.get('id') ?? '', engine.user(p.get('userId')), { citar: p.get('citar') === '1' });
+    return r.naoEncontrado ? [404, { erro: 'Projeto não encontrado ou sem permissão.' }] : r;
+  },
+
+  // CR-076: cases ganhos para a apresentação, por tema ou por lista de projetos.
+  'POST /api/apresentacao/cases': async (req) => {
+    const { userId, tema, ids } = await readJson(req, 20_000);
+    const user = engine.user(userId);
+    const r = await casesParaApresentacao(engine, user, { tema: maskSensitive(String(tema ?? '')).texto, ids: Array.isArray(ids) ? ids.map(String) : [] });
+    return r.erro ? [400, r] : r;
+  },
+
   // UC11: registro de atividades, somente leitura e só para o gestor.
   'GET /api/atividades': (req, url) => {
     if (!can(engine.user(url.searchParams.get('userId')), 'verAtividades')) return [403, { erro: PROIBIDO.verAtividades }];
@@ -660,6 +710,8 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/api/sessao') return send(res, 200, { login: auth.enabled });
     if (req.method === 'GET' && url.pathname === '/api/documento/baixar') return download(res, url);
     if (req.method === 'POST' && url.pathname === '/api/projeto/exportar') return exportFile(req, res);
+    if (req.method === 'POST' && url.pathname === '/api/onepage/exportar') return exportOnePageFile(req, res);
+    if (req.method === 'POST' && url.pathname === '/api/apresentacao/exportar') return exportApresentacaoFile(req, res);
     if (handler) {
       const out = await handler(req, url);
       // Handlers devolvem o corpo (200) ou [status, corpo].

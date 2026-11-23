@@ -16,6 +16,9 @@ import { responderConversaIA } from './skills/conversa.js';
 import { responderAjuda } from './skills/ajuda.js';
 import { resumirAnexos, perguntarAnexo, consultaDoAnexo, destinoDoEnvio } from './skills/anexo.js';
 import { can } from './permissions.js';
+import { temaDoPedido, refereListaAnterior, refereFoco, codigoNoTexto } from './skills/cases.js';
+import { onePageContent } from './export/onepage.js';
+import { casesParaApresentacao } from './export/index.js';
 import {
   IntentTools, VOCAB, CAMPOS_FICHA, classificar, camposPedidos, agrupamentoPedido, temAssunto, filtrosValidos,
   textoListagem, textoContagem, textoFicha, textoComparacao, referenciaAnterior, pedeResultados, textoResultados, textoFichas,
@@ -212,7 +215,8 @@ export class RadarEngine {
     // Skills do registro escolhidas pela IA (adendo 6).
     const pelaIA = { conversa: { skill: 'conversa', tipo: u.conversa ?? 'nao_entendi' }, fora_dominio: { skill: 'conversa', tipo: 'fora_escopo' }, ajuda: { skill: 'ajuda' } }[u.intencao]
       ?? (u.intencao === 'anexo' && anexos.length ? { skill: 'anexo', acao: u.acao ?? 'perguntar' } : null)
-      ?? (u.intencao === 'enviar_arquivo' && pendentes > 0 ? { skill: 'enviar_arquivo' } : null);
+      ?? (u.intencao === 'enviar_arquivo' && pendentes > 0 ? { skill: 'enviar_arquivo' } : null)
+      ?? (['gerar_onepage', 'apresentacao_cases'].includes(u.intencao) ? { skill: u.intencao } : null);
     if (pelaIA) return this.runSkill(pelaIA, { ...ctxSkill, query, t0, iaStatus, entendimento });
 
     // UC03.14 — pedido de detalhe de um resultado da resposta anterior.
@@ -404,6 +408,8 @@ export class RadarEngine {
       if (r.ia) iaStatus.push(r.ia);
       return responder('anexo', r);
     }
+    if (d.skill === 'gerar_onepage') return responder('onepage', await this.skillOnePage(query, { user, opp, history }));
+    if (d.skill === 'apresentacao_cases') return responder('apresentacao', await this.skillApresentacao(query, { user, opp, history }));
     if (d.skill === 'enviar_arquivo') {
       const projetos = this.tools.visible(user).itens.map((p) => ({ id: p.id, titulo: p.titulo, cliente: p.cliente, segmento: p.segmento }));
       const foco = opp?.projetoId ? projetos.find((p) => p.id === opp.projetoId) ?? null : null;
@@ -416,6 +422,55 @@ export class RadarEngine {
       return responder('enviar_arquivo', { resposta, dados: { projeto: dest.projeto, opcoes: dest.opcoes, podeCriar: can(user, 'cadastrarProjeto') } });
     }
     return null;
+  }
+
+  // ---------- Adendo 7: one page de case (CR-075) e apresentação de cases (CR-076) ----------
+  // Projeto da one page: código citado, nome citado, projeto em foco ou, sem nada disso, os cases ganhos mais parecidos com o tema.
+  async skillOnePage(query, { user, opp, history }) {
+    const codigo = codigoNoTexto(query);
+    let id = codigo && this.repo.projectDetail(codigo, user) ? codigo : null;
+    if (codigo && !id) return { resposta: `Não encontrei o ${codigo} entre os projetos que o seu perfil pode ver. Diga outro projeto ou o tema do case.`, semEvidencia: true, dados: { opcoes: [] } };
+    const tema = temaDoPedido(query);
+    if (!id && tema) id = this.findProjects({ projetos: [] }, tema, user)[0]?.projeto_id ?? null;
+    if (!id && opp?.projetoId && (!tema || refereFoco(query))) id = opp.projetoId;
+    if (!id && !tema) {
+      const ultimo = [...history].reverse().find((t) => t.mostrados?.length);
+      if (ultimo?.mostrados?.length === 1) id = ultimo.mostrados[0];
+    }
+    if (id) {
+      const c = onePageContent(this, id, user);
+      const vazios = c.blocos.filter((b) => b.vazio && b.key !== 'investimento').map((b) => b.titulo.toLowerCase());
+      const partes = [c.ehCase ? `A one page de "${c.projeto.titulo}" está pronta para conferir.` : `"${c.projeto.titulo}" não é um case (status: ${c.projeto.status}). Dá para gerar a one page como referência interna, com o selo "Uso interno".`,
+        c.citado ? '' : `O cliente aparece como "${c.projeto.cliente}".`,
+        vazios.length ? `Não há registro na base para ${vazios.join(', ')}: complete na prévia antes de enviar.` : 'Todos os blocos têm registro na base.'];
+      return { resposta: partes.filter(Boolean).join(' '), dados: { projeto: { id, titulo: c.projeto.titulo, cliente: c.projeto.cliente, status: c.projeto.status, ehCase: c.ehCase }, vazios, fontes: c.fontes.length } };
+    }
+    if (!tema) return { resposta: 'De qual projeto você quer a one page? Diga o código (ex.: "one page do P001"), o nome do projeto ou o tema do case (ex.: "um case de antifraude em uma página").', dados: { opcoes: [] } };
+    const r = await casesParaApresentacao(this, user, { tema });
+    const opcoes = (r.candidatos ?? []).filter((c) => c.origem !== 'ampliado').slice(0, 3);
+    if (!opcoes.length) return { resposta: `Não encontrei case ganho sobre "${tema}". Tente outro tema ou peça a lista de projetos parecidos.`, semEvidencia: true, dados: { opcoes: [], tema } };
+    return { resposta: `Encontrei ${opcoes.length === 1 ? '1 case ganho' : `${opcoes.length} cases ganhos`} sobre "${tema}". Escolha de qual gerar a one page.`, dados: { opcoes, tema } };
+  }
+
+  // Cases da apresentação: a lista da resposta anterior ("transforma esses"), o tema pedido ou o projeto em foco.
+  async skillApresentacao(query, { user, opp, history }) {
+    const ultimo = [...history].reverse().find((t) => t.mostrados?.length);
+    let tema = temaDoPedido(query);
+    let r;
+    if (refereListaAnterior(query) && ultimo) {
+      r = await casesParaApresentacao(this, user, { ids: ultimo.mostrados, tema: ultimo.consulta ?? '' });
+      tema = r.tema;
+    } else {
+      if ((!tema || refereFoco(query)) && opp) tema = [opp.titulo, opp.segmento].filter(Boolean).join(' em ');
+      if (!tema) return { resposta: 'Sobre qual tema é a apresentação? Ex.: "monta uma apresentação sobre fraude em seguros com nossos cases".', dados: { candidatos: [], removidos: 0, semGanhos: true, tema: '' } };
+      r = await casesParaApresentacao(this, user, { tema });
+    }
+    const n = r.candidatos.filter((c) => c.origem !== 'ampliado').length;
+    const saiu = r.removidos ? ` ${r.removidos} ${r.removidos === 1 ? 'parecido ficou' : 'parecidos ficaram'} de fora por não ${r.removidos === 1 ? 'ser case ganho' : 'serem cases ganhos'}.` : '';
+    const resposta = r.semGanhos
+      ? `Não achei case ganho sobre "${tema}", então não monto material para cliente sem prova.${r.internos?.length ? ` Há ${r.internos.length} ${r.internos.length === 1 ? 'proposta' : 'propostas'} em aberto ou ${r.internos.length === 1 ? 'perdida' : 'perdidas'} sobre o tema, só para consulta interna.` : ''}${r.candidatos.length ? ' Mostro abaixo cases parecidos só nas palavras: use só se servirem.' : ''}`
+      : `Separei ${n === 1 ? '1 case ganho' : `${n} cases ganhos`} sobre "${tema}"${n > 5 ? ' e marquei os 5 mais parecidos' : ''}.${saiu} Confira a seleção, mude a ordem se quiser e gere a apresentação (capa, o que já fizemos, uma one page por case e fontes).`;
+    return { resposta, semEvidencia: r.semGanhos, dados: r };
   }
 
   // ---------- Roteamento por intenção (UC03.17–UC03.23) ----------

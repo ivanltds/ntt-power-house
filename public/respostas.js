@@ -4,6 +4,7 @@
 import { $$, esc, openTab } from './common.js';
 import { icon } from './icons.js';
 import { openProject, statusDot } from './projetos.js';
+import { openOnePage, openApresentacao } from './onepage.js';
 
 export const TIPO_LABEL = {
   semelhantes: ['radar', 'Projetos parecidos'],
@@ -18,6 +19,8 @@ export const TIPO_LABEL = {
   ajuda: ['help', 'Dúvida de uso'],
   anexo: ['paperclip', 'Arquivo da conversa'],
   enviar_arquivo: ['upload', 'Envio de arquivo'],
+  onepage: ['star', 'One page de case'],
+  apresentacao: ['layout', 'Apresentação de cases'],
 };
 
 const FERRAMENTA = {
@@ -186,6 +189,24 @@ function anexo(d) {
     : `<button type="button" class="chip-btn" data-acao-anexo="${esc(a.acao)}">${icon(a.icone, { size: 14 })}${esc(a.rotulo)}</button>`)).join('')}</div>`;
 }
 
+// One page (CR-075): o projeto escolhido (botão abre a prévia) ou até 3 cases ganhos para escolher.
+function onepage(d) {
+  if (d.projeto) {
+    return `<div class="resp-acoes"><button type="button" class="btn sm primary" data-onepage="${esc(d.projeto.id)}">${icon('star', { size: 15 })}${d.projeto.ehCase ? 'Abrir a prévia da one page' : 'Abrir como referência interna'}</button>
+      <button type="button" class="chip-btn" data-proj="${esc(d.projeto.id)}">${icon('folder', { size: 14 })}Abrir o projeto</button></div>`;
+  }
+  return (d.opcoes ?? []).length ? `<ul class="op-escolha">${d.opcoes.map((c) => `<li><span><b>${esc(c.titulo)}</b><small>${esc(c.cliente)} · ${statusDot(c.status)}${c.similaridade != null ? ` · ${Math.round(c.similaridade * 100)}% parecido` : ''}</small></span>
+    <button type="button" class="btn sm" data-onepage="${esc(c.projeto_id)}">${icon('star', { size: 14 })}One page</button></li>`).join('')}</ul>` : '';
+}
+
+// Apresentação de cases (CR-076): resumo da seleção e o botão que abre a montagem (escolher, ordenar e gerar).
+function apresentacao(d) {
+  const marcados = (d.candidatos ?? []).filter((c) => c.marcado);
+  const lista = (d.candidatos ?? []).length ? `<ol class="deck-resumo">${d.candidatos.slice(0, 8).map((c) => `<li class="${c.marcado ? 'on' : ''}">${icon(c.marcado ? 'checkCircle' : 'xCircle', { size: 14 })}<span><b>${esc(c.titulo)}</b> <small>${esc(c.cliente)} · ${esc(c.status)}${c.origem === 'ampliado' ? ' · parecido só nas palavras' : ''}</small></span></li>`).join('')}</ol>` : '';
+  const botao = (d.candidatos ?? []).length ? `<div class="resp-acoes"><button type="button" class="btn sm primary" data-deck="${esc(JSON.stringify(d))}">${icon('layout', { size: 15 })}${marcados.length ? `Montar a apresentação (${marcados.length} ${marcados.length === 1 ? 'case' : 'cases'})` : 'Escolher cases'}</button></div>` : '';
+  return `${lista}${botao}`;
+}
+
 // Corpo da resposta para os tipos novos. Devolve null para "semelhantes" (cards do fluxo original).
 export function renderTyped(r) {
   const d = r.dados ?? {};
@@ -199,6 +220,8 @@ export function renderTyped(r) {
     case 'ajuda': return ajuda(d);
     case 'anexo': return anexo(d);
     case 'enviar_arquivo': return '<div class="envio-destino"></div>';
+    case 'onepage': return onepage(d);
+    case 'apresentacao': return apresentacao(d);
     case 'esclarecimento': return d.opcoes?.length ? `<div class="resp-acoes opcoes">${d.opcoes.map((o) => `<button type="button" class="chip-btn" data-perguntar="${esc(o)}">${icon('message', { size: 14 })}${esc(o)}</button>`).join('')}</div>` : '';
     case 'composta': {
       // Uma ficha por projeto e só o último bloco de cada tipo de lista, para não repetir tabelas.
@@ -232,4 +255,6 @@ export function bindTyped(container, { ask, ajuda: abrirAjuda, feedback, anexar,
   });
   $$('[data-abrir-projetos], [data-filtro]', container).forEach((b) => (b.onclick = () => abrirProjetos(JSON.parse(b.dataset.abrirProjetos ?? b.dataset.filtro))));
   $$('[data-perguntar]', container).forEach((b) => (b.onclick = () => ask(b.dataset.perguntar)));
+  $$('[data-onepage]', container).forEach((b) => (b.onclick = () => openOnePage(b.dataset.onepage)));
+  $$('[data-deck]', container).forEach((b) => (b.onclick = () => openApresentacao({ dados: JSON.parse(b.dataset.deck) })));
 }
