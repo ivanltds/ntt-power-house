@@ -2,9 +2,23 @@
 
 export const NOTAS = [
   {
+    versao: 'V0.0.3',
+    data: '23/11/2026',
+    estado: 'Em andamento',
+    resumo: 'Os três casos de uso da Kelly no alinhamento executivo de 19/11 (cases, apresentação comercial e apoio à nova proposta) e as melhorias levantadas com a Qualidade de Propostas no mesmo dia: one page de case, apresentação de cases ganhos, conversa dentro da ficha do projeto, Insights no ano fiscal da NTT DATA com "Ganhamos × perdemos", sinais do setor e "com quem falar" em cada projeto parecido. A V0.0.2 fica arquivada (roteiro e resultados só para consulta).',
+    itens: [
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Qualidade',
+        titulo: 'V0.0.2 arquivada e roteiro da V0.0.3 aberto',
+        antes: 'O roteiro e os resultados eram da V0.0.2.',
+        depois: 'A V0.0.2 fica arquivada, com o roteiro congelado como estava em produção (116 cenários) e os resultados só para consulta. O roteiro da V0.0.3 começa zerado, traz os cenários das novidades desta versão e destaca os que falharam ou ficaram bloqueados na V0.0.2.',
+      },
+    ],
+  },
+  {
     versao: 'V0.0.2',
     data: '13/11/2026',
-    estado: 'Em andamento',
+    estado: 'Arquivada',
     resumo: 'Correções dos tickets da V0.0.1 priorizados para o MVP, das críticas às baixas, e a gestão de versões: a V0.0.1 fica arquivada (roteiro e resultados só para consulta) e o roteiro da V0.0.2 começa zerado. Cada item cita os tickets que corrige; eles ficam como "Corrigido, aguardando reteste" até alguém passar o cenário no roteiro.',
     itens: [
       {

@@ -743,21 +743,21 @@ test('pergunta composta: a IA escolhe ferramentas, o servidor aplica as permiss�
 test('qualidade: ticket com código, mascaramento, falha no roteiro abre ticket e versão nova começa zerada', () => {
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-qa-')), 'qualidade.json');
   const q = new QualityStore(file);
-  const t1 = q.abrir({ nome: 'Ana', texto: 'A resposta veio errada. Meu e-mail é ana.teste@exemplo.com', area: 'conversas', versao: 'V0.0.2' });
+  const t1 = q.abrir({ nome: 'Ana', texto: 'A resposta veio errada. Meu e-mail é ana.teste@exemplo.com', area: 'conversas', versao: 'V0.0.3' });
   assert.equal(t1.codigo, 'CR-001');
   assert.ok(!JSON.stringify(t1).includes('ana.teste@exemplo.com'), 'e-mail mascarado antes de gravar');
-  const r = q.registrar({ versao: 'V0.0.2', cenario: 'C02', analista: 'Bruno', resultado: 'falha', comentario: 'Veio projetos parecidos em vez da lista.' });
+  const r = q.registrar({ versao: 'V0.0.3', cenario: 'C02', analista: 'Bruno', resultado: 'falha', comentario: 'Veio projetos parecidos em vez da lista.' });
   assert.equal(r.ticket, 'CR-002');
   assert.equal(q.data.tickets.find((t) => t.codigo === 'CR-002').cenario, 'C02');
-  assert.throws(() => q.registrar({ versao: 'V0.0.2', cenario: 'C03', analista: 'Bruno', resultado: 'falha' }), /Conte o que aconteceu/);
-  q.registrar({ versao: 'V0.0.2', cenario: 'C01', analista: 'Bruno', resultado: 'ok' });
-  const s1 = q.resumo('V0.0.2');
+  assert.throws(() => q.registrar({ versao: 'V0.0.3', cenario: 'C03', analista: 'Bruno', resultado: 'falha' }), /Conte o que aconteceu/);
+  q.registrar({ versao: 'V0.0.3', cenario: 'C01', analista: 'Bruno', resultado: 'ok' });
+  const s1 = q.resumo('V0.0.3');
   assert.equal(s1.geral.ok, 1);
   assert.equal(s1.geral.falha, 1);
   assert.equal(s1.geral.pendente, ROTEIRO.length - 2, 'cada cenário conta uma vez');
   // Reteste por outra pessoa substitui: vale o resultado mais recente, sem somar execuções.
-  q.registrar({ versao: 'V0.0.2', cenario: 'C02', analista: 'Carla', resultado: 'ok' });
-  const s1b = q.resumo('V0.0.2');
+  q.registrar({ versao: 'V0.0.3', cenario: 'C02', analista: 'Carla', resultado: 'ok' });
+  const s1b = q.resumo('V0.0.3');
   assert.equal(s1b.geral.ok + s1b.geral.falha + s1b.geral.bloqueado + s1b.geral.pendente, ROTEIRO.length);
   assert.equal(s1b.geral.ok, 2);
   assert.equal(s1b.geral.falha, 0);
@@ -766,15 +766,15 @@ test('qualidade: ticket com código, mascaramento, falha no roteiro abre ticket 
   assert.equal(c02.analista, 'Carla');
   assert.equal(c02.registros, 2);
   assert.ok(s1b.regra.includes('uma vez'));
-  q.atualizar('CR-002', { status: 'corrigido', texto: 'Corrigido, pode retestar.', autor: 'Claude', versao: 'V0.0.3' });
+  q.atualizar('CR-002', { status: 'corrigido', texto: 'Corrigido, pode retestar.', autor: 'Claude', versao: 'V0.0.4' });
   // Versão nova: roteiro zerado; tickets continuam e o histórico da anterior fica disponível.
   const q2 = new QualityStore(file);
-  const s2 = q2.resumo('V0.0.3');
+  const s2 = q2.resumo('V0.0.4');
   assert.equal(s2.geral.ok + s2.geral.falha + s2.geral.bloqueado, 0);
   assert.equal(q2.tickets({ abertos: true }).length, 2);
-  assert.equal(q2.tickets().find((t) => t.codigo === 'CR-002').versaoCorrecao, 'V0.0.3');
-  assert.deepEqual(s2.anteriores.map((v) => v.versao), ['V0.0.2']);
-  assert.equal(q2.abrir({ nome: 'Ana', texto: 'Outro problema aqui.', versao: 'V0.0.3' }).codigo, 'CR-003');
+  assert.equal(q2.tickets().find((t) => t.codigo === 'CR-002').versaoCorrecao, 'V0.0.4');
+  assert.deepEqual(s2.anteriores.map((v) => v.versao), ['V0.0.3']);
+  assert.equal(q2.abrir({ nome: 'Ana', texto: 'Outro problema aqui.', versao: 'V0.0.4' }).codigo, 'CR-003');
 });
 
 test('qualidade: imagens só PNG/JPG/WEBP, no máximo 3; versão do selo igual à do package.json; arquivos do roteiro existem', () => {
@@ -877,15 +877,15 @@ test('roteiro: evidências de Falhou vão para o ticket do cenário; reteste som
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-ev-')), 'qualidade.json');
   const q = new QualityStore(file);
   const img = (n) => ({ url: `https://i.ibb.co/x/ev${n}.jpg`, thumb: `https://i.ibb.co/x/ev${n}-t.jpg`, servico: 'imgbb' });
-  const r = q.registrar({ versao: 'V0.0.2', cenario: 'C02', analista: 'Bia', resultado: 'falha', comentario: 'Veio a lista errada.', imagens: [img(1)] });
+  const r = q.registrar({ versao: 'V0.0.3', cenario: 'C02', analista: 'Bia', resultado: 'falha', comentario: 'Veio a lista errada.', imagens: [img(1)] });
   assert.deepEqual(q.ticket(r.ticket).imagens.map((i) => i.url), [img(1).url]);
-  q.registrar({ versao: 'V0.0.2', cenario: 'C02', analista: 'Bia', resultado: 'bloqueado', comentario: 'Tela não abriu no reteste.', imagens: [img(2)] });
+  q.registrar({ versao: 'V0.0.3', cenario: 'C02', analista: 'Bia', resultado: 'bloqueado', comentario: 'Tela não abriu no reteste.', imagens: [img(2)] });
   const t = q.ticket(r.ticket);
   assert.equal(t.imagens.length, 2);
   assert.equal(t.historico.at(-1).alteracoes[0].adicionadas, 1);
-  const ok = q.registrar({ versao: 'V0.0.2', cenario: 'C01', analista: 'Bia', resultado: 'ok', imagens: [img(3)] });
+  const ok = q.registrar({ versao: 'V0.0.3', cenario: 'C01', analista: 'Bia', resultado: 'ok', imagens: [img(3)] });
   assert.equal(ok.ticket, null);
-  assert.throws(() => q.registrar({ versao: 'V0.0.2', cenario: 'C03', analista: 'Bia', resultado: 'falha', comentario: 'x', imagens: [{ url: 'http://inseguro/a.jpg' }] }), /Link de imagem/);
+  assert.throws(() => q.registrar({ versao: 'V0.0.3', cenario: 'C03', analista: 'Bia', resultado: 'falha', comentario: 'x', imagens: [{ url: 'http://inseguro/a.jpg' }] }), /Link de imagem/);
 });
 
 test('versões: V0.0.1 arquivada e congelada; cenário que passa valida os tickets ligados a ele', () => {
@@ -896,6 +896,11 @@ test('versões: V0.0.1 arquivada e congelada; cenário que passa valida os ticke
   const v1 = roteiroDe('V0.0.1');
   assert.equal(v1.length, 74);
   assert.ok(Object.isFrozen(v1) && Object.isFrozen(v1[0]) && Object.isFrozen(v1[0].passos));
+  // V0.0.2 fechada em 23/11/2026 (foto do roteiro de produção, commit e4ce849): também congelada.
+  const foto2 = JSON.stringify(JSON.parse(fs.readFileSync(path.join(ROOT, 'src', 'roteiros', 'V0.0.2.json'), 'utf8')));
+  assert.equal(crypto.createHash('sha256').update(foto2).digest('hex'), '0ac88534bdebf59dbd618311454b9a30d9e991842efc4131d4243ad5917cd4cb', 'o roteiro da V0.0.2 não pode ser alterado');
+  assert.equal(roteiroDe('V0.0.2').length, 116);
+  assert.ok(versaoArquivada('V0.0.2'));
   assert.ok(versaoArquivada('V0.0.1') && !versaoArquivada(VERSAO));
   assert.equal(roteiroDe(VERSAO), ROTEIRO);
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'radar-ver-')), 'qualidade.json');
@@ -917,11 +922,11 @@ test('versões: V0.0.1 arquivada e congelada; cenário que passa valida os ticke
   assert.equal(q.ticket(outro.codigo).status, 'aberto');
   // Falha não valida nada; versões listadas com a atual primeiro.
   assert.deepEqual(q.registrar({ versao: VERSAO, cenario: 'C01', analista: 'Ana', resultado: 'falha', comentario: 'Quebrou.' }).validados, []);
-  assert.deepEqual(q.versoes(VERSAO).map((v) => [v.versao, v.atual]), [[VERSAO, true], ['V0.0.1', false]]);
+  assert.deepEqual(q.versoes(VERSAO).map((v) => [v.versao, v.atual]), [[VERSAO, true], ['V0.0.2', false], ['V0.0.1', false]]);
   assert.equal(q.resumo('V0.0.1').arquivada, true);
   // Cenários que não passaram na versão anterior: destacados e filtráveis no roteiro da atual.
-  q.data.execucoes['V0.0.1'] = { inicio: 'x', resultados: { C05: { Ana: { resultado: 'bloqueado', em: '2026-11-01', ticket: 'CR-039' } }, C01: { Ana: { resultado: 'ok', em: '2026-11-01' } }, C09: { Bia: { resultado: 'falha', em: '2026-11-01', ticket: 'CR-041' }, Caio: { resultado: 'ok', em: '2026-11-02' } } } };
-  assert.deepEqual(q.naoPassaramAntes(VERSAO, VERSAO), { versao: 'V0.0.1', cenarios: { C05: { resultado: 'bloqueado', ticket: 'CR-039' } } }, 'vale o resultado mais recente');
+  q.data.execucoes['V0.0.2'] = { inicio: 'x', resultados: { C05: { Ana: { resultado: 'bloqueado', em: '2026-11-01', ticket: 'CR-039' } }, C01: { Ana: { resultado: 'ok', em: '2026-11-01' } }, C09: { Bia: { resultado: 'falha', em: '2026-11-01', ticket: 'CR-041' }, Caio: { resultado: 'ok', em: '2026-11-02' } } } };
+  assert.deepEqual(q.naoPassaramAntes(VERSAO, VERSAO), { versao: 'V0.0.2', cenarios: { C05: { resultado: 'bloqueado', ticket: 'CR-039' } } }, 'vale o resultado mais recente');
   assert.equal(q.naoPassaramAntes('V0.0.1', VERSAO), null);
 });
 

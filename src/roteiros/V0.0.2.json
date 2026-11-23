@@ -1,0 +1,2757 @@
+[
+ {
+  "id": "C01",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Pergunta sobre projetos parecidos",
+  "objetivo": "Ver se o Radar encontra projetos parecidos e mostra de onde tirou a informação.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Já fizemos fraude em seguros?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Olhe a etiqueta pequena acima da resposta, à direita (ela diz o tipo de resposta)."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Projetos parecidos\".",
+   "Aparece pelo menos um card de projeto do segmento Seguros.",
+   "Cada card mostra o título, o cliente, o status e uma porcentagem de semelhança.",
+   "Os nomes de clientes citados no texto da resposta são os mesmos dos cards."
+  ]
+ },
+ {
+  "id": "C02",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Pergunta sem acento e com erro de digitação",
+  "objetivo": "Ver se o Radar entende a pergunta mesmo escrita de forma informal.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"ja fizemos fraude em seguros\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A resposta é parecida com a do cenário C01: etiqueta \"Projetos parecidos\" e card do segmento Seguros."
+  ]
+ },
+ {
+  "id": "C03",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Listagem completa (consolidado)",
+  "objetivo": "Ver se um pedido de lista traz a lista, e não \"projetos parecidos\".",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"faça um consolidado de todos os projetos\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Olhe a etiqueta pequena acima da resposta, à direita (ela diz o tipo de resposta).",
+   "Clique em uma linha da tabela."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Listagem\".",
+   "Aparece uma tabela com as colunas Projeto, Cliente, Segmento, Status e Ano.",
+   "O texto informa quantos projetos existem.",
+   "O clique na linha abre a janela de detalhe daquele projeto."
+  ]
+ },
+ {
+  "id": "C04",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Listagem com filtro de status e ano",
+  "objetivo": "Ver se o Radar aplica os filtros que estão na pergunta.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Liste os projetos entregues em 2025\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Leia as colunas Status e Ano de todas as linhas da tabela."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Listagem\".",
+   "Todas as linhas têm status \"Entregue\".",
+   "Todas as linhas têm ano 2025."
+  ]
+ },
+ {
+  "id": "C05",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Listagem por segmento e por status",
+  "objetivo": "Ver variações de pedido de lista.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"quantos projetos temos de Saúde?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"liste as propostas perdidas\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "As duas respostas têm a etiqueta \"Listagem\".",
+   "Na primeira, todas as linhas são do segmento Saúde e o texto diz quantos são.",
+   "Na segunda, todas as linhas têm status \"Perdida\" (a base de exemplo já tem uma proposta perdida, da ModaViva; não é preciso enviar nada)."
+  ]
+ },
+ {
+  "id": "C06",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Abrir a listagem na tela de Projetos",
+  "objetivo": "Ver se dá para continuar a análise na tela de Projetos com os mesmos filtros.",
+  "preparo": [
+   "Faça o cenário C04 até a tabela aparecer."
+  ],
+  "passos": [
+   "Abaixo da tabela, clique no botão \"Abrir em Projetos\" (ou \"Ver os N em Projetos\")."
+  ],
+  "esperado": [
+   "A aba \"Projetos\" abre sozinha.",
+   "O painel de filtros aparece com \"Entregue\" marcado em Status.",
+   "Os cards mostram os mesmos projetos da tabela."
+  ]
+ },
+ {
+  "id": "C07",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Contagem por \"áreas\" e troca de agrupamento",
+  "objetivo": "Ver se o Radar conta projetos e permite ver por outro critério.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"quais áreas têm projetos?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Abaixo das barras, clique no botão \"Ver por prática NTT\".",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A primeira resposta tem a etiqueta \"Contagem\" e barras com um número ao lado de cada item.",
+   "Aparecem botões para ver por outro critério (por exemplo \"Ver por prática NTT\" e \"Ver por serviço\").",
+   "Depois do clique, chega uma nova resposta agrupada por prática NTT."
+  ]
+ },
+ {
+  "id": "C08",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Contagem por tecnologia, por ano e por cliente",
+  "objetivo": "Ver outras formas de contagem.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Quantos projetos por tecnologia?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"distribuição de projetos por ano\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"quais clientes temos na base?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "As três respostas têm a etiqueta \"Contagem\", cada uma por uma dimensão (o cruzamento tecnologia × ano em barras empilhadas não está nesta versão).",
+   "Na de tecnologia, o texto avisa que um projeto pode contar em mais de um item.",
+   "Na de ano, as barras mostram anos (ex.: 2026, 2025, 2024).",
+   "Na de clientes, aparecem nomes de clientes com a quantidade de projetos de cada um."
+  ],
+  "tickets": [
+   "CR-040"
+  ]
+ },
+ {
+  "id": "C09",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Clicar numa barra da contagem",
+  "objetivo": "Ver se o item da contagem leva aos projetos dele.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Quais segmentos já atendemos?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "passos": [
+   "Na lista de barras, clique no nome de um segmento (por exemplo \"Varejo\")."
+  ],
+  "esperado": [
+   "A aba \"Projetos\" abre sozinha.",
+   "Só aparecem cards do segmento clicado, e o filtro aparece como etiqueta acima da lista (ex.: \"Segmento: Varejo\").",
+   "A quantidade de cards é igual ao número que aparecia ao lado da barra."
+  ]
+ },
+ {
+  "id": "C10",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Ficha de um projeto: consultor não vê valores, gestor vê",
+  "objetivo": "Ver se a ficha respeita o que cada perfil pode ver.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Qual o prazo, o valor e a margem do P001?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Anote o que aparece em Valor e Margem.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Qual o prazo, o valor e a margem do P001?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "As duas respostas têm a etiqueta \"Ficha do projeto\".",
+   "Como consultor: Valor e Margem aparecem com um cadeado e o texto \"restrito ao seu perfil\".",
+   "Como gestor: Valor aparece em reais e Margem em porcentagem.",
+   "O prazo aparece nas duas."
+  ]
+ },
+ {
+  "id": "C11",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Ficha pelo nome do projeto",
+  "objetivo": "Ver se o Radar acha o projeto pelo nome, sem o código.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"qual o prazo do projeto Predição de churn em tempo real para banda larga?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Ficha do projeto\".",
+   "A ficha é do projeto da ConectaFibra Telecom e mostra o prazo em meses."
+  ]
+ },
+ {
+  "id": "C12",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Projeto confidencial não aparece para o consultor",
+  "objetivo": "Ver se um projeto confidencial fica escondido de quem não tem permissão.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"ficha do P005\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"ficha do P005\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "Como consultor: o Radar não mostra nenhum dado do P005 (nem cliente, nem valor) e responde só \"Não encontrei o P005 entre os projetos que o seu perfil pode ver\", oferecendo buscar pelo tema, sem listar outros projetos.",
+   "Como gestor: aparece a ficha do projeto da Cooperativa de Crédito Horizonte, com valor e margem na tabela; o texto não repete os campos da tabela."
+  ]
+ },
+ {
+  "id": "C13",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Comparar dois projetos pelo código",
+  "objetivo": "Ver a comparação lado a lado.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"compare o P001 com o P002\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Comparação\".",
+   "Aparece uma tabela com uma coluna para cada projeto.",
+   "O texto resume o que é igual e o que é diferente (segmento, status, prazo, tecnologias)."
+  ]
+ },
+ {
+  "id": "C14",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Comparar os projetos da resposta anterior (\"os dois\")",
+  "objetivo": "Ver se o Radar entende \"os dois\" como os projetos que acabou de mostrar.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"mostre todos os projetos de varejo\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Anote os nomes dos projetos da tabela.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"compare os dois\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A segunda resposta tem a etiqueta \"Comparação\".",
+   "A tabela compara exatamente os projetos da lista anterior, lado a lado."
+  ]
+ },
+ {
+  "id": "C15",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Pergunta composta (várias etapas)",
+  "objetivo": "Ver se o Radar resolve uma pergunta que pede mais de uma coisa.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"liste os projetos de varejo e compare os dois\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Passe o mouse sobre a etiqueta acima da resposta.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"liste os projetos de varejo e compare os dois\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Resposta em etapas\"; passando o mouse, aparecem as etapas (ex.: \"listou projetos → leu a ficha\").",
+   "A resposta traz os projetos de varejo e a comparação entre eles.",
+   "Como gestor, a resposta pode citar valores em reais.",
+   "Como consultor, nenhum valor em reais nem margem aparece no texto ou na tabela."
+  ]
+ },
+ {
+  "id": "C16",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Continuar a conversa com \"neles\"",
+  "objetivo": "Ver se o Radar mantém o assunto quando a pergunta se refere à resposta anterior.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"quais as principais empresas de energia que trabalhamos?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Anote os nomes dos clientes.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"quais os resultados neles?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A segunda resposta tem a etiqueta \"Resultados\".",
+   "Ela fala dos mesmos clientes da resposta anterior, sem trazer clientes novos.",
+   "Para cada projeto aparece o resultado registrado ou o aviso \"Sem resultados registrados\"."
+  ]
+ },
+ {
+  "id": "C17",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Continuar a conversa trocando o segmento (\"e em varejo?\")",
+  "objetivo": "Ver se o Radar mantém o tema e troca só o segmento.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"projetos de churn em telecom\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"e em varejo?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A segunda resposta mostra a etiqueta \"continuando a conversa\".",
+   "Ela fala de churn (perda de clientes) no varejo, e não de varejo em geral, e deixa claro o que entendeu (ex.: projetos de churn no varejo).",
+   "Na caixa de texto aparece a marca \"lembrando 1 pergunta\" (ou mais)."
+  ],
+  "tickets": [
+   "CR-036"
+  ]
+ },
+ {
+  "id": "C18",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Continuar uma contagem (\"desses\")",
+  "objetivo": "Ver se o Radar aplica um filtro novo sobre a resposta anterior.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Quais segmentos já atendemos?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"quais desses têm projetos entregues?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A segunda resposta tem a etiqueta \"Contagem\".",
+   "O texto fala só dos projetos com status entregue.",
+   "O total da segunda resposta é menor ou igual ao da primeira."
+  ]
+ },
+ {
+  "id": "C19",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Esquecer a memória da conversa",
+  "objetivo": "Ver se o botão de esquecer começa do zero.",
+  "preparo": [
+   "Faça o cenário C17 até o fim."
+  ],
+  "passos": [
+   "Na marca \"lembrando N perguntas\", dentro da caixa de texto, clique no X.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"e em varejo?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "Depois do X, a tela volta para a tela inicial de conversa nova e a marca \"lembrando\" some.",
+   "A resposta de \"e em varejo?\" não fala mais de churn: ela trata a pergunta sozinha (ou pede para você explicar melhor)."
+  ]
+ },
+ {
+  "id": "C20",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Pergunta ambígua: o Radar pergunta de volta",
+  "objetivo": "Ver se o Radar oferece opções quando não entende.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"me fala sobre aquilo\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique em uma das opções que aparecerem.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Pergunta de volta\" e aparecem de 2 a 3 opções clicáveis.",
+   "Clicar numa opção envia aquela pergunta e chega uma resposta normal."
+  ]
+ },
+ {
+  "id": "C21",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Pergunta fora do assunto",
+  "objetivo": "Ver se o Radar recusa com educação o que não é sobre propostas e projetos.",
+  "preparo": [
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"qual a previsão do tempo para amanhã?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Olhe a etiqueta pequena acima da resposta, à direita (ela diz o tipo de resposta)."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Conversa\".",
+   "O Radar explica, com educação, que isso foge do que ele faz (propostas, cases, projetos da base e uso do Radar) e pergunta se pode ajudar com algo assim.",
+   "Abaixo aparecem sugestões clicáveis de perguntas que ele responde.",
+   "Nenhum card de projeto aparece."
+  ],
+  "tickets": [
+   "CR-053"
+  ]
+ },
+ {
+  "id": "C22",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Assunto que não existe na base",
+  "objetivo": "Ver se o Radar não inventa projetos.",
+  "preparo": [
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"projetos de computação quântica para mineração em Marte\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "O Radar diz que não encontrou evidência ou que a pergunta está fora do que a base responde.",
+   "Nenhum card de projeto aparece e nenhum projeto é inventado no texto."
+  ]
+ },
+ {
+  "id": "C23",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Dar foco a um projeto (\"Proposta em foco\")",
+  "objetivo": "Ver se o chat passa a responder pensando no projeto escolhido.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Na ponta esquerda da caixa de pergunta, clique no ícone de alvo (\"Proposta em foco\").",
+   "Na caixa de busca que abrir, escreva \"Bom Preço\" e clique no projeto da Rede Bom Preço Supermercados.",
+   "Leia a faixa que aparece acima do chat e as sugestões da tela.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"algum case parecido?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Na faixa \"Respondendo com foco em…\", clique no X.",
+   "Escolha o foco de novo e tire pelo X do botão \"Foco: …\"."
+  ],
+  "esperado": [
+   "Aparece a faixa \"Respondendo com foco em Rede Bom Preço Supermercados\".",
+   "As sugestões da tela inicial mudam para perguntas sobre esse cliente.",
+   "A resposta traz cards de projetos parecidos com o da Rede Bom Preço.",
+   "Antes de clicar, o botão é só um ícone; ao clicar, ele se abre com uma animação suave mostrando \"Proposta em foco\" e a lista. Com o projeto escolhido, mostra \"Foco: Rede Bom Preço Supermercados\", em azul, com um X.",
+   "Depois do X (da faixa ou do botão), a faixa some e o botão volta a ser só o ícone."
+  ]
+ },
+ {
+  "id": "C24",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Ver os detalhes de um card de resposta",
+  "objetivo": "Ver se o card mostra as evidências e a explicação da posição.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"tem algum case de manutenção preditiva?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "passos": [
+   "Clique no título do primeiro card para abri-lo.",
+   "Clique em \"Trechos que sustentam a resposta\".",
+   "Clique em \"Por que apareceu nesta posição\".",
+   "Em \"Fontes\", no fim do card, clique em um dos documentos.",
+   "Feche a janela do documento."
+  ],
+  "esperado": [
+   "O card abre e mostra primeiro o segmento, o prazo, a justificativa e o resumo; as tecnologias aparecem uma vez só, no fim do card.",
+   "Os trechos mostram frases dos documentos do projeto.",
+   "A explicação mostra barras com fatores como conteúdo, segmento e tecnologias.",
+   "O documento abre numa janela com o texto e o botão \"Baixar original\".",
+   "Como consultor, no lugar do preço aparece \"preço e margem restritos\" (os resultados em reais dos cases continuam aparecendo)."
+  ],
+  "tickets": [
+   "CR-051"
+  ]
+ },
+ {
+  "id": "C25",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Reaproveitar um card: abrir, copiar escopo e usar como base",
+  "objetivo": "Ver os botões de reaproveitamento.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Já fizemos fraude em seguros?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Abra o primeiro card clicando no título."
+  ],
+  "passos": [
+   "Clique em \"Copiar escopo\" e cole (Ctrl+V) num bloco de notas.",
+   "Clique em \"Abrir projeto\" e depois feche a janela pelo X.",
+   "Clique em \"Usar como base\".",
+   "Feche o formulário pelo X, sem cadastrar.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Repita a pergunta numa conversa nova e abra o primeiro card."
+  ],
+  "esperado": [
+   "Aparece o aviso \"Escopo copiado\" e o texto colado tem o título, o cliente e o escopo.",
+   "\"Abrir projeto\" abre o detalhe do projeto.",
+   "\"Usar como base\" abre o formulário \"Novo projeto\" já com segmento, tecnologias e serviços preenchidos.",
+   "Como consultor, o botão \"Usar como base\" não aparece."
+  ]
+ },
+ {
+  "id": "C26",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Avaliar uma resposta (útil / não ajudou)",
+  "objetivo": "Ver se é possível dar retorno sobre uma resposta.",
+  "preparo": [
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"tem algum case de manutenção preditiva?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "passos": [
+   "No primeiro card, clique no polegar para cima (\"Útil\").",
+   "No segundo card (se houver), clique no polegar para baixo (\"Não ajudou\").",
+   "Escolha um dos motivos que aparecem."
+  ],
+  "esperado": [
+   "Depois do polegar para cima, aparece o aviso \"Obrigado! Isso melhora as próximas buscas.\"",
+   "Depois do polegar para baixo, aparecem os motivos \"Não é parecido\", \"Informação errada\", \"Desatualizado\" e \"Outro\".",
+   "Depois do motivo, aparece o aviso \"Obrigado! Vamos usar isso para ajustar a busca.\""
+  ]
+ },
+ {
+  "id": "C27",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Conversa salva, renomeada e encontrada pela busca",
+  "objetivo": "Ver se as conversas ficam guardadas e podem ser encontradas.",
+  "preparo": [
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Quais segmentos já atendemos?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique no título da conversa, no alto, apague o texto, escreva \"Teste do roteiro\" seguido do seu nome e aperte Enter.",
+   "Na coluna da esquerda, clique em \"Buscar conversas\" e escreva \"Teste do roteiro\".",
+   "Clique na conversa encontrada."
+  ],
+  "esperado": [
+   "Depois do Enter, aparece o aviso \"Conversa renomeada\".",
+   "A busca da esquerda mostra a conversa com o novo nome.",
+   "Clicar nela reabre a conversa com a pergunta e a resposta."
+  ]
+ },
+ {
+  "id": "C28",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Favoritar e desfavoritar uma conversa",
+  "objetivo": "Ver se as favoritas ficam no alto da lista.",
+  "preparo": [
+   "Faça o cenário C27."
+  ],
+  "passos": [
+   "Clique na estrela (☆) no alto da conversa, à direita do título.",
+   "Olhe a coluna da esquerda.",
+   "Clique de novo na estrela."
+  ],
+  "esperado": [
+   "A estrela fica preenchida e a conversa aparece na caixa \"Favoritas\", no alto da lista, com a estrela sempre visível.",
+   "Nas outras conversas, a estrela só aparece ao passar o mouse.",
+   "Clicando de novo, a estrela fica vazia e a conversa sai de \"Favoritas\" (continua em \"Recentes\" ou no grupo dela)."
+  ],
+  "tickets": [
+   "CR-004"
+  ]
+ },
+ {
+  "id": "C29",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Excluir uma conversa",
+  "objetivo": "Ver se a exclusão pede confirmação antes de apagar.",
+  "preparo": [
+   "Faça o cenário C27 (use a sua conversa \"Teste do roteiro\", não a de outra pessoa)."
+  ],
+  "passos": [
+   "Na coluna da esquerda, passe o mouse sobre a conversa e clique nos três pontinhos (⋯) à direita dela.",
+   "Clique em \"Excluir\".",
+   "Na janela que abre, clique em \"Cancelar\".",
+   "Repita os dois primeiros passos e clique fora da janela.",
+   "Repita mais uma vez e clique em \"Excluir conversa\"."
+  ],
+  "esperado": [
+   "A janela \"Excluir conversa\" mostra o nome da conversa e avisa que a exclusão é permanente.",
+   "\"Cancelar\" e o clique fora fecham a janela sem apagar nada.",
+   "\"Excluir conversa\" apaga: a conversa some da lista e aparece o aviso \"Conversa excluída\"."
+  ]
+ },
+ {
+  "id": "C30",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Reabrir uma conversa e continuar perguntando",
+  "objetivo": "Ver se a memória volta quando a conversa é reaberta.",
+  "preparo": [
+   "Faça os cenários C16 e C27 (deixe uma conversa salva)."
+  ],
+  "passos": [
+   "Clique em \"Nova conversa\".",
+   "Na coluna da esquerda, clique na conversa do cenário C16.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"e qual o prazo deles?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A conversa reabre com todas as perguntas e respostas anteriores.",
+   "A marca \"lembrando N perguntas\" aparece na caixa de texto.",
+   "A resposta fala dos mesmos projetos de energia da conversa."
+  ]
+ },
+ {
+  "id": "C31",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Sugestões da tela inicial mudam com o perfil",
+  "objetivo": "Ver se cada perfil recebe sugestões próprias.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Anote as sugestões que aparecem no meio da tela.",
+   "Clique em uma delas.",
+   "Espere a resposta aparecer.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Compare as sugestões com as anotadas."
+  ],
+  "esperado": [
+   "Clicar numa sugestão envia a pergunta sem precisar digitar.",
+   "As sugestões do gestor são diferentes das do consultor (ex.: \"Quantos projetos por status?\")."
+  ]
+ },
+ {
+  "id": "C32",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Detalhes técnicos da resposta (ícone \"i\")",
+  "objetivo": "Ver como o Radar entendeu a pergunta.",
+  "preparo": [
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"e os de varejo?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "passos": [
+   "Passe o mouse sobre o pequeno \"i\" à direita da etiqueta da resposta."
+  ],
+  "esperado": [
+   "Aparece uma caixa com o tempo da resposta, \"IA: DeepSeek\" e, quando a pergunta foi reescrita, \"Entendi como: …\"."
+  ]
+ },
+ {
+  "id": "C33",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Envio vazio e pergunta muito longa",
+  "objetivo": "Ver se o Radar lida com envio sem texto e texto grande.",
+  "preparo": [
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Com a caixa de texto vazia, aperte Enter.",
+   "Escreva uma pergunta longa, com umas 5 linhas, descrevendo uma proposta de dados para um banco (cliente, objetivo, tecnologias), e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "Com a caixa vazia, nada acontece (nenhuma mensagem vazia é enviada).",
+   "A pergunta longa recebe uma resposta normal, sem erro."
+  ]
+ },
+ {
+  "id": "C34",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Conversas no celular",
+  "objetivo": "Ver se o chat funciona bem na tela pequena.",
+  "preparo": [
+   "No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha."
+  ],
+  "passos": [
+   "Na aba \"Perguntar\", faça a pergunta \"faça um consolidado de todos os projetos\".",
+   "Arraste a tabela da resposta para o lado com o dedo.",
+   "Toque no ícone de lista, no alto à esquerda da conversa, para abrir a lista de conversas, e toque numa conversa."
+  ],
+  "esperado": [
+   "A tabela rola para o lado dentro da resposta, sem a página inteira sair da tela.",
+   "A lista de conversas abre como uma gaveta e fecha ao tocar numa conversa.",
+   "As abas ficam numa barra na parte de baixo da tela."
+  ]
+ },
+ {
+  "id": "P01",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Ler o card de projeto (gestor)",
+  "objetivo": "Ver se os cards trazem as informações de negócio.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Escolha qualquer card e leia o que está escrito nele.",
+   "Passe o mouse sobre as letras no canto inferior direito do card (P, A, C…)."
+  ],
+  "esperado": [
+   "Cada card mostra status, título, cliente e segmento.",
+   "Quando há mais de um projeto com o mesmo cliente, aparece \"N projetos com o cliente\".",
+   "Passando o mouse sobre as letras, aparece o nome completo de cada documento (proposta, apresentação, case…).",
+   "Como gestor, aparece o valor em reais.",
+   "Acima dos cards aparece o total de projetos."
+  ]
+ },
+ {
+  "id": "P02",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Card sem valor para o consultor",
+  "objetivo": "Ver se o consultor não vê valores nos cards.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Olhe a parte de baixo de três cards diferentes."
+  ],
+  "esperado": [
+   "Nenhum card mostra valor em reais.",
+   "No lugar do valor aparece \"Porte\" com P, M, G ou GG.",
+   "Nenhum card mostra o cadeado de \"Confidencial\"."
+  ]
+ },
+ {
+  "id": "P03",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Filtrar por segmento e limpar",
+  "objetivo": "Ver se os filtros reduzem a lista corretamente.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela."
+  ],
+  "passos": [
+   "Anote o total de projetos que aparece acima dos cards.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda.",
+   "No grupo \"Segmento\", marque \"Varejo\".",
+   "Olhe o total e os cards.",
+   "Ao terminar, clique em \"Limpar\", no alto do painel de filtros."
+  ],
+  "esperado": [
+   "Depois de marcar Varejo, só aparecem cards do segmento Varejo e o total diminui.",
+   "O número ao lado de \"Varejo\" no filtro é igual à quantidade de cards.",
+   "O botão \"Filtros\" mostra o número 1 (um filtro ativo).",
+   "Depois de \"Limpar\", o total volta ao número anotado."
+  ]
+ },
+ {
+  "id": "P04",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Combinar filtros de grupos diferentes",
+  "objetivo": "Ver se dois filtros juntos mostram só o que atende aos dois.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda."
+  ],
+  "passos": [
+   "Em \"Segmento\", marque \"Utilities / Energia\".",
+   "Em \"Status\", marque \"Entregue\".",
+   "Confira os cards.",
+   "Ao terminar, clique em \"Limpar\", no alto do painel de filtros."
+  ],
+  "esperado": [
+   "Só aparecem cards de Utilities / Energia com status Entregue.",
+   "O botão \"Filtros\" mostra o número 2.",
+   "Se nenhum projeto atender aos dois, aparece \"Nenhum projeto com esses critérios\" e o botão \"Limpar filtros\"."
+  ]
+ },
+ {
+  "id": "P05",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Vários itens no mesmo grupo e \"todas\" × \"qualquer\"",
+  "objetivo": "Ver a diferença entre exigir todas as tecnologias ou qualquer uma.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda."
+  ],
+  "passos": [
+   "Em \"Tecnologias\", marque \"Python\" e \"Azure\".",
+   "Anote o total. Ao lado do título \"Tecnologias\", a opção \"todas\" deve estar marcada.",
+   "Ao lado do título \"Tecnologias\", marque \"qualquer\".",
+   "Anote o total de novo.",
+   "Ao terminar, clique em \"Limpar\", no alto do painel de filtros."
+  ],
+  "esperado": [
+   "Com \"todas\", aparecem só projetos que têm Python e Azure ao mesmo tempo.",
+   "Com \"qualquer\", aparecem projetos com Python ou com Azure, e o total é maior ou igual ao anterior."
+  ]
+ },
+ {
+  "id": "P06",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Filtrar por documento disponível",
+  "objetivo": "Ver se dá para achar projetos que têm um tipo de documento.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda."
+  ],
+  "passos": [
+   "No grupo \"Tem documento\", marque \"Case de sucesso\".",
+   "Olhe as letras no canto dos cards.",
+   "Ao terminar, clique em \"Limpar\", no alto do painel de filtros."
+  ],
+  "esperado": [
+   "Todos os cards que sobram têm a letra C (case) entre as letras do canto."
+  ]
+ },
+ {
+  "id": "P07",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Filtrar por cliente, prazo e data",
+  "objetivo": "Ver os filtros de texto, número e data.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda."
+  ],
+  "passos": [
+   "Na caixa \"Cliente\", escreva \"Energisul\" e olhe os cards. Depois apague.",
+   "Em prazo, escreva 4 em \"meses de\" e 6 em \"até\". Olhe os cards. Depois apague os dois.",
+   "Em data, escolha 01/01/2025 no primeiro campo e 31/12/2025 no segundo. Olhe os cards.",
+   "Ao terminar, clique em \"Limpar\", no alto do painel de filtros."
+  ],
+  "esperado": [
+   "Com \"Energisul\", só aparecem projetos desse cliente.",
+   "Com prazo de 4 a 6 meses, todos os cards mostram prazo entre 4 e 6 m.",
+   "Com a data de 2025, todos os cards mostram o ano 2025."
+  ]
+ },
+ {
+  "id": "P08",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Filtro de valor só para o gestor",
+  "objetivo": "Ver se o filtro de valor some para quem não pode ver valores.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda."
+  ],
+  "passos": [
+   "Procure os campos \"R$ de\" e \"até\" no painel de filtros.",
+   "Escreva 1000000 em \"R$ de\" e olhe os cards.",
+   "Ao terminar, clique em \"Limpar\", no alto do painel de filtros.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Abra o painel de filtros de novo e procure os campos de valor."
+  ],
+  "esperado": [
+   "Como gestor, os campos de valor aparecem e, com R$ 1.000.000, só ficam projetos a partir desse valor.",
+   "Como consultor, os campos de valor não aparecem."
+  ]
+ },
+ {
+  "id": "P09",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "\"Meus projetos\"",
+  "objetivo": "Ver o filtro de projetos ligados a você.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda."
+  ],
+  "passos": [
+   "Clique em \"Meus projetos\", no alto do painel de filtros, e anote os projetos.",
+   "Clique de novo para desligar.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Ligue \"Meus projetos\" de novo."
+  ],
+  "esperado": [
+   "No canto superior direito, o botão de conta mostra \"MC Marina · Consultor\" e depois \"TR Thiago · Gestor\".",
+   "Como consultor, aparecem os projetos em que Marina Costa é a responsável (ou em que esse perfil enviou documento).",
+   "Como gestor, a lista é outra: os projetos de Thiago Ramos.",
+   "Clicando de novo, a lista completa volta."
+  ]
+ },
+ {
+  "id": "P10",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Buscar no conteúdo dos documentos",
+  "objetivo": "Ver se a busca encontra projetos pelo que está escrito nos documentos.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela."
+  ],
+  "passos": [
+   "Clique na caixa \"Buscar no conteúdo dos documentos\" e escreva \"churn\".",
+   "Espere um segundo e leia o trecho destacado nos cards.",
+   "Apague o texto."
+  ],
+  "esperado": [
+   "A lista mostra só projetos que falam de churn.",
+   "Os cards mostram um trecho do documento com a palavra destacada.",
+   "Apagando o texto, a lista completa volta."
+  ]
+ },
+ {
+  "id": "P11",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Busca com várias palavras: \"todas\" × \"qualquer\"",
+  "objetivo": "Ver como a busca combina palavras.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda."
+  ],
+  "passos": [
+   "Na caixa de busca, escreva \"churn varejo\".",
+   "No painel de filtros, a opção \"todas as palavras\" deve estar marcada. Anote o total.",
+   "Marque \"qualquer\" e anote o total de novo.",
+   "Apague a busca e clique em \"Limpar\"."
+  ],
+  "esperado": [
+   "Com \"todas as palavras\", aparecem só projetos que falam de churn e de varejo.",
+   "Com \"qualquer\", o total é maior ou igual."
+  ]
+ },
+ {
+  "id": "P12",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Busca sem resultado leva ao chat",
+  "objetivo": "Ver o que acontece quando nada é encontrado.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela."
+  ],
+  "passos": [
+   "Na caixa de busca, escreva \"xyzteste\".",
+   "Clique no botão \"Perguntar ao Radar sobre “xyzteste”\"."
+  ],
+  "esperado": [
+   "Aparece \"Nenhum projeto com esses critérios\".",
+   "O botão leva para a aba \"Perguntar\" e envia a pergunta."
+  ]
+ },
+ {
+  "id": "P13",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Ordenar a lista",
+  "objetivo": "Ver se a ordenação muda a ordem dos cards.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela."
+  ],
+  "passos": [
+   "Clique na caixa de ordenação (mostra \"Relevância\"), ao lado do botão Filtros, e escolha \"Recentes\".",
+   "Escolha \"Prazo\".",
+   "Escolha \"A–Z\".",
+   "Escolha \"Valor\".",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Abra a caixa de ordenação de novo."
+  ],
+  "esperado": [
+   "\"Recentes\": da data mais nova para a mais antiga; os cards mostram mês e ano (ex.: set/2026).",
+   "\"Prazo\": em ordem de prazo.",
+   "\"A–Z\": em ordem alfabética do título.",
+   "\"Valor\" (gestor): do maior para o menor valor.",
+   "Como consultor, a opção \"Valor\" não aparece na lista."
+  ]
+ },
+ {
+  "id": "P14",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Abrir o detalhe do projeto",
+  "objetivo": "Ver se o detalhe mostra os dados e os documentos.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela."
+  ],
+  "passos": [
+   "Clique num card qualquer.",
+   "Leia a coluna da direita (\"Ficha\", \"Tecnologias\", \"Serviços\", \"Projetos parecidos\").",
+   "Role a janela até o fim e clique em \"Documentos\" para abrir a seção.",
+   "Clique em \"Documentos\" de novo para fechar.",
+   "Feche pelo X no canto superior direito."
+  ],
+  "esperado": [
+   "Abre uma janela com título, cliente, objetivo e contexto; Resultados, Lições aprendidas, Riscos e Documentos vêm fechados, com a quantidade de itens no título e uma setinha.",
+   "A coluna \"Ficha\" mostra cliente, segmento, status, acesso e origem.",
+   "Ao abrir \"Documentos\", cada documento mostra o tipo (proposta, apresentação, case…); clicar no título de novo fecha a seção.",
+   "O X fecha a janela e você volta para a lista."
+  ]
+ },
+ {
+  "id": "P15",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Navegar para um projeto parecido e abrir um documento",
+  "objetivo": "Ver as ligações entre projetos e os documentos.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra o detalhe de um projeto que tenha \"Projetos parecidos\" na coluna da direita."
+  ],
+  "passos": [
+   "Na coluna da direita, clique em \"Projetos parecidos\" para abrir o card e clique num dos projetos.",
+   "No novo detalhe, abra a seção \"Documentos\" e clique no nome de um documento.",
+   "Na janela do documento, clique em \"Baixar original\".",
+   "Feche as janelas."
+  ],
+  "esperado": [
+   "O detalhe muda para o projeto parecido.",
+   "O documento abre numa janela com o texto.",
+   "\"Baixar original\" baixa o arquivo como foi enviado (na base de exemplo os documentos são .md; o botão mostra o formato). PDF e Word gerados pelo Radar ficam em \"Exportar\", na ficha."
+  ]
+ },
+ {
+  "id": "P16",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Detalhe do projeto como consultor",
+  "objetivo": "Ver se o consultor não vê valores no detalhe.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela."
+  ],
+  "passos": [
+   "Abra o detalhe de um projeto qualquer.",
+   "Procure valor e margem."
+  ],
+  "esperado": [
+   "Valor aparece com cadeado (oculto para o perfil).",
+   "O botão \"Usar como base\" não aparece no alto da janela."
+  ]
+ },
+ {
+  "id": "P17",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Exportar proposta (apresentação e resumo)",
+  "objetivo": "Ver se o Radar gera os documentos para o cliente.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra o detalhe de um projeto com vários documentos (ex.: o da Energisul)."
+  ],
+  "passos": [
+   "Clique em \"Exportar\", no alto da janela.",
+   "Deixe \"Apresentação para o cliente\" e \"PowerPoint\" e clique em \"Gerar PowerPoint\".",
+   "Abra o arquivo baixado.",
+   "Clique em \"Exportar\" de novo, escolha \"Resumo executivo\" e \"PDF\" e clique em \"Gerar PDF\".",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Abra o mesmo projeto, clique em \"Exportar\" e leia a parte de baixo da janela."
+  ],
+  "esperado": [
+   "Os arquivos são baixados e abrem sem erro, com o título e o cliente do projeto.",
+   "As seções marcadas em \"O que levar para o documento\" aparecem no arquivo.",
+   "Como consultor, aparece o aviso \"Valores e margens não entram para o seu perfil\"."
+  ]
+ },
+ {
+  "id": "P18",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Escolher as seções da exportação",
+  "objetivo": "Ver se dá para tirar e pôr seções.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra o detalhe de um projeto e clique em \"Exportar\"."
+  ],
+  "passos": [
+   "Clique em \"Limpar\", ao lado de \"O que levar para o documento\".",
+   "Marque só duas seções.",
+   "Clique em \"Marcar todas\".",
+   "Feche a janela sem gerar (\"Cancelar\")."
+  ],
+  "esperado": [
+   "\"Limpar\" desmarca todas.",
+   "\"Marcar todas\" marca todas as que estão disponíveis; as indisponíveis ficam cinza e explicam o motivo.",
+   "\"Cancelar\" fecha sem baixar nada."
+  ]
+ },
+ {
+  "id": "P19",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Perguntar sobre o projeto a partir do detalhe",
+  "objetivo": "Ver o atalho do detalhe para o chat.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra o detalhe de um projeto."
+  ],
+  "passos": [
+   "Clique em \"Perguntar\", no alto da janela."
+  ],
+  "esperado": [
+   "A janela fecha e a aba \"Perguntar\" abre com o título e o cliente do projeto já escritos na caixa de texto."
+  ]
+ },
+ {
+  "id": "P20",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "\"Usar como base\" a partir do detalhe",
+  "objetivo": "Ver se o cadastro novo já vem preenchido.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra o detalhe de um projeto."
+  ],
+  "passos": [
+   "Clique em \"Usar como base\".",
+   "Leia o formulário.",
+   "Feche pelo X, sem cadastrar."
+  ],
+  "esperado": [
+   "Abre o formulário \"Novo projeto\" com a marca \"a partir de\" e o nome do projeto original.",
+   "Segmento, tecnologias e serviços já vêm preenchidos.",
+   "Fechar pelo X não cria nada."
+  ]
+ },
+ {
+  "id": "P21",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Cadastro de projeto só para o gestor",
+  "objetivo": "Ver se só o gestor tem o botão de cadastrar.",
+  "preparo": [],
+  "passos": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Procure o botão azul \"Projeto\", à direita da barra de busca.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Procure de novo o botão azul \"Projeto\" e clique nele.",
+   "Feche o formulário pelo X, sem cadastrar."
+  ],
+  "esperado": [
+   "Como consultor, o botão \"Projeto\" não aparece.",
+   "Como gestor, o botão aparece e abre o formulário \"Novo projeto\".",
+   "Fechar pelo X não cria nada."
+  ]
+ },
+ {
+  "id": "P22",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Preencher o cadastro com IA",
+  "objetivo": "Ver se o Radar preenche os campos a partir de uma frase.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão azul \"Projeto\"."
+  ],
+  "passos": [
+   "Na caixa \"Descreva o projeto em uma frase…\", escreva: \"Modelo de previsão de demanda para uma rede de farmácias usando Azure e Power BI, em 5 meses\".",
+   "Clique no botão com estrelinhas ao lado (\"Sugerir campos\").",
+   "Espere e leia os campos.",
+   "Feche pelo X, sem cadastrar."
+  ],
+  "esperado": [
+   "Os campos de segmento, tecnologias (Azure, Power BI), serviços e prazo são preenchidos.",
+   "Se houver projetos parecidos na base, o Radar mostra links para eles.",
+   "Nada é cadastrado ao fechar pelo X."
+  ]
+ },
+ {
+  "id": "P23",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Editar um projeto e desfazer",
+  "objetivo": "Ver se a edição grava e fica no histórico.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra o detalhe do projeto da AgroCerrado Cooperativa."
+  ],
+  "passos": [
+   "Clique no lápis do alto da janela (\"Editar tudo num formulário\").",
+   "Anote o \"Responsável\" atual e troque por \"Teste roteiro\".",
+   "Clique em \"Salvar\".",
+   "Abra o detalhe de novo e role até \"Comentários e histórico\", na coluna principal.",
+   "Edite de novo e volte o Responsável ao nome anotado. Salve."
+  ],
+  "esperado": [
+   "Depois de salvar, aparece o aviso \"P0xx atualizado\".",
+   "\"Comentários e histórico\" mostra um cartão com a troca do responsável (antes riscado → depois), com o nome de quem fez e a data.",
+   "Depois de desfazer, o responsável volta ao original."
+  ]
+ },
+ {
+  "id": "P24",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Lista de documentos",
+  "objetivo": "Ver a lista geral de documentos.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela."
+  ],
+  "passos": [
+   "No alto, clique em \"Documentos\" (ao lado de \"Projetos\").",
+   "Na caixa \"Filtrar por nome, cliente ou tipo\", escreva \"case\".",
+   "Clique no nome de um documento."
+  ],
+  "esperado": [
+   "Aparece uma tabela com Documento, Projeto, Tipo e Fonte.",
+   "Depois de escrever \"case\", sobram só documentos ligados a cases.",
+   "Clicar abre o documento numa janela."
+  ]
+ },
+ {
+  "id": "P25",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Projetos no celular",
+  "objetivo": "Ver a tela de projetos na tela pequena.",
+  "preparo": [
+   "No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha."
+  ],
+  "passos": [
+   "Toque na aba \"Projetos\", na barra de baixo.",
+   "Toque em \"Filtros\" e marque um segmento.",
+   "Toque num card."
+  ],
+  "esperado": [
+   "Os cards aparecem um embaixo do outro, sem cortar texto.",
+   "O painel de filtros abre e filtra.",
+   "O detalhe abre ocupando a tela e fecha pelo X."
+  ]
+ },
+ {
+  "id": "U01",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Enviar um arquivo pela ficha e revisar o que o Radar leu",
+  "objetivo": "Ver se o Radar lê o arquivo enviado dentro do projeto e aponta o que conferir.",
+  "preparo": [
+   "Baixe o arquivo de exemplo pelo botão deste cenário.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Energisul Distribuidora.",
+   "Leia a linha de formatos aceitos no bloco \"Enviar arquivo\".",
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"apresentacao-energisul-fase2.pptx\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Espere o cartão do arquivo aparecer em \"Aguardando aprovação\" com \"tudo certo\" ou \"pontos para conferir\" e clique em \"Mais detalhes\" para abrir a revisão.",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "A linha de formatos começa pelos mais comuns: PDF · PPTX · DOCX · XLSX, depois os outros, e o limite de 15 MB.",
+   "O cartão mostra o nome, o tipo, o título e o acesso, e os pontos para conferir (ex.: o prazo diverge do projeto).",
+   "\"Mais detalhes\" abre a janela \"Conferir e aprovar\" enxuta: tipo, título, acesso, \"Vai para\" o projeto da Energisul, \"Atualizar a ficha do projeto\" e o resto recolhido em \"Mais detalhes\".",
+   "O tipo vem como apresentação comercial."
+  ],
+  "tickets": [
+   "CR-052"
+  ],
+  "arquivo": "apresentacao-energisul-fase2.pptx"
+ },
+ {
+  "id": "U02",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Descartar um envio",
+  "objetivo": "Ver se é possível desistir de um envio sem que ele entre na base.",
+  "preparo": [
+   "Faça o cenário U01 até o cartão aparecer."
+  ],
+  "passos": [
+   "No cartão, clique em \"Descartar\"."
+  ],
+  "esperado": [
+   "Aparece o aviso de arquivo descartado e o cartão some de \"Aguardando aprovação\" (ao reabrir a ficha).",
+   "O arquivo não aparece em \"Documentos\"."
+  ]
+ },
+ {
+  "id": "U03",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Aprovar um envio com informações extras (fazer uma vez só)",
+  "objetivo": "Ver se o documento aprovado entra na base com o que você completou.",
+  "preparo": [
+   "Combine com os outros analistas: só a primeira pessoa aprova. Quem vier depois verá o aviso de duplicidade (cenário U04).",
+   "Baixe o arquivo pelo botão deste cenário.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Segura Mais Seguros.",
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"case-segura-mais-resultados.pdf\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Espere o cartão do arquivo aparecer em \"Aguardando aprovação\" com \"tudo certo\" ou \"pontos para conferir\" e clique em \"Mais detalhes\" para abrir a revisão.",
+   "Na janela, abra \"Mais detalhes\" e, em \"Sobre o documento\", escreva seu nome em \"Autor\" e \"v1\" em \"Versão\".",
+   "Em \"Por que este documento é relevante?\", escreva \"Teste do roteiro de regressão\" e marque \"Bom modelo para reaproveitar em novas propostas\".",
+   "Clique em \"Aprovar\"."
+  ],
+  "esperado": [
+   "A janela fecha, aparece o aviso \"… está na base\" e o cartão some de \"Aguardando aprovação\".",
+   "Em \"Documentos\", o novo documento aparece com a estrela \"bom modelo\" e a nota que você escreveu."
+  ],
+  "arquivo": "case-segura-mais-resultados.pdf"
+ },
+ {
+  "id": "U04",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Aviso de arquivo duplicado",
+  "objetivo": "Ver se o Radar avisa quando o mesmo arquivo já está na base.",
+  "preparo": [
+   "O cenário U03 precisa ter sido aprovado por alguém antes.",
+   "Baixe o arquivo pelo botão deste cenário."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Segura Mais Seguros.",
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"case-segura-mais-resultados.pdf\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Espere o cartão do arquivo aparecer em \"Aguardando aprovação\" com \"tudo certo\" ou \"pontos para conferir\" e clique em \"Mais detalhes\" para abrir a revisão.",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "O cartão e a janela mostram o aviso \"Arquivo idêntico já está na base\", com o nome do documento existente.",
+   "A tela não trava e é possível descartar."
+  ],
+  "arquivo": "case-segura-mais-resultados.pdf"
+ },
+ {
+  "id": "U05",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Dados pessoais são mascarados",
+  "objetivo": "Ver se e-mails e telefones são escondidos de forma discreta.",
+  "preparo": [
+   "Baixe o arquivo pelo botão deste cenário."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Rede Bom Preço Supermercados.",
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"email-rede-bom-preco-ampliacao.eml\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Espere o cartão do arquivo aparecer em \"Aguardando aprovação\" com \"tudo certo\" ou \"pontos para conferir\" e clique em \"Mais detalhes\" para abrir a revisão.",
+   "Na janela, abra \"Mais detalhes\" e depois \"Texto extraído\" e \"Pessoas, resultados, lições e riscos\".",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "Aparece uma nota discreta: \"Removemos 3 dados sensíveis (e-mail, telefone) antes de processar.\"",
+   "No texto extraído, os e-mails e o telefone aparecem como \"[e-mail removido]\" e \"[telefone removido]\".",
+   "O envio não é bloqueado."
+  ],
+  "arquivo": "email-rede-bom-preco-ampliacao.eml"
+ },
+ {
+  "id": "U06",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Enviar pela conversa com uma proposta em foco",
+  "objetivo": "Ver se, com um projeto em foco, o arquivo anexado já vai para ele.",
+  "preparo": [
+   "Baixe o arquivo pelo botão deste cenário.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Na aba \"Perguntar\", clique no ícone de alvo, na ponta esquerda da caixa de pergunta, e escolha o projeto da Hospital Santa Aurora.",
+   "Clique no clipe, ao lado do ícone de alvo, e escolha o arquivo baixado.",
+   "Espere o cartão do arquivo aparecer na conversa.",
+   "No cartão, clique em \"Mais detalhes\" e leia \"Em qual projeto entra?\".",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "Sem precisar escrever nada, o arquivo é enviado para o projeto do Hospital Santa Aurora e aparece \"Arquivo enviado para … Confira e aprove abaixo\".",
+   "O cartão mostra a situação (\"extraindo os dados\", depois \"tudo certo\" ou \"pontos para conferir\") e os botões Mais detalhes, Descartar e Aprovar.",
+   "A janela mostra \"Vai para\" o projeto do Hospital; o tipo vem como documento técnico."
+  ],
+  "tickets": [
+   "CR-052"
+  ],
+  "arquivo": "levantamento-requisitos-hospital.html"
+ },
+ {
+  "id": "U07",
+  "area": "upload",
+  "prioridade": "media",
+  "titulo": "Enviar pela conversa dizendo o projeto",
+  "objetivo": "Ver se, sem foco, o arquivo espera até você dizer o projeto.",
+  "preparo": [
+   "Baixe o arquivo pelo botão deste cenário.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Confirme que não há proposta em foco (o ícone de alvo está fechado)."
+  ],
+  "passos": [
+   "Clique no clipe e escolha o arquivo.",
+   "Escreva \"de qual projeto é esse arquivo?\" e aperte Enter.",
+   "Escreva \"é do projeto P003\" e aperte Enter.",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "O arquivo aparece como etiqueta acima da caixa de texto, com X para tirar.",
+   "Sem projeto, o Radar responde \"Para qual projeto vai o arquivo? … Nada foi enviado ainda.\" (etiqueta \"Envio de arquivo\"); o arquivo continua só na conversa.",
+   "Com o projeto, o arquivo é enviado para a Rede Bom Preço e aparece o cartão para aprovar."
+  ],
+  "tickets": [
+   "CR-050",
+   "CR-053"
+  ],
+  "arquivo": "pipeline-oportunidades.csv"
+ },
+ {
+  "id": "U08",
+  "area": "upload",
+  "prioridade": "media",
+  "titulo": "Vários arquivos de uma vez pela ficha",
+  "objetivo": "Ver a lista de envios do projeto com mais de um arquivo e formatos diferentes.",
+  "preparo": [
+   "Baixe os dois arquivos pelos botões deste cenário.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Transportes Rota Certa.",
+   "No bloco \"Enviar arquivo\", clique em \"escolha\" e selecione os dois arquivos juntos (segure Ctrl e clique nos dois).",
+   "Espere os dois cartões ficarem prontos.",
+   "Descarte os dois pelos cartões."
+  ],
+  "esperado": [
+   "Aparecem dois cartões em \"Aguardando aprovação\", cada um com a sua situação.",
+   "A planilha vem como estimativa preliminar e a transcrição como transcrição de reunião.",
+   "Se os dois vierem \"tudo certo\", aparece \"Aprovar os 2 prontos\" (não clique: descarte)."
+  ],
+  "arquivo": "estimativa-preliminar-banco-aurora.xlsx",
+  "arquivo2": "kickoff-logistica-expressa-norte.vtt"
+ },
+ {
+  "id": "U09",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Consultor não cria projeto a partir de arquivo",
+  "objetivo": "Ver se só o gestor cria projeto novo com um arquivo.",
+  "preparo": [
+   "Baixe o arquivo pelo botão deste cenário.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Procure o botão \"Novo a partir de arquivo\", ao lado da busca.",
+   "Volte para \"Perguntar\", clique no clipe e escolha o arquivo.",
+   "Escreva \"esse arquivo é de um cliente novo\" e aperte Enter.",
+   "Tire o anexo pelo X da etiqueta."
+  ],
+  "esperado": [
+   "Como consultor, o botão \"Novo a partir de arquivo\" não aparece em Projetos.",
+   "Na conversa, o Radar pede o projeto e diz para pedir ao gestor se o projeto ainda não existe; não aparece \"Criar projeto com este arquivo\" (nem na resposta, nem nos botões)."
+  ],
+  "arquivo": "estimativa-preliminar-banco-aurora.xlsx"
+ },
+ {
+  "id": "U10",
+  "area": "upload",
+  "prioridade": "media",
+  "titulo": "Documento confidencial",
+  "objetivo": "Ver se o Radar reconhece um documento confidencial.",
+  "preparo": [
+   "Baixe o arquivo pelo botão deste cenário.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Cooperativa de Crédito Horizonte.",
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"proposta-banco-aurora-antifraude.docx\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Espere o cartão do arquivo aparecer em \"Aguardando aprovação\" com \"tudo certo\" ou \"pontos para conferir\" e clique em \"Mais detalhes\" para abrir a revisão.",
+   "Olhe o campo \"Acesso\" no topo da janela.",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "O campo \"Acesso\" vem como \"confidencial\".",
+   "O tipo vem como proposta comercial."
+  ],
+  "arquivo": "proposta-banco-aurora-antifraude.docx"
+ },
+ {
+  "id": "U11",
+  "area": "upload",
+  "prioridade": "media",
+  "titulo": "Planilha com divergência de dados",
+  "objetivo": "Ver o aviso quando o arquivo contradiz o que já está na base.",
+  "preparo": [
+   "Baixe o arquivo pelo botão deste cenário."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Rede Bom Preço Supermercados.",
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"pipeline-oportunidades.csv\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Espere o cartão do arquivo aparecer em \"Aguardando aprovação\" com \"tudo certo\" ou \"pontos para conferir\" e clique em \"Mais detalhes\" para abrir a revisão.",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "O cartão mostra \"pontos para conferir\" com o aviso de que o prazo diverge do que está na base, explicando qual valor prevalece.",
+   "A janela mostra os mesmos pontos no topo."
+  ],
+  "arquivo": "pipeline-oportunidades.csv"
+ },
+ {
+  "id": "U12",
+  "area": "upload",
+  "prioridade": "media",
+  "titulo": "Corrigir campos na revisão",
+  "objetivo": "Ver se dá para mudar o que o Radar leu.",
+  "preparo": [
+   "Baixe o arquivo pelo botão deste cenário."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Transportes Rota Certa.",
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"kickoff-logistica-expressa-norte.vtt\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Espere o cartão do arquivo aparecer em \"Aguardando aprovação\" com \"tudo certo\" ou \"pontos para conferir\" e clique em \"Mais detalhes\" para abrir a revisão.",
+   "Troque o \"Tipo\" e mude o \"Título\".",
+   "Abra \"Mais detalhes\" > \"Tecnologias e serviços\", tire uma tecnologia pelo X e acrescente outra.",
+   "Em \"Mais campos\", preencha a \"Data\".",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "Todos os campos aceitam a mudança sem erro.",
+   "As tecnologias podem ser retiradas e acrescentadas."
+  ],
+  "arquivo": "kickoff-logistica-expressa-norte.vtt"
+ },
+ {
+  "id": "U13",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Formato de arquivo não aceito",
+  "objetivo": "Ver se o Radar explica quando o formato não é aceito.",
+  "preparo": [
+   "Tenha no computador uma imagem qualquer (.png ou .jpg), por exemplo uma captura de tela."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Energisul Distribuidora.",
+   "No bloco \"Enviar arquivo\", clique em \"escolha\" e selecione a imagem.",
+   "Na aba \"Perguntar\", clique no clipe e escolha a mesma imagem, com uma proposta em foco."
+  ],
+  "esperado": [
+   "Nos dois casos aparece o aviso de formato não aceito, com a lista de formatos (PDF, PPTX, DOCX, XLSX…).",
+   "A imagem não vira cartão nem entra na base, e a tela não trava."
+  ]
+ },
+ {
+  "id": "U14",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Projeto novo a partir de um arquivo (gestor)",
+  "objetivo": "Ver se o gestor cria um projeto com os campos preenchidos pelo que o Radar leu.",
+  "preparo": [
+   "Baixe o arquivo pelo botão deste cenário.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique em \"Novo a partir de arquivo\", ao lado da busca, e escolha o arquivo baixado.",
+   "Espere a janela \"Conferir e aprovar\" carregar.",
+   "Leia o bloco \"Projeto novo\".",
+   "Clique em \"Descartar\" (não crie o projeto)."
+  ],
+  "esperado": [
+   "A janela mostra \"Projeto novo (preenchido com o que o Radar leu; confira)\" com cliente, título, segmento, status e acesso preenchidos, e o botão \"Criar projeto e aprovar\".",
+   "\"Descartar\" fecha sem criar nada.",
+   "Na conversa, sem foco e sem projeto, o gestor também vê \"Criar projeto com este arquivo\"."
+  ],
+  "tickets": [
+   "CR-052"
+  ],
+  "arquivo": "kickoff-logistica-expressa-norte.vtt"
+ },
+ {
+  "id": "U15",
+  "area": "upload",
+  "prioridade": "media",
+  "titulo": "Envio no celular",
+  "objetivo": "Ver o envio de arquivo pela tela pequena.",
+  "preparo": [
+   "No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha.",
+   "Tenha no celular um dos arquivos de exemplo (pode baixar pelo botão deste cenário no próprio celular)."
+  ],
+  "passos": [
+   "Abra a aba \"Projetos\", abra um projeto e role até o bloco \"Enviar arquivo\".",
+   "Toque em \"escolha\" e selecione o arquivo.",
+   "Quando o cartão ficar pronto, toque em \"Mais detalhes\" e depois em \"Descartar\"."
+  ],
+  "esperado": [
+   "O arquivo é enviado e a janela de revisão abre inteira, sem cortar botões.",
+   "\"Descartar\" funciona."
+  ],
+  "arquivo": "levantamento-requisitos-hospital.html"
+ },
+ {
+  "id": "C35",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Busca sem nada relevante sugere buscas próximas",
+  "objetivo": "Ver se, quando não há nada na base, o Radar diz isso e oferece buscas que trazem resultado.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"preciso de propostas de mineração\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique numa das buscas sugeridas abaixo da resposta.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"preiso de propostas de energia\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A primeira resposta diz \"Não encontrei nada relevante na base\" e mostra até 3 buscas próximas como botões.",
+   "Clicar numa sugestão faz a busca e traz projetos (não volta vazia).",
+   "A pergunta com erro de digitação (\"preiso\") traz os projetos de Utilities / Energia."
+  ],
+  "tickets": [
+   "CR-012"
+  ]
+ },
+ {
+  "id": "C36",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Resposta curta e direta",
+  "objetivo": "Ver se a resposta vai direto ao ponto, sem blocos genéricos de recomendação e de perfis.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Já fizemos projetos de churn em telecom?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A resposta tem até dois parágrafos curtos: responde à pergunta e diz em poucas palavras por que cada projeto citado serve.",
+   "NÃO aparecem os blocos \"Recomendação:\" nem \"Perfis sugeridos:\".",
+   "Quando dois projetos citados são do mesmo cliente, as etiquetas mostram também o código (ex.: \"ConectaFibra Telecom · P008\") e o texto diferencia os dois pelo tema.",
+   "O que reaproveitar continua no cartão de cada projeto (\"Escopo, resultados e lições\", \"Copiar escopo\")."
+  ],
+  "tickets": [
+   "CR-027",
+   "CR-060",
+   "CR-062"
+  ]
+ },
+ {
+  "id": "C37",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Card do projeto: ordem, tags, itens que abrem e barras",
+  "objetivo": "Ver o novo card de projeto da resposta.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"tem algum case de manutenção preditiva?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique no título do primeiro card para abri-lo."
+  ],
+  "passos": [
+   "Olhe a ordem das informações do card.",
+   "Clique em \"Escopo, resultados e lições\" e depois em \"Por que apareceu nesta posição\".",
+   "Passe o mouse sobre uma das barras.",
+   "Clique numa tecnologia, no fim do card."
+  ],
+  "esperado": [
+   "O ícone do segmento aparece ao lado do título; segmento, prazo, justificativa e resumo vêm antes dos botões, e as tecnologias aparecem uma vez só, no fim, discretas.",
+   "Cada item que abre tem uma setinha que vira ao abrir, e só um fica aberto por vez (abrir outro fecha o anterior).",
+   "Cada barra tem o mesmo tamanho do percentual ao lado (53% é maior que 20%) e a dica mostra \"nota × peso\"; a soma das barras dá a semelhança do projeto.",
+   "Clicar na tecnologia abre a aba Projetos filtrada por ela."
+  ],
+  "tickets": [
+   "CR-028",
+   "CR-029",
+   "CR-030"
+  ]
+ },
+ {
+  "id": "C38",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Grupos de conversas, arquivar e menu da conversa",
+  "objetivo": "Ver se dá para organizar as conversas por cliente ou proposta.",
+  "preparo": [
+   "Faça o cenário C27 (tenha a sua conversa \"Teste do roteiro\")."
+  ],
+  "passos": [
+   "Na coluna da esquerda, passe o mouse sobre a sua conversa e clique nos três pontinhos (⋯).",
+   "Em \"Mover para grupo\", escreva \"Roteiro\" seguido do seu nome e clique no +.",
+   "Abra o menu de novo e clique em \"Renomear\"; mude o nome e aperte Enter.",
+   "Abra o menu e clique em \"Arquivar\".",
+   "Abra a caixa \"Arquivadas\" (entre Grupos e Recentes), abra o menu da conversa e clique em \"Desarquivar\"."
+  ],
+  "esperado": [
+   "A conversa sai de \"Recentes\" e aparece na caixa \"Grupos\", dentro do grupo com o nome escolhido.",
+   "O nome muda na lista e aparece o aviso \"Conversa renomeada\".",
+   "Arquivada, a conversa sai de \"Grupos\" e passa para a caixa \"Arquivadas\".",
+   "Desarquivada, ela volta para o grupo."
+  ],
+  "tickets": [
+   "CR-017",
+   "CR-018"
+  ]
+ },
+ {
+  "id": "C39",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Editar o título pelo lápis",
+  "objetivo": "Ver se fica claro que o título da conversa pode ser editado.",
+  "preparo": [
+   "Abra uma conversa sua."
+  ],
+  "passos": [
+   "Clique no lápis ao lado do título da conversa, no alto.",
+   "Mude o nome e aperte Esc.",
+   "Clique no lápis de novo, mude o nome e aperte Enter."
+  ],
+  "esperado": [
+   "O lápis aparece ao lado do título e, ao clicar, o título fica selecionado para edição.",
+   "Esc desfaz e volta o nome anterior.",
+   "Enter salva e aparece o aviso \"Conversa renomeada\"."
+  ],
+  "tickets": [
+   "CR-034"
+  ]
+ },
+ {
+  "id": "C40",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Botão enviar só com texto",
+  "objetivo": "Ver se o botão de enviar fica desligado com a caixa vazia.",
+  "preparo": [
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Olhe o botão de enviar (seta azul) com a caixa de texto vazia.",
+   "Digite só espaços.",
+   "Digite uma pergunta."
+  ],
+  "esperado": [
+   "Com a caixa vazia ou só com espaços, o botão fica apagado e não envia (nem com Enter).",
+   "Com texto, o botão fica azul e envia."
+  ],
+  "tickets": [
+   "CR-037"
+  ]
+ },
+ {
+  "id": "C41",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Editar a última pergunta e reenviar",
+  "objetivo": "Ver se dá para corrigir a última pergunta sem mandar outra.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"projetos de telecom\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "passos": [
+   "Passe o mouse sobre a sua pergunta (balão azul) e clique no lápis ao lado dela.",
+   "Mude a pergunta para \"projetos de telecom com machine learning\" e aperte Enter."
+  ],
+  "esperado": [
+   "A caixa de texto recebe a pergunta e aparece o aviso \"Editando a última pergunta\" com \"Cancelar\".",
+   "A pergunta e a resposta antigas somem e aparecem a pergunta nova e a resposta dela; a conversa continua com o mesmo número de perguntas."
+  ],
+  "tickets": [
+   "CR-044"
+  ]
+ },
+ {
+  "id": "C42",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Enviar arquivo pelo chat para um projeto",
+  "objetivo": "Ver se dá para mandar um documento para um projeto conversando com o Radar.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Baixe o arquivo de exemplo deste cenário.",
+   "Confirme que não há proposta em foco."
+  ],
+  "passos": [
+   "Clique no clipe e escolha o arquivo baixado.",
+   "Escreva \"esse arquivo é de qual projeto?\" e aperte Enter.",
+   "Escreva \"coloca no projeto de energia\" e aperte Enter.",
+   "Nos botões que aparecem, clique no projeto da Energisul Distribuidora.",
+   "No cartão que aparece, clique em \"Mais detalhes\" e depois em \"Descartar\"."
+  ],
+  "esperado": [
+   "O arquivo aparece como etiqueta acima da caixa de texto, com X para tirar.",
+   "Sem projeto definido, o Radar pergunta para qual projeto vai (o gestor também vê o botão \"Criar projeto com este arquivo\") e o arquivo continua só na conversa; a etiqueta diz \"Envio de arquivo\".",
+   "Com um nome que combina com mais de um projeto (\"de energia\"), o Radar mostra os projetos possíveis como botões e avisa \"Nada foi enviado ainda\"; só envia depois do clique (com o código, ex.: \"P003\", ou com \"Proposta em foco\", envia direto).",
+   "Depois do clique, aparece \"Arquivo enviado para … Confira e aprove abaixo\" e um cartão com a situação e os botões Mais detalhes, Descartar e Aprovar.",
+   "A janela abre com \"Vai para\" o projeto da Energisul.",
+   "\"Descartar\" tira o arquivo, sem entrar na base."
+  ],
+  "tickets": [
+   "CR-049",
+   "CR-050",
+   "CR-053"
+  ],
+  "arquivo": "apresentacao-energisul-fase2.pptx"
+ },
+ {
+  "id": "C43",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Etiqueta da visão, menu e seção atual",
+  "objetivo": "Ver se fica claro com que perfil e em que seção você está.",
+  "preparo": [],
+  "passos": [
+   "Olhe o canto superior direito da tela.",
+   "Clique no botão com as iniciais e o nome e troque o \"Ver como\".",
+   "Clique nos três pontinhos (⋮), ao lado do botão de conta.",
+   "Clique no X no alto desse menu.",
+   "Clique nas abas Projetos e Insights."
+  ],
+  "esperado": [
+   "O botão de conta mostra um círculo com as iniciais, o primeiro nome e, embaixo, o perfil (ex.: \"MC Marina · Consultor\"), nas cores da página, sempre visível.",
+   "Clicar nele abre só o perfil, com o \"Ver como\"; trocando, o botão passa a mostrar a outra pessoa e o outro perfil, e aparece um aviso.",
+   "O menu ⋮ é separado: tem tema, documentos, métricas, ajuda e versão, mas não o \"Ver como\"; o X fecha esse menu (Esc também).",
+   "A aba atual fica em azul cheio, com um traço embaixo, bem diferente das outras."
+  ],
+  "tickets": [
+   "CR-031",
+   "CR-006",
+   "CR-025"
+  ]
+ },
+ {
+  "id": "C44",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Ajuda e versão na lateral das conversas",
+  "objetivo": "Ver se a ajuda está à vista, sem depender do menu.",
+  "preparo": [
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Olhe o fim da coluna da esquerda.",
+   "Clique em \"Como usar o Radar\" e feche.",
+   "Clique em \"Enviar feedback\" e feche sem enviar.",
+   "Olhe o alto da tela, acima das abas de conteúdo."
+  ],
+  "esperado": [
+   "A coluna da esquerda tem o fundo no tom azul da marca e, no fim, os atalhos \"Como usar o Radar\" e \"Enviar feedback\" (não há atalho de versão e testes).",
+   "\"Como usar o Radar\" abre o guia; \"Enviar feedback\" abre só o formulário de feedback, sem a coluna de versão, tickets e testes, e o texto não fala da tela de Tickets.",
+   "Não aparece mais a faixa \"Desbloqueie a próxima fase do Radar\" no alto da tela (campanha encerrada).",
+   "O logo da ImpactAI (\"Criado e desenvolvido por\") fica sempre visível no fim da coluna."
+  ],
+  "tickets": [
+   "CR-026",
+   "CR-003"
+  ]
+ },
+ {
+  "id": "P26",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Filtros ativos como etiquetas e \"Ver N projetos\"",
+  "objetivo": "Ver se é fácil enxergar e tirar os filtros aplicados.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Clique no botão \"Filtros\", ao lado da caixa de busca, para abrir o painel de filtros à esquerda."
+  ],
+  "passos": [
+   "Marque dois segmentos no painel.",
+   "Clique em \"Ver N projetos\", no fim do painel.",
+   "Clique no X de uma das etiquetas acima da lista.",
+   "Clique em \"Limpar tudo\"."
+  ],
+  "esperado": [
+   "Cada filtro marcado é aplicado na hora, e dá para marcar mais de um antes de fechar.",
+   "\"Ver N projetos\" fecha o painel; os filtros aparecem como etiquetas acima da lista (ex.: \"Segmento: Varejo\").",
+   "O X tira só aquele filtro e a lista atualiza.",
+   "\"Limpar tudo\" volta a lista completa."
+  ],
+  "tickets": [
+   "CR-005",
+   "CR-013"
+  ]
+ },
+ {
+  "id": "P27",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Títulos da ficha e ícone do segmento",
+  "objetivo": "Ver o destaque visual da ficha do projeto.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela."
+  ],
+  "passos": [
+   "Olhe os cards da lista.",
+   "Abra um projeto."
+  ],
+  "esperado": [
+   "Cada card mostra um ícone do segmento (ex.: raio para Utilities / Energia, carrinho para Varejo).",
+   "Na ficha, os títulos das seções (Objetivo, Contexto, Documentos…) estão maiores, em azul e com uma linha embaixo."
+  ],
+  "tickets": [
+   "CR-015",
+   "CR-026"
+  ]
+ },
+ {
+  "id": "P28",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Enviar arquivo pela ficha do projeto",
+  "objetivo": "Ver se dá para mandar um documento sem sair do projeto.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Baixe o arquivo de exemplo deste cenário.",
+   "Abra o projeto \"Plataforma de dados para redução de perdas não técnicas\" (Energisul)."
+  ],
+  "passos": [
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"apresentacao-energisul-fase2.pptx\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Feche a ficha e veja o card do projeto na lista.",
+   "Abra a ficha de novo, clique em \"Mais detalhes\" no cartão e depois em \"Descartar\"."
+  ],
+  "esperado": [
+   "O bloco \"Enviar arquivo\" é discreto (linha tracejada) e fica logo acima de \"Comentários e histórico\".",
+   "O andamento aparece na própria ficha, em \"Aguardando aprovação\", sem trocar de tela.",
+   "Enquanto não for aprovado, o card do projeto na lista mostra \"1 para aprovar\".",
+   "A janela abre com \"Vai para\" o projeto da Energisul; \"Descartar\" tira o arquivo, sem entrar na base."
+  ],
+  "tickets": [
+   "CR-046"
+  ],
+  "arquivo": "apresentacao-energisul-fase2.pptx"
+ },
+ {
+  "id": "C45",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Lista de conversas em caixas",
+  "objetivo": "Ver se a coluna da esquerda separa bem favoritas, grupos, arquivadas e recentes.",
+  "preparo": [
+   "Faça os cenários C28 e C38 (tenha uma conversa num grupo e outra favorita)."
+  ],
+  "passos": [
+   "Olhe a coluna da esquerda de cima para baixo, sem clicar em nada.",
+   "Clique no título de \"Favoritas\", \"Grupos\" e \"Arquivadas\" para abrir as três.",
+   "Dentro de \"Grupos\", clique no nome do seu grupo para abrir.",
+   "Favorite a conversa que está no seu grupo (estrela ao passar o mouse).",
+   "Diminua a janela do navegador na altura (ou use uma tela menor) e olhe a caixa \"Recentes\".",
+   "Feche \"Favoritas\" e aperte F5 para recarregar a página."
+  ],
+  "esperado": [
+   "As conversas ficam em caixas separadas, nesta ordem: \"Favoritas\", \"Grupos\", \"Arquivadas\" e \"Recentes\" (caixa sem conversas não aparece).",
+   "Ao abrir a tela, \"Favoritas\", \"Grupos\" e \"Arquivadas\" vêm fechadas (uma linha cada, com o nome e uma setinha, sem contagem de conversas) e \"Recentes\" aparece inteira logo abaixo.",
+   "Abertas, as caixas mostram as conversas e, se forem muitas, rolam por dentro; \"Recentes\" continua visível, com rolagem própria, mesmo com tudo aberto ou com a janela baixa.",
+   "A conversa favorita que está num grupo aparece duas vezes: em \"Favoritas\" e dentro do grupo.",
+   "Depois do F5, cada caixa e cada grupo continuam como você deixou (abertos ou fechados)."
+  ]
+ },
+ {
+  "id": "C46",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Cumprimentar o Radar",
+  "objetivo": "Ver se o Radar responde a uma saudação com educação, diz o que faz e oferece caminhos.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"olá\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Olhe a etiqueta pequena acima da resposta, à direita (ela diz o tipo de resposta).",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"bom dia, liste os projetos de varejo\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Conversa\".",
+   "A resposta começa com \"Olá, Marina!\", diz em uma frase o que o Radar faz e termina com \"Como posso ajudar?\".",
+   "Abaixo aparecem sugestões clicáveis e os links \"Como usar o Radar\" e \"Bons exemplos de pergunta\".",
+   "Não aparece \"Não encontrei nada relevante\".",
+   "A segunda pergunta começa com \"Bom dia!\" e traz a listagem dos projetos de varejo."
+  ],
+  "tickets": [
+   "CR-053"
+  ]
+ },
+ {
+  "id": "C47",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Perguntar o que o Radar sabe fazer",
+  "objetivo": "Ver se o Radar explica o próprio funcionamento e mostra só o que o perfil pode usar.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Boa noite, o que vc pode fazer?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique no exemplo de um dos cartões (ex.: \"Liste os projetos entregues em 2025\").",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"o que você pode fazer?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A resposta começa com \"Boa noite!\" e mostra cartões de capacidades, cada um com ícone, descrição e um exemplo (achar parecidos, listar, contar, ficha, comparar, ler um arquivo, enviar arquivo, tirar dúvidas).",
+   "Clicar no exemplo faz a pergunta e traz a resposta.",
+   "Como consultor, NÃO aparece o cartão \"Criar projeto a partir de um arquivo\"; como gestor, aparece.",
+   "Embaixo há links para \"Como usar o Radar\" e \"Como o Radar funciona\"."
+  ],
+  "tickets": [
+   "CR-053"
+  ]
+ },
+ {
+  "id": "C48",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Tirar uma dúvida de uso no chat",
+  "objetivo": "Ver se o Radar responde como usar o produto com base na ajuda e mostra de onde tirou.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"como favorito uma conversa?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Olhe a etiqueta pequena acima da resposta, à direita (ela diz o tipo de resposta).",
+   "Clique em \"ver trecho\" e depois em \"Abrir no guia\", no fim do trecho.",
+   "Feche a ajuda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"o que mudou nesta versão?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Dúvida de uso\".",
+   "A resposta explica, em poucas linhas, que é pela estrela.",
+   "Abaixo vem, recolhida, a linha \"Fonte: Como usar o Radar › Conversas salvas · ver trecho\"; ao clicar, abre só o trecho que fala de favoritar (ex.: \"Favoritar: Passe o mouse na conversa e clique na ⭐…\"), coerente com a resposta, e não o começo da seção.",
+   "A fonte aparece uma vez só: não há outro botão solto com o nome da seção abaixo da resposta.",
+   "\"Abrir no guia\" abre a ajuda direto na seção \"Conversas salvas\".",
+   "A pergunta sobre a versão lista as novidades da V0.0.2 e oferece o botão \"Notas da V0.0.2\"."
+  ],
+  "tickets": [
+   "CR-053",
+   "CR-056",
+   "CR-058"
+  ]
+ },
+ {
+  "id": "C49",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Agradecer e reclamar de uma resposta",
+  "objetivo": "Ver se o Radar responde a agradecimento e crítica de forma curta e útil.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"liste os projetos de varejo\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"valeu\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"essa resposta está errada\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "\"valeu\" recebe uma resposta curta e cordial (\"Por nada! …\"), sem busca.",
+   "A crítica recebe um pedido de desculpas, a dica de reformular com mais detalhes e o botão \"Enviar feedback\".",
+   "O botão \"Enviar feedback\" abre o formulário de feedback."
+  ],
+  "tickets": [
+   "CR-053"
+  ]
+ },
+ {
+  "id": "C50",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Frase sem assunto",
+  "objetivo": "Ver se, quando não entende, o Radar diz isso e mostra o que dá para fazer, em vez de uma busca vazia.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"faz aí\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A resposta diz \"Não entendi bem o que você precisa\" e mostra alguns cartões de capacidades com exemplos clicáveis.",
+   "Não aparece \"Não encontrei nada relevante na base\"."
+  ],
+  "tickets": [
+   "CR-053"
+  ]
+ },
+ {
+  "id": "C51",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Pedir para o Radar ler um arquivo",
+  "objetivo": "Ver se o Radar lê e resume um arquivo anexado sem pedir projeto e sem colocá-lo na base.",
+  "preparo": [
+   "Baixe o arquivo de exemplo deste cenário.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Confirme que não há proposta em foco (o ícone de alvo está fechado)."
+  ],
+  "passos": [
+   "Clique no clipe, ao lado da caixa de pergunta, e escolha o arquivo baixado.",
+   "Escreva \"leia esse arquivo\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Olhe a etiqueta pequena acima da resposta, à direita (ela diz o tipo de resposta).",
+   "Abra a aba \"Projetos\" e confira se apareceu algum envio novo aguardando aprovação."
+  ],
+  "esperado": [
+   "Enquanto lê, aparece \"Lendo o arquivo…\".",
+   "A etiqueta diz \"Arquivo da conversa\".",
+   "A resposta diz o que é o documento (proposta comercial do Banco Aurora, sobre detecção de fraude em PIX) e que o arquivo fica só nesta conversa e não entra na base.",
+   "Um cartão mostra o nome do arquivo, o tema, o tipo, o cliente, o prazo, os pontos principais e as tecnologias.",
+   "Abaixo aparecem \"Buscar projetos parecidos\", \"Perguntar algo sobre o arquivo\", \"Enviar para um projeto\" e, para o gestor, \"Criar projeto com este arquivo\".",
+   "O Radar NÃO pergunta para qual projeto vai o arquivo, e nada novo aparece aguardando aprovação."
+  ],
+  "tickets": [
+   "CR-053"
+  ],
+  "arquivo": "proposta-banco-aurora-antifraude.docx"
+ },
+ {
+  "id": "C52",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Perguntar sobre o arquivo e buscar parecidos",
+  "objetivo": "Ver se o Radar responde com o conteúdo do arquivo e usa o arquivo para achar projetos parecidos na base.",
+  "preparo": [
+   "Faça o cenário C51 e continue na mesma conversa."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"quais os riscos?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique em \"Buscar projetos parecidos\" na resposta do C51 (ou escreva \"tem algo parecido com isso na base?\").",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A resposta sobre riscos cita os riscos do arquivo (acesso aos dados de transações e homologação do modelo); o trecho do arquivo de onde tirou fica recolhido em \"Fonte: proposta-banco-aurora-antifraude.docx · ver trecho\".",
+   "A busca de parecidos começa com \"Busquei na base projetos parecidos com o arquivo …\" e traz cards de projetos (ex.: streaming com Kafka e Databricks)."
+  ],
+  "tickets": [
+   "CR-053",
+   "CR-056"
+  ],
+  "arquivo": "proposta-banco-aurora-antifraude.docx"
+ },
+ {
+  "id": "C53",
+  "area": "conversas",
+  "prioridade": "media",
+  "titulo": "Enviar à base só quando pedir",
+  "objetivo": "Ver se o arquivo lido na conversa só vai para um projeto quando você pede.",
+  "preparo": [
+   "Faça o cenário C51 e continue na mesma conversa (o arquivo ainda aparece como etiqueta acima da caixa de texto)."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"coloca no projeto P003\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "No cartão que aparece, clique em \"Descartar\"."
+  ],
+  "esperado": [
+   "A etiqueta diz \"Envio de arquivo\" e aparece \"Arquivo enviado para Previsão de demanda e reposição automática de estoque (Rede Bom Preço Supermercados). Confira e aprove abaixo\".",
+   "O cartão do envio aparece na conversa; \"Descartar\" tira o arquivo, sem entrar na base.",
+   "A etiqueta do arquivo some de cima da caixa de texto depois do envio."
+  ],
+  "tickets": [
+   "CR-053"
+  ],
+  "arquivo": "proposta-banco-aurora-antifraude.docx"
+ },
+ {
+  "id": "C54",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Cartão de projeto na conversa, no celular",
+  "objetivo": "Ver se o cartão de projeto da resposta fica legível no celular e sem avisos que confundem.",
+  "preparo": [
+   "No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Já fizemos fraude em seguros?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Olhe o cartão do projeto \"Detecção de fraude em sinistros…\" (Segura Mais Seguros) sem abrir.",
+   "Toque no cartão para abrir e depois em \"Abrir projeto\"."
+  ],
+  "esperado": [
+   "No cartão fechado, em cima ficam o ícone, o título (até 3 linhas, sem cortar em \"Det… de…\") e a setinha; embaixo do título, \"Muito parecido\", o cliente e o status, e depois os botões 👍 e 👎. Nada fica por cima de nada.",
+   "O cartão NÃO mostra \"dados divergentes\".",
+   "A linha \"Também costumam entrar: …\" aparece como uma frase que quebra normalmente, não em colunas.",
+   "Na ficha do projeto aparece o aviso \"Prazo diverge entre fontes\", com a fonte que prevaleceu (a divergência fica só dentro do projeto)."
+  ],
+  "tickets": [
+   "CR-054",
+   "CR-055"
+  ]
+ },
+ {
+  "id": "C56",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Conversa informal com cordialidade",
+  "objetivo": "Ver se o Radar conversa de forma natural num papo curto, sem parecer um robô.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"boa noite, tudo bem?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"qual seu nome?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"liste os projetos de varejo\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"bom trabalho!\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"tudo bem com você?\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "\"boa noite, tudo bem?\" recebe um boa noite (com o nome Marina), diz que está tudo bem e pergunta de volta, em poucas frases; só nesta primeira mensagem o Radar se apresenta.",
+   "\"qual seu nome?\" responde que é o Radar e o que faz, em uma ou duas frases.",
+   "Depois da listagem, \"bom trabalho!\" recebe um agradecimento natural, sem se reapresentar.",
+   "\"tudo bem com você?\" no meio da conversa responde e pergunta de volta, sem a apresentação inteira de novo.",
+   "As respostas variam com o que foi dito (não são sempre a mesma frase) e nenhuma inventa projetos ou números."
+  ],
+  "tickets": [
+   "CR-061"
+  ]
+ },
+ {
+  "id": "C57",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Percentual realista de semelhança",
+  "objetivo": "Ver se o percentual dos cartões reflete o quanto o projeto realmente se parece com a pergunta.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"projetos de fraude em seguros\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Abra o cartão do primeiro projeto e veja \"Por que apareceu nesta posição\".",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"projeto para uma funilaria de carros\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"sistema de gestão para uma padaria\" e aperte Enter.",
+   "Espere a resposta aparecer."
+  ],
+  "esperado": [
+   "A pergunta de fraude em seguros traz o projeto da Segura Mais Seguros como \"Muito parecido\" (perto de 100%).",
+   "Em \"Por que apareceu nesta posição\", o Status soma pouco e só junto com um conteúdo parecido.",
+   "A funilaria não traz nenhum projeto como \"Muito parecido\": o Radar diz que não encontrou nada relevante ou mostra só \"Relacionado\"/\"Parecido\" abaixo de 75%.",
+   "A padaria também não passa de \"Parecido\" (abaixo de 75%).",
+   "No menu ⋮ → Como usar o Radar, a seção \"Como o Radar calcula a semelhança\" explica os critérios, os pesos, a nota da IA e o teto, com o exemplo do churn em telecom (98% e 63%); perguntar no chat \"como é calculado o percentual de semelhança?\" responde com essa seção."
+  ],
+  "tickets": [
+   "CR-064",
+   "CR-065"
+  ]
+ },
+ {
+  "id": "C55",
+  "area": "conversas",
+  "prioridade": "alta",
+  "titulo": "Caixa de pergunta no celular com memória da conversa",
+  "objetivo": "Ver se a caixa de pergunta continua numa linha só quando o chat está lembrando perguntas anteriores.",
+  "preparo": [
+   "No celular, abra o mesmo endereço do Radar no navegador e entre com o mesmo usuário e senha.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda."
+  ],
+  "passos": [
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"Já fizemos fraude em seguros?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Clique na caixa de texto na parte de baixo da tela, escreva exatamente: \"e em varejo?\" e aperte Enter.",
+   "Espere a resposta aparecer.",
+   "Olhe a caixa de pergunta, o título da conversa, no alto, e o balão da sua última pergunta."
+  ],
+  "esperado": [
+   "A etiqueta \"lembrando N perguntas\" fica numa linha própria, acima.",
+   "Na linha de baixo ficam, lado a lado, o ícone de alvo, o clipe, o campo de texto (com espaço para escrever) e o botão de enviar; o botão NÃO desce para outra linha.",
+   "O título da conversa mostra o lápis e a estrela dentro da tela, sem rolagem para o lado.",
+   "O menu de baixo (Perguntar, Projetos, Insights) fica centralizado, com as três abas do mesmo tamanho.",
+   "O lápis de editar a última pergunta fica à esquerda, fora do balão azul; o balão tem só o texto, sem uma linha vazia embaixo."
+  ],
+  "tickets": [
+   "CR-057",
+   "CR-063"
+  ]
+ },
+ {
+  "id": "P29",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Seções da ficha que recolhem",
+  "objetivo": "Ver se a ficha mostra primeiro o essencial e deixa o resto recolhido.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra o projeto \"Plataforma de dados para redução de perdas não técnicas\" (Energisul)."
+  ],
+  "passos": [
+   "Olhe as seções abaixo de Objetivo e Contexto.",
+   "Clique em \"Resultados\", depois em \"Lições aprendidas\" e em \"Riscos\".",
+   "Clique de novo em \"Riscos\".",
+   "Na coluna da direita, clique em \"Tecnologias\", \"Palavras-chave\" e \"Projetos parecidos\".",
+   "Feche a ficha e abra de novo."
+  ],
+  "esperado": [
+   "Objetivo e Contexto aparecem abertos; \"Resultados\", \"Lições aprendidas\", \"Riscos\" e \"Documentos\" vêm fechados, cada um com a quantidade de itens e uma setinha.",
+   "Clicar no título abre a seção com os itens e de onde vieram; a setinha vira; clicar de novo fecha.",
+   "Na coluna da direita, \"Tecnologias\", \"Palavras-chave\" e \"Projetos parecidos\" também vêm fechados e abrem ao clicar.",
+   "Ao reabrir a ficha, essas seções vêm fechadas de novo."
+  ]
+ },
+ {
+  "id": "P30",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Editar um campo da ficha sem abrir o formulário",
+  "objetivo": "Ver se dá para corrigir um dado do projeto direto na ficha.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra um projeto qualquer."
+  ],
+  "passos": [
+   "Passe o mouse sobre o prazo (no alto da ficha) e clique no lápis que aparece.",
+   "Mude o número e aperte Enter.",
+   "Clique no lápis do \"Objetivo\", mude o texto e aperte Esc.",
+   "Clique no lápis do \"Segmento\", escreva um segmento que não existe e tente salvar.",
+   "Ao terminar, volte o prazo ao valor original pelo mesmo lápis."
+  ],
+  "esperado": [
+   "O lápis aparece só ao passar o mouse sobre o campo (título, cliente, segmento, prazo, responsável, data, objetivo, contexto, área, status, acesso e pasta; valor e margem só para o gestor).",
+   "Enter salva: aparece o aviso \"Prazo atualizado\" e o novo valor já aparece na ficha.",
+   "Esc cancela e volta o texto anterior, sem salvar.",
+   "Como consultor, segmento que não existe não é aceito: aparece \"só o gestor cria opções novas\".",
+   "Campo vazio mostra \"Adicionar …\" para preencher."
+  ]
+ },
+ {
+  "id": "P31",
+  "area": "projetos",
+  "prioridade": "media",
+  "titulo": "Tecnologias e serviços pela ficha",
+  "objetivo": "Ver se dá para pôr e tirar tecnologias e serviços direto no card.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Abra um projeto qualquer."
+  ],
+  "passos": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Na coluna da direita, abra \"Tecnologias\" e clique no lápis.",
+   "Escreva parte do nome de uma tecnologia da lista, escolha e aperte Enter.",
+   "Escreva \"Tecnologia Teste\" e aperte Enter.",
+   "Tire a tecnologia que você colocou (X no chip) e clique em \"Salvar\".",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Abra o mesmo projeto, clique no lápis de \"Serviços\", escreva \"Serviço Teste\" + o seu nome, aperte Enter e depois tire o chip e clique em \"Cancelar\"."
+  ],
+  "esperado": [
+   "O lápis abre os chips com X para tirar e uma caixa com a lista de opções.",
+   "Como consultor, só entram opções que já existem; \"Tecnologia Teste\" mostra \"só o gestor cria opções novas\".",
+   "Como gestor, um nome novo entra como chip (é criado ao salvar).",
+   "\"Cancelar\" não muda nada; \"Salvar\" grava e aparece o aviso."
+  ]
+ },
+ {
+  "id": "P32",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Comentários e histórico da ficha",
+  "objetivo": "Ver a conversa e o registro do que mudou no projeto.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Faça o cenário P30 no mesmo projeto."
+  ],
+  "passos": [
+   "Na coluna principal, role até \"Comentários e histórico\".",
+   "Escreva um comentário com o seu nome e clique em \"Comentar\".",
+   "Olhe os itens abaixo do campo de comentário."
+  ],
+  "esperado": [
+   "O botão \"Comentar\" só fica ativo com texto; o comentário aparece no topo como um balão, com as iniciais, o nome e a hora.",
+   "As edições aparecem como cartões com o campo, o valor antigo riscado (vermelho) → o novo (verde); em tecnologias e serviços, chips \"+\" e \"−\".",
+   "Edições feitas juntas ficam num cartão só; exportações e outros registros aparecem como linhas com ícone.",
+   "Tudo fica num cartão próprio; aparecem os 5 itens mais recentes e \"Mostrar mais\" abre de 5 em 5 (com \"Mostrando N de M\" e \"Mostrar menos\")."
+  ]
+ },
+ {
+  "id": "P33",
+  "area": "projetos",
+  "prioridade": "alta",
+  "titulo": "Excluir um projeto (só gestor)",
+  "objetivo": "Ver se só o gestor exclui projetos e se a exclusão pede confirmação.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Clique na aba \"Projetos\", no alto da tela.",
+   "Cadastre um projeto de teste pelo botão azul \"Projeto\" (título \"Projeto para excluir\" + o seu nome; cliente, segmento e status quaisquer da lista). Nunca exclua um projeto da base."
+  ],
+  "passos": [
+   "Abra o projeto de teste e clique na lixeira, no alto da ficha.",
+   "Na janela, clique em \"Cancelar\".",
+   "Clique na lixeira de novo e em \"Excluir projeto\".",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar.",
+   "Abra um projeto qualquer e procure a lixeira."
+  ],
+  "esperado": [
+   "A janela \"Excluir projeto\" mostra o nome do projeto e avisa que a ação não pode ser desfeita.",
+   "\"Cancelar\" fecha sem excluir.",
+   "\"Excluir projeto\" fecha a ficha, aparece o aviso e o projeto some da lista e das buscas.",
+   "Como consultor, a lixeira não aparece."
+  ]
+ },
+ {
+  "id": "U16",
+  "area": "upload",
+  "prioridade": "alta",
+  "titulo": "Arquivo recusado: trocar ou remover",
+  "objetivo": "Ver se um arquivo de formato errado não trava o envio.",
+  "preparo": [
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Energisul Distribuidora.",
+   "Tenha no computador uma imagem (PNG ou JPG) qualquer."
+  ],
+  "passos": [
+   "No bloco \"Enviar arquivo\", escolha a imagem."
+  ],
+  "esperado": [
+   "Aparece o aviso de formato não aceito com a lista de formatos (PDF, PPTX, DOCX…), e a imagem nem vira cartão.",
+   "Se algum envio terminar com erro, o cartão mostra a mensagem e o botão \"Remover\", que tira o envio da lista."
+  ],
+  "tickets": [
+   "CR-010"
+  ]
+ },
+ {
+  "id": "U17",
+  "area": "upload",
+  "prioridade": "media",
+  "titulo": "Atualizar a ficha do projeto ao aprovar um arquivo",
+  "objetivo": "Ver se os dados novos do arquivo podem atualizar o projeto.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Baixe o arquivo de exemplo deste cenário.",
+   "Clique na aba \"Projetos\", no alto da tela, e abra o projeto da Energisul Distribuidora."
+  ],
+  "passos": [
+   "Role a ficha até o bloco \"Enviar arquivo\" (logo acima de \"Comentários e histórico\"), clique em \"escolha\" e selecione o arquivo \"apresentacao-energisul-fase2.pptx\" que você baixou (ou arraste o arquivo para o bloco).",
+   "Espere o cartão do arquivo aparecer em \"Aguardando aprovação\" com \"tudo certo\" ou \"pontos para conferir\" e clique em \"Mais detalhes\" para abrir a revisão.",
+   "Na janela, procure a seção \"Atualizar a ficha do projeto\".",
+   "No fim, clique em \"Descartar\" (na janela ou no cartão) para não colocar o arquivo na base."
+  ],
+  "esperado": [
+   "Quando o arquivo traz prazo, data ou valor diferentes da ficha do projeto de destino, aparece a seção com cada diferença (antes → depois) e uma caixa para marcar.",
+   "Só o que for marcado é atualizado na ficha ao aprovar (e fica no histórico do projeto)."
+  ],
+  "tickets": [
+   "CR-047"
+  ],
+  "arquivo": "apresentacao-energisul-fase2.pptx"
+ },
+ {
+  "id": "U18",
+  "area": "upload",
+  "prioridade": "media",
+  "titulo": "Aprovar vários envios de uma vez",
+  "objetivo": "Ver a aprovação em lote.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar.",
+   "Na aba \"Perguntar\", clique no botão azul \"Nova conversa\", no alto da coluna da esquerda.",
+   "Baixe os dois arquivos de exemplo deste cenário.",
+   "Combine com os outros analistas: faça uma vez só (os arquivos entram na base)."
+  ],
+  "passos": [
+   "Na aba \"Perguntar\", clique no ícone de alvo, na ponta esquerda da caixa de pergunta, e escolha o projeto da Segura Mais Seguros.",
+   "Clique no clipe e escolha os dois arquivos juntos (segure Ctrl).",
+   "Espere os dois cartões ficarem prontos.",
+   "Se aparecer \"Aprovar os N prontos\", clique; os que tiverem pontos para conferir, revise em \"Mais detalhes\" (1 de N) ou descarte."
+  ],
+  "esperado": [
+   "Os dois arquivos vão direto para o projeto em foco e aparecem como cartões na conversa.",
+   "\"Aprovar os N prontos\" aprova de uma vez os que vieram \"tudo certo\"; os com pontos para conferir ficam para revisar um a um.",
+   "Os cartões aprovados mostram \"aprovado e na base\"."
+  ],
+  "tickets": [
+   "CR-048"
+  ],
+  "arquivo": "case-segura-mais-resultados.pdf",
+  "arquivo2": "proposta-banco-aurora-antifraude.docx"
+ },
+ {
+  "id": "I01",
+  "area": "insights",
+  "prioridade": "alta",
+  "titulo": "Visões: as cinco perguntas",
+  "objetivo": "Ver se a tela inicial de Insights apresenta as perguntas que cada visão responde, já com o número principal.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Insights\", no alto da tela, e na aba interna \"Visões\".",
+   "Se uma visão abrir direto, clique em \"← Todas as perguntas\".",
+   "Leia os cinco cartões sem clicar.",
+   "Clique em \"Abrir Negócio\"."
+  ],
+  "esperado": [
+   "Aparecem cinco perguntas: \"Estamos prontos para uma nova oportunidade?\", \"Onde estamos ganhando e onde crescer?\", \"Sabemos entregar o que vendemos?\", \"Que propostas precisam de atenção agora?\" e \"Dá para confiar nos dados da base?\", cada uma com para quem é.",
+   "Cada cartão mostra o número principal em negrito com a explicação (ex.: \"86% taxa de ganho · 6 de 7 decididas\").",
+   "Como consultor, a pergunta de Pré-venda vem primeiro, com \"sugerido para você\".",
+   "\"Abrir Negócio\" abre a visão de Negócio; o Radar lembra a última visão aberta."
+  ],
+  "tickets": [
+   "CR-069"
+  ]
+ },
+ {
+  "id": "I02",
+  "area": "insights",
+  "prioridade": "alta",
+  "titulo": "Manchetes em cartões",
+  "objetivo": "Ver se o resumo de cada visão mostra o que importa com número, tom e um gráfico pequeno.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Insights\", no alto da tela, e na aba interna \"Visões\".",
+   "Abra a visão \"Negócio\".",
+   "Olhe os cartões de \"Em resumo\".",
+   "Passe o mouse sobre as partes da barra colorida do primeiro cartão.",
+   "Clique em \"Ver os números\" de um cartão."
+  ],
+  "esperado": [
+   "Cada cartão tem: uma etiqueta de tom com ícone (\"Ponto forte\", \"Atenção\" ou \"Para saber\"), um número grande, o que ele significa, um gráfico pequeno (quando faz sentido) e a frase completa.",
+   "O primeiro cartão mostra a taxa de ganho e uma barra com Ganhos (azul), Em aberto (laranja) e Perdidos (cinza), com a legenda e os números.",
+   "Passar o mouse mostra o número e o percentual de cada parte.",
+   "\"Ver os números\" rola até o gráfico detalhado correspondente, que pisca em destaque."
+  ],
+  "tickets": [
+   "CR-069"
+  ]
+ },
+ {
+  "id": "I03",
+  "area": "insights",
+  "prioridade": "media",
+  "titulo": "Técnica, Pipeline e Curadoria",
+  "objetivo": "Ver se as outras visões também abrem com manchetes úteis.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Insights\", no alto da tela, e na aba interna \"Visões\".",
+   "Troque para \"Técnica\", \"Pipeline\" e \"Curadoria\" pelos botões no alto à direita."
+  ],
+  "esperado": [
+   "Técnica: lições com atraso por legado (\"x de y\" com barra), riscos previstos que aconteceram, estimativa contra proposta e tecnologias sem projeto recente (barras com o número de projetos).",
+   "Pipeline: propostas em andamento (barra por situação) e os alertas (paradas, cadastro incompleto, margem fora da faixa), em \"Atenção\".",
+   "Curadoria: percentual de documentos revisados por uma pessoa (barra) e o que precisa de limpeza.",
+   "Os textos ficam legíveis no tema claro e no escuro."
+  ],
+  "tickets": [
+   "CR-069"
+  ]
+ },
+ {
+  "id": "I04",
+  "area": "insights",
+  "prioridade": "media",
+  "titulo": "Filtros e \"Copiar resumo\"",
+  "objetivo": "Ver se dá para recortar os números por segmento, prática e período e levar o resumo para um e-mail.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Insights\", no alto da tela, e na aba interna \"Visões\".",
+   "Abra a visão \"Negócio\".",
+   "Em \"Segmento\", escolha \"Varejo\".",
+   "Volte \"Segmento\" para \"todos\" e clique em \"Copiar resumo\".",
+   "Cole o texto num bloco de notas."
+  ],
+  "esperado": [
+   "Com \"Varejo\", as manchetes e os gráficos passam a contar só os projetos de Varejo.",
+   "O resumo copiado traz a data, o filtro (se houver) e uma linha por manchete."
+  ],
+  "tickets": [
+   "CR-069"
+  ]
+ },
+ {
+  "id": "I05",
+  "area": "insights",
+  "prioridade": "alta",
+  "titulo": "Visões respeitam o perfil",
+  "objetivo": "Ver se o consultor não vê valores nem projetos confidenciais nos números.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Insights\", no alto da tela, e na aba interna \"Visões\".",
+   "Abra \"Negócio\" e anote a taxa de ganho e a quantidade de projetos ganhos.",
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\". Clique fora para fechar.",
+   "Veja \"Negócio\" de novo."
+  ],
+  "esperado": [
+   "Como consultor, nenhuma manchete fala em R$ e os cartões de valor dizem que os valores aparecem só para quem tem permissão.",
+   "Como gestor, os números podem ser maiores (entram os projetos confidenciais) e aparece a concentração da carteira ganha em R$."
+  ],
+  "tickets": [
+   "CR-069"
+  ]
+ },
+ {
+  "id": "I06",
+  "area": "insights",
+  "prioridade": "media",
+  "titulo": "Pré-venda: prontidão das oportunidades",
+  "objetivo": "Ver se a visão de Pré-venda diz, por oportunidade, se temos provas para usar.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Consultor\" (o botão passa a mostrar Marina · Consultor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Insights\", no alto da tela, e na aba interna \"Visões\".",
+   "Abra a visão \"Pré-venda\".",
+   "Clique em \"Ver os números\" do primeiro cartão."
+  ],
+  "esperado": [
+   "Há um cartão por oportunidade, com o nível (\"Pronta\", \"Parcial\" ou \"Pouca prova\") em destaque e barras com entregues parecidos, com case e perdidas parecidas.",
+   "\"Ver os números\" leva à prontidão daquela oportunidade, com o kit para reaproveitar."
+  ],
+  "tickets": [
+   "CR-069"
+  ]
+ },
+ {
+  "id": "I07",
+  "area": "insights",
+  "prioridade": "media",
+  "titulo": "Endereço antigo das visões",
+  "objetivo": "Ver se quem guardou o endereço do protótipo cai na aba nova.",
+  "preparo": [],
+  "passos": [
+   "Na barra de endereço do navegador, troque o fim do endereço por \"/insights-novo\" e aperte Enter.",
+   "Olhe a barra de abas no alto."
+  ],
+  "esperado": [
+   "Abre a aba \"Insights\", já na aba interna \"Visões\".",
+   "A barra de abas tem só Perguntar, Projetos e Insights."
+  ],
+  "tickets": [
+   "CR-069"
+  ]
+ },
+ {
+  "id": "I08",
+  "area": "insights",
+  "prioridade": "media",
+  "titulo": "Métricas do piloto dentro de Insights",
+  "objetivo": "Ver se as métricas de uso do Radar ficam numa aba de Insights, ao lado da visão da base.",
+  "preparo": [
+   "Clique no botão de conta (círculo com as iniciais e o nome), no canto superior direito. Em \"Ver como\", escolha \"Gestor\" (o botão passa a mostrar Thiago · Gestor). Clique fora para fechar."
+  ],
+  "passos": [
+   "Clique na aba \"Insights\", no alto da tela.",
+   "Clique na aba interna \"Métricas do piloto\".",
+   "Clique em \"Visões\" e depois abra o menu ⋮ e clique em \"Métricas do piloto\".",
+   "Aperte F5 para recarregar e abra \"Insights\" de novo."
+  ],
+  "esperado": [
+   "Insights tem duas abas internas: \"Visões\" (as cinco perguntas sobre a base) e \"Métricas do piloto\".",
+   "\"Métricas do piloto\" mostra buscas, sem resultado, úteis entre os 3 primeiros, tempo até a 1ª referência útil, reaproveitamentos, fontes abertas, tempo de resposta e as tabelas \"Por que não ajudou\" e \"O que pedem ao chat\".",
+   "O item \"Métricas do piloto\" do menu ⋮ abre Insights já nessa aba; não existe mais uma tela separada.",
+   "Depois do F5, Insights abre na última aba interna usada."
+  ],
+  "tickets": [
+   "CR-068"
+  ]
+ }
+]
