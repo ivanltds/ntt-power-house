@@ -237,6 +237,20 @@ O documento **só entra na base depois da revisão humana**. Cada sugestão alte
   - **Consultor:** não vê o projeto confidencial nem valores e margens.
   - **Gestor:** vê tudo.
 
+### Massa de testes (V0.0.3): 500 projetos fictícios
+
+Para validar a hipótese com volume próximo do real (uma unidade de negócio com cerca de 2,5 anos fiscais de histórico), há uma massa de **500 projetos (P101 a P600) e cerca de 2.200 documentos** em `data/corpus/massa/`. Os números seguem o que a Qualidade de Propostas relatou em 19/11: toda oportunidade tem proposta e documento financeiro, a taxa de ganho fica em ~53% das decididas e as perdas têm motivo.
+
+| Etapa | Comando | O que faz |
+|---|---|---|
+| 1. Planejar | `node scripts/massa/planejar.js` | Fatos de cada projeto, com semente fixa: setor (10), tema (25), cliente (66), responsável (35), status, datas de abr/2024 a nov/2026, valores, motivo de perda e de ganho, documentos e casos difíceis (versão anterior com prazo e valor diferentes, cadastro incompleto, dados pessoais). |
+| 2. Escrever | `node scripts/massa/escrever.js` | A IA (DeepSeek do `.env`) redige os textos de cada projeto sem mudar os fatos. Um arquivo por projeto em `data/massa/textos/`; dá para interromper e retomar. |
+| 3. Montar | `node scripts/massa/montar.js` | Gera os Markdown em `data/corpus/massa/` com as mesmas seções da base piloto. |
+| 4. Carregar | `node src/ingest.js --adicionar` | Acrescenta ao banco só os projetos novos e reindexa, **sem apagar** cadastros e envios. |
+| 5. Avaliar | `node scripts/massa/gabarito.js` e `node scripts/massa/avaliar.js [--ia]` | 60 perguntas com resposta conhecida; mede acerto@3, precisão@3, pessoa citada, motivo citado e tempo. |
+
+Os testes automáticos ignoram a massa (`RADAR_SEM_MASSA=1`) e continuam usando só os 11 projetos da base piloto. Os vetores ficam esparsos na memória (~1 KB por trecho), o que permite a massa no servidor de produção.
+
 ## Roteiro de demo
 
 1. **Busca (consultor):**

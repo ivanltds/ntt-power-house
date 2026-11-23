@@ -257,7 +257,10 @@ ${p.licoes}
 `;
 }
 
-fs.rmSync(CORPUS, { recursive: true, force: true });
+// Apaga só as pastas da base piloto (P001…P011); a massa de testes em data/corpus/massa é gerada à parte
+// (node scripts/massa/montar.js) e fica intacta.
+fs.mkdirSync(CORPUS, { recursive: true });
+for (const d of fs.readdirSync(CORPUS)) if (d !== 'massa') fs.rmSync(path.join(CORPUS, d), { recursive: true, force: true });
 let count = 0;
 for (const p of PROJECTS) {
   const dir = path.join(CORPUS, `${p.id}-${slug(p.cliente)}`);

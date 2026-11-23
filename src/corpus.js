@@ -44,7 +44,8 @@ export function readCorpus(dir) {
   const walk = (d) => {
     for (const entry of fs.readdirSync(d, { withFileTypes: true })) {
       const full = path.join(d, entry.name);
-      if (entry.isDirectory()) walk(full);
+      // A massa de testes (data/corpus/massa) fica fora dos testes automáticos (RADAR_SEM_MASSA=1 em test/setup.js).
+      if (entry.isDirectory()) { if (!(entry.name === 'massa' && process.env.RADAR_SEM_MASSA === '1')) walk(full); }
       else if (/\.(md|txt)$/i.test(entry.name)) {
         const { meta, body } = parseDocument(fs.readFileSync(full, 'utf8'));
         if (!meta.id) continue;
