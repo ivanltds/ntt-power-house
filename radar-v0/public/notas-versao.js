@@ -13,6 +13,42 @@ export const NOTAS = [
         antes: 'O roteiro e os resultados eram da V0.0.2.',
         depois: 'A V0.0.2 fica arquivada, com o roteiro congelado como estava em produção (116 cenários) e os resultados só para consulta. O roteiro da V0.0.3 começa zerado, traz os cenários das novidades desta versão e destaca os que falharam ou ficaram bloqueados na V0.0.2.',
       },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Projetos', tickets: ['CR-075'],
+        titulo: 'One page de case',
+        antes: 'A exportação tinha a apresentação (vários slides) e o resumo executivo. Não havia uma página única de case no formato do comercial, nem pedido pelo chat, nem cuidado com cliente que não pode ser citado.',
+        depois: 'Nova one page (1 slide PowerPoint ou 1 página PDF) com contexto, desafio, objetivo, solução, tecnologias e serviços, benefícios, resultados com números em destaque, duração e fonte no rodapé. O cliente sai como "grande cliente do setor …" (também no texto e no nome do arquivo); só o gestor pode citar o nome, e nunca em projeto confidencial. Investimento só para o gestor e só se marcar. Bloco sem registro na base aparece para completar na prévia; a IA não cria números. Projeto que não é case sai só como referência interna, com selo. Abre pelo chat ("gera a one page do P001"), pelo botão One page no cartão do resultado, pelo Exportar e pela conversa da ficha.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Chat', tickets: ['CR-076'],
+        titulo: 'Apresentação de cases (deck com uma one page por case ganho)',
+        antes: 'Dava para buscar projetos parecidos e exportar um por vez; não havia como juntar vários cases num só material.',
+        depois: 'No chat, "monta uma apresentação sobre fraude em seguros com nossos cases" ou "transforma esses em apresentação" separa os cases ganhos, diz quantos parecidos ficaram de fora e abre a montagem: marcar até 8 cases, mudar a ordem e incluir o slide de aprendizados (uso interno). O arquivo (PowerPoint ou PDF) tem capa, "O que a NTT DATA já fez em …" com números contados na base, uma one page por case e as fontes. Sem case ganho sobre o tema, o Radar não monta material para cliente.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Projetos', tickets: ['CR-077'],
+        titulo: 'Conversa dentro da ficha do projeto e "com quem falar"',
+        antes: 'O botão Perguntar da ficha levava para a tela de Conversas com o título escrito na caixa; a ficha saía de vista e a pergunta não ficava ligada ao projeto. Os resultados não diziam com quem conversar.',
+        depois: 'A ficha tem a seção "Conversar sobre este projeto": a mesma conversa das Conversas, com o foco fixo no projeto, as 3 últimas trocas, atalhos por status (parecidos, riscos, quem já fez, apresentação de cases, comparar com a RFP anexada; one page e resultados nos projetos ganhos) e o clipe para anexar a RFP só na conversa. A conversa aparece em Conversas com o selo do projeto. Cada resultado e cada ficha mostram quem pode contar como foi (responsável, área e setor) com uma mensagem pronta para copiar.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-078'],
+        titulo: 'Insights no ano fiscal e Ganhamos × perdemos',
+        antes: 'Os anos eram civis e o filtro era "Desde". A taxa de ganho aparecia por segmento, sem uma leitura de por que ganhamos e por que perdemos.',
+        depois: 'Os Insights usam o ano fiscal da NTT DATA (abril a março; FY26 = abr/2026 a mar/2027), com o filtro "Ano fiscal". A visão Negócio ganhou o cartão "Ganhamos × perdemos": o que as ganhas e as perdidas têm em comum, os motivos de perda sugeridos a partir das lições (lista controlada: preço, escopo, concorrente, relacionamento, prazo, capacidade técnica, desistência) e as perdidas que viraram aprendizado, com quem conduziu. O método da taxa de ganho aparece em "como calculamos". Os filtros Setor, Unidade, Foundation e Prisma e a troca do termo "prática" aguardam as definições da Kelly.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-079'],
+        titulo: 'Sinais do setor',
+        antes: 'Os Insights mostravam só o histórico da base.',
+        depois: 'A visão Negócio tem o cartão "O que está acontecendo no setor?": notícias de fontes curadas, coletadas uma vez por dia, com a relevância para nós (cliente da carteira, tecnologia que já entregamos no setor ou só o setor), o porquê, o link da fonte e "O que já fizemos sobre isso?". O Radar guarda só título, data, link e um trecho, por 90 dias, e uma fonte fora do ar não afeta o resto. A lista de fontes está sendo definida com a Kelly e o Bruno Miranda.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Projetos',
+        titulo: 'Revisão de qualidade e documento financeiro',
+        antes: 'A ficha não avisava que a proposta passaria pela revisão de qualidade, e uma planilha financeira podia ser marcada como "bom modelo" como qualquer documento.',
+        depois: 'Proposta em aberto a partir de R$ 500 mil mostra "Exige revisão de qualidade" com a orientação de chamar o time cedo (o corte por tipologia ainda será confirmado com a Qualidade de Propostas). Planilhas financeiras (GECO, GECO Val, Calculadora) mostram que servem de referência de estrutura e equipe, não de base, e apontam para a versão do mês no Ibiza; marcadas para reaproveitar, viram "boa referência de composição".',
+      },
     ],
   },
   {

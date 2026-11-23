@@ -204,7 +204,7 @@ function lenteNegocio(n, v) {
   cards.push(card({
     id: 'sinais', pergunta: 'O que está acontecendo no setor?', origem: 'IA · sugerido', largo: true,
     como: 'Notícias das fontes curadas, coletadas uma vez por dia (só título, data, link e um trecho; nada da base sai do Radar). Relevância: alta se cita um cliente da carteira, média se fala de tecnologia que já entregamos no setor, baixa se é só do setor. O link original é sempre a referência.',
-    corpo: '<div id="pn-sinais"><p class="muted small">Carregando os sinais…</p></div>',
+    corpo: '<div id="pn-sinais-lista"><p class="muted small">Carregando os sinais…</p></div>',
   }));
   cards.push(card({
     id: 'quadrante', amostra: true, dica: 'Cada segmento cai numa zona. Núcleo é o ideal; Risco e Conversão pedem ação.', pergunta: 'Ganhamos onde sabemos entregar?', largo: false, n: n.quadrante.reduce((a, q) => a + q.n, 0),
@@ -486,7 +486,7 @@ function render() {
 
 const NIVEL_SINAL = { alta: ['Alta', 'ok'], media: ['Média', 'warn'], baixa: ['Baixa', ''] };
 async function carregarSinais() {
-  const alvo = $('#pn-sinais');
+  const alvo = $('#pn-sinais-lista');
   if (!alvo) return;
   let r;
   try { r = await api(`/api/sinais?userId=${userId()}${view.filtros.segmento ? `&segmento=${encodeURIComponent(view.filtros.segmento)}` : ''}`); } catch { alvo.innerHTML = vazio('Os sinais do setor não carregaram agora. O resto dos Insights segue normal.'); return; }
