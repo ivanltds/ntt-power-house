@@ -28,7 +28,7 @@ for (const q of perguntas) {
   const t0 = Date.now();
   const r = await engine.search(q.pergunta, { userId: 'u-gestor' });
   const ms = Date.now() - t0;
-  const ids = [...(r.resultados ?? []).map((x) => x.projeto_id), ...(r.dados?.itens ?? []).map((x) => x.projeto_id)];
+  const ids = [...(r.resultados ?? []).map((x) => x.projeto_id), ...(r.dados?.itens ?? []).map((x) => x.projeto_id), ...(r.dados?.projetos ?? []).map((x) => x.projeto_id)];
   const top3 = ids.slice(0, 3);
   const certo = (id) => { const p = plano.get(id); return p && p.tema === q.tema && (!q.setor || p.setor === q.setor); };
   const texto = normalize(r.resposta ?? '');
