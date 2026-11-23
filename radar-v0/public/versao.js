@@ -7,7 +7,7 @@ import { icon } from './icons.js';
 import { render, table, tip } from './ajuda.js';
 import { SECOES_QUALIDADE } from './qualidade.js';
 
-export const VERSAO = 'V0.0.2';
+export const VERSAO = 'V0.0.3';
 
 export { NOTAS } from './notas-versao.js';
 import { NOTAS } from './notas-versao.js';
@@ -21,7 +21,7 @@ const item = (i) => `
   <li class="rn-item">
     <div class="rn-top">${chip(i.status)}<span class="rn-tipo">${TIPO[i.tipo][0]} · ${i.area}</span></div>
     <b>${i.titulo}</b>${i.tickets?.length ? `<span class="rn-tks">${i.tickets.map((c) => `<code>${c}</code>`).join(' ')}</span>` : ''}
-    <dl><dt>Antes</dt><dd>${i.antes}</dd><dt>${i.status === 'feito' ? 'Agora' : 'Próximo passo'}</dt><dd>${i.depois}</dd></dl>
+    <dl><dt>Antes</dt><dd>${i.antes}</dd><dt>${i.substituido ? 'Na época' : i.status === 'feito' ? 'Agora' : 'Próximo passo'}</dt><dd>${i.depois}</dd>${i.substituido ? `<dt>Hoje</dt><dd>${i.substituido}</dd>` : ''}</dl>
   </li>`;
 
 const secao = (n) => [n.versao, 'tag', `${n.versao} · ${n.estado}`, () => {

@@ -11,14 +11,16 @@ const ORDEM_PRIO = ['critica', 'alta', 'media', 'baixa', null];
 
 const ABERTOS = ['aberto', 'em_correcao', 'corrigido'];
 const FILTROS = { abertos: 'Em aberto', corrigido: 'Aguardando reteste', fora_mvp: 'Fora do MVP', resolvidos: 'Resolvidos', todos: 'Todos' };
-const filtro = { tickets: 'abertos', melhorias: 'abertos' };
-const busca = { tickets: '', melhorias: '' };
+const filtro = { tickets: 'abertos', melhorias: 'abertos', roteiro: 'todos' };
+const busca = { tickets: '', melhorias: '', roteiro: '' };
+// Filtro do roteiro da versão: pela situação de cada cenário (o resultado mais recente).
+const FILTROS_ROTEIRO = { todos: 'Todos', pendente: 'Pendentes', problema: 'Falhou ou bloqueado', ok: 'OK' };
 // Filtros e busca das tabelas guardados no navegador, como no quadro de tickets.
 const FILTROS_KEY = 'radar.status.filtros';
 try {
   const s = JSON.parse(localStorage.getItem(FILTROS_KEY)) ?? {};
   for (const k of Object.keys(filtro)) {
-    if (FILTROS[s.filtro?.[k]]) filtro[k] = s.filtro[k];
+    if ((k === 'roteiro' ? FILTROS_ROTEIRO : FILTROS)[s.filtro?.[k]]) filtro[k] = s.filtro[k];
     if (typeof s.busca?.[k] === 'string') busca[k] = s.busca[k];
   }
 } catch { /* sem localStorage: começa no padrão */ }
@@ -45,7 +47,7 @@ function versoes() {
       <p>${esc(n.resumo)}</p>
       <ul class="st-itens">${n.itens.map((x) => `<li>
         <details><summary><span class="rn-chip rn-${SIT_NOTA[x.status][1]}">${SIT_NOTA[x.status][0]}</span><span class="muted small">${TIPO[x.tipo][0]} · ${esc(x.area)}</span><b>${esc(x.titulo)}</b>${x.tickets?.length ? `<span class="rn-tks">${x.tickets.map((c) => `<code>${esc(c)}</code>`).join(" ")}</span>` : ""}</summary>
-        <dl><dt>Antes</dt><dd>${esc(x.antes)}</dd><dt>${x.status === 'feito' ? 'Agora' : 'Próximo passo'}</dt><dd>${esc(x.depois)}</dd></dl></details>
+        <dl><dt>Antes</dt><dd>${esc(x.antes)}</dd><dt>${x.substituido ? 'Na época' : x.status === 'feito' ? 'Agora' : 'Próximo passo'}</dt><dd>${esc(x.depois)}</dd>${x.substituido ? `<dt>Hoje</dt><dd>${esc(x.substituido)}</dd>` : ''}</dl></details>
       </li>`).join('')}</ul>
     </article>`;
   }).join('');
@@ -72,6 +74,39 @@ function tabela(chave, lista) {
         <td>${u ? `<span class="small">${u.texto ? esc(u.texto) : esc(rot.status[u.para] ?? '')}</span><br><span class="muted small">${esc(u.autor)} · ${dateBR(u.em)}</span>` : '<span class="muted small">Sem retorno</span>'}</td>
       </tr>`;
     }).join('')}</tbody></table></div>`;
+}
+
+// Roteiro de testes da versão no ar: cada cenário com a situação atual, quem testou e o passo a passo completo.
+const passaRoteiro = (sit, f) => f === 'todos' || (f === 'problema' ? sit === 'falha' || sit === 'bloqueado' : sit === f);
+const listaPassos = (titulo, itens) => (itens?.length ? `<dt>${titulo}</dt><dd><ol class="st-passos">${itens.map((x) => `<li>${esc(x)}</li>`).join('')}</ol></dd>` : '');
+
+function cenarios() {
+  const rot = q.rotulos;
+  const sit = { ...rot.resultados, pendente: 'Pendente' };
+  const porId = Object.fromEntries(q.resumo.porCenario.map((c) => [c.id, c]));
+  const termo = busca.roteiro.toLowerCase();
+  const vis = q.roteiro.filter((c) => passaRoteiro(porId[c.id]?.situacao ?? 'pendente', filtro.roteiro) && (!termo || `${c.id} ${c.titulo} ${c.objetivo}`.toLowerCase().includes(termo)));
+  if (!vis.length) return '<p class="muted">Nenhum cenário nesta situação.</p>';
+  const areas = [...new Set(vis.map((c) => c.area))];
+  return areas.map((a) => {
+    const daArea = vis.filter((c) => c.area === a);
+    return `<h3 class="st-area">${esc(rot.areas[a] ?? a)} <span class="muted small">· ${daArea.length} cenário${daArea.length === 1 ? '' : 's'}</span></h3>
+    <ul class="st-itens">${daArea.map((c) => {
+      const r = porId[c.id] ?? { situacao: 'pendente' };
+      return `<li><details><summary>${chip(r.situacao, sit)}<code>${esc(c.id)}</code><b>${esc(c.titulo)}</b><span class="muted small">Prioridade ${esc(rot.prioridades?.[c.prioridade] ?? c.prioridade)}${r.analista ? ` · ${esc(r.analista)} em ${dateBR(r.em)}` : ''}${r.ticket ? ` · ticket ${esc(r.ticket)}` : ''}</span></summary>
+        <dl><dt>Objetivo</dt><dd>${esc(c.objetivo)}</dd>${listaPassos('Antes de começar', c.preparo)}${listaPassos('Passo a passo', c.passos)}${listaPassos('O que deve acontecer', c.esperado)}${c.tickets?.length ? `<dt>Tickets que este cenário retesta</dt><dd>${c.tickets.map((t) => `<code>${esc(t)}</code>`).join(' ')}</dd>` : ''}</dl></details></li>`;
+    }).join('')}</ul>`;
+  }).join('');
+}
+
+function blocoRoteiro() {
+  const s = q.resumo;
+  return `<section class="st-sec" id="sec-roteiro"><h2>Roteiro de testes · ${esc(s.versao)}</h2>
+    <p class="muted">${q.roteiro.length} cenários da versão no ar. Clique num cenário para ver o objetivo, o passo a passo e o que deve acontecer. Para registrar um resultado, use o menu Versão → Roteiro de testes no Radar.</p>
+    <div class="qa-toolbar"><div class="theme-seg" role="radiogroup" aria-label="Filtro do roteiro">${Object.entries(FILTROS_ROTEIRO).map(([k, v]) => `<button type="button" role="radio" data-sec="roteiro" data-f="${k}" class="${filtro.roteiro === k ? 'on' : ''}" aria-checked="${filtro.roteiro === k}">${v}</button>`).join('')}</div>
+      <input type="search" data-busca="roteiro" value="${esc(busca.roteiro)}" placeholder="Buscar por código, título ou objetivo" aria-label="Buscar no roteiro"></div>
+    <div data-tabela="roteiro">${cenarios()}</div>
+  </section>`;
 }
 
 function blocoTickets(chave, titulo, descricao, lista) {
@@ -103,7 +138,7 @@ function pintar() {
       ${tile('Melhorias em aberto', melhorias.filter((t) => ABERTOS.includes(t.status)).length, `${melhorias.length} sugeridas no total`)}
       ${tile('Roteiro da versão', `${previsto ? Math.round((feitos / previsto) * 100) : 0}%`, `${feitos} de ${previsto} cenários · ${s.geral.falha} com falha`)}
     </div>
-    <nav class="st-nav" aria-label="Seções"><a href="#sec-versoes">Versões</a><a href="#sec-tickets">Tickets</a><a href="#sec-melhorias">Feedbacks de melhoria</a><a href="#sec-testes">Testes da versão</a></nav>
+    <nav class="st-nav" aria-label="Seções"><a href="#sec-versoes">Versões</a><a href="#sec-tickets">Tickets</a><a href="#sec-melhorias">Feedbacks de melhoria</a><a href="#sec-testes">Testes da versão</a><a href="#sec-roteiro">Roteiro da ${esc(q.versao)}</a></nav>
     <section class="st-sec" id="sec-versoes"><h2>Versões</h2><p class="muted">O que mudou em cada versão. Clique num item para ver o antes e o agora.</p>${versoes()}</section>
     ${blocoTickets('tickets', 'Tickets', 'Problemas e dúvidas relatados por feedback ou por falha no roteiro de testes, de todas as versões.', problemas)}
     ${blocoTickets('melhorias', 'Feedbacks de melhoria', 'Sugestões enviadas pelo menu Versão → Enviar feedback (tipo "Sugestão").', melhorias)}
@@ -111,15 +146,17 @@ function pintar() {
       <p class="muted">${feitos} de ${previsto} cenários executados. ${esc(s.regra)} Zera a cada versão nova.</p>
       <div class="qa-pizzas">${pizza('Roteiro (todas as áreas)', partesResultado(s.geral, R), { tamanho: 150 })}${Object.entries(s.porArea).map(([a, c]) => pizza(q.rotulos.areas[a], partesResultado(c, R), { tamanho: 110 })).join('')}</div>
       ${s.anteriores.length ? `<h3>Versões anteriores</h3><div class="tbl-wrap"><table class="guide-tbl"><thead><tr><th>Versão</th><th>${R.ok}</th><th>${R.falha}</th><th>${R.bloqueado}</th></tr></thead><tbody>${s.anteriores.map((v) => `<tr><td>${esc(v.versao)}</td><td>${v.ok}</td><td>${v.falha}</td><td>${v.bloqueado}</td></tr>`).join('')}</tbody></table></div>` : ''}
-    </section>`;
+    </section>
+    ${blocoRoteiro()}`;
+  const render = (k) => (k === 'roteiro' ? cenarios() : tabela(k, listas[k]));
   $$('[data-sec]').forEach((b) => (b.onclick = () => {
     const k = b.dataset.sec;
     filtro[k] = b.dataset.f;
     gravarFiltros();
     $$(`[data-sec="${k}"]`).forEach((x) => { const on = x.dataset.f === filtro[k]; x.classList.toggle('on', on); x.setAttribute('aria-checked', on); });
-    $(`[data-tabela="${k}"]`).innerHTML = tabela(k, listas[k]);
+    $(`[data-tabela="${k}"]`).innerHTML = render(k);
   }));
-  $$('[data-busca]').forEach((inp) => (inp.oninput = () => { const k = inp.dataset.busca; busca[k] = inp.value.trim(); gravarFiltros(); $(`[data-tabela="${k}"]`).innerHTML = tabela(k, listas[k]); }));
+  $$('[data-busca]').forEach((inp) => (inp.oninput = () => { const k = inp.dataset.busca; busca[k] = inp.value.trim(); gravarFiltros(); $(`[data-tabela="${k}"]`).innerHTML = render(k); }));
   $('#st-atualizado').textContent = `Atualizado às ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
 }
 

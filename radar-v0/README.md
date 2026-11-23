@@ -6,6 +6,13 @@ Protótipo local para validar a hipótese do discovery (NB-01 de `radar-proposta
 
 **Tudo é fictício:** clientes, pessoas, valores e resultados foram inventados.
 
+> **Documentação de uso e de funcionamento (V0.0.2):**
+> - [Como usar o Radar](docs/COMO-USAR-O-RADAR.md): passo a passo de cada tela, com desenhos de tela e fluxos.
+> - [Como funciona o Radar](docs/COMO-FUNCIONA-O-RADAR.md): arquitetura, busca, percentual de semelhança, envio, permissões e segurança, com diagramas.
+> - [Documentação do projeto](docs/DOCUMENTACAO-DO-PROJETO.md): missão, proposta, MVP, como é implementado e roadmap (Impact AI).
+>
+> O conteúdo dos dois primeiros também está no app (menu ⋮ → Como usar o Radar / Como o Radar funciona), e o chat responde dúvidas de uso com base nele.
+
 ## Como rodar localmente (passo a passo)
 
 > Esta seção foi escrita para ser seguida **à risca por uma pessoa ou por um agente de IA**, sem conhecimento prévio do projeto. Cada passo diz o comando, o que esperar e o que fazer se der errado. Validada num clone limpo do GitHub em 05/11/2026 (Windows 11, Node 24.19).
@@ -53,7 +60,7 @@ cd ntt-power-house/radar-v0
 
 ### Passo 3 (opcional). Ligar a IA DeepSeek
 
-Sem este passo o Radar funciona em **modo offline**: respostas por regras e busca local, e o topo da tela mostra o selo "IA offline". Para usar a IA:
+Sem este passo o Radar funciona em **modo offline**: respostas por regras e busca local, e o topo da tela mostra a etiqueta "Modo regras". Para usar a IA:
 
 ```bash
 cp .env.example .env          # Windows PowerShell: Copy-Item .env.example .env
@@ -117,14 +124,14 @@ Invoke-RestMethod http://localhost:3000/api/sessao
 # esperado: buscar
 ```
 
-Depois abra **http://localhost:3000** no navegador. Deve aparecer "O que você procura?" e o selo **V0.0.1** ao lado de "Radar". A página `http://localhost:3000/status` mostra versões, tickets e feedbacks. Os tickets são priorizados e editados no menu ⋮ → "Versão: notas, feedbacks e testes" → Tickets (lista e kanban).
+Depois abra **http://localhost:3000** no navegador. Deve aparecer "O que você procura?" e o selo **V0.0.2** ao lado de "Radar". A página `http://localhost:3000/status` mostra versões, tickets e feedbacks. Os tickets são priorizados e editados no menu ⋮ → "Versão: notas, feedbacks e testes" → Tickets (lista e kanban).
 
-Perfis de teste (troque no menu ⋮ do canto superior direito, campo "Ver como"):
+Perfis de teste (troque no botão de conta do canto superior direito, campo "Ver como"):
 
 | id | Perfil | Diferença |
 |---|---|---|
-| `u-consultor` | Consultor(a) de pré-vendas | Não vê valores nem documentos confidenciais; não cadastra projetos |
-| `u-gestor` | Gestor(a) comercial | Vê valores e confidenciais; cadastra e edita projetos |
+| `u-consultor` | Consultor(a) de pré-vendas (Marina Costa) | Não vê valores nem documentos confidenciais; não cadastra projetos |
+| `u-gestor` | Gestor(a) comercial (Thiago Ramos) | Vê valores e confidenciais; cadastra, edita e exclui projetos |
 
 ### Passo 6. Parar o servidor
 
@@ -134,7 +141,7 @@ Perfis de teste (troque no menu ⋮ do canto superior direito, campo "Ver como")
 ### Comandos úteis
 
 ```bash
-npm test                  # 58 testes automatizados; esperado: "pass 58" e "fail 0"
+npm test                  # 84 testes automatizados; esperado: "pass 84" e "fail 0"
 npm run setup             # recria a base fictícia do zero (apaga o que foi cadastrado ou enviado localmente)
 npm run ingest            # reindexa sem apagar o que foi cadastrado ou enviado
 npm run ask -- "propostas de utilities com Databricks"   # pergunta pelo terminal, sem navegador
@@ -142,7 +149,7 @@ npm run ask -- "propostas de utilities com Databricks"   # pergunta pelo termina
 
 Os testes gravam numa pasta temporária e não mexem nos seus dados. O `npm run setup` regenera `data/corpus/` e `amostras/` com o mesmo conteúdo, então o `git status` continua limpo.
 
-Sem `npm`: `node --disable-warning=ExperimentalWarning src/server.js` (start) e `node --disable-warning=ExperimentalWarning --test test/radar.test.js` (testes).
+Sem `npm`: `node --disable-warning=ExperimentalWarning src/server.js` (start) e `node --disable-warning=ExperimentalWarning --test --test-concurrency=1 test/radar.test.js test/skills.test.js` (testes).
 
 ### Onde ficam os dados locais
 
@@ -155,7 +162,7 @@ O que você cria ao usar (conversas, uploads, projetos cadastrados, avaliações
 | `No such built-in module: node:sqlite` ou `ERR_UNKNOWN_BUILTIN_MODULE` | Node antigo | Passo 1: instale o Node 22.13 ou maior |
 | `EADDRINUSE: address already in use :::3000` | Porta ocupada | Use outra porta (`PORT=3001 npm start`) ou pare o processo que usa a 3000 |
 | `npm` não encontrado, mas `node` funciona | Instalação sem npm | Use os comandos "Sem `npm`" acima |
-| O topo da tela mostra "IA offline" | Sem `DEEPSEEK_API_KEY`, sem internet ou chave inválida | Normal sem chave. Com chave, confira o `.env` e reinicie o servidor |
+| O topo da tela mostra "Modo regras" | Sem `DEEPSEEK_API_KEY`, sem internet ou chave inválida | Normal sem chave. Com chave, confira o `.env` e reinicie o servidor |
 | Cada pergunta leva 5 a 10 s | IA ligada (chamada à DeepSeek) | Esperado. No modo offline é instantâneo |
 | Redireciona para `/login` | `RADAR_LOGIN_USER` e `RADAR_LOGIN_PASS` definidos | Entre com esses valores ou remova-os do `.env` |
 | `git status` mostra muitos arquivos alterados depois do `setup` | Clone anterior ao `.gitattributes` (diferença só de fim de linha) | `git rm --cached -r -q . && git reset --hard` dentro de `radar-v0`, ou clone de novo |
@@ -169,12 +176,11 @@ Copie a pasta sem `data/radar.db*`, `data/vectorstore`, `data/uploads`, `data/co
 
 | Aba | O que faz | Casos de uso |
 |---|---|---|
-| **Busca conversacional** | Chat com memória, IA, conversas salvas e favoritas | UC03, UC05, UC06 |
-| **Projetos** | Exploração com texto e filtros combinados (facetas com contagem, "todas/qualquer", faixas, pessoa/KPI/risco citado), detalhe do projeto, cadastro e edição com sugestão inteligente | UC07, UC08 |
-| **Upload** | Envio multiformato, fila com etapas ao vivo, revisão de metadados e confirmação ou rejeição | UC02 |
-| **Insights da base** | Conversão por segmento e tecnologia, tecnologias que andam juntas, resultados de cases, lições de perdas, curadoria e correções | UC09 |
-| **Documentos** | Lista de tudo o que o perfil pode ver | — |
-| **Métricas da hipótese** | Buscas, utilidade, tempo até a primeira referência útil | NB-01 |
+| **Perguntar** | Chat com memória, IA, proposta em foco, conversas salvas (favoritas, grupos, arquivadas), leitura de arquivo anexado, envio para um projeto e dúvidas de uso | UC03, UC05, UC06, UC14, UC15 |
+| **Projetos** | Exploração com texto e filtros combinados (facetas com contagem, "todas/qualquer", faixas, pessoa/KPI/risco citado), visão Documentos, ficha com edição no lugar, comentários e histórico, envio de arquivos com revisão, exportação, cadastro (gestor) | UC02, UC07, UC08, UC10 |
+| **Insights** | Visões Negócio, Técnica, Pipeline, Pré-venda e Curadoria (manchetes em cartões) e Métricas do piloto (buscas, utilidade, tempo até a primeira referência útil, reaproveitamento) | UC09, NB-01 |
+
+Não há aba de envio: os arquivos entram pela ficha do projeto ("Enviar arquivo"), pela conversa (clipe) ou, para o gestor, por "Novo a partir de arquivo". O passo a passo de cada tela está em [Como usar o Radar](docs/COMO-USAR-O-RADAR.md).
 
 Os casos de uso estão em [`docs/`](docs/). O modelo de dados está em [`docs/MER-base-de-conhecimento.md`](docs/MER-base-de-conhecimento.md).
 
@@ -234,19 +240,19 @@ O documento **só entra na base depois da revisão humana**. Cada sugestão alte
 ## Roteiro de demo
 
 1. **Busca (consultor):**
-   - Pergunte *"propostas de utilities com plataforma de dados Databricks"* e depois *"e o segundo?"*. Mostre a memória, o score por fator e o conflito de prazo.
+   - Pergunte *"propostas de utilities com plataforma de dados Databricks"* e depois *"e o segundo?"*. Mostre a memória ("lembrando N perguntas"), o percentual com "Por que apareceu nesta posição" e as fontes; o conflito de prazo aparece na ficha do projeto.
    - Pergunte *"receita de bolo"*: o sistema diz que está fora do domínio, em vez de inventar.
-2. **Upload (gestor):**
-   - Envie `amostras/proposta-banco-aurora-antifraude.docx`.
+2. **Envio com projeto novo (gestor):**
+   - Em Projetos, clique em **Novo a partir de arquivo** e envie `amostras/proposta-banco-aurora-antifraude.docx`.
    - Mostre as etapas, os selos de confiança e as entidades extraídas. O documento é marcado como **confidencial**, e o sistema recomenda criar o projeto novo "Banco Aurora".
-   - Confirme. Pergunte no chat *"fraude em PIX"* e o projeto aparece.
+   - Confira e aprove. Pergunte no chat *"fraude em PIX"* e o projeto aparece.
    - Troque para **consultor**: o projeto some de todas as telas.
-3. **Upload de um cliente existente:** envie `amostras/apresentacao-energisul-fase2.pptx`. O sistema vincula ao P001 e aponta o conflito de prazo (5 contra 6 meses).
+3. **Envio para um cliente existente:** na ficha do P001 (Energisul), bloco "Enviar arquivo", envie `amostras/apresentacao-energisul-fase2.pptx`. O sistema aponta o conflito de prazo (5 contra 6 meses).
 4. **Projetos:**
    - Filtre "Databricks" + "Azure" (todas) e troque para "qualquer".
    - Busque o texto "perdas" e filtre "Citado nos documentos › Pessoa: Marina".
-   - Clique em **+ Novo projeto**, descreva em uma frase e use **✨ Sugerir campos**.
-5. **Insights:** conversão por segmento e tecnologia, lições de propostas perdidas e correções feitas nas sugestões.
+   - Clique em **+ Projeto** (gestor), descreva em uma frase e use **✨ Sugerir campos**.
+5. **Insights:** visão Negócio (taxa de ganho, onde mais ganhamos e perdemos), Pré-venda (prontidão das oportunidades), Curadoria (correções feitas nas sugestões) e Métricas do piloto.
 
 ## Limitações conhecidas do V0
 

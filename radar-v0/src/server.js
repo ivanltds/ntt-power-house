@@ -16,7 +16,7 @@ import { UploadService, MAX_UPLOAD_BYTES } from './uploads.js';
 import { createProject, updateProject, suggestProject } from './projects.js';
 import { documentForEdit, updateDocument } from './documents.js';
 import { can, capabilities, PROIBIDO } from './permissions.js';
-import { proposalExportOptions, exportProposal } from './export/index.js';
+import { proposalExportOptions, exportProposal, onePagePreview, exportOnePage, casesParaApresentacao, exportApresentacao } from './export/index.js';
 import { MODELOS, SECOES } from './export/modelo.js';
 import { TIPOS_DOCUMENTAIS } from './analysis.js';
 import { STATUS_PROPOSTA, CONFIDENCIALIDADES } from './db/repo.js';
@@ -31,6 +31,7 @@ import { VERSAO } from './version.js';
 import { criarAcessoRelatorio, montarRelatorio, RELATORIO_PATH, RELATORIO_INSIGHTS_PATH, usuarioRelatorio } from './relatorio.js';
 import { resumoCampanha } from './campanha.js';
 import { montarPainel, resumoExecutivo } from './painel.js';
+import { SinaisStore, agendarColeta } from './sinais.js';
 
 loadEnv(path.join(ROOT, '.env'));
 
@@ -99,6 +100,11 @@ function registrarMascaramento(contexto, user, achados) {
 }
 // Qualidade da versão: feedbacks com código de correção e roteiro regressivo (só texto em disco).
 const qualidade = new QualityStore(path.join(DATA_DIR, 'qualidade.json'));
+
+// CR-079: sinais do setor (fontes curadas em DATA_DIR/sinais-fontes.json), coletados de madrugada.
+const sinais = new SinaisStore(DATA_DIR);
+const vocabSinais = () => { const t = engine.repo.taxonomy(); return { segmentos: t.segmentos.map((x) => x.nome), tecnologias: t.tecnologias.map((x) => x.nome) }; };
+agendarColeta(sinais, vocabSinais);
 
 function painelPara(user, filtros = {}) {
   return montarPainel(engine.repo, user, { oportunidades: engine.opportunities, turnos: audit.read(audit.turnsFile), eventos: audit.read(audit.eventsFile), filtros });
@@ -184,6 +190,41 @@ async function exportFile(req, res) {
   res.end(r.buffer);
 }
 
+// Entrega um arquivo gerado (one page, apresentação de cases); nada fica guardado no servidor.
+function sendFile(res, r) {
+  const ascii = r.nome.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w .-]/g, '_');
+  res.writeHead(200, {
+    'Content-Type': r.mime,
+    'Content-Length': r.buffer.length,
+    'Content-Disposition': `attachment; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(r.nome)}`,
+    'X-Content-Type-Options': 'nosniff',
+  });
+  res.end(r.buffer);
+}
+
+// CR-075: one page de case (PPTX ou PDF de 1 página). R1P5: fica na auditoria (quem, qual projeto, se citou o cliente).
+async function exportOnePageFile(req, res) {
+  const { id, userId, ...pedido } = await readJson(req, 50_000);
+  const user = engine.user(userId);
+  const r = exportOnePage(engine, String(id ?? ''), user, pedido);
+  if (r.naoEncontrado) return send(res, 404, { erro: 'Projeto não encontrado ou sem permissão.' });
+  if (r.erro) return send(res, 400, { erro: r.erro, naoCase: r.naoCase ?? false });
+  engine.repo.logActivity({ acao: 'exportar', entidade: 'projeto', entidade_id: id, campo: `One page · ${String(pedido.formato).toUpperCase()}`, depois: [r.citado ? 'cliente citado' : 'cliente anônimo', r.interno ? 'uso interno' : null].filter(Boolean).join(', '), usuario_id: user.id });
+  audit.logEvent({ tipo: 'onepage', projeto_id: id, formato: pedido.formato, citado: r.citado, interno: r.interno, usuario: user.id });
+  return sendFile(res, r);
+}
+
+// CR-076: apresentação de cases (capa, consolidado, uma one page por case ganho, aprendizados e fontes).
+async function exportApresentacaoFile(req, res) {
+  const { userId, ...pedido } = await readJson(req, 50_000);
+  const user = engine.user(userId);
+  const r = exportApresentacao(engine, user, pedido);
+  if (r.erro) return send(res, 400, { erro: r.erro });
+  for (const id of r.ids) engine.repo.logActivity({ acao: 'exportar', entidade: 'projeto', entidade_id: id, campo: `Apresentação de cases · ${String(pedido.formato).toUpperCase()}`, depois: String(pedido.tema ?? '').slice(0, 80), usuario_id: user.id });
+  audit.logEvent({ tipo: 'apresentacao_cases', projetos: r.ids, fora: r.fora, formato: pedido.formato, slides: r.slides, aprendizados: Boolean(pedido.aprendizados), usuario: user.id });
+  return sendFile(res, r);
+}
+
 function allowedDocs(user) {
   return [...engine.docs.values()].filter((d) => matchesWhere(d.meta, { confidencialidade: { $in: user.confidencialidades } }));
 }
@@ -219,13 +260,17 @@ const routes = {
 
   // A conversa dá a memória da busca: os turnos anteriores entram como contexto (UC03.3 / UC03.14).
   'POST /api/buscar': async (req) => {
-    const { query: bruta, userId, opportunityId, conversaId, pendentes = 0 } = await readJson(req);
+    const { query: bruta, userId, opportunityId: oppPedida, conversaId, pendentes = 0, projetoId: pedidoProjeto = null } = await readJson(req);
     if (!bruta?.trim()) return [400, { erro: 'Informe uma pergunta.' }];
     const user = engine.user(userId);
+    // CR-077: conversa da ficha do projeto, com o foco fixo nele (só se o perfil pode ver o projeto).
+    const projetoId = pedidoProjeto && engine.focus(String(pedidoProjeto), user)?.projetoId ? String(pedidoProjeto) : null;
+    if (pedidoProjeto && !projetoId) return [404, { erro: 'Projeto não encontrado ou sem permissão.' }];
+    const opportunityId = projetoId ?? oppPedida;
     // A pergunta também vai à IA externa: dados sensíveis saem antes (UC13.2).
     const { texto: query, achados } = maskSensitive(bruta);
     registrarMascaramento('pergunta', user, achados);
-    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId });
+    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId, projetoId });
     const anexos = anexosConversa.list(conversa.id, user.id);
     const result = await engine.search(query, {
       userId: user.id, opportunityId, history: conversations.history(conversa),
@@ -240,16 +285,34 @@ const routes = {
 
   // UC15: anexar um arquivo à conversa para o Radar ler (não entra na base). Cria a conversa se ainda não existir.
   'POST /api/conversa/anexo': async (req) => {
-    const { nome, conteudoBase64, userId, opportunityId, conversaId } = await readJson(req, Math.ceil(MAX_UPLOAD_BYTES * 1.4) + 10_000);
+    const { nome, conteudoBase64, userId, opportunityId: oppPedida, conversaId, projetoId: pedidoProjeto = null } = await readJson(req, Math.ceil(MAX_UPLOAD_BYTES * 1.4) + 10_000);
     const user = engine.user(userId);
     const buffer = Buffer.from(conteudoBase64 ?? '', 'base64');
     if (!nome || !buffer.length) return [400, { erro: 'Arquivo vazio.' }];
     if (buffer.length > MAX_UPLOAD_BYTES) return [400, { erro: `Arquivo maior que ${MAX_UPLOAD_BYTES / 1024 / 1024} MB.` }];
-    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId });
+    const projetoId = pedidoProjeto && engine.focus(String(pedidoProjeto), user)?.projetoId ? String(pedidoProjeto) : null;
+    const opportunityId = projetoId ?? oppPedida;
+    const conversa = conversations.open(conversaId, { userId: user.id, opportunityId, projetoId });
     const r = anexosConversa.add(conversa.id, user.id, { nome, buffer, clientes: engine.repo.clients(user) });
     if (r.erro) return [400, { erro: r.erro, conversa: { id: conversa.id } }];
     audit.logEvent?.({ tipo: 'anexo_conversa', usuario: user.id, conversa: conversa.id, arquivo: r.anexo.nome, formato: r.anexo.formato, mascarados: r.anexo.mascarados });
     return { anexo: resumoPublico(r.anexo), conversa: { id: conversa.id, titulo: conversa.titulo, salva: conversa.salva, favorita: conversa.favorita, turnos: conversa.turnos.length } };
+  },
+
+  // CR-077: conversa da ficha — a mais recente do usuário neste projeto, com as 3 últimas trocas.
+  'GET /api/conversa/projeto': (req, url) => {
+    const user = engine.user(url.searchParams.get('userId'));
+    const id = url.searchParams.get('id') ?? '';
+    if (!engine.focus(id, user)?.projetoId) return [404, { erro: 'Projeto não encontrado ou sem permissão.' }];
+    const c = conversations.ultimaDoProjeto(user.id, id);
+    if (!c) return { conversa: null };
+    return {
+      conversa: {
+        id: c.id, titulo: c.titulo, favorita: c.favorita, total: c.turnos.length, atualizadaEm: c.atualizadaEm,
+        turnos: c.turnos.slice(-3).map((t) => ({ turnoId: t.turnoId, pergunta: t.pergunta, resultado: t.resultado })),
+        anexos: anexosConversa.list(c.id, user.id).map(resumoPublico),
+      },
+    };
   },
 
   // "O que você pode fazer?" na tela (boas-vindas): capacidades do registro de skills, filtradas pelo perfil.
@@ -522,6 +585,21 @@ const routes = {
     return r.erro ? [400, r] : r;
   },
 
+  // CR-075: prévia da one page (blocos, fontes e avisos). ?citar=1 pede o nome do cliente (só vale se permitido).
+  'GET /api/onepage': (req, url) => {
+    const p = url.searchParams;
+    const r = onePagePreview(engine, p.get('id') ?? '', engine.user(p.get('userId')), { citar: p.get('citar') === '1' });
+    return r.naoEncontrado ? [404, { erro: 'Projeto não encontrado ou sem permissão.' }] : r;
+  },
+
+  // CR-076: cases ganhos para a apresentação, por tema ou por lista de projetos.
+  'POST /api/apresentacao/cases': async (req) => {
+    const { userId, tema, ids } = await readJson(req, 20_000);
+    const user = engine.user(userId);
+    const r = await casesParaApresentacao(engine, user, { tema: maskSensitive(String(tema ?? '')).texto, ids: Array.isArray(ids) ? ids.map(String) : [] });
+    return r.erro ? [400, r] : r;
+  },
+
   // UC11: registro de atividades, somente leitura e só para o gestor.
   'GET /api/atividades': (req, url) => {
     if (!can(engine.user(url.searchParams.get('userId')), 'verAtividades')) return [403, { erro: PROIBIDO.verAtividades }];
@@ -612,7 +690,25 @@ const routes = {
     segmento: url.searchParams.get('segmento') || null,
     area: url.searchParams.get('area') || null,
     desde: url.searchParams.get('desde') || null,
+    fy: url.searchParams.get('fy') || null, // CR-078: ano fiscal (abril a março), ex.: FY26
   }),
+
+  // CR-079: as 5 notícias mais relevantes para nós no setor filtrado, com o porquê (só sobre o que o usuário pode ver).
+  'GET /api/sinais': (req, url) => {
+    const user = engine.user(url.searchParams.get('userId'));
+    const projetos = engine.tools.visible(user).itens.map((p) => ({ id: p.id, cliente: p.cliente, segmento: p.segmento, status_proposta: p.status_proposta, tecnologias: p.tecnologias, dono: p.dono }));
+    return { itens: sinais.relevantes(projetos, { segmento: url.searchParams.get('segmento') || null }), saude: sinais.saude(), podeColetar: can(user, 'marcarTeste') };
+  },
+
+  // Coleta manual (gestor): útil logo depois de configurar as fontes.
+  'POST /api/sinais/coletar': async (req) => {
+    const { userId } = await readJson(req, 2_000);
+    const user = engine.user(userId);
+    if (!can(user, 'marcarTeste')) return [403, { erro: 'Só o gestor pode disparar a coleta de sinais.' }];
+    const r = await sinais.coletar(vocabSinais());
+    audit.logEvent({ tipo: 'sinais_coleta', fontes: r.fontes, novos: r.novos, falhas: r.falhas.length, usuario: user.id });
+    return r;
+  },
 
   'POST /api/projeto/teste': async (req) => {
     const b = await readJson(req, 10_000);
@@ -660,6 +756,8 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/api/sessao') return send(res, 200, { login: auth.enabled });
     if (req.method === 'GET' && url.pathname === '/api/documento/baixar') return download(res, url);
     if (req.method === 'POST' && url.pathname === '/api/projeto/exportar') return exportFile(req, res);
+    if (req.method === 'POST' && url.pathname === '/api/onepage/exportar') return exportOnePageFile(req, res);
+    if (req.method === 'POST' && url.pathname === '/api/apresentacao/exportar') return exportApresentacaoFile(req, res);
     if (handler) {
       const out = await handler(req, url);
       // Handlers devolvem o corpo (200) ou [status, corpo].

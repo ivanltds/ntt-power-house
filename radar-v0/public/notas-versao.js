@@ -2,9 +2,59 @@
 
 export const NOTAS = [
   {
+    versao: 'V0.0.3',
+    data: '23/11/2026',
+    estado: 'Em andamento',
+    resumo: 'Os três casos de uso da Kelly no alinhamento executivo de 19/11 (cases, apresentação comercial e apoio à nova proposta) e as melhorias levantadas com a Qualidade de Propostas no mesmo dia: one page de case, apresentação de cases ganhos, conversa dentro da ficha do projeto, Insights no ano fiscal da NTT DATA com "Ganhamos × perdemos", sinais do setor e "com quem falar" em cada projeto parecido. A V0.0.2 fica arquivada (roteiro e resultados só para consulta).',
+    itens: [
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Qualidade',
+        titulo: 'V0.0.2 arquivada e roteiro da V0.0.3 aberto',
+        antes: 'O roteiro e os resultados eram da V0.0.2.',
+        depois: 'A V0.0.2 fica arquivada, com o roteiro congelado como estava em produção (116 cenários) e os resultados só para consulta. O roteiro da V0.0.3 começa zerado, traz os cenários das novidades desta versão e destaca os que falharam ou ficaram bloqueados na V0.0.2.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Projetos', tickets: ['CR-075'],
+        titulo: 'One page de case',
+        antes: 'A exportação tinha a apresentação (vários slides) e o resumo executivo. Não havia uma página única de case no formato do comercial, nem pedido pelo chat, nem cuidado com cliente que não pode ser citado.',
+        depois: 'Nova one page (1 slide PowerPoint ou 1 página PDF) com contexto, desafio, objetivo, solução, tecnologias e serviços, benefícios, resultados com números em destaque, duração e fonte no rodapé. O cliente sai como "grande cliente do setor …" (também no texto e no nome do arquivo); só o gestor pode citar o nome, e nunca em projeto confidencial. Investimento só para o gestor e só se marcar. Bloco sem registro na base aparece para completar na prévia; a IA não cria números. Projeto que não é case sai só como referência interna, com selo. Abre pelo chat ("gera a one page do P001"), pelo botão One page no cartão do resultado, pelo Exportar e pela conversa da ficha.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Chat', tickets: ['CR-076'],
+        titulo: 'Apresentação de cases (deck com uma one page por case ganho)',
+        antes: 'Dava para buscar projetos parecidos e exportar um por vez; não havia como juntar vários cases num só material.',
+        depois: 'No chat, "monta uma apresentação sobre fraude em seguros com nossos cases" ou "transforma esses em apresentação" separa os cases ganhos, diz quantos parecidos ficaram de fora e abre a montagem: marcar até 8 cases, mudar a ordem e incluir o slide de aprendizados (uso interno). O arquivo (PowerPoint ou PDF) tem capa, "O que a NTT DATA já fez em …" com números contados na base, uma one page por case e as fontes. Sem case ganho sobre o tema, o Radar não monta material para cliente.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Projetos', tickets: ['CR-077'],
+        titulo: 'Conversa dentro da ficha do projeto e "com quem falar"',
+        antes: 'O botão Perguntar da ficha levava para a tela de Conversas com o título escrito na caixa; a ficha saía de vista e a pergunta não ficava ligada ao projeto. Os resultados não diziam com quem conversar.',
+        depois: 'A ficha tem a seção "Conversar sobre este projeto": a mesma conversa das Conversas, com o foco fixo no projeto, as 3 últimas trocas, atalhos por status (parecidos, riscos, quem já fez, apresentação de cases, comparar com a RFP anexada; one page e resultados nos projetos ganhos) e o clipe para anexar a RFP só na conversa. A conversa aparece em Conversas com o selo do projeto. Cada resultado e cada ficha mostram quem pode contar como foi (responsável, área e setor) com uma mensagem pronta para copiar.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-078'],
+        titulo: 'Insights no ano fiscal e Ganhamos × perdemos',
+        antes: 'Os anos eram civis e o filtro era "Desde". A taxa de ganho aparecia por segmento, sem uma leitura de por que ganhamos e por que perdemos.',
+        depois: 'Os Insights usam o ano fiscal da NTT DATA (abril a março; FY26 = abr/2026 a mar/2027), com o filtro "Ano fiscal". A visão Negócio ganhou o cartão "Ganhamos × perdemos": o que as ganhas e as perdidas têm em comum, os motivos de perda sugeridos a partir das lições (lista controlada: preço, escopo, concorrente, relacionamento, prazo, capacidade técnica, desistência) e as perdidas que viraram aprendizado, com quem conduziu. O método da taxa de ganho aparece em "como calculamos". Os filtros Setor, Unidade, Foundation e Prisma e a troca do termo "prática" aguardam as definições da Kelly.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-079'],
+        titulo: 'Sinais do setor',
+        antes: 'Os Insights mostravam só o histórico da base.',
+        depois: 'A visão Negócio tem o cartão "O que está acontecendo no setor?": notícias de fontes curadas, coletadas uma vez por dia, com a relevância para nós (cliente da carteira, tecnologia que já entregamos no setor ou só o setor), o porquê, o link da fonte e "O que já fizemos sobre isso?". O Radar guarda só título, data, link e um trecho, por 90 dias, e uma fonte fora do ar não afeta o resto. A lista de fontes está sendo definida com a Kelly e o Bruno Miranda.',
+      },
+      {
+        tipo: 'melhoria', status: 'feito', area: 'Projetos',
+        titulo: 'Revisão de qualidade e documento financeiro',
+        antes: 'A ficha não avisava que a proposta passaria pela revisão de qualidade, e uma planilha financeira podia ser marcada como "bom modelo" como qualquer documento.',
+        depois: 'Proposta em aberto a partir de R$ 500 mil mostra "Exige revisão de qualidade" com a orientação de chamar o time cedo (o corte por tipologia ainda será confirmado com a Qualidade de Propostas). Planilhas financeiras (GECO, GECO Val, Calculadora) mostram que servem de referência de estrutura e equipe, não de base, e apontam para a versão do mês no Ibiza; marcadas para reaproveitar, viram "boa referência de composição".',
+      },
+    ],
+  },
+  {
     versao: 'V0.0.2',
     data: '13/11/2026',
-    estado: 'Em andamento',
+    estado: 'Arquivada',
     resumo: 'Correções dos tickets da V0.0.1 priorizados para o MVP, das críticas às baixas, e a gestão de versões: a V0.0.1 fica arquivada (roteiro e resultados só para consulta) e o roteiro da V0.0.2 começa zerado. Cada item cita os tickets que corrige; eles ficam como "Corrigido, aguardando reteste" até alguém passar o cenário no roteiro.',
     itens: [
       {
@@ -16,6 +66,7 @@ export const NOTAS = [
       {
         tipo: 'melhoria', status: 'feito', area: 'Insights',
         titulo: 'Insights (novo) sai das abas e fica só no endereço /insights-novo',
+        substituido: 'Substituído pelo item "Insights: cinco visões com manchetes em cartões" (CR-069): as cinco visões viraram a aba principal de Insights, e o endereço /insights-novo só abre essa aba.',
         antes: 'A aba "Insights (novo)" aparecia para todos ao lado de Insights, ainda em protótipo.',
         depois: 'A aba saiu da barra. O protótipo continua acessível pelo endereço /insights-novo, para avaliação do time durante a semana; ele volta com melhorias numa versão seguinte (provavelmente a V0.0.3).',
       },
@@ -28,12 +79,14 @@ export const NOTAS = [
       {
         tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-009'],
         titulo: 'Aba Insights refeita: números grandes, funil e top 10',
+        substituido: 'Substituído pelo item "Insights: cinco visões com manchetes em cartões" (CR-069): os números grandes, o funil e os top 10 deram lugar às cinco visões (Negócio, Técnica, Pipeline, Pré-venda e Curadoria) com manchetes em cartões.',
         antes: 'Tabelas com barras pequenas e sem cor, a lista inteira de segmentos e tecnologias e os dados de curadoria misturados com os de negócio.',
         depois: 'Quatro números grandes no topo (projetos, conversão, segmentos, tecnologias), funil das propostas por status em barra colorida, top 10 segmentos e top 10 tecnologias em barras, projetos por ano, pares de tecnologias, resultados comprovados e lições das perdidas. Cada barra tem dica com o número e leva aos projetos. A curadoria ficou recolhida em "Saúde da base". É um paliativo: o "efeito uau" ainda depende de definições de produto, e o Insights novo é avaliado à parte (V0.0.3).',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Chat', tickets: ['CR-027'],
         titulo: 'Resposta em blocos fáceis de ler',
+        substituido: 'Substituído pelo item "Resposta mais direta e conversa informal mais humana" (CR-060): os blocos "Recomendação:" e "Perfis sugeridos:" saíram; a resposta vai direto ao ponto e o que reaproveitar fica no cartão de cada projeto.',
         antes: 'Um parágrafo longo misturava a resposta, a justificativa e o que reaproveitar.',
         depois: 'A resposta vem em blocos: primeiro a resposta direta e por que cada projeto é relevante; depois "Recomendação:", com o que reaproveitar e os cuidados; e "Perfis sugeridos:" só quando os documentos citam papéis da equipe.',
       },
@@ -146,10 +199,10 @@ export const NOTAS = [
         depois: 'Insights tem duas abas internas: "Visões" (as cinco perguntas sobre a base) e "Métricas do piloto" (uso do Radar, utilidade das respostas, reaproveitamento, por que não ajudou e o que pedem ao chat). O item do menu ⋮ abre Insights direto nessa aba, e o Radar lembra a última aba aberta.',
       },
       {
-        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-069'],
+        tipo: 'melhoria', status: 'feito', area: 'Insights', tickets: ['CR-069', 'CR-070'],
         titulo: 'Insights: cinco visões com manchetes em cartões',
         antes: 'A aba Insights mostrava contagens genéricas (números grandes, funil, top 10, projetos por ano) que diziam o que havia na base, mas não o que fazer com isso; o resumo das visões novas era uma lista de frases, e elas ficavam escondidas em /insights-novo.',
-        depois: 'As cinco visões (Negócio, Técnica, Pipeline, Pré-venda e Curadoria) viraram a aba principal de Insights, ao lado das Métricas do piloto. Cada visão abre com manchetes em cartões: tom com ícone (Ponto forte, Atenção, Para saber), número em destaque, o que ele significa, um gráfico pequeno e a frase, com link para os números por trás. Manchetes novas: taxa de ganho, onde mais ganhamos, onde mais perdemos e o pacote de serviços mais vendido. A tela inicial mostra o número principal de cada pergunta. O endereço /insights-novo abre a aba nova.',
+        depois: 'As cinco visões (Negócio, Técnica, Pipeline, Pré-venda e Curadoria) viraram a aba principal de Insights, ao lado das Métricas do piloto. Cada visão abre com manchetes em cartões: tom com ícone (Ponto forte, Atenção, Para saber), número em destaque, o que ele significa, um gráfico pequeno e a frase, com link para os números por trás. Manchetes novas: taxa de ganho, onde mais ganhamos, onde mais perdemos e o pacote de serviços mais vendido. A tela inicial mostra o número principal de cada pergunta. O endereço /insights-novo abre a aba nova. Na primeira carga, uma flor com as cores da paleta surge girando e, quando os números chegam, espalha as pétalas; as visões entram suavemente, em sequência (sem animação para quem prefere menos movimento); ao voltar para a aba, os números aparecem na hora, e trocar um filtro só esmaece a tela.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
@@ -162,6 +215,12 @@ export const NOTAS = [
         titulo: 'Filtros de Tickets e do Roteiro mais claros; leitura rápida dos tickets',
         antes: 'Os filtros eram fileiras de botões, uma ao lado da outra; não ficava claro o que cada grupo filtrava nem quantos itens sobravam. Para ler um ticket era preciso abri-lo.',
         depois: 'Os filtros viraram campos de seleção, lado a lado e com o nome em cima (Situação, Prioridade, Área ou Tela, Tipo, Aberto na versão, Aberto por). O campo mostra o que está escolhido; ao clicar, abre a lista com ícone e quantidade de cada opção. Situação é escolha única; os demais aceitam várias opções (ex.: Crítica e Alta), com "Limpar seleção". Uma linha de resumo diz "Mostrando N de M", lista os filtros ativos como etiquetas que se tiram com um X e oferece "Limpar filtros". Na lista de tickets, clicar na linha expande a descrição e a proposta; clicar no código ou no título abre o ticket. A busca do "Proposta em foco" voltou a ter borda, e a lupa não fica mais por cima do texto. No kanban, o fluxo (Aberto, Em correção, Corrigido, Validado) fica em cima e \"Não priorizado no MVP\" e \"Não procede\" ficam separados embaixo, em \"Fora do fluxo\"; cada coluna mostra 5 cartões e \"Mostrar mais\" carrega mais 5; títulos longos quebram dentro do cartão.',
+      },
+      {
+        tipo: 'correcao', status: 'feito', area: 'Geral',
+        titulo: 'Guia, dúvidas frequentes e ajuda do chat conferidos com o funcionamento real',
+        antes: 'O guia dizia que o consultor vê documentos "públicos e internos" (nenhum perfil vê o nível público), que o original sai com valores ocultos para o consultor (PDF e Office com valores não baixam), que Enter salva qualquer campo da ficha (nos textos longos é Ctrl+Enter) e que a IA lê as 8 últimas perguntas (ela lê as 6 mais recentes). Não citava a Página de status no menu, a visão Documentos em Projetos, Desarquivar e Tirar do grupo, o cabeçalho da resposta (continuando a conversa, ícone de informações), "Também costumam entrar", o primeiro acesso, nem Marcar como teste na Curadoria. Três notas desta versão, já superadas, ainda apareciam como "Agora" e eram usadas pelo chat.',
+        depois: 'Guia e explicação técnica revisados contra o código, com as correções acima e as seções novas; Dúvidas frequentes com 8 situações novas (Modo regras, percentual baixo, download recusado, botões de cadastro, aprovação de confidencial, conversas por perfil, cadastro de teste, poucos dados); notas superadas marcadas como "Substituído", e o chat passa a responder com o que vale hoje. Os documentos "Como funciona o Radar" e "Como usar o Radar" (docs/) descrevem o mesmo, com diagramas.',
       },
     ],
   },

@@ -20,6 +20,8 @@ const CONF_RANK = { publica: 0, interna: 1, confidencial: 2 };
 export const STATUS_PROPOSTA = ['Em elaboração', 'Enviada', 'Em negociação', 'Vendida', 'Em execução', 'Entregue', 'Perdida', 'Cancelada'];
 export const STATUS_GANHO = ['Vendida', 'Em execução', 'Entregue'];
 export const STATUS_ANDAMENTO = ['Em elaboração', 'Enviada', 'Em negociação'];
+// R19-11: corte de valor a partir do qual a proposta passa pela revisão de qualidade (a confirmar por tipologia).
+export const LIMIAR_REVISAO = 500_000;
 export const CONFIDENCIALIDADES = ['publica', 'interna', 'confidencial'];
 // Faixa de valor (card rápido, adendo 5): dá o porte a quem não pode ver valores, sem expor o número.
 export const FAIXAS_VALOR = [[500_000, 'P', 'até R$ 500 mil'], [1_500_000, 'M', 'R$ 500 mil a 1,5 mi'], [3_000_000, 'G', 'R$ 1,5 a 3 mi'], [Infinity, 'GG', 'acima de R$ 3 mi']];
@@ -667,6 +669,11 @@ Notas do revisor: ${r.observacoes}` : r.texto,
     if (!p.servicos.length) faltando.push('servicos');
     if (!docs.some((d) => d.nivel_confianca >= 4)) faltando.push('documento de alta confiança (proposta final, case ou apresentação)');
     const project = { ...p };
+    // R19-11: proposta em aberto a partir de R$ 500 mil passa pela revisão de qualidade (corte a confirmar com a
+    // Qualidade de Propostas por tipologia e setor). O aviso não revela o valor a quem não pode vê-lo.
+    const revisaoQualidade = STATUS_ANDAMENTO.includes(p.status_proposta) && p.valor >= LIMIAR_REVISAO
+      ? { exige: true, motivo: 'Pelo porte, esta proposta passa pela revisão de qualidade (riscos, estimativa e eficiência, equipe e econômico) antes do L1. Chame o time de Qualidade de Propostas já agora, não só no pré-comitê.' }
+      : null;
     if (!user.verValores) { delete project.valor; delete project.margem; }
     return {
       projeto: project,
@@ -675,6 +682,7 @@ Notas do revisor: ${r.observacoes}` : r.texto,
       relacionados,
       conflitos,
       historico,
+      revisaoQualidade,
       qualidade: { percentual: Math.round((1 - faltando.length / (campos.length + 3)) * 100), faltando },
     };
   }

@@ -40,7 +40,8 @@ function secoes() {
   // Cada item das notas é um trecho próprio: "o que mudou no envio?" acha o item certo.
   for (const n of NOTAS) {
     for (const i of n.itens ?? []) {
-      out.push({ fonte: { tipo: 'notas', secao: n.versao, titulo: i.titulo, onde: `Notas da ${n.versao} › ${i.titulo}` }, texto: `${i.titulo}. ${i.depois ?? ''}` });
+      // Item superado por outro da mesma versão: o chat responde com o que vale hoje, não com o "Agora" antigo.
+      out.push({ fonte: { tipo: 'notas', secao: n.versao, titulo: i.titulo, onde: `Notas da ${n.versao} › ${i.titulo}` }, texto: i.substituido ? `${i.titulo} (item substituído). Hoje: ${i.substituido}` : `${i.titulo}. ${i.depois ?? ''}` });
     }
   }
   return out;
@@ -72,5 +73,5 @@ export class BaseDeAjuda {
 // Novidades de uma versão (a mais recente por padrão), para "o que mudou nesta versão?".
 export function novidades(versao = NOTAS[0]?.versao) {
   const n = NOTAS.find((x) => x.versao === versao) ?? NOTAS[0];
-  return n ? { versao: n.versao, itens: (n.itens ?? []).map((i) => ({ titulo: i.titulo, tipo: i.tipo, area: i.area })) } : null;
+  return n ? { versao: n.versao, itens: (n.itens ?? []).filter((i) => !i.substituido).map((i) => ({ titulo: i.titulo, tipo: i.tipo, area: i.area })) } : null;
 }

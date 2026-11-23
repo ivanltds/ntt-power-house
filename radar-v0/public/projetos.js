@@ -2,8 +2,10 @@
 
 import { enviarParaProjeto } from './upload.js';
 import { cartoesDeEnvio, meusEnvios, formatosOrdenados, abrirRevisao } from './revisao.js';
-import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText, iconeSegmento } from './common.js';
+import { $, $$, esc, md, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, onUserChange, toast, copyText, highlight, dateBR, chipPicker, bindChipPickers, readChips, trustBadge, matchLabel, downloadDoc, userName, pode, normalizeText, iconeSegmento } from './common.js';
 import { icon } from './icons.js';
+import { openOnePage, openApresentacao } from './onepage.js';
+import { montarConversaFicha } from './conversa-ficha.js';
 import { ELISTS, elist, bindEntityLists, readEntityLists } from './entidades.js';
 import { ensureTerms, handleTermsError, maskNote, policyLine } from './aviso.js';
 
@@ -308,6 +310,9 @@ function linhaDoTempo(historico) {
 }
 
 // Modal grande: conteúdo do projeto à esquerda, ficha e conexões à direita.
+// R19-12: planilhas financeiras (GECO, GECO Val, Calculadora) mudam todo mês e não devem ser reaproveitadas como base.
+const financeiro = (doc) => /\b(geco|calculadora|financeir\w*|precifica\w*)\b/i.test(`${doc.titulo} ${doc.arquivo ?? ''}`) || doc.tipo_documental === 'estimativa_preliminar' && /xlsx?$/i.test(doc.formato ?? '');
+
 export async function openProject(id) {
   const d = await api(`/api/projeto?id=${encodeURIComponent(id)}&userId=${userId()}`);
   const p = d.projeto;
@@ -360,12 +365,14 @@ export async function openProject(id) {
       <div><small>${icon('files', { size: 14 })}Documentos</small><b>${d.documentos.length}</b></div>
       <div title="${q.faltando.length ? `Falta: ${esc(q.faltando.join(', '))}` : 'Cadastro completo'}"><small>${icon('checkCircle', { size: 14 })}Cadastro</small><b>${q.percentual}%</b><span class="bar"><i style="width:${q.percentual}%"></i></span></div>
     </div>
+    ${d.revisaoQualidade ? `<p class="alert warn">${icon('shield', { size: 16 })}<span><b>Exige revisão de qualidade.</b> ${esc(d.revisaoQualidade.motivo)}</span></p>` : ''}
     ${d.conflitos.map((c) => `<p class="alert warn">${icon('alert', { size: 16 })}<span><b>${c.campo === 'prazo_meses' ? 'Prazo' : 'Valor'} diverge entre fontes.</b> Prevalece ${esc(tipoLabel(c.escolhido.tipo))}: ${c.campo === 'valor' ? brl(c.escolhido.valor) : `${c.escolhido.valor} meses`}.
       <small class="pd-fontes">${c.fontes.map((f) => `${esc(f.fonte === 'cadastro' ? 'Cadastro' : docTitle.get(f.fonte) ?? f.fonte)}: ${c.campo === 'valor' ? brl(f.valor) : `${f.valor} meses`}`).join(' · ')}</small></span></p>`).join('')}
     <div class="pd-grid">
       <div class="pd-main">
         <section class="pd-sec"><h5 class="sect-title">${icon('trending', { size: 16 })}Objetivo</h5><div class="pd-text">${ed('objetivo', p.objetivo ? md(p.objetivo) : '')}</div></section>
         <section class="pd-sec"><h5 class="sect-title">${icon('info', { size: 16 })}Contexto</h5><div class="pd-text">${ed('descricao', p.descricao ? md(p.descricao) : '')}</div></section>
+        <details class="pd-sec pd-acc pd-conv" id="pd-conv" open><summary><h5 class="sect-title">${icon('message', { size: 16 })}Conversar sobre este projeto<span class="pd-acc-chev">${icon('chevronDown', { size: 16 })}</span></h5></summary><div id="pd-conv-body"><p class="muted small">${icon('loader', { size: 14, cls: 'spin' })} Carregando a conversa…</p></div></details>
         ${insight('kpi', 'chart', 'Resultados')}${insight('licao', 'bulb', 'Lições aprendidas')}${insight('risco', 'alert', 'Riscos')}
         ${recolhivel('files', 'Documentos', d.documentos.length, `
           ${d.documentos.length ? `<ul class="pd-docs">${d.documentos.map((doc) => `<li>
@@ -373,11 +380,12 @@ export async function openProject(id) {
             <span class="sub">${esc(tipoLabel(doc.tipo_documental))}${doc.status_documento ? ` · ${esc(doc.status_documento.replace(/_/g, ' '))}` : ''} · ${dateBR(doc.data_conteudo)}${doc.formato ? ` · ${esc(doc.formato.toUpperCase())}` : ''}${doc.tamanho_bytes ? ` · ${kb(doc.tamanho_bytes)}` : ''}
               ${doc.contem_pii ? ` · <span title="Contém dados pessoais">${icon('shield', { size: 13 })}dados pessoais</span>` : ''}${doc.origem === 'upload' ? ` · ${icon('upload', { size: 13 })}enviado${doc.revisado_por ? ` e revisado por ${esc(doc.revisado_por)}` : ''}` : ''}</span>
             ${doc.autor || doc.versao || doc.link_origem || doc.reutilizavel ? `<div class="pd-doc-meta">
-              ${doc.reutilizavel ? `<span class="tag reuse" title="Marcado na revisão como bom modelo para novas propostas">${icon('star', { size: 12 })}bom modelo</span>` : ''}
+              ${doc.reutilizavel ? (financeiro(doc) ? `<span class="tag reuse" title="Documento financeiro: serve de referência de composição, não de base">${icon('star', { size: 12 })}boa referência de composição</span>` : `<span class="tag reuse" title="Marcado na revisão como bom modelo para novas propostas">${icon('star', { size: 12 })}bom modelo</span>`) : ''}
               ${doc.autor ? `<span title="Autor">${icon('user', { size: 13 })}${esc(doc.autor)}</span>` : ''}
               ${doc.versao ? `<span title="Versão">${icon('history', { size: 13 })}${esc(doc.versao)}</span>` : ''}
               ${doc.link_origem ? `<a href="${esc(doc.link_origem)}" target="_blank" rel="noopener">${icon('link', { size: 13 })}original</a>` : ''}
             </div>` : ''}
+            ${financeiro(doc) ? `<p class="pd-note warn">${icon('alert', { size: 13 })} Documento financeiro: use como referência de estrutura e equipe, não como base. As planilhas mudam quase todo mês (dissídios e promoções); baixe a versão do mês no Ibiza, em Comercial › GECO Val e Calculadora › Ferramentas financeiras.</p>` : ''}
             ${doc.resumo ? `<p>${esc(doc.resumo)}</p>` : ''}
             ${doc.observacoes ? `<p class="pd-note" title="Nota de quem revisou o envio">${icon('info', { size: 13 })} ${esc(doc.observacoes)}</p>` : ''}
             ${doc.palavras_chave?.length ? `<div class="chips">${tags(doc.palavras_chave.slice(0, 8))}</div>` : ''}
@@ -406,6 +414,8 @@ export async function openProject(id) {
           ${row('Atualizado', when(p.atualizado_em))}
           ${row('Pasta', ed('link_sharepoint', p.link_sharepoint ? `<a href="${esc(p.link_sharepoint)}" target="_blank" rel="noopener">${icon('link', { size: 13 })}SharePoint</a>` : ''))}
         </dl>`)}
+        ${p.dono ? side('users', 'Quem pode te contar como foi', `<p class="pd-contato"><b>${esc(p.dono)}</b><small>Responsável pelo projeto${p.area ? ` · ${esc(p.area)}` : ''}${p.segmento ? ` · setor ${esc(p.segmento)}` : ''}</small></p>
+          <button type="button" class="link-btn" id="pd-contato">${icon('copy', { size: 13 })}Copiar mensagem para ${esc(p.dono.split(' ')[0])}</button>`) : ''}
         ${sideAcc('cpu', 'Tecnologias', tagsEd('tecnologias', p.tecnologias), p.tecnologias.length, ' data-acc="tecnologias"')}
         ${side('layers', 'Serviços', tagsEd('servicos', p.servicos, ' alt'), p.servicos.length)}
         ${side('users', 'Pessoas', ents('pessoa').length ? `<ul class="pd-list">${ents('pessoa').map((e) => `<li>${esc(e.valor)}</li>`).join('')}</ul>` : '', ents('pessoa').length)}
@@ -580,7 +590,13 @@ export async function openProject(id) {
   };
   $('#pd-upload').onclick = upload;
   $('#pd-upload-2')?.addEventListener('click', upload);
-  $('#pd-ask').onclick = () => { close(); openTab('busca'); $('#query').value = `${p.titulo} (${p.cliente})`; $('#query').focus(); };
+  // CR-077: "Perguntar" leva à conversa da própria ficha, com o foco fixo no projeto (sem sair da ficha).
+  montarConversaFicha($('#pd-conv-body'), p, { fecharFicha: close });
+  $('#pd-contato')?.addEventListener('click', async () => {
+    await copyText(`Oi, ${p.dono}! Vi no Radar o projeto "${p.titulo}" (${p.cliente}). Estou preparando uma proposta parecida e queria entender como foi: por que ganhamos ou perdemos, o que pesou no preço e o que doeu entre vender e entregar. Podemos conversar 15 minutos?`);
+    toast('Mensagem copiada: cole no Teams ou no e-mail');
+  });
+  $('#pd-ask').onclick = () => { const s = $('#pd-conv'); s.open = true; s.scrollIntoView({ block: 'start', behavior: 'smooth' }); setTimeout(() => $('#pd-conv textarea')?.focus(), 300); };
   if (!$('#project-dialog').open) $('#project-dialog').showModal();
 }
 
@@ -652,6 +668,8 @@ async function openDocumentForm(id) {
 const MODELOS_UI = {
   apresentacao: { icon: 'layout', nome: 'Apresentação para o cliente', desc: 'Slides 16:9 para apresentar ou enviar ao cliente.', formatos: { pptx: 'PowerPoint', pdf: 'PDF' } },
   resumo: { icon: 'file', nome: 'Resumo executivo', desc: 'Documento A4 de 1 a 2 páginas para decisores.', formatos: { docx: 'Word', pdf: 'PDF' } },
+  // CR-075: abre a prévia da one page (blocos editáveis, cliente anônimo por padrão).
+  onepage: { icon: 'star', nome: 'One page de case', desc: 'Uma página com contexto, desafio, solução e resultados, sem expor o cliente.', formatos: { pptx: 'PowerPoint', pdf: 'PDF' } },
 };
 
 async function openExportDialog(p) {
@@ -688,7 +706,7 @@ async function openExportDialog(p) {
     $$('[data-close]', form).forEach((b) => (b.onclick = () => dlg.close()));
     // Guarda título e destinatário digitados ao trocar de modelo ou formato.
     const keep = () => { st.titulo = form.titulo.value; st.para = form.para.value; };
-    $$('input[name=modelo]', form).forEach((r) => (r.onchange = () => { keep(); st.modelo = r.value; render(); }));
+    $$('input[name=modelo]', form).forEach((r) => (r.onchange = () => { keep(); if (r.value === 'onepage') { dlg.close(); openOnePage(p.id); return; } st.modelo = r.value; render(); }));
     $$('input[name=formato]', form).forEach((r) => (r.onchange = () => { keep(); st.formato = r.value; render(); }));
     $('[data-todas]', form).onclick = () => $$('input[name=secao]:not(:disabled)', form).forEach((c) => (c.checked = true));
     $('[data-nenhuma]', form).onclick = () => $$('input[name=secao]', form).forEach((c) => (c.checked = false));

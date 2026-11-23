@@ -39,9 +39,17 @@ export const GUIA = [
     <h4>Botão de conta e menu ${icon('menu', { size: 14 })}</h4>
     <ul>
       <li><b>Botão de conta</b> (canto superior direito, com iniciais, nome e perfil): mostra quem está ativo e tem o <b>Ver como (demonstração)</b>, que troca entre Consultor (Marina) e Gestor (Thiago). <b>Consultor</b> não vê projetos confidenciais nem o <b>preço e a margem</b> das propostas; os resultados dos cases (ex.: economia gerada para o cliente) aparecem para todos. <b>Gestor</b> vê tudo. Serve para testar as permissões; some quando houver login individual.</li>
-      <li><b>Menu ⋮</b> (ao lado; fecha no X ou com ${kbd('Esc')}): <b>Tema</b> (Auto, Claro ou Escuro), <b>Todos os documentos</b> (arquivos da base com tipo e rótulo de confiança), <b>Métricas do piloto</b> (atalho para a aba de mesmo nome em Insights), <b>Registro de atividades</b> (só gestor), <b>Como usar o Radar</b> (este guia), <b>Como o Radar funciona</b> (explicação técnica), <b>Processo SDLC</b> (como a versão foi construída), <b>Versão: notas, feedbacks e testes</b> (novidades, enviar feedback, tickets e roteiro de testes), <b>Política de dados</b> e <b>Sair</b> (a sessão dura 7 dias).</li>
+      <li><b>Menu ⋮</b> (ao lado; fecha no X ou com ${kbd('Esc')}): <b>Tema</b> (Auto, Claro ou Escuro), <b>Todos os documentos</b> (abre ${ui('Projetos')} na visão <b>Documentos</b>: arquivos da base com projeto, tipo e rótulo de confiança), <b>Métricas do piloto</b> (atalho para a aba de mesmo nome em Insights), <b>Registro de atividades</b> (só gestor), <b>Como usar o Radar</b> (este guia), <b>Como o Radar funciona</b> (explicação técnica), <b>Processo SDLC</b> (como a versão foi construída), <b>Versão: notas, feedbacks e testes</b> (novidades, enviar feedback, tickets e roteiro de testes), <b>Página de status</b> (abre /status numa aba nova: versões, tickets e feedbacks, com link para compartilhar), <b>Política de dados</b> e <b>Sair</b> (só aparece quando o login está ligado; a sessão dura 7 dias).</li>
+      <li><b>Selo da versão</b> (ex.: V0.0.2, ao lado de "Radar"): abre as notas da versão.</li>
+      <li><b>Modo regras</b>: etiqueta no topo que só aparece quando a IA não está configurada no ambiente. O Radar continua funcionando por regras e busca por palavras.</li>
       <li><b>Coluna de conversas</b>: no rodapé, atalhos para <b>Como usar o Radar</b> e <b>Enviar feedback</b>.</li>
     </ul>
+    <h4>Primeiro acesso</h4>
+    ${steps([
+      'Aparece a janela <b>Bem-vindo ao Radar</b>, com as boas práticas e a política de dados do piloto. Clique em <b>Começar</b> para aceitar (o aceite vale por perfil e por versão do termo).',
+      'No chat, um cartão de introdução mostra 4 passos (Pergunte, Dê contexto, Explore, Alimente). <b>Entendi</b> esconde o cartão; <b>Ver o guia completo</b> abre este guia.',
+      'Abaixo, botões de sugestão já fazem uma pergunta com um clique. As sugestões mudam com o perfil e com a proposta em foco.',
+    ])}
     ${tip('Na dúvida, pergunte ao próprio Radar: <i>"o que você pode fazer?"</i> ou <i>"como envio um arquivo?"</i>. Ele responde com base neste guia e mostra a seção de onde tirou.')}
     ${tip('Todos os dados desta versão são <b>fictícios</b>. Pode testar à vontade: perguntar, enviar arquivos e editar não afeta nenhum cliente real.')}`],
 
@@ -49,7 +57,7 @@ export const GUIA = [
     <p>Escreva como falaria com um colega. O Radar entende sinônimos e o sentido da frase: "distribuidora de luz" encontra projetos de <i>Utilities / Energia</i>.</p>
     ${steps([
       `Clique em ${ui('Perguntar')} e digite no campo de baixo. ${kbd('Enter')} envia (o botão de enviar só acende com texto).`,
-      'Olhe a <b>etiqueta</b> acima da resposta, à direita: ela diz o tipo de resposta (Projetos parecidos, Listagem, Contagem, Ficha, Comparação, Dúvida de uso, Arquivo da conversa…).',
+      'Olhe a <b>etiqueta</b> acima da resposta: ela diz o tipo de resposta (Projetos parecidos, Listagem, Contagem, Ficha do projeto, Comparação, Resultados, Resposta em etapas, Pergunta de volta, Conversa, Dúvida de uso, Arquivo da conversa ou Envio de arquivo). Ao lado podem aparecer <b>continuando a conversa</b> (usou as perguntas anteriores) e <b>resposta direta da base</b> (respondeu sem a IA). O ícone ' + icon('info', { size: 13 }) + ' mostra quantos projetos foram avaliados, o tempo, quem respondeu (DeepSeek ou regras) e, se a pergunta foi reescrita, "Entendi como: …".',
       'Leia a resposta curta: ela responde direto e diz por que cada projeto citado serve. Os projetos aparecem com o nome do cliente (e o código, quando dois são do mesmo cliente). O que reaproveitar fica no cartão de cada projeto (escopo, resultados e lições).',
       'Abaixo vêm as tabelas ou os <b>cartões de projeto</b>, do mais parecido para o menos. Clique em um cartão para ver o porquê e as fontes.',
       'Errou a pergunta? A última pergunta tem um ' + icon('edit', { size: 13 }) + ' lápis: edite e reenvie; a pergunta e a resposta antigas são trocadas.',
@@ -61,7 +69,9 @@ export const GUIA = [
       ['Contar e agrupar', '<i>"Quantos projetos por tecnologia?"</i>', 'Lista com a quantidade de cada item'],
       ['Ficha de um projeto', '<i>"Qual o prazo e o responsável do P003?"</i>', 'Os campos do cadastro (valores só para o gestor)'],
       ['Comparar', '<i>"Compare o P001 com o P006"</i> ou <i>"compare os dois"</i>', 'Tabela lado a lado'],
-      ['Em etapas', '<i>"Liste os de seguros e compare os dois primeiros"</i>', 'A IA combina as consultas acima'],
+      ['Em etapas', '<i>"Liste os de seguros e compare os dois primeiros"</i>', 'A IA combina as consultas acima (precisa da IA ligada)'],
+      ['Retomar a resposta anterior', '<i>"Quais os resultados neles?"</i>, <i>"e o prazo deles?"</i>', 'Resultados registrados nos cases ou os campos pedidos, só dos projetos da resposta anterior'],
+      ['Detalhar um resultado', '<i>"Detalhe o segundo"</i>', 'Abre o cartão do 2º projeto da resposta anterior'],
       ['Ler um arquivo', 'Anexe pelo clipe e escreva <i>"resuma"</i>', 'Resumo, perguntas sobre ele e projetos parecidos (veja "Ler um arquivo na conversa")'],
       ['Dúvida de uso', '<i>"Como favorito uma conversa?"</i>, <i>"o que mudou nesta versão?"</i>', 'Explicação com o trecho deste guia e um botão que abre a seção'],
     ])}
@@ -88,16 +98,17 @@ export const GUIA = [
     ${table(['Ação', 'O que faz'], [
       [`${icon('folder', { size: 14 })} Abrir projeto`, 'Abre a ficha completa, com todos os documentos.'],
       [`${icon('copy', { size: 14 })} Copiar escopo`, 'Copia o título, o cliente e a seção de escopo do projeto para colar na sua proposta.'],
-      [`${icon('duplicate', { size: 14 })} Usar como base`, 'Abre o cadastro de um projeto novo já preenchido com segmento, tecnologias, serviços, prazo e objetivo do escolhido (gestor).'],
+      [`${icon('duplicate', { size: 14 })} Usar como base`, 'Abre o cadastro de um projeto novo já preenchido com segmento, tecnologias, serviços, prazo e objetivo do escolhido (gestor). Com uma proposta em foco, o cliente e o título vêm dela.'],
     ])}
+    <p>Abaixo dos cartões, <b>"Também costumam entrar"</b> lista serviços que aparecem com frequência nos projetos parecidos e que você não citou: bom lembrete para o escopo.</p>
     <h4>Quando não há nada na base</h4>
-    <p>O Radar diz <i>"Não encontrei nada relevante na base"</i> e oferece até 3 <b>buscas próximas</b> como botões, que sempre trazem resultado para o seu perfil. Também aparecem "Explorar projetos" e, se houver, "Perguntar sem o foco" e "Nova conversa".</p>
+    <p>O Radar diz <i>"Não encontrei nada relevante na base"</i> e oferece até 3 <b>buscas próximas</b> como botões, que sempre trazem resultado para o seu perfil. Também aparecem "Explorar projetos" e, se houver, "Perguntar sem o foco em …" e "Nova conversa, sem o contexto anterior". Se você pediu um projeto pelo código e ele não existe ou o seu perfil não pode vê-lo, o Radar só diz que não o encontrou entre os que você pode ver (não revela se ele existe).</p>
     <h4>Conversa com memória</h4>
-    <p>O Radar lembra as últimas <b>8 perguntas</b> da conversa (aparece "lembrando N perguntas"). Por isso dá para continuar:</p>
+    <p>O Radar guarda as últimas <b>8 perguntas</b> da conversa como memória (aparece "lembrando N perguntas"); para interpretar a pergunta nova, a IA lê as 6 mais recentes. Por isso dá para continuar:</p>
     ${steps(['<i>"Projetos de churn em telecom"</i>', '<i>"E em varejo?"</i> (entende que ainda é churn)', '<i>"Detalhe o segundo"</i> (abre o 2º resultado da resposta anterior)'])}
     ${tip(`Mudou de assunto? Clique no ✕ de "lembrando N perguntas" ou em ${ui('Nova conversa')}. Assim as perguntas antigas não influenciam a nova busca.`)}
     <h4>Avaliar</h4>
-    <p>👍 conta como referência útil. 👎 pergunta o motivo (Não é parecido, Informação errada, Desatualizado, Outro). Essas avaliações alimentam as <b>Métricas do piloto</b>.</p>
+    <p>Cada cartão de projeto tem 👍 e 👎 no topo. 👍 conta como referência útil. 👎 pergunta o motivo (Não é parecido, Informação errada, Desatualizado, Outro). Essas avaliações alimentam as <b>Métricas do piloto</b>.</p>
     ${tip('A IA nunca inventa: ela só pode citar o que está nos documentos que você tem permissão de ver. Se não houver evidência, a resposta diz isso.', 'warn')}`],
 
   ['semelhanca', 'chart', 'Como o Radar calcula a semelhança', () => `
@@ -172,7 +183,7 @@ export const GUIA = [
     ${tip('O arquivo fica <b>só nesta conversa</b> e só para você: não entra na base, não aparece para outras pessoas e é apagado junto com a conversa. Dados pessoais são mascarados antes de qualquer leitura pela IA.', 'warn')}
     <ul>
       <li>Formatos e limite iguais aos do envio: PDF com texto, PPTX, DOCX, XLSX, CSV, TXT, MD, HTML, EML, VTT, SRT e JSON, até 15 MB; até 5 arquivos por conversa.</li>
-      <li>Arquivo muito longo: o Radar lê o começo e o fim e avisa no cartão.</li>
+      <li>Arquivo longo: para resumir, a IA lê o começo e o fim do texto. O Radar guarda até 200 mil caracteres por arquivo; acima disso, o cartão avisa "arquivo longo: li o início".</li>
       <li>Numa conversa nova, os arquivos que ainda estiverem anexados são lidos de novo.</li>
     </ul>`],
 
@@ -181,19 +192,22 @@ export const GUIA = [
     ${table(['Quero…', 'Como'], [
       ['Renomear', `Clique no lápis ao lado do título, no topo do chat, edite e aperte ${kbd('Enter')} (${kbd('Esc')} cancela). Também pelo menu ⋯ da conversa.`],
       ['Favoritar', 'Clique na ⭐ da conversa (no computador ela aparece ao passar o mouse; no celular fica sempre à vista). Ela fica fixa nas favoritas.'],
-      ['Organizar por cliente ou proposta', 'Menu ⋯ da conversa → <b>Mover para grupo</b> (nome livre). Os grupos só organizam a lista; não limitam a busca.'],
+      ['Organizar por cliente ou proposta', 'Menu ⋯ da conversa → <b>Mover para grupo</b>: escolha um grupo existente ou digite o nome de um novo e clique em +. Uma favorita que está num grupo aparece nos dois lugares. Os grupos só organizam a lista; não limitam a busca.'],
+      ['Tirar do grupo', 'Menu ⋯ → <b>Tirar do grupo</b>. Ela volta para "Recentes".'],
       ['Tirar da frente sem apagar', 'Menu ⋯ → <b>Arquivar</b>. Ela vai para a caixa "Arquivadas".'],
+      ['Desarquivar', 'Abra a caixa "Arquivadas", menu ⋯ da conversa → <b>Desarquivar</b>.'],
       ['Apagar', 'Menu ⋯ → <b>Excluir</b> e confirme na janela. Arquivos lidos nela são apagados junto.'],
-      ['Encontrar uma conversa', 'Use "Buscar conversas" no alto da lista.'],
+      ['Encontrar uma conversa', 'Use "Buscar conversas" no alto da lista (com uma busca, todas as caixas abrem).'],
       ['Continuar de onde parou', 'Abra a conversa: a memória e o foco voltam junto.'],
       ['Começar do zero', `${ui('Nova conversa')}.`],
-    ])}`],
+    ])}
+    ${tip('Cada conversa pertence a quem a criou: ao trocar o perfil em "Ver como", a lista mostra só as conversas daquele perfil, e o chat começa uma conversa nova.')}`],
 
   ['projetos', 'folder', 'Explorar projetos', () => `
-    <p>A aba ${ui('Projetos')} lista tudo o que o seu perfil pode ver, <b>20 por página</b>.</p>
+    <p>A aba ${ui('Projetos')} lista tudo o que o seu perfil pode ver, <b>20 por página</b>. No alto, o seletor <b>Projetos | Documentos</b> troca para a lista de todos os documentos (com projeto, tipo e rótulo de confiança, e um campo para filtrar por nome, cliente ou tipo); é a mesma lista do item "Todos os documentos" do menu ⋮.</p>
     <h4>Buscar e filtrar</h4>
     ${steps([
-      '<b>Meus projetos</b> (topo dos filtros): os que você criou, em que é o responsável ou em que enviou documentos.',
+      '<b>Meus projetos</b> (topo dos filtros): os que você criou, em que é o responsável ou em que enviou documentos (na demonstração, o consultor é a Marina Costa e o gestor é o Thiago Ramos).',
       '<b>Busca no conteúdo:</b> procura dentro do texto dos documentos, sem diferenciar acentos. Escolha se o projeto precisa ter <i>todas as palavras</i> ou <i>qualquer</i> delas.',
       `<b>${icon('filter', { size: 13 })} Filtros:</b> cliente, prazo, valor (gestor), data e "citado nos documentos" (pessoa, organização, resultado, risco, lição, palavra-chave).`,
       '<b>Facetas:</b> segmento, status, tecnologias, serviços e tipo de documento, com a contagem de projetos. Em tecnologias e serviços, <i>todas</i> exige todas as marcadas e <i>qualquer</i> aceita uma delas.',
@@ -207,13 +221,13 @@ export const GUIA = [
     <ul>
       <li><b>Topo:</b> prazo, valor e margem (gestor), responsável, data, número de documentos e quanto do cadastro está completo.</li>
       <li><b>Conteúdo:</b> objetivo, contexto, resultados, lições e riscos, cada um com o trecho e o documento de origem.</li>
-      <li><b>Documentos:</b> resumo, tipo, status, palavras-chave e autor. ${icon('edit', { size: 13 })} <b>Editar informações</b> e ${icon('download', { size: 13 })} <b>Baixar original</b>, no formato em que foi enviado (para o consultor, valores saem ocultos).</li>
+      <li><b>Avisos de divergência:</b> quando dois documentos discordam no prazo ou no valor, aparece "Prazo (ou Valor) diverge entre fontes", com o valor que prevaleceu e o de cada fonte.</li>
+      <li><b>Documentos</b> (recolhe e abre): resumo, tipo, status, data, formato, tamanho, palavras-chave, autor, selos ("dados pessoais", "enviado e revisado por…", "bom modelo"). Clique no nome para ler o texto. ${icon('edit', { size: 13 })} <b>Editar informações</b> e ${icon('download', { size: 13 })} <b>Baixar original</b>, no formato em que foi enviado. Para o consultor: em arquivos de texto, as linhas de preço e margem saem como "[valor oculto para o seu perfil]"; um PDF, Word, PowerPoint ou Excel que tenha valor ou margem cadastrados <b>não é baixado</b> (aparece "peça o original ao gestor do projeto").</li>
       <li><b>Enviar arquivo:</b> bloco discreto acima de "Comentários e histórico", com os envios "Aguardando aprovação" (veja "Enviar documentos").</li>
-      <li><b>Lateral:</b> ficha, tecnologias, serviços, pessoas, organizações, palavras-chave, projetos parecidos e o que falta no cadastro (tecnologias, palavras-chave e projetos parecidos vêm recolhidos).</li>
-      <li><b>Editar no lugar:</b> passe o mouse num campo e clique no lápis; Enter salva, Esc cancela. Tecnologias e serviços editam no card: o consultor escolhe entre as opções existentes; o gestor também cria novas.</li>
+      <li><b>Lateral:</b> ficha (cliente, segmento, área, status, acesso, origem, criado por, atualizado e pasta do SharePoint), tecnologias, serviços, pessoas, organizações, palavras-chave, projetos parecidos e <b>Falta no cadastro</b>, com o link "Completar cadastro" (tecnologias, palavras-chave e projetos parecidos vêm recolhidos).</li>
+      <li><b>Editar no lugar:</b> passe o mouse num campo e clique no lápis; ${kbd('Enter')} salva e ${kbd('Esc')} cancela. Nos textos longos (objetivo e contexto), ${kbd('Ctrl')} + ${kbd('Enter')} salva. Tecnologias e serviços editam no card: o consultor escolhe entre as opções existentes; o gestor também cria novas. Cliente também é escolhido da lista: só o gestor cadastra cliente novo.</li>
       <li><b>Comentários e histórico:</b> no fim da coluna principal, escreva um comentário e veja comentários em balões e cada alteração num cartão com antes → depois, 5 por vez ("Mostrar mais").</li>
-      <li><b>Ações:</b> ${icon('download', { size: 13 })} <b>Exportar</b> (apresentação ou resumo executivo), Perguntar sobre o projeto, Usar como base (gestor), Editar tudo num formulário (lápis no alto) e, só para o gestor, Excluir (com confirmação).</li>
-      <li><b>Ficha:</b> mostra quem criou o projeto e quando.</li>
+      <li><b>Ações no alto:</b> ${icon('download', { size: 13 })} <b>Exportar</b> (apresentação ou resumo executivo), <b>Perguntar</b> (vai para o chat com o título e o cliente do projeto já escritos na caixa, para você completar a pergunta), <b>Usar como base</b> (gestor), ${icon('upload', { size: 13 })} enviar documento, ${icon('edit', { size: 13 })} editar tudo num formulário e, só para o gestor, ${icon('trash', { size: 13 })} Excluir (com confirmação; apaga documentos, comentários e histórico do projeto e não pode ser desfeito).</li>
     </ul>
     <h4>Cadastrar projeto (só gestor)</h4>
     <p>Só o gestor cadastra projetos e clientes novos. O consultor envia documentos para projetos existentes e edita os que enxerga.</p>
@@ -280,6 +294,42 @@ export const GUIA = [
     ${tip('No PowerPoint e no Word o arquivo é editável: ajuste o texto antes de enviar ao cliente. A exportação fica no registro de atividades.')}
     ${tip('Para o consultor, valores e margens nunca entram, e projetos confidenciais não aparecem nem como referência.', 'warn')}`],
 
+  ['onepage', 'star', 'One page e apresentação de cases', () => `
+    <p>Para uma conversa com cliente: uma <b>one page de case</b> (uma página só) ou uma <b>apresentação de cases</b> com vários cases ganhos sobre um tema. Tudo vem da base, com a fonte no rodapé.</p>
+    <h4>One page de case</h4>
+    ${steps([
+      `Abra pelo chat ("gera a one page do P001", "quero um case de antifraude em uma página"), pelo botão ${ui('One page')} no cartão de um resultado, pelo atalho ${ui('Gerar one page')} na conversa da ficha ou em ${ui(`${icon('download', { size: 13 })} Exportar`)} → <b>One page de case</b>.`,
+      'Confira a prévia: contexto, desafio, objetivo, solução, tecnologias e serviços, benefícios e resultados (com os números em destaque). Os blocos sem registro na base aparecem em amarelo com "complete antes de enviar".',
+      'Edite o texto direto na prévia, se precisar. A edição vale só para o arquivo e não muda a base.',
+      `Escolha PowerPoint ou PDF e clique em ${ui('Baixar')}.`,
+    ])}
+    ${table(['Regra', 'Como funciona'], [
+      ['Nome do cliente', 'sai como "grande cliente do setor …", inclusive no texto, no nome do arquivo e nas propriedades do arquivo. Só o gestor pode marcar "Citar o nome do cliente", e nunca em projeto confidencial.'],
+      ['Investimento', 'só para o gestor, e só se marcar "Incluir investimento". O consultor não vê o bloco.'],
+      ['Projeto que não é case', 'em aberto, perdido ou cancelado: sai só como referência interna, com o selo "Uso interno".'],
+      ['Sem invenção', 'a IA não cria números nem fatos. O que não está na base aparece como "Não há registro".'],
+    ])}
+    <h4>Apresentação de cases</h4>
+    ${steps([
+      'No chat: "monta uma apresentação de uns 10 slides sobre fraude em seguros com nossos cases" ou, depois de uma lista de projetos, "transforma esses em apresentação". Na ficha, o atalho "Montar apresentação de cases" usa o projeto como tema.',
+      'O Radar separa os cases ganhos (Vendida, Em execução, Entregue) e marca os 5 mais parecidos. Perdidas e propostas em aberto ficam de fora (ele diz quantas).',
+      `Clique em ${ui('Montar a apresentação')}, marque ou desmarque cases (até 8), mude a ordem com as setas e, se quiser, inclua o slide de aprendizados (uso interno).`,
+      'Gere em PowerPoint ou PDF: capa, "O que a NTT DATA já fez em …" (números contados na base), uma one page por case e as fontes.',
+    ])}
+    ${tip('Sem case ganho sobre o tema, o Radar não monta material para cliente: mostra o que existe só para consulta interna.', 'warn')}`],
+
+  ['conversa-ficha', 'message', 'Conversar dentro da ficha do projeto', () => `
+    <p>A ficha do projeto tem a seção <b>Conversar sobre este projeto</b>. As perguntas feitas ali consideram o projeto: "projetos parecidos" quer dizer parecidos com este, "one page" é a deste projeto.</p>
+    ${steps([
+      `Abra o projeto e use a seção logo abaixo de Contexto (o botão ${ui('Perguntar')} leva até ela).`,
+      'Use os atalhos: em proposta aberta, "Projetos parecidos", "Riscos de projetos parecidos", "Quem já fez algo parecido", "Montar apresentação de cases" e "Comparar com a RFP anexada"; em projeto ganho, "Gerar one page" e "Resumir resultados".',
+      'Para comparar com uma RFP nova, anexe o arquivo pelo clipe da seção. Ele fica só na conversa e não vai para a base.',
+      `A conversa aparece em Conversas com o selo do projeto (ex.: P012). ${ui('Abrir em Conversas')} continua em tela cheia; ${ui('Nova conversa')} começa outra sobre o mesmo projeto.`,
+    ])}
+    <h4>Com quem falar</h4>
+    <p>Cada resultado parecido e cada ficha mostram <b>quem pode te contar como foi</b> (o responsável pelo projeto, com área e setor) e o botão ${ui('Copiar mensagem')}, com um convite pronto para colar no Teams ou no e-mail. No chat, pergunte "quem já fez algo parecido com isto?".</p>
+    ${tip('Documento financeiro (GECO, GECO Val, Calculadora) serve como referência de estrutura e equipe, não como base: as planilhas mudam quase todo mês. Baixe a versão do mês no Ibiza, em Comercial › GECO Val e Calculadora › Ferramentas financeiras.', 'warn')}`],
+
   ['insights', 'chart', 'Insights e métricas', () => `
     <p>A aba ${ui('Insights')} tem duas abas internas: <b>Visões</b>, com os números da base de propostas e cases, e <b>Métricas do piloto</b>, com o uso do Radar. O Radar lembra a última aberta.</p>
     <h4>Visões: cinco perguntas sobre a base</h4>
@@ -291,13 +341,21 @@ export const GUIA = [
       ['Curadoria', 'Dá para confiar nos dados da base?', 'Quem cuida da base'],
     ])}
     ${steps([
-      `Em ${ui('Insights')} › ${ui('Visões')}, escolha uma pergunta (a sugerida para o seu perfil vem primeiro). Cada cartão já mostra o número principal.`,
+      `Em ${ui('Insights')} › ${ui('Visões')}, escolha uma pergunta. A sugerida para o seu perfil vem primeiro, com a marca "sugerido para você" (consultor: <b>Pré-venda</b>; gestor: <b>Negócio</b>). Cada cartão já mostra o número principal. O Radar lembra a última visão aberta.`,
       '<b>Em resumo</b> traz as manchetes em cartões: uma etiqueta de tom (<b>Ponto forte</b>, <b>Atenção</b> ou <b>Para saber</b>, sempre com ícone), um número grande, o que ele significa, um gráfico pequeno e a frase completa. Passe o mouse nas barras para ver os números.',
-      '<b>Ver os números</b> leva ao gráfico detalhado daquela manchete, em <b>Os números por trás</b>.',
-      'Recorte por <b>Segmento</b>, <b>Prática</b> e <b>Desde</b> (Negócio, Técnica e Pipeline) e use <b>Copiar resumo</b> para levar as manchetes para um e-mail ou para o Teams.',
+      '<b>Ver os números</b> leva ao gráfico detalhado daquela manchete, em <b>Os números por trás</b>. Cada gráfico diz quantos itens entram na conta ("com base em N").',
+      'Recorte por <b>Segmento</b>, <b>Prática</b> e <b>Desde</b> (Negócio, Técnica e Pipeline) e use <b>Copiar resumo</b> para levar as manchetes para um e-mail ou para o Teams. Pré-venda compara cada oportunidade com a base inteira, e Curadoria olha a base inteira, inclusive os testes.',
       '<b>Ver projetos</b> num gráfico abre <span class="ui">Projetos</span> já filtrado com os projetos daquele número.',
     ])}
-    ${tip('As manchetes saem de regras sobre os cadastros, não de texto livre da IA. Com poucos projetos no recorte aparece o aviso <b>poucos dados</b>: trate como indício. O selo <b>IA · confira antes de usar</b> marca o que foi extraído dos documentos sem revisão de uma pessoa.')}
+    ${table(['Visão', 'O que você encontra'], [
+      ['Negócio', 'Carteira (ganho, em aberto, perdido), onde ganhamos (taxa de ganho por segmento), quadrante "ganhamos onde sabemos entregar?", margem por segmento e por duração (gestor), pacotes de serviço mais vendidos e resultados que dá para citar.'],
+      ['Técnica', 'Onde temos profundidade (segmento × tecnologia), o que está crescendo ou sumindo, lições que se repetem, riscos previstos que aconteceram, estimativa contra proposta, capacidades esfriando, plataforma que rende mais e com quem falar.'],
+      ['Pipeline', 'Propostas em andamento com alertas (parada há 7 dias ou mais, margem fora da faixa dos ganhos, cadastro incompleto, parecida com uma perdida), funil por status e por que perdemos. "Copiar aviso" leva o alerta ao responsável.'],
+      ['Pré-venda', 'Para cada oportunidade cadastrada: prontidão (entregues parecidos, com case, perdidas parecidas), o que reaproveitar, porte de referência e com quem falar.'],
+      ['Curadoria', 'Documentos revisados por uma pessoa, cadastros que parecem teste, termos suspeitos na taxonomia, fichas incompletas, onde a leitura automática mais erra no envio e o uso do Radar.'],
+    ])}
+    ${tip('As manchetes saem de regras sobre os cadastros, não de texto livre da IA. Com menos de 3 itens na conta aparece o aviso <b>poucos dados</b> (e a barra fica hachurada): trate como indício. O selo <b>Calculado da base</b> é conta sobre os cadastros; <b>IA · confira antes de usar</b> marca o que foi extraído dos documentos sem revisão de uma pessoa; <b>IA · revisado</b>, o que uma pessoa conferiu.')}
+    ${tip('<b>Cadastros de teste</b> (Curadoria › "Que cadastros são de teste?"): o Radar sugere os que parecem teste (título com "teste", texto aleatório ou curto demais). Só o gestor clica em <b>Marcar como teste</b>, que tira o projeto dos números sem apagar nada; <b>Voltar aos números</b> desfaz.')}
     <h4>Métricas do piloto (aba em Insights)</h4>
     <p>Em ${ui('Insights')}, a aba <b>Métricas do piloto</b>, ao lado de <b>Visões</b>, mostra se o Radar está sendo usado e ajudando (o item de mesmo nome no menu ⋮ abre direto essa aba; o Radar lembra a última aba aberta).</p>
     ${table(['Indicador', 'O que mede'], [
@@ -306,28 +364,39 @@ export const GUIA = [
       ['Úteis entre os 3 primeiros', 'Quantas avaliações dos 3 primeiros resultados foram 👍 (e o % geral na dica).'],
       ['Até a 1ª referência útil', 'Da primeira pergunta ao primeiro 👍 da conversa.'],
       ['Reaproveitamentos', 'Cliques em Abrir projeto, Copiar escopo e Usar como base a partir de uma resposta.'],
-      ['Fontes abertas', 'Documentos de origem abertos (e fichas abertas, na dica).'],
+      ['Fontes abertas', 'Documentos de origem abertos a partir de uma resposta (e cartões de projeto abertos, na dica).'],
       ['Tempo de resposta', 'Tempo médio até a resposta do chat.'],
       ['Por que não ajudou', 'Motivos dos 👎.'],
       ['O que pedem ao chat', 'Perguntas por tipo de pedido (parecidos, listagem, conversa, dúvida de uso, arquivo…) e quantas ficaram sem resposta.'],
+    ])}
+    <h4>Ano fiscal, Ganhamos × perdemos e sinais do setor (V0.0.3)</h4>
+    ${table(['O quê', 'Como funciona'], [
+      ['Ano fiscal', 'Os anos dos Insights seguem o ano fiscal da NTT DATA, de abril a março: o FY26 vai de abril de 2026 a março de 2027. O filtro "Ano fiscal" mostra um FY por vez (o atual vem marcado como "atual").'],
+      ['Taxa de ganho', 'ganhas ÷ (ganhas + perdidas). Em aberto e canceladas ficam fora da conta. O "como calculamos" de cada cartão explica o método.'],
+      ['Ganhamos × perdemos', 'Na visão Negócio: o que as ganhas e as perdidas têm em comum (tecnologias, serviços, prazo e, para o gestor, valor), os motivos de perda sugeridos a partir das lições (preço, escopo, concorrente, relacionamento, prazo, capacidade técnica, desistência) e as perdidas que viraram aprendizado, com quem conduziu. Os motivos são sugestão: confira.'],
+      ['Sinais do setor', 'Na visão Negócio: notícias das fontes curadas, coletadas uma vez por dia, com o porquê da relevância (cliente da carteira, tecnologia que já entregamos ou só o setor) e o botão "O que já fizemos sobre isso?". O Radar guarda só título, data, link e um trecho; o link original é a referência.'],
     ])}`],
 
   ['permissoes', 'lock', 'Permissões e privacidade', () => `
     ${table(['', 'Consultor', 'Gestor'], [
-      ['Documentos públicos e internos', '✔', '✔'],
-      ['Documentos e projetos confidenciais', '—', '✔'],
-      ['Preço e margem das propostas', 'ocultos (inclusive no download)', '✔'],
+      ['Documentos e projetos internos', '✔', '✔'],
+      ['Documentos e projetos confidenciais', '— (não aparecem em nenhuma tela)', '✔'],
+      ['Preço e margem das propostas', 'ocultos em todas as telas e na exportação', '✔'],
+      ['Baixar original', 'texto com valores ocultos; PDF/Office com valor ou margem não baixa', '✔'],
       ['Editar campos da ficha e comentar', '✔', '✔'],
+      ['Enviar documento para um projeto existente', '✔', '✔'],
+      ['Aprovar documento que se declara confidencial', '—', '✔'],
       ['Classificar algo como confidencial', '—', '✔'],
       ['Cadastrar projeto e cliente novo (inclusive a partir de um arquivo)', '—', '✔'],
       ['Excluir projeto', '—', '✔'],
-      ['Criar tecnologia ou serviço novo', 'escolhe entre os existentes', '✔'],
+      ['Criar tecnologia, serviço ou segmento novo', 'escolhe entre os existentes', '✔'],
       ['Exportar apresentação e resumo', '✔ (sem valores)', '✔'],
+      ['Marcar cadastro como teste (Insights › Curadoria)', '—', '✔'],
       ['Consultar o registro de atividades', '—', '✔'],
     ])}
     <ul>
-      <li>O filtro de permissão é aplicado <b>antes</b> da busca e da IA: um conteúdo que você não pode ver nunca entra na resposta.</li>
-      <li>Dados pessoais (CPF, CNPJ, e-mail, telefone) são detectados no envio, nas perguntas e nos arquivos lidos na conversa e aparecem mascarados.</li>
+      <li>O filtro de permissão é aplicado <b>antes</b> da busca e da IA: um conteúdo que você não pode ver nunca entra na resposta. Para quem não vê valores, os trechos de documento que contêm preço ou margem também ficam fora da busca.</li>
+      <li>CPF, RG, e-mail, telefone, número de cartão, senhas e chaves são trocados por marcadores (ex.: <code>[e-mail removido]</code>) no envio, no cadastro, na edição, nas perguntas e nos arquivos lidos na conversa, antes de gravar ou de ir para a IA. O registro guarda só o tipo e a quantidade, nunca o valor.</li>
       <li>O acesso de um documento nunca fica mais aberto que o do projeto dele.</li>
       <li>Arquivo lido na conversa é só de quem anexou e é apagado junto com a conversa.</li>
     </ul>`],
@@ -342,7 +411,15 @@ export const GUIA = [
       ['Não acho um projeto em Projetos.', 'Limpe os filtros. Se for confidencial, o perfil consultor não o vê.'],
       ['Enviei um PDF e não veio texto.', 'Provavelmente é uma imagem escaneada. O V0 não faz OCR: envie a versão em Word ou PDF com texto.'],
       ['O Radar diz que o arquivo já existe.', 'Um arquivo idêntico já está na base. Abra o projeto para encontrá-lo.'],
-      ['Aparece "resposta direta da base".', 'A resposta foi montada pelas regras e pela busca por palavras do Radar, direto dos dados da base. Repita a pergunta para ter a resposta com a análise da IA.'],
+      ['Aparece "resposta direta da base".', 'A IA não respondeu a tempo ou falhou, e a resposta foi montada pelas regras e pela busca por palavras do Radar, direto dos dados da base. Repita a pergunta para ter a resposta com a análise da IA.'],
+      ['Aparece "Modo regras" no topo da tela.', 'Este ambiente está sem a IA configurada. Tudo funciona por regras; perguntas em etapas ("liste e compare") precisam da IA e são respondidas por partes.'],
+      ['O percentual de semelhança está baixo em todos os resultados.', 'A base ainda não tem uma boa referência para esse tema. Diga o segmento e as tecnologias ou use a Proposta em foco para a conta considerar mais critérios. Veja "Como o Radar calcula a semelhança".'],
+      ['Não consigo baixar o original (consultor).', 'O arquivo é PDF, Word, PowerPoint ou Excel e tem preço ou margem cadastrados. Peça o original ao gestor do projeto. Arquivos de texto baixam com os valores ocultos.'],
+      ['Não vejo os botões "+ Projeto" e "Novo a partir de arquivo".', 'Só o gestor cadastra projetos. Como consultor, envie o documento para um projeto existente ou peça ao gestor.'],
+      ['Não consigo aprovar um documento.', 'Se ele se declara confidencial, só quem tem acesso a confidencial (gestor) aprova.'],
+      ['Minhas conversas sumiram.', 'Confira o perfil em "Ver como": cada perfil vê só as conversas dele. Veja também as caixas "Arquivadas" e "Grupos", que começam fechadas.'],
+      ['Um cadastro de teste está distorcendo os Insights.', 'Peça ao gestor para usar "Marcar como teste" em Insights › Curadoria. O projeto sai dos números e nada é apagado.'],
+      ['Aparece "poucos dados" num gráfico.', 'Menos de 3 itens entram naquela conta. Leia como indício, não como conclusão.'],
       ['Encontrei um problema ou tenho uma ideia.', 'Use "Enviar feedback" (rodapé da coluna de conversas ou menu ⋮ → Versão). Você recebe um código CR-NNN para acompanhar em Tickets.'],
     ])}`],
 
@@ -350,7 +427,7 @@ export const GUIA = [
     <p>No menu ⋮, <b>Versão: notas, feedbacks e testes</b> reúne o que mudou e o acompanhamento da qualidade.</p>
     ${table(['Seção', 'Para que serve'], [
       ['Notas da versão', 'O que entrou em cada versão, com o antes e o depois de cada item e os tickets ligados.'],
-      ['Enviar feedback', 'Conte o que aconteceu (onde, tipo e descrição) e anexe até algumas capturas de tela (também com Ctrl+V). A IA descreve as imagens. Cada envio vira um ticket com código (ex.: CR-053).'],
+      ['Enviar feedback', 'Conte o que aconteceu (onde, tipo e descrição) e anexe até 3 capturas de tela (também com Ctrl+V). A IA descreve as imagens. Cada envio vira um ticket com código (ex.: CR-053); um ticket pode juntar até 6 imagens.'],
       ['Tickets', 'Lista ou kanban de tudo o que foi relatado. Na lista, clicar na linha mostra a descrição e a proposta de solução; clicar no código ou no título abre o ticket. Filtros em campos de seleção (Situação, Prioridade, Área, Tipo, Aberto na versão, Aberto por). No kanban, o fluxo fica em cima e "Não priorizado no MVP" e "Não procede" ficam separados embaixo; cada coluna mostra 5 cartões e "Mostrar mais" carrega mais.'],
       ['Roteiro de testes', 'Cenários passo a passo por tela, com seletor de versão. Abra um cenário, siga o passo a passo, escreva o seu nome e marque OK, Falhou ou Bloqueado. Uma falha abre um ticket; um OK num cenário que retesta um ticket valida esse ticket.'],
       ['Acompanhamento', 'Andamento do roteiro da versão (por prioridade, área e analista) e os tickets por situação.'],
@@ -464,10 +541,10 @@ export const TECNICO = [
   ['busca', 'search', 'Busca semântica', () => `
     <p>Uma pergunta em linguagem natural passa por interpretação, recuperação híbrida (vetorial + textual), pontuação por vários fatores e uma reavaliação pela IA, sempre restrita ao que o usuário pode ver.</p>
     ${flow([
-      ['Pergunta', '+ últimas 8 perguntas da conversa + foco', 'message'],
+      ['Pergunta', '+ memória da conversa (até 8 perguntas) + foco', 'message'],
       ['Entendimento (IA)', 'intenção, consulta reescrita, segmentos, tecnologias, serviços, prazo', 'sparkles', true],
       ['Consulta enriquecida', 'sinônimos do léxico + descrição do foco', 'tag'],
-      ['Filtro de permissão', 'confidencialidade do perfil aplicada no where', 'lock', true],
+      ['Filtro de permissão', 'confidencialidade do perfil (e trechos com valores, para quem não os vê) aplicada no where', 'lock', true],
       ['Recuperação híbrida', '80 trechos por cosseno + BM25 (FTS5) como reforço de até 25%', 'search'],
       ['Agrupar por projeto', 'melhores trechos de cada projeto', 'folder'],
       ['Score multi-fator', 'conteúdo, segmento, tecnologias, serviços, porte, status', 'chart'],
@@ -475,7 +552,7 @@ export const TECNICO = [
       ['Corte e conflitos', 'score ≥ 0,4 · até 5 projetos · fonte mais confiável prevalece', 'checkCircle'],
     ], { vertical: true })}
     <h4>1. Entendimento</h4>
-    <p>A DeepSeek recebe a pergunta, o histórico e o foco e devolve um JSON com a <b>intenção</b>, a <b>consulta reescrita</b> sem ambiguidade (ex.: "e em varejo?" → "projetos de churn em varejo") e as entidades, escolhidas apenas do vocabulário controlado.</p>
+    <p>A DeepSeek recebe a pergunta, as 6 perguntas mais recentes da conversa e o foco e devolve um JSON com a <b>intenção</b>, a <b>consulta reescrita</b> sem ambiguidade (ex.: "e em varejo?" → "projetos de churn em varejo") e as entidades, escolhidas apenas do vocabulário controlado.</p>
     <p>As capacidades do chat ficam num <b>registro de skills</b> (<code>src/skills/</code>): cada skill declara a intenção, quando usar, o que mostra em "o que você pode fazer?" (por perfil) e frases de exemplo, testadas automaticamente. Casos claros (saudação, agradecimento, dúvida de uso, pedidos sobre o arquivo anexado) são resolvidos por regras <b>antes</b> da IA. Cada intenção tem uma resposta própria; só <i>buscar</i> segue para a busca de projetos parecidos descrita abaixo:</p>
     ${table(['Intenção', 'Exemplo', 'Como responde'], [
       ['<b>buscar</b>', '"Já fizemos fraude em seguros?"', 'Busca híbrida, score e análise da IA (passos 2 a 5).'],
@@ -493,7 +570,7 @@ export const TECNICO = [
     <p>Sem IA, regras de palavras-chave fazem a mesma classificação. Números, listas e fichas sempre vêm do banco; a IA só escreve a síntese. O conjunto de avaliação fica em <code>test/avaliacao-intencoes.js</code>.</p>
     <h4>2. Recuperação híbrida</h4>
     <ul>
-      <li><b>Vetorial:</b> a consulta vira um embedding e a base devolve os 80 trechos de maior cosseno, já filtrados por <code>where: { confidencialidade: { $in: [...] } }</code>.</li>
+      <li><b>Vetorial:</b> a consulta vira um embedding e a base devolve os 80 trechos de maior cosseno, já filtrados por <code>where: { confidencialidade: { $in: [...] } }</code> e, para quem não vê valores, por <code>contem_valores: { $ne: true }</code> (trechos com preço ou margem ficam de fora).</li>
       <li><b>Textual:</b> o FTS5 roda a mesma consulta com BM25. Trechos que aparecem nas duas listas têm a similaridade multiplicada por até 1,25, conforme a posição no BM25. O reforço só amplia o que já é semanticamente parecido.</li>
     </ul>
     <h4>3. Score multi-fator</h4>
@@ -507,7 +584,7 @@ export const TECNICO = [
     ])}
     <p>Fatores sem sinal na pergunta não entram e os pesos são <b>renormalizados</b>. Uma pergunta só sobre conteúdo usa só o conteúdo.</p>
     <h4>4. Reavaliação e resposta pela IA</h4>
-    <p>Os 8 melhores candidatos vão para a DeepSeek com metadados e <b>frases numeradas</b> dos documentos. Ela devolve, para cada projeto, a relevância (0 a 1), uma justificativa e o <b>id da frase</b> que a sustenta, além da resposta curta com citações [P001].</p>
+    <p>Os 8 melhores candidatos vão para a DeepSeek com metadados, até 8 <b>frases numeradas</b> dos documentos (sem linhas de preço para quem não vê valores) e as 3 perguntas mais recentes da conversa. Ela devolve, para cada projeto, a relevância (0 a 1), uma justificativa e o <b>id da frase</b> que a sustenta, além da resposta curta com citações [P001].</p>
     ${tip('Travas contra alucinação: a IA só recebe trechos que o usuário pode ver; cita a evidência por id (o texto exibido vem da base, não da IA); só cita projetos com relevância ≥ 0,5; não pode inventar números; e, sem evidência, deve dizer que não há.', 'warn')}
     <p>A IA avalia cada candidato numa escala fixa (0,9+ mesmo problema e segmento · 0,7 mesmo problema em outro segmento · 0,5 semelhança parcial útil · 0,3 só tecnologia ou palavra em comum · abaixo disso, sem relação). A nota final do conteúdo mistura 25% da semelhança de texto e 75% dessa avaliação, e o percentual final nunca passa da relevância da IA + 10 pontos: segmento, tecnologias e status não inflam um projeto que é fraco no significado. Ficam projetos com relevância ≥ 0,4 e score ≥ 0,4, até 5.</p>
     <h4>5. Conflito de fontes</h4>
@@ -534,7 +611,7 @@ export const TECNICO = [
     <ul>
       <li><b>Acesso:</b> tela de login com sessão em cookie <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Lax</code>, assinado com HMAC-SHA256 e válido por 7 dias. Erros de senha têm atraso fixo.</li>
       <li><b>Permissão antes de tudo:</b> busca, IA, detalhe, download e edição respeitam o nível de confidencialidade do perfil.</li>
-      <li><b>Valores:</b> perfis sem permissão não recebem valores nem margens, nem na API, nem no download.</li>
+      <li><b>Valores:</b> perfis sem permissão não recebem valores nem margens, nem na API, nem na exportação. No download do original, arquivos de texto saem com as linhas de preço e margem ocultas, e PDF ou Office com valor ou margem cadastrados é recusado (HTTP 403).</li>
       <li><b>Segredos:</b> a chave da IA fica só no servidor (arquivo com acesso restrito), nunca no navegador.</li>
       <li><b>Mascaramento:</b> CPF, RG, e-mail, telefone, cartão, senhas e chaves são trocados por marcadores no servidor antes de gravar, indexar ou enviar texto à DeepSeek (envio, cadastro, sugestão, edição e perguntas). O envio nunca é bloqueado; o registro guarda só o tipo e a quantidade.</li>
       <li><b>Termo de uso:</b> aceito uma vez por perfil e por versão, na tela de boas-vindas.</li>
