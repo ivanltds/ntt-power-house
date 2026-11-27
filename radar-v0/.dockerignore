@@ -1,20 +1,23 @@
-# Fora da imagem: segredos, dados gravados localmente, testes e documentação.
-.env
-.env.*
-!.env.example
-.git
-node_modules
-test
-docs
+# Lista de permissão: só o que o app precisa entra na imagem. Qualquer arquivo solto na pasta
+# (segredos, planilhas, .env, tokens) fica de fora, mesmo que o build seja feito de uma pasta "suja".
+*
+!package.json
+!src/
+!public/
+!amostras/
+!data/
+
+# Dentro de data/, só a massa piloto (usuarios.json, oportunidades.json e corpus/). Dados gravados ficam fora.
 data/radar.db*
 data/vectorstore
 data/uploads
 data/conversas
 data/auditoria
 data/anexos
+data/massa
 data/termos.json
 data/qualidade.json
 data/sinais.json
 data/sinais-fontes.json
-Dockerfile
-.dockerignore
+**/.env
+**/.env.*

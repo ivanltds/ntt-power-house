@@ -227,7 +227,7 @@ export const ROTEIRO = [
     'Ver como o Radar entendeu a pergunta.',
     [NOVA, PERGUNTE('e os de varejo?'), ESPERE],
     ['Passe o mouse sobre o pequeno "i" à direita da etiqueta da resposta.'],
-    ['Aparece uma caixa com o tempo da resposta, "IA: DeepSeek" e, quando a pergunta foi reescrita, "Entendi como: …".']),
+    ['Aparece uma caixa com o tempo da resposta, "IA: Azure OpenAI" e, quando a pergunta foi reescrita, "Entendi como: …".']),
 
   c('C33', 'media', 'Envio vazio e pergunta muito longa',
     'Ver se o Radar lida com envio sem texto e texto grande.',

@@ -1,120 +1,101 @@
 # Deploy do Radar na Azure (container)
 
-Passo a passo para publicar o Radar no **Azure App Service** como container, usando os recursos do grupo `rg-ph` na assinatura Poc Bees Data:
+Como o Radar foi publicado no **Azure App Service** em 27/11/2026 e como publicar novas versões. Recursos do grupo `rg-ph`, na assinatura Poc Bees Data:
 
 | Recurso | Tipo | Papel no deploy |
 |---|---|---|
-| `regphradar` | Container Registry (ACR) | Guarda a imagem do Radar |
-| `plan-ph-radar` | Plano do App Service | Máquina onde o app roda (precisa ser Linux) |
-| `web-ph-radar` | App Service (web app) | O Radar no ar, com HTTPS |
-| `openai-ph` | Azure OpenAI | IA generativa (substitui a DeepSeek) |
+| `regphradar` | Container Registry (ACR, Standard) | Guarda as imagens do Radar (`radar:<versão>`) |
+| `plan-ph-radar` | Plano do App Service (Linux, F1 gratuito) | Máquina onde o app roda |
+| `web-ph-radar` | App Service (web app) | O Radar no ar, com HTTPS e login |
+| `openai-ph` | Azure OpenAI | IA generativa, implantação `gpt-6-luna` |
+
+Endereço: `https://web-ph-radar-dbdfa4d7c8gehwd0.westus3-01.azurewebsites.net`
 
 ```mermaid
 flowchart LR
-  GH["GitHub<br/>ivanltds/ntt-power-house"] -->|git clone / pull| SH["Terminal<br/>(Cloud Shell ou WSL)"]
-  SH -->|az acr build| ACR["regphradar<br/>imagem radar:TAG"]
-  ACR -->|baixa a imagem| APP["web-ph-radar<br/>container Node"]
+  DEV["Desenvolvimento<br/>GitHub (radar-v0/)"] -->|branch radar-gitlab| GL["GitLab da empresa<br/>DATASCIENC/ntt-power-house-radar"]
+  DEV -->|git clone limpo| SH["Azure Cloud Shell"]
+  SH -->|az acr build| ACR["regphradar<br/>radar:TAG"]
+  ACR -->|token só de leitura| APP["web-ph-radar<br/>container Node"]
   APP -->|/home/radar-dados| HOME[("Disco persistente<br/>banco, envios, conversas")]
-  APP -->|chat/completions| AOAI["openai-ph<br/>implantação do modelo"]
+  APP -->|chave api-key| AOAI["openai-ph<br/>gpt-6-luna"]
   U["Usuários"] -->|HTTPS + login| APP
 ```
 
-A imagem é montada **dentro da Azure** (`az acr build`). Ninguém precisa de Docker na máquina.
+## Regras que valem sempre
+
+- **Monte a imagem a partir de um clone limpo**, nunca da pasta de trabalho de alguém: a pasta pode ter `.env`, tokens e arquivos soltos. O `.dockerignore` é uma lista de permissão (só `package.json`, `src`, `public`, `amostras` e a massa piloto de `data/`), mas o clone limpo é a primeira barreira.
+- **Segredos não aparecem na tela.** Os comandos guardam chaves e senhas em variáveis, usam `-o none` e, quando a Azure insiste em imprimir um aviso com a senha, `2>/dev/null`. Se um segredo aparecer na tela ou num chat, gere outro (veja o passo 3).
+- **Uma instância só.** O SQLite e os arquivos JSON supõem um único container. Não aumente o número de instâncias.
 
 ## 0. Onde rodar os comandos
 
-Os comandos abaixo são de **bash** e precisam da **Azure CLI** (`az`). Há dois caminhos:
+No **Azure Cloud Shell**: no portal, clique no ícone `>_` da barra do topo e escolha **Bash**. Se ele perguntar sobre armazenamento, escolha **"Não é necessária uma conta de armazenamento"**. A sessão é temporária, e o código vem do GitHub a cada vez. O Cloud Shell já tem `az`, `git` e `openssl`, e você entra logado.
 
-**A. Azure Cloud Shell (recomendado: não instala nada).**
-1. No portal da Azure, clique no ícone `>_` da barra do topo.
-2. Escolha **Bash**.
-3. Se perguntar sobre armazenamento, escolha **"Não é necessária uma conta de armazenamento"**. A sessão fica temporária, o que basta, porque o código vem do GitHub a cada vez.
-
-O Cloud Shell já vem com `az`, `git` e você logado. Se a política da empresa bloquear o Cloud Shell, use o caminho B.
-
-**B. WSL na máquina.** WSL (Windows Subsystem for Linux) é um Linux (Ubuntu) que roda dentro do Windows, com um terminal próprio.
-1. No PowerShell **como administrador**, rode `wsl --install` e reinicie a máquina.
-2. Abra o **Ubuntu** pelo menu Iniciar e crie um usuário e uma senha do Linux.
-3. Instale as ferramentas:
-
-```bash
-sudo apt update && sudo apt install -y git
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-az login --use-device-code
-```
-
-## 1. Variáveis e testes de acesso
+Toda sessão nova começa pelas variáveis:
 
 ```bash
 RG=rg-ph; APP=web-ph-radar; PLANO=plan-ph-radar; ACR=regphradar; AOAI=openai-ph
-
-az account list -o table
-az account set --subscription "<nome ou id da assinatura Poc Bees Data>"
-az resource list -g $RG -o table
-
-# O plano precisa ser Linux (linux: true) e de nível Basic ou acima (para o Always On)
-az appservice plan show -g $RG -n $PLANO --query "{sku:sku.name, linux:reserved}" -o json
-az webapp show -g $RG -n $APP --query "{estado:state, url:defaultHostName}" -o json
-az acr show -n $ACR --query "{servidor:loginServer, sku:sku.name}" -o json
-
-# Azure OpenAI: endpoint, se aceita chave (semChave=false) e o nome da implantação do modelo
-az cognitiveservices account show -g $RG -n $AOAI --query "{endpoint:properties.endpoint, semChave:properties.disableLocalAuth}" -o json
-az cognitiveservices account deployment list -g $RG -n $AOAI --query "[].{implantacao:name, modelo:properties.model.name, versao:properties.model.version}" -o table
 ```
 
-Anote o **endpoint** e o **nome da implantação**. No `AZURE_OPENAI_DEPLOYMENT` vai o nome da implantação, que pode ser diferente do nome do modelo.
-
-## 2. Código e imagem
+## 1. Conferir acessos
 
 ```bash
-git clone https://github.com/ivanltds/ntt-power-house.git   # na primeira vez
-cd ntt-power-house && git checkout main && git pull
-cd radar-v0
+az account show --query name -o tsv                 # Poc Bees Data 1855163
+az appservice plan show -g $RG -n $PLANO --query "{tipo:kind, sku:sku.tier}" -o json      # linux
+az acr show -n $ACR --query "{servidor:loginServer, sku:sku.name}" -o json
+az cognitiveservices account show -g $RG -n $AOAI --query "{endpoint:properties.endpoint, semChave:properties.disableLocalAuth}" -o json
+az cognitiveservices account deployment list -g $RG -n $AOAI --query "[].{implantacao:name, modelo:properties.model.name}" -o table
+```
 
+`semChave: null` (ou `false`) significa que o recurso aceita chave.
+
+## 2. Montar a imagem
+
+```bash
+cd ~
+git clone -b radar-gitlab https://github.com/ivanltds/ntt-power-house.git radar
+cd radar
 TAG=$(git rev-parse --short HEAD)
 az acr build -r $ACR -t radar:$TAG -t radar:latest .
 ```
 
-Se `az acr build` for recusado (ACR Tasks desligado na assinatura), monte a imagem com Docker no WSL e envie com `az acr login -n $ACR && docker push`.
+O fim esperado é `Run ID: ... was successful`. A branch `radar-gitlab` tem o mesmo conteúdo da `main` do GitLab (veja a seção 7).
 
-## 3. Ligar o web app à imagem
+## 3. Ligar o web app à imagem (primeira vez)
 
-O web app baixa a imagem com a própria identidade gerenciada, sem senha:
+A conta usada no deploy não pode atribuir papéis (`roleAssignments/write`). Por isso o web app não usa a identidade gerenciada para baixar a imagem. Ele usa um **token do registro só de leitura e só do repositório `radar`**, o acesso mínimo.
 
 ```bash
-az webapp identity assign -g $RG -n $APP -o none
-PRINC=$(az webapp identity show -g $RG -n $APP --query principalId -o tsv)
-az role assignment create --assignee-object-id $PRINC --assignee-principal-type ServicePrincipal \
-  --role AcrPull --scope $(az acr show -n $ACR --query id -o tsv) -o none
-az webapp config set -g $RG -n $APP --generic-configurations '{"acrUseManagedIdentityCreds": true}' -o none
-
+ACR_PASS=$(az acr token create -n radar-pull -r $ACR --repository radar content/read metadata/read --query "credentials.passwords[0].value" -o tsv 2>/dev/null)
+[ -n "$ACR_PASS" ] && echo "TOKEN OK"
 az webapp config container set -g $RG -n $APP \
   --container-image-name $ACR.azurecr.io/radar:$TAG \
-  --container-registry-url https://$ACR.azurecr.io -o none
+  --container-registry-url https://$ACR.azurecr.io \
+  --container-registry-user radar-pull \
+  --container-registry-password "$ACR_PASS" -o none && echo "CONTAINER OK"
 ```
 
-Se `az role assignment create` falhar por falta de permissão (exige Owner ou User Access Administrator), há duas saídas:
-- peça a atribuição a quem administra a assinatura;
-- como alternativa de piloto, use o usuário administrador do registro:
+Para **trocar a senha do token**, por exemplo se ela vazar, gere uma nova e repita o `container set` acima:
 
 ```bash
-az acr update -n $ACR --admin-enabled true -o none
-az webapp config container set -g $RG -n $APP \
-  --container-image-name $ACR.azurecr.io/radar:$TAG --container-registry-url https://$ACR.azurecr.io \
-  --container-registry-user $ACR \
-  --container-registry-password "$(az acr credential show -n $ACR --query 'passwords[0].value' -o tsv)" -o none
+ACR_PASS=$(az acr token credential generate -n radar-pull -r $ACR --password1 --query "passwords[0].value" -o tsv 2>/dev/null)
+[ -n "$ACR_PASS" ] && echo "SENHA NOVA OK"
 ```
 
-## 4. Configuração do Radar (variáveis do app)
+A senha antiga deixa de valer na hora. Se aparecer só `CONTAINER OK`, sem `SENHA NOVA OK`, pare: a variável ficou vazia.
 
-A senha do Radar é digitada sem aparecer na tela. Os segredos ficam só nas configurações do web app e nunca entram na imagem. Todos os comandos usam `-o none` para não imprimir valores.
+Quando alguém com permissão de atribuir papéis puder ajudar, dá para trocar o token pela identidade gerenciada, que já foi criada no web app. É preciso dar o papel `AcrPull` no registro e ligar `acrUseManagedIdentityCreds`.
+
+## 4. Configuração do Radar (primeira vez)
+
+O usuário e a senha do Radar são digitados na hora; a senha não aparece na tela. A chave do OpenAI é lida direto da Azure.
 
 ```bash
 read -p "Usuário do Radar: " RUSER
 read -s -p "Senha do Radar: " RPASS; echo
-AOAI_ENDPOINT=$(az cognitiveservices account show -g $RG -n $AOAI --query properties.endpoint -o tsv)
-read -p "Nome da implantação do modelo (passo 1): " AOAI_DEPLOY
-
+AOAI_KEY=$(az cognitiveservices account keys list -g $RG -n $AOAI --query key1 -o tsv 2>/dev/null)
+[ -n "$AOAI_KEY" ] && echo "CHAVE OPENAI OK"
 az webapp config appsettings set -g $RG -n $APP -o none --settings \
   WEBSITES_PORT=8080 \
   WEBSITES_ENABLE_APP_SERVICE_STORAGE=true \
@@ -125,63 +106,27 @@ az webapp config appsettings set -g $RG -n $APP -o none --settings \
   RADAR_LOGIN_SECRET=$(openssl rand -hex 32) \
   RADAR_RELATORIO_TOKEN=$(openssl rand -hex 24) \
   LLM_PROVIDER=azure \
-  AZURE_OPENAI_ENDPOINT="$AOAI_ENDPOINT" \
-  AZURE_OPENAI_DEPLOYMENT="$AOAI_DEPLOY"
-```
+  AZURE_OPENAI_ENDPOINT=https://openai-ph.openai.azure.com/ \
+  AZURE_OPENAI_DEPLOYMENT=gpt-6-luna \
+  AZURE_OPENAI_API_KEY="$AOAI_KEY" && echo "CONFIG OK"
 
-Para o acesso à IA, use **uma** das duas formas:
-
-```bash
-# (a) Chave do recurso, se semChave=false no passo 1
-az webapp config appsettings set -g $RG -n $APP -o none --settings \
-  AZURE_OPENAI_API_KEY="$(az cognitiveservices account keys list -g $RG -n $AOAI --query key1 -o tsv)"
-
-# (b) Identidade gerenciada, obrigatória se semChave=true (também exige permissão para atribuir papéis)
-az role assignment create --assignee-object-id $PRINC --assignee-principal-type ServicePrincipal \
-  --role "Cognitive Services OpenAI User" --scope $(az cognitiveservices account show -g $RG -n $AOAI --query id -o tsv) -o none
-```
-
-O que cada variável faz:
-
-| Variável | Por quê |
-|---|---|
-| `WEBSITES_PORT=8080` | Porta em que o container escuta |
-| `WEBSITES_ENABLE_APP_SERVICE_STORAGE=true` | Liga o `/home` persistente: os dados sobrevivem a reinícios e novas versões |
-| `RADAR_DATA_DIR=/home/radar-dados` | Grava banco, índice, envios, conversas e auditoria no disco persistente |
-| `RADAR_SQLITE_JOURNAL=DELETE` | O `/home` é disco de rede, onde o modo WAL do SQLite não funciona |
-| `WEBSITES_CONTAINER_START_TIME_LIMIT=600` | A primeira subida monta a base (cerca de 1 a 2 minutos no disco de rede) |
-| `RADAR_LOGIN_SECRET` | Fixa a assinatura do login: reiniciar o app não derruba as sessões |
-| `RADAR_RELATORIO_TOKEN` | Chave do endpoint `/api/relatorio/qualidade` para agentes |
-| `AZURE_OPENAI_*` | Endpoint e implantação do modelo. Se ele for de raciocínio, o Radar ajusta os parâmetros sozinho |
-
-Por fim, deixe o app sempre ligado (a coleta de sinais roda de madrugada) e só com HTTPS:
-
-```bash
-az webapp config set -g $RG -n $APP --always-on true -o none
 az webapp update -g $RG -n $APP --https-only true -o none
 az webapp log config -g $RG -n $APP --docker-container-logging filesystem -o none
 az webapp restart -g $RG -n $APP
 ```
 
-## 5. Conferir
+| Variável | Por quê |
+|---|---|
+| `WEBSITES_PORT=8080` | Porta em que o container escuta |
+| `WEBSITES_ENABLE_APP_SERVICE_STORAGE=true` | Liga o `/home` persistente: os dados sobrevivem a reinícios e a novas versões |
+| `RADAR_DATA_DIR=/home/radar-dados` | Grava banco, índice, envios, conversas e auditoria no disco persistente |
+| `RADAR_SQLITE_JOURNAL=DELETE` | O `/home` é disco de rede, onde o modo WAL do SQLite não funciona |
+| `WEBSITES_CONTAINER_START_TIME_LIMIT=600` | Folga para a primeira subida, que monta a base (cerca de 30 s) |
+| `RADAR_LOGIN_SECRET` | Fixa a assinatura do login: reiniciar o app não derruba as sessões |
+| `RADAR_RELATORIO_TOKEN` | Chave do endpoint `/api/relatorio/qualidade` para agentes |
+| `AZURE_OPENAI_*` | Endpoint, implantação e chave. Se o modelo for de raciocínio, o Radar ajusta os parâmetros sozinho |
 
-```bash
-az webapp log tail -g $RG -n $APP      # Ctrl+C para sair
-```
-
-No log devem aparecer, nesta ordem:
-- `Base preparada: … projetos` (só na primeira subida);
-- `Radar V0 em http://localhost:8080`;
-- `Login: ativo`;
-- `IA: Azure OpenAI (<implantação>)`.
-
-Depois, abra `https://<url do passo 1>` e confira:
-1. A tela de login aparece e entra com o usuário e a senha do passo 4.
-2. Faça uma pergunta no chat. A linha de informações da resposta deve dizer **"IA: Azure OpenAI"**.
-3. Envie um arquivo. A revisão deve mostrar **"Lido com IA"**.
-4. A página `/status` abre com o roteiro da versão.
-
-Se o topo mostrar **"Modo regras"**, a IA não foi configurada: confira as variáveis `AZURE_OPENAI_*` e o acesso (chave ou papel). Se a IA falhar numa chamada, a resposta mostra **"IA: regras do Radar"** e o motivo vai para o log.
+Para trocar só a senha do Radar, rode o `read -s` e depois `az webapp config appsettings set -g $RG -n $APP -o none --settings RADAR_LOGIN_PASS="$RPASS"`.
 
 Para ler a chave do relatório para agentes:
 
@@ -189,20 +134,64 @@ Para ler a chave do relatório para agentes:
 az webapp config appsettings list -g $RG -n $APP --query "[?name=='RADAR_RELATORIO_TOKEN'].value" -o tsv
 ```
 
+## 5. Conferir
+
+```bash
+az webapp log tail -g $RG -n $APP      # Ctrl+C para sair. Se cair ("Log stream interrupted"), rode de novo
+```
+
+No plano gratuito, o container só sobe quando alguém acessa. Abra o endereço do Radar numa aba (pode levar de 1 a 3 minutos) e acompanhe o log. Devem aparecer:
+- `Base preparada: 511 projetos, …`, só na primeira subida;
+- `Radar V0 em http://localhost:8080`;
+- `Login: ativo`;
+- `IA: Azure OpenAI (gpt-6-luna)`.
+
+No app:
+1. Entre com o usuário e a senha.
+2. Pergunte "churn em telecom com Kafka". A resposta deve trazer um texto comparando as referências, e a linha de informações deve dizer **"IA: Azure OpenAI"**.
+3. A página `/status` abre com o roteiro da versão.
+
+Se o topo mostrar **"Modo regras"**, confira as variáveis `AZURE_OPENAI_*`. Se uma resposta disser **"IA: regras do Radar"**, a chamada à IA falhou naquela pergunta.
+
 ## 6. Publicar uma nova versão
 
 ```bash
-cd ntt-power-house && git pull && cd radar-v0
+RG=rg-ph; APP=web-ph-radar; ACR=regphradar
+cd ~ && rm -rf radar
+git clone -b radar-gitlab https://github.com/ivanltds/ntt-power-house.git radar && cd radar
 TAG=$(git rev-parse --short HEAD)
 az acr build -r $ACR -t radar:$TAG -t radar:latest .
-az webapp config container set -g $RG -n $APP --container-image-name $ACR.azurecr.io/radar:$TAG -o none
+az webapp config container set -g $RG -n $APP --container-image-name $ACR.azurecr.io/radar:$TAG -o none && echo "CONTAINER OK"
+az webapp restart -g $RG -n $APP
 ```
 
-Os dados em `/home/radar-dados` são mantidos. Para voltar a uma versão anterior, use o mesmo último comando com a TAG antiga. As tags ficam listadas em `az acr repository show-tags -n $ACR --repository radar -o table`.
+O `rm -rf radar` apaga só a cópia temporária do Cloud Shell. Os dados em `/home/radar-dados` são mantidos.
+
+Para **voltar a uma versão anterior**, rode o `container set` com a TAG antiga. Para ver as tags:
+
+```bash
+az acr repository show-tags -n $ACR --repository radar -o table
+```
+
+## 7. Código no GitLab da empresa
+
+O repositório oficial é o GitLab `DATASCIENC/ntt-power-house-radar`, com o conteúdo de `radar-v0` na raiz e todo o histórico dele. O desenvolvimento acontece no GitHub (pasta `radar-v0/`). A cada versão:
+
+1. **No GitHub:** `git subtree split --prefix=radar-v0 -b radar-gitlab` e `git push origin radar-gitlab`.
+2. **Na máquina da empresa**, no clone que tem o remoto `gitlab`:
+
+```powershell
+git fetch origin
+git checkout radar-gitlab
+git merge origin/radar-gitlab
+git push gitlab radar-gitlab:main
+```
+
+Antes do push, `git ls-tree --name-only HEAD` deve listar só os arquivos do Radar. Arquivos soltos na pasta, como tokens e planilhas, não entram, porque o push só leva o que está nos commits. Mesmo assim, não deixe segredos dentro da pasta do projeto.
 
 ## Observações
 
-- **Dados da AWS.** Resultados de teste, tickets, envios e conversas do ambiente da AWS não vão automaticamente para a Azure: a Azure começa com a massa piloto. Se precisar migrar, copie a pasta de dados da AWS para `/home/radar-dados` (pelo Kudu: `https://<app>.scm.azurewebsites.net`) com o app parado.
-- **Uma instância só.** O SQLite e os arquivos JSON supõem um único container. Não aumente o número de instâncias do plano.
+- **Plano gratuito (F1).** O app "dorme" depois de uns 20 minutos sem uso e demora para acordar no primeiro acesso. Não há Always On, então a coleta de sinais da madrugada não roda. Há uma cota diária de processador, e o disco tem 1 GB (os dados ocupam cerca de 40 MB).
+- **Dados.** A Azure começou com a massa piloto. Os dados do ambiente antigo da AWS não foram migrados.
 - **Regiões.** O web app está em West US 3 e o OpenAI em East US. Funciona, com alguns milissegundos a mais por chamada.
 - **Rodar localmente com a Azure OpenAI:** no `.env`, preencha `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_DEPLOYMENT` e `AZURE_OPENAI_API_KEY` (ver `.env.example`).

@@ -67,7 +67,7 @@ npm start      # abra http://localhost:3000
 
 | Situação | O que acontece |
 |---|---|
-| Sem `DEEPSEEK_API_KEY` no `.env` | Funciona em **Modo regras** (etiqueta no topo); respostas instantâneas. |
+| Sem `AZURE_OPENAI_*` nem `DEEPSEEK_API_KEY` no `.env` | Funciona em **Modo regras** (etiqueta no topo); respostas instantâneas. |
 | Com a chave | Respostas com IA (5 a 10 s por pergunta). |
 | Com `RADAR_LOGIN_USER` e `RADAR_LOGIN_PASS` | Pede login; o menu ⋮ ganha "Sair". |
 
@@ -164,7 +164,7 @@ flowchart LR
 
 - **continuando a conversa**: a pergunta foi interpretada com as anteriores.
 - **resposta direta da base**: a IA falhou nesta pergunta e a resposta veio das regras. Repita para ter a análise da IA.
-- **ⓘ**: quantos projetos foram avaliados, tempo, quem respondeu (DeepSeek ou regras) e "Entendi como: …" quando a pergunta foi reescrita.
+- **ⓘ**: quantos projetos foram avaliados, tempo, quem respondeu (Azure OpenAI ou regras) e "Entendi como: …" quando a pergunta foi reescrita.
 
 ### 5.4 Bons exemplos
 
