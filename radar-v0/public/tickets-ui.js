@@ -351,7 +351,7 @@ export async function montarTickets(root, { visao = 'lista' } = {}) {
         <div class="qa-field"><span>Imagens</span>
           <div class="qa-prev" id="tk-imgs">${imgs.map((i, n) => `<figure data-url="${esc(i.url)}"><img src="${esc(i.thumb || i.url)}" alt="Imagem ${n + 1}"><button type="button" class="icon-btn sm" data-tirar title="Remover do ticket">${icon('x', { size: 12 })}</button></figure>`).join('')}</div>
           ${podeAnexar ? `<label class="btn sm tk-anexar">${icon('upload', { size: 14 })}Anexar imagem<input type="file" accept="image/png,image/jpeg,image/webp" multiple hidden></label>
-          <span class="muted small">Até ${q.maxImagensTicket} por ticket; também dá para colar com Ctrl+V. As imagens vão para o ${esc(q.hospedagemImagens)} e ficam acessíveis a quem tiver o link: use só telas com dados fictícios.</span>`
+          <span class="muted small">Até ${q.maxImagensTicket} por ticket; também dá para colar com Ctrl+V. As imagens vão para o ${esc(q.hospedagemImagens)} e ficam acessíveis a quem tiver o link: use só telas com dados simulados.</span>`
           : '<span class="muted small">Anexo de imagens desligado neste ambiente (falta configurar a chave do ImgBB).</span>'}
         </div>
         ${campoNome()}

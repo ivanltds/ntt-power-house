@@ -172,7 +172,7 @@ export function slidesModel(content, secoes, { titulo, para }) {
       ...slideBody(s),
       rect(64, 496, 832, 1, COR.linha),
       box(64, 504, 500, 18, [{ runs: [run(para || p.cliente, { size: 10, color: COR.suave })] }]),
-      box(560, 504, 336, 18, [{ runs: [run('Radar · dados fictícios', { size: 10, color: COR.suave })], align: 'r' }]),
+      box(560, 504, 336, 18, [{ runs: [run('Radar · dados simulados', { size: 10, color: COR.suave })], align: 'r' }]),
     ]);
   });
   return slides;

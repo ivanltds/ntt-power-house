@@ -252,7 +252,7 @@ export function onePageSlide(c, { interno = false, incluirInvestimento = false, 
   const fontes = c.fontes.length ? `Fonte: ${c.fontes.map((f) => [f.titulo, f.tipo, f.confianca, f.versao, f.data].filter(Boolean).join(', ')).join(' · ')} · ficha ${p.id} no Radar` : `Fonte: ficha ${p.id} no Radar (sem documentos)`;
   els.push(rect(X, 500, W, 1, COR.linha),
     box(X, 506, W - 200, 26, [{ runs: [run(caber(fontes, 8, W - 200, 2), { size: 8, color: COR.suave })], lineHeight: 1.25 }]),
-    box(SLIDE.w - 48 - 190, 506, 190, 14, [{ runs: [run(rodape || 'Radar · dados fictícios', { size: 8, color: COR.suave })], align: 'r' }]));
+    box(SLIDE.w - 48 - 190, 506, 190, 14, [{ runs: [run(rodape || 'Radar · dados simulados', { size: 8, color: COR.suave })], align: 'r' }]));
   return els;
 }
 
