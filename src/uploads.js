@@ -112,7 +112,7 @@ export class UploadService {
 
     // 4. IA: extração semântica complementar, validada contra o texto.
     const ia = await step('Análise com IA', async () => {
-      if (this.engine.llm.provider !== 'deepseek') return { status: 'ignorada', detalhe: 'Dados extraídos pelas regras do Radar.' };
+      if ((this.engine.llm.provider ?? 'mock') === 'mock') return { status: 'ignorada', detalhe: 'Dados extraídos pelas regras do Radar.' };
       const ai = await this.engine.llm.extractMetadata({ texto: extracao.texto, filename: job.nome_arquivo });
       if (ai?.ia?.fallback) return { status: 'aviso', detalhe: ai.ia.erro, ia: ai.ia };
       s = mergeAI(s, ai, extracao.texto);

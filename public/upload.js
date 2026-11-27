@@ -1,6 +1,6 @@
 // Tela "Enviar": envio multiformato, fila de processamento com etapas ao vivo e revisão humana (UC02).
 
-import { $, $$, esc, brl, api, state, userId, currentUser, tipoLabel, onTab, onUserChange, openTab, toast, chipPicker, bindChipPickers, readChips, pode } from './common.js';
+import { $, $$, esc, brl, api, state, userId, currentUser, tipoLabel, onTab, onUserChange, openTab, toast, chipPicker, bindChipPickers, readChips, pode, nomeIA } from './common.js';
 import { icon } from './icons.js';
 import { ELISTS, elist, bindEntityLists, readEntityLists } from './entidades.js';
 import { ensureTerms, handleTermsError, maskNote, policyLine } from './aviso.js';
@@ -190,7 +190,7 @@ export function reviewForm(job, etapas, opts = {}) {
   const ent = (ic, label, list, fmt = (e) => esc(e.valor)) => (list?.length ? `<div class="ent"><h6>${icon(ic, { size: 14 })}${label}</h6><ul>${list.map((e) => `<li>${fmt(e)}</li>`).join('')}</ul></div>` : '');
   const nEnts = ELISTS.reduce((n, [k]) => n + (c.entidades[k]?.length ?? 0), 0);
   const autor = s.arquivo?.autor ?? c.entidades.pessoas?.find((p) => p.papel === 'autor do arquivo')?.valor ?? '';
-  const iaOn = s.ia?.provedor === 'deepseek' && !s.ia?.fallback;
+  const iaOn = Boolean(nomeIA(s.ia?.provedor)) && !s.ia?.fallback;
   const avisos = s.alertas.filter((a) => a.nivel !== 'info');
   // CR-046: envio feito de dentro de um projeto (ficha ou chat) já vem com o destino; a escolha só aparece em "Trocar".
   const alvo = job.projeto_alvo_id ? view.projetos.find((p) => p.id === job.projeto_alvo_id) : null;
@@ -218,7 +218,7 @@ export function reviewForm(job, etapas, opts = {}) {
     ${maskNote(s.mascaramento)}
     <form id="review" class="review">
       <div class="review-meta">
-        <span title="${iaOn ? 'Metadados por regras + IA (DeepSeek)' : 'Dados extraídos pelas regras do Radar'}">${icon(iaOn ? 'sparkles' : 'cpu', { size: 15 })}${iaOn ? 'Lido com IA' : 'Lido por regras'}</span>
+        <span title="${iaOn ? `Metadados por regras + IA (${nomeIA(s.ia.provedor)})` : 'Dados extraídos pelas regras do Radar'}">${icon(iaOn ? 'sparkles' : 'cpu', { size: 15 })}${iaOn ? 'Lido com IA' : 'Lido por regras'}</span>
         <span title="${c.qualidade.faltando.length ? `Falta: ${c.qualidade.faltando.join(', ')}` : 'Todos os campos preenchidos'}">${icon('checkCircle', { size: 15 })}${c.qualidade.percentual}% dos campos preenchidos</span>
         ${s.alertas.some((a) => a.nivel === 'info' && a.codigo !== 'mascaramento') ? `<span title="${esc(s.alertas.filter((a) => a.nivel === 'info' && a.codigo !== 'mascaramento').map((a) => a.mensagem).join('\n'))}">${icon('info', { size: 15 })}</span>` : ''}
       </div>

@@ -94,35 +94,58 @@ Recebe o relato de um testador e capturas de tela. Responda só com JSON:
 Regras: descreva só o que está visível; não invente causas técnicas; se a imagem não mostrar problema, diga isso.
 Não transcreva nomes de pessoas, e-mails, telefones, documentos ou senhas: escreva [dado pessoal].`;
 
+// Nome de cada provedor remoto nas mensagens e na tela.
+export const ROTULOS_IA = { deepseek: 'DeepSeek', azure: 'Azure OpenAI' };
+
+// Cliente de qualquer API no padrão OpenAI (DeepSeek ou Azure OpenAI): muda só o endereço, a autenticação
+// e, nos modelos de raciocínio, os parâmetros aceitos.
 export class DeepSeekLLM extends MockLLM {
-  constructor({ apiKey, model = 'deepseek-chat', baseUrl = 'https://api.deepseek.com', timeoutMs = 45000 } = {}) {
+  constructor({ apiKey, model = 'deepseek-chat', baseUrl = 'https://api.deepseek.com', timeoutMs = 45000, provider = 'deepseek', autenticar = null, raciocinio = false, esforco = 'low' } = {}) {
     super();
-    this.apiKey = apiKey;
     this.model = model;
     this.baseUrl = baseUrl.replace(/\/$/, '');
     this.timeoutMs = timeoutMs;
     this.name = model;
-    this.provider = 'deepseek';
+    this.provider = provider;
+    this.rotulo = ROTULOS_IA[provider] ?? provider;
+    this.autenticar = autenticar ?? (async () => ({ Authorization: `Bearer ${apiKey}` }));
+    this.raciocinio = raciocinio;
+    this.esforco = esforco;
+  }
+
+  // Modelos de raciocínio (famílias o e gpt-5) não aceitam temperature nem max_tokens, e o raciocínio
+  // consome tokens da resposta: pedem max_completion_tokens com folga.
+  corpo({ maxTokens, ...resto }) {
+    if (!this.raciocinio) return { model: this.model, temperature: 0.1, max_tokens: maxTokens, ...resto };
+    return { model: this.model, max_completion_tokens: maxTokens + 4000, ...(this.esforco ? { reasoning_effort: this.esforco } : {}), ...resto };
+  }
+
+  async completar(params, signal) {
+    for (let tentativa = 0; ; tentativa++) {
+      const res = await fetch(`${this.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(await this.autenticar()) },
+        body: JSON.stringify(this.corpo(params)),
+        signal,
+      });
+      if (res.ok) return res.json();
+      const erro = res.status === 400 && tentativa < 2 ? await res.text().catch(() => '') : '';
+      // Se o modelo recusar os parâmetros, ajusta e tenta de novo (descobre sozinho se é de raciocínio).
+      if (!this.raciocinio && /max_tokens|temperature/i.test(erro)) { this.raciocinio = true; continue; }
+      if (this.raciocinio && this.esforco && /reasoning_effort/i.test(erro)) { this.esforco = null; continue; }
+      throw new Error(`${this.rotulo} respondeu HTTP ${res.status}`);
+    }
   }
 
   async chat(system, user, maxTokens) {
-    const res = await fetch(`${this.baseUrl}/chat/completions`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.apiKey}` },
-      body: JSON.stringify({
-        model: this.model,
-        temperature: 0.1,
-        max_tokens: maxTokens,
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: system },
-          { role: 'user', content: user },
-        ],
-      }),
-      signal: AbortSignal.timeout(this.timeoutMs),
-    });
-    if (!res.ok) throw new Error(`DeepSeek respondeu HTTP ${res.status}`);
-    const data = await res.json();
+    const data = await this.completar({
+      maxTokens,
+      response_format: { type: 'json_object' },
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: user },
+      ],
+    }, AbortSignal.timeout(this.timeoutMs));
     return JSON.parse(data.choices?.[0]?.message?.content ?? '{}');
   }
 
@@ -133,7 +156,7 @@ export class DeepSeekLLM extends MockLLM {
 
   fallbackStatus(err) {
     const motivo = err.name === 'TimeoutError' ? 'tempo esgotado' : err.message;
-    return { provedor: 'mock', fallback: true, erro: `DeepSeek indisponível (${motivo}); usado o modo offline.` };
+    return { provedor: 'mock', fallback: true, erro: `${this.rotulo} indisponível (${motivo}); usado o modo offline.` };
   }
 
   async understand({ query, history = [], opportunity, anexos = [], pendentes = 0 }) {
@@ -172,7 +195,7 @@ export class DeepSeekLLM extends MockLLM {
         prazoMeses: Number.isFinite(out.prazoMeses) ? out.prazoMeses : null,
         termos: Array.isArray(out.termos) ? out.termos.filter((t) => typeof t === 'string').slice(0, 12) : [],
         referencia: Number.isInteger(out.referencia) ? out.referencia : null,
-        ia: { provedor: 'deepseek', fallback: false },
+        ia: { provedor: this.provider, fallback: false },
       };
     } catch (err) {
       return { ...(await super.understand({ query, history, anexos, pendentes })), ia: this.fallbackStatus(err) };
@@ -215,7 +238,7 @@ export class DeepSeekLLM extends MockLLM {
           evidencia: typeof a.evidencia === 'string' ? a.evidencia : null,
         };
       }
-      return { avaliacoes, resposta: typeof out.resposta === 'string' ? out.resposta : null, ia: { provedor: 'deepseek', fallback: false } };
+      return { avaliacoes, resposta: typeof out.resposta === 'string' ? out.resposta : null, ia: { provedor: this.provider, fallback: false } };
     } catch (err) {
       return { avaliacoes: {}, resposta: null, ia: this.fallbackStatus(err) };
     }
@@ -235,15 +258,9 @@ export class DeepSeekLLM extends MockLLM {
       const restante = deadlineMs - (Date.now() - t0);
       if (restante < 1500) break;
       const podeChamar = passos.length < maxCalls;
-      const res = await fetch(`${this.baseUrl}/chat/completions`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.apiKey}` },
-        body: JSON.stringify({ model: this.model, temperature: 0.1, max_tokens: 500, messages, ...(podeChamar ? { tools, tool_choice: 'auto' } : {}) }),
-        signal: AbortSignal.timeout(restante),
-      });
-      if (!res.ok) throw new Error(`DeepSeek respondeu HTTP ${res.status}`);
-      const msg = (await res.json()).choices?.[0]?.message ?? {};
-      if (!msg.tool_calls?.length) return { resposta: msg.content ?? '', passos, ia: { provedor: 'deepseek', fallback: false } };
+      const data = await this.completar({ maxTokens: 500, messages, ...(podeChamar ? { tools, tool_choice: 'auto' } : {}) }, AbortSignal.timeout(restante));
+      const msg = data.choices?.[0]?.message ?? {};
+      if (!msg.tool_calls?.length) return { resposta: msg.content ?? '', passos, ia: { provedor: this.provider, fallback: false } };
       messages.push({ role: 'assistant', content: msg.content ?? '', tool_calls: msg.tool_calls });
       // A API exige uma resposta para cada pedido de ferramenta, mesmo os que passam do limite.
       for (const call of msg.tool_calls) {
@@ -259,7 +276,7 @@ export class DeepSeekLLM extends MockLLM {
         messages.push({ role: 'tool', tool_call_id: call.id, content: JSON.stringify(saida) });
       }
     }
-    return { resposta: '', passos, ia: { provedor: 'deepseek', fallback: false }, incompleta: true };
+    return { resposta: '', passos, ia: { provedor: this.provider, fallback: false }, incompleta: true };
   }
 
   // UC02: metadados sugeridos para um documento enviado. O prompt fica em EXTRACT_PROMPT, abaixo da classe.
@@ -287,7 +304,7 @@ Examine as ${imagens.length} captura(s) de tela a seguir.` },
         segmento: VOCAB.segmentos.includes(out.segmento) ? out.segmento : null,
         tecnologias: pick(out.tecnologias, VOCAB.tecnologias),
         servicos: pick(out.servicos, VOCAB.servicos),
-        ia: { provedor: 'deepseek', fallback: false },
+        ia: { provedor: this.provider, fallback: false },
       };
     } catch (err) {
       return { ia: this.fallbackStatus(err) };
@@ -321,8 +338,36 @@ TECNOLOGIAS: ${JSON.stringify(VOCAB.tecnologias)}
 SERVICOS: ${JSON.stringify(VOCAB.servicos)}`;
 
 // Escolhe o provedor pelas variáveis de ambiente (ver .env.example).
+// Azure: chave no cabeçalho api-key ou, sem chave, a identidade gerenciada do App Service (token do Entra ID).
+export function autenticacaoAzure(env) {
+  if (env.AZURE_OPENAI_API_KEY) return async () => ({ 'api-key': env.AZURE_OPENAI_API_KEY });
+  let cache = null;
+  return async () => {
+    if (!cache || cache.expira - Date.now() < 5 * 60 * 1000) {
+      const q = new URLSearchParams({ resource: 'https://cognitiveservices.azure.com', 'api-version': '2019-08-01', ...(env.AZURE_CLIENT_ID ? { client_id: env.AZURE_CLIENT_ID } : {}) });
+      const res = await fetch(`${env.IDENTITY_ENDPOINT}?${q}`, { headers: { 'X-IDENTITY-HEADER': env.IDENTITY_HEADER }, signal: AbortSignal.timeout(10000) });
+      if (!res.ok) throw new Error(`identidade gerenciada respondeu HTTP ${res.status}`);
+      const t = await res.json();
+      cache = { token: t.access_token, expira: Number(t.expires_on) * 1000 };
+    }
+    return { Authorization: `Bearer ${cache.token}` };
+  };
+}
+
 export function createLLM(env = process.env) {
-  if ((env.LLM_PROVIDER ?? 'deepseek') === 'deepseek' && env.DEEPSEEK_API_KEY) {
+  const provedor = env.LLM_PROVIDER ?? (env.AZURE_OPENAI_ENDPOINT ? 'azure' : 'deepseek');
+  if (provedor === 'azure' && (env.AZURE_OPENAI_ENDPOINT || env.AZURE_OPENAI_BASE_URL) && env.AZURE_OPENAI_DEPLOYMENT && (env.AZURE_OPENAI_API_KEY || env.IDENTITY_ENDPOINT)) {
+    return new DeepSeekLLM({
+      provider: 'azure',
+      model: env.AZURE_OPENAI_DEPLOYMENT,
+      baseUrl: env.AZURE_OPENAI_BASE_URL || `${env.AZURE_OPENAI_ENDPOINT.replace(/\/$/, '')}/openai/v1`,
+      autenticar: autenticacaoAzure(env),
+      raciocinio: env.AZURE_OPENAI_REASONING === 'true',
+      esforco: env.AZURE_OPENAI_REASONING_EFFORT ?? 'low',
+      timeoutMs: Number(env.AZURE_OPENAI_TIMEOUT_MS ?? 45000),
+    });
+  }
+  if (provedor === 'deepseek' && env.DEEPSEEK_API_KEY) {
     return new DeepSeekLLM({
       apiKey: env.DEEPSEEK_API_KEY,
       model: env.DEEPSEEK_MODEL,
