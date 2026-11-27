@@ -53,7 +53,10 @@ export class Repo {
     fs.mkdirSync(path.dirname(file), { recursive: true });
     this.file = file;
     this.db = new DatabaseSync(file);
-    this.db.exec('PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;');
+    // WAL é o padrão. Em disco de rede (o /home do Azure App Service é um compartilhamento SMB) o WAL não funciona:
+    // lá se usa RADAR_SQLITE_JOURNAL=DELETE.
+    const journal = /^(WAL|DELETE|TRUNCATE)$/i.test(process.env.RADAR_SQLITE_JOURNAL ?? '') ? process.env.RADAR_SQLITE_JOURNAL.toUpperCase() : 'WAL';
+    this.db.exec(`PRAGMA journal_mode = ${journal}; PRAGMA synchronous = ${journal === 'WAL' ? 'NORMAL' : 'FULL'};`);
     this.db.exec(SCHEMA);
     this.migrate();
     this.stmts = new Map();

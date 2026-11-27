@@ -198,6 +198,45 @@ test('sem chave usa o mock; com chave usa DeepSeek', () => {
   assert.equal(createLLM({ DEEPSEEK_API_KEY: 'x', LLM_PROVIDER: 'mock' }).provider, 'mock');
 });
 
+test('Azure OpenAI: escolhida pelas variáveis, com chave ou identidade gerenciada', () => {
+  const az = { AZURE_OPENAI_ENDPOINT: 'https://x.openai.azure.com/', AZURE_OPENAI_DEPLOYMENT: 'luna' };
+  assert.equal(createLLM(az).provider, 'mock'); // sem chave e fora do App Service
+  const comChave = createLLM({ ...az, AZURE_OPENAI_API_KEY: 'k' });
+  assert.equal(comChave.provider, 'azure');
+  assert.equal(comChave.name, 'luna');
+  assert.equal(comChave.baseUrl, 'https://x.openai.azure.com/openai/v1');
+  assert.equal(createLLM({ ...az, IDENTITY_ENDPOINT: 'http://127.0.0.1:9/msi', IDENTITY_HEADER: 'h' }).provider, 'azure');
+  assert.equal(createLLM({ ...az, AZURE_OPENAI_API_KEY: 'k', DEEPSEEK_API_KEY: 'd', LLM_PROVIDER: 'deepseek' }).provider, 'deepseek');
+});
+
+test('Azure OpenAI: cabeçalho api-key e troca para parâmetros de raciocínio quando o modelo recusa', async () => {
+  const http = await import('node:http');
+  const pedidos = [];
+  const srv = http.createServer((req, res) => {
+    let corpo = '';
+    req.on('data', (c) => { corpo += c; });
+    req.on('end', () => {
+      const b = JSON.parse(corpo);
+      pedidos.push({ url: req.url, chave: req.headers['api-key'], b });
+      if ('max_tokens' in b) { res.writeHead(400, { 'Content-Type': 'application/json' }); return res.end(JSON.stringify({ error: { message: "Unsupported parameter: 'max_tokens'. Use 'max_completion_tokens' instead.", code: 'unsupported_parameter' } })); }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ choices: [{ message: { content: '{"ok":true}' } }] }));
+    });
+  });
+  await new Promise((r) => srv.listen(0, '127.0.0.1', r));
+  try {
+    const llm = createLLM({ AZURE_OPENAI_ENDPOINT: `http://127.0.0.1:${srv.address().port}`, AZURE_OPENAI_DEPLOYMENT: 'luna', AZURE_OPENAI_API_KEY: 'segredo' });
+    assert.deepEqual(await llm.grounded({ sistema: 's', payload: { a: 1 }, maxTokens: 100 }), { ok: true });
+    assert.equal(pedidos.length, 2);
+    assert.equal(pedidos[0].url, '/openai/v1/chat/completions');
+    assert.equal(pedidos[0].chave, 'segredo');
+    assert.equal(pedidos[1].b.model, 'luna');
+    assert.ok(!('temperature' in pedidos[1].b) && pedidos[1].b.max_completion_tokens > 100 && pedidos[1].b.reasoning_effort === 'low');
+    await llm.grounded({ sistema: 's', payload: {}, maxTokens: 50 });
+    assert.equal(pedidos.length, 3); // já sabe que é de raciocínio: não erra de novo
+  } finally { srv.close(); }
+});
+
 test('DeepSeek indisponível cai para o modo offline sem quebrar a busca', async () => {
   const offline = new RadarEngine({ storePath: STORE_PATH, repo: engine.repo, llm: new DeepSeekLLM({ apiKey: 'x', baseUrl: 'http://127.0.0.1:9', timeoutMs: 2000 }) });
   const r = await offline.search('churn em telecom com Kafka', { userId: 'u-consultor' });

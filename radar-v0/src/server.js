@@ -785,5 +785,5 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, process.env.HOST, () => {
   console.log(`Radar V0 em http://localhost:${PORT}`);
   console.log(`Login: ${auth.enabled ? 'ativo' : 'desligado (defina RADAR_LOGIN_USER e RADAR_LOGIN_PASS para exigir)'}`);
-  console.log(`IA: ${engine.llm.provider === 'deepseek' ? `DeepSeek (${engine.llm.name})` : 'mock offline (defina DEEPSEEK_API_KEY no .env para usar a DeepSeek)'}`);
+  console.log(`IA: ${engine.llm.provider !== 'mock' ? `${engine.llm.rotulo} (${engine.llm.name})` : 'mock offline (defina AZURE_OPENAI_* ou DEEPSEEK_API_KEY no .env para usar uma IA)'}`);
 });
