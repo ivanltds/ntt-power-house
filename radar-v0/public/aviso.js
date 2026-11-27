@@ -2,7 +2,7 @@
 // Tom de produto em piloto: boas práticas em linguagem positiva, sem alarme. A proteção real fica no servidor,
 // que mascara dados sensíveis antes de gravar ou de enviar texto ao provedor de IA (src/sensitive.js).
 
-import { $, esc, api, userId } from './common.js';
+import { $, esc, api, userId, state } from './common.js';
 import { icon } from './icons.js';
 
 const CHAVE = 'radar.termo';
@@ -18,7 +18,7 @@ const praticas = () => `<ul class="praticas">${BOAS_PRATICAS.map(([i, t]) => `<l
 // Único lugar com os detalhes técnicos: provedor, mascaramento e onde os dados ficam.
 const politica = () => `<ul class="politica">
   <li><b>Mascaramento automático.</b> Antes de gravar ou de processar com IA, o Radar troca CPF, RG, e-mail, telefone, número de cartão, senhas e chaves por marcadores como <code>[e-mail removido]</code>. Esses dados não ficam nos metadados, na busca nem nas conversas.</li>
-  <li><b>Provedor de IA.</b> Nesta fase piloto, a interpretação das perguntas e a sugestão de metadados usam um provedor de IA fora do ambiente NTT (DeepSeek). Ele recebe só o texto já mascarado.</li>
+  <li><b>Provedor de IA.</b> ${state.ctx?.base?.llmProvedor === 'azure' ? 'Neste ambiente, a interpretação das perguntas e a sugestão de metadados usam o Azure OpenAI na assinatura Azure da NTT.' : 'Nesta fase piloto, a interpretação das perguntas e a sugestão de metadados usam um provedor de IA fora do ambiente NTT (DeepSeek).'} Ele recebe só o texto já mascarado.</li>
   <li><b>Onde ficam os dados.</b> Banco, índice de busca e arquivos ficam no servidor do piloto, com acesso por login.</li>
   <li><b>Arquivos originais.</b> Arquivos de texto são entregues mascarados no download. PDF, Word, PowerPoint e Excel ficam guardados como foram enviados.</li>
   <li><b>Permissões.</b> Valores e conteúdo confidencial aparecem só para os perfis autorizados.</li>

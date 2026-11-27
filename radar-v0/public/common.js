@@ -156,3 +156,6 @@ export const readChips = (root, name) => $$(`[data-picker="${name}"] input[type=
 // CR-026 (D18): ícone por segmento (torre), para dar identidade visual aos cards sem banco de imagens.
 const ICONE_SEGMENTO = { 'Utilities / Energia': 'zap', Varejo: 'cart', 'Serviços Financeiros': 'bank', Seguros: 'shield', 'Saúde': 'heart', Telecom: 'antenna', 'Agronegócio': 'leaf', 'Setor Público': 'landmark', 'Logística': 'truck', Manufatura: 'factory' };
 export const iconeSegmento = (seg) => ICONE_SEGMENTO[seg] ?? 'building';
+
+// Nome do provedor de IA remoto (DeepSeek na AWS, Azure OpenAI na Azure); null quando é o modo regras.
+export const nomeIA = (provedor) => ({ deepseek: 'DeepSeek', azure: 'Azure OpenAI' })[provedor] ?? null;

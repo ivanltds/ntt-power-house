@@ -81,7 +81,7 @@ export async function resumirAnexos({ anexos, llm, user, pendentes = 0, podeCria
     resposta,
     dados: { acao: 'resumir', anexo: { id: alvo.id, nome: alvo.nome, formato: alvo.formato, truncado: alvo.truncado }, resumo, acoes, outros: anexos.length - 1 },
     semEvidencia: false,
-    ia: ia ? { provedor: 'deepseek', fallback: false } : null,
+    ia: ia ? { provedor: llm.provider, fallback: false } : null,
     usuario: user?.id,
   };
 }

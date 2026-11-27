@@ -10,6 +10,7 @@ Protótipo local para validar a hipótese do discovery (NB-01 de `radar-proposta
 > - [Como usar o Radar](docs/COMO-USAR-O-RADAR.md): passo a passo de cada tela, com desenhos de tela e fluxos.
 > - [Como funciona o Radar](docs/COMO-FUNCIONA-O-RADAR.md): arquitetura, busca, percentual de semelhança, envio, permissões e segurança, com diagramas.
 > - [Documentação do projeto](docs/DOCUMENTACAO-DO-PROJETO.md): missão, proposta, MVP, como é implementado e roadmap (Impact AI).
+> - [Deploy na Azure](docs/DEPLOY-AZURE.md): container, App Service, Azure OpenAI e como publicar novas versões.
 >
 > O conteúdo dos dois primeiros também está no app (menu ⋮ → Como usar o Radar / Como o Radar funciona), e o chat responde dúvidas de uso com base nele.
 

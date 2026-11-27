@@ -1,4 +1,4 @@
-import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode, iconeSegmento } from './common.js';
+import { $, $$, esc, md, pct, brl, api, state, userId, currentUser, tipoLabel, openTab, openDoc, onTab, notifyUserChange, trustBadge, matchLabel, copyText, toast, pode, iconeSegmento, nomeIA } from './common.js';
 import { enviarParaProjeto, toBase64 } from './upload.js';
 import { cartoesDeEnvio, abrirRevisao } from './revisao.js';
 import { icon, hydrateIcons } from './icons.js';
@@ -56,7 +56,7 @@ async function init() {
   setupFocus();
   setupTheme();
   // A IA só aparece no topo quando está fora do ar: ligada é o normal.
-  const ia = state.ctx.base.llmProvedor === 'deepseek';
+  const ia = Boolean(nomeIA(state.ctx.base.llmProvedor));
   if (!ia) {
     $('#ia-badge').innerHTML = `${icon('cpu', { size: 14 })}Modo regras`;
     $('#ia-badge').title = 'Neste ambiente, as respostas usam as regras e a busca por palavras do Radar.';
@@ -385,7 +385,7 @@ function renderText(r) {
 function renderAnswer(r) {
   const e = r.entendimento ?? {};
   const reescrita = e.consulta && e.consulta.trim().toLowerCase() !== r.query.trim().toLowerCase();
-  const info = `${r.candidatosAvaliados ? `${r.candidatosAvaliados} projetos avaliados · ` : ''}${r.tempoMs} ms · IA: ${r.ia?.fallback ? 'regras do Radar' : r.ia?.provedor === 'deepseek' ? 'DeepSeek' : 'regras'}${reescrita ? `\nEntendi como: ${e.consulta}` : ''}`;
+  const info = `${r.candidatosAvaliados ? `${r.candidatosAvaliados} projetos avaliados · ` : ''}${r.tempoMs} ms · IA: ${r.ia?.fallback ? 'regras do Radar' : nomeIA(r.ia?.provedor) ?? 'regras'}${reescrita ? `\nEntendi como: ${e.consulta}` : ''}`;
   const opp = state.foco;
   const tipado = renderTyped(r);
   return `

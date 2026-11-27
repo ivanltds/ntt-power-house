@@ -95,7 +95,7 @@ export async function responderConversaIA(tipo, { user, capacidades, query = '',
     const emoji = /\p{Extended_Pictographic}/u;
     let texto = typeof out?.resposta === 'string' ? out.resposta.trim() : '';
     if (!emoji.test(query)) texto = texto.replace(/\s*\p{Extended_Pictographic}️?/gu, '').trim();
-    if (texto && texto.split(/\s+/).length <= 70) return { ...base, resposta: texto, ia: { provedor: 'deepseek', fallback: false } };
+    if (texto && texto.split(/\s+/).length <= 70) return { ...base, resposta: texto, ia: { provedor: llm.provider, fallback: false } };
   } catch { /* sem IA: fica o modelo de texto */ }
   return { ...base, ia: null };
 }
