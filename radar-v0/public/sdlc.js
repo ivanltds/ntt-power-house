@@ -43,7 +43,7 @@ const ETAPAS = [
 
 // Incrementos da POC: cada um passou pelo ciclo especificar → construir → testar → publicar → feedback.
 const INCREMENTOS = [
-  ['1', 'Base da busca', 'Busca semântica em Node puro, base vetorial local e dados fictícios de projetos.', 'NB-02 (UC03)', '—'],
+  ['1', 'Base da busca', 'Busca semântica em Node puro, base vetorial local e dados simulados de projetos.', 'NB-02 (UC03)', '—'],
   ['2', 'IA e memória', 'Análise semântica com IA generativa (DeepSeek na POC, hoje Azure OpenAI), memória de conversa, conversas salvas e favoritas.', 'Adendo 2 (UC03.16, UC05, UC06)', 'DEC-0007'],
   ['3', 'Base real', 'Envio multiformato com extração de metadados, revisão humana, cadastro de projetos, filtros, insights e MER.', 'Adendo 3 (UC02, UC07–UC09) + MER', 'DEC-0008'],
   ['4', 'Experiência e publicação', 'Interface enxuta, celular, login, publicação na AWS, detalhe do projeto, download, edição de documentos, foco por projeto, tema claro/escuro.', 'UC02.15, UC07.4, ajustes de UX', '—'],

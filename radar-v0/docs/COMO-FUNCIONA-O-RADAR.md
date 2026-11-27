@@ -3,7 +3,7 @@
 > **Versão descrita:** V0.0.2 (`package.json` 0.0.2) · **Revisado contra o código em:** 16/11/2026
 > **Público:** banca avaliadora, arquitetura, liderança técnica e quem precisa entender o que acontece por trás da tela.
 > **Documento irmão:** [Como usar o Radar](./COMO-USAR-O-RADAR.md) (passo a passo de cada tela).
-> **Tudo é fictício:** clientes, pessoas, valores e resultados da base piloto foram inventados.
+> **Dados simulados:** clientes, pessoas, valores e resultados da base piloto foram simulados, sem dado real de cliente.
 
 Este documento explica **o que o Radar faz, com que peças, em que ordem e com que regras**. Cada número citado (pesos, limites, tamanhos) vem do código e traz o arquivo de origem para conferência. A mesma explicação, resumida, está no app em **menu ⋮ → Como o Radar funciona**.
 
@@ -104,7 +104,7 @@ Em uma frase: **o navegador conversa com um único servidor Node; o servidor dec
 
 - **Somente Node.js na VM**, sem banco externo, sem Docker → tudo roda em **um processo Node ≥ 22.13** com **zero dependências npm** (`package.json` não tem `dependencies`). O banco é o SQLite embutido no Node (`node:sqlite`).
 - **Servidor pequeno** (limite de 220 MB de RAM no ambiente publicado) → base vetorial em arquivo JSON e embeddings calculados localmente.
-- **IA externa só com dados fictícios** (DEC-0007, DEC-0008, risco R10) → a IA é **opcional**; sem chave, tudo funciona por regras.
+- **IA externa só com dados simulados** (DEC-0007, DEC-0008, risco R10) → a IA é **opcional**; sem chave, tudo funciona por regras.
 
 ### 3.2 Camadas
 

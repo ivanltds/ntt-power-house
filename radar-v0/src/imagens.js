@@ -1,6 +1,6 @@
 // Hospedagem das imagens dos tickets num serviço externo gratuito (ImgBB, https://api.imgbb.com).
 // O servidor do Radar não guarda imagem nenhuma: envia a captura ao ImgBB e o ticket fica só com os links.
-// As imagens ficam acessíveis a quem tiver o link: use apenas capturas com dados fictícios.
+// As imagens ficam acessíveis a quem tiver o link: use apenas capturas com dados simulados.
 // Sem IMGBB_API_KEY a hospedagem fica desligada e as imagens só servem para a IA descrever o problema.
 
 const ENDPOINT = 'https://api.imgbb.com/1/upload';

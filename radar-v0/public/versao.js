@@ -45,5 +45,5 @@ export function showFeedback() {
 }
 
 export function showReleaseNotes(v = NOTAS[0].versao) {
-  render(`Versão ${VERSAO}`, 'Notas da versão, feedbacks e testes regressivos · protótipo com dados fictícios', [...NOTAS.map(secao), ...SECOES_QUALIDADE, COMO], v);
+  render(`Versão ${VERSAO}`, 'Notas da versão, feedbacks e testes regressivos · protótipo com dados simulados', [...NOTAS.map(secao), ...SECOES_QUALIDADE, COMO], v);
 }

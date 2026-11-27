@@ -1,6 +1,6 @@
 // Caminhos do Radar. RADAR_DATA_DIR permite apontar os dados gravados (banco, índice vetorial,
 // uploads, conversas, auditoria) para outra pasta, como nos testes.
-// A massa piloto (corpus fictício, usuários e oportunidades) fica sempre em data/.
+// A massa piloto (corpus simulado, usuários e oportunidades) fica sempre em data/.
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

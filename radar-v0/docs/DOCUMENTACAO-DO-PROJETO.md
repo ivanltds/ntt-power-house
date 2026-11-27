@@ -45,7 +45,7 @@ Na NTT DATA, o conhecimento produzido em propostas e projetos está espalhado em
 
 O **Impact AI** propõe uma plataforma que conecta esse acervo: propostas, cases, execuções reais, pessoas, mercado e parceiros. A IA generativa responde perguntas em linguagem natural **sempre com a fonte**, dentro de uma fronteira de conhecimento confiável e respeitando a confidencialidade de cada documento.
 
-O **Radar de Propostas & Cases** é o MVP (Onda 0). Ele valida a hipótese central com uma base piloto fictícia: **11 projetos e 51 documentos** de 11 clientes inventados. O que ele já faz:
+O **Radar de Propostas & Cases** é o MVP (Onda 0). Ele valida a hipótese central com uma base piloto simulada: **11 projetos e 51 documentos** de 11 clientes simulados. O que ele já faz:
 
 - Responde "já fizemos algo assim?" com até 5 projetos parecidos. Cada um vem com percentual de semelhança explicado, trechos literais e documento de origem.
 - Lista, conta, compara e mostra a ficha de projetos, sempre a partir do banco, nunca do texto livre da IA.
@@ -91,7 +91,7 @@ Ser a **memória comercial e técnica da NTT DATA**: um único lugar onde propos
 | O2 | Aumentar o reaproveitamento do conhecimento já produzido | Indicador "Reaproveitamentos" (Abrir projeto, Copiar escopo, Usar como base) |
 | O3 | Explicar por que uma referência é relevante, com fonte rastreável | Percentual de semelhança dividido por critério, trecho literal e documento de origem em cada cartão |
 | O4 | Sugerir áreas e serviços complementares de escopo, como possibilidade e nunca como decisão | "Também costumam entrar" nas respostas e visão Pré-venda dos Insights |
-| O5 | Validar a hipótese barato, antes de investir em integrações completas | Base piloto fictícia, zero dependências, custo incremental baixo (NB-03) |
+| O5 | Validar a hipótese barato, antes de investir em integrações completas | Base piloto simulada, zero dependências, custo incremental baixo (NB-03) |
 | O6 | Diminuir a dependência de poucas pessoas que concentram a memória histórica | Responsável e documentos de cada projeto acessíveis pelo chat e pela ficha |
 
 ### 2.4 Hipótese
@@ -274,7 +274,7 @@ flowchart TB
 
 | Camada | Responsabilidade | Onde está no MVP |
 |---|---|---|
-| 1 · Fontes | Origem do conhecimento | Base piloto fictícia (`data/corpus/`, 11 projetos, 51 documentos) e documentos enviados pela tela |
+| 1 · Fontes | Origem do conhecimento | Base piloto simulada (`data/corpus/`, 11 projetos, 51 documentos) e documentos enviados pela tela |
 | 2 · Conectores e ingestão | Trazer o conteúdo com integridade | Upload manual de 12 tipos de arquivo, até 15 MB; hash SHA-256 e detecção de quase-duplicata |
 | 3 · Processamento | Extrair, enriquecer, proteger e revisar | Pipeline de 7 etapas, IA com trava anti-invenção, mascaramento, revisão humana obrigatória |
 | 4 · Base confiável | Guardar e indexar só o que foi aprovado | SQLite com FTS5/BM25, base vetorial local, histórico de alterações |
@@ -294,7 +294,7 @@ A plataforma-alvo classifica cada ativo em cinco dimensões. O MVP implementa as
 | Dimensão | Valores na plataforma-alvo | No MVP Radar |
 |---|---|---|
 | **1. Confidencialidade** | Público, Interno, Restrito, Confidencial | **Implementada com 3 níveis:** `publica`, `interna` e `confidencial`, por projeto e por documento. Consultor vê `interna`; gestor vê `interna` e `confidencial`. Nenhum perfil do piloto vê `publica`, reservada para conteúdo externo futuro. O nível *Restrito* entra junto com o SSO e os grupos corporativos. |
-| **2. Permissão de uso pela IA** | Permitido, Não permitido | **Regra geral, não campo por documento:** no piloto só há dados fictícios, então todo conteúdo aprovado pode ir à IA (DEC-0007, risco R10). Dados pessoais são mascarados antes do envio. O campo por documento entra antes de ingerir conteúdo real. |
+| **2. Permissão de uso pela IA** | Permitido, Não permitido | **Regra geral, não campo por documento:** no piloto só há dados simulados, então todo conteúdo aprovado pode ir à IA (DEC-0007, risco R10). Dados pessoais são mascarados antes do envio. O campo por documento entra antes de ingerir conteúdo real. |
 | **3. Escopo de reutilização** | Mesmo cliente, mesma BU, NTT DATA Brasil, Global | **Parcial:** o documento tem a marca `reutilizavel`. Os quatro níveis entram com o portfólio multi-BU. |
 | **4. Capability** | Data & AI, Cloud, Digital Experience, Application Services, Outros | **Parcial:** o projeto tem área, serviços e tecnologias com taxonomia controlada (segmento e tecnologia novos só pelo gestor). A taxonomia oficial de capabilities entra com o Maná. |
 | **5. Força da evidência** | Proposta, Proposta ganha, Projeto executado, Projeto + resultados | **Implementada como nível de confiança de 1 a 5** por documento (`src/corpus.js`), usado para resolver conflito entre fontes e exibido como rótulo em cada fonte. |
@@ -342,7 +342,7 @@ Provar, com uma base pequena e controlada, que **busca semântica + chat com fon
 
 **Dentro do MVP**
 
-- Base piloto curada e fictícia (sem dado real de cliente).
+- Base piloto curada e simulada (sem dado real de cliente).
 - Cadastro e edição de projetos (cadastro de projeto e de cliente novo só pelo gestor).
 - Envio de documentos com extração, metadados sugeridos pela IA e **revisão humana obrigatória**.
 - Busca conversacional com 3 a 5 resultados, percentual de semelhança explicado, trechos e fontes.
@@ -434,10 +434,10 @@ O cálculo completo do percentual de semelhança (pesos 40/15/15/15/10/5, nota d
 
 | Item | Valor |
 |---|---|
-| Projetos | 11 (P001 a P011), de 11 clientes fictícios em segmentos como utilities, saneamento, varejo, e-commerce, cooperativa de crédito, seguros, saúde, telecom, agro e logística |
+| Projetos | 11 (P001 a P011), de 11 clientes simulados em segmentos como utilities, saneamento, varejo, e-commerce, cooperativa de crédito, seguros, saúde, telecom, agro e logística |
 | Documentos | 51: propostas comerciais, apresentações, estimativas, cases de sucesso, transcrições de kickoff e outros |
 | Amostras para testar o envio | 8 arquivos em `amostras/` (DOCX, PPTX, XLSX, PDF, VTT, EML, HTML, CSV) |
-| Origem dos dados | **Tudo fictício.** Clientes, pessoas, valores e resultados foram inventados, para poder usar a IA externa sem risco (R10). |
+| Origem dos dados | **Dados simulados.** Clientes, pessoas, valores e resultados foram simulados, para poder usar a IA externa sem risco (R10). |
 | Perfis de demonstração | Consultor e gestor, com pessoas de demonstração responsáveis por alguns projetos (D19). |
 
 ### 7.6 Evidências de qualidade
@@ -726,7 +726,7 @@ A posição de cada item nas ondas é uma **proposta** deste documento, para val
 | R6 | Score mal calibrado | Médio | Pesos do RF19 como ponto de partida; calibração com 👍/👎 e motivos | Em andamento |
 | R7 | PDF escaneado e áudio sem texto | Médio | Fora do MVP; OCR e transcrição no roadmap | Aceito |
 | R8 | Baixa adoção ou desconfiança do score | Alto | Score explicado por critério; usuários-chave nos testes; ajuda dentro do chat | Mitigado |
-| R10 | Conteúdo real enviado à IA (na POC, DeepSeek fora do Brasil; hoje, Azure OpenAI da assinatura NTT) conflitar com a política de segurança e a LGPD | Alto | Só dados fictícios no piloto; mascaramento automático; aprovação de segurança antes de conteúdo real | **Aberto: bloqueia a Onda 1** |
+| R10 | Conteúdo real enviado à IA (na POC, DeepSeek fora do Brasil; hoje, Azure OpenAI da assinatura NTT) conflitar com a política de segurança e a LGPD | Alto | Só dados simulados no piloto; mascaramento automático; aprovação de segurança antes de conteúdo real | **Aberto: bloqueia a Onda 1** |
 | R11 | Node da VM abaixo de 22.13 | Médio | Conferir antes; alternativa: SQLite em WebAssembly | Mitigado |
 | R12 | Acesso ao Maná e aos SharePoints não liberado | Alto | Começar por uma BU e um conjunto de projetos; manter o upload manual como caminho garantido | Aberto (roadmap) |
 | R13 | Link do SharePoint ausente ou desatualizado no Maná | Médio | Campo obrigatório no Maná; pendência na visão Curadoria | Aberto (roadmap) |
@@ -763,7 +763,7 @@ Esta tabela evita confundir o destino da plataforma com o que o MVP faz hoje.
 | Tema | Visão (Impact AI) | Realidade do MVP (Radar V0.0.2) |
 |---|---|---|
 | Prazo do MVP | Prova de valor curta (3 a 4 semanas no plano executivo) | Meta de 4 a 6 semanas (NB-01). Discovery aprovado em 29/10/2026, congelamento em 20/11, pitch em 03/12/2026 |
-| Tamanho da base piloto | Amostra de 3 a 5 propostas e cases | **11 projetos e 51 documentos fictícios** (mais 8 amostras para testar o envio) |
+| Tamanho da base piloto | Amostra de 3 a 5 propostas e cases | **11 projetos e 51 documentos simulados** (mais 8 amostras para testar o envio) |
 | Fontes | Maná, SharePoint, ERPs/CRMs, mercado, parceiros | Base piloto e upload manual. Integrações no roadmap |
 | Formatos | PDF, DOCX, PPTX, XLSX, áudio e vídeo | DOCX, PPTX, XLSX, PDF com texto, VTT/SRT, EML, HTML, CSV, JSON, MD, TXT. **Sem OCR e sem áudio/vídeo** |
 | Índice | Vector DB + BM25 | Base vetorial local (embeddings `hashing-tfidf`, 1024 dimensões) + FTS5/BM25 |

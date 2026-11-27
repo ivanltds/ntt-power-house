@@ -479,7 +479,7 @@ function render() {
     <h3 class="pn-sec">Os números por trás</h3>
     <div class="pn-grid">${corpo}</div>
     ${transversal(d.uso)}
-    <p class="muted small pn-rodape">${icon('info', { size: 13 })} Dados fictícios do piloto. Os anos são fiscais (abril a março: FY26 = abr/2026 a mar/2027). Barras hachuradas e o aviso "poucos dados" marcam contas com menos de ${d.amostraMinima} itens. "IA · confira antes de usar": extraído automaticamente, sem revisão humana.</p>`;
+    <p class="muted small pn-rodape">${icon('info', { size: 13 })} Dados simulados do piloto. Os anos são fiscais (abril a março: FY26 = abr/2026 a mar/2027). Barras hachuradas e o aviso "poucos dados" marcam contas com menos de ${d.amostraMinima} itens. "IA · confira antes de usar": extraído automaticamente, sem revisão humana.</p>`;
   bind();
   if (view.lente === 'negocio') carregarSinais();
 }
@@ -535,7 +535,7 @@ function bind() {
   if ($('#pn-copiar', root)) $('#pn-copiar', root).onclick = async () => {
     const [, nome] = LENTES.find(([k]) => k === view.lente);
     const f = Object.entries(view.filtros).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join(', ');
-    const txt = [`Radar · Insights ${nome} · ${dateBR(view.dados.geradoEm)}${f ? ` (${f})` : ''}`, ...view.dados.manchetes[view.lente].map((m) => `• ${m.texto}`), '(protótipo com dados fictícios)'].join('\n');
+    const txt = [`Radar · Insights ${nome} · ${dateBR(view.dados.geradoEm)}${f ? ` (${f})` : ''}`, ...view.dados.manchetes[view.lente].map((m) => `• ${m.texto}`), '(protótipo com dados simulados)'].join('\n');
     await copyText(txt);
     toast('Resumo copiado.');
   };

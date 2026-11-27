@@ -114,7 +114,7 @@ const FEEDBACK = ['feedback', 'message', 'Enviar feedback', () => carregando(), 
       <label class="qa-field"><span>O que aconteceu</span><textarea id="qa-fb-texto" rows="5" maxlength="4000" placeholder="Ex.: Perguntei &quot;quais os resultados neles?&quot; e a resposta trouxe projetos que não estavam na conversa."></textarea></label>
       <div class="qa-imgs">
         <label class="btn sm">${icon('upload', { size: 14 })}Anexar imagem<input id="qa-fb-img" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden></label>
-        <span class="muted small">Até ${q.maxImagens} capturas de tela. Você também pode colar com Ctrl+V. ${q.analiseImagens ? 'A IA examina e descreve o problema.' : 'A IA está desligada neste ambiente: as imagens não serão analisadas.'} ${q.hospedagemImagens ? `A imagem fica anexada ao ticket (guardada no ${esc(q.hospedagemImagens)}, acessível a quem tiver o link): use só telas com dados fictícios.` : 'A imagem <b>não é guardada</b>, só o texto.'}</span>
+        <span class="muted small">Até ${q.maxImagens} capturas de tela. Você também pode colar com Ctrl+V. ${q.analiseImagens ? 'A IA examina e descreve o problema.' : 'A IA está desligada neste ambiente: as imagens não serão analisadas.'} ${q.hospedagemImagens ? `A imagem fica anexada ao ticket (guardada no ${esc(q.hospedagemImagens)}, acessível a quem tiver o link): use só telas com dados simulados.` : 'A imagem <b>não é guardada</b>, só o texto.'}</span>
         <div id="qa-fb-prev" class="qa-prev"></div>
       </div>
       <div class="qa-acoes"><button type="submit" class="btn primary" id="qa-fb-enviar">${icon('send', { size: 15 })}Enviar feedback</button></div>
@@ -211,7 +211,7 @@ function cenarioHtml(c, q) {
         <label class="qa-field"><span>O que aconteceu de diferente <em class="muted">(obrigatório se Falhou ou Bloqueado)</em></span><textarea name="c" rows="2" maxlength="2000"></textarea></label>
         ${q.hospedagemImagens ? `<div class="qa-imgs qa-evid" hidden>
           <label class="btn sm">${icon('upload', { size: 14 })}Anexar evidência<input type="file" accept="image/png,image/jpeg,image/webp" multiple hidden></label>
-          <span class="muted small">Até ${q.maxImagens} capturas de tela; também dá para colar com Ctrl+V. Ficam anexadas ao ticket (guardadas no ${esc(q.hospedagemImagens)}, acessíveis a quem tiver o link): use só telas com dados fictícios.</span>
+          <span class="muted small">Até ${q.maxImagens} capturas de tela; também dá para colar com Ctrl+V. Ficam anexadas ao ticket (guardadas no ${esc(q.hospedagemImagens)}, acessíveis a quem tiver o link): use só telas com dados simulados.</span>
           <div class="qa-prev"></div>
         </div>` : ''}
         <div class="qa-acoes"><button type="submit" class="btn sm primary">${icon('check', { size: 14 })}Salvar resultado</button></div>

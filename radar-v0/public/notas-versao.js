@@ -14,6 +14,12 @@ export const NOTAS = [
         depois: 'O Radar roda em container no Azure App Service da NTT, com login e HTTPS. A IA passou a ser o Azure OpenAI (implantação gpt-6-luna) da assinatura NTT. Banco, envios e conversas ficam num disco que não se perde quando o app reinicia ou ganha versão nova. O código fica no GitLab da empresa.',
       },
       {
+        tipo: 'melhoria', status: 'feito', area: 'Geral',
+        titulo: 'Base de demonstração chamada de dados simulados',
+        antes: 'O app chamava a base de demonstração de "dados fictícios", o que passava a impressão de algo inventado.',
+        depois: 'Telas, exportações, ajuda e documentação passam a dizer "dados simulados": uma base criada para o piloto, sem dado real de cliente.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
         titulo: 'V0.0.2 arquivada e roteiro da V0.0.3 aberto',
         antes: 'O roteiro e os resultados eram da V0.0.2.',
@@ -51,9 +57,9 @@ export const NOTAS = [
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Geral',
-        titulo: 'Base de testes com 500 projetos fictícios',
-        antes: 'A base tinha 11 projetos fictícios (um por setor) e 5 cadastrados à mão: cada busca tinha 1 ou 2 candidatos e os Insights trabalhavam com 1 a 3 projetos por segmento.',
-        depois: 'Entraram 500 projetos fictícios (P101 a P600) e 2.204 documentos, de abr/2024 a nov/2026, em 10 setores e 25 temas que se repetem entre setores, com 66 clientes, 35 responsáveis e taxa de ganho de ~53%. Toda proposta tem documento financeiro; as perdidas têm ata com o motivo e, às vezes, o e-mail do cliente. Os projetos cadastrados pelos usuários foram mantidos. Um gabarito de 60 perguntas mede a qualidade das respostas a cada versão.',
+        titulo: 'Base de testes com 500 projetos simulados',
+        antes: 'A base tinha 11 projetos simulados (um por setor) e 5 cadastrados à mão: cada busca tinha 1 ou 2 candidatos e os Insights trabalhavam com 1 a 3 projetos por segmento.',
+        depois: 'Entraram 500 projetos simulados (P101 a P600) e 2.204 documentos, de abr/2024 a nov/2026, em 10 setores e 25 temas que se repetem entre setores, com 66 clientes, 35 responsáveis e taxa de ganho de ~53%. Toda proposta tem documento financeiro; as perdidas têm ata com o motivo e, às vezes, o e-mail do cliente. Os projetos cadastrados pelos usuários foram mantidos. Um gabarito de 60 perguntas mede a qualidade das respostas a cada versão.',
       },
       {
         tipo: 'melhoria', status: 'feito', area: 'Chat', tickets: ['CR-080'],
