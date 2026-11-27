@@ -59,7 +59,7 @@ cd ntt-power-house/radar-v0
 - Quando o código estiver na `main`, o `--branch ...` deixa de ser necessário.
 - Se já tiver o repositório: `git fetch`, `git checkout sdlc/negocio/nb-03/radar-propostas-cases`, `git pull` e entre em `radar-v0`.
 
-### Passo 3 (opcional). Ligar a IA DeepSeek
+### Passo 3 (opcional). Ligar a IA (Azure OpenAI ou DeepSeek)
 
 Sem este passo o Radar funciona em **modo offline**: respostas por regras e busca local, e o topo da tela mostra a etiqueta "Modo regras". Para usar a IA:
 
@@ -67,14 +67,22 @@ Sem este passo o Radar funciona em **modo offline**: respostas por regras e busc
 cp .env.example .env          # Windows PowerShell: Copy-Item .env.example .env
 ```
 
-Abra o `.env` e preencha `DEEPSEEK_API_KEY=` com a chave que a pessoa fornecer. O resto pode ficar como está. Use só dados fictícios com a IA externa (regra do projeto: DEC-0007 e DEC-0008).
+Abra o `.env` e preencha **uma** das opções:
+
+- **Azure OpenAI** (a IA do ambiente publicado): `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_DEPLOYMENT` (`gpt-6-luna`) e `AZURE_OPENAI_API_KEY`.
+- **DeepSeek** (alternativa para rodar localmente): `DEEPSEEK_API_KEY`. Com ela, use só dados fictícios, porque é um provedor fora do ambiente NTT (DEC-0007, DEC-0008, R10).
+
+O resto pode ficar como está.
 
 Variáveis aceitas, todas opcionais (no `.env` ou na linha de comando):
 
 | Variável | Para que serve | Padrão |
 |---|---|---|
-| `DEEPSEEK_API_KEY` | Liga a IA. Vazio = modo offline | vazio |
-| `LLM_PROVIDER` | `deepseek` ou `mock` (força o modo offline) | `deepseek` |
+| `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_DEPLOYMENT`, `AZURE_OPENAI_API_KEY` | Ligam a IA no Azure OpenAI. Sem chave, no App Service, usa a identidade gerenciada | vazio |
+| `AZURE_OPENAI_REASONING`, `AZURE_OPENAI_REASONING_EFFORT`, `AZURE_OPENAI_TIMEOUT_MS` | Parâmetros de modelo de raciocínio (detectados sozinhos) e tempo máximo | ver `.env.example` |
+| `DEEPSEEK_API_KEY` | Liga a IA na DeepSeek. Vazio = modo offline | vazio |
+| `LLM_PROVIDER` | `azure`, `deepseek` ou `mock` (força o modo offline) | `azure` se houver `AZURE_OPENAI_ENDPOINT`; senão `deepseek` |
+| `RADAR_DATA_DIR`, `RADAR_SQLITE_JOURNAL` | Pasta dos dados gravados e modo do SQLite (`DELETE` em disco de rede) | `data/`, `WAL` |
 | `DEEPSEEK_MODEL`, `DEEPSEEK_BASE_URL`, `DEEPSEEK_TIMEOUT_MS` | Modelo, endereço e tempo máximo da IA | ver `.env.example` |
 | `PORT` | Porta do servidor | `3000` |
 | `HOST` | Interface de rede (`127.0.0.1` = só esta máquina) | todas |
@@ -96,10 +104,10 @@ Saída esperada. Na primeira execução o banco e o índice são preparados sozi
 Base preparada: 11 projetos, 51 documentos, 118 trechos
 Radar V0 em http://localhost:3000
 Login: desligado (defina RADAR_LOGIN_USER e RADAR_LOGIN_PASS para exigir)
-IA: mock offline (defina DEEPSEEK_API_KEY no .env para usar a DeepSeek)
+IA: mock offline (defina AZURE_OPENAI_* ou DEEPSEEK_API_KEY no .env para usar uma IA)
 ```
 
-O número de trechos pode variar em 1 (118 ou 119). Com a chave configurada, a última linha é `IA: DeepSeek (deepseek-chat)`. Nas execuções seguintes a linha "Base preparada" não aparece, porque o banco já existe.
+O número de trechos pode variar em 1 (118 ou 119). Com a IA configurada, a última linha é `IA: Azure OpenAI (gpt-6-luna)` ou `IA: DeepSeek (deepseek-chat)`. Nas execuções seguintes a linha "Base preparada" não aparece, porque o banco já existe.
 
 Outra porta: `PORT=8080 npm start` (bash) ou `$env:PORT=8080; npm start` (PowerShell).
 
@@ -142,7 +150,7 @@ Perfis de teste (troque no botão de conta do canto superior direito, campo "Ver
 ### Comandos úteis
 
 ```bash
-npm test                  # 84 testes automatizados; esperado: "pass 84" e "fail 0"
+npm test                  # 96 testes automatizados; esperado: "pass 96" e "fail 0"
 npm run setup             # recria a base fictícia do zero (apaga o que foi cadastrado ou enviado localmente)
 npm run ingest            # reindexa sem apagar o que foi cadastrado ou enviado
 npm run ask -- "propostas de utilities com Databricks"   # pergunta pelo terminal, sem navegador
@@ -163,8 +171,8 @@ O que você cria ao usar (conversas, uploads, projetos cadastrados, avaliações
 | `No such built-in module: node:sqlite` ou `ERR_UNKNOWN_BUILTIN_MODULE` | Node antigo | Passo 1: instale o Node 22.13 ou maior |
 | `EADDRINUSE: address already in use :::3000` | Porta ocupada | Use outra porta (`PORT=3001 npm start`) ou pare o processo que usa a 3000 |
 | `npm` não encontrado, mas `node` funciona | Instalação sem npm | Use os comandos "Sem `npm`" acima |
-| O topo da tela mostra "Modo regras" | Sem `DEEPSEEK_API_KEY`, sem internet ou chave inválida | Normal sem chave. Com chave, confira o `.env` e reinicie o servidor |
-| Cada pergunta leva 5 a 10 s | IA ligada (chamada à DeepSeek) | Esperado. No modo offline é instantâneo |
+| O topo da tela mostra "Modo regras" | Sem `AZURE_OPENAI_*` nem `DEEPSEEK_API_KEY`, sem internet ou chave inválida | Normal sem chave. Com chave, confira o `.env` e reinicie o servidor |
+| Cada pergunta leva 5 a 10 s | IA ligada (chamada ao Azure OpenAI ou à DeepSeek) | Esperado. No modo offline é instantâneo |
 | Redireciona para `/login` | `RADAR_LOGIN_USER` e `RADAR_LOGIN_PASS` definidos | Entre com esses valores ou remova-os do `.env` |
 | `git status` mostra muitos arquivos alterados depois do `setup` | Clone anterior ao `.gitattributes` (diferença só de fim de linha) | `git rm --cached -r -q . && git reset --hard` dentro de `radar-v0`, ou clone de novo |
 | Página em branco ou 404 | Servidor iniciado fora de `radar-v0` ou ainda subindo | Rode `npm start` dentro de `radar-v0` e espere a linha "Radar V0 em ..." |
@@ -201,7 +209,7 @@ Cada arquivo passa por estas etapas, visíveis na tela:
    - pessoas e papéis, organizações, KPIs, riscos e lições;
    - resumo e palavras-chave por TF-IDF;
    - dados pessoais (mascarados) e confidencialidade sugerida.
-4. **IA (DeepSeek):** completa e confirma os metadados. O que a IA sugere e não está no texto é **descartado** (cliente, pessoas, prazo, valor).
+4. **IA (Azure OpenAI):** completa e confirma os metadados. O que a IA sugere e não está no texto é **descartado** (cliente, pessoas, prazo, valor).
 5. **Vínculo:** sugere o projeto pelo cliente, pelo conteúdo e pelo título, ou propõe um **projeto novo** pré-preenchido.
 6. **Duplicidade e conflitos:** avisa sobre conteúdo mais de 90% igual e sobre prazo, valor ou cliente divergentes, dizendo qual fonte prevalece.
 7. **Qualidade:** mostra a completude e o que falta revisar.
@@ -226,7 +234,7 @@ O documento **só entra na base depois da revisão humana**. Cada sugestão alte
 |---|---|---|
 | Banco, busca textual e base vetorial | **Real**, só com Node | PostgreSQL + pgvector (ou Chroma) |
 | Embeddings | **Real, porém simples:** TF-IDF com hashing, offline | Modelo multilíngue (ex.: `multilingual-e5`) |
-| IA | **Real com DeepSeek**, com fallback por regras | Modelo hospedado internamente para dados reais (R10) |
+| IA | **Real com Azure OpenAI** (`gpt-6-luna`, assinatura NTT), com fallback por regras | Aprovação de segurança e jurídico para dados reais (R10) |
 | Upload, extração e metadados | **Real** | OCR para PDF escaneado; arquivos do SharePoint |
 | Usuários e perfis | **Fixos** (consultor e gestor) | SSO |
 
@@ -271,9 +279,9 @@ Os testes automáticos ignoram a massa (`RADAR_SEM_MASSA=1`) e continuam usando 
 
 ## Limitações conhecidas do V0
 
-- Os embeddings são locais (hashing), porque a DeepSeek não tem API de embeddings. A semântica entra na interpretação, na reavaliação e na extração.
-- Com a DeepSeek, cada pergunta leva de 5 a 10 s e cada upload de 2 a 5 s. No modo offline, os dois são instantâneos.
-- **Dados enviados à DeepSeek** (perguntas, trechos e documentos enviados): só dados fictícios até haver aprovação de segurança/jurídico (DEC-0007, DEC-0008, R10).
+- Os embeddings são locais (hashing): a busca funciona sem rede e sem custo por documento. O Azure OpenAI tem API de embeddings, o que abre a troca por um modelo neural no roadmap. A semântica entra na interpretação, na reavaliação e na extração.
+- Com a IA ligada, cada pergunta leva de 5 a 10 s e cada upload de 2 a 5 s. No modo offline, os dois são instantâneos.
+- **Dados enviados à IA** (perguntas, trechos e documentos enviados): no ambiente publicado vão ao Azure OpenAI da assinatura NTT. Dados reais de projetos dependem de aprovação de segurança e jurídico (R10). Com a DeepSeek, só dados fictícios (DEC-0007, DEC-0008).
 - PDF escaneado (imagem) não tem OCR: o sistema avisa e pede revisão manual.
 - As amostras DOCX, PPTX e XLSX são arquivos mínimos, gerados para teste. Arquivos reais do Office usam a mesma estrutura e são lidos pelo mesmo extrator.
 - A base vetorial é reconstruída inteira a cada confirmação (cerca de 200 ms para 50 documentos). Para milhares de documentos, o próximo passo é a indexação incremental.

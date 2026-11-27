@@ -54,7 +54,7 @@ O **Radar de Propostas & Cases** é o MVP (Onda 0). Ele valida a hipótese centr
 - Mascara dados pessoais antes de gravar e antes de enviar texto à IA.
 - Exporta a proposta em PPTX, DOCX ou PDF e mostra cinco visões de Insights (Negócio, Técnica, Pipeline, Pré-venda e Curadoria).
 - Funciona **sem IA** ("Modo regras") quando a chave não está configurada ou quando a IA falha.
-- Tem 84 testes automatizados e um ambiente de demonstração publicado na AWS com login.
+- Tem 96 testes automatizados e um ambiente de demonstração publicado no Azure App Service (container), com login e IA no Azure OpenAI.
 
 **Próximos passos:** o roadmap (seção 9) leva o MVP às fontes reais da NTT DATA:
 
@@ -278,10 +278,10 @@ flowchart TB
 | 2 · Conectores e ingestão | Trazer o conteúdo com integridade | Upload manual de 12 tipos de arquivo, até 15 MB; hash SHA-256 e detecção de quase-duplicata |
 | 3 · Processamento | Extrair, enriquecer, proteger e revisar | Pipeline de 7 etapas, IA com trava anti-invenção, mascaramento, revisão humana obrigatória |
 | 4 · Base confiável | Guardar e indexar só o que foi aprovado | SQLite com FTS5/BM25, base vetorial local, histórico de alterações |
-| 5 · Inteligência | Entender o pedido e orquestrar | Registro de skills (buscar, listar, agregar, ficha, comparar, composta, anexo, ajuda…) e DeepSeek opcional com fallback por regras |
+| 5 · Inteligência | Entender o pedido e orquestrar | Registro de skills (buscar, listar, agregar, ficha, comparar, composta, anexo, ajuda…) e Azure OpenAI (opcional) com fallback por regras |
 | 6 · Aplicações | Uso pelas pessoas | Telas Perguntar, Projetos e Insights; exportação PPTX/DOCX/PDF |
 | 7 · Learning loop | Aprender com o uso | 👍/👎 com motivo, buscas sem resultado, correções da IA, métricas do piloto |
-| 8 · Transversais | Segurança e operação | Login, perfis consultor e gestor, filtro de permissão na consulta, auditoria JSONL, HTTPS (Caddy) na AWS |
+| 8 · Transversais | Segurança e operação | Login, perfis consultor e gestor, filtro de permissão na consulta, auditoria JSONL, HTTPS e container no Azure App Service |
 
 ---
 
@@ -387,8 +387,8 @@ flowchart LR
   subgraph N["Navegador"]
     UI["HTML + CSS + JS (módulos ES), sem framework"]
   end
-  subgraph AWS["Ambiente de demonstração (AWS)"]
-    CD["Caddy<br/>HTTPS · proxy reverso"]
+  subgraph AWS["Ambiente de demonstração (Azure App Service)"]
+    CD["App Service<br/>HTTPS · container Docker"]
     subgraph NODE["Servidor Node.js ≥ 22.13 · zero dependências npm"]
       API["API JSON + login (cookie HMAC-SHA256)"]
       SK["Roteador de skills"]
@@ -401,7 +401,7 @@ flowchart LR
     VS[("Base vetorial local<br/>hashing-tfidf · 1024 dimensões")]
     AU[("Auditoria JSONL")]
   end
-  IA[["DeepSeek (opcional)<br/>sem chave = Modo regras"]]
+  IA[["Azure OpenAI gpt-6-luna (opcional)<br/>sem configuração = Modo regras"]]
 
   UI --> CD --> API
   API --> SK --> BUS
@@ -422,7 +422,7 @@ Decisões técnicas e o motivo de cada uma:
 |---|---|
 | **Um processo Node, zero dependências** | O ambiente-alvo do piloto é uma VM com acesso restrito: sem banco externo, sem Docker, sem `npm install`. Também reduz a superfície de ataque e o custo de manutenção. |
 | **SQLite embutido (`node:sqlite`) com FTS5** | Banco relacional e busca textual BM25 sem servidor de banco. Exige Node 22.13 ou superior (risco R11). |
-| **Embeddings locais (`hashing-tfidf-v1`)** | A DeepSeek não oferece API de embeddings, e o piloto não tem orçamento para outro provedor (NB-03, P2). A busca semântica funciona sem rede. O roadmap prevê trocar por um modelo de embeddings multilíngue. |
+| **Embeddings locais (`hashing-tfidf-v1`)** | Na POC a IA era a DeepSeek, sem API de embeddings, e o piloto não tinha orçamento para outro provedor (NB-03, P2). A busca semântica funciona sem rede. O roadmap prevê trocar por um modelo de embeddings multilíngue. |
 | **Busca híbrida** (80 trechos vetoriais + 40 textuais) | O vetor acha pelo sentido, e o BM25 garante termos exatos (siglas, nomes de cliente). |
 | **IA só para linguagem** | A IA entende a pergunta, dá uma nota de relevância numa escala fixa, resume e escolhe ferramentas. Números, listas e fichas vêm do banco. Isso limita a alucinação ao mínimo. |
 | **IA opcional, com MockLLM** | O produto não para quando a IA falha ou fica sem crédito; a etiqueta "Modo regras" deixa claro para a pessoa. |
@@ -442,7 +442,7 @@ O cálculo completo do percentual de semelhança (pesos 40/15/15/15/10/5, nota d
 
 ### 7.6 Evidências de qualidade
 
-- **84 testes automatizados** (`npm test`, `node:test`), entre eles:
+- **96 testes automatizados** (`npm test`, `node:test`), entre eles:
   - intenções do chat;
   - permissões;
   - mascaramento;
@@ -452,7 +452,7 @@ O cálculo completo do percentual de semelhança (pesos 40/15/15/15/10/5, nota d
 - **Conjunto de avaliação de intenções** com as perguntas reais do teste com o time: 30/30 com regras e 30/30 com a DeepSeek (`test/avaliacao-intencoes.js`).
 - **Homologação manual** em computador e celular, nos temas claro e escuro.
 - **Tickets do teste com o time** registrados no próprio Radar, com roteiro de reteste por versão.
-- **Ambiente de demonstração** publicado na AWS, com HTTPS e login.
+- **Ambiente de demonstração** publicado no Azure App Service (container), com HTTPS, login e IA no Azure OpenAI. Código no GitLab da empresa.
 
 ---
 
@@ -492,7 +492,7 @@ Legenda: verde = gate aprovado; amarelo = em aprovação, ou exercida na POC com
 | NB-02 Requisitos | Aprovado em 29/10/2026 (DEC-0006); adendos 2 a 5 aguardam o comitê junto com o NB-03 |
 | NB-03 Viabilidade | Recomendação **Go com ressalvas**; aguarda o comitê do time |
 | NB-04 a QA-02 | Exercidas na POC, com evidências no `radar-v0`; formalização dos gates pendente |
-| QA-03 CI/CD | Parcial: ambiente de demonstração na AWS; falta pipeline de CI e artefato versionado |
+| QA-03 CI/CD | Parcial: imagem versionada no Azure Container Registry e deploy no App Service por comandos; falta pipeline de CI |
 | QA-04 UAT e QA-05 Produção | Pendentes |
 
 > **Exceção registrada:** a POC foi construída antes do gate NB-03 para que o comitê decidisse vendo o produto funcionando (DEC-0007 e DEC-0008). "Exercida na POC" significa que a etapa tem evidência, mas ainda não tem aprovação formal, e a aprovação não é preenchida pela IA.
@@ -726,7 +726,7 @@ A posição de cada item nas ondas é uma **proposta** deste documento, para val
 | R6 | Score mal calibrado | Médio | Pesos do RF19 como ponto de partida; calibração com 👍/👎 e motivos | Em andamento |
 | R7 | PDF escaneado e áudio sem texto | Médio | Fora do MVP; OCR e transcrição no roadmap | Aceito |
 | R8 | Baixa adoção ou desconfiança do score | Alto | Score explicado por critério; usuários-chave nos testes; ajuda dentro do chat | Mitigado |
-| R10 | Conteúdo real enviado a IA externa (DeepSeek, processamento fora do Brasil) conflitar com a política de segurança e a LGPD | Alto | Só dados fictícios no piloto; mascaramento automático; aprovação de segurança antes de conteúdo real | **Aberto: bloqueia a Onda 1** |
+| R10 | Conteúdo real enviado à IA (na POC, DeepSeek fora do Brasil; hoje, Azure OpenAI da assinatura NTT) conflitar com a política de segurança e a LGPD | Alto | Só dados fictícios no piloto; mascaramento automático; aprovação de segurança antes de conteúdo real | **Aberto: bloqueia a Onda 1** |
 | R11 | Node da VM abaixo de 22.13 | Médio | Conferir antes; alternativa: SQLite em WebAssembly | Mitigado |
 | R12 | Acesso ao Maná e aos SharePoints não liberado | Alto | Começar por uma BU e um conjunto de projetos; manter o upload manual como caminho garantido | Aberto (roadmap) |
 | R13 | Link do SharePoint ausente ou desatualizado no Maná | Médio | Campo obrigatório no Maná; pendência na visão Curadoria | Aberto (roadmap) |
@@ -768,12 +768,12 @@ Esta tabela evita confundir o destino da plataforma com o que o MVP faz hoje.
 | Formatos | PDF, DOCX, PPTX, XLSX, áudio e vídeo | DOCX, PPTX, XLSX, PDF com texto, VTT/SRT, EML, HTML, CSV, JSON, MD, TXT. **Sem OCR e sem áudio/vídeo** |
 | Índice | Vector DB + BM25 | Base vetorial local (embeddings `hashing-tfidf`, 1024 dimensões) + FTS5/BM25 |
 | Agentes | Busca, Análise, Governança, Precificação, Proposta | Registro de skills com roteador de intenção (buscar, listar, agregar, ficha, comparar, composta, detalhar, anexo, enviar arquivo, ajuda, conversa). **Sem precificação automática** |
-| LLM | Orquestração de modelos | DeepSeek opcional; sem chave, Modo regras |
+| LLM | Orquestração de modelos | Azure OpenAI (gpt-6-luna) opcional; sem configuração, Modo regras |
 | Confidencialidade | 4 níveis (Público, Interno, Restrito, Confidencial) | 3 níveis (`publica`, `interna`, `confidencial`) |
 | Outras dimensões de governança | Uso pela IA, escopo de reutilização, capability, força da evidência | Força da evidência implementada (níveis 1 a 5); reutilizável como marca; demais no roadmap |
 | Identidade | SSO, RBAC/ABAC | Login próprio, perfis consultor e gestor ("Ver como"). SSO no roadmap |
 | Idiomas | Multilíngue | Português |
-| Operação | Nuvem corporativa global | Ambiente de demonstração na AWS (Caddy + Node) e execução local |
+| Operação | Nuvem corporativa global | Container no Azure App Service da NTT e execução local |
 | Modelo de dados | 6 domínios conceituais (contexto, conteúdo, governança, base e permissões, conversação, auditoria) | Mesmos domínios, com nomes do MVP: `cliente`, `oportunidade`, `projeto`, `documento`, `trecho` (+ FTS5), `documento_entidade`, `processamento`, `correcao_metadado`, `historico_alteracao`, `usuario`, `usuario_confidencialidade`; conversas e auditoria em arquivos JSON/JSONL. Ver [Como funciona o Radar, seção 4](COMO-FUNCIONA-O-RADAR.md#4-modelo-de-dados) e `MER-base-de-conhecimento.md` |
 
 ---
