@@ -30,7 +30,7 @@ const ETAPAS = [
   { cod: 'NB-02', fase: 'negocio', nome: 'Especificação de Requisitos', status: 'aprovado', aprovador: 'PO', data: '29/10/2026', faz: 'Requisitos funcionais e não funcionais, casos de uso e critérios de aceite testáveis.', saida: 'NB-02-especificacao-requisitos.md + adendos', quem: 'Product Owner / BA líder' },
   { cod: 'NB-03', fase: 'negocio', nome: 'Viabilidade & Priorização', status: 'aprovacao', aprovador: 'Comitê do time', faz: 'Esforço, custo-benefício, riscos, faseamento e recomendação Go / No-Go.', saida: 'NB-03-viabilidade.md (Go com ressalvas)', quem: 'Sponsor / Comitê' },
   { cod: 'NB-04', fase: 'negocio', nome: 'UI/UX Design', status: 'poc', poc: 'Telas navegáveis de chat, envio, revisão, projetos e exportação; tema claro/escuro com contraste verificado; versão para celular.', faz: 'Jornadas, fluxos, wireframes, usabilidade e acessibilidade.', saida: 'NB-04-ui-ux.md', quem: 'PO / Designer' },
-  { cod: 'DEV-01', fase: 'dev', nome: 'Arquitetura & Design Técnico', status: 'poc', poc: 'Node sem dependências, SQLite + FTS5, base vetorial local, DeepSeek com fallback e modelo de permissões; MER registrado como insumo.', faz: 'Componentes, integrações, dados, segurança, observabilidade e ADRs.', saida: 'DEV-01-arquitetura.md', quem: 'Arquiteto / Tech Lead' },
+  { cod: 'DEV-01', fase: 'dev', nome: 'Arquitetura & Design Técnico', status: 'poc', poc: 'Node sem dependências, SQLite + FTS5, base vetorial local, IA generativa com fallback (DeepSeek na POC, Azure OpenAI desde 27/11) e modelo de permissões; MER registrado como insumo.', faz: 'Componentes, integrações, dados, segurança, observabilidade e ADRs.', saida: 'DEV-01-arquitetura.md', quem: 'Arquiteto / Tech Lead' },
   { cod: 'DEV-02', fase: 'dev', nome: 'Plano de Testes BDD', status: 'poc', poc: 'Critérios de aceite em formato Dado / Quando / Então em cada caso de uso dos adendos.', faz: 'Critérios de aceite em cenários Gherkin com matriz de rastreabilidade.', saida: '.feature / plano de testes', quem: 'QA Lead / Tech Lead' },
   { cod: 'DEV-03', fase: 'dev', nome: 'Implementação / TDD', status: 'poc', poc: 'App completo: busca conversacional, envio multiformato, cadastro, exploração, insights, exportação, permissões e registro de atividades.', faz: 'Código conforme arquitetura e cenários aprovados, com testes unitários.', saida: 'Código + DEV-03-implementacao.md', quem: 'Tech Lead / Dev sênior' },
   { cod: 'DEV-04', fase: 'dev', nome: 'Code Review & Qualidade', status: 'poc', poc: 'Revisão a cada incremento, verificação de contraste WCAG nos dois temas e regras de permissão checadas no servidor.', faz: 'Revisão de arquitetura, segurança, legibilidade, análise estática e testes.', saida: 'DEV-04-code-review.md', quem: 'Revisores (CODEOWNERS)' },
@@ -44,7 +44,7 @@ const ETAPAS = [
 // Incrementos da POC: cada um passou pelo ciclo especificar → construir → testar → publicar → feedback.
 const INCREMENTOS = [
   ['1', 'Base da busca', 'Busca semântica em Node puro, base vetorial local e dados fictícios de projetos.', 'NB-02 (UC03)', '—'],
-  ['2', 'IA e memória', 'Análise semântica com DeepSeek, memória de conversa, conversas salvas e favoritas.', 'Adendo 2 (UC03.16, UC05, UC06)', 'DEC-0007'],
+  ['2', 'IA e memória', 'Análise semântica com IA generativa (DeepSeek na POC, hoje Azure OpenAI), memória de conversa, conversas salvas e favoritas.', 'Adendo 2 (UC03.16, UC05, UC06)', 'DEC-0007'],
   ['3', 'Base real', 'Envio multiformato com extração de metadados, revisão humana, cadastro de projetos, filtros, insights e MER.', 'Adendo 3 (UC02, UC07–UC09) + MER', 'DEC-0008'],
   ['4', 'Experiência e publicação', 'Interface enxuta, celular, login, publicação na AWS, detalhe do projeto, download, edição de documentos, foco por projeto, tema claro/escuro.', 'UC02.15, UC07.4, ajustes de UX', '—'],
   ['5', 'Governança', 'Exportação de proposta (PPTX/DOCX/PDF), permissões por perfil, registro de atividades e aviso de dados sensíveis.', 'Adendo 4 (UC10, UC11, RN-V0-01)', 'a registrar'],
@@ -60,6 +60,7 @@ const DECISOES = [
   ['DEC-0006', '29/10/2026', 'Gate', 'Gate NB-02 aprovado.', 'aprovado'],
   ['DEC-0007', '29/10/2026', 'Exceção', 'POC com IA real (DeepSeek), memória de conversa e conversas salvas.', 'aprovacao'],
   ['DEC-0008', '29/10/2026', 'Exceção', 'POC com upload real, metadados, cadastro de projetos, filtros, insights e base relacional (SQLite).', 'aprovacao'],
+  ['DEC-0009', '27/11/2026', 'Arquitetura', 'Radar em container no Azure App Service, com IA no Azure OpenAI (gpt-6-luna) da assinatura NTT no lugar da DeepSeek; código no GitLab da empresa.', 'poc'],
 ];
 
 const ST = {
@@ -115,7 +116,7 @@ const SECOES = [
     ${table(['Etapa', 'Situação'], [
       ['NB-01 Discovery', `${chip('aprovado')} Aprovado pelo PO em 29/10/2026 (DEC-0005).`],
       ['NB-02 Requisitos', `${chip('aprovado')} Aprovado pelo PO em 29/10/2026 (DEC-0006), avaliado junto com NB-01 (exceção DEC-0002).`],
-      ['NB-03 Viabilidade', `${chip('aprovacao')} Recomendação <b>Go com ressalvas</b>: MVP em duas ondas, LLM DeepSeek, PO como curador. Decisão do <b>comitê do time após apresentação e testes</b> desta POC.`],
+      ['NB-03 Viabilidade', `${chip('aprovacao')} Recomendação <b>Go com ressalvas</b>: MVP em duas ondas, LLM DeepSeek (trocada pelo Azure OpenAI em 27/11, DEC-0009), PO como curador. Decisão do <b>comitê do time após apresentação e testes</b> desta POC.`],
       ['NB-04 a DEV-04', `${chip('poc')} Executadas na POC: telas, arquitetura, critérios de aceite, implementação e revisão. Gate formal no MVP 1.`],
       ['QA-01 e QA-02', `${chip('poc')} 58 testes automatizados e testes manuais no navegador e pelo time.`],
       ['QA-03', `${chip('parcial')} Ambiente de demonstração na AWS; falta pipeline de CI/CD.`],
@@ -226,9 +227,9 @@ const SECOES = [
     ])}
     <h4>Restrições válidas na POC</h4>
     <ul>
-      <li>Só <b>dados fictícios</b> vão para a DeepSeek até haver aprovação de segurança e jurídico (risco R10).</li>
+      <li>A IA roda no <b>Azure OpenAI da assinatura NTT</b>. Dados reais de projetos só entram com aprovação de segurança e jurídico (risco R10).</li>
       <li>Login compartilhado; "Ver como" simula os perfis.</li>
-      <li>A VM alvo precisa de Node 22.13 ou superior (risco R11).</li>
+      <li>O container usa Node 24; fora dele, Node 22.13 ou superior (risco R11).</li>
     </ul>`],
 
   ['decisoes', 'bookmark', 'Decisões registradas', () => `

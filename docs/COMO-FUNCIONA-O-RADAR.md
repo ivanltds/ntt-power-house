@@ -78,7 +78,7 @@ flowchart LR
     AU[(Auditoria<br/>eventos.jsonl / turnos.jsonl)]
   end
 
-  IA[[DeepSeek<br/>opcional]]
+  IA[[Azure OpenAI<br/>opcional]]
 
   P --> API --> SK --> BUS
   J --> API --> UP
@@ -111,16 +111,16 @@ Em uma frase: **o navegador conversa com um único servidor Node; o servidor dec
 ```mermaid
 flowchart TB
   N["Navegador<br/>HTML + CSS + JavaScript (módulos ES), sem framework<br/>public/*.js"]
-  C["Caddy (no ambiente publicado)<br/>HTTPS automático, proxy reverso, log de acesso"]
+  C["Azure App Service (no ambiente publicado)<br/>HTTPS, container Docker, disco persistente em /home"]
   S["Servidor Node<br/>node:http · API JSON · login por cookie assinado (HMAC-SHA256)"]
   N --> C --> S
-  S --> DB[("SQLite (node:sqlite, WAL)<br/>projetos, documentos, entidades,<br/>trechos, histórico, FTS5")]
+  S --> DB[("SQLite (node:sqlite; WAL local, DELETE na Azure)<br/>projetos, documentos, entidades,<br/>trechos, histórico, FTS5")]
   S --> VS[("Base vetorial local<br/>API no estilo Chroma<br/>vetores de 1024 dimensões")]
-  S --> IA[["DeepSeek (deepseek-chat)<br/>fetch nativo · JSON · temperatura 0,1"]]
+  S --> IA[["Azure OpenAI (gpt-6-luna)<br/>fetch nativo · API v1 · JSON"]]
   S --> AU[("Auditoria JSONL<br/>buscas, avaliações, downloads")]
 ```
 
-Localmente, o Caddy não é necessário: `npm start` sobe o servidor em `http://localhost:3000`.
+Localmente, nada disso é necessário: `npm start` sobe o servidor em `http://localhost:3000`. O passo a passo da publicação está em [DEPLOY-AZURE.md](DEPLOY-AZURE.md).
 
 ### 3.3 Componentes e arquivos
 
@@ -133,7 +133,7 @@ Localmente, o Caddy não é necessário: `npm start` sobe o servidor em `http://
 | Indexação | `src/ingest.js`, `src/text.js`, `src/embedder.js`, `src/vectorstore.js` | Trechos, embeddings, base vetorial, projetos relacionados. |
 | Motor de busca | `src/search.js`, `src/lexicon.js`, `src/intents.js` | Roteamento por intenção, busca híbrida, score, conflito de fontes. |
 | Registro de skills | `src/skills/index.js` + um arquivo por skill | Intenções, regras do roteador, "o que você pode fazer?", exemplos testados. |
-| IA | `src/deepseek.js` (real), `src/llm.js` (MockLLM, regras) | Entender, avaliar, resumir, chamar ferramentas; fallback automático. |
+| IA | `src/deepseek.js` (cliente no padrão OpenAI: Azure OpenAI ou DeepSeek), `src/llm.js` (MockLLM, regras) | Entender, avaliar, resumir, chamar ferramentas; fallback automático. |
 | Envio e extração | `src/uploads.js`, `src/analysis.js`, `src/extract/*` | Pipeline de 7 etapas, sugestões com confiança, revisão. |
 | Mascaramento | `src/sensitive.js` | Troca dados pessoais por marcadores antes de gravar ou enviar à IA. |
 | Conversas | `src/conversations.js` | Memória, salvamento, favoritas, grupos, arquivadas. |
@@ -153,8 +153,8 @@ Localmente, o Caddy não é necessário: `npm start` sobe o servidor em `http://
 | Embeddings | `hashing-tfidf-v1` (próprio) | Texto → vetor sem rede e sem modelo externo. |
 | Base vetorial | `LocalVectorStore` (próprio, API no estilo Chroma) | Similaridade de cosseno com filtro `where`. |
 | Extração | `zlib` nativo + leitor ZIP próprio | DOCX, PPTX, XLSX e PDF. |
-| IA generativa | DeepSeek `deepseek-chat` via `fetch` | Linguagem: entender, avaliar, resumir, ferramentas. |
-| Testes | `node:test` + `node:assert` | 84 testes automatizados (`npm test`). |
+| IA generativa | Azure OpenAI (implantação `gpt-6-luna`) via `fetch`; DeepSeek como alternativa local | Linguagem: entender, avaliar, resumir, ferramentas. |
+| Testes | `node:test` + `node:assert` | 96 testes automatizados (`npm test`). |
 
 ---
 
@@ -662,8 +662,8 @@ CPF, RG, e-mail, telefone, número de cartão (validado por Luhn), senhas e chav
 
 ```mermaid
 flowchart TD
-  A{DEEPSEEK_API_KEY<br/>configurada?} -->|não| M[MockLLM em toda pergunta<br/>etiqueta 'Modo regras' no topo]
-  A -->|sim| D[DeepSeek]
+  A{IA configurada?<br/>AZURE_OPENAI_* ou DEEPSEEK_API_KEY} -->|não| M[MockLLM em toda pergunta<br/>etiqueta 'Modo regras' no topo]
+  A -->|sim| D[Azure OpenAI ou DeepSeek]
   D -->|timeout 45 s, chave inválida,<br/>JSON malformado| F[Fallback para MockLLM<br/>nesta pergunta<br/>etiqueta 'resposta direta da base']
   D -->|ok| OK[Resposta com IA]
 ```
@@ -684,7 +684,7 @@ flowchart LR
   RT -->|Falhou| TK
 ```
 
-- **Testes automatizados:** 84 testes (`npm test`, `node:test`), cobrindo extração, permissões, busca, percentual, upload, edição, skills, ajuda e Insights. Rodam numa pasta temporária.
+- **Testes automatizados:** 96 testes (`npm test`, `node:test`), cobrindo extração, permissões, busca, percentual, upload, edição, skills, ajuda e Insights. Rodam numa pasta temporária.
 - **Roteiro de testes V0.0.2:** 116 cenários manuais (57 de conversas, 33 de projetos, 18 de envio, 8 de Insights), com seletor de versão; a V0.0.1 fica arquivada.
 - **Página de status** (`/status`): versões, tickets e feedbacks, com link para compartilhar.
 
@@ -721,7 +721,7 @@ Principais rotas (todas JSON; `userId` identifica o perfil de demonstração):
 |---|---|---|
 | Banco, busca textual, base vetorial | Real, só com Node | PostgreSQL + pgvector (ou Chroma) |
 | Embeddings | Real, porém simples (hashing TF-IDF, offline) | Modelo multilíngue (ex.: `multilingual-e5`) |
-| IA | Real com DeepSeek, com fallback por regras | Modelo hospedado internamente para dados reais (R10) |
+| IA | Real com Azure OpenAI (assinatura NTT), com fallback por regras | Aprovação de segurança e jurídico para dados reais (R10) |
 | Upload, extração, metadados | Real | OCR para PDF escaneado; arquivos do SharePoint |
 | Usuários e perfis | Fixos, com "Ver como" | SSO corporativo |
 
@@ -731,7 +731,7 @@ Limites conhecidos:
 - Base vetorial reconstruída inteira a cada alteração (~200 ms para 50 documentos); para milhares, indexação incremental.
 - Sem OCR: PDF escaneado não tem texto.
 - Busca da ajuda e do arquivo anexado é por palavras (BM25 com sinônimos).
-- Dados enviados à DeepSeek: só fictícios até aprovação de segurança/jurídico (DEC-0007, DEC-0008, R10).
+- Dados enviados à IA: vão ao Azure OpenAI da assinatura NTT. Dados reais de projetos só com aprovação de segurança e jurídico (R10).
 - Um único servidor pequeno.
 
 ---

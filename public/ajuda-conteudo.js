@@ -57,7 +57,7 @@ export const GUIA = [
     <p>Escreva como falaria com um colega. O Radar entende sinônimos e o sentido da frase: "distribuidora de luz" encontra projetos de <i>Utilities / Energia</i>.</p>
     ${steps([
       `Clique em ${ui('Perguntar')} e digite no campo de baixo. ${kbd('Enter')} envia (o botão de enviar só acende com texto).`,
-      'Olhe a <b>etiqueta</b> acima da resposta: ela diz o tipo de resposta (Projetos parecidos, Listagem, Contagem, Ficha do projeto, Comparação, Resultados, Resposta em etapas, Pergunta de volta, Conversa, Dúvida de uso, Arquivo da conversa ou Envio de arquivo). Ao lado podem aparecer <b>continuando a conversa</b> (usou as perguntas anteriores) e <b>resposta direta da base</b> (respondeu sem a IA). O ícone ' + icon('info', { size: 13 }) + ' mostra quantos projetos foram avaliados, o tempo, quem respondeu (DeepSeek ou regras) e, se a pergunta foi reescrita, "Entendi como: …".',
+      'Olhe a <b>etiqueta</b> acima da resposta: ela diz o tipo de resposta (Projetos parecidos, Listagem, Contagem, Ficha do projeto, Comparação, Resultados, Resposta em etapas, Pergunta de volta, Conversa, Dúvida de uso, Arquivo da conversa ou Envio de arquivo). Ao lado podem aparecer <b>continuando a conversa</b> (usou as perguntas anteriores) e <b>resposta direta da base</b> (respondeu sem a IA). O ícone ' + icon('info', { size: 13 }) + ' mostra quantos projetos foram avaliados, o tempo, quem respondeu (Azure OpenAI ou regras) e, se a pergunta foi reescrita, "Entendi como: …".',
       'Leia a resposta curta: ela responde direto e diz por que cada projeto citado serve. Os projetos aparecem com o nome do cliente (e o código, quando dois são do mesmo cliente). O que reaproveitar fica no cartão de cada projeto (escopo, resultados e lições).',
       'Abaixo vêm as tabelas ou os <b>cartões de projeto</b>, do mais parecido para o menos. Clique em um cartão para ver o porquê e as fontes.',
       'Errou a pergunta? A última pergunta tem um ' + icon('edit', { size: 13 }) + ' lápis: edite e reenvie; a pergunta e a resposta antigas são trocadas.',
@@ -254,7 +254,7 @@ export const GUIA = [
       ['Recebido', 'Confere tamanho e formato real do arquivo e calcula a impressão digital (SHA-256).'],
       ['Texto', 'Extrai o texto e as propriedades (título, autor, data, páginas, slides).'],
       ['Regras', 'Identifica tipo, cliente, segmento, tecnologias, serviços, prazo, valor, datas, pessoas, riscos, lições e dados pessoais.'],
-      ['IA', 'A DeepSeek complementa pelo significado. O que ela "inventar" e não estiver no texto é descartado.'],
+      ['IA', 'A IA (Azure OpenAI) complementa pelo significado. O que ela "inventar" e não estiver no texto é descartado.'],
       ['Projeto', 'Usa o projeto em que você enviou (ou sugere um, quando é projeto novo).'],
       ['Conflitos', 'Bloqueia arquivo idêntico e avisa se prazo, valor ou cliente divergem do projeto.'],
       ['Qualidade', 'Calcula quantos % dos campos ficaram preenchidos.'],
@@ -444,7 +444,7 @@ export const TECNICO = [
     <div class="arch">
       ${flow([['Navegador', 'HTML + CSS + JavaScript (módulos ES), sem framework', 'eye'], ['Caddy', 'HTTPS automático (Let\'s Encrypt), proxy reverso, log de acesso', 'shield'], ['Servidor Node', 'node:http · login por cookie assinado (HMAC-SHA256) · API JSON', 'cpu', true]])}
       <div class="arch-down">${icon('chevronDown', { size: 18 })}</div>
-      ${flow([['SQLite', 'node:sqlite · projetos, documentos, entidades, trechos, histórico · FTS5', 'files'], ['Base vetorial', 'JSON local, API no estilo Chroma · embeddings de 1024 dimensões', 'grid'], ['DeepSeek', 'API compatível com OpenAI via fetch · modo JSON · temperatura 0,1', 'sparkles'], ['Auditoria', 'JSONL: buscas, avaliações, downloads → métricas', 'gauge']], { parallel: true })}
+      ${flow([['SQLite', 'node:sqlite · projetos, documentos, entidades, trechos, histórico · FTS5', 'files'], ['Base vetorial', 'JSON local, API no estilo Chroma · embeddings de 1024 dimensões', 'grid'], ['Azure OpenAI', 'implantação gpt-6-luna · API v1 via fetch · modo JSON', 'sparkles'], ['Auditoria', 'JSONL: buscas, avaliações, downloads → métricas', 'gauge']], { parallel: true })}
     </div>
     <h4>Ferramentas e bibliotecas</h4>
     ${table(['Camada', 'Tecnologia', 'Uso no Radar'], [
@@ -454,7 +454,7 @@ export const TECNICO = [
       ['Embeddings', '<b>hashing-tfidf-v1</b> (próprio, <code>src/embedder.js</code>)', 'Transforma texto em vetor sem rede e sem modelo externo.'],
       ['Base vetorial', '<b>LocalVectorStore</b> (próprio, <code>src/vectorstore.js</code>)', 'Busca por similaridade de cosseno com filtro <code>where</code>; API igual à do Chroma para troca futura.'],
       ['Extração', '<b>zlib</b> nativo + leitor ZIP próprio', 'DOCX, PPTX e XLSX (ZIP com XML) e PDF (streams compactados).'],
-      ['IA generativa', '<b>DeepSeek</b> (<code>deepseek-chat</code>) via <b>fetch</b> nativo', 'Entender a pergunta, reavaliar candidatos, redigir a resposta e enriquecer metadados.'],
+      ['IA generativa', '<b>Azure OpenAI</b> (implantação <code>gpt-6-luna</code>, na assinatura Azure da NTT) via <b>fetch</b> nativo; a DeepSeek segue como alternativa para rodar localmente', 'Entender a pergunta, reavaliar candidatos, redigir a resposta e enriquecer metadados.'],
       ['Fallback', '<b>MockLLM</b> (regras)', 'Se a IA falhar ou estiver sem chave, tudo continua funcionando por regras.'],
       ['Infra', '<b>Caddy</b> + <b>systemd</b> na AWS', 'HTTPS, proxy, reinício automático e limites de memória.'],
       ['Testes', '<b>node:test</b> + <b>node:assert</b>', 'Testes automatizados de extração, permissões, busca, upload e edição.'],
@@ -466,7 +466,7 @@ export const TECNICO = [
       ['1. Recebimento', 'formato real pelo conteúdo · SHA-256 · limite 15 MB', 'upload'],
       ['2. Extração de texto', 'parser por formato → Markdown leve + propriedades', 'file'],
       ['3. Regras', 'léxico, regex, TF-IDF, PII', 'filter'],
-      ['4. IA', 'DeepSeek em modo JSON · validação anti-invenção', 'sparkles', true],
+      ['4. IA', 'Azure OpenAI em modo JSON · validação anti-invenção', 'sparkles', true],
       ['5. Vínculo', 'ranking de projetos candidatos', 'folder'],
       ['6. Conflitos', 'duplicata exata e > 90% · divergências', 'alert'],
       ['7. Qualidade', '% de completude', 'checkCircle'],
@@ -490,7 +490,7 @@ export const TECNICO = [
       <li><b>Dados pessoais:</b> CPF, CNPJ, e-mail e telefone, mascarados na tela e usados para sugerir "confidencial".</li>
     </ul>
     <h4>IA com trava anti-invenção</h4>
-    ${flow([['Texto do documento', '', 'file'], ['DeepSeek', 'devolve JSON com campos e entidades', 'sparkles'], ['Validação', 'cada valor precisa aparecer no texto', 'shield', true], ['Mescla', 'IA + regras concordam → confiança sobe', 'checkCircle']])}
+    ${flow([['Texto do documento', '', 'file'], ['Azure OpenAI', 'devolve JSON com campos e entidades', 'sparkles'], ['Validação', 'cada valor precisa aparecer no texto', 'shield', true], ['Mescla', 'IA + regras concordam → confiança sobe', 'checkCircle']])}
     <p>Cliente, pessoas, prazo e valor sugeridos pela IA que <b>não aparecem no texto são descartados</b>. Quando IA e regras concordam, a confiança sobe e o método vira "regras+ia".</p>
     <h4>Vínculo com projeto</h4>
     <p><code>score = 0,6 × conteúdo semelhante (cosseno) + 0,45 se for o mesmo cliente + 0,1 se o título for parecido</code> (limitado a 1). Cliente com baixa confiança não pesa. Com score ≥ 0,6 o projeto já vem marcado como destino. Sem candidato forte, o Radar propõe criar um projeto novo com os campos já extraídos.</p>`],
@@ -553,7 +553,7 @@ export const TECNICO = [
       ['Corte e conflitos', 'score ≥ 0,4 · até 5 projetos · fonte mais confiável prevalece', 'checkCircle'],
     ], { vertical: true })}
     <h4>1. Entendimento</h4>
-    <p>A DeepSeek recebe a pergunta, as 6 perguntas mais recentes da conversa e o foco e devolve um JSON com a <b>intenção</b>, a <b>consulta reescrita</b> sem ambiguidade (ex.: "e em varejo?" → "projetos de churn em varejo") e as entidades, escolhidas apenas do vocabulário controlado.</p>
+    <p>A IA (Azure OpenAI) recebe a pergunta, as 6 perguntas mais recentes da conversa e o foco e devolve um JSON com a <b>intenção</b>, a <b>consulta reescrita</b> sem ambiguidade (ex.: "e em varejo?" → "projetos de churn em varejo") e as entidades, escolhidas apenas do vocabulário controlado.</p>
     <p>As capacidades do chat ficam num <b>registro de skills</b> (<code>src/skills/</code>): cada skill declara a intenção, quando usar, o que mostra em "o que você pode fazer?" (por perfil) e frases de exemplo, testadas automaticamente. Casos claros (saudação, agradecimento, dúvida de uso, pedidos sobre o arquivo anexado) são resolvidos por regras <b>antes</b> da IA. Cada intenção tem uma resposta própria; só <i>buscar</i> segue para a busca de projetos parecidos descrita abaixo:</p>
     ${table(['Intenção', 'Exemplo', 'Como responde'], [
       ['<b>buscar</b>', '"Já fizemos fraude em seguros?"', 'Busca híbrida, score e análise da IA (passos 2 a 5).'],
@@ -585,13 +585,13 @@ export const TECNICO = [
     ])}
     <p>Fatores sem sinal na pergunta não entram e os pesos são <b>renormalizados</b>. Uma pergunta só sobre conteúdo usa só o conteúdo.</p>
     <h4>4. Reavaliação e resposta pela IA</h4>
-    <p>Os 8 melhores candidatos vão para a DeepSeek com metadados, até 8 <b>frases numeradas</b> dos documentos (sem linhas de preço para quem não vê valores) e as 3 perguntas mais recentes da conversa. Ela devolve, para cada projeto, a relevância (0 a 1), uma justificativa e o <b>id da frase</b> que a sustenta, além da resposta curta com citações [P001].</p>
+    <p>Os 8 melhores candidatos vão para a IA com metadados, até 8 <b>frases numeradas</b> dos documentos (sem linhas de preço para quem não vê valores) e as 3 perguntas mais recentes da conversa. Ela devolve, para cada projeto, a relevância (0 a 1), uma justificativa e o <b>id da frase</b> que a sustenta, além da resposta curta com citações [P001].</p>
     ${tip('Travas contra alucinação: a IA só recebe trechos que o usuário pode ver; cita a evidência por id (o texto exibido vem da base, não da IA); só cita projetos com relevância ≥ 0,5; não pode inventar números; e, sem evidência, deve dizer que não há.', 'warn')}
     <p>A IA avalia cada candidato numa escala fixa (0,9+ mesmo problema e segmento · 0,7 mesmo problema em outro segmento · 0,5 semelhança parcial útil · 0,3 só tecnologia ou palavra em comum · abaixo disso, sem relação). A nota final do conteúdo mistura 25% da semelhança de texto e 75% dessa avaliação, e o percentual final nunca passa da relevância da IA + 10 pontos: segmento, tecnologias e status não inflam um projeto que é fraco no significado. Ficam projetos com relevância ≥ 0,4 e score ≥ 0,4, até 5.</p>
     <h4>5. Conflito de fontes</h4>
     <p>Quando documentos discordam (prazo, valor), vale a fonte de maior confiança: <b>5</b> proposta final aprovada, SOW ou contrato · <b>4</b> proposta ou case · <b>3</b> estimativa, ata validada ou ficha · <b>2</b> transcrição, e-mail ou documento técnico · <b>1</b> rascunho. A ficha do projeto mostra o aviso "Prazo (ou Valor) diverge entre fontes" com a fonte que prevaleceu; os cartões do chat mostram só o valor escolhido.</p>
     <h4>Sem IA</h4>
-    <p>Se a DeepSeek falhar (timeout de 45 s, chave inválida, JSON malformado), o <b>MockLLM</b> assume com regras: entidades pelo léxico, ranking só pelo score multi-fator e resposta montada a partir dos fatos. A tela mostra "Modo regras" no alto ou "resposta direta da base" na resposta.</p>`],
+    <p>Se a IA falhar (timeout de 45 s, chave inválida, JSON malformado), o <b>MockLLM</b> assume com regras: entidades pelo léxico, ranking só pelo score multi-fator e resposta montada a partir dos fatos. A tela mostra "Modo regras" no alto ou "resposta direta da base" na resposta.</p>`],
 
   ['exportacao', 'download', 'Exportação e registro', () => `
     <h4>Exportação de proposta</h4>
@@ -614,7 +614,7 @@ export const TECNICO = [
       <li><b>Permissão antes de tudo:</b> busca, IA, detalhe, download e edição respeitam o nível de confidencialidade do perfil.</li>
       <li><b>Valores:</b> perfis sem permissão não recebem valores nem margens, nem na API, nem na exportação. No download do original, arquivos de texto saem com as linhas de preço e margem ocultas, e PDF ou Office com valor ou margem cadastrados é recusado (HTTP 403).</li>
       <li><b>Segredos:</b> a chave da IA fica só no servidor (arquivo com acesso restrito), nunca no navegador.</li>
-      <li><b>Mascaramento:</b> CPF, RG, e-mail, telefone, cartão, senhas e chaves são trocados por marcadores no servidor antes de gravar, indexar ou enviar texto à DeepSeek (envio, cadastro, sugestão, edição e perguntas). O envio nunca é bloqueado; o registro guarda só o tipo e a quantidade.</li>
+      <li><b>Mascaramento:</b> CPF, RG, e-mail, telefone, cartão, senhas e chaves são trocados por marcadores no servidor antes de gravar, indexar ou enviar texto à IA (envio, cadastro, sugestão, edição e perguntas). O envio nunca é bloqueado; o registro guarda só o tipo e a quantidade.</li>
       <li><b>Termo de uso:</b> aceito uma vez por perfil e por versão, na tela de boas-vindas.</li>
       <li><b>Arquivo lido na conversa:</b> o texto extraído é mascarado e guardado só para a conversa de quem anexou; é apagado quando a conversa é excluída (e, na partida do servidor, os de conversas que não existem mais).</li>
       <li><b>Dados:</b> no piloto, use documentos de exemplo ou públicos.</li>

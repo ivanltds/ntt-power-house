@@ -8,6 +8,12 @@ export const NOTAS = [
     resumo: 'Os três casos de uso da Kelly no alinhamento executivo de 19/11 (cases, apresentação comercial e apoio à nova proposta) e as melhorias levantadas com a Qualidade de Propostas no mesmo dia: one page de case, apresentação de cases ganhos, conversa dentro da ficha do projeto, Insights no ano fiscal da NTT DATA com "Ganhamos × perdemos", sinais do setor e "com quem falar" em cada projeto parecido. A V0.0.2 fica arquivada (roteiro e resultados só para consulta).',
     itens: [
       {
+        tipo: 'melhoria', status: 'feito', area: 'Geral',
+        titulo: 'Radar na Azure, com IA no Azure OpenAI',
+        antes: 'O ambiente de demonstração rodava num servidor na AWS, e a IA era a DeepSeek, um provedor fora do ambiente NTT.',
+        depois: 'O Radar roda em container no Azure App Service da NTT, com login e HTTPS. A IA passou a ser o Azure OpenAI (implantação gpt-6-luna) da assinatura NTT. Banco, envios e conversas ficam num disco que não se perde quando o app reinicia ou ganha versão nova. O código fica no GitLab da empresa.',
+      },
+      {
         tipo: 'melhoria', status: 'feito', area: 'Qualidade',
         titulo: 'V0.0.2 arquivada e roteiro da V0.0.3 aberto',
         antes: 'O roteiro e os resultados eram da V0.0.2.',
