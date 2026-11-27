@@ -4,7 +4,7 @@
 > **Público:** quem usa o Radar no dia a dia (consultores e gestores de pré-vendas) e a banca avaliadora.
 > **Documento irmão:** [Como funciona o Radar](./COMO-FUNCIONA-O-RADAR.md) (arquitetura, regras e cálculos).
 > **No app:** o mesmo conteúdo está em **menu ⋮ → Como usar o Radar**, e o chat responde dúvidas de uso com base nele (ex.: *"como favorito uma conversa?"*).
-> **Tudo é fictício:** pode testar à vontade; nenhum cliente real é afetado.
+> **Dados simulados:** pode testar à vontade; nenhum cliente real é afetado.
 
 ---
 

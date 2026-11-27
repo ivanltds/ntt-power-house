@@ -764,7 +764,7 @@ const server = http.createServer(async (req, res) => {
       return Array.isArray(out) && typeof out[0] === 'number' ? send(res, out[0], out[1]) : send(res, 200, out);
     }
     if (req.method !== 'GET') return send(res, 404, { erro: 'Rota não encontrada' });
-    // Arquivos de exemplo (fictícios) usados no roteiro de testes.
+    // Arquivos de exemplo (simulados) usados no roteiro de testes.
     if (url.pathname.startsWith('/amostras/')) {
       const nome = path.basename(decodeURIComponent(url.pathname));
       const f = path.join(AMOSTRAS, nome);

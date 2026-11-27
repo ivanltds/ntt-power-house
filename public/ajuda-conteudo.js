@@ -51,7 +51,7 @@ export const GUIA = [
       'Abaixo, botões de sugestão já fazem uma pergunta com um clique. As sugestões mudam com o perfil e com a proposta em foco.',
     ])}
     ${tip('Na dúvida, pergunte ao próprio Radar: <i>"o que você pode fazer?"</i> ou <i>"como envio um arquivo?"</i>. Ele responde com base neste guia e mostra a seção de onde tirou.')}
-    ${tip('Todos os dados desta versão são <b>fictícios</b>. Pode testar à vontade: perguntar, enviar arquivos e editar não afeta nenhum cliente real.')}`],
+    ${tip('Todos os dados desta versão são <b>simulados</b>. Pode testar à vontade: perguntar, enviar arquivos e editar não afeta nenhum cliente real.')}`],
 
   ['perguntar', 'message', 'Perguntar ao Radar', () => `
     <p>Escreva como falaria com um colega. O Radar entende sinônimos e o sentido da frase: "distribuidora de luz" encontra projetos de <i>Utilities / Energia</i>.</p>

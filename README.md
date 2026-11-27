@@ -4,7 +4,7 @@ Protótipo local para validar a hipótese do discovery (NB-01 de `radar-proposta
 
 > Uma base de propostas e cases com busca semântica e fontes rastreáveis reduz o tempo para encontrar referências e aumenta o reaproveitamento de conhecimento em novas propostas.
 
-**Tudo é fictício:** clientes, pessoas, valores e resultados foram inventados.
+**Dados simulados:** clientes, pessoas, valores e resultados foram simulados para o piloto, sem dado real de cliente.
 
 > **Documentação de uso e de funcionamento (V0.0.2):**
 > - [Como usar o Radar](docs/COMO-USAR-O-RADAR.md): passo a passo de cada tela, com desenhos de tela e fluxos.
@@ -70,7 +70,7 @@ cp .env.example .env          # Windows PowerShell: Copy-Item .env.example .env
 Abra o `.env` e preencha **uma** das opções:
 
 - **Azure OpenAI** (a IA do ambiente publicado): `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_DEPLOYMENT` (`gpt-6-luna`) e `AZURE_OPENAI_API_KEY`.
-- **DeepSeek** (alternativa para rodar localmente): `DEEPSEEK_API_KEY`. Com ela, use só dados fictícios, porque é um provedor fora do ambiente NTT (DEC-0007, DEC-0008, R10).
+- **DeepSeek** (alternativa para rodar localmente): `DEEPSEEK_API_KEY`. Com ela, use só dados simulados, porque é um provedor fora do ambiente NTT (DEC-0007, DEC-0008, R10).
 
 O resto pode ficar como está.
 
@@ -151,7 +151,7 @@ Perfis de teste (troque no botão de conta do canto superior direito, campo "Ver
 
 ```bash
 npm test                  # 96 testes automatizados; esperado: "pass 96" e "fail 0"
-npm run setup             # recria a base fictícia do zero (apaga o que foi cadastrado ou enviado localmente)
+npm run setup             # recria a base simulada do zero (apaga o que foi cadastrado ou enviado localmente)
 npm run ingest            # reindexa sem apagar o que foi cadastrado ou enviado
 npm run ask -- "propostas de utilities com Databricks"   # pergunta pelo terminal, sem navegador
 ```
@@ -246,7 +246,7 @@ O documento **só entra na base depois da revisão humana**. Cada sugestão alte
   - **Consultor:** não vê o projeto confidencial nem valores e margens.
   - **Gestor:** vê tudo.
 
-### Massa de testes (V0.0.3): 500 projetos fictícios
+### Massa de testes (V0.0.3): 500 projetos simulados
 
 Para validar a hipótese com volume próximo do real (uma unidade de negócio com cerca de 2,5 anos fiscais de histórico), há uma massa de **500 projetos (P101 a P600) e cerca de 2.200 documentos** em `data/corpus/massa/`. Os números seguem o que a Qualidade de Propostas relatou em 19/11: toda oportunidade tem proposta e documento financeiro, a taxa de ganho fica em ~53% das decididas e as perdas têm motivo.
 
@@ -281,7 +281,7 @@ Os testes automáticos ignoram a massa (`RADAR_SEM_MASSA=1`) e continuam usando 
 
 - Os embeddings são locais (hashing): a busca funciona sem rede e sem custo por documento. O Azure OpenAI tem API de embeddings, o que abre a troca por um modelo neural no roadmap. A semântica entra na interpretação, na reavaliação e na extração.
 - Com a IA ligada, cada pergunta leva de 5 a 10 s e cada upload de 2 a 5 s. No modo offline, os dois são instantâneos.
-- **Dados enviados à IA** (perguntas, trechos e documentos enviados): no ambiente publicado vão ao Azure OpenAI da assinatura NTT. Dados reais de projetos dependem de aprovação de segurança e jurídico (R10). Com a DeepSeek, só dados fictícios (DEC-0007, DEC-0008).
+- **Dados enviados à IA** (perguntas, trechos e documentos enviados): no ambiente publicado vão ao Azure OpenAI da assinatura NTT. Dados reais de projetos dependem de aprovação de segurança e jurídico (R10). Com a DeepSeek, só dados simulados (DEC-0007, DEC-0008).
 - PDF escaneado (imagem) não tem OCR: o sistema avisa e pede revisão manual.
 - As amostras DOCX, PPTX e XLSX são arquivos mínimos, gerados para teste. Arquivos reais do Office usam a mesma estrutura e são lidos pelo mesmo extrator.
 - A base vetorial é reconstruída inteira a cada confirmação (cerca de 200 ms para 50 documentos). Para milhares de documentos, o próximo passo é a indexação incremental.

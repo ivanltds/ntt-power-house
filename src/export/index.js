@@ -32,7 +32,7 @@ export function exportProposal(engine, id, user, { modelo, formato, secoes = [],
   if (!validas.some((k) => k !== 'capa')) return { erro: 'Escolha ao menos uma seção com conteúdo.' };
   const opts = { titulo: String(titulo).trim().slice(0, 160) || c.projeto.titulo, para: String(para).trim().slice(0, 120) || c.projeto.cliente };
   const nomeDoc = `${m.nome} — ${opts.titulo}`;
-  const rodape = `Radar · ${m.nome} · ${opts.para} · dados fictícios`;
+  const rodape = `Radar · ${m.nome} · ${opts.para} · dados simulados`;
   let buffer;
   if (modelo === 'apresentacao') {
     const slides = slidesModel(c, validas, opts);
