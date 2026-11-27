@@ -21,6 +21,7 @@ export const TIPO_LABEL = {
   enviar_arquivo: ['upload', 'Envio de arquivo'],
   onepage: ['star', 'One page de case'],
   apresentacao: ['layout', 'Apresentação de cases'],
+  perdas: ['alert', 'Por que perdemos'],
 };
 
 const FERRAMENTA = {
@@ -207,6 +208,18 @@ function apresentacao(d) {
   return `${lista}${botao}`;
 }
 
+// Por que perdemos (CR-080): motivos agrupados em barras e a lista das perdidas com motivo, lição e com quem falar.
+const MOTIVO_ROTULO = { preco: 'Preço', escopo: 'Escopo', concorrente: 'Concorrente', relacionamento: 'Relacionamento', prazo: 'Prazo', capacidade: 'Capacidade técnica', desistencia: 'Cliente desistiu' };
+function perdas(d) {
+  if (!d.projetos?.length) return '';
+  const max = Math.max(...d.motivos.map((m) => m.n), 1);
+  const barras = d.motivos.length ? `<div class="perdas-motivos">${d.motivos.map((m) => `<span>${esc(m.rotulo)}</span><div class="bar"><div style="width:${Math.round((100 * m.n) / max)}%"></div></div><em>${m.n}</em>`).join('')}</div>` : '';
+  const linhas = d.projetos.map((p) => `<tr data-proj="${esc(p.projeto_id)}" tabindex="0"><td><b>${esc(p.titulo)}</b><small>${esc(p.cliente)} · ${esc(p.segmento ?? '')}${p.data ? ` · ${esc(String(p.data).slice(0, 7))}` : ''}</small></td>
+    <td>${p.motivos.length ? p.motivos.map((m) => `<span class="chip">${esc(MOTIVO_ROTULO[m] ?? m)}</span>`).join(' ') : '<span class="muted small">sem motivo claro</span>'}${p.motivos.length ? `<small class="muted">${p.origem === 'registrado' ? 'registrado na ata' : 'sugerido pelo Radar'}</small>` : ''}</td>
+    <td class="small">${p.licao ? esc(p.licao) : '<span class="muted">sem lição registrada</span>'}</td><td class="small">${esc(p.contato ?? '—')}</td></tr>`).join('');
+  return `${barras}<div class="tbl-wrap"><table class="tbl perdas-tab"><thead><tr><th>Proposta perdida</th><th>Motivo</th><th>Lição</th><th>Com quem falar</th></tr></thead><tbody>${linhas}</tbody></table></div>`;
+}
+
 // Corpo da resposta para os tipos novos. Devolve null para "semelhantes" (cards do fluxo original).
 export function renderTyped(r) {
   const d = r.dados ?? {};
@@ -222,6 +235,7 @@ export function renderTyped(r) {
     case 'enviar_arquivo': return '<div class="envio-destino"></div>';
     case 'onepage': return onepage(d);
     case 'apresentacao': return apresentacao(d);
+    case 'perdas': return perdas(d);
     case 'esclarecimento': return d.opcoes?.length ? `<div class="resp-acoes opcoes">${d.opcoes.map((o) => `<button type="button" class="chip-btn" data-perguntar="${esc(o)}">${icon('message', { size: 14 })}${esc(o)}</button>`).join('')}</div>` : '';
     case 'composta': {
       // Uma ficha por projeto e só o último bloco de cada tipo de lista, para não repetir tabelas.

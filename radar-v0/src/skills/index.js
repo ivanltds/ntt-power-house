@@ -8,6 +8,7 @@ import { tipoDeConversa, separarSaudacao } from './conversa.js';
 import { ehDuvidaDeUso } from './ajuda.js';
 import { acaoComAnexo } from './anexo.js';
 import { pedeOnePage, pedeApresentacao } from './cases.js';
+import { pedePerdas } from './perdas.js';
 
 // Campos de cada skill:
 //   id, intencao (valor que a IA devolve), regraIA (quando escolher, para o prompt do roteador),
@@ -93,6 +94,13 @@ export const SKILLS = [
     naoAtiva: ['qual a apresentação comercial do P003?', 'como exporto uma apresentação?'],
   },
   {
+    id: 'perdas', intencao: 'perdas',
+    regraIA: 'pergunta sobre POR QUE PERDEMOS propostas (motivos de perda, o que aprendemos com as perdidas), de um tema ou da base toda ("por que perdemos propostas de fraude?", "quais os motivos das perdas em telecom?").',
+    capacidade: { icone: 'alert', titulo: 'Por que perdemos', descricao: 'Olho as propostas perdidas parecidas com um tema, agrupo os motivos, trago as lições e quem conduziu cada uma.', exemplo: 'Por que perdemos propostas de detecção de fraude?', clicavel: true },
+    exemplos: ['por que perdemos propostas de detecção de fraude?', 'quais os motivos das perdas em churn?', 'o que aprendemos com as propostas perdidas?'],
+    naoAtiva: ['liste as propostas perdidas', 'o que é o cartão ganhamos × perdemos?', 'projetos de churn em telecom'],
+  },
+  {
     id: 'ajuda', intencao: 'ajuda',
     regraIA: 'dúvida sobre COMO USAR o Radar: telas, botões, envio de arquivos, conversas, filtros, permissões, novidades da versão ("como favorito uma conversa?", "o que é proposta em foco?", "o que mudou nesta versão?").',
     capacidade: { icone: 'help', titulo: 'Tirar dúvidas de uso', descricao: 'Explico como usar o Radar com base no guia e nas notas da versão, e mostro onde ler mais.', exemplo: 'Como favorito uma conversa?', clicavel: true },
@@ -135,6 +143,7 @@ export function preRotear(query, ctx = {}) {
   if (tipo) return { skill: 'conversa', tipo, saudacao: s?.saudacao };
   if (ehDuvidaDeUso(texto)) return { skill: 'ajuda', saudacao: s?.saudacao };
   // Adendo 7: pedidos claros de material comercial.
+  if (pedePerdas(texto)) return { skill: 'perdas', saudacao: s?.saudacao };
   if (pedeOnePage(texto)) return { skill: 'gerar_onepage', saudacao: s?.saudacao };
   if (pedeApresentacao(texto)) return { skill: 'apresentacao_cases', saudacao: s?.saudacao };
   if (s?.resto) return { saudacao: s.saudacao, resto: s.resto };

@@ -158,3 +158,21 @@ test('sinais do setor: lê RSS, classifica, isola falhas, expira em 90 dias e n�
   assert.equal(rel[0].relevancia.nivel, 'alta', 'notícia de cliente da carteira vem primeiro');
   assert.deepEqual(store.relevantes(projetos, { segmento: 'Seguros' }).map((i) => i.titulo), ['Nova regulação antifraude em Seguros']);
 });
+
+test('por que perdemos: só perdidas, motivos agrupados, lição e com quem falar (CR-080)', async () => {
+  const { pedePerdas, temaDasPerdas } = await import('../src/skills/perdas.js');
+  assert.ok(pedePerdas('Por que perdemos propostas de detecção de fraude?'));
+  assert.ok(pedePerdas('o que aprendemos com as propostas perdidas?'));
+  assert.ok(!pedePerdas('liste as propostas perdidas') && !pedePerdas('o que é o cartão ganhamos × perdemos?'));
+  assert.equal(temaDasPerdas('Por que perdemos propostas de detecção de fraude?'), 'detecção fraude');
+  const r = await engine.search('por que perdemos propostas de churn no varejo?', { userId: 'u-gestor' });
+  assert.equal(r.tipoResposta, 'perdas');
+  assert.ok(r.dados.projetos.length >= 1);
+  assert.ok(r.dados.projetos.every((p) => engine.repo.project(p.projeto_id).status_proposta === 'Perdida'), 'só propostas perdidas');
+  const p004 = r.dados.projetos.find((p) => p.projeto_id === 'P004');
+  assert.ok(p004, 'a perdida da ModaViva aparece');
+  assert.deepEqual(p004.motivos.sort(), ['concorrente', 'preco']);
+  assert.equal(p004.origem, 'sugerido');
+  assert.match(p004.licao, /fase 1 menor/);
+  assert.match(r.resposta, /Com quem falar: Rafael Moreira/);
+});
