@@ -16,7 +16,7 @@ export const NOTAS = [
       {
         tipo: 'melhoria', status: 'feito', area: 'Geral',
         titulo: 'Base de demonstração chamada de dados simulados',
-        antes: 'O app chamava a base de demonstração de "dados fictícios", o que passava a impressão de algo inventado.',
+        antes: 'O termo usado para a base de demonstração passava a impressão de dados inventados.',
         depois: 'Telas, exportações, ajuda e documentação passam a dizer "dados simulados": uma base criada para o piloto, sem dado real de cliente.',
       },
       {
